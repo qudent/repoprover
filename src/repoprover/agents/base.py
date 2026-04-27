@@ -43,18 +43,21 @@ PROVIDER_BASE_URLS = {
     "anthropic": "https://api.anthropic.com/v1/",
     "openai": "https://api.openai.com/v1/",
     "google": "https://generativelanguage.googleapis.com/v1beta/openai/",
+    "openrouter": "https://openrouter.ai/api/v1/",
 }
 
 PROVIDER_API_KEY_ENV = {
     "anthropic": "ANTHROPIC_API_KEY",
     "openai": "OPENAI_API_KEY",
     "google": "GEMINI_API_KEY",
+    "openrouter": "OPENROUTER_API_KEY",
 }
 
 PROVIDER_DEFAULT_MODELS = {
     "anthropic": "claude-sonnet-4-20250514",
     "openai": "gpt-4o",
     "google": "gemini-2.5-flash",
+    "openrouter": "google/gemini-2.5-flash",
 }
 
 

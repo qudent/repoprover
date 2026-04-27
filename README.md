@@ -122,10 +122,12 @@ Then run repoprover on it:
 
 ```bash
 source .venv/bin/activate
-python -m repoprover run /tmp/repoprover-toy-test --pool-size 2 --verbose
+python -m repoprover run /tmp/repoprover-toy-test --pool-size 1 --provider google --no-background-agents --verbose
 ```
 
 The toy project has one chapter with 4 trivial targets (a definition and 3 theorems about doubling natural numbers).
+
+Use `--provider {anthropic,openai,google,openrouter}` to select the LLM backend. If omitted, RepoProver chooses the first configured provider API key from the environment.
 
 ### Trajectory viewer
 

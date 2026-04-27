@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from .agents.lean_tools import (
     configure_global_pool,
     shutdown_global_pool,
 )
+from .agents.base import AgentConfig, PROVIDER_API_KEY_ENV, PROVIDER_BASE_URLS
 from .coordinator import BookCoordinator, BookCoordinatorConfig
 from .distributed import (
     DistributedWorker,
@@ -26,6 +28,41 @@ from .distributed import (
 )
 
 DEFAULT_MANIFEST_NAME = "manifest.json"
+
+
+def _default_provider_from_env() -> str:
+    """Choose a configured provider from available API keys."""
+    for provider in ("anthropic", "openai", "google", "openrouter"):
+        env_var = PROVIDER_API_KEY_ENV[provider]
+        if os.environ.get(env_var):
+            return provider
+    return ""
+
+
+def build_agent_config(args: argparse.Namespace) -> AgentConfig:
+    """Build and validate LLM agent config from CLI args and environment."""
+    provider = args.provider or os.environ.get("REPOPROVER_PROVIDER", "") or _default_provider_from_env()
+    model = args.model or os.environ.get("REPOPROVER_MODEL", "")
+    base_url = args.base_url or os.environ.get("REPOPROVER_BASE_URL", "")
+    api_key = args.api_key or os.environ.get("REPOPROVER_API_KEY", "")
+
+    if not provider:
+        expected = ", ".join(PROVIDER_API_KEY_ENV.values())
+        raise ValueError(
+            "No LLM provider configured. Pass --provider or set REPOPROVER_PROVIDER. "
+            f"Available built-in providers require one of: {expected}."
+        )
+
+    if provider not in PROVIDER_BASE_URLS and not base_url:
+        raise ValueError(f"Unknown provider '{provider}'. Pass --base-url for OpenAI-compatible providers.")
+
+    env_var = PROVIDER_API_KEY_ENV.get(provider, "")
+    if not api_key and env_var and not os.environ.get(env_var):
+        raise ValueError(f"API key not found for provider '{provider}'. Set {env_var} or pass --api-key.")
+    if not api_key and not env_var:
+        raise ValueError(f"API key not found for provider '{provider}'. Pass --api-key or set REPOPROVER_API_KEY.")
+
+    return AgentConfig(provider=provider, model=model, api_key=api_key, base_url=base_url)
 
 
 def setup_logging(log_dir: Path | None = None, verbose: bool = False) -> None:
@@ -164,6 +201,11 @@ def cmd_run(args: argparse.Namespace) -> int:
     import threading
 
     base_project = Path(args.path).resolve()
+    try:
+        args.agent_config = build_agent_config(args)
+    except ValueError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
 
     # Distributed mode detection
     rank = get_global_rank()
@@ -321,6 +363,9 @@ def _run_coordinator(base_project: Path, args: argparse.Namespace) -> int:
         worktrees_root=worktrees_root,
         state_file=state_file,
         runs_dir=runs_dir,
+        lean_pool_size=pool_size,
+        enable_background_agents=not args.no_background_agents,
+        agent_config=args.agent_config,
         prs_to_issues=args.prs_to_issues,
         agents_per_target=args.agents_per_target,
     )
@@ -460,6 +505,20 @@ def main() -> int:
         dest="agents_per_target",
         help="Max agents per theorem/issue. Effective = min(this, 32 // n_targets) (default: 1)",
     )
+    p_run.add_argument(
+        "--no-background-agents",
+        action="store_true",
+        dest="no_background_agents",
+        help="Disable periodic triage, scan, and progress agents; useful for toy smoke tests.",
+    )
+    p_run.add_argument(
+        "--provider",
+        choices=sorted(PROVIDER_BASE_URLS),
+        help="LLM provider. Defaults to REPOPROVER_PROVIDER or the first configured provider API key.",
+    )
+    p_run.add_argument("--model", help="LLM model. Defaults to the provider default or REPOPROVER_MODEL.")
+    p_run.add_argument("--base-url", dest="base_url", help="OpenAI-compatible API base URL override.")
+    p_run.add_argument("--api-key", dest="api_key", help="API key override. Prefer environment variables.")
 
     # export
     p_export = subparsers.add_parser("export", help="Export state as JSON")

@@ -85,6 +85,9 @@ class BookCoordinatorConfig:
     # Lean REPL pool size for parallel proof checking
     lean_pool_size: int = 24
 
+    # Optional background agents for issue triage, scanning, and progress updates.
+    enable_background_agents: bool = True
+
     # Recording
     recording_enabled: bool = True
     runs_dir: Path | None = None  # Default: base_project/runs
@@ -1929,6 +1932,8 @@ class BookCoordinator:
         """
         if self._draining:
             return False
+        if not self.config.enable_background_agents:
+            return False
 
         # Check if we already have a triage agent running
         if self._triage_tasks:
@@ -1971,6 +1976,8 @@ class BookCoordinator:
         NOTE: Using ContributorAgent scan mode for unified scanning.
         """
         if self._draining:
+            return False
+        if not self.config.enable_background_agents:
             return False
 
         # Check timing - only run periodically
@@ -2021,6 +2028,8 @@ class BookCoordinator:
         NOTE: Using ContributorAgent progress mode.
         """
         if self._draining:
+            return False
+        if not self.config.enable_background_agents:
             return False
 
         # Check timing - only run periodically
@@ -2515,6 +2524,8 @@ class BookCoordinator:
                 contrib_task = ContributorTask.triage()
             elif pr.agent_type == "scan":
                 contrib_task = ContributorTask.scan()
+            elif pr.agent_type == "progress":
+                contrib_task = ContributorTask.progress()
             elif pr.agent_type == "maintain":
                 contrib_task = ContributorTask.maintain(issue_id=pr.issue_id)
             elif pr.agent_type == "fix":
