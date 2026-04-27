@@ -136,6 +136,47 @@ def _estimate_tool_results_tokens(messages: list[dict[str, Any]]) -> int:
     return total
 
 
+def _sanitize_message_for_api(msg: dict[str, Any]) -> dict[str, Any]:
+    """Return a shallow copy suitable for chat-completions APIs."""
+    sanitized_msg = dict(msg)
+    if sanitized_msg.get("content") is None:
+        sanitized_msg["content"] = ""
+    return sanitized_msg
+
+
+def _tool_call_to_history_dict(tool_call: Any) -> dict[str, Any]:
+    """Serialize a model tool call for replay without dropping provider metadata.
+
+    Gemini 3 returns encrypted thought signatures inside OpenAI-compatible
+    tool call extension fields. Reconstructing a minimal id/name/arguments
+    dict drops those fields and makes the next tool-result request invalid.
+    """
+    if hasattr(tool_call, "model_dump"):
+        data = tool_call.model_dump(exclude_none=True)
+    elif isinstance(tool_call, dict):
+        data = dict(tool_call)
+    else:
+        data = {
+            "id": getattr(tool_call, "id", ""),
+            "type": getattr(tool_call, "type", "function"),
+            "function": {
+                "name": getattr(tool_call.function, "name", ""),
+                "arguments": getattr(tool_call.function, "arguments", ""),
+            },
+        }
+
+    data.setdefault("type", "function")
+    function = data.get("function")
+    if not isinstance(function, dict):
+        function = {
+            "name": getattr(function, "name", ""),
+            "arguments": getattr(function, "arguments", ""),
+        }
+    function.setdefault("arguments", "")
+    data["function"] = function
+    return data
+
+
 def _perform_compaction(
     client: "OpenAI",
     model: str,
@@ -170,12 +211,7 @@ def _perform_compaction(
 
     # Add compaction prompt to the EXISTING messages (same dialog, not a separate one)
     # Sanitize messages to ensure no None content values (AWS Bedrock rejects null)
-    sanitized_messages = []
-    for msg in messages:
-        sanitized_msg = dict(msg)
-        if sanitized_msg.get("content") is None:
-            sanitized_msg["content"] = ""
-        sanitized_messages.append(sanitized_msg)
+    sanitized_messages = [_sanitize_message_for_api(msg) for msg in messages]
     messages_with_compaction = sanitized_messages + [{"role": "user", "content": compaction_prompt}]
     full_messages = [{"role": "system", "content": system_prompt or ""}] + messages_with_compaction
 
@@ -496,12 +532,7 @@ def run_tool_loop(
 
         # Call LLM with retry
         # Ensure no None values in messages (some APIs like AWS Bedrock reject null content)
-        sanitized_messages = []
-        for msg in messages:
-            sanitized_msg = dict(msg)
-            if sanitized_msg.get("content") is None:
-                sanitized_msg["content"] = ""
-            sanitized_messages.append(sanitized_msg)
+        sanitized_messages = [_sanitize_message_for_api(msg) for msg in messages]
         full_messages = [{"role": "system", "content": system_prompt or ""}] + sanitized_messages
 
         response = _call_with_retry(
@@ -536,14 +567,7 @@ def run_tool_loop(
 
         tool_calls_in_response = []
         if message.tool_calls:
-            assistant_message["tool_calls"] = [
-                {
-                    "id": tc.id,
-                    "type": "function",
-                    "function": {"name": tc.function.name, "arguments": tc.function.arguments},
-                }
-                for tc in message.tool_calls
-            ]
+            assistant_message["tool_calls"] = [_tool_call_to_history_dict(tc) for tc in message.tool_calls]
             tool_calls_in_response = [(tc.id, tc.function.name, tc.function.arguments) for tc in message.tool_calls]
 
         messages.append(assistant_message)

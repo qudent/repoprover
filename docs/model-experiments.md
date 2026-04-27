@@ -22,6 +22,12 @@ gemini-3-flash-preview
 
 The plain `gemini-3-flash` string returned 404. Google’s model docs list Gemini 3 Flash as a preview model and link tool/thinking behavior, including thought signatures.
 
+On April 27, 2026, the shared tool loop was updated to preserve provider-specific fields on assistant tool calls instead of rebuilding only `id`, `type`, and `function`. This keeps Google's OpenAI-compatible `extra_content.google.thought_signature` metadata in the replayed assistant message. A live `gemini-3-flash-preview` smoke with one function call and one continuation passed after the change:
+
+```text
+stop_reason=stop, iterations=2, tool_calls=["echo_marker"], final_text="FINAL: gemini3-smoke"
+```
+
 For the current OpenRouter open-weight attempt, `z-ai/glm-5.1` was selected first. Live OpenRouter model metadata described it as a coding model with long-horizon-task gains; it also passed a direct OpenRouter chat smoke. Other reasonable open-weight candidates visible in the same model metadata were `deepseek/deepseek-v4-pro`, `qwen/qwen3-coder`, and `qwen/qwen3-coder-plus`.
 
 ## Commands
@@ -65,6 +71,8 @@ Function call is missing a thought_signature in functionCall parts.
 
 The coordinator then relaunched sketchers into the same provider error until the process was killed. Treat this as a provider/transcript compatibility issue, not a Lean or prompt-quality result.
 
+This specific transcript issue is fixed in the shared tool-loop serializer, but the full toy sketch/review/merge path has not yet been rerun with Gemini 3 Flash after the fix.
+
 GLM 5.1 completed the sketch loop. It first wrote a Lean file with an invalid `Even (2 * n)` witness, observed the `lake build` failure, repaired with `lean_check` and Mathlib search, committed the sketch branch, passed review, and merged. The final toy project still builds:
 
 ```bash
@@ -72,6 +80,8 @@ cd /tmp/repoprover-toy-gemini3-flash && lake build
 ```
 
 The run was stopped after the sketch merge because the coordinator launched four follow-up maintain contributors for toy target issues. That was enough to validate model/provider/tool/build/review/merge behavior without letting the toy run continue spending tokens.
+
+The successful toy sketch plus both reviewers used 181,115 input tokens and 3,585 output tokens across completed agents. At Gemini 3 Flash Preview standard paid pricing ($0.50/M text input and $3.00/M text output, including reasoning tokens), that same completed first-merge formalization would be about $0.10 before any free-tier credit, taxes, or follow-up maintain agents.
 
 ## Learnings File
 
