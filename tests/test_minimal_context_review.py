@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from scripts.review_minimal_context_records import (
+    build_evidence_bundle,
     fetch_repo_file,
     extract_declaration_hits,
     extract_json_object,
@@ -30,6 +31,55 @@ def test_fetch_repo_file_prefers_local_source_root(tmp_path) -> None:
     assert fetch_repo_file("Demo.lean", "https://example.invalid", None, source_root) == (
         "theorem local : True := by\n  trivial\n"
     )
+
+
+def test_build_evidence_bundle_includes_predecessor_snippets(tmp_path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    (source_root / "Demo.lean").write_text(
+        "\n".join(
+            [
+                "def helper : Nat := 1",
+                "",
+                "def target : Nat := helper",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    (source_root / "Demo.tex").write_text("Definition text\n", encoding="utf-8")
+    record = {
+        "id": "demo:target",
+        "output": {
+            "lean_path": "Demo.lean",
+            "line_range": [3, 3],
+            "declaration_names": ["Demo.target"],
+        },
+        "minimal_context": {
+            "source_spans": [{"path": "Demo.tex", "line_range": [1, 1], "labels": ["demo"]}],
+            "lean_predecessors": [
+                {
+                    "path": "Demo.lean",
+                    "declaration": "Demo.helper",
+                    "line_range": [1, 1],
+                    "method": "lexical_reference",
+                    "reason": "Used in target.",
+                }
+            ],
+        },
+    }
+
+    evidence = build_evidence_bundle(record, "https://example.invalid", None, source_root, 0, 0)
+
+    assert evidence["lean_predecessors"] == [
+        {
+            "path": "Demo.lean",
+            "declaration": "Demo.helper",
+            "line_range": [1, 1],
+            "method": "lexical_reference",
+            "reason": "Used in target.",
+            "snippet": "1: def helper : Nat := 1",
+        }
+    ]
 
 
 def test_extract_declaration_hits_clips_to_declared_output_range() -> None:

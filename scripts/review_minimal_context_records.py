@@ -137,6 +137,24 @@ def build_evidence_bundle(
             }
         )
 
+    lean_predecessor_snippets = []
+    for predecessor in minimal_context.get("lean_predecessors", []):
+        line_range = predecessor.get("line_range")
+        if not line_range:
+            continue
+        pred_text = fetch_repo_file(predecessor["path"], source_base_url, cache_dir, source_root)
+        start, end = line_range
+        lean_predecessor_snippets.append(
+            {
+                "path": predecessor["path"],
+                "declaration": predecessor.get("declaration"),
+                "line_range": [start, end],
+                "method": predecessor.get("method"),
+                "reason": predecessor.get("reason"),
+                "snippet": numbered_snippet(pred_text, start, end, context=lean_context),
+            }
+        )
+
     return {
         "record": record,
         "lean_output": {
@@ -150,6 +168,7 @@ def build_evidence_bundle(
             ),
         },
         "source_spans": source_snippets,
+        "lean_predecessors": lean_predecessor_snippets,
     }
 
 
@@ -211,6 +230,8 @@ def review_prompt(evidence: dict[str, Any]) -> list[dict[str, str]]:
         "LaTeX and Lean context needed to reproduce the provided Lean output. "
         "Only declarations inside record.output.line_range are the target output; do not treat "
         "neighboring context lines as declarations that the record must justify. "
+        "The dataset stores Lean context as file/line mappings; if lean_predecessors snippets are present, "
+        "evaluate whether those mapped snippets are sufficient rather than requiring code to be embedded elsewhere. "
         "Prefer concrete missing-context and oversized-context findings over praise. "
         "Return exactly one JSON object and no markdown."
     )
