@@ -297,14 +297,14 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
 
 
-def write_summary(path: Path, rows: list[dict[str, Any]], records_path: Path) -> None:
+def write_summary(path: Path, rows: list[dict[str, Any]], records_path: Path, title: str) -> None:
     total_prompt = sum(row["usage"].get("prompt_tokens") or 0 for row in rows)
     total_completion = sum(row["usage"].get("completion_tokens") or 0 for row in rows)
     costs = [row["usage"].get("cost_usd") for row in rows]
     total_cost = sum(cost for cost in costs if isinstance(cost, int | float))
 
     lines = [
-        "# Minimal-Context Pilot Review",
+        f"# {title}",
         "",
         f"Records reviewed: {len(rows)} from `{records_path}`.",
         f"Reviewer model: `{rows[0]['model']}`." if rows else "Reviewer model: n/a.",
@@ -362,6 +362,7 @@ def main() -> int:
     parser.add_argument("--model", default=DEFAULT_MODEL, help="OpenRouter reviewer model.")
     parser.add_argument("--output", type=Path, default=Path("docs/minimal-context-review.jsonl"))
     parser.add_argument("--summary", type=Path, default=Path("docs/minimal-context-review-report.md"))
+    parser.add_argument("--summary-title", default="Minimal-Context Review")
     parser.add_argument("--source-base-url", default=DEFAULT_SOURCE_BASE)
     parser.add_argument(
         "--source-root",
@@ -452,7 +453,7 @@ def main() -> int:
             }
         )
         write_jsonl(args.output, rows)
-        write_summary(args.summary, rows, args.records)
+        write_summary(args.summary, rows, args.records, args.summary_title)
         usage = result["usage"]
         cost = usage.get("cost_usd")
         cost_text = f", ${cost:.6f}" if isinstance(cost, int | float) else ""
