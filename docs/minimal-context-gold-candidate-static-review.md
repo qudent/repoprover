@@ -28,7 +28,14 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
     "structure": 11,
     "theorem": 652
   },
-  "elapsed_seconds": 0.938,
+  "elapsed_seconds": 0.781,
+  "issue_categories": {
+    "incomplete_lean_output": 4,
+    "likely_oversized_predecessor": 2069,
+    "parsed_line_range_mismatch": 2,
+    "source_span_ref_not_label": 170,
+    "unrepresented_doc_comment_label": 39
+  },
   "model_cost_usd": 0.0,
   "records_reviewed": 863,
   "reviewer": "gold-candidate-static-adversarial-review-v1",

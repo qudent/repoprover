@@ -284,26 +284,58 @@ def review_record(
     )
 
 
-def write_summary(path: Path, rows: list[dict[str, Any]], records_path: Path, elapsed_seconds: float) -> None:
+def issue_category(issue: str) -> str:
+    if "does not contain `\\label" in issue:
+        return "source_span_ref_not_label"
+    if "contains `sorry` or `admit`" in issue:
+        return "incomplete_lean_output"
+    if "not represented by source_spans" in issue:
+        return "unrepresented_doc_comment_label"
+    if "not strictly before the target" in issue:
+        return "future_or_circular_predecessor"
+    if "not in imports/import_closure" in issue:
+        return "unreachable_cross_file_predecessor"
+    if "line_range" in issue and "does not match parsed" in issue:
+        return "parsed_line_range_mismatch"
+    if "not named in the target output" in issue:
+        return "likely_oversized_predecessor"
+    if "was not parsed" in issue:
+        return "unparsed_declaration"
+    return "other"
+
+
+def write_summary(
+    *,
+    path: Path,
+    output_path: Path,
+    rows: list[dict[str, Any]],
+    records_path: Path,
+    elapsed_seconds: float,
+) -> None:
     verdict_counts = Counter(row["review"]["verdict"] for row in rows)
     issue_counts: Counter[str] = Counter()
     source_issue_counts: Counter[str] = Counter()
     lean_issue_counts: Counter[str] = Counter()
+    category_counts: Counter[str] = Counter()
     kind_counts = Counter(row["evidence_summary"]["chunk_kind"] for row in rows)
     for row in rows:
         review = row["review"]
         for issue in review.get("label_or_line_issues", []):
             issue_counts[issue] += 1
+            category_counts[issue_category(issue)] += 1
         for issue in review.get("missing_context", []):
             source_issue_counts[issue] += 1
+            category_counts[issue_category(issue)] += 1
         for issue in review.get("oversized_context", []):
             lean_issue_counts[issue] += 1
+            category_counts[issue_category(issue)] += 1
 
     payload = {
         "records_reviewed": len(rows),
         "reviewer": REVIEWER_VERSION,
         "verdicts": dict(sorted(verdict_counts.items())),
         "chunk_kinds": dict(sorted(kind_counts.items())),
+        "issue_categories": dict(sorted(category_counts.items())),
         "top_label_or_line_issues": issue_counts.most_common(20),
         "top_missing_context_issues": source_issue_counts.most_common(20),
         "top_oversized_context_issues": lean_issue_counts.most_common(20),
@@ -327,7 +359,7 @@ def write_summary(path: Path, rows: list[dict[str, Any]], records_path: Path, el
         "## Artifacts",
         "",
         f"- Input: `{records_path.as_posix()}`",
-        f"- Review JSONL: `{path.with_suffix('.jsonl').as_posix()}`",
+        f"- Review JSONL: `{output_path.as_posix()}`",
         "- Model/API cost: `$0.00` (deterministic local checks only)",
         "",
         "## Summary",
@@ -402,7 +434,13 @@ def main() -> None:
 
     write_jsonl(args.output, rows)
     elapsed = time.monotonic() - started
-    write_summary(args.summary, rows, args.records, elapsed)
+    write_summary(
+        path=args.summary,
+        output_path=args.output,
+        rows=rows,
+        records_path=args.records,
+        elapsed_seconds=elapsed,
+    )
     print(
         json.dumps(
             {
