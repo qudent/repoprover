@@ -37,7 +37,19 @@ def test_select_records_prefers_reviewed_short_theorem() -> None:
 def test_materialize_smoke_project_writes_single_sorry_project(tmp_path: Path) -> None:
     source_root = tmp_path / "source"
     source_root.mkdir()
-    (source_root / "lakefile.lean").write_text("import Lake\n", encoding="utf-8")
+    (source_root / "lakefile.lean").write_text(
+        "\n".join(
+            [
+                "import Lake",
+                "",
+                "require checkdecls from git",
+                '  "https://github.com/PatrickMassot/checkdecls.git"',
+                "",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     (source_root / "lean-toolchain").write_text("leanprover/lean4:v4.28.0\n", encoding="utf-8")
 
     lean_dir = source_root / "Demo"
@@ -97,6 +109,8 @@ def test_materialize_smoke_project_writes_single_sorry_project(tmp_path: Path) -
     assert "exact True.intro" not in lean_text
 
     assert (output_root / "Demo.lean").read_text(encoding="utf-8") == "import Demo.Example\n"
+    assert "checkdecls" not in (output_root / "lakefile.lean").read_text(encoding="utf-8")
+    assert ".lake/" in (output_root / ".gitignore").read_text(encoding="utf-8")
     assert "line two\nline three" in (output_root / "Demo" / "tex" / "Example.tex").read_text(encoding="utf-8")
 
     state_text = (output_root / ".repoprover" / "state.json").read_text(encoding="utf-8")

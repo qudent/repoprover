@@ -215,6 +215,30 @@ def copy_lake_cache(cache_from: Path, output_root: Path) -> None:
             target.symlink_to(source_lake / name, target_is_directory=True)
 
 
+def copy_project_config(project_root: Path, output_root: Path) -> None:
+    for filename in ("lean-toolchain", "lake-manifest.json"):
+        source = project_root / filename
+        if source.exists():
+            shutil.copy2(source, output_root / filename)
+
+    lakefile = project_root / "lakefile.lean"
+    if not lakefile.exists():
+        return
+    lines = lakefile.read_text(encoding="utf-8").splitlines()
+    filtered: list[str] = []
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        if line.strip() == "require checkdecls from git":
+            index += 1
+            while index < len(lines) and (not lines[index].strip() or lines[index].startswith((" ", "\t"))):
+                index += 1
+            continue
+        filtered.append(line)
+        index += 1
+    (output_root / "lakefile.lean").write_text("\n".join(filtered).rstrip() + "\n", encoding="utf-8")
+
+
 def write_repoprover_state(output_root: Path, record: SelectedRecord, source_path: str) -> None:
     state = {
         "book_id": output_root.name,
@@ -261,10 +285,7 @@ def materialize_smoke_project(
         shutil.rmtree(output_root)
     output_root.mkdir(parents=True)
 
-    for filename in ("lakefile.lean", "lean-toolchain", "lake-manifest.json"):
-        source = project_root / filename
-        if source.exists():
-            shutil.copy2(source, output_root / filename)
+    copy_project_config(project_root, output_root)
 
     source_path = write_source_snippets(project_root, output_root, record)
 
@@ -304,7 +325,7 @@ def materialize_smoke_project(
     (output_root / "CONTENTS.md").write_text("\n".join(contents), encoding="utf-8")
 
     write_repoprover_state(output_root, record, source_path)
-    (output_root / ".gitignore").write_text(".repoprover/\nruns/\n.lake/build/\n", encoding="utf-8")
+    (output_root / ".gitignore").write_text(".repoprover/\nruns/\n.lake/\n", encoding="utf-8")
     if lake_cache_from:
         copy_lake_cache(lake_cache_from, output_root)
 
