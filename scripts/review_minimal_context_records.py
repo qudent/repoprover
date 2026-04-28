@@ -158,11 +158,19 @@ def extract_json_object(text: str) -> dict[str, Any]:
         stripped = re.sub(r"\s*```$", "", stripped)
     try:
         return json.loads(stripped)
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as original_exc:
         match = re.search(r"\{.*\}", stripped, flags=re.DOTALL)
         if not match:
             raise
-        return json.loads(match.group(0))
+        candidate = match.group(0)
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError:
+            repaired = re.sub(r'\\(?!["\\/bfnrtu])', r"\\\\", candidate)
+            try:
+                return json.loads(repaired)
+            except json.JSONDecodeError:
+                raise original_exc
 
 
 def openrouter_prices(model_ids: list[str]) -> dict[str, tuple[float, float]]:
