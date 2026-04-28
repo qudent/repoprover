@@ -2,68 +2,67 @@
 
 Records reviewed: 3 from `docs/minimal-context-pilot-records.jsonl`.
 Reviewer model: `qwen/qwen3-coder`.
-Run timestamp: `2026-04-28T11:08:43.121726+00:00`.
-Token usage: 11,321 prompt / 1,298 completion.
-Estimated OpenRouter cost: `$0.004827`.
+Run timestamp: `2026-04-28T11:18:47.088739+00:00`.
+Token usage: 11,793 prompt / 1,350 completion.
+Estimated OpenRouter cost: `$0.005024`.
 
 ## Findings
 
 ### ac-notations-and-elementary-facts-examples:basic-cardinality-principles
 
-- Verdict: `revise` (3,230 prompt / 360 completion, $0.001359).
-- Source span: Source span covers basic principles but lacks detail for bijection strengthening.
-- Lean context: Lean context is minimal but sufficient for most theorems; missing explicit import paths.
+- Verdict: `revise` (3,326 prompt / 430 completion, $0.001506).
+- Source span: Source lines cover the named principles but lack precise alignment with the Lean bijection principle's strengthened formulation.
+- Lean context: Imports and Mathlib context are sufficient and minimal for the Lean output.
 - Missing context:
-  - Missing explicit import paths for Mathlib theorems (e.g., `import Mathlib.Data.Finset.Card`)
-  - Source does not explicitly mention the strengthened finite-set bijection API used in `bijection_principle` Lean statement
+  - The source span does not explicitly state the membership condition (hst) required in the Lean bijection principle.
+  - The source does not mention the explicit function and bijective hypothesis formulation used in the Lean version.
 - Recommended edits:
-  - Add explicit Mathlib import paths to `imports` or `mathlib_context`
-  - Expand source span to include more detailed discussion of bijection principle if available, or note the discrepancy in review notes
+  - Add a note in the source span or review_notes indicating that the Lean bijection principle includes explicit function and membership hypotheses not present in the textbook wording.
+  - Consider adding labels to the source span for better traceability to the Lean declarations.
 - Review notes:
   - Generated from a cheap qwen/qwen3-coder extraction pass and then line-checked against raw GitHub excerpts.
-  - Needs review: bijection_principle may need more context than the source paragraph because the Lean statement strengthens the textbook wording into a finite-set bijection API.
-  - The source span does not fully justify the formalization of `bijection_principle`, which requires explicit handling of set membership and bijective function properties.
-- Trust updates: `{"human_review": 0.2, "lean_dependency_graph": 0.35, "model_extraction": 0.35, "source_span": 0.35}`
+  - Qwen reviewer 2026-04-28 verdict revise: source lines cover the named principles, but the Lean bijection statement strengthens the textbook wording into a finite-set API with explicit function and membership hypotheses.
+  - Lean-checked on 2026-04-28: the output range builds with Mathlib.Data.Finset.Powerset and Mathlib.Data.Finset.Prod instead of all Mathlib.
+  - No human review yet; keep as a failure-sensitive benchmark example rather than gold.
+  - The source span lacks explicit mention of the function and membership conditions present in the Lean bijection principle.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.55, "model_extraction": 0.35, "source_span": 0.3}`
 
 ### ac-notations-and-elementary-facts-examples:def.binom.binom
 
-- Verdict: `revise` (4,626 prompt / 504 completion, $0.001925).
-- Source span: Source spans cover the definition and a related factorial formula but lack explicit mention of key Mathlib API used in proofs.
-- Lean context: Lean context imports Mathlib broadly and includes relevant Mathlib facts, but some dependencies like `npow_one` are missing.
-- Missing context:
-  - Missing import or explicit dependency on `npow_one` (used in `binom_one_right` proof).
-  - Missing explicit mention in source spans of Mathlib's `Ring.choose_one_right'` which is directly used in the Lean output.
-- Oversized context:
-  - The import `Mathlib` is overly broad; should specify precise modules like `Mathlib.Algebra.CharZero.Defs`, `Mathlib.Data.Nat.Choose.Basic`, etc.
-  - Some Mathlib facts listed (e.g., `Ring.choose_natCast`) may not be strictly necessary if their proofs are by exact reference and not used in intermediate reasoning.
+- Verdict: `provisionally_accept` (4,794 prompt / 303 completion, $0.001600).
+- Source span: TeX spans cover the definition and a related factorial formula, matching the Lean content.
+- Lean context: Mathlib context includes all direct dependencies used in the Lean proofs.
 - Recommended edits:
-  - Add `npow_one` to `mathlib_context` or ensure it's available via explicit imports.
-  - Explicitly mention `Ring.choose_one_right'` in the source context or LaTeX labels to justify its use.
-  - Replace `imports: ["Mathlib"]` with specific Mathlib imports such as `Mathlib.Algebra.CharZero.Defs`, `Mathlib.Data.Nat.Factorial.Basic`, and `Mathlib.Algebra.Binomial.Core`.
+  - Increase human_review trust score to reflect Lean-checked status and resolved neighbor-line leaks.
 - Review notes:
-  - The record uses Mathlib lemmas like `Ring.choose_one_right'` and `npow_one` that are not justified by the current source spans or explicitly listed in the Lean context.
-  - Importing all of Mathlib is not minimal; the context should be narrowed to only necessary modules.
-  - Some listed Mathlib facts may be over-inclusive if they are used only via exact reference without local reasoning.
-- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.3, "source_span": 0.35}`
+  - Lean output builds successfully with Mathlib.RingTheory.Binomial, confirming import minimality.
+  - All proof dependencies like Nat.cast_ne_zero, Nat.factorial_ne_zero, nsmul_eq_mul, and npow_one are present in mathlib_context.
+  - TeX spans correctly align with the definition label def.binom.binom and related equation eq.binom.fac-form.
+  - No oversized context detected; all Lean imports and Mathlib facts are directly used in the output range.
+  - Previously noted trust issues about missing dependencies and neighbor lines have been resolved.
+- Trust updates: `{"human_review": 0.6, "lean_dependency_graph": 0.7, "model_extraction": 0.5, "source_span": 0.5}`
 
 ### ac-notations-and-elementary-facts-examples:prop.binom.rec
 
-- Verdict: `revise` (3,465 prompt / 434 completion, $0.001544).
-- Source span: insufficiently specific for Lean variants
-- Lean context: missing local notation setup and some dependencies
+- Verdict: `revise` (3,673 prompt / 617 completion, $0.001919).
+- Source span: The source span includes the proposition and equation label but is slightly oversized with introductory citation.
+- Lean context: Most context is appropriate but some Mathlib facts may be oversized; predecessor justification is incomplete.
 - Missing context:
-  - AlgebraicCombinatorics.FPS.binom_def_formula (establishes Ring.choose notation used in output)
-  - NatPowAssoc class (used in ring variants but not declared in context)
-  - Ring.choose_succ_succ (used directly in pascal_identity_succ and indirectly in others)
-  - Nat.choose_eq_choose_pred_add (used directly in pascal_identity)
+  - The source does not explicitly state the constraints on m and n (e.g., m > 0 when working over naturals), which are crucial for the Lean formalization and appear only in comments.
+  - No explicit mention of the interpretation of binomial coefficients in the source (Nat.choose vs Ring.choose), which is critical for understanding the multiple variants in Lean.
+- Oversized context:
+  - Mathlib fact `Nat.choose_eq_choose_pred_add` is directly used in the first theorem but is not the most general form; however, it's needed for that specific variant.
+  - The import `Mathlib.RingTheory.Binomial` might be oversized if more specific imports like `Mathlib.Algebra.BinomialRing` would suffice (requires checking).
+  - The `NatPowAssoc` typeclass is included but its necessity is not clearly motivated in the source or comments.
 - Line or label issues:
-  - source span lines 134-141 are too general; Lean output distinguishes natural, ring, integer, and rational variants not present in single source equation
+  - The line range [295, 346] correctly captures all five declarations, but the label `prop.binom.rec` refers to a single proposition in the source which is split into multiple Lean theorems with different assumptions.
 - Recommended edits:
-  - Add NatPowAssoc to lean_predecessors or imports
-  - Clarify that source label 'prop.binom.rec' corresponds to multiple Lean theorems with different type assumptions
-  - Include Ring.choose_succ_succ and Nat.choose_eq_choose_pred_add in mathlib_context since they are used directly
+  - Narrow the source span to exclude the citation line (132) if it's not essential to the mathematical content.
+  - Clarify in review_notes that the source proposition is generalized but Lean requires case distinctions by type, hence multiple theorems.
+  - Add explicit note that the source does not state domain constraints (like m > 0) which are necessary for the natural number version and affect the formalization.
 - Review notes:
-  - The source span gives a general mathematical statement, but the Lean output contains multiple formalizations with different type constraints (Nat, Ring, Int, Rat). The minimal context should reflect this split.
-  - The record mentions binom_def_formula as a predecessor but doesn't include NatPowAssoc which is required by several theorems.
-  - Direct uses of Mathlib lemmas like Ring.choose_succ_succ and Nat.choose_eq_choose_pred_add should be listed in mathlib_context.
-- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.25, "model_extraction": 0.35, "source_span": 0.2}`
+  - The source proposition is generalized over 'any numbers m and n' but lacks explicit domain constraints, which are essential for the natural number case in Lean.
+  - Lean formalization splits the general proposition into multiple typed variants due to differences in subtraction behavior and typeclass requirements (Nat vs Ring).
+  - The predecessor `binom_def_formula` is noted as establishing notation, but its role in defining the correspondence between textbook and Lean binomial coefficients should be more explicit.
+  - Some Mathlib facts like `NatPowAssoc` are included but their necessity or connection to the source is not clearly explained.
+- Trust updates: `{"human_review": 0.6, "lean_dependency_graph": 0.5, "model_extraction": 0.3, "source_span": 0.3}`

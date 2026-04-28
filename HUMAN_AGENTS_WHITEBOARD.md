@@ -1,7 +1,7 @@
 # RepoProver - Human/Agents Whiteboard
 
 ## Active Human Prompts
-- No unresolved prompt. The first minimal-context records have been attacked by a live Qwen reviewer and hardened, but still need human review before being treated as gold.
+- No unresolved prompt. The first minimal-context records have been attacked by a live Qwen reviewer, hardened, and checked with narrower imports, but still need human review before being treated as gold.
 
 ## Agent Notes
 - Local install is complete. Toy Lean setup/build succeeds at `/tmp/repoprover-toy-test`.
@@ -17,7 +17,8 @@
 - Live cheap extraction pass: `qwen/qwen3-coder` over first chapter excerpts produced three seed records at 11,582 input tokens / 404 output tokens / `$0.0038658`; records were line-checked and kept low-trust.
 - Added `scripts/review_minimal_context_records.py` to fetch published TeX/Lean snippets and run OpenRouter reviewer audits over the JSONL records.
 - DeepSeek reviewer attempt (`deepseek/deepseek-v4-pro`) reached OpenRouter and billed about `$0.016702`, but returned empty content after the 4,096 completion-token cap; keep the parse-error report as a provider failure example.
-- Qwen reviewer pass (`qwen/qwen3-coder`) reviewed all three records for about `$0.004827`. Records were hardened with added Mathlib/proof dependencies, a clipped evidence bug fix, and low-trust review notes.
+- Final Qwen reviewer pass (`qwen/qwen3-coder`) reviewed all three updated records for about `$0.005024`. Records were hardened with added Mathlib/proof dependencies, exact imports, a clipped evidence bug fix, and low-trust review notes.
+- Exact-import check reused `/tmp/repoprover-toy-gemini3-flash/.lake/packages/mathlib`: cardinality principles build with `Mathlib.Data.Finset.Powerset` + `Mathlib.Data.Finset.Prod`; the two binomial chunks build with `Mathlib.RingTheory.Binomial`.
 
 ## Open Questions
-- Should the next pass spend budget on exact Mathlib import minimization for these three records, or scale the same Qwen review process to more FPS chunks first?
+- Should the next pass wire these reviewed records into a bounded RepoProver retrieval/prompt smoke, or scale the same Qwen review process to more FPS chunks first?

@@ -1,7 +1,7 @@
 # RepoProver - Status
 
 ## Current State
-RepoProver is installed locally in `.venv`, and Lean/Lake are installed through `elan`. The toy Lean project validates with OpenRouter `z-ai/glm-5.1` through sketch, review, merge, and final `lake build`; minimal-context gold-standard work now has a reviewed first FPS pilot scaffold and a reusable OpenRouter reviewer script.
+RepoProver is installed locally in `.venv`, and Lean/Lake are installed through `elan`. The toy Lean project validates with OpenRouter `z-ai/glm-5.1` through sketch, review, merge, and final `lake build`; minimal-context gold-standard work now has a reviewed first FPS pilot scaffold, exact-import checks for the three seed records, and a reusable OpenRouter reviewer script.
 
 ## Active Goals
 - [x] Install local Python and Lean dependencies.
@@ -10,12 +10,13 @@ RepoProver is installed locally in `.venv`, and Lean/Lake are installed through 
 - [x] Document model experiments and relevant commit hashes.
 - [x] Turn the whiteboard minimal-context/budget request into an initial plan, estimator, and pilot records.
 - [x] Review and harden the first minimal-context pilot records.
-- [ ] Minimize exact Mathlib imports/dependencies for the reviewed pilot records.
+- [x] Minimize exact Mathlib imports/dependencies for the reviewed pilot records.
+- [ ] Integrate the reviewed records into a retrieval/prompt smoke for a bounded RepoProver run.
 
 ## Blockers
 - The Google `gemini-2.5-flash` toy RepoProver run reaches real LLM/tool/build execution, but the sketcher repeatedly chooses nonexistent Nat parity imports and can hit the agent iteration limit without emitting a completion marker.
 - No current blocker for basic Gemini 3 Flash tool-call continuation. Full toy sketch/review/merge validation with `gemini-3-flash-preview` still has not been rerun after the transcript fix.
-- The first minimal-context records remain low-trust: Qwen reviewed and hardened them, but no human has reviewed them and broad `Mathlib` imports are not minimized.
+- The first minimal-context records remain low-trust: Qwen reviewed and hardened them, exact imports were checked for isolated output ranges, but no human has reviewed them and full chapter integration has not been checked.
 - `deepseek/deepseek-v4-pro` is not a useful reviewer at the current 4,096 completion-token cap: live calls spent hidden reasoning tokens and returned empty message content.
 
 ## Recent Results
@@ -28,10 +29,11 @@ RepoProver is installed locally in `.venv`, and Lean/Lake are installed through 
 - Preserved provider-specific tool-call metadata in the shared tool loop, added a regression test for `extra_content.google.thought_signature`, and passed a live `gemini-3-flash-preview` one-tool smoke.
 - Added `--stop-after-first-merge` so bounded smoke tests can land one PR and exit before follow-up maintain/proof agents spend more tokens.
 - Added `scripts/estimate_openrouter_budget.py`, `docs/minimal-context-budget-plan.md`, and three low-trust pilot JSONL records for the first FPS chapter. A live `qwen/qwen3-coder` extraction pass used 11,582 input tokens and 404 output tokens for `$0.0038658`; the observed OpenRouter balance was about `$7.42`.
-- Added `scripts/review_minimal_context_records.py` plus focused tests. A live `qwen/qwen3-coder` review of all three records used 11,321 prompt tokens and 1,298 completion tokens for `$0.004827`; the records were updated with missing dependencies and reviewer notes.
+- Added `scripts/review_minimal_context_records.py` plus focused tests. The final live `qwen/qwen3-coder` review of all three updated records used 11,793 prompt tokens and 1,350 completion tokens for `$0.005024`; the records were updated with missing dependencies, exact imports, and reviewer notes.
 - A live `deepseek/deepseek-v4-pro` reviewer attempt used 13,819 prompt tokens and 12,288 completion tokens for `$0.016702`, but produced parse-error rows because the model returned empty content after hidden reasoning.
+- Reused the local Mathlib checkout under `/tmp/repoprover-toy-gemini3-flash` to `lake env lean` check isolated output ranges with narrower imports: `Mathlib.Data.Finset.Powerset` + `Mathlib.Data.Finset.Prod` for the cardinality principles, and `Mathlib.RingTheory.Binomial` for both binomial clusters.
 
 ## Next Steps
 - Rerun a clean bounded toy smoke with `--stop-after-first-merge` when disk space permits or after reusing/cleaning the existing `/tmp/repoprover-toy-gemini3-flash` tree carefully.
-- Replace broad `Mathlib` imports in the pilot records with exact module-level context, then rerun `scripts/review_minimal_context_records.py --model qwen/qwen3-coder`.
+- Use the reviewed minimal-context records as retrieval examples in a bounded `--stop-after-first-merge` smoke, then keep any missing-context failures as new benchmark examples.
 - If continuing planning, use `scripts/estimate_openrouter_budget.py` after each run to recompute costs from actual token logs and live OpenRouter pricing.

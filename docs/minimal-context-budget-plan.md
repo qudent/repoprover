@@ -182,7 +182,7 @@ Two live reviewer attempts were run on April 28, 2026:
 | Model | Result | Prompt/completion tokens | Estimated cost |
 |---|---|---:|---:|
 | `deepseek/deepseek-v4-pro` | Transport and billing worked, but the model returned empty message content after spending the 4,096 completion-token cap on hidden reasoning. Kept as a provider failure record. | 13,819 / 12,288 | `$0.016702` |
-| `qwen/qwen3-coder` | Produced parseable JSON reviews for all three records. | 11,321 / 1,298 | `$0.004827` |
+| `qwen/qwen3-coder` | Produced parseable JSON reviews for all three updated records; final verdicts were revise / provisionally_accept / revise. | 11,793 / 1,350 | `$0.005024` |
 
 The Qwen review marked all three records as still needing revision. Durable
 fixes already applied to `docs/minimal-context-pilot-records.jsonl`:
@@ -197,6 +197,12 @@ fixes already applied to `docs/minimal-context-pilot-records.jsonl`:
 - added explicit Pascal identity proof/typeclass context including
   `BinomialRing`, `NatPowAssoc`, `Nat.succ_pred_eq_of_pos`,
   `Nat.pred_eq_sub_one`, and `Nat.sub_add_cancel`.
+- replaced broad `Mathlib` imports in the three pilot records with imports that
+  were checked by `lake env lean` against the extracted output ranges:
+  `Mathlib.Data.Finset.Powerset` plus `Mathlib.Data.Finset.Prod` for the
+  cardinality principles, and `Mathlib.RingTheory.Binomial` for both binomial
+  clusters.
 
 The current records remain low-trust because no human has reviewed them and
-because broad `Mathlib` imports are not yet minimized to exact module imports.
+because the exact imported modules have only been checked for these isolated
+output ranges, not for full chapter integration.
