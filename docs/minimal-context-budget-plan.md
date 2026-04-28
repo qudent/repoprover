@@ -1,6 +1,6 @@
 # Minimal-Context Gold Standard and Budget Plan
 
-This report turns the April 28 whiteboard request into an executable plan for
+This report turns the April 28 planning request into an executable plan for
 using the existing Algebraic Combinatorics formalization as supervision for
 future RepoProver runs.
 

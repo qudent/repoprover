@@ -5,7 +5,7 @@ This guide records the bounded toy validation runs from April 27, 2026. The goal
 ## Commit Map
 
 - `57421d3` in this repo: baseline local setup, provider/model CLI support, OpenRouter support, and toy Lean build validation.
-- `956b452` in this repo: Gemini 3 Flash provider result recorded in `STATUS.md` and `HUMAN_AGENTS_WHITEBOARD.md`.
+- `956b452` in this repo: Gemini 3 Flash provider result recorded in the coordination notes that are now consolidated into `STATUS.md`.
 - `97c3bd9` in `/tmp/repoprover-toy-gemini3-flash`: GLM 5.1 sketch commit, `Sketch basics chapter: define double and prove three theorems`.
 - `ed17e510` in `/tmp/repoprover-toy-gemini3-flash`: merge commit for the accepted GLM 5.1 sketch PR.
 - `eef1daf` in `/tmp/repoprover-toy-gemini3-flash`: coordinator-generated follow-up target theorem issues after the sketch merge.
