@@ -106,11 +106,18 @@ def extract_labels(text: str) -> list[str]:
     labels: list[str] = []
     seen: set[str] = set()
     for label in [*LABEL_RE.findall(text), *LABEL_TOKEN_RE.findall(text)]:
-        cleaned = label.strip().rstrip(".,;:")
+        cleaned = clean_label_token(label)
         if cleaned and cleaned not in seen:
             labels.append(cleaned)
             seen.add(cleaned)
     return labels
+
+
+def clean_label_token(label: str) -> str:
+    cleaned = label.strip().rstrip(".,;:")
+    if cleaned.endswith(")") and "(" not in cleaned:
+        cleaned = cleaned[:-1]
+    return cleaned
 
 
 def is_top_level_label(label: str) -> bool:
@@ -136,14 +143,27 @@ def parse_tex_labels(project_root: Path) -> dict[str, TexLabel]:
             next_top = next((candidate_line for _, candidate_line in top_level if candidate_line > line), None)
             end = (next_top - 1) if next_top else len(text_lines)
             kind = label.split(".", 1)[0]
-            labels[label] = TexLabel(
+            tex_label = TexLabel(
                 label=label,
                 path=path,
                 line=line,
                 line_range=(line, max(line, end)),
                 kind=kind,
             )
+            existing = labels.get(label)
+            if existing is None or should_replace_tex_label(existing, tex_label):
+                labels[label] = tex_label
     return labels
+
+
+def should_replace_tex_label(existing: TexLabel, candidate: TexLabel) -> bool:
+    """Prefer chapter-local TeX over aggregate files when labels duplicate."""
+
+    existing_is_aggregate = existing.path.endswith("/all.tex")
+    candidate_is_aggregate = candidate.path.endswith("/all.tex")
+    if existing_is_aggregate != candidate_is_aggregate:
+        return existing_is_aggregate and not candidate_is_aggregate
+    return len(candidate.path) < len(existing.path)
 
 
 def declaration_display_start(lines: list[str], declaration_index: int) -> int:
