@@ -30,9 +30,10 @@ imports, Mathlib/API context, TeX-only inferability, trust scores, and reviewer
 metadata.
 
 The exact-label gold-candidate queue now contains 645 bounded records. The
-deterministic static adversarial review accepts 633 mechanically, marks 10 for
-source-label repair, and rejects 2 incomplete Lean outputs. This pass is local
-and costs `$0.00`; it is not a human semantic certification.
+deterministic static adversarial review accepts all 645 mechanically after
+normalizing Lean subpart references to their parent TeX labels and stripping
+Lean comments before scanning for `sorry`/`admit`. This pass is local and costs
+`$0.00`; it is not a human semantic certification.
 
 ## Cost And Time
 

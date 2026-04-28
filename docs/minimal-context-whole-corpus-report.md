@@ -103,6 +103,7 @@ The latest run selected 645 of 5,684 records. This is a higher-trust candidate
 surface for adversarial review or bounded RepoProver smokes, not a final
 human-certified gold set.
 
-The zero-cost static adversarial review currently finds 633 mechanically clean
-candidates, 10 records needing label/source repair, and 2 rejected incomplete
-Lean outputs before semantic review.
+The zero-cost static adversarial review currently finds all 645 candidates
+mechanically clean before semantic review. The reviewer treats Lean subpart
+references such as `thm.foo.a` as covered by a parent TeX `\label{thm.foo}`
+source span, and scans only comment-stripped Lean code for `sorry`/`admit`.
