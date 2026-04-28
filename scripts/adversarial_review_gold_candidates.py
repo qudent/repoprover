@@ -20,8 +20,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from scripts.filter_minimal_context_gold_candidates import read_jsonl, write_jsonl
-from scripts.generate_context_graph import LeanDecl, lean_module_from_path, parse_lean_declarations
+try:
+    from scripts.filter_minimal_context_gold_candidates import read_jsonl, write_jsonl
+    from scripts.generate_context_graph import LeanDecl, lean_module_from_path, parse_lean_declarations
+except ModuleNotFoundError:
+    from filter_minimal_context_gold_candidates import read_jsonl, write_jsonl
+    from generate_context_graph import LeanDecl, lean_module_from_path, parse_lean_declarations
 
 
 REVIEWER_VERSION = "gold-candidate-static-adversarial-review-v1"
