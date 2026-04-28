@@ -11,38 +11,39 @@ Deliverable: A minimal context mapping (mapping line regions/files to lines), an
 
 Avoid editing above the line except to preserve new human direction.
 -------
-Start time of work: <insert current time here when you start work>
-Remaining openrouter budget: <insert remaining budget> $
+Start time of work: 2026-04-28T15:52:46Z
+Remaining openrouter budget: 7.287381 $
 
 
 ## Current State
 RepoProver is locally installed with Python in `.venv` and Lean/Lake through
-`elan`. The toy project has completed a bounded sketch/review/merge path with
-OpenRouter `z-ai/glm-5.1`, and the current research thread is a minimal-context
-gold-standard pilot using the published Algebraic Combinatorics TeX/Lean corpus
-as supervision for later bounded RepoProver runs.
+`elan`. The Algebraic Combinatorics vendored snapshot has been cleaned of
+duplicate/generated blueprint chapter artifacts while retaining canonical
+TeX/Lean sources. The minimal-context pilot now has a canonical 14-record,
+reviewed JSONL seed set for `NotationsExamples.lean` lines 202-370, with
+explicit costs, trust metadata, and hard negatives.
 
 ## Active Goals
 - [x] Validate local RepoProver, Lean, and at least one live provider path.
 - [x] Build the first minimal-context pilot records and reviewer workflow.
 - [x] Add a generator for candidate records from real upstream TeX/Lean chunks.
-- [ ] Revise generated records into a cleaner low-trust benchmark seed set.
-- [ ] Scale generation/review to enough FPS chunks to expose recurring missing
+- [x] Revise generated records into a cleaner low-trust benchmark seed set.
+- [x] Scale generation/review to enough FPS chunks to expose recurring missing
   context patterns without curating away hard failures.
 - [ ] Feed selected records into a bounded RepoProver smoke so failures become
   concrete benchmark examples.
 
 ## TODO Plan
-- [ ] Apply the Qwen review findings to the four generated records, especially
+- [x] Apply the Qwen review findings to the four generated records, especially
   missing imports for `binom_neg_one`, explicit `k <= n` context for
   `binom_factorial_formula`, and separating TeX insufficiency from Lean/API
   insufficiency in the double-factorial records.
-- [ ] Keep rejected or ugly cases in the dataset with explicit trust and review
+- [x] Keep rejected or ugly cases in the dataset with explicit trust and review
   metadata; do not drop them just because they are bad examples.
-- [ ] Generate the next 10-20 FPS records from real upstream chunks, tracking
+- [x] Generate the next 10-20 FPS records from real upstream chunks, tracking
   elapsed time, token usage, estimated OpenRouter cost, and
   `tex_only_inferability`.
-- [ ] Review the larger batch with a cheap adversarial reviewer before spending
+- [x] Review the larger batch with a cheap adversarial reviewer before spending
   on RepoProver runs.
 - [ ] Select the lowest-risk direct Mathlib-wrapper records for the first
   retrieval/prompt smoke, while keeping double-factorial/divisibility records as
@@ -53,10 +54,10 @@ as supervision for later bounded RepoProver runs.
 - [ ] After each decision point, update this file and commit the coherent unit.
 
 ## Blockers
-- The generated records are not yet human-reviewed and remain low trust by
-  design; their trust fields must drive downstream selection.
-- The latest Qwen review rejected `prod_odd_eq_doubleFactorial` and requested
-  revisions for the other three generated records.
+- The canonical generated records are Qwen-reviewed but not human-reviewed; keep
+  their trust fields low and use reviewer verdicts for downstream selection.
+- Current reviewed verdicts are 1 provisionally accepted, 9 revise, and 4
+  reject. Rejected records are intentional hard negatives, not cleanup targets.
 - `deepseek/deepseek-v4-pro` is not useful as a reviewer under the tested
   4,096 completion-token cap because live calls spent hidden reasoning tokens
   and returned empty content.
@@ -64,20 +65,21 @@ as supervision for later bounded RepoProver runs.
   thought-signature transcript fix, though the direct one-tool continuation
   smoke passed.
 - Disk and existing `/tmp/repoprover-toy-gemini3-flash` state need care before
-  another full toy or benchmark smoke.
+  another full toy or benchmark smoke; accidental `.lake` cache under the
+  vendored snapshot was removed after cleanup.
 ## Recent Results
-- Successfully cloned `facebookresearch/algebraic-combinatorics` at upstream
-  commit `b6022318e986a0c20764569208ba8ebbe1c04dbf`, removed its nested `.git`
-  directory, and prepared the source tree for vendoring.
-- Added a root `AGENTS.md` contributor guide covering repo layout, `uv`/pytest
-  commands, toy Lean smoke testing, coding style, and PR expectations.
-- Added and live-tested `scripts/generate_minimal_context_records.py`; the
-  committed generation pass produced four records for lines 202-261 of
-  `NotationsExamples.lean`, costing about `$0.006556`.
-- Ran a live adversarial Qwen review over those generated records; verdicts
-  were revise, revise, reject, revise, costing about `$0.005059`.
-- Including calibration and regeneration attempts, the generator/reviewer work
-  in the last committed session spent about `$0.037040` on OpenRouter.
+- Removed duplicate/generated blueprint artifacts from
+  `algebraic-combinatorics/` and documented the cleanup in
+  `algebraic-combinatorics/CLEANUP_NOTE.md`; vendored tree is about 23 MB.
+- Folded the first Qwen review into `docs/minimal-context-generated-records.jsonl`
+  while preserving the rejected double-factorial case as a hard negative.
+- Generated 10 additional `NotationsExamples.lean` records for lines 263-370
+  with `qwen/qwen3-coder`, costing about `$0.014325`, then reviewed them with
+  Qwen for about `$0.010873`.
+- Canonical generated dataset now has 14 records, generation cost `$0.020880`,
+  review cost `$0.015932`, and total recorded token-estimated cost `$0.036813`.
+- Added `docs/minimal-context-generation-report.md` summarizing artifacts, cost,
+  elapsed time, review outcomes, and context-selection difficulty.
 - Earlier toy validation succeeded with OpenRouter `z-ai/glm-5.1`; toy commits
   were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
 
@@ -86,6 +88,12 @@ as supervision for later bounded RepoProver runs.
 - Main benchmark artifacts are `docs/minimal-context-pilot-records.jsonl`,
   `docs/minimal-context-generated-records.jsonl`, and
   `docs/minimal-context-generated-review-qwen3-coder-report.md`.
+- Batch 2 artifacts are
+  `docs/minimal-context-generated-records-batch2.jsonl`,
+  `docs/minimal-context-generated-review-batch2-qwen3-coder.jsonl`, and
+  `docs/minimal-context-generated-review-batch2-qwen3-coder-report.md`.
+- `docs/minimal-context-generation-report.md` is the current human-readable
+  deliverable report for the minimal-context mapping seed set.
 - `algebraic-combinatorics/` is a vendored snapshot of
   `facebookresearch/algebraic-combinatorics` from commit
   `b6022318e986a0c20764569208ba8ebbe1c04dbf`; its nested `.git` directory was
