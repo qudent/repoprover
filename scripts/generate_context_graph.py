@@ -117,6 +117,8 @@ def extract_labels(text: str) -> list[str]:
 
 def clean_label_token(label: str) -> str:
     cleaned = label.strip().rstrip(".,;:")
+    while cleaned.endswith("**"):
+        cleaned = cleaned[:-2].rstrip(".,;:")
     if cleaned.endswith(")") and "(" not in cleaned:
         cleaned = cleaned[:-1]
     return cleaned
@@ -653,7 +655,12 @@ def main() -> int:
     parser.add_argument("--project-root", type=Path, default=Path("algebraic-combinatorics"))
     parser.add_argument("--graph-output", type=Path, default=Path("docs/minimal-context-graph.json"))
     parser.add_argument("--records-output", type=Path, default=Path("docs/minimal-context-full-records.jsonl"))
-    parser.add_argument("--local-window", type=int, default=3)
+    parser.add_argument(
+        "--local-window",
+        type=int,
+        default=0,
+        help="Number of nearest preceding declarations to include before lexical references.",
+    )
     parser.add_argument("--max-references", type=int, default=20)
     args = parser.parse_args()
 

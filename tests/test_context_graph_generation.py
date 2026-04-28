@@ -3,6 +3,8 @@
 from pathlib import Path
 
 from scripts.generate_context_graph import (
+    find_predecessors,
+    module_path_index,
     TexLabel,
     clean_label_token,
     parse_lean_declarations,
@@ -15,6 +17,8 @@ def test_clean_label_token_preserves_balanced_parentheses() -> None:
     assert clean_label_token("def.det.sub)") == "def.det.sub"
     assert clean_label_token("thm.det.det(A+B)") == "thm.det.det(A+B)"
     assert clean_label_token("prop.binom.rec,") == "prop.binom.rec"
+    assert clean_label_token("thm.det.adj.inverse**") == "thm.det.adj.inverse"
+    assert clean_label_token("eq.thm.fps.xneq.props.b.*") == "eq.thm.fps.xneq.props.b.*"
 
 
 def test_prefers_chapter_tex_label_over_aggregate_all_tex() -> None:
@@ -92,3 +96,52 @@ def test_parse_lean_declarations_tracks_namespace_and_doc_labels(tmp_path: Path)
     assert declarations[0].comment_labels == ("def.toy.item",)
     assert declarations[1].comment_labels == ("thm.toy.item",)
     assert declarations[1].imports == ("Mathlib",)
+
+
+def test_find_predecessors_keeps_local_window_optional(tmp_path: Path) -> None:
+    project = tmp_path
+    lean_dir = project / "AlgebraicCombinatorics"
+    lean_dir.mkdir()
+    lean_file = lean_dir / "Toy.lean"
+    lean_file.write_text(
+        "\n".join(
+            [
+                "namespace Toy",
+                "theorem helper : True := by",
+                "  trivial",
+                "",
+                "theorem target : True := by",
+                "  trivial",
+                "end Toy",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    declarations = parse_lean_declarations(project, lean_file)
+    declarations_by_module = module_path_index(declarations)
+    direct_imports = {}
+    by_short_name = {row.name: [row] for row in declarations}
+
+    strict_predecessors, _ = find_predecessors(
+        declarations[1],
+        declarations_by_module,
+        direct_imports,
+        by_short_name,
+        project,
+        local_window=0,
+        max_references=0,
+    )
+    window_predecessors, _ = find_predecessors(
+        declarations[1],
+        declarations_by_module,
+        direct_imports,
+        by_short_name,
+        project,
+        local_window=1,
+        max_references=0,
+    )
+
+    assert strict_predecessors == []
+    assert [row["declaration"] for row in window_predecessors] == ["Toy.helper"]
+    assert window_predecessors[0]["method"] == "local_predecessor_window"
