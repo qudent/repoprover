@@ -274,6 +274,7 @@ def call_reviewer(
         "messages": review_prompt(evidence),
         "temperature": temperature,
         "max_tokens": max_tokens,
+        "response_format": {"type": "json_object"},
     }
     if extra_body:
         kwargs["extra_body"] = extra_body
