@@ -8,6 +8,7 @@ Run date: 2026-04-28.
 - Whole-corpus records: `docs/minimal-context-full-records.jsonl`
 - Whole-corpus format: `docs/minimal-context-format.md`
 - Whole-corpus report: `docs/minimal-context-whole-corpus-report.md`
+- Gold-candidate static review: `docs/minimal-context-gold-candidate-static-review.md`
 - Canonical dataset: `docs/minimal-context-generated-records.jsonl`
 - Batch 2 raw generation: `docs/minimal-context-generated-records-batch2.jsonl`
 - Batch 2 Qwen3.6 regeneration: `docs/minimal-context-generated-records-batch2-qwen3.6-35b-a3b.jsonl`
@@ -19,14 +20,19 @@ Run date: 2026-04-28.
 - Generator: `scripts/generate_minimal_context_records.py`
 - Reviewer: `scripts/review_minimal_context_records.py`
 
-The whole-corpus artifacts contain 5,684 declaration-level records and a 6,617
-node / 54,047 edge graph for the entire vendored book/formalization snapshot.
+The whole-corpus artifacts contain 5,684 declaration-level records and a 6,573
+node / 40,436 edge graph for the entire vendored book/formalization snapshot.
 They are deterministic, local-only, and cost-free to regenerate. The canonical
 reviewed JSONL currently contains 14 line-mapped records from
 `AlgebraicCombinatorics/FPS/NotationsExamples.lean` lines 202-370. Each record
 maps a Lean output region to TeX source spans, local predecessor declarations,
 imports, Mathlib/API context, TeX-only inferability, trust scores, and reviewer
 metadata.
+
+The exact-label gold-candidate queue now contains 645 bounded records. The
+deterministic static adversarial review accepts 633 mechanically, marks 10 for
+source-label repair, and rejects 2 incomplete Lean outputs. This pass is local
+and costs `$0.00`; it is not a human semantic certification.
 
 ## Cost And Time
 

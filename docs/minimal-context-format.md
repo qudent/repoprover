@@ -52,21 +52,13 @@ record:
     "source_spans": [
       {
         "path": "AlgebraicCombinatorics/tex/FPS/Notations.tex",
-        "line_range": [154, 161],
+        "line_range": [155, 185],
         "labels": ["thm.binom.sym"],
         "reason": "Lean doc comment references this TeX label.",
         "method": "lean_comment_label"
       }
     ],
-    "lean_predecessors": [
-      {
-        "path": "AlgebraicCombinatorics/FPS/NotationsExamples.lean",
-        "declaration": "AlgebraicCombinatorics.FPS.binom_zero_of_lt",
-        "line_range": [348, 353],
-        "reason": "Nearest preceding declaration in the same Lean file.",
-        "method": "local_predecessor_window"
-      }
-    ],
+    "lean_predecessors": [],
     "imports": ["Mathlib"],
     "import_closure": ["Mathlib"],
     "mathlib_context": [

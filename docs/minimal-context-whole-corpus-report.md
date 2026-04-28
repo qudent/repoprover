@@ -34,17 +34,17 @@ Latest generated summary:
 
 ```json
 {
-  "edge_count": 53999,
+  "edge_count": 40436,
   "lean_declaration_count": 5684,
   "node_count": 6573,
   "record_count": 5684,
   "source_alignment_methods": {
-    "lean_comment_label": 1030,
-    "manifest_position_fallback": 4432,
+    "lean_comment_label": 1062,
+    "manifest_position_fallback": 4400,
     "unmapped": 222
   },
   "source_label_count": 790,
-  "unresolved_or_low_trust_count": 4654
+  "unresolved_or_low_trust_count": 4622
 }
 ```
 
@@ -65,9 +65,10 @@ Complete means every named Lean declaration has:
 
 - an output file and inclusive line range;
 - direct imports and transitive import closure;
-- local predecessor context from nearby declarations;
 - lexical predecessor links to prior declarations when the names occur in the
   output chunk;
+- optional local predecessor context from nearby declarations when
+  `--local-window` is set above zero;
 - source context when the generator can infer it, with explicit trust and method
   metadata.
 
@@ -98,6 +99,10 @@ exact `lean_comment_label` alignments with valid file/line spans and bounded
 context size: at most 80 source lines, 50 output lines, and 10 Lean
 predecessors.
 
-The latest run selected 613 of 5,684 records. This is a higher-trust candidate
+The latest run selected 645 of 5,684 records. This is a higher-trust candidate
 surface for adversarial review or bounded RepoProver smokes, not a final
 human-certified gold set.
+
+The zero-cost static adversarial review currently finds 633 mechanically clean
+candidates, 10 records needing label/source repair, and 2 rejected incomplete
+Lean outputs before semantic review.
