@@ -27,7 +27,7 @@ def base_record() -> dict:
         "output": {
             "lean_path": "AlgebraicCombinatorics/Toy.lean",
             "declaration_names": ["Toy.target"],
-            "line_range": [3, 5],
+            "line_range": [2, 4],
             "chunk_kind": "theorem",
         },
         "minimal_context": {
