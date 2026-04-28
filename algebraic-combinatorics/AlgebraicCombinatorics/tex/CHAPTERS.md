@@ -86,9 +86,9 @@ To recreate them, obtain the relevant sections from the original textbook.
 | Limits.tex | Details: Limits of FPSs |
 | LaurentSeries.tex | Details on Laurent power series |
 
-## Other Files
+## Removed Aggregate Sources
 
-| File | Description |
-|------|-------------|
-| all.tex | Main file that includes all chapters |
-| detnotes.tex | Full determinant notes (Chapter 6 from original textbook) |
+`all.tex` and `detnotes.tex` are intentionally absent from this vendored
+snapshot. `all.tex` duplicated the chapter files, and `detnotes.tex` was a large
+external reference source cited by the chapters rather than canonical
+line-mapping input for this formalization.

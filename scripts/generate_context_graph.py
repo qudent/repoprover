@@ -28,6 +28,7 @@ from typing import Any
 
 
 GENERATOR_VERSION = "whole-corpus-context-graph-v1"
+AGGREGATE_TEX_FILENAMES = {"all.tex", "detnotes.tex"}
 DECL_KINDS = "theorem|lemma|def|abbrev|instance|class|structure|inductive"
 DECL_RE = re.compile(
     rf"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
@@ -128,6 +129,8 @@ def parse_tex_labels(project_root: Path) -> dict[str, TexLabel]:
     tex_root = project_root / "AlgebraicCombinatorics" / "tex"
     raw_by_path: dict[str, list[tuple[str, int]]] = {}
     for path in sorted(tex_root.rglob("*.tex")):
+        if path.name in AGGREGATE_TEX_FILENAMES:
+            continue
         rel = relpath(path, project_root)
         raw: list[tuple[str, int]] = []
         for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
@@ -159,8 +162,8 @@ def parse_tex_labels(project_root: Path) -> dict[str, TexLabel]:
 def should_replace_tex_label(existing: TexLabel, candidate: TexLabel) -> bool:
     """Prefer chapter-local TeX over aggregate files when labels duplicate."""
 
-    existing_is_aggregate = existing.path.endswith("/all.tex")
-    candidate_is_aggregate = candidate.path.endswith("/all.tex")
+    existing_is_aggregate = Path(existing.path).name in AGGREGATE_TEX_FILENAMES
+    candidate_is_aggregate = Path(candidate.path).name in AGGREGATE_TEX_FILENAMES
     if existing_is_aggregate != candidate_is_aggregate:
         return existing_is_aggregate and not candidate_is_aggregate
     return len(candidate.path) < len(existing.path)

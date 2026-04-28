@@ -31,17 +31,17 @@ Latest generated summary:
 
 ```json
 {
-  "edge_count": 57342,
+  "edge_count": 54047,
   "lean_declaration_count": 5684,
-  "node_count": 9914,
+  "node_count": 6617,
   "record_count": 5684,
   "source_alignment_methods": {
-    "lean_comment_label": 1036,
-    "manifest_position_fallback": 4427,
+    "lean_comment_label": 1034,
+    "manifest_position_fallback": 4429,
     "unmapped": 221
   },
-  "source_label_count": 4107,
-  "unresolved_or_low_trust_count": 4648
+  "source_label_count": 812,
+  "unresolved_or_low_trust_count": 4650
 }
 ```
 

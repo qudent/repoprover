@@ -93,9 +93,13 @@ subset for model-evaluation experiments.
   `docs/minimal-context-graph.json` and
   `docs/minimal-context-full-records.jsonl` from local vendored sources with no
   network/model spend.
-- Current whole-corpus generation produced 5,684 declaration records, 4,107 TeX
-  labels, 9,914 graph nodes, and 57,342 graph edges in about 24 seconds. Source
-  alignment methods: 1,036 `lean_comment_label`, 4,427
+- Removed duplicate aggregate TeX sources
+  `AlgebraicCombinatorics/tex/all.tex` and
+  `AlgebraicCombinatorics/tex/detnotes.tex`; regenerated the graph/records so
+  no context span points at either file.
+- Current whole-corpus generation produced 5,684 declaration records, 812 TeX
+  labels, 6,617 graph nodes, and 54,047 graph edges in about 23 seconds. Source
+  alignment methods: 1,034 `lean_comment_label`, 4,429
   `manifest_position_fallback`, 221 `unmapped`.
 - Added `docs/minimal-context-format.md`,
   `docs/minimal-context-whole-corpus-report.md`, and focused generator tests;

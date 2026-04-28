@@ -16,8 +16,8 @@ Run date: 2026-04-28.
 - Generator: `scripts/generate_minimal_context_records.py`
 - Reviewer: `scripts/review_minimal_context_records.py`
 
-The whole-corpus artifacts contain 5,684 declaration-level records and a 9,914
-node / 57,342 edge graph for the entire vendored book/formalization snapshot.
+The whole-corpus artifacts contain 5,684 declaration-level records and a 6,617
+node / 54,047 edge graph for the entire vendored book/formalization snapshot.
 They are deterministic, local-only, and cost-free to regenerate. The canonical
 reviewed JSONL currently contains 14 line-mapped records from
 `AlgebraicCombinatorics/FPS/NotationsExamples.lean` lines 202-370. Each record

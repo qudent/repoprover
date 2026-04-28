@@ -10,12 +10,17 @@ Removed:
   that substantially duplicate `AlgebraicCombinatorics/tex/**`.
 - `blueprint/src/print.pdf`, `blueprint/print/`, and `blueprint/web/`:
   generated documentation outputs not needed for source-line mapping.
+- `AlgebraicCombinatorics/tex/all.tex`: aggregate TeX build file that
+  duplicated the chapter files under `AlgebraicCombinatorics/tex/**`.
+- `AlgebraicCombinatorics/tex/detnotes.tex`: large standalone external
+  reference text cited by chapters as `detnotes`, not canonical source for this
+  formalization's line mapping.
 
 Kept:
 
 - `AlgebraicCombinatorics/**/*.lean`: the formalization output source.
-- `AlgebraicCombinatorics/tex/**`: the canonical textbook TeX source used for
-  evidence spans.
+- `AlgebraicCombinatorics/tex/**`: canonical chapter-level textbook TeX source
+  used for evidence spans, excluding aggregate/external duplicate source files.
 - `manifest.json`, `blueprint/lean_decls`, and blueprint helper scripts:
   lightweight metadata that can still help map Lean declarations to source
   targets.
