@@ -4,14 +4,22 @@ Run date: 2026-04-28.
 
 ## Artifacts
 
+- Whole-corpus graph: `docs/minimal-context-graph.json`
+- Whole-corpus records: `docs/minimal-context-full-records.jsonl`
+- Whole-corpus format: `docs/minimal-context-format.md`
+- Whole-corpus report: `docs/minimal-context-whole-corpus-report.md`
 - Canonical dataset: `docs/minimal-context-generated-records.jsonl`
 - Batch 2 raw generation: `docs/minimal-context-generated-records-batch2.jsonl`
 - Batch 1 review: `docs/minimal-context-generated-review-qwen3-coder-report.md`
 - Batch 2 review: `docs/minimal-context-generated-review-batch2-qwen3-coder-report.md`
+- Whole-corpus generator: `scripts/generate_context_graph.py`
 - Generator: `scripts/generate_minimal_context_records.py`
 - Reviewer: `scripts/review_minimal_context_records.py`
 
-The canonical JSONL currently contains 14 line-mapped records from
+The whole-corpus artifacts contain 5,684 declaration-level records and a 9,914
+node / 57,342 edge graph for the entire vendored book/formalization snapshot.
+They are deterministic, local-only, and cost-free to regenerate. The canonical
+reviewed JSONL currently contains 14 line-mapped records from
 `AlgebraicCombinatorics/FPS/NotationsExamples.lean` lines 202-370. Each record
 maps a Lean output region to TeX source spans, local predecessor declarations,
 imports, Mathlib/API context, TeX-only inferability, trust scores, and reviewer
