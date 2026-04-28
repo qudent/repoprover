@@ -126,6 +126,8 @@ python -m repoprover run /tmp/repoprover-toy-test --pool-size 1 --provider googl
 ```
 
 The toy project has one chapter with 4 trivial targets (a definition and 3 theorems about doubling natural numbers).
+Add `--stop-after-first-merge` when you only want a bounded first-merge smoke
+instead of continuing into follow-up proof or maintenance work.
 
 Use `--provider {anthropic,openai,google,openrouter}` to select the LLM backend. If omitted, RepoProver chooses the first configured provider API key from the environment.
 

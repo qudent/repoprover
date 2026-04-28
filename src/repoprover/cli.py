@@ -367,6 +367,7 @@ def _run_coordinator(base_project: Path, args: argparse.Namespace) -> int:
         enable_background_agents=not args.no_background_agents,
         agent_config=args.agent_config,
         prs_to_issues=args.prs_to_issues,
+        stop_after_first_merge=args.stop_after_first_merge,
         agents_per_target=args.agents_per_target,
     )
 
@@ -510,6 +511,12 @@ def main() -> int:
         action="store_true",
         dest="no_background_agents",
         help="Disable periodic triage, scan, and progress agents; useful for toy smoke tests.",
+    )
+    p_run.add_argument(
+        "--stop-after-first-merge",
+        action="store_true",
+        dest="stop_after_first_merge",
+        help="Stop the coordinator after the first successful PR merge; useful for bounded budget smokes.",
     )
     p_run.add_argument(
         "--provider",

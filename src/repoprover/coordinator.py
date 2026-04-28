@@ -100,6 +100,10 @@ class BookCoordinatorConfig:
     # to issues (documenting unfinished work) and marked as closed/failed.
     prs_to_issues: bool = False
 
+    # Stop after the first successful PR merge. Useful for bounded smoke tests
+    # and budget probes where launching follow-up work would blur the result.
+    stop_after_first_merge: bool = False
+
     # Multiple agents per target: allows launching multiple agents per theorem/issue.
     # Effective agents = min(agents_per_target, 32 // n_targets)
     # So with 2 sorries and agents_per_target=8 → 8 provers each (32//2=16 cap)
@@ -1423,6 +1427,8 @@ class BookCoordinator:
                 for step in steps:
                     if await step():
                         progress = True
+                    if not self._running:
+                        break
 
                 # Log periodic status summary
                 if loop_count % status_interval == 0:
@@ -2910,6 +2916,12 @@ class BookCoordinator:
                         revision_number=pr.revision_count,
                         main_commit_hash=details.get("main_commit_hash"),
                     )
+
+                if self.config.stop_after_first_merge:
+                    logger.info("Stopping after first successful merge (--stop-after-first-merge)")
+                    self._shutdown_reason = "stopped_after_first_merge"
+                    self._running = False
+                    break
 
                 # Save state every 10 merges for durability
                 if merge_count % 10 == 0:

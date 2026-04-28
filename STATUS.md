@@ -1,17 +1,20 @@
 # RepoProver - Status
 
 ## Current State
-RepoProver is installed locally in `.venv`, and Lean/Lake are installed through `elan`. The toy Lean project validates with OpenRouter `z-ai/glm-5.1` through sketch, review, merge, and final `lake build`; the Gemini 3 Flash OpenAI-compatible tool loop now passes a focused live function-call continuation smoke.
+RepoProver is installed locally in `.venv`, and Lean/Lake are installed through `elan`. The toy Lean project validates with OpenRouter `z-ai/glm-5.1` through sketch, review, merge, and final `lake build`; budget/planning work has started for a minimal-context gold-standard workflow based on the published Algebraic Combinatorics formalization.
 
 ## Active Goals
 - [x] Install local Python and Lean dependencies.
 - [x] Validate the toy Lean project setup and build.
 - [x] Get the toy RepoProver sketch/review/merge loop to completion with a reliable model/provider path.
 - [x] Document model experiments and relevant commit hashes.
+- [x] Turn the whiteboard minimal-context/budget request into an initial plan, estimator, and pilot records.
+- [ ] Review and harden the first minimal-context pilot records.
 
 ## Blockers
 - The Google `gemini-2.5-flash` toy RepoProver run reaches real LLM/tool/build execution, but the sketcher repeatedly chooses nonexistent Nat parity imports and can hit the agent iteration limit without emitting a completion marker.
 - No current blocker for basic Gemini 3 Flash tool-call continuation. Full toy sketch/review/merge validation with `gemini-3-flash-preview` still has not been rerun after the transcript fix.
+- The first minimal-context records are intentionally low-trust: they need reviewer/human checks before being treated as gold.
 
 ## Recent Results
 - Created `.venv` with `uv` and installed RepoProver in editable mode.
@@ -21,7 +24,10 @@ RepoProver is installed locally in `.venv`, and Lean/Lake are installed through 
 - Reused the built toy tree for `--provider openrouter --model z-ai/glm-5.1`; GLM 5.1 created, repaired, reviewed, and merged the toy sketch. Toy commits: `97c3bd9` sketch, `ed17e510` merge, `eef1daf` generated follow-up issues.
 - Checked `facebookresearch/algebraic-combinatorics` via the GitHub tree API; no tracked `.repoprover/learnings.json` or similar learnings file exists in the published repo.
 - Preserved provider-specific tool-call metadata in the shared tool loop, added a regression test for `extra_content.google.thought_signature`, and passed a live `gemini-3-flash-preview` one-tool smoke.
+- Added `--stop-after-first-merge` so bounded smoke tests can land one PR and exit before follow-up maintain/proof agents spend more tokens.
+- Added `scripts/estimate_openrouter_budget.py`, `docs/minimal-context-budget-plan.md`, and three low-trust pilot JSONL records for the first FPS chapter. A live `qwen/qwen3-coder` extraction pass used 11,582 input tokens and 404 output tokens for `$0.0038658`; the observed OpenRouter balance was about `$7.42`.
 
 ## Next Steps
-- If continuing the toy proof loop, rerun `gemini-3-flash-preview` from `/tmp/repoprover-toy-gemini3-flash` after cleaning orphan maintain worktrees or start a fresh tree after freeing disk.
-- Consider adding a CLI stop condition that exits after first successful sketch merge to make this smoke test bounded.
+- Rerun a clean bounded toy smoke with `--stop-after-first-merge` when disk space permits or after reusing/cleaning the existing `/tmp/repoprover-toy-gemini3-flash` tree carefully.
+- Run a reviewer pass over `docs/minimal-context-pilot-records.jsonl`; keep failures and missing-context findings as benchmark examples rather than curating them away.
+- If continuing planning, use `scripts/estimate_openrouter_budget.py` after each run to recompute costs from actual token logs and live OpenRouter pricing.

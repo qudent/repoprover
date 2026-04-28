@@ -96,5 +96,5 @@ The toy run did not produce a `learnings.json`. The linked original formalizatio
 ## Practical Notes
 
 - This machine was disk-bound during the experiments: duplicate toy Mathlib checkouts pushed `/` near full. Reuse one built toy tree or delete old `/tmp/repoprover-toy-*` directories before starting another clean run.
-- `--no-background-agents` disables periodic scan/triage/progress agents, but after a sketch merge the coordinator can still launch maintain contributors for target issues. Stop manually once the validation milestone is reached.
+- `--no-background-agents` disables periodic scan/triage/progress agents. For bounded smoke tests, also pass `--stop-after-first-merge` so the coordinator exits after the first successful PR merge instead of launching follow-up maintain/proof contributors.
 - For another open-weight attempt, try `deepseek/deepseek-v4-pro` next if GLM 5.1 regresses; it has a larger context window and passed the direct OpenRouter smoke.
