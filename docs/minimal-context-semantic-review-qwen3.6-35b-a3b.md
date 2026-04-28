@@ -3,8 +3,8 @@
 Records reviewed: 24 from `docs/minimal-context-semantic-review-sample.jsonl`.
 Reviewer model: `qwen/qwen3.6-35b-a3b`.
 Run timestamp: `2026-04-28T19:45:13.939222+00:00`.
-Token usage: 99,563 prompt / 28,368 completion.
-Estimated OpenRouter cost: `$0.043432`.
+Token usage: 99,565 prompt / 27,994 completion.
+Estimated OpenRouter cost: `$0.043071`.
 
 ## Findings
 
@@ -150,14 +150,20 @@ Estimated OpenRouter cost: `$0.043432`.
 
 ### AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:SSYT
 
-- Verdict: `parse_error` (5,938 prompt / 1,590 completion, $0.002492).
-- Source span: 
-- Lean context: 
+- Verdict: `revise` (5,940 prompt / 1,216 completion, $0.002131).
+- Source span: The source span correctly identifies the TeX definition corresponding to the Lean structure. However, the source span includes an example block which is not strictly necessary for the definition, but is acceptable as context. The main issue is the Lean context.
+- Lean context: The provided Lean context is insufficient. The output defines `SSYT` which extends `YoungTableau`. The `YoungTableau` structure is defined in the same file (`SchurBasics.lean`) at lines 288-298. The record includes `YoungTableau` in `lean_predecessors`, but the `minimal_context` block does not explicitly include the `YoungTableau` definition snippet in a way that guarantees it is available for compilation/verification if the file is processed in isolation or if the predecessor mechanism is not fully trusted. More critically, `SSYT` depends on `NPartition` and `NPartition.youngDiagram`. While these are listed as predecessors, the `minimal_context` must ensure all necessary definitions are present. The current `lean_predecessors` list is good, but the `minimal_context` structure often requires the actual snippets to be embedded or clearly linked. The record relies on `lean_predecessors` to provide the context. Let's look closer. The `lean_predecessors` array contains snippets for `YoungTableau`, `NPartition` (abbrev), `NPartition` (structure), and `NPartition.youngDiagram`. This seems sufficient for the definition of `SSYT`. However, `SSYT` also uses `Fin N`, `Finset`, `Antitone`, etc., which come from Mathlib. The `import_closure` lists `Mathlib`. The `minimal_context` includes `mathlib_context` as a placeholder. This is often acceptable if the environment has Mathlib. But wait, `SSYT` extends `YoungTableau`. `YoungTableau` is defined in the same file. The `lean_predecessors` includes `YoungTableau` from `SchurBasics.lean`. This is correct. Is there anything missing? `SSYT` uses `entry` from `YoungTableau`. `YoungTableau` is provided. `SSYT` uses `lam.youngDiagram`. `NPartition.youngDiagram` is provided. `SSYT` uses `NPartition`. `NPartition` structure is provided. The imports are listed. The context seems sufficient *if* the `lean_predecessors` snippets are considered part of the minimal context. The record format stores `lean_predecessors` separately. The question is whether the `minimal_context` block is self-contained. It lists imports and predecessors. If the evaluation system uses the `lean_predecessors` snippets to construct the context, it is sufficient. If it only uses the `minimal_context` block's `imports` and `mathlib_context`, it is insufficient. Given the schema, `lean_predecessors` is a separate field in the record, not inside `minimal_context`. The `minimal_context` block has `import_closure` and `imports`. It does *not* contain the snippets. The `lean_predecessors` field at the root level contains the snippets. The prompt asks if the 
+- Missing context:
+  - The record relies on `lean_predecessors` snippets being injected into the context. If the evaluation environment does not automatically inject these snippets, the context is missing the definitions of `YoungTableau`, `NPartition`, and `NPartition.youngDiagram`.
+  - The `minimal_context` block does not explicitly embed the `YoungTableau` definition, which is in the same file. While listed in `lean_predecessors`, it should be verified if the `minimal_context` is expected to be self-contained or if `lean_predecessors` are supplementary. Usually, `minimal_context` should contain the necessary code. If `lean_predecessors` are not automatically included, `YoungTableau` is missing.
+- Line or label issues:
+  - The source span includes an example block (lines 325-343) which is not part of the definition. This is minor but could be narrowed to just the definition (294-323) to be more precise.
 - Recommended edits:
-  - Rerun this record; reviewer output was not parseable JSON.
+  - Ensure that the `minimal_context` includes the actual Lean code snippets for `YoungTableau`, `NPartition`, and `NPartition.youngDiagram` if the evaluation system does not automatically use `lean_predecessors`.
+  - Narrow the source span to exclude the example block if strict definition-only context is required.
 - Review notes:
-  - Reviewer response parse failed: Expecting ',' delimiter: line 5 column 2162 (char 2577)
-- Trust updates: `{"human_review": 0, "lean_dependency_graph": 0.45, "model_extraction": 0.0, "source_span": 0.75}`
+  - The record is a 'gold_candidate' but not human-certified. The `lean_predecessors` provide the necessary definitions, but their integration into the final context is critical. If the system expects `minimal_context` to be self-contained, it is currently insufficient because it only lists imports and predecessors without embedding the code. The `YoungTableau` definition is in the same file, so it should ideally be included in the minimal context or clearly marked as a same-file dependency that is always available.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.45, "model_extraction": 0.0, "source_span": 0.75}`
 
 ### AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:SkewYoungTableau
 
