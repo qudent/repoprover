@@ -206,3 +206,33 @@ fixes already applied to `docs/minimal-context-pilot-records.jsonl`:
 The current records remain low-trust because no human has reviewed them and
 because the exact imported modules have only been checked for these isolated
 output ranges, not for full chapter integration.
+
+## Generated Candidate Batch
+
+`scripts/generate_minimal_context_records.py` now generates candidate records
+directly from real upstream TeX/Lean chunks. It splits a Lean file into
+declaration chunks, gives a bounded TeX excerpt to an OpenRouter model, and
+writes JSONL records with:
+
+- `generation`: timestamp, model, source base URL, elapsed seconds, token usage,
+  and estimated OpenRouter cost;
+- `trust`: capped unreviewed trust scores so model output cannot certify itself;
+- `tex_only_inferability`: an explicit assessment of how much the Lean chunk
+  can be inferred from textbook LaTeX without prior formalization/API context.
+
+The first generated batch is
+`docs/minimal-context-generated-records.jsonl`. It covers four next-binomial
+chunks from `NotationsExamples.lean` lines 202-261:
+
+- `binom_neg_one`
+- `binom_factorial_formula`
+- `prod_odd_eq_doubleFactorial`
+- `factorial_dvd_prod_odd_mul_pow`
+
+The committed generation pass used `qwen/qwen3-coder` and cost `$0.006556`
+for 11,790 prompt tokens and 2,201 completion tokens. The follow-up adversarial
+review in `docs/minimal-context-generated-review-qwen3-coder-report.md` cost
+`$0.005059` for 10,681 prompt tokens and 1,505 completion tokens. Its verdicts
+were revise, revise, reject, revise, which is useful: the double-factorial
+support record is a concrete hard negative showing that the textbook span alone
+does not explain enough Lean/API context.
