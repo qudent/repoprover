@@ -23,90 +23,47 @@ duplicate/generated blueprint chapter artifacts while retaining canonical
 TeX/Lean sources. The requested deliverable now exists: a complete deterministic
 whole-corpus context graph and declaration-level minimal-context collection for
 the vendored book/formalization snapshot, plus a reproducible local generator
-and documented data format. The reviewed 14-record seed remains the higher-trust
-subset for model-evaluation experiments.
-The first selected-record RepoProver smoke has also been run and recorded as a
-concrete benchmark failure: the chosen context was sufficient, but
-`qwen/qwen3-coder` repeatedly produced malformed tool-call/edit arguments and
-was stopped before a PR was submitted. A deterministic high-trust candidate
-filter now selects the exact-label, bounded-size, file/line-validated subset of
-the whole-corpus records for the next review/smoke queue. Current OpenRouter
-model selection has been refreshed from live catalog data: `qwen/qwen3-coder`
-is historical, while `qwen/qwen3.6-35b-a3b` is now the default open-weight Qwen
-model for minimal-context JSON generation/review. `Goedel-Prover-V2-32B` is the
-best documented self-hosted Lean-prover candidate found in current research,
-but it is not available in the OpenRouter catalog. The TeX label extractor has
-been corrected to index only `\label{...}` definitions, not `\ref{...}` uses.
-The refreshed exact-label queue has 645 deterministic gold candidates; the
-zero-cost static adversarial review now finds 633 mechanically clean, 10 needing
-source-label repair, and 2 rejected for incomplete Lean outputs before semantic
-review. The generator now defaults to lexical predecessor context only; the
-old nearest-local-window heuristic is still available with `--local-window` but
-is no longer included by default because it created non-minimal labels.
+and documented data format. The exact-label gold-candidate queue contains 645
+bounded, file/line-validated records, and the zero-cost static adversarial
+review now mechanically accepts all 645 before semantic review. The reviewed
+14-record seed remains the higher-trust subset for model-evaluation
+experiments. The first selected-record RepoProver smoke is a recorded benchmark
+failure: context was sufficient, but `qwen/qwen3-coder` repeatedly produced
+malformed tool-call/edit arguments and was stopped before PR submission.
+Current OpenRouter model selection has been refreshed from live catalog data:
+`qwen/qwen3.6-35b-a3b` is the default open-weight Qwen model for
+minimal-context JSON generation/review with `--reasoning-effort none`.
 
 ## Active Goals
-- [x] Validate local RepoProver, Lean, and at least one live provider path.
-- [x] Build the first minimal-context pilot records and reviewer workflow.
-- [x] Add a generator for candidate records from real upstream TeX/Lean chunks.
-- [x] Revise generated records into a cleaner low-trust benchmark seed set.
-- [x] Scale generation/review to enough FPS chunks to expose recurring missing
-  context patterns without curating away hard failures.
 - [x] Generate a complete whole-corpus context graph and minimal-context
   collection with a documented reproducible pipeline and data format.
 - [x] Feed selected records into a bounded RepoProver smoke so failures become
   concrete benchmark examples.
+- [x] Mechanically review the 645 exact-label gold candidates at `$0.00` cost.
 
 ## TODO Plan
-- [x] Apply the Qwen review findings to the four generated records, especially
-  missing imports for `binom_neg_one`, explicit `k <= n` context for
-  `binom_factorial_formula`, and separating TeX insufficiency from Lean/API
-  insufficiency in the double-factorial records.
-- [x] Keep rejected or ugly cases in the dataset with explicit trust and review
-  metadata; do not drop them just because they are bad examples.
-- [x] Generate the next 10-20 FPS records from real upstream chunks, tracking
-  elapsed time, token usage, estimated OpenRouter cost, and
-  `tex_only_inferability`.
-- [x] Review the larger batch with a cheap adversarial reviewer before spending
-  on RepoProver runs.
-- [x] Select the lowest-risk direct Mathlib-wrapper records for the first
-  retrieval/prompt smoke, while keeping double-factorial/divisibility records as
-  hard negatives.
-- [x] Run a cheap formatting/dry smoke before any live bounded build loop.
-- [x] Run one live `--stop-after-first-merge` RepoProver smoke with enough model
-  reasoning/context for Lean version, Mathlib API, and predecessor declarations.
-- [x] Add a low max-iteration or repeated-tool-error kill rule before running
-  more open-model RepoProver smokes.
-- [x] Filter the whole-corpus records into a higher-trust gold-candidate subset
-  before using them as benchmark labels.
-- [x] Refresh OSS model choices online and rerun batch-2 generation/review with
-  a current OpenRouter Qwen model.
-- [x] Optionally adversarially review the 645 gold candidates before treating
-  them as final gold labels.
+- [x] Clean duplicate/generated vendored TeX artifacts and document cleanup.
+- [x] Build deterministic whole-corpus context graph and record format.
+- [x] Generate and review the 14-record seed with cost tracking.
+- [x] Filter 645 higher-trust exact-label gold candidates from 5,684 records.
+- [x] Run static adversarial review over all 645 candidates at `$0.00` cost.
+- [x] Run one selected-record RepoProver smoke and record the Qwen tool-loop
+  failure.
+- [ ] Next useful step: semantically review a small stratified sample from the
+  645 mechanically accepted candidates, or try a bounded smoke with a stronger
+  current model and the repeated-tool-error guard.
 
 ## Blockers
 - The whole-corpus records are complete machine-generated candidates, not
   fully human-certified gold. Trust fields distinguish exact Lean-comment label
   matches from low-trust manifest-position fallbacks and unmapped Lean support
   files.
-- Residual static review issues after the stricter generator are now small:
-  10 records have doc-comment labels that are still not represented by source
-  spans, and 2 candidate Lean outputs contain `sorry`/`admit`. The 633
-  mechanically accepted candidates are still not human-certified.
-- The canonical generated records are Qwen-reviewed but not human-reviewed; keep
-  their trust fields low and use reviewer verdicts for downstream selection.
-  The newer Qwen3.6 rerun is a comparison artifact, not a human-certified gold
-  replacement.
-- Current reviewed verdicts are 1 provisionally accepted, 9 revise, and 4
-  reject. Rejected records are intentional hard negatives, not cleanup targets.
-- `deepseek/deepseek-v4-pro` is not useful as a reviewer under the tested
-  4,096 completion-token cap because live calls spent hidden reasoning tokens
-  and returned empty content.
+- The 645/645 static review only proves mechanical consistency. It normalizes
+  Lean subpart labels to parent TeX labels and strips comments before scanning
+  for `sorry`/`admit`; it does not prove semantic minimality.
 - `qwen/qwen3.6-35b-a3b` and `qwen/qwen3.6-27b` returned empty content on the
   first JSON generation request unless OpenRouter reasoning was disabled. Use
   `--reasoning-effort none` for schema-bound generation/review scripts.
-- A clean bounded `gemini-3-flash-preview` toy run has not been rerun after the
-  thought-signature transcript fix, though the direct one-tool continuation
-  smoke passed.
 - Disk and existing `/tmp/repoprover-toy-gemini3-flash` state need care before
   another full toy or benchmark smoke; accidental `.lake` cache under the
   vendored snapshot was removed after cleanup.
@@ -120,98 +77,21 @@ is no longer included by default because it created non-minimal labels.
   `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is not
   present. The repo-local focused tests passed.
 ## Recent Results
-- Removed duplicate/generated blueprint artifacts from
-  `algebraic-combinatorics/` and documented the cleanup in
-  `algebraic-combinatorics/CLEANUP_NOTE.md`; vendored tree is about 23 MB.
-- Folded the first Qwen review into `docs/minimal-context-generated-records.jsonl`
-  while preserving the rejected double-factorial case as a hard negative.
-- Generated 10 additional `NotationsExamples.lean` records for lines 263-370
-  with `qwen/qwen3-coder`, costing about `$0.014325`, then reviewed them with
-  Qwen for about `$0.010873`.
-- Canonical generated dataset now has 14 records, generation cost `$0.020880`,
-  review cost `$0.015932`, and total recorded token-estimated cost `$0.036813`.
-- Added `docs/minimal-context-generation-report.md` summarizing artifacts, cost,
-  elapsed time, review outcomes, and context-selection difficulty.
-- Added `scripts/generate_context_graph.py`, which deterministically emits
-  `docs/minimal-context-graph.json` and
-  `docs/minimal-context-full-records.jsonl` from local vendored sources with no
-  network/model spend.
-- Removed duplicate aggregate TeX sources
-  `AlgebraicCombinatorics/tex/all.tex` and
-  `AlgebraicCombinatorics/tex/detnotes.tex`; regenerated the graph/records so
-  no context span points at either file.
-- Current whole-corpus generation produced 5,684 declaration records, 790 TeX
-  labels, 6,573 graph nodes, and 40,436 graph edges in about 24 seconds. Source
-  alignment methods: 1,062 `lean_comment_label`, 4,400
-  `manifest_position_fallback`, 222 `unmapped`.
-- Added `docs/minimal-context-format.md`,
-  `docs/minimal-context-whole-corpus-report.md`, and focused generator tests;
-  `uv run pytest tests/test_context_graph_generation.py
-  tests/test_minimal_context_review.py` passed, and graph/JSONL validation
-  passed.
-- Added `scripts/materialize_minimal_context_smoke.py` and tests, then
-  materialized `/tmp/repoprover-minctx-binom-zero` from
-  `ac-notations-and-elementary-facts-examples:binom_zero_of_lt`; RepoProver
-  status showed 1/1 chapters sketched and `lake env lean` compiled with the
-  expected single `sorry` warning.
-- Ran a bounded live OpenRouter smoke with `qwen/qwen3-coder`; it was stopped
-  after repeated malformed `lean_check`/`file_edit` calls. Logs are under
-  `/tmp/repoprover-minctx-binom-zero/runs/20260428-164407/`, and
-  `scripts/estimate_openrouter_budget.py` estimates 245,172 input tokens,
-  2,000 output tokens, and `$0.05753784` cost.
-- Added a shared repeated-tool-error kill rule to `run_tool_loop`: by default,
-  three consecutive identical failing tool calls stop the agent with
-  `repeated_tool_error`. `repoprover run` now also exposes `--max-iterations`
-  and `--max-consecutive-tool-errors`.
-- Verified the guard with `uv run pytest tests/test_tool_loop.py
-  tests/test_recording.py` and `uv run python -m repoprover run --help`; full
-  `uv run pytest` got 282 passing tests plus the unrelated missing-docbuild
-  vendored blueprint failure.
-- Added `scripts/filter_minimal_context_gold_candidates.py`, which now selects
-  645 exact `lean_comment_label` records from the 5,684-record whole corpus
-  with valid file/line spans and bounded context size. Outputs are
-  `docs/minimal-context-gold-candidates.jsonl` and
-  `docs/minimal-context-gold-candidates-report.md`; model/API cost was `$0.00`.
-- Verified the selector and adjacent minimal-context helpers with
-  `uv run pytest tests/test_minimal_context_gold_filter.py
-  tests/test_context_graph_generation.py tests/test_minimal_context_review.py`
-  (14 passed).
-- Earlier toy validation succeeded with OpenRouter `z-ai/glm-5.1`; toy commits
-  were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
-- Researched current model versions online and against the live OpenRouter
-  catalog. Added `docs/open-model-research-2026-04-28.md`; Qwen3.6 is current,
-  and specialized Lean provers found in the literature are not on OpenRouter.
-- Updated minimal-context OpenRouter defaults from `qwen/qwen3-coder` or
-  `deepseek/deepseek-v4-pro` to `qwen/qwen3.6-35b-a3b`; added
-  `--reasoning-effort` to generation/review scripts and repaired JSON parsing
-  for LaTeX backslashes in model output.
-- Reran batch-2 generation with `qwen/qwen3.6-35b-a3b --reasoning-effort none`:
-  10 records, 27,304 prompt / 7,115 completion tokens, estimated `$0.011269`.
-  The Qwen3.6 review used 22,709 prompt / 7,729 completion tokens, estimated
-  `$0.011121`, with verdicts 1 provisionally accepted, 6 revise, 3 reject.
-- Added `scripts/adversarial_review_gold_candidates.py`, tests, and the
-  generated review artifacts
-  `docs/minimal-context-gold-candidate-static-review.{jsonl,md}`. The current
-  local pass reviewed all 645 selected candidates in under a second at `$0.00`
-  model cost, with verdicts 633 provisionally accepted, 10 revise, and 2
-  reject. Remaining issue categories are 2 incomplete Lean outputs containing
-  `sorry`/`admit` and 10 unrepresented doc-comment labels.
-- Fixed `scripts/generate_context_graph.py` so TeX source indexing records only
-  `\label{...}` definitions while Lean comments may still reference
-  `\ref{...}`. Regenerated `docs/minimal-context-graph.json`,
-  `docs/minimal-context-full-records.jsonl`,
-  `docs/minimal-context-gold-candidates.jsonl`, and the static review report;
-  `uv run pytest tests/test_context_graph_generation.py` passed.
-- Tightened `scripts/generate_context_graph.py` again so Markdown-style trailing
-  `**` tokens in Lean comments are cleaned without breaking real single-star
-  TeX labels, and changed the default local predecessor window from 3 to 0 to
-  avoid over-including nearby unrelated declarations. Regenerated graph,
-  records, gold-candidate filter output, and static review artifacts. Latest
-  static review: 645 reviewed, 633 provisionally accepted, 10 revise, 2 reject,
-  with no likely-oversized-predecessor issues. Verified with `uv run pytest
-  tests/test_context_graph_generation.py
-  tests/test_minimal_context_static_adversarial_review.py
-  tests/test_minimal_context_gold_filter.py` (12 passed).
+- Current whole-corpus artifacts: 5,684 declaration records, 790 TeX labels,
+  6,573 graph nodes, and 40,436 graph edges. Source alignment methods: 1,062
+  `lean_comment_label`, 4,400 `manifest_position_fallback`, 222 `unmapped`.
+- Canonical reviewed seed: 14 `NotationsExamples.lean` records; recorded
+  generation/review cost `$0.036813`. Qwen3.6 comparison rerun cost about
+  `$0.022390` token-estimated.
+- `docs/minimal-context-gold-candidates.jsonl` contains 645 exact-label,
+  bounded records. `docs/minimal-context-gold-candidate-static-review.jsonl`
+  now reports 645 `provisionally_accept`, 0 issue categories, `$0.00` model
+  cost.
+- Static reviewer false positives were fixed in
+  `scripts/adversarial_review_gold_candidates.py`: parent TeX labels cover
+  Lean subpart references, and `sorry`/`admit` checks ignore comments.
+- Focused validation passed:
+  `uv run pytest tests/test_minimal_context_static_adversarial_review.py`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -221,35 +101,19 @@ is no longer included by default because it created non-minimal labels.
   `docs/minimal-context-format.md`,
   `docs/minimal-context-whole-corpus-report.md`, and
   `scripts/generate_context_graph.py`.
-- Gold-candidate selector artifacts are
-  `scripts/filter_minimal_context_gold_candidates.py`,
-  `docs/minimal-context-gold-candidates.jsonl`, and
-  `docs/minimal-context-gold-candidates-report.md`. This subset is higher
-  trust but not human-certified; dependency context remains heuristic.
-- Main reviewed benchmark artifacts are `docs/minimal-context-pilot-records.jsonl`,
-  `docs/minimal-context-generated-records.jsonl`, and
-  `docs/minimal-context-generated-review-qwen3-coder-report.md`.
-- Batch 2 artifacts are
-  `docs/minimal-context-generated-records-batch2.jsonl`,
-  `docs/minimal-context-generated-review-batch2-qwen3-coder.jsonl`, and
-  `docs/minimal-context-generated-review-batch2-qwen3-coder-report.md`.
-- Qwen3.6 refresh artifacts are
-  `docs/open-model-research-2026-04-28.md`,
-  `docs/minimal-context-generated-records-batch2-qwen3.6-35b-a3b.jsonl`,
-  `docs/minimal-context-generated-review-batch2-qwen3.6-35b-a3b.jsonl`, and
-  `docs/minimal-context-generated-review-batch2-qwen3.6-35b-a3b-report.md`.
-- `docs/minimal-context-generation-report.md` is the current human-readable
-  deliverable report for the minimal-context mapping seed set.
+- Static-review artifacts are
+  `scripts/adversarial_review_gold_candidates.py` and
+  `docs/minimal-context-gold-candidate-static-review.{jsonl,md}`.
+- Reviewed seed and comparison artifacts are in
+  `docs/minimal-context-generated-records*.jsonl`,
+  `docs/minimal-context-generated-review*.jsonl`, and
+  `docs/open-model-research-2026-04-28.md`.
 - `docs/minimal-context-repoprover-smoke-report.md` records the first
   selected-record RepoProver smoke and its Qwen tool-use failure.
 - `scripts/materialize_minimal_context_smoke.py` generates one-record smoke
   projects with snippet-only TeX, a single target `sorry`, and pre-seeded
   `.repoprover/state.json`; use `--lake-cache-from` to avoid another Mathlib
   download on this low-disk machine.
-- `algebraic-combinatorics/` is a vendored snapshot of
-  `facebookresearch/algebraic-combinatorics` from commit
-  `b6022318e986a0c20764569208ba8ebbe1c04dbf`; its nested `.git` directory was
-  intentionally removed before commit.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.
