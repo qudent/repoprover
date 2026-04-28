@@ -453,8 +453,9 @@ def find_predecessors(
 
     same_module = declarations_by_module.get(declaration.module, [])
     prior_local = [row for row in same_module if row.declaration_line < declaration.declaration_line]
-    for row in prior_local[-local_window:]:
-        add(row, "Nearest preceding declaration in the same Lean file.", "local_predecessor_window")
+    if local_window > 0:
+        for row in prior_local[-local_window:]:
+            add(row, "Nearest preceding declaration in the same Lean file.", "local_predecessor_window")
 
     imported_modules = transitive_imports(declaration.module, direct_imports)
     snippet = declaration_snippet(project_root, declaration)
