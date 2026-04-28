@@ -8,8 +8,12 @@ This is the durable data contract for the whole-corpus minimal-context artifacts
   Algebraic Combinatorics source/formalization snapshot.
 - `docs/minimal-context-full-records.jsonl`: one candidate minimal-context
   record per named Lean declaration.
+- `docs/minimal-context-gold-candidates.jsonl`: deterministic higher-trust
+  subset selected from the full records for the next review/smoke queue.
 - `scripts/generate_context_graph.py`: deterministic generator. It uses only
   local files and makes no network or model calls.
+- `scripts/filter_minimal_context_gold_candidates.py`: deterministic selector
+  for exact-label, bounded-size, file/line-validated gold candidates.
 
 Regenerate with:
 
@@ -18,6 +22,15 @@ uv run python scripts/generate_context_graph.py \
   --project-root algebraic-combinatorics \
   --graph-output docs/minimal-context-graph.json \
   --records-output docs/minimal-context-full-records.jsonl
+```
+
+Regenerate the higher-trust review queue with:
+
+```bash
+uv run python scripts/filter_minimal_context_gold_candidates.py \
+  --input docs/minimal-context-full-records.jsonl \
+  --output docs/minimal-context-gold-candidates.jsonl \
+  --report-output docs/minimal-context-gold-candidates-report.md
 ```
 
 ## JSONL Record Schema
@@ -114,3 +127,18 @@ Main edge kinds:
 This whole-corpus collection is complete as a machine-generated candidate
 dataset, not fully human-certified gold. Trust fields are intentionally low for
 fallbacks so review and model-evaluation code can filter them.
+
+## Gold Candidate Selection
+
+`minimal-context-gold-candidates.jsonl` is a filtered subset, not a separate
+human-certified dataset. The current selector keeps records with:
+
+- exact `lean_comment_label` source alignment;
+- non-empty labeled source spans using the same method;
+- validated output, source, and predecessor file/line ranges;
+- at most 80 total source lines, 50 output lines, and 10 Lean predecessors.
+
+Selected rows include a top-level `selection` object documenting the selector
+version, criteria, timestamp, and caveat. Skipped records remain in
+`minimal-context-full-records.jsonl`; use the filter report for skipped-reason
+counts.

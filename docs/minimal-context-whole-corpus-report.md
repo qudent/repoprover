@@ -12,6 +12,9 @@ formalization snapshot.
 - Records: `docs/minimal-context-full-records.jsonl`
 - Format contract: `docs/minimal-context-format.md`
 - Generator: `scripts/generate_context_graph.py`
+- Higher-trust review queue: `docs/minimal-context-gold-candidates.jsonl`
+- Gold-candidate filter report:
+  `docs/minimal-context-gold-candidates-report.md`
 
 Regeneration command:
 
@@ -86,3 +89,15 @@ The trust fields encode that distinction:
 The high-quality reviewed seed remains
 `docs/minimal-context-generated-records.jsonl`; the new full-corpus files are
 the reproducible substrate for scaling that review process.
+
+## Gold Candidate Filter
+
+`scripts/filter_minimal_context_gold_candidates.py` selects a zero-cost,
+deterministic first review queue from the full records. The current filter keeps
+exact `lean_comment_label` alignments with valid file/line spans and bounded
+context size: at most 80 source lines, 50 output lines, and 10 Lean
+predecessors.
+
+The latest run selected 863 of 5,684 records. This is a higher-trust candidate
+surface for adversarial review or bounded RepoProver smokes, not a final
+human-certified gold set.

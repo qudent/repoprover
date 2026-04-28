@@ -68,7 +68,7 @@ Exact Lean doc-comment references to TeX labels form a better first gold-candida
       55
     ],
     [
-      "unmapped",
+      "missing_chapter_id",
       47
     ],
     [

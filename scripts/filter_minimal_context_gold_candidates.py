@@ -186,7 +186,7 @@ def report_markdown(
 ) -> str:
     selected_kind_counts = Counter(row["output"]["chunk_kind"] for row in selected)
     selected_method_counts = Counter(row["alignment"]["source_method"] for row in selected)
-    selected_chapter_counts = Counter(row.get("chapter_id") or "unmapped" for row in selected)
+    selected_chapter_counts = Counter(row.get("chapter_id") or "missing_chapter_id" for row in selected)
     top_chapters = selected_chapter_counts.most_common(12)
 
     payload = {
