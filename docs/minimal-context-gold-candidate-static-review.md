@@ -27,67 +27,16 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
     "structure": 11,
     "theorem": 473
   },
-  "elapsed_seconds": 0.801,
-  "issue_categories": {
-    "incomplete_lean_output": 2,
-    "unrepresented_doc_comment_label": 10
-  },
+  "elapsed_seconds": 1.053,
+  "issue_categories": {},
   "model_cost_usd": 0.0,
   "records_reviewed": 645,
   "reviewer": "gold-candidate-static-adversarial-review-v1",
-  "top_label_or_line_issues": [
-    [
-      "Target Lean output contains `sorry` or `admit`, so it is not a complete gold output.",
-      2
-    ]
-  ],
-  "top_missing_context_issues": [
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.det.minors-diag.a`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.det.minors-diag.b`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.a.indep`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.c`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.d.span`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.d.indep`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.d`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `prop.sf.Npar-as-par.size`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `prop.sf.strips.entries(a))`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `prop.sf.strips.entries(b))`.",
-      1
-    ]
-  ],
+  "top_label_or_line_issues": [],
+  "top_missing_context_issues": [],
   "top_oversized_context_issues": [],
   "verdicts": {
-    "provisionally_accept": 633,
-    "reject": 2,
-    "revise": 10
+    "provisionally_accept": 645
   }
 }
 ```
