@@ -22,154 +22,32 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
 {
   "chunk_kinds": {
     "abbrev": 24,
-    "def": 124,
+    "def": 131,
     "instance": 6,
     "structure": 11,
-    "theorem": 448
+    "theorem": 473
   },
-  "elapsed_seconds": 0.793,
+  "elapsed_seconds": 0.801,
   "issue_categories": {
     "incomplete_lean_output": 2,
-    "likely_oversized_predecessor": 1488,
-    "other": 18,
-    "unrepresented_doc_comment_label": 27
+    "unrepresented_doc_comment_label": 10
   },
   "model_cost_usd": 0.0,
-  "records_reviewed": 613,
+  "records_reviewed": 645,
   "reviewer": "gold-candidate-static-adversarial-review-v1",
   "top_label_or_line_issues": [
     [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['thm.det.adj.inverse', 'thm.det.adj.inverse**'], parsed=['thm.det.adj.inverse'].",
-      4
-    ],
-    [
       "Target Lean output contains `sorry` or `admit`, so it is not a complete gold output.",
       2
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['cor.fps.invertible.field', 'cor.fps.invertible.field)**'], parsed=['cor.fps.invertible.field'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['prop.fps.invertible.1+x', 'prop.fps.invertible.1+x)**'], parsed=['prop.fps.invertible.1+x'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['thm.binom.upneg-n', 'thm.binom.upneg-n)**'], parsed=['thm.binom.upneg-n'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['prop.fps.div-by-x-inverts', 'prop.fps.div-by-x-inverts)**'], parsed=['prop.fps.div-by-x-inverts'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.g=xh', 'lem.fps.g=xh)**'], parsed=['lem.fps.g=xh'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.first-n-coeffs-of-xna', 'lem.fps.first-n-coeffs-of-xna)**'], parsed=['lem.fps.first-n-coeffs-of-xna'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.muls-of-xn', 'lem.fps.muls-of-xn)**'], parsed=['lem.fps.muls-of-xn'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.prod.irlv.fg', 'lem.fps.prod.irlv.fg)**'], parsed=['lem.fps.prod.irlv.fg'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.prod.irlv.mul', 'lem.fps.prod.irlv.mul)**'], parsed=['lem.fps.prod.irlv.mul'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.prod.irlv.cong-mul', 'lem.fps.prod.irlv.cong-mul)**'], parsed=['lem.fps.prod.irlv.cong-mul'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['prop.fps.comps.num-w2comps-n-k-id**', 'thm.fps.comps.num-wpcomps-n-k'], parsed=['prop.fps.comps.num-w2comps-n-k-id', 'thm.fps.comps.num-wpcomps-n-k'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['def.fps.fps', 'def.fps.fps**'], parsed=['def.fps.fps'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['thm.sf.S-subalg', 'thm.sf.S-subalg**'], parsed=['thm.sf.S-subalg'].",
-      1
-    ],
-    [
-      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['def.sf.content)**', 'eq.def.sf.content.xT='], parsed=['def.sf.content', 'eq.def.sf.content.xT='].",
-      1
     ]
   ],
   "top_missing_context_issues": [
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.det.adj.inverse**`.",
-      4
-    ],
     [
       "Lean doc-comment label(s) are not represented by source_spans: `lem.det.minors-diag.a`.",
       1
     ],
     [
       "Lean doc-comment label(s) are not represented by source_spans: `lem.det.minors-diag.b`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `cor.fps.invertible.field)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `prop.fps.invertible.1+x)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.binom.upneg-n)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `prop.fps.div-by-x-inverts)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.fps.g=xh)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.fps.first-n-coeffs-of-xna)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.fps.muls-of-xn)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.fps.prod.irlv.fg)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.fps.prod.irlv.mul)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.fps.prod.irlv.cong-mul)**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `prop.fps.comps.num-w2comps-n-k-id**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `def.fps.fps**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.S-subalg**`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `def.sf.content)**`.",
       1
     ],
     [
@@ -183,94 +61,33 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
     [
       "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.d.span`.",
       1
+    ],
+    [
+      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.d.indep`.",
+      1
+    ],
+    [
+      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.d`.",
+      1
+    ],
+    [
+      "Lean doc-comment label(s) are not represented by source_spans: `prop.sf.Npar-as-par.size`.",
+      1
+    ],
+    [
+      "Lean doc-comment label(s) are not represented by source_spans: `prop.sf.strips.entries(a))`.",
+      1
+    ],
+    [
+      "Lean doc-comment label(s) are not represented by source_spans: `prop.sf.strips.entries(b))`.",
+      1
     ]
   ],
-  "top_oversized_context_issues": [
-    [
-      "Predecessor `det_sum_pow` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `det_laplace_row` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `adjugateMat_eq_adjugate` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `PowerSeries.coeffStabilizesTo_mul'` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `PowerSeries.coeffStabilizesTo_partial_sum'` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `PowerSeries.coeffStabilizesTo_partial_prod'` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `AlgebraicCombinatorics.Det.det_sumMatrix_eq_zero` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `AlgebraicCombinatorics.Det.det_row_add` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `AlgebraicCombinatorics.Det.det_swap_cols` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `AlgebraicCombinatorics.Det.det_zero_col` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `AlgebraicCombinatorics.Det.det_eq_cols` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `AlgebraicCombinatorics.Det.det_scale_col` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `fps_inv_coeff_succ_isUnit` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `fps_onePlusX_isUnit` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `fps_eq_X_mul_divByX` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `fps_divByX_X_mul` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `PowerSeries.isMultipleOf` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `binomial_theorem_sub` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `module_add_comm` is not named in the target output; check whether it is necessary.",
-      3
-    ]
-  ],
+  "top_oversized_context_issues": [],
   "verdicts": {
-    "provisionally_accept": 31,
-    "reject": 20,
-    "revise": 562
+    "provisionally_accept": 633,
+    "reject": 2,
+    "revise": 10
   }
 }
 ```
