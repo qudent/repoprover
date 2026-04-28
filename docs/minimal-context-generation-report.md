@@ -10,8 +10,11 @@ Run date: 2026-04-28.
 - Whole-corpus report: `docs/minimal-context-whole-corpus-report.md`
 - Canonical dataset: `docs/minimal-context-generated-records.jsonl`
 - Batch 2 raw generation: `docs/minimal-context-generated-records-batch2.jsonl`
+- Batch 2 Qwen3.6 regeneration: `docs/minimal-context-generated-records-batch2-qwen3.6-35b-a3b.jsonl`
 - Batch 1 review: `docs/minimal-context-generated-review-qwen3-coder-report.md`
 - Batch 2 review: `docs/minimal-context-generated-review-batch2-qwen3-coder-report.md`
+- Batch 2 Qwen3.6 review: `docs/minimal-context-generated-review-batch2-qwen3.6-35b-a3b-report.md`
+- Current model research: `docs/open-model-research-2026-04-28.md`
 - Whole-corpus generator: `scripts/generate_context_graph.py`
 - Generator: `scripts/generate_minimal_context_records.py`
 - Reviewer: `scripts/review_minimal_context_records.py`
@@ -36,6 +39,8 @@ Estimated OpenRouter cost from recorded token usage:
 | Batch 2 generation | 10 | 26,413 | 4,730 | `$0.014325` |
 | Batch 2 Qwen review | 10 | 20,187 | 3,573 | `$0.010873` |
 | Total recorded dataset work | 14 | 69,071 | 12,009 | `$0.036813` |
+| Batch 2 Qwen3.6 regeneration | 10 | 27,304 | 7,115 | `$0.011269` |
+| Batch 2 Qwen3.6 review | 10 | 22,709 | 7,729 | `$0.011121` |
 
 Batch 2 generation ran in roughly 93 seconds wall time and recorded 72.5
 seconds of model-call elapsed time across the 10 records. The batch 2 review
@@ -43,6 +48,13 @@ completed in about 37 seconds wall time. During the current continuation, the
 OpenRouter credits endpoint moved from `$7.310344` remaining to `$7.287381`
 remaining, a live debit of about `$0.022963`; token-estimated batch 2 spend was
 `$0.025198`.
+
+The Qwen3.6 rerun was done after checking the current OpenRouter catalog and
+the official Qwen3.6 repository. `qwen/qwen3.6-35b-a3b` is now the default
+open-weight Qwen model for these OpenRouter JSON generation/review scripts.
+The run required `--reasoning-effort none`; without that parameter,
+Qwen3.6-35B-A3B and Qwen3.6-27B both returned empty content on the first JSON
+generation request.
 
 ## Review Outcomes
 
@@ -81,7 +93,7 @@ argument:
 
 ## Reproducibility Notes
 
-Generate a new candidate batch:
+Generate a new candidate batch with the current OpenRouter Qwen default:
 
 ```bash
 uv run python scripts/generate_minimal_context_records.py \
@@ -91,18 +103,20 @@ uv run python scripts/generate_minimal_context_records.py \
   --after-line 263 \
   --limit 10 \
   --tex-range 83:164 \
-  --output docs/minimal-context-generated-records-batch2.jsonl \
-  --model qwen/qwen3-coder
+  --output docs/minimal-context-generated-records-batch2-qwen3.6-35b-a3b.jsonl \
+  --model qwen/qwen3.6-35b-a3b \
+  --reasoning-effort none
 ```
 
 Review a candidate batch:
 
 ```bash
 uv run python scripts/review_minimal_context_records.py \
-  --records docs/minimal-context-generated-records-batch2.jsonl \
-  --model qwen/qwen3-coder \
-  --output docs/minimal-context-generated-review-batch2-qwen3-coder.jsonl \
-  --summary docs/minimal-context-generated-review-batch2-qwen3-coder-report.md \
+  --records docs/minimal-context-generated-records-batch2-qwen3.6-35b-a3b.jsonl \
+  --model qwen/qwen3.6-35b-a3b \
+  --reasoning-effort none \
+  --output docs/minimal-context-generated-review-batch2-qwen3.6-35b-a3b.jsonl \
+  --summary docs/minimal-context-generated-review-batch2-qwen3.6-35b-a3b-report.md \
   --max-tokens 2048 \
   --source-context 3 \
   --lean-context 0

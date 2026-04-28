@@ -105,17 +105,20 @@ negative example.
 
 ## Budget Estimate
 
-Live OpenRouter metadata on April 28, 2026 gave these catalog prices:
+Live OpenRouter metadata refreshed on April 28, 2026 gave these catalog prices:
 
 | Model | Context | Input/output per M tokens |
 |---|---:|---:|
-| `qwen/qwen3-coder` | 262k | $0.22 / $1.80 |
+| `qwen/qwen3.6-35b-a3b` | 262k | $0.1612 / $0.96525 |
+| `qwen/qwen3.6-27b` | 256k | $0.325 / $3.25 |
+| `qwen/qwen3.6-plus` | 1,000k | $0.325 / $1.95 |
 | `deepseek/deepseek-v4-pro` | 1,048k | $0.435 / $0.87 |
+| `qwen/qwen3-coder-next` | 262k | $0.14 / $0.80 |
+| `moonshotai/kimi-k2.6` | 256k | $0.7448 / $4.655 |
 | `google/gemini-2.5-flash` | 1,048k | $0.30 / $2.50 |
-| `z-ai/glm-5` | 202k | $0.60 / $2.08 |
 | `z-ai/glm-5.1` | 202k | $1.05 / $3.50 |
 
-The live key balance was `$7.42` when checked with
+The live key balance was `$7.22` when checked with
 `GET https://openrouter.ai/api/v1/credits`. The earlier `$10` should be treated
 as an intended budget, not the current balance.
 
@@ -123,20 +126,27 @@ The successful toy first-merge path used 181,115 input tokens and 3,585 output
 tokens across sketch, math review, and engineering review. At current catalog
 prices:
 
-| Model | Toy first-merge cost | Runs with $7.42 | Runs with $10 | Runs with $50 |
+| Model | Toy first-merge cost | Runs with $7.22 | Runs with $10 | Runs with $50 |
 |---|---:|---:|---:|---:|
-| `qwen/qwen3-coder` | $0.0463 | 160 | 216 | 1,080 |
+| `qwen/qwen3.6-35b-a3b` | $0.0415 | 174 | 241 | 1,206 |
+| `qwen/qwen3.6-27b` | $0.0862 | 84 | 116 | 580 |
+| `qwen/qwen3-coder` | $0.0575 | 126 | 174 | 869 |
 | `google/gemini-2.5-flash` | $0.0633 | 117 | 158 | 790 |
-| `deepseek/deepseek-v4-pro` | $0.0819 | 91 | 122 | 611 |
-| `z-ai/glm-5` | $0.1161 | 64 | 86 | 431 |
-| `z-ai/glm-5.1` | $0.2027 | 37 | 49 | 247 |
+| `deepseek/deepseek-v4-pro` | $0.1084 | 67 | 92 | 461 |
+| `moonshotai/kimi-k2.6` | $0.1919 | 38 | 52 | 260 |
+| `z-ai/glm-5.1` | $0.2644 | 27 | 38 | 189 |
 
 Real chapter work will be much larger than the toy. A conservative planning
 multiplier is 10x for a small early FPS chapter and 25x for a hard chapter with
-multiple repair/review rounds. Under that range, `$7.42` is enough for roughly
-6-16 bounded early-chapter attempts on `qwen/qwen3-coder`, or 3-9 attempts on
-`deepseek/deepseek-v4-pro`. `$50` is enough for a real pilot over the first few
+multiple repair/review rounds. Under that range, `$7.22` is enough for roughly
+7-17 bounded early-chapter attempts on `qwen/qwen3.6-35b-a3b`, or 2-6 attempts
+on `z-ai/glm-5.1`. `$50` is enough for a real pilot over the first few
 chapters plus several failure-driven review rounds.
+
+`qwen/qwen3-coder` remains in this report only as historical evidence from
+earlier runs. The current Qwen/OpenRouter default for minimal-context JSON
+generation and review is `qwen/qwen3.6-35b-a3b` with
+`--reasoning-effort none`.
 
 ## Immediate RepoProver Change
 
@@ -148,7 +158,7 @@ or follow-up proof agents start spending tokens. Use it with:
 python -m repoprover run /tmp/repoprover-toy-gemini3-flash \
   --pool-size 1 \
   --provider openrouter \
-  --model z-ai/glm-5.1 \
+  --model qwen/qwen3.6-35b-a3b \
   --no-background-agents \
   --stop-after-first-merge \
   --verbose
@@ -236,3 +246,10 @@ review in `docs/minimal-context-generated-review-qwen3-coder-report.md` cost
 were revise, revise, reject, revise, which is useful: the double-factorial
 support record is a concrete hard negative showing that the textbook span alone
 does not explain enough Lean/API context.
+
+After refreshing model availability, the batch-2 generation/review workflow was
+rerun with `qwen/qwen3.6-35b-a3b` and `--reasoning-effort none`. The new
+generation artifact cost `$0.011269` for 27,304 prompt and 7,115 completion
+tokens; the new adversarial review cost `$0.011121` for 22,709 prompt and 7,729
+completion tokens. The Qwen3.6 review verdicts were 1 provisionally accepted,
+6 revise, and 3 reject.

@@ -110,7 +110,9 @@ python scripts/count_tokens.py /path/to/lean/project
 python scripts/plot_agent_efficiency.py /path/to/lean/project --out ./plots
 
 # Audit minimal-context pilot records with OpenRouter
-python scripts/review_minimal_context_records.py --model qwen/qwen3-coder
+python scripts/review_minimal_context_records.py \
+  --model qwen/qwen3.6-35b-a3b \
+  --reasoning-effort none
 ```
 
 ### Smoke test

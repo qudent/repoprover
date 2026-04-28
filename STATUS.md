@@ -12,8 +12,8 @@ Deliverable: A minimal context mapping (mapping line regions/files to lines), an
 Avoid editing above the line except to preserve new human direction.
 -------
 Start time of work: 2026-04-28T15:52:46Z
-Remaining openrouter budget: about 7.229843 $ after token-log estimate from
-the Qwen minimal-context smoke; refresh credits before more live runs.
+Remaining openrouter budget: about 7.22 $ after the April 28 model refresh and
+Qwen3.6 generation/review rerun; refresh credits before more live runs.
 
 
 ## Current State
@@ -30,7 +30,12 @@ concrete benchmark failure: the chosen context was sufficient, but
 `qwen/qwen3-coder` repeatedly produced malformed tool-call/edit arguments and
 was stopped before a PR was submitted. A deterministic high-trust candidate
 filter now selects the exact-label, bounded-size, file/line-validated subset of
-the whole-corpus records for the next review/smoke queue.
+the whole-corpus records for the next review/smoke queue. Current OpenRouter
+model selection has been refreshed from live catalog data: `qwen/qwen3-coder`
+is historical, while `qwen/qwen3.6-35b-a3b` is now the default open-weight Qwen
+model for minimal-context JSON generation/review. `Goedel-Prover-V2-32B` is the
+best documented self-hosted Lean-prover candidate found in current research,
+but it is not available in the OpenRouter catalog.
 
 ## Active Goals
 - [x] Validate local RepoProver, Lean, and at least one live provider path.
@@ -66,6 +71,8 @@ the whole-corpus records for the next review/smoke queue.
   more open-model RepoProver smokes.
 - [x] Filter the whole-corpus records into a higher-trust gold-candidate subset
   before using them as benchmark labels.
+- [x] Refresh OSS model choices online and rerun batch-2 generation/review with
+  a current OpenRouter Qwen model.
 - [ ] Optionally adversarially review the 863 gold candidates before treating
   them as final gold labels.
 
@@ -76,11 +83,16 @@ the whole-corpus records for the next review/smoke queue.
   files.
 - The canonical generated records are Qwen-reviewed but not human-reviewed; keep
   their trust fields low and use reviewer verdicts for downstream selection.
+  The newer Qwen3.6 rerun is a comparison artifact, not a human-certified gold
+  replacement.
 - Current reviewed verdicts are 1 provisionally accepted, 9 revise, and 4
   reject. Rejected records are intentional hard negatives, not cleanup targets.
 - `deepseek/deepseek-v4-pro` is not useful as a reviewer under the tested
   4,096 completion-token cap because live calls spent hidden reasoning tokens
   and returned empty content.
+- `qwen/qwen3.6-35b-a3b` and `qwen/qwen3.6-27b` returned empty content on the
+  first JSON generation request unless OpenRouter reasoning was disabled. Use
+  `--reasoning-effort none` for schema-bound generation/review scripts.
 - A clean bounded `gemini-3-flash-preview` toy run has not been rerun after the
   thought-signature transcript fix, though the direct one-tool continuation
   smoke passed.
@@ -155,6 +167,17 @@ the whole-corpus records for the next review/smoke queue.
   (14 passed).
 - Earlier toy validation succeeded with OpenRouter `z-ai/glm-5.1`; toy commits
   were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
+- Researched current model versions online and against the live OpenRouter
+  catalog. Added `docs/open-model-research-2026-04-28.md`; Qwen3.6 is current,
+  and specialized Lean provers found in the literature are not on OpenRouter.
+- Updated minimal-context OpenRouter defaults from `qwen/qwen3-coder` or
+  `deepseek/deepseek-v4-pro` to `qwen/qwen3.6-35b-a3b`; added
+  `--reasoning-effort` to generation/review scripts and repaired JSON parsing
+  for LaTeX backslashes in model output.
+- Reran batch-2 generation with `qwen/qwen3.6-35b-a3b --reasoning-effort none`:
+  10 records, 27,304 prompt / 7,115 completion tokens, estimated `$0.011269`.
+  The Qwen3.6 review used 22,709 prompt / 7,729 completion tokens, estimated
+  `$0.011121`, with verdicts 1 provisionally accepted, 6 revise, 3 reject.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -176,6 +199,11 @@ the whole-corpus records for the next review/smoke queue.
   `docs/minimal-context-generated-records-batch2.jsonl`,
   `docs/minimal-context-generated-review-batch2-qwen3-coder.jsonl`, and
   `docs/minimal-context-generated-review-batch2-qwen3-coder-report.md`.
+- Qwen3.6 refresh artifacts are
+  `docs/open-model-research-2026-04-28.md`,
+  `docs/minimal-context-generated-records-batch2-qwen3.6-35b-a3b.jsonl`,
+  `docs/minimal-context-generated-review-batch2-qwen3.6-35b-a3b.jsonl`, and
+  `docs/minimal-context-generated-review-batch2-qwen3.6-35b-a3b-report.md`.
 - `docs/minimal-context-generation-report.md` is the current human-readable
   deliverable report for the minimal-context mapping seed set.
 - `docs/minimal-context-repoprover-smoke-report.md` records the first

@@ -28,7 +28,25 @@ On April 27, 2026, the shared tool loop was updated to preserve provider-specifi
 stop_reason=stop, iterations=2, tool_calls=["echo_marker"], final_text="FINAL: gemini3-smoke"
 ```
 
-For the current OpenRouter open-weight attempt, `z-ai/glm-5.1` was selected first. Live OpenRouter model metadata described it as a coding model with long-horizon-task gains; it also passed a direct OpenRouter chat smoke. Other reasonable open-weight candidates visible in the same model metadata were `deepseek/deepseek-v4-pro`, `qwen/qwen3-coder`, and `qwen/qwen3-coder-plus`.
+For the April 27 OpenRouter open-weight attempt, `z-ai/glm-5.1` was selected first. Live OpenRouter model metadata described it as a coding model with long-horizon-task gains; it also passed a direct OpenRouter chat smoke. Other reasonable candidates visible at that time were `deepseek/deepseek-v4-pro`, `qwen/qwen3-coder`, and `qwen/qwen3-coder-plus`.
+
+On April 28, 2026, model availability was refreshed against the live
+OpenRouter catalog and the official Qwen3.6 repository. Qwen3.6 is now the
+current Qwen family, and OpenRouter lists `qwen/qwen3.6-35b-a3b`,
+`qwen/qwen3.6-27b`, `qwen/qwen3.6-plus`, `qwen/qwen3.6-flash`, and
+`qwen/qwen3.6-max-preview`. The current open-weight Qwen default for
+minimal-context JSON generation/review is therefore `qwen/qwen3.6-35b-a3b`,
+not `qwen/qwen3-coder`.
+
+For math formalization specifically, current public theorem-proving papers
+point to specialized self-hosted Lean provers rather than general OpenRouter
+coder models. `Goedel-Prover-V2-32B` reports 88.1% MiniF2F pass@32 and 90.4%
+with self-correction, outperforming prior open-source theorem provers at
+release time. `DeepSeek-Prover-V2-671B` reports 88.9% MiniF2F-test pass ratio
+and 49/658 PutnamBench problems. Neither appears in the live OpenRouter catalog,
+so OpenRouter-only runs should use the current general models while treating
+self-hosted specialized provers as the better research target when GPU serving
+is available. See `docs/open-model-research-2026-04-28.md`.
 
 ## Commands
 
@@ -50,7 +68,7 @@ timeout 10m .venv/bin/python -m repoprover run /tmp/repoprover-toy-gemini3-flash
   --verbose
 ```
 
-OpenRouter GLM 5.1 attempt:
+OpenRouter GLM 5.1 attempt, historical:
 
 ```bash
 timeout 12m .venv/bin/python -m repoprover run /tmp/repoprover-toy-gemini3-flash \
@@ -58,6 +76,18 @@ timeout 12m .venv/bin/python -m repoprover run /tmp/repoprover-toy-gemini3-flash
   --provider openrouter \
   --model z-ai/glm-5.1 \
   --no-background-agents \
+  --verbose
+```
+
+Current OpenRouter Qwen smoke command:
+
+```bash
+timeout 12m .venv/bin/python -m repoprover run /tmp/repoprover-toy-gemini3-flash \
+  --pool-size 1 \
+  --provider openrouter \
+  --model qwen/qwen3.6-35b-a3b \
+  --no-background-agents \
+  --stop-after-first-merge \
   --verbose
 ```
 
@@ -97,4 +127,7 @@ The toy run did not produce a `learnings.json`. The linked original formalizatio
 
 - This machine was disk-bound during the experiments: duplicate toy Mathlib checkouts pushed `/` near full. Reuse one built toy tree or delete old `/tmp/repoprover-toy-*` directories before starting another clean run.
 - `--no-background-agents` disables periodic scan/triage/progress agents. For bounded smoke tests, also pass `--stop-after-first-merge` so the coordinator exits after the first successful PR merge instead of launching follow-up maintain/proof contributors.
-- For another open-weight attempt, try `deepseek/deepseek-v4-pro` next if GLM 5.1 regresses; it has a larger context window and passed the direct OpenRouter smoke.
+- For another OpenRouter open-weight attempt, use `qwen/qwen3.6-35b-a3b` first.
+  If it regresses on tool use, compare against `deepseek/deepseek-v4-pro`,
+  `qwen/qwen3-coder-next`, and `moonshotai/kimi-k2.6`. For self-hosted Lean
+  proof generation, prioritize Goedel-Prover-V2 over generic coder models.
