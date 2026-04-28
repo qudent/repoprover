@@ -1,10 +1,10 @@
 # Minimal-Context Semantic Review
 
-Records reviewed: 21 from `docs/minimal-context-semantic-review-sample.jsonl`.
+Records reviewed: 24 from `docs/minimal-context-semantic-review-sample.jsonl`.
 Reviewer model: `qwen/qwen3.6-35b-a3b`.
 Run timestamp: `2026-04-28T19:39:40.113717+00:00`.
-Token usage: 66,207 prompt / 28,496 completion.
-Estimated OpenRouter cost: `$0.038178`.
+Token usage: 76,654 prompt / 33,216 completion.
+Estimated OpenRouter cost: `$0.044418`.
 
 ## Findings
 
@@ -453,3 +453,66 @@ Estimated OpenRouter cost: `$0.038178`.
 - Review notes:
   - The record fails to include the direct parent structure `SkewYoungTableau` in the predecessors, making the context incomplete for reproduction. The predecessor list contains errors (module as declaration). The imports are redundant.
 - Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:YoungTableau
+
+- Verdict: `provisionally_accept` (3,412 prompt / 2,490 completion, $0.002953).
+- Source span: Correctly identifies TeX label def.sf.ytab; spans include definition and surrounding descriptive text.
+- Lean context: Imports and predecessors adequately cover all Lean types and fields used in the output (Fin, NeZero, NPartition, youngDiagram).
+- Oversized context:
+  - Mathlib is a catch-all import; could be narrowed to specific submodules (e.g., Data.Fin.Basic, Data.Nat.Defs, Init.Data.Set.Basic).
+  - AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson and MonomialSymmetric are in the closure but likely unnecessary for this standalone structure definition.
+- Recommended edits:
+  - Narrow Mathlib to specific submodules to reduce context size.
+  - Remove non-essential AlgebraicCombinatorics imports from minimal_context if they are not transitively required for YoungTableau.
+  - Verify that NPartition.youngDiagram line range [645, 653] actually contains the field definition; if it references a lemma instead, adjust to the structure definition line range.
+- Review notes:
+  - Context is sufficient for compilation of the structure definition.
+  - TeX source span includes extra descriptive text beyond the definition; consider trimming to just the definition environment if strictness is required.
+  - Mathlib import is a catch-all; narrowing improves reproducibility and matches benchmark best practices.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.6, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/LaurentSeries.lean:AlgebraicCombinatorics.BalancedTernaryRepresentation
+
+- Verdict: `reject` (2,409 prompt / 983 completion, $0.001337).
+- Source span: The source span points to a LaTeX file (`LaurentSeries.tex`) containing definitions for binary representations and Laurent series motivation, but the Lean output defines `BalancedTernaryRepresentation`. The source span does not contain the definition of `BalancedTernaryDigit` or the specific definition of balanced ternary representation, making it semantically disconnected from the target Lean code. The label `sec.gf.laure` is present, but the content is insufficient to justify the Lean structure without external context.
+- Lean context: The `lean_predecessors` list includes `BalancedTernaryDigit` and `BalancedTernaryDigit.toInt`, which are necessary for the `digits` field and `sum_eq` proof obligation. However, the `import_closure` is just `Mathlib`, which is too broad and likely insufficient if `BalancedTernaryDigit` is defined in the same file but not imported (it's a predecessor in the same file). The record fails to explicitly include the definition of `BalancedTernaryDigit` in the context, relying on `lexical_reference` which is weak for reproducibility. Furthermore, `Mathlib` imports are needed for `ℤ`, `ℕ`, `Finite`, `sum`, etc., but the specific local predecessor `BalancedTernaryDigit` must be provided.
+- Missing context:
+  - Definition of `AlgebraicCombinatorics.BalancedTernaryDigit` (enum/structure) is required as it is used in the `digits` field.
+  - Definition of `AlgebraicCombinatorics.BalancedTernaryDigit.toInt` is required for the `sum_eq` field.
+  - The `lean_predecessors` are listed but their actual Lean code snippets are not included in the `minimal_context` block, only their line ranges and paths. The record must include the source code of these predecessors to be reproducible.
+  - Imports for `Mathlib.Data.Int.Basic`, `Mathlib.Data.Fintype.Basic`, `Mathlib.Algebra.BigOperators.Basic` (or similar) are implied by `Mathlib` but should be explicit if `Mathlib` is not a valid single import in the target environment.
+- Line or label issues:
+  - The `source_spans` point to `LaurentSeries.tex` lines 1-26, which discuss binary representations, not balanced ternary. This is a mismatch with the Lean output `BalancedTernaryRepresentation`.
+  - The `output.line_range` [427, 440] corresponds to the structure definition. The `lean_predecessors` line ranges [386, 393] and [395, 401] are within the same file, which is good, but the context provided does not include the text of these lines.
+- Recommended edits:
+  - Include the actual Lean code snippets for `AlgebraicCombinatorics.BalancedTernaryDigit` and `AlgebraicCombinatorics.BalancedTernaryDigit.toInt` in the `minimal_context`.
+  - Replace the generic `Mathlib` import with specific necessary imports or ensure the environment supports `Mathlib`.
+  - Correct the `source_spans` to point to the LaTeX section defining balanced ternary representation, or acknowledge that the LaTeX source is incomplete/mismatched and rely solely on Lean context.
+  - Ensure `lean_predecessors` are fully expanded with their code content, not just metadata.
+- Review notes:
+  - The record is rejected because the source span is semantically irrelevant (binary vs balanced ternary) and the Lean context is incomplete (missing predecessor code).
+  - The `lexical_reference` method for predecessors is insufficient for a minimal context record; the actual definitions must be included.
+  - The label `sec.gf.laure` exists in the source, but the content at that label does not define the Lean structure.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.2}`
+
+### AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.multipliable_coeff_eq_of_determines
+
+- Verdict: `revise` (4,626 prompt / 1,247 completion, $0.001949).
+- Source span: The source span points to a TeX file, which is not the Lean source. While the label matches, the record lacks the actual Lean source span for the theorem, making it impossible to verify the Lean context against the source directly without external mapping.
+- Lean context: The minimal context is insufficient. It imports `Mathlib` and `AlgebraicCombinatorics.FPS.Limits`, but the theorem relies on `PowerSeries`, `Finset`, and the specific definition `DeterminesCoeffInProd`. `DeterminesCoeffInProd` is defined in `InfiniteProducts.lean` (as indicated by the predecessor), but the context does not include the definition of `PowerSeries` or the `multipliable` predicate, which are likely in `AlgebraicCombinatorics.FPS.XnEquivalence` or `Limits`. More critically, the `import_closure` includes `XnEquivalence` but the `imports` list does not. The theorem uses `PowerSeries` and `Finset` operations which require specific imports not guaranteed by just `Mathlib` in a minimal context (though `Mathlib` usually suffices, explicit imports are better for minimal context). The main issue is that `DeterminesCoeffInProd` is a local definition in the same file, so the context must either include the file's content up to that point or import the module containing it if it were exported. Since it's in the same file, the minimal context should ideally include the definition or the file should be self-contained. However, the record lists `lean_predecessors` pointing to the same file, implying the definition is available. The `imports` list is likely too broad (`Mathlib`) and missing specific algebraic combinatorics imports if they are not in `Mathlib` (unlikely, but `AlgebraicCombinatorics` is a separate library). The key missing piece is the definition of `DeterminesCoeffInProd` itself if it's not in the imported modules.
+- Missing context:
+  - Definition of `PowerSeries.DeterminesCoeffInProd` is referenced as a predecessor in the same file, but the minimal context does not include the definition or the file content up to line 124. If the theorem is in the same file, the context should either include the definition or the record should specify that the file is self-contained. Given the `lean_predecessors` field, it seems the system expects the definition to be found, but the `minimal_context` does not provide it. The `imports` list should likely include `AlgebraicCombinatorics.FPS.XnEquivalence` if `PowerSeries` or related structures are defined there, or at least clarify that `Mathlib` covers it.
+  - The `import_closure` includes `AlgebraicCombinatorics.FPS.XnEquivalence` but `imports` does not. This is inconsistent. If `XnEquivalence` is needed for `PowerSeries` or `multipliable`, it should be in `imports`.
+- Oversized context:
+  - `Mathlib` is a very broad import. If the theorem only depends on specific parts of Mathlib (e.g., `Algebra.CommutativeRing`, `Data.Finset.Basic`, `Analysis.NormedSpace.Basic`), listing `Mathlib` is oversized. However, for a minimal context record, `Mathlib` is often accepted if the specific imports are hard to determine. The bigger issue is the inconsistency with `import_closure`.
+- Line or label issues:
+  - The `source_spans` points to a TeX file, not the Lean file. The `output.line_range` [334, 356] is for the Lean file. The record should ideally have a `source_span` for the Lean file to allow direct verification of the Lean code against the source. The current setup relies on a label mapping which is fragile.
+- Recommended edits:
+  - Add the Lean source span for the theorem (lines 334-356 of `InfiniteProducts.lean`) to `source_spans`.
+  - Ensure `imports` includes all necessary modules. If `DeterminesCoeffInProd` is defined in `InfiniteProducts.lean` before the theorem, the minimal context should either include the definition or the record should be marked as requiring the file's preceding content. Since `lean_predecessors` points to the same file, the context is incomplete without the definition.
+  - Reconcile `imports` and `import_closure`. If `XnEquivalence` is in `import_closure`, it should be in `imports` if it's a direct dependency.
+  - Consider narrowing `Mathlib` to specific imports if possible, or keep it if it's the standard way to handle large dependencies in this benchmark.
+- Review notes:
+  - The record is a 'gold_candidate' but lacks the Lean source span, relying on a TeX label. This makes it hard to verify the Lean context. The `minimal_context` is inconsistent between `imports` and `import_closure`. The theorem depends on a local definition `DeterminesCoeffInProd`, which is not included in the minimal context, making the context insufficient for reproduction without the file's preceding content.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.6, "model_extraction": 0.0, "source_span": 0.5}`
