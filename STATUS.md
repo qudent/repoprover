@@ -191,12 +191,11 @@ is no longer included by default because it created non-minimal labels.
   `$0.011121`, with verdicts 1 provisionally accepted, 6 revise, 3 reject.
 - Added `scripts/adversarial_review_gold_candidates.py`, tests, and the
   generated review artifacts
-  `docs/minimal-context-gold-candidate-static-review.{jsonl,md}`. The local
-  pass reviewed all 613 selected candidates in under a second at `$0.00` model
-  cost, with verdicts 31 provisionally accepted, 580 revise, and 2 reject.
-  Issue categories are now 2 incomplete Lean outputs containing `sorry`/`admit`,
-  27 unrepresented doc-comment labels, and 1,488 likely oversized predecessor
-  entries.
+  `docs/minimal-context-gold-candidate-static-review.{jsonl,md}`. The current
+  local pass reviewed all 645 selected candidates in under a second at `$0.00`
+  model cost, with verdicts 633 provisionally accepted, 10 revise, and 2
+  reject. Remaining issue categories are 2 incomplete Lean outputs containing
+  `sorry`/`admit` and 10 unrepresented doc-comment labels.
 - Fixed `scripts/generate_context_graph.py` so TeX source indexing records only
   `\label{...}` definitions while Lean comments may still reference
   `\ref{...}`. Regenerated `docs/minimal-context-graph.json`,
