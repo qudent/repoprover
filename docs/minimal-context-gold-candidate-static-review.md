@@ -21,103 +21,24 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
 ```json
 {
   "chunk_kinds": {
-    "abbrev": 25,
-    "def": 159,
-    "instance": 7,
-    "lemma": 9,
+    "abbrev": 24,
+    "def": 124,
+    "instance": 6,
     "structure": 11,
-    "theorem": 652
+    "theorem": 448
   },
-  "elapsed_seconds": 0.781,
+  "elapsed_seconds": 0.821,
   "issue_categories": {
-    "incomplete_lean_output": 4,
-    "likely_oversized_predecessor": 2069,
-    "parsed_line_range_mismatch": 2,
-    "source_span_ref_not_label": 170,
-    "unrepresented_doc_comment_label": 39
+    "incomplete_lean_output": 2,
+    "likely_oversized_predecessor": 1488,
+    "unrepresented_doc_comment_label": 27
   },
   "model_cost_usd": 0.0,
-  "records_reviewed": 863,
+  "records_reviewed": 613,
   "reviewer": "gold-candidate-static-adversarial-review-v1",
   "top_label_or_line_issues": [
     [
-      "Source span `AlgebraicCombinatorics/tex/FPS/Limits.tex:[351, 352]` does not contain `\\label{thm.fps.xneq.props}`.",
-      15
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:[82, 84]` does not contain `\\label{def.alg.commring}`.",
-      13
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/Details/Limits.tex:[438, 495]` does not contain `\\label{def.fps.multipliable}`.",
-      12
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/Polynomials.tex:[20, 28]` does not contain `\\label{thm.fps.pol.ring}`.",
-      11
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/ExpLog.tex:[159, 164]` does not contain `\\label{prop.fps.subs.rules}`.",
-      11
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/ExpLog.tex:[88, 107]` does not contain `\\label{thm.fps.deriv.rules}`.",
-      9
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:[160, 171]` does not contain `\\label{lem.fps.xa}`.",
-      8
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/Determinants/DesnanotJacobi.tex:[232, 251]` does not contain `\\label{thm.det.rowop}`.",
-      7
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/InfiniteProducts1.tex:[688, 710]` does not contain `\\label{prop.fps.infprod-approx-xneq}`.",
-      5
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/Partitions/Basics.tex:[5, 7]` does not contain `\\label{def.fps.comps}`.",
-      5
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/LaurentSeries.tex:[486, 488]` does not contain `\\label{thm.fps.laure.lauser-ring}`.",
-      5
-    ],
-    [
       "Target Lean output contains `sorry` or `admit`, so it is not a complete gold output.",
-      4
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/ExpLog.tex:[398, 408]` does not contain `\\label{lem.fps.Exp-Log-maps-wd}`.",
-      4
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:[48, 61]` does not contain `\\label{prop.sf.SN-acts}`.",
-      4
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/ExpLog.tex:[171, 180]` does not contain `\\label{def.fps.subs}`.",
-      3
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/FPS/ExpLog.tex:[198, 201]` does not contain `\\label{prop.fps.subs.wd}`.",
-      3
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/Permutations/Signs.tex:[78, 81]` does not contain `\\label{cor.perm.red.sigtau}`.",
-      3
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/Determinants/LGV2.tex:[501, 544]` does not contain `\\label{thm.sf.NG}`.",
-      3
-    ],
-    [
-      "Source span `AlgebraicCombinatorics/tex/SymmetricFunctions/SchurBasics.tex:[490, 492]` does not contain `\\label{lem.sf.alternant-0}`.",
-      3
-    ],
-    [
-      "Predecessor `submatrixDet` line_range [107, 113] does not match parsed range [114, 138].",
       2
     ]
   ],
@@ -127,19 +48,11 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
       4
     ],
     [
-      "Lean doc-comment label(s) are not represented by source_spans: `prop.fps.lim.sum-prod**`.",
-      3
-    ],
-    [
       "Lean doc-comment label(s) are not represented by source_spans: `lem.det.minors-diag.a`.",
       1
     ],
     [
       "Lean doc-comment label(s) are not represented by source_spans: `lem.det.minors-diag.b`.",
-      1
-    ],
-    [
-      "Lean doc-comment label(s) are not represented by source_spans: `lem.det.vander.a.pol**`.",
       1
     ],
     [
@@ -191,15 +104,23 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
       1
     ],
     [
-      "Lean doc-comment label(s) are not represented by source_spans: `pf.thm.fps.ring.xn(a+b)=)`.",
+      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.S-subalg**`.",
       1
     ],
     [
-      "Lean doc-comment label(s) are not represented by source_spans: `pf.thm.fps.ring.xn(a-b)=)`.",
+      "Lean doc-comment label(s) are not represented by source_spans: `def.sf.content)**`.",
       1
     ],
     [
-      "Lean doc-comment label(s) are not represented by source_spans: `pf.thm.fps.ring.xn(la)=)`.",
+      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.a.indep`.",
+      1
+    ],
+    [
+      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.c`.",
+      1
+    ],
+    [
+      "Lean doc-comment label(s) are not represented by source_spans: `thm.sf.m-basis.d.span`.",
       1
     ]
   ],
@@ -214,18 +135,6 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
     ],
     [
       "Predecessor `adjugateMat_eq_adjugate` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `PowerSeries.prodRule_infInf` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `PowerSeries.prodRule_infInf_coeff` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `Seq.stabilizesTo_unique'` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
@@ -245,50 +154,62 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.outerProductMatrix_apply` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
-      "Predecessor `AlgebraicCombinatorics.Det.sum_sign_eq_zero` is not named in the target output; check whether it is necessary.",
-      3
-    ],
-    [
       "Predecessor `AlgebraicCombinatorics.Det.det_sumMatrix_eq_zero` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.det_diagonal'` is not named in the target output; check whether it is necessary.",
+      "Predecessor `AlgebraicCombinatorics.Det.det_row_add` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.det_swap_rows` is not named in the target output; check whether it is necessary.",
+      "Predecessor `AlgebraicCombinatorics.Det.det_swap_cols` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.det_zero_row` is not named in the target output; check whether it is necessary.",
+      "Predecessor `AlgebraicCombinatorics.Det.det_zero_col` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.det_eq_rows` is not named in the target output; check whether it is necessary.",
+      "Predecessor `AlgebraicCombinatorics.Det.det_eq_cols` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.det_scale_row` is not named in the target output; check whether it is necessary.",
+      "Predecessor `AlgebraicCombinatorics.Det.det_scale_col` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.det_add_row` is not named in the target output; check whether it is necessary.",
+      "Predecessor `fps_inv_coeff_succ_isUnit` is not named in the target output; check whether it is necessary.",
       3
     ],
     [
-      "Predecessor `AlgebraicCombinatorics.Det.det_add_smul_row` is not named in the target output; check whether it is necessary.",
+      "Predecessor `fps_onePlusX_isUnit` is not named in the target output; check whether it is necessary.",
+      3
+    ],
+    [
+      "Predecessor `fps_eq_X_mul_divByX` is not named in the target output; check whether it is necessary.",
+      3
+    ],
+    [
+      "Predecessor `fps_divByX_X_mul` is not named in the target output; check whether it is necessary.",
+      3
+    ],
+    [
+      "Predecessor `PowerSeries.isMultipleOf` is not named in the target output; check whether it is necessary.",
+      3
+    ],
+    [
+      "Predecessor `binomial_theorem_sub` is not named in the target output; check whether it is necessary.",
+      3
+    ],
+    [
+      "Predecessor `module_add_comm` is not named in the target output; check whether it is necessary.",
       3
     ]
   ],
   "verdicts": {
-    "provisionally_accept": 35,
-    "reject": 172,
-    "revise": 656
+    "provisionally_accept": 31,
+    "reject": 2,
+    "revise": 580
   }
 }
 ```

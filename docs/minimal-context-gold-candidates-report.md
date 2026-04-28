@@ -22,86 +22,85 @@ Exact Lean doc-comment references to TeX labels form a better first gold-candida
     "max_source_lines": 80,
     "source_method": "lean_comment_label"
   },
-  "elapsed_seconds": 0.65,
+  "elapsed_seconds": 0.543,
   "input_records": 5684,
   "model_cost_usd": 0.0,
-  "rejected_records": 4821,
+  "rejected_records": 5071,
   "rejection_reasons": {
-    "missing_source_span": 221,
+    "missing_source_span": 222,
     "output_invalid_line_range": 2,
     "output_span_too_large": 459,
     "predecessor_invalid_line_range": 6,
-    "source_method_not_lean_comment_label": 4650,
-    "source_span_method_mismatch": 4429,
-    "source_span_too_large": 177,
+    "source_method_not_lean_comment_label": 4654,
+    "source_span_method_mismatch": 4432,
+    "source_span_too_large": 2926,
     "too_many_lean_predecessors": 404
   },
   "selected_kinds": {
-    "abbrev": 25,
-    "def": 159,
-    "instance": 7,
-    "lemma": 9,
+    "abbrev": 24,
+    "def": 124,
+    "instance": 6,
     "structure": 11,
-    "theorem": 652
+    "theorem": 448
   },
-  "selected_records": 863,
+  "selected_records": 613,
   "selected_source_methods": {
-    "lean_comment_label": 863
+    "lean_comment_label": 613
   },
-  "selection_rate": 0.15183,
+  "selection_rate": 0.107847,
   "source_methods": {
-    "lean_comment_label": 1034,
-    "manifest_position_fallback": 4429,
-    "unmapped": 221
+    "lean_comment_label": 1030,
+    "manifest_position_fallback": 4432,
+    "unmapped": 222
   },
   "top_selected_chapters": [
     [
       "ac-definitions-and-examples-of-symmetric",
-      142
+      120
     ],
     [
       "ac-basic-definitions-transpositions-cycles",
-      87
-    ],
-    [
-      "ac-details-laurent-power-series",
-      55
+      68
     ],
     [
       "missing_chapter_id",
-      47
+      45
+    ],
+    [
+      "ac-details-laurent-power-series",
+      43
     ],
     [
       "ac-definitions-preamble-reminder-commutativ",
-      39
+      26
     ],
     [
       "ac-exponentials-and-logarithms",
-      36
-    ],
-    [
-      "ac-determinants-preamble-basic-properties",
-      35
+      26
     ],
     [
       "ac-details-limits-of-fpss",
-      32
+      22
     ],
     [
       "ac-definitions-the-definition-of-formal-pow",
-      32
+      19
     ],
     [
-      "ac-polynomials",
-      30
+      "ac-dividing-fpss",
+      17
     ],
     [
-      "ac-determinants-factor-hunting-desnanot-jac",
-      29
+      "ac-schur-polynomials-preamble-skew-young-di",
+      17
     ],
     [
       "ac-inversions-length-and-lehmer-codes-pream",
-      24
+      16
+    ],
+    [
+      "ac-substitution-and-evaluation-of-power-ser",
+      15
     ]
   ]
 }
