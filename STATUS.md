@@ -19,9 +19,11 @@ Remaining openrouter budget: 7.287381 $
 RepoProver is locally installed with Python in `.venv` and Lean/Lake through
 `elan`. The Algebraic Combinatorics vendored snapshot has been cleaned of
 duplicate/generated blueprint chapter artifacts while retaining canonical
-TeX/Lean sources. The minimal-context pilot now has a canonical 14-record,
-reviewed JSONL seed set for `NotationsExamples.lean` lines 202-370, with
-explicit costs, trust metadata, and hard negatives.
+TeX/Lean sources. The requested deliverable now exists: a complete deterministic
+whole-corpus context graph and declaration-level minimal-context collection for
+the vendored book/formalization snapshot, plus a reproducible local generator
+and documented data format. The reviewed 14-record seed remains the higher-trust
+subset for model-evaluation experiments.
 
 ## Active Goals
 - [x] Validate local RepoProver, Lean, and at least one live provider path.
@@ -30,6 +32,8 @@ explicit costs, trust metadata, and hard negatives.
 - [x] Revise generated records into a cleaner low-trust benchmark seed set.
 - [x] Scale generation/review to enough FPS chunks to expose recurring missing
   context patterns without curating away hard failures.
+- [x] Generate a complete whole-corpus context graph and minimal-context
+  collection with a documented reproducible pipeline and data format.
 - [ ] Feed selected records into a bounded RepoProver smoke so failures become
   concrete benchmark examples.
 
@@ -51,9 +55,14 @@ explicit costs, trust metadata, and hard negatives.
 - [ ] Run a cheap formatting/dry smoke before any live bounded build loop.
 - [ ] Run one live `--stop-after-first-merge` RepoProver smoke with enough model
   reasoning/context for Lean version, Mathlib API, and predecessor declarations.
-- [ ] After each decision point, update this file and commit the coherent unit.
+- [ ] Optionally review/filter the whole-corpus fallback records into a higher
+  trust gold subset before using them as benchmark labels.
 
 ## Blockers
+- The whole-corpus records are complete machine-generated candidates, not
+  fully human-certified gold. Trust fields distinguish exact Lean-comment label
+  matches from low-trust manifest-position fallbacks and unmapped Lean support
+  files.
 - The canonical generated records are Qwen-reviewed but not human-reviewed; keep
   their trust fields low and use reviewer verdicts for downstream selection.
 - Current reviewed verdicts are 1 provisionally accepted, 9 revise, and 4
@@ -80,12 +89,30 @@ explicit costs, trust metadata, and hard negatives.
   review cost `$0.015932`, and total recorded token-estimated cost `$0.036813`.
 - Added `docs/minimal-context-generation-report.md` summarizing artifacts, cost,
   elapsed time, review outcomes, and context-selection difficulty.
+- Added `scripts/generate_context_graph.py`, which deterministically emits
+  `docs/minimal-context-graph.json` and
+  `docs/minimal-context-full-records.jsonl` from local vendored sources with no
+  network/model spend.
+- Current whole-corpus generation produced 5,684 declaration records, 4,107 TeX
+  labels, 9,914 graph nodes, and 57,342 graph edges in about 24 seconds. Source
+  alignment methods: 1,036 `lean_comment_label`, 4,427
+  `manifest_position_fallback`, 221 `unmapped`.
+- Added `docs/minimal-context-format.md`,
+  `docs/minimal-context-whole-corpus-report.md`, and focused generator tests;
+  `uv run pytest tests/test_context_graph_generation.py
+  tests/test_minimal_context_review.py` passed, and graph/JSONL validation
+  passed.
 - Earlier toy validation succeeded with OpenRouter `z-ai/glm-5.1`; toy commits
   were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
-- Main benchmark artifacts are `docs/minimal-context-pilot-records.jsonl`,
+- Whole-corpus deliverable artifacts are `docs/minimal-context-graph.json`,
+  `docs/minimal-context-full-records.jsonl`,
+  `docs/minimal-context-format.md`,
+  `docs/minimal-context-whole-corpus-report.md`, and
+  `scripts/generate_context_graph.py`.
+- Main reviewed benchmark artifacts are `docs/minimal-context-pilot-records.jsonl`,
   `docs/minimal-context-generated-records.jsonl`, and
   `docs/minimal-context-generated-review-qwen3-coder-report.md`.
 - Batch 2 artifacts are
