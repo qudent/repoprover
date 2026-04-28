@@ -60,7 +60,7 @@ was stopped before a PR was submitted.
 - [x] Run a cheap formatting/dry smoke before any live bounded build loop.
 - [x] Run one live `--stop-after-first-merge` RepoProver smoke with enough model
   reasoning/context for Lean version, Mathlib API, and predecessor declarations.
-- [ ] Add a low max-iteration or repeated-tool-error kill rule before running
+- [x] Add a low max-iteration or repeated-tool-error kill rule before running
   more open-model RepoProver smokes.
 - [ ] Optionally review/filter the whole-corpus fallback records into a higher
   trust gold subset before using them as benchmark labels.
@@ -88,6 +88,10 @@ was stopped before a PR was submitted.
   but repeatedly called `lean_check`/`file_edit` with malformed strings such as
   `{'n': 'ℕ'}`. Treat this as a model/tool-use failure, not a context-selection
   failure.
+- The full `uv run pytest` suite currently includes the vendored
+  `algebraic-combinatorics/blueprint/test_docgen_data.py`, which fails because
+  `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is not
+  present. The repo-local focused tests passed.
 ## Recent Results
 - Removed duplicate/generated blueprint artifacts from
   `algebraic-combinatorics/` and documented the cleanup in
@@ -128,6 +132,14 @@ was stopped before a PR was submitted.
   `/tmp/repoprover-minctx-binom-zero/runs/20260428-164407/`, and
   `scripts/estimate_openrouter_budget.py` estimates 245,172 input tokens,
   2,000 output tokens, and `$0.05753784` cost.
+- Added a shared repeated-tool-error kill rule to `run_tool_loop`: by default,
+  three consecutive identical failing tool calls stop the agent with
+  `repeated_tool_error`. `repoprover run` now also exposes `--max-iterations`
+  and `--max-consecutive-tool-errors`.
+- Verified the guard with `uv run pytest tests/test_tool_loop.py
+  tests/test_recording.py` and `uv run python -m repoprover run --help`; full
+  `uv run pytest` got 282 passing tests plus the unrelated missing-docbuild
+  vendored blueprint failure.
 - Earlier toy validation succeeded with OpenRouter `z-ai/glm-5.1`; toy commits
   were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
 
@@ -162,3 +174,6 @@ was stopped before a PR was submitted.
   in this file, not in project-agnostic learnings.
 - Use `scripts/estimate_openrouter_budget.py` after live runs to recompute costs
   from actual token logs and current OpenRouter pricing.
+- The next Qwen-style smoke should keep the default
+  `--max-consecutive-tool-errors 3`; lower `--max-iterations` only if the smoke
+  target should be strictly budget-capped beyond the repeated-error guard.
