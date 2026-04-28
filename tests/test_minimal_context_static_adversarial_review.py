@@ -100,6 +100,74 @@ def test_static_review_rejects_missing_source_label(tmp_path: Path) -> None:
     assert any("does not contain" in issue for issue in result.label_or_line_issues)
 
 
+def test_static_review_accepts_parent_source_label_for_subpart_comment(tmp_path: Path) -> None:
+    write_project(
+        tmp_path,
+        "\n".join(
+            [
+                "namespace Toy",
+                "/-- Theorem thm.toy (a). Label: thm.toy.a -/",
+                "theorem target : True := by",
+                "  trivial",
+                "end Toy",
+            ]
+        )
+        + "\n",
+        "\\label{thm.toy}\nStatement with parts.\nProof.\n",
+    )
+    record = base_record()
+    record["alignment"]["comment_labels"] = ["thm.toy", "thm.toy.a"]
+
+    result = review(tmp_path, record)
+
+    assert result.verdict == "provisionally_accept"
+    assert result.missing_context == []
+
+
+def test_static_review_ignores_sorry_inside_comments(tmp_path: Path) -> None:
+    write_project(
+        tmp_path,
+        "\n".join(
+            [
+                "namespace Toy",
+                "/-- This complete proof mentions a prior sorry in prose. Theorem \\ref{thm.toy}. -/",
+                "theorem target : True := by",
+                "  trivial",
+                "end Toy",
+            ]
+        )
+        + "\n",
+        "\\label{thm.toy}\nStatement.\nProof.\n",
+    )
+
+    result = review(tmp_path, base_record())
+
+    assert result.verdict == "provisionally_accept"
+    assert not any("sorry" in issue for issue in result.label_or_line_issues)
+
+
+def test_static_review_rejects_sorry_in_code(tmp_path: Path) -> None:
+    write_project(
+        tmp_path,
+        "\n".join(
+            [
+                "namespace Toy",
+                "/-- Theorem \\ref{thm.toy}. -/",
+                "theorem target : True := by",
+                "  sorry",
+                "end Toy",
+            ]
+        )
+        + "\n",
+        "\\label{thm.toy}\nStatement.\nProof.\n",
+    )
+
+    result = review(tmp_path, base_record())
+
+    assert result.verdict == "reject"
+    assert any("sorry" in issue for issue in result.label_or_line_issues)
+
+
 def test_static_review_rejects_future_predecessor(tmp_path: Path) -> None:
     write_project(
         tmp_path,

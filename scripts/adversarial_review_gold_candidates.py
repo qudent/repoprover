@@ -96,6 +96,80 @@ def source_label_present(snippet: str, label: str) -> bool:
     return re.search(r"\\label\{" + re.escape(label) + r"\}", snippet) is not None
 
 
+def strip_lean_comments(code: str) -> str:
+    """Remove Lean comments before scanning code-only keywords."""
+
+    result: list[str] = []
+    index = 0
+    length = len(code)
+    while index < length:
+        if code.startswith("/-", index):
+            depth = 1
+            index += 2
+            while index < length and depth:
+                if code.startswith("/-", index):
+                    depth += 1
+                    index += 2
+                elif code.startswith("-/", index):
+                    depth -= 1
+                    index += 2
+                else:
+                    index += 1
+            continue
+        if code.startswith("--", index):
+            while index < length and code[index] != "\n":
+                index += 1
+            continue
+        result.append(code[index])
+        index += 1
+    return "".join(result)
+
+
+def has_incomplete_code(snippet: str) -> bool:
+    return INCOMPLETE_RE.search(strip_lean_comments(snippet)) is not None
+
+
+def label_coverage_candidates(label: str) -> list[str]:
+    """Return exact and parent labels that can cover a Lean subpart reference.
+
+    The TeX often labels a theorem once and then names parts as (a), (b), etc.
+    Lean comments may record those as synthetic labels such as
+    ``thm.foo.a`` or ``thm.foo(a)``.  Those are covered by the parent TeX label
+    when the source span points at the parent theorem/proposition.
+    """
+
+    candidates: list[str] = []
+    seen: set[str] = set()
+
+    def add(candidate: str) -> None:
+        cleaned = clean_label_like_token(candidate)
+        if cleaned and cleaned not in seen:
+            candidates.append(cleaned)
+            seen.add(cleaned)
+
+    add(label)
+    if "(" in label:
+        add(label.split("(", 1)[0])
+
+    current = label
+    while "." in current:
+        current = current.rsplit(".", 1)[0]
+        add(current)
+
+    return candidates
+
+
+def clean_label_like_token(label: str) -> str:
+    cleaned = label.strip().rstrip(".,;:")
+    while cleaned.endswith(")") and cleaned.count(")") > cleaned.count("("):
+        cleaned = cleaned[:-1].rstrip(".,;:")
+    return cleaned
+
+
+def source_labels_cover(comment_label: str, source_span_labels: set[str]) -> bool:
+    return any(candidate in source_span_labels for candidate in label_coverage_candidates(comment_label))
+
+
 def classify_label_kind(record: dict[str, Any], labels: set[str]) -> list[str]:
     expected = LABEL_KIND_BY_OUTPUT_KIND.get(record["output"].get("chunk_kind", ""), set())
     if not expected:
@@ -153,7 +227,7 @@ def review_record(
                 f"record={sorted(aligned_labels)}, parsed={sorted(parsed_labels)}."
             )
 
-    if INCOMPLETE_RE.search(target_snippet):
+    if has_incomplete_code(target_snippet):
         label_or_line_issues.append("Target Lean output contains `sorry` or `admit`, so it is not a complete gold output.")
 
     source_span_labels: set[str] = set()
@@ -172,7 +246,9 @@ def review_record(
                 )
 
     aligned_labels = set(record.get("alignment", {}).get("comment_labels", []))
-    missing_source_labels = sorted(aligned_labels - source_span_labels)
+    missing_source_labels = sorted(
+        label for label in aligned_labels if not source_labels_cover(label, source_span_labels)
+    )
     if missing_source_labels:
         missing_context.append(
             "Lean doc-comment label(s) are not represented by source_spans: "
