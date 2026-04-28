@@ -168,3 +168,35 @@ tokens, costing `$0.0038658`.
 Treat these records as a scaffold, not gold. The next useful step is a reviewer
 pass that tries to break each record by finding missing source context, missing
 Mathlib/Lean predecessor context, or overly broad clusters.
+
+## First Reviewer Pass
+
+`scripts/review_minimal_context_records.py` now runs an evidence-backed
+OpenRouter audit over the JSONL records. It fetches the corresponding TeX and
+Lean snippets from `facebookresearch/algebraic-combinatorics`, asks a reviewer
+model for structured JSON, records token usage and estimated price, and writes a
+Markdown report.
+
+Two live reviewer attempts were run on April 28, 2026:
+
+| Model | Result | Prompt/completion tokens | Estimated cost |
+|---|---|---:|---:|
+| `deepseek/deepseek-v4-pro` | Transport and billing worked, but the model returned empty message content after spending the 4,096 completion-token cap on hidden reasoning. Kept as a provider failure record. | 13,819 / 12,288 | `$0.016702` |
+| `qwen/qwen3-coder` | Produced parseable JSON reviews for all three records. | 11,321 / 1,298 | `$0.004827` |
+
+The Qwen review marked all three records as still needing revision. Durable
+fixes already applied to `docs/minimal-context-pilot-records.jsonl`:
+
+- clipped reviewer evidence to the declared Lean output range, after a first
+  audit pass leaked neighbor declarations and produced a false `binom_neg_one`
+  finding;
+- added missing binomial proof dependencies such as `Nat.cast_ne_zero`,
+  `Nat.factorial_ne_zero`, `nsmul_eq_mul`, and `npow_one`;
+- expanded the Pascal identity source span to include the sentence introducing
+  the cited basic facts;
+- added explicit Pascal identity proof/typeclass context including
+  `BinomialRing`, `NatPowAssoc`, `Nat.succ_pred_eq_of_pos`,
+  `Nat.pred_eq_sub_one`, and `Nat.sub_add_cancel`.
+
+The current records remain low-trust because no human has reviewed them and
+because broad `Mathlib` imports are not yet minimized to exact module imports.

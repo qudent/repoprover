@@ -1,7 +1,7 @@
 # RepoProver - Human/Agents Whiteboard
 
 ## Active Human Prompts
-- Review `docs/minimal-context-pilot-records.jsonl` before treating the records as gold. They are deliberately low-trust and should be attacked for missing source spans, missing Lean predecessors, or oversized context.
+- No unresolved prompt. The first minimal-context records have been attacked by a live Qwen reviewer and hardened, but still need human review before being treated as gold.
 
 ## Agent Notes
 - Local install is complete. Toy Lean setup/build succeeds at `/tmp/repoprover-toy-test`.
@@ -15,6 +15,9 @@
 - Added `scripts/estimate_openrouter_budget.py` for live OpenRouter price/balance estimates from actual RepoProver token logs.
 - Added `--stop-after-first-merge` to bound smoke tests. It means: after the first approved PR merges and passes the merge build, the coordinator exits before launching maintain/proof follow-up agents.
 - Live cheap extraction pass: `qwen/qwen3-coder` over first chapter excerpts produced three seed records at 11,582 input tokens / 404 output tokens / `$0.0038658`; records were line-checked and kept low-trust.
+- Added `scripts/review_minimal_context_records.py` to fetch published TeX/Lean snippets and run OpenRouter reviewer audits over the JSONL records.
+- DeepSeek reviewer attempt (`deepseek/deepseek-v4-pro`) reached OpenRouter and billed about `$0.016702`, but returned empty content after the 4,096 completion-token cap; keep the parse-error report as a provider failure example.
+- Qwen reviewer pass (`qwen/qwen3-coder`) reviewed all three records for about `$0.004827`. Records were hardened with added Mathlib/proof dependencies, a clipped evidence bug fix, and low-trust review notes.
 
 ## Open Questions
-- Which reviewer model should audit the pilot records first: cheapest breadth (`qwen/qwen3-coder`) or stronger long-context audit (`deepseek/deepseek-v4-pro`)?
+- Should the next pass spend budget on exact Mathlib import minimization for these three records, or scale the same Qwen review process to more FPS chunks first?

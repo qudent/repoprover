@@ -10,3 +10,5 @@ build/
 .env
 .mypy_cache/
 .pytest_cache/
+.cache/
+uv.lock
