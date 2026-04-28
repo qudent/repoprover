@@ -1,14 +1,13 @@
 # RepoProver - Status
-# Overall direction
-As in AGENTS.md
+## Overall direction
+We want to build a gold standard "minimal context" dataset from this repo+formalization, so that we can iterate graph for this formalization and learn how to replicat the previous 100k$ autoformalization for much cheaper with open models or so. The idea is to get a "gold standard" dataset that we can iterate on with cheap models.
 
-Make as much autonomous progress as possible towards a publishable
-minimal-context benchmark with the remaining roughly `$7` OpenRouter budget and
-the requested 3 hour work window. Focus on generating a gold-standard set
-from the real Algebraic Combinatorics formalization, using scripts plus Codex
-judgment, while tracking spend/time and how inferable each needed backward
-context item is from textbook LaTeX alone. Trust belongs in the benchmark data
-format, not as loose status prose.
+## Next autonomous deliverable
+
+Next autonomous deliverable:
+Clean up the algebraic combinatorics repo (and write into algebraic-combinatorics/CLEANUP_NOTE.md what you did) as follows: Remove duplicate latex source (eg summarized files that repeat the original chapter texts). Step after that: Make a 'gold standard' dataset mapping each output chunk of lean (at the appropriate level - maybe lemma or so? make choice yourself after looking) to the minimal context necessary to produce it - so, previous latex snippets, and previous lean formalizations that specify something necessary to know, with a mapping on a file:line levels. no circular dependencies. report how hard it would be to reproduce that. you can do that selection with a small model and verify. make a report how hard the "context selection" task is and what challenges you encountered. The "gold standard minimal context mapping generation task" should become replicable and cost tracked (as said, in a file format that maps lines to context). next autonomous deliverable is this gold standard dataset with mapping. Finish after you did that. Also make a report how much it cost, and how long it takes.
+
+Deliverable: A minimal context mapping (mapping line regions/files to lines), and tooling to generate it. should use open source agents.
 
 Avoid editing above the line except to preserve new human direction.
 -------
