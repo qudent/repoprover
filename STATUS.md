@@ -28,7 +28,9 @@ subset for model-evaluation experiments.
 The first selected-record RepoProver smoke has also been run and recorded as a
 concrete benchmark failure: the chosen context was sufficient, but
 `qwen/qwen3-coder` repeatedly produced malformed tool-call/edit arguments and
-was stopped before a PR was submitted.
+was stopped before a PR was submitted. A deterministic high-trust candidate
+filter now selects the exact-label, bounded-size, file/line-validated subset of
+the whole-corpus records for the next review/smoke queue.
 
 ## Active Goals
 - [x] Validate local RepoProver, Lean, and at least one live provider path.
@@ -62,8 +64,10 @@ was stopped before a PR was submitted.
   reasoning/context for Lean version, Mathlib API, and predecessor declarations.
 - [x] Add a low max-iteration or repeated-tool-error kill rule before running
   more open-model RepoProver smokes.
-- [ ] Optionally review/filter the whole-corpus fallback records into a higher
-  trust gold subset before using them as benchmark labels.
+- [x] Filter the whole-corpus records into a higher-trust gold-candidate subset
+  before using them as benchmark labels.
+- [ ] Optionally adversarially review the 863 gold candidates before treating
+  them as final gold labels.
 
 ## Blockers
 - The whole-corpus records are complete machine-generated candidates, not
@@ -140,6 +144,15 @@ was stopped before a PR was submitted.
   tests/test_recording.py` and `uv run python -m repoprover run --help`; full
   `uv run pytest` got 282 passing tests plus the unrelated missing-docbuild
   vendored blueprint failure.
+- Added `scripts/filter_minimal_context_gold_candidates.py`, which selects
+  863 exact `lean_comment_label` records from the 5,684-record whole corpus
+  with valid file/line spans and bounded context size. Outputs are
+  `docs/minimal-context-gold-candidates.jsonl` and
+  `docs/minimal-context-gold-candidates-report.md`; model/API cost was `$0.00`.
+- Verified the selector and adjacent minimal-context helpers with
+  `uv run pytest tests/test_minimal_context_gold_filter.py
+  tests/test_context_graph_generation.py tests/test_minimal_context_review.py`
+  (14 passed).
 - Earlier toy validation succeeded with OpenRouter `z-ai/glm-5.1`; toy commits
   were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
 
@@ -147,9 +160,15 @@ was stopped before a PR was submitted.
 - `STATUS.md` is the single coordination source of truth for this repo;
 - Whole-corpus deliverable artifacts are `docs/minimal-context-graph.json`,
   `docs/minimal-context-full-records.jsonl`,
+  `docs/minimal-context-gold-candidates.jsonl`,
   `docs/minimal-context-format.md`,
   `docs/minimal-context-whole-corpus-report.md`, and
   `scripts/generate_context_graph.py`.
+- Gold-candidate selector artifacts are
+  `scripts/filter_minimal_context_gold_candidates.py`,
+  `docs/minimal-context-gold-candidates.jsonl`, and
+  `docs/minimal-context-gold-candidates-report.md`. This subset is higher
+  trust but not human-certified; dependency context remains heuristic.
 - Main reviewed benchmark artifacts are `docs/minimal-context-pilot-records.jsonl`,
   `docs/minimal-context-generated-records.jsonl`, and
   `docs/minimal-context-generated-review-qwen3-coder-report.md`.
