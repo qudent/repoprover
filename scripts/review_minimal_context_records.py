@@ -26,7 +26,7 @@ from typing import Any
 from openai import OpenAI
 
 
-DEFAULT_MODEL = "deepseek/deepseek-v4-pro"
+DEFAULT_MODEL = "qwen/qwen3.6-35b-a3b"
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_SOURCE_BASE = "https://raw.githubusercontent.com/facebookresearch/algebraic-combinatorics/main"
 
@@ -234,13 +234,17 @@ def call_reviewer(
     max_tokens: int,
     temperature: float,
     prices: dict[str, tuple[float, float]],
+    extra_body: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    response = client.chat.completions.create(
-        model=model,
-        messages=review_prompt(evidence),
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
+    kwargs: dict[str, Any] = {
+        "model": model,
+        "messages": review_prompt(evidence),
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+    }
+    if extra_body:
+        kwargs["extra_body"] = extra_body
+    response = client.chat.completions.create(**kwargs)
     content = response.choices[0].message.content or ""
     try:
         parsed = extract_json_object(content)
@@ -351,6 +355,11 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=0, help="Limit number of records reviewed.")
     parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument(
+        "--reasoning-effort",
+        choices=["none", "minimal", "low", "medium", "high", "xhigh"],
+        help="OpenRouter reasoning effort override; use 'none' for schema-bound JSON review.",
+    )
     parser.add_argument("--source-context", type=int, default=6)
     parser.add_argument("--lean-context", type=int, default=0)
     parser.add_argument("--dry-run", action="store_true", help="Build evidence only; do not call OpenRouter.")
@@ -385,6 +394,11 @@ def main() -> int:
 
     client = OpenAI(base_url=DEFAULT_BASE_URL, api_key=api_key)
     prices = openrouter_prices([args.model])
+    extra_body = (
+        {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
+        if args.reasoning_effort
+        else None
+    )
     reviewed_at = datetime.now(timezone.utc).isoformat()
 
     rows: list[dict[str, Any]] = []
@@ -397,6 +411,7 @@ def main() -> int:
             max_tokens=args.max_tokens,
             temperature=args.temperature,
             prices=prices,
+            extra_body=extra_body,
         )
         rows.append(
             {

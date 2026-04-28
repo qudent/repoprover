@@ -49,7 +49,7 @@ except ModuleNotFoundError:
     )
 
 
-DEFAULT_MODEL = "qwen/qwen3-coder"
+DEFAULT_MODEL = "qwen/qwen3.6-35b-a3b"
 GENERATOR_VERSION = "minimal-context-record-generator-v1"
 MODEL_TRUST_CAPS = {
     "source_span": 0.65,
@@ -364,14 +364,18 @@ def call_generator(
     max_tokens: int,
     temperature: float,
     prices: dict[str, tuple[float, float]],
+    extra_body: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], str, ReviewUsage, float]:
     started = time.monotonic()
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
+    kwargs: dict[str, Any] = {
+        "model": model,
+        "messages": messages,
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+    }
+    if extra_body:
+        kwargs["extra_body"] = extra_body
+    response = client.chat.completions.create(**kwargs)
     elapsed = time.monotonic() - started
     content = response.choices[0].message.content or ""
     parsed = extract_json_object(content)
@@ -486,6 +490,11 @@ def main() -> int:
     parser.add_argument("--include-private", action="store_true")
     parser.add_argument("--max-tokens", type=int, default=2048)
     parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument(
+        "--reasoning-effort",
+        choices=["none", "minimal", "low", "medium", "high", "xhigh"],
+        help="OpenRouter reasoning effort override; use 'none' for schema-bound JSON generation.",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print candidate evidence and do not call OpenRouter.")
     parser.add_argument("--keep-raw-response", action="store_true", help="Keep raw_model_response in output JSONL.")
     args = parser.parse_args()
@@ -523,6 +532,11 @@ def main() -> int:
 
     client = OpenAI(base_url=DEFAULT_BASE_URL, api_key=api_key)
     prices = openrouter_prices([args.model])
+    extra_body = (
+        {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
+        if args.reasoning_effort
+        else None
+    )
     generated_at = datetime.now(timezone.utc).isoformat()
     rows: list[dict[str, Any]] = []
     for candidate in candidates:
@@ -541,6 +555,7 @@ def main() -> int:
                 max_tokens=args.max_tokens,
                 temperature=args.temperature,
                 prices=prices,
+                extra_body=extra_body,
             )
         except Exception as exc:
             print(f"error: generation failed for {candidate.record_suffix}: {exc}", file=sys.stderr)

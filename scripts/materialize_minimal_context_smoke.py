@@ -375,7 +375,7 @@ def main() -> int:
     print(f"Project: {args.output}")
     print(
         "Run: uv run python -m repoprover run "
-        f"{args.output} --pool-size 1 --provider openrouter --model qwen/qwen3-coder "
+        f"{args.output} --pool-size 1 --provider openrouter --model qwen/qwen3.6-35b-a3b "
         "--no-background-agents --stop-after-first-merge --verbose"
     )
     return 0

@@ -22,10 +22,12 @@ from count_tokens import AgentTokenStats, analyze_run, find_all_runs
 
 
 DEFAULT_MODELS = [
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.6-27b",
+    "qwen/qwen3.6-plus",
     "deepseek/deepseek-v4-pro",
-    "qwen/qwen3-coder",
-    "qwen/qwen3-coder-plus",
-    "z-ai/glm-5",
+    "qwen/qwen3-coder-next",
+    "moonshotai/kimi-k2.6",
     "z-ai/glm-5.1",
     "google/gemini-2.5-flash",
 ]
