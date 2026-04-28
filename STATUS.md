@@ -54,13 +54,6 @@ as supervision for later bounded RepoProver runs.
 - [ ] After each decision point, update this file and commit the coherent unit.
 
 ## Blockers
-- Vendoring `facebookresearch/algebraic-combinatorics` is still blocked in the
-  shell despite the latest user note about sandboxing: `git clone --depth 1
-  https://github.com/facebookresearch/algebraic-combinatorics
-  algebraic-combinatorics` failed with `Could not resolve host: github.com`,
-  `getent hosts github.com` returned nothing, and direct-IP `curl` to GitHub
-  could not connect. The GitHub connector can inspect individual files, but it
-  does not provide a way to materialize a complete local checkout.
 - The generated records are not yet human-reviewed and remain low trust by
   design; their trust fields must drive downstream selection.
 - The latest Qwen review rejected `prod_odd_eq_doubleFactorial` and requested
@@ -74,12 +67,9 @@ as supervision for later bounded RepoProver runs.
 - Disk and existing `/tmp/repoprover-toy-gemini3-flash` state need care before
   another full toy or benchmark smoke.
 ## Recent Results
-- Retried cloning the formalization repo after the user said the environment
-  should now work without sandboxing; shell network is still blocked, no
-  `algebraic-combinatorics/` directory was created, and there is nothing to
-  remove under `.git` or commit as a vendored checkout.
-- Attempted to clone the formalization repo into `algebraic-combinatorics/`;
-  no files were created because local network access to GitHub is unavailable.
+- Successfully cloned `facebookresearch/algebraic-combinatorics` at upstream
+  commit `b6022318e986a0c20764569208ba8ebbe1c04dbf`, removed its nested `.git`
+  directory, and prepared the source tree for vendoring.
 - Added a root `AGENTS.md` contributor guide covering repo layout, `uv`/pytest
   commands, toy Lean smoke testing, coding style, and PR expectations.
 - Added and live-tested `scripts/generate_minimal_context_records.py`; the
@@ -97,6 +87,10 @@ as supervision for later bounded RepoProver runs.
 - Main benchmark artifacts are `docs/minimal-context-pilot-records.jsonl`,
   `docs/minimal-context-generated-records.jsonl`, and
   `docs/minimal-context-generated-review-qwen3-coder-report.md`.
+- `algebraic-combinatorics/` is a vendored snapshot of
+  `facebookresearch/algebraic-combinatorics` from commit
+  `b6022318e986a0c20764569208ba8ebbe1c04dbf`; its nested `.git` directory was
+  intentionally removed before commit.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.
