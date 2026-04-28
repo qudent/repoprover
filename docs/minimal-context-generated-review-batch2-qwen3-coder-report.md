@@ -1,10 +1,10 @@
 # Minimal-Context Pilot Review
 
-Records reviewed: 8 from `docs/minimal-context-generated-records-batch2.jsonl`.
+Records reviewed: 10 from `docs/minimal-context-generated-records-batch2.jsonl`.
 Reviewer model: `qwen/qwen3-coder`.
 Run timestamp: `2026-04-28T15:57:43.537273+00:00`.
-Token usage: 16,821 prompt / 2,862 completion.
-Estimated OpenRouter cost: `$0.008852`.
+Token usage: 20,187 prompt / 3,573 completion.
+Estimated OpenRouter cost: `$0.010873`.
 
 ## Findings
 
@@ -169,3 +169,44 @@ Estimated OpenRouter cost: `$0.008852`.
   - Lean output directly applies Nat.choose_symm and Eq.symm but neither is derivable from the TeX as given
   - The mismatch between source and target contexts indicates a failure of minimal sufficiency
 - Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.2, "source_span": 0.3}`
+
+### ac-notations-and-elementary-facts-examples:binom_symm_add
+
+- Verdict: `reject` (1,662 prompt / 366 completion, $0.001024).
+- Source span: Insufficiently specific to justify Lean output
+- Lean context: Missing key Lean API and notation context
+- Missing context:
+  - The precise statement being formalized: (a + b).choose a = (a + b).choose b
+  - Nat type constraint in the theorem signature
+  - Lean's Nat.choose notation and its binding power
+  - The specific Mathlib lemma Nat.choose_symm_add being applied
+- Recommended edits:
+  - Add the exact Lean theorem statement to source_spans for proper context
+  - Include Nat.choose_symm_add in mathlib_context with explanation of its role
+  - Add Nat type notation context to lean_predecessors or mathlib_context
+  - Clarify that the TeX source does not contain the specific identity being formalized
+- Review notes:
+  - The TeX source discusses general binomial symmetry but does not state the specific case (a+b).choose a = (a+b).choose b
+  - Lean output requires explicit knowledge of Nat.choose notation and Nat.choose_symm_add lemma
+  - Record lacks the precise mathematical statement being formalized
+  - Missing critical context about Lean's Nat type and choose notation binding
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.2, "model_extraction": 0.1, "source_span": 0.3}`
+
+### ac-notations-and-elementary-facts-examples:binom_symm_of_eq_add
+
+- Verdict: `reject` (1,704 prompt / 345 completion, $0.000996).
+- Source span: Insufficiently specific to justify Lean formulation
+- Lean context: Missing key Mathlib dependencies and Lean-specific notation
+- Missing context:
+  - Nat.choose_symm_of_eq_add (specific Mathlib lemma used in proof)
+  - n.choose notation definition in Lean
+  - ℕ type constraints and their implications in Lean
+- Recommended edits:
+  - Add explicit mention of Nat.choose_symm_of_eq_add in mathlib_context
+  - Include n.choose notation in mathlib_context
+  - Clarify that the source span provides conceptual but not formal justification
+- Review notes:
+  - Source span discusses binomial coefficient symmetry but in general form (n choose k = n choose (n-k)), not the specific additive decomposition form (n = a + b implies n choose a = n choose b) used in Lean
+  - The Lean theorem name and proof reference Nat.choose_symm_of_eq_add which is not derivable from the provided TeX source alone
+  - Missing context includes Lean-specific notation (n.choose) and type constraints (ℕ) that are essential for formal statement
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.2, "model_extraction": 0.1, "source_span": 0.3}`
