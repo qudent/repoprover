@@ -35,10 +35,12 @@ model selection has been refreshed from live catalog data: `qwen/qwen3-coder`
 is historical, while `qwen/qwen3.6-35b-a3b` is now the default open-weight Qwen
 model for minimal-context JSON generation/review. `Goedel-Prover-V2-32B` is the
 best documented self-hosted Lean-prover candidate found in current research,
-but it is not available in the OpenRouter catalog. The 863 deterministic gold
-candidates now have a zero-cost static adversarial review pass: only 35 are
-mechanically clean, 656 need predecessor-context narrowing, and 172 are rejected
-for mechanical issues before semantic review.
+but it is not available in the OpenRouter catalog. The TeX label extractor has
+been corrected to index only `\label{...}` definitions, not `\ref{...}` uses.
+The refreshed exact-label queue has 613 deterministic gold candidates; the
+zero-cost static adversarial review finds 31 mechanically clean, 580 needing
+predecessor-context or label-token cleanup, and only 2 rejected for incomplete
+Lean outputs before semantic review.
 
 ## Active Goals
 - [x] Validate local RepoProver, Lean, and at least one live provider path.
@@ -76,7 +78,7 @@ for mechanical issues before semantic review.
   before using them as benchmark labels.
 - [x] Refresh OSS model choices online and rerun batch-2 generation/review with
   a current OpenRouter Qwen model.
-- [x] Optionally adversarially review the 863 gold candidates before treating
+- [x] Optionally adversarially review the 613 gold candidates before treating
   them as final gold labels.
 
 ## Blockers
@@ -84,11 +86,10 @@ for mechanical issues before semantic review.
   fully human-certified gold. Trust fields distinguish exact Lean-comment label
   matches from low-trust manifest-position fallbacks and unmapped Lean support
   files.
-- Static adversarial review found that many apparent exact labels were TeX
-  references rather than label definitions because the graph generator's label
-  extractor accepts both `\label{...}` and `\ref{...}` tokens. Treat the 172
-  rejected gold candidates as mechanically invalid until label extraction is
-  separated.
+- Residual static review issues after the label-extractor fix are mostly
+  oversized predecessor context and noisy doc-comment token matches such as
+  trailing `**` or `)`; the exact-label queue is cleaner but not
+  human-certified.
 - The canonical generated records are Qwen-reviewed but not human-reviewed; keep
   their trust fields low and use reviewer verdicts for downstream selection.
   The newer Qwen3.6 rerun is a comparison artifact, not a human-certified gold
@@ -137,10 +138,10 @@ for mechanical issues before semantic review.
   `AlgebraicCombinatorics/tex/all.tex` and
   `AlgebraicCombinatorics/tex/detnotes.tex`; regenerated the graph/records so
   no context span points at either file.
-- Current whole-corpus generation produced 5,684 declaration records, 812 TeX
-  labels, 6,617 graph nodes, and 54,047 graph edges in about 23 seconds. Source
-  alignment methods: 1,034 `lean_comment_label`, 4,429
-  `manifest_position_fallback`, 221 `unmapped`.
+- Current whole-corpus generation produced 5,684 declaration records, 790 TeX
+  labels, 6,573 graph nodes, and 53,999 graph edges in about 23 seconds. Source
+  alignment methods: 1,030 `lean_comment_label`, 4,432
+  `manifest_position_fallback`, 222 `unmapped`.
 - Added `docs/minimal-context-format.md`,
   `docs/minimal-context-whole-corpus-report.md`, and focused generator tests;
   `uv run pytest tests/test_context_graph_generation.py
@@ -164,8 +165,8 @@ for mechanical issues before semantic review.
   tests/test_recording.py` and `uv run python -m repoprover run --help`; full
   `uv run pytest` got 282 passing tests plus the unrelated missing-docbuild
   vendored blueprint failure.
-- Added `scripts/filter_minimal_context_gold_candidates.py`, which selects
-  863 exact `lean_comment_label` records from the 5,684-record whole corpus
+- Added `scripts/filter_minimal_context_gold_candidates.py`, which now selects
+  613 exact `lean_comment_label` records from the 5,684-record whole corpus
   with valid file/line spans and bounded context size. Outputs are
   `docs/minimal-context-gold-candidates.jsonl` and
   `docs/minimal-context-gold-candidates-report.md`; model/API cost was `$0.00`.
@@ -189,12 +190,17 @@ for mechanical issues before semantic review.
 - Added `scripts/adversarial_review_gold_candidates.py`, tests, and the
   generated review artifacts
   `docs/minimal-context-gold-candidate-static-review.{jsonl,md}`. The local
-  pass reviewed all 863 selected candidates in under a second at `$0.00` model
-  cost, with verdicts 35 provisionally accepted, 656 revise, and 172 reject.
-  Issue categories were 170 source spans that cite a `\ref` rather than a
-  defining `\label`, 4 incomplete Lean outputs containing `sorry`/`admit`, 2
-  parsed line-range mismatches, 39 unrepresented doc-comment labels, and 2,069
-  likely oversized predecessor entries.
+  pass reviewed all 613 selected candidates in under a second at `$0.00` model
+  cost, with verdicts 31 provisionally accepted, 580 revise, and 2 reject.
+  Issue categories are now 2 incomplete Lean outputs containing `sorry`/`admit`,
+  27 unrepresented doc-comment labels, and 1,488 likely oversized predecessor
+  entries.
+- Fixed `scripts/generate_context_graph.py` so TeX source indexing records only
+  `\label{...}` definitions while Lean comments may still reference
+  `\ref{...}`. Regenerated `docs/minimal-context-graph.json`,
+  `docs/minimal-context-full-records.jsonl`,
+  `docs/minimal-context-gold-candidates.jsonl`, and the static review report;
+  `uv run pytest tests/test_context_graph_generation.py` passed.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
