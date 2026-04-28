@@ -1,17 +1,20 @@
 # RepoProver - Status
-
 # Overall direction
-Make as much autonomous progress as possible toward derisking a publishable
+As in AGENTS.md
+
+Make as much autonomous progress as possible towards a publishable
 minimal-context benchmark with the remaining roughly `$7` OpenRouter budget and
-the requested multi-hour work window. Focus on generating a gold-standard set
+the requested 3 hour work window. Focus on generating a gold-standard set
 from the real Algebraic Combinatorics formalization, using scripts plus Codex
 judgment, while tracking spend/time and how inferable each needed backward
 context item is from textbook LaTeX alone. Trust belongs in the benchmark data
-format, not as loose status prose. Commit at decision points; if context runs
-out, continue with `codex_commit_push` as described in learnings.
+format, not as loose status prose.
 
 Avoid editing above the line except to preserve new human direction.
 -------
+Start time of work: <insert current time here when you start work>
+Remaining openrouter budget: <insert remaining budget> $
+
 
 ## Current State
 RepoProver is locally installed with Python in `.venv` and Lean/Lake through
@@ -65,6 +68,8 @@ as supervision for later bounded RepoProver runs.
   another full toy or benchmark smoke.
 
 ## Recent Results
+- Added a root `AGENTS.md` contributor guide covering repo layout, `uv`/pytest
+  commands, toy Lean smoke testing, coding style, and PR expectations.
 - Added and live-tested `scripts/generate_minimal_context_records.py`; the
   committed generation pass produced four records for lines 202-261 of
   `NotationsExamples.lean`, costing about `$0.006556`.
@@ -76,8 +81,7 @@ as supervision for later bounded RepoProver runs.
   were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
 
 ## Agent Notes
-- `STATUS.md` is the single coordination source of truth for this repo; there
-  is no separate whiteboard.
+- `STATUS.md` is the single coordination source of truth for this repo;
 - Main benchmark artifacts are `docs/minimal-context-pilot-records.jsonl`,
   `docs/minimal-context-generated-records.jsonl`, and
   `docs/minimal-context-generated-review-qwen3-coder-report.md`.
