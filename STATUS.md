@@ -12,7 +12,8 @@ Deliverable: A minimal context mapping (mapping line regions/files to lines), an
 Avoid editing above the line except to preserve new human direction.
 -------
 Start time of work: 2026-04-28T15:52:46Z
-Remaining openrouter budget: 7.287381 $
+Remaining openrouter budget: about 7.229843 $ after token-log estimate from
+the Qwen minimal-context smoke; refresh credits before more live runs.
 
 
 ## Current State
@@ -24,6 +25,10 @@ whole-corpus context graph and declaration-level minimal-context collection for
 the vendored book/formalization snapshot, plus a reproducible local generator
 and documented data format. The reviewed 14-record seed remains the higher-trust
 subset for model-evaluation experiments.
+The first selected-record RepoProver smoke has also been run and recorded as a
+concrete benchmark failure: the chosen context was sufficient, but
+`qwen/qwen3-coder` repeatedly produced malformed tool-call/edit arguments and
+was stopped before a PR was submitted.
 
 ## Active Goals
 - [x] Validate local RepoProver, Lean, and at least one live provider path.
@@ -34,7 +39,7 @@ subset for model-evaluation experiments.
   context patterns without curating away hard failures.
 - [x] Generate a complete whole-corpus context graph and minimal-context
   collection with a documented reproducible pipeline and data format.
-- [ ] Feed selected records into a bounded RepoProver smoke so failures become
+- [x] Feed selected records into a bounded RepoProver smoke so failures become
   concrete benchmark examples.
 
 ## TODO Plan
@@ -49,12 +54,14 @@ subset for model-evaluation experiments.
   `tex_only_inferability`.
 - [x] Review the larger batch with a cheap adversarial reviewer before spending
   on RepoProver runs.
-- [ ] Select the lowest-risk direct Mathlib-wrapper records for the first
+- [x] Select the lowest-risk direct Mathlib-wrapper records for the first
   retrieval/prompt smoke, while keeping double-factorial/divisibility records as
   hard negatives.
-- [ ] Run a cheap formatting/dry smoke before any live bounded build loop.
-- [ ] Run one live `--stop-after-first-merge` RepoProver smoke with enough model
+- [x] Run a cheap formatting/dry smoke before any live bounded build loop.
+- [x] Run one live `--stop-after-first-merge` RepoProver smoke with enough model
   reasoning/context for Lean version, Mathlib API, and predecessor declarations.
+- [ ] Add a low max-iteration or repeated-tool-error kill rule before running
+  more open-model RepoProver smokes.
 - [ ] Optionally review/filter the whole-corpus fallback records into a higher
   trust gold subset before using them as benchmark labels.
 
@@ -76,6 +83,11 @@ subset for model-evaluation experiments.
 - Disk and existing `/tmp/repoprover-toy-gemini3-flash` state need care before
   another full toy or benchmark smoke; accidental `.lake` cache under the
   vendored snapshot was removed after cleanup.
+- `qwen/qwen3-coder` is not currently reliable for this prover/tool loop even
+  on the trivial `binom_zero_of_lt` record: it found the right Mathlib theorem
+  but repeatedly called `lean_check`/`file_edit` with malformed strings such as
+  `{'n': 'ℕ'}`. Treat this as a model/tool-use failure, not a context-selection
+  failure.
 ## Recent Results
 - Removed duplicate/generated blueprint artifacts from
   `algebraic-combinatorics/` and documented the cleanup in
@@ -106,6 +118,16 @@ subset for model-evaluation experiments.
   `uv run pytest tests/test_context_graph_generation.py
   tests/test_minimal_context_review.py` passed, and graph/JSONL validation
   passed.
+- Added `scripts/materialize_minimal_context_smoke.py` and tests, then
+  materialized `/tmp/repoprover-minctx-binom-zero` from
+  `ac-notations-and-elementary-facts-examples:binom_zero_of_lt`; RepoProver
+  status showed 1/1 chapters sketched and `lake env lean` compiled with the
+  expected single `sorry` warning.
+- Ran a bounded live OpenRouter smoke with `qwen/qwen3-coder`; it was stopped
+  after repeated malformed `lean_check`/`file_edit` calls. Logs are under
+  `/tmp/repoprover-minctx-binom-zero/runs/20260428-164407/`, and
+  `scripts/estimate_openrouter_budget.py` estimates 245,172 input tokens,
+  2,000 output tokens, and `$0.05753784` cost.
 - Earlier toy validation succeeded with OpenRouter `z-ai/glm-5.1`; toy commits
   were `97c3bd9` sketch, `ed17e510` merge, and `eef1daf` follow-up issues.
 
@@ -125,6 +147,12 @@ subset for model-evaluation experiments.
   `docs/minimal-context-generated-review-batch2-qwen3-coder-report.md`.
 - `docs/minimal-context-generation-report.md` is the current human-readable
   deliverable report for the minimal-context mapping seed set.
+- `docs/minimal-context-repoprover-smoke-report.md` records the first
+  selected-record RepoProver smoke and its Qwen tool-use failure.
+- `scripts/materialize_minimal_context_smoke.py` generates one-record smoke
+  projects with snippet-only TeX, a single target `sorry`, and pre-seeded
+  `.repoprover/state.json`; use `--lake-cache-from` to avoid another Mathlib
+  download on this low-disk machine.
 - `algebraic-combinatorics/` is a vendored snapshot of
   `facebookresearch/algebraic-combinatorics` from commit
   `b6022318e986a0c20764569208ba8ebbe1c04dbf`; its nested `.git` directory was
