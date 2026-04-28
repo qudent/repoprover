@@ -58,11 +58,14 @@ def fetch_text(url: str) -> str:
         return response.read().decode("utf-8")
 
 
-def fetch_repo_file(path: str, source_base_url: str, cache_dir: Path | None) -> str:
+def fetch_repo_file(path: str, source_base_url: str, cache_dir: Path | None, source_root: Path | None = None) -> str:
     if path.startswith("http://") or path.startswith("https://"):
         url = path
         cache_key = re.sub(r"[^A-Za-z0-9_.-]+", "_", path)
     else:
+        if source_root is not None:
+            local_path = source_root / path
+            return local_path.read_text(encoding="utf-8")
         url = f"{source_base_url.rstrip('/')}/{path}"
         cache_key = path.replace("/", "__")
 
@@ -111,18 +114,19 @@ def build_evidence_bundle(
     record: dict[str, Any],
     source_base_url: str,
     cache_dir: Path | None,
+    source_root: Path | None,
     source_context: int,
     lean_context: int,
 ) -> dict[str, Any]:
     output = record["output"]
     minimal_context = record["minimal_context"]
     lean_path = output["lean_path"]
-    lean_text = fetch_repo_file(lean_path, source_base_url, cache_dir)
+    lean_text = fetch_repo_file(lean_path, source_base_url, cache_dir, source_root)
     lean_start, lean_end = output["line_range"]
 
     source_snippets = []
     for span in minimal_context.get("source_spans", []):
-        source_text = fetch_repo_file(span["path"], source_base_url, cache_dir)
+        source_text = fetch_repo_file(span["path"], source_base_url, cache_dir, source_root)
         start, end = span["line_range"]
         source_snippets.append(
             {
@@ -359,6 +363,11 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=Path("docs/minimal-context-review.jsonl"))
     parser.add_argument("--summary", type=Path, default=Path("docs/minimal-context-review-report.md"))
     parser.add_argument("--source-base-url", default=DEFAULT_SOURCE_BASE)
+    parser.add_argument(
+        "--source-root",
+        type=Path,
+        help="Read Lean/TeX evidence from this local repository root instead of fetching from source-base-url.",
+    )
     parser.add_argument("--cache-dir", type=Path, default=Path(".cache/minimal-context-sources"))
     parser.add_argument("--limit", type=int, default=0, help="Limit number of records reviewed.")
     parser.add_argument("--max-tokens", type=int, default=4096)
@@ -385,6 +394,7 @@ def main() -> int:
             record,
             source_base_url=args.source_base_url,
             cache_dir=args.cache_dir,
+            source_root=args.source_root,
             source_context=args.source_context,
             lean_context=args.lean_context,
         )

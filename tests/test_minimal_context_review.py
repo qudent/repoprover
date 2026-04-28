@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from scripts.review_minimal_context_records import (
+    fetch_repo_file,
     extract_declaration_hits,
     extract_json_object,
     numbered_snippet,
@@ -19,6 +20,16 @@ def test_numbered_snippet_uses_one_indexed_line_numbers() -> None:
     text = "alpha\nbeta\ngamma\ndelta"
 
     assert numbered_snippet(text, 2, 3) == "2: beta\n3: gamma"
+
+
+def test_fetch_repo_file_prefers_local_source_root(tmp_path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    (source_root / "Demo.lean").write_text("theorem local : True := by\n  trivial\n", encoding="utf-8")
+
+    assert fetch_repo_file("Demo.lean", "https://example.invalid", None, source_root) == (
+        "theorem local : True := by\n  trivial\n"
+    )
 
 
 def test_extract_declaration_hits_clips_to_declared_output_range() -> None:
