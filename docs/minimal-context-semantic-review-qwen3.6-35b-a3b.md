@@ -1,10 +1,10 @@
 # Minimal-Context Semantic Review
 
-Records reviewed: 5 from `docs/minimal-context-semantic-review-sample.jsonl`.
+Records reviewed: 12 from `docs/minimal-context-semantic-review-sample.jsonl`.
 Reviewer model: `qwen/qwen3.6-35b-a3b`.
 Run timestamp: `2026-04-28T19:39:40.113717+00:00`.
-Token usage: 14,849 prompt / 4,439 completion.
-Estimated OpenRouter cost: `$0.006678`.
+Token usage: 38,320 prompt / 16,805 completion.
+Estimated OpenRouter cost: `$0.022398`.
 
 ## Findings
 
@@ -110,3 +110,148 @@ Estimated OpenRouter cost: `$0.006678`.
 - Review notes:
   - The record fails to provide the definition of the dependent declaration `DeterminesCoeffInProd`, making the output non-reproducible without external lookup. The import list is too vague (`Mathlib`) for precise reproduction.
 - Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.P_isAlgebra'
+
+- Verdict: `revise` (2,857 prompt / 2,556 completion, $0.002928).
+- Source span: TeX span correctly aligns via label but does not substitute for Lean definitions or type parameters.
+- Lean context: Empty lean_predecessors and overly broad Mathlib import make reproduction impossible; missing type parameters K, N and definition of P.
+- Missing context:
+  - Definition of P (polynomial ring, likely MvPolynomial N K)
+  - Type parameters K and N (introduced in a section/namespace)
+  - Section/namespace headers introducing K and N
+  - Precise Mathlib imports for Algebra and MvPolynomial
+- Oversized context:
+  - Mathlib (too broad, should be specific modules like Algebra.Algebra.Basic)
+  - AlgebraicCombinatorics.Permutations.Basics (likely irrelevant for this instance)
+- Line or label issues:
+  - line_range [202, 210] includes surrounding comments and next proposition header; declaration is strictly on line 204
+- Recommended edits:
+  - Populate lean_predecessors with P, K, N, and section/namespace headers
+  - Replace Mathlib with specific imports like Algebra.Algebra.Basic and Polynomial.MvPolynomial.Basic
+  - Narrow output line_range to [204, 204] or include necessary surrounding context for K/N/P
+  - Remove AlgebraicCombinatorics.Permutations.Basics from imports if unused
+- Review notes:
+  - inferInstance requires prior definitions of P and type parameters K/N. Empty lean_predecessors breaks reproducibility. Mathlib import obscures actual dependencies. Record needs precise predecessor tracking and narrowed imports to be usable as a minimal context.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.1, "model_extraction": 0.2, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.P_isCommRing'
+
+- Verdict: `revise` (2,751 prompt / 2,567 completion, $0.002921).
+- Source span: TeX source span correctly aligns with the doc comment label but provides no Lean code context.
+- Lean context: Imports are listed but critical Lean declarations (variables, typeclass assumptions, and the definition of P) are missing, making the instance non-reproducible.
+- Missing context:
+  - Variable declarations for K and N
+  - Definition of P (likely an alias for MvPolynomial N K)
+  - Typeclass assumptions on K (e.g., [CommRing K])
+  - Preceding Lean declarations from Definitions.lean (lines 1-197) that establish P, K, N, and their instances
+- Oversized context:
+  - Mathlib import is broad; could be narrowed to Mathlib.Algebra.MvPolynomial.CommRing and related modules for strict minimality.
+- Line or label issues:
+  - Source span points to a TeX file instead of the Lean file; Lean context must include surrounding declarations from Definitions.lean.
+  - lean_predecessors is empty despite the instance likely depending on prior definitions in the same file or imported modules.
+- Recommended edits:
+  - Extract and include the variable declarations and definition of P from the Lean file into minimal_context.
+  - Populate lean_predecessors with the actual preceding declarations that P and K/N depend on.
+  - Replace the broad Mathlib import with specific imports if strict minimality is enforced, or document why Mathlib is retained.
+- Review notes:
+  - The output uses inferInstance, which delegates to the typeclass resolution system. Without the definition of P and assumptions on K/N, the instance cannot be typechecked or reproduced. The empty predecessor list is a significant gap for a file-scoped definition.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.2, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:SSYT
+
+- Verdict: `revise` (4,256 prompt / 656 completion, $0.001319).
+- Source span: The source span correctly identifies the TeX definition of SSYT, but the Lean output includes a namespace block and doc comments that are not strictly part of the structure definition itself, though they are contextually relevant. The span is acceptable for the structure definition.
+- Lean context: The minimal context is insufficient. It lists imports and predecessors but fails to include the actual Lean code for `YoungTableau` and `NPartition`, which are essential for understanding the `extends` clause and the `lam.youngDiagram` field used in the structure fields. Without these, the Lean code is not self-contained or reproducible.
+- Missing context:
+  - The definition of `YoungTableau` (from SchurBasics.lean or imported) is required because `SSYT` extends it.
+  - The definition of `NPartition` (from NPartition.lean) is required because `lam : NPartition N` is a parameter.
+  - The definition of `NPartition.youngDiagram` is referenced in the structure fields.
+  - The instance `[NeZero N]` is required for the structure to be well-formed.
+  - The `entry` field is inherited from `YoungTableau`, so its definition is implicitly needed.
+- Line or label issues:
+  - The output line range [356, 397] includes the structure definition and the start of the namespace. This is acceptable as it captures the full declaration and immediate context.
+- Recommended edits:
+  - Add the Lean code for `YoungTableau` to the minimal_context.lean_predecessors or include it in the context snippet.
+  - Add the Lean code for `NPartition` and `NPartition.youngDiagram` to the minimal_context.
+  - Ensure the `NeZero` instance is available or explicitly stated in the context.
+  - Consider narrowing the output to just the structure definition if the namespace content is not strictly necessary for the 'minimal' context, but keeping it is safer for reproducibility.
+- Review notes:
+  - The record identifies the correct source and output, but the minimal context is critically incomplete. It lists imports but does not provide the necessary type definitions (`YoungTableau`, `NPartition`) that are referenced in the structure definition. A user cannot reproduce or understand the `SSYT` structure without these definitions. The `lean_dependency_graph` trust is lowered because the static analysis did not capture the full dependency chain in the context.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:SkewYoungTableau
+
+- Verdict: `revise` (3,119 prompt / 759 completion, $0.001235).
+- Source span: The source span correctly identifies the TeX definition corresponding to the Lean structure, but the record lacks the necessary Lean context to verify the dependencies of the structure fields.
+- Lean context: The minimal_context lists imports and predecessors but fails to include the actual Lean code for `NPartition` and `skewYoungDiagram`. Without these, the Lean context is insufficient to reproduce the definition of `SkewYoungTableau` because `NPartition` and `skewYoungDiagram` are used in the structure's type signature and support condition.
+- Missing context:
+  - Definition of `NPartition` (from AlgebraicCombinatorics.SymmetricFunctions.NPartition)
+  - Definition of `skewYoungDiagram` (from AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson or NPartition)
+  - Instance or definition for `Fin N` and `NeZero N` if not covered by Mathlib import (though Mathlib is imported, specific lemmas/instances might be needed for the type to be well-formed in isolation)
+  - The actual Lean code for the predecessors is missing from `minimal_context.lean_predecessors` entries (only metadata is provided, not the code snippets)
+- Line or label issues:
+  - The `output.line_range` [1864, 1883] includes the structure definition and the start of a namespace. The `declaration_hits` shows `SkewYoungTableau` at line 2041, which is inconsistent with the output snippet ending at 1883. This suggests the output snippet might be truncated or the declaration hit is for a different part of the file. The record should clarify if the output is just the structure or includes the namespace.
+  - The `lean_predecessors` entries provide `line_range` and `path` but do not provide the actual source code snippets, making it impossible to verify the context without external access.
+- Recommended edits:
+  - Include the actual Lean code snippets for `NPartition` and `skewYoungDiagram` in the `minimal_context` or ensure they are accessible via the listed imports.
+  - Clarify the discrepancy between the output line range (ending at 1883) and the declaration hit line (2041). If the output is just the structure, the declaration hit might be irrelevant or erroneous.
+  - Ensure `minimal_context` contains sufficient code to typecheck the structure definition, specifically the types of `lam`, `mu`, and the result of `skewYoungDiagram`.
+- Review notes:
+  - The record is a 'gold_candidate' but lacks the actual Lean code for its dependencies. To be reproducible, the minimal context must include the definitions of `NPartition` and `skewYoungDiagram` or their full import closure must be self-contained in the provided context. Currently, it relies on external files not included in the record's `minimal_context` code snippets.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean:NPartition
+
+- Verdict: `provisionally_accept` (2,154 prompt / 2,446 completion, $0.002708).
+- Source span: Points to a TeX file for doc-comment alignment; valid for `lean_comment_label` method but irrelevant for Lean compilation.
+- Lean context: Imports `Mathlib` which covers `Fin`, `ℕ`, and `Antitone`. Sufficient for compilation, though broad.
+- Oversized context:
+  - `imports` and `import_closure` list only `Mathlib`; could be narrowed to specific Mathlib submodules like `Mathlib.Order.Monotone.Basic` if strict minimalism is required.
+- Recommended edits:
+  - Consider narrowing `imports` to `Mathlib.Order.Monotone.Basic` or `Mathlib.Data.Fin.Basic` for tighter context.
+  - Verify that `AlgebraicCombinatorics` repository structure does not require local imports beyond `Mathlib`.
+- Review notes:
+  - Record uses a TeX source span for documentation alignment, which is correct for the `lean_comment_label` method. The Lean context relies on `Mathlib` for `Fin`, `ℕ`, and `Antitone`, which is standard and sufficient. The broad `Mathlib` import is acceptable but could be tightened for benchmark strictness. No compilation-blocking context is missing.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.25, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.fubini_prod_invertible
+
+- Verdict: `revise` (4,907 prompt / 994 completion, $0.001750).
+- Source span: The source span correctly identifies the TeX label and the surrounding text, but the line range [1033, 1109] is significantly larger than the proposition itself (lines 1031-1043). It includes the proof sketch and subsequent discussion, which is not part of the formal statement or immediate context.
+- Lean context: The minimal context is insufficient. It lists imports and lexical predecessors but fails to include the actual Lean code for the predecessors (`Multipliable`, `multipliable_subfamily`, `multipliable_reindex`) which are essential for understanding and reproducing the proof. The `import_closure` includes `Mathlib` which is too broad; specific imports like `Algebra.Topology.InfiniteProduct` or `Algebra.GroupPower` might be needed depending on the exact definitions, but at minimum, the predecessor definitions must be provided.
+- Missing context:
+  - The actual Lean code for `PowerSeries.Multipliable` (lines 328-332)
+  - The actual Lean code for `PowerSeries.multipliable_subfamily` (lines 1696-1827)
+  - The actual Lean code for `PowerSeries.multipliable_reindex` (lines 1829-1884)
+  - Specific Mathlib imports required for `IsUnit`, `Multipliable`, and `PowerSeries` operations (e.g., `Algebra.GroupPower`, `Topology.InfiniteProduct` if used for convergence, though `Multipliable` is algebraic).
+  - The definition of `PowerSeries` and `coeff` if not available via standard `Mathlib` import, though `Mathlib` is listed, it's vague.
+- Oversized context:
+  - The source span line range [1033, 1109] includes excessive text beyond the proposition statement (lines 1031-1043). It should be narrowed to [1031, 1043] or similar to capture just the proposition.
+  - The `import_closure` includes `Mathlib` which is a catch-all. While acceptable for broad contexts, for a minimal context record, it's better to list specific imports if possible, or at least acknowledge that `Mathlib` is a placeholder for many dependencies.
+- Line or label issues:
+  - The source span line range [1033, 1109] is too large and includes irrelevant text. The proposition is on lines 1031-1043.
+  - The output line range [2903, 2932] is correct for the theorem and its immediate proof, but the context provided does not include the necessary definitions to make this theorem standalone.
+- Recommended edits:
+  - Narrow the `source_spans` line range to [1031, 1043] to capture only the proposition statement.
+  - Add the actual Lean code snippets for `PowerSeries.Multipliable`, `PowerSeries.multipliable_subfamily`, and `PowerSeries.multipliable_reindex` to the `minimal_context` or as separate context entries.
+  - Refine the `imports` list to be more specific if possible, or keep `Mathlib` but note that it implies many dependencies.
+  - Ensure that the `minimal_context` includes enough information to resolve all identifiers in the output snippet, not just lexical references.
+- Review notes:
+  - The record is a 'gold_candidate' but lacks the actual code for its dependencies, making it impossible to reproduce the theorem without external access to the full file. The source span is also overly broad.
+  - The proof relies on `multipliable_subfamily` and `multipliable_reindex`, which are defined in the same file but far away. These definitions must be included in the minimal context for the record to be useful.
+  - The `Mathlib` import is too vague; specific imports should be identified if possible.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.5}`
+
+### AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeff_mul_one_add_eq_of_coeff_zero
+
+- Verdict: `provisionally_accept` (3,427 prompt / 2,388 completion, $0.002857).
+- Source span: TeX span correctly aligned with doc comment label; line ranges match output.
+- Lean context: Imports and predecessors are sufficient for the proof; all used lemmas are covered by Mathlib.
+- Oversized context:
+  - Mathlib import is overly broad; could be narrowed to Mathlib.Algebra.PowerSeries.Basic, Mathlib.Data.Finset.Basic, and Mathlib.Tactic.Omega for a tighter minimal context.
+- Recommended edits:
+  - Replace 'Mathlib' with precise imports if the file's actual imports are known, to reduce context size and improve reproducibility.
+- Review notes:
+  - Record is internally consistent. The proof uses standard Mathlib lemmas (coeff_mul, mul_add, Finset.sum_eq_zero, etc.) fully covered by the broad Mathlib import. No missing predecessors or context gaps detected. The TeX source span correctly corresponds to the labeled lemma.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.5, "model_extraction": 0.5, "source_span": 0.8}`
