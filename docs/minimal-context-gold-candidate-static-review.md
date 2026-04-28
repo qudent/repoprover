@@ -27,10 +27,11 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
     "structure": 11,
     "theorem": 448
   },
-  "elapsed_seconds": 0.821,
+  "elapsed_seconds": 0.793,
   "issue_categories": {
     "incomplete_lean_output": 2,
     "likely_oversized_predecessor": 1488,
+    "other": 18,
     "unrepresented_doc_comment_label": 27
   },
   "model_cost_usd": 0.0,
@@ -38,8 +39,68 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
   "reviewer": "gold-candidate-static-adversarial-review-v1",
   "top_label_or_line_issues": [
     [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['thm.det.adj.inverse', 'thm.det.adj.inverse**'], parsed=['thm.det.adj.inverse'].",
+      4
+    ],
+    [
       "Target Lean output contains `sorry` or `admit`, so it is not a complete gold output.",
       2
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['cor.fps.invertible.field', 'cor.fps.invertible.field)**'], parsed=['cor.fps.invertible.field'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['prop.fps.invertible.1+x', 'prop.fps.invertible.1+x)**'], parsed=['prop.fps.invertible.1+x'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['thm.binom.upneg-n', 'thm.binom.upneg-n)**'], parsed=['thm.binom.upneg-n'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['prop.fps.div-by-x-inverts', 'prop.fps.div-by-x-inverts)**'], parsed=['prop.fps.div-by-x-inverts'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.g=xh', 'lem.fps.g=xh)**'], parsed=['lem.fps.g=xh'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.first-n-coeffs-of-xna', 'lem.fps.first-n-coeffs-of-xna)**'], parsed=['lem.fps.first-n-coeffs-of-xna'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.muls-of-xn', 'lem.fps.muls-of-xn)**'], parsed=['lem.fps.muls-of-xn'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.prod.irlv.fg', 'lem.fps.prod.irlv.fg)**'], parsed=['lem.fps.prod.irlv.fg'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.prod.irlv.mul', 'lem.fps.prod.irlv.mul)**'], parsed=['lem.fps.prod.irlv.mul'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['lem.fps.prod.irlv.cong-mul', 'lem.fps.prod.irlv.cong-mul)**'], parsed=['lem.fps.prod.irlv.cong-mul'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['prop.fps.comps.num-w2comps-n-k-id**', 'thm.fps.comps.num-wpcomps-n-k'], parsed=['prop.fps.comps.num-w2comps-n-k-id', 'thm.fps.comps.num-wpcomps-n-k'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['def.fps.fps', 'def.fps.fps**'], parsed=['def.fps.fps'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['thm.sf.S-subalg', 'thm.sf.S-subalg**'], parsed=['thm.sf.S-subalg'].",
+      1
+    ],
+    [
+      "Alignment comment_labels do not match labels parsed from the Lean doc comment: record=['def.sf.content)**', 'eq.def.sf.content.xT='], parsed=['def.sf.content', 'eq.def.sf.content.xT='].",
+      1
     ]
   ],
   "top_missing_context_issues": [
@@ -208,8 +269,8 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
   ],
   "verdicts": {
     "provisionally_accept": 31,
-    "reject": 2,
-    "revise": 580
+    "reject": 20,
+    "revise": 562
   }
 }
 ```

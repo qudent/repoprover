@@ -22,35 +22,35 @@ Exact Lean doc-comment references to TeX labels form a better first gold-candida
     "max_source_lines": 80,
     "source_method": "lean_comment_label"
   },
-  "elapsed_seconds": 0.543,
+  "elapsed_seconds": 0.444,
   "input_records": 5684,
   "model_cost_usd": 0.0,
-  "rejected_records": 5071,
+  "rejected_records": 5039,
   "rejection_reasons": {
     "missing_source_span": 222,
     "output_invalid_line_range": 2,
     "output_span_too_large": 459,
-    "predecessor_invalid_line_range": 6,
-    "source_method_not_lean_comment_label": 4654,
-    "source_span_method_mismatch": 4432,
-    "source_span_too_large": 2926,
-    "too_many_lean_predecessors": 404
+    "predecessor_invalid_line_range": 1,
+    "source_method_not_lean_comment_label": 4622,
+    "source_span_method_mismatch": 4400,
+    "source_span_too_large": 2913,
+    "too_many_lean_predecessors": 249
   },
   "selected_kinds": {
     "abbrev": 24,
-    "def": 124,
+    "def": 131,
     "instance": 6,
     "structure": 11,
-    "theorem": 448
+    "theorem": 473
   },
-  "selected_records": 613,
+  "selected_records": 645,
   "selected_source_methods": {
-    "lean_comment_label": 613
+    "lean_comment_label": 645
   },
-  "selection_rate": 0.107847,
+  "selection_rate": 0.113476,
   "source_methods": {
-    "lean_comment_label": 1030,
-    "manifest_position_fallback": 4432,
+    "lean_comment_label": 1062,
+    "manifest_position_fallback": 4400,
     "unmapped": 222
   },
   "top_selected_chapters": [
@@ -64,19 +64,23 @@ Exact Lean doc-comment references to TeX labels form a better first gold-candida
     ],
     [
       "missing_chapter_id",
-      45
+      46
     ],
     [
       "ac-details-laurent-power-series",
       43
     ],
     [
+      "ac-exponentials-and-logarithms",
+      27
+    ],
+    [
       "ac-definitions-preamble-reminder-commutativ",
       26
     ],
     [
-      "ac-exponentials-and-logarithms",
-      26
+      "ac-schur-polynomials-preamble-skew-young-di",
+      23
     ],
     [
       "ac-details-limits-of-fpss",
@@ -88,19 +92,15 @@ Exact Lean doc-comment references to TeX labels form a better first gold-candida
     ],
     [
       "ac-dividing-fpss",
-      17
+      18
     ],
     [
-      "ac-schur-polynomials-preamble-skew-young-di",
+      "ac-schur-polynomials-the-littlewood-richard",
       17
     ],
     [
       "ac-inversions-length-and-lehmer-codes-pream",
       16
-    ],
-    [
-      "ac-substitution-and-evaluation-of-power-ser",
-      15
     ]
   ]
 }
