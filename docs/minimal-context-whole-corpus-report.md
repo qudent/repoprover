@@ -15,6 +15,8 @@ formalization snapshot.
 - Higher-trust review queue: `docs/minimal-context-gold-candidates.jsonl`
 - Gold-candidate filter report:
   `docs/minimal-context-gold-candidates-report.md`
+- Semantic-review sample:
+  `docs/minimal-context-semantic-review-sample.jsonl`
 
 Regeneration command:
 
@@ -107,3 +109,8 @@ The zero-cost static adversarial review currently finds all 645 candidates
 mechanically clean before semantic review. The reviewer treats Lean subpart
 references such as `thm.foo.a` as covered by a parent TeX `\label{thm.foo}`
 source span, and scans only comment-stripped Lean code for `sorry`/`admit`.
+
+`scripts/sample_minimal_context_semantic_review.py` selects a deterministic
+24-record semantic-review queue from those mechanically accepted candidates,
+stratified by declaration kind and context-size bin. It is a queue for the next
+review pass, not semantic certification.

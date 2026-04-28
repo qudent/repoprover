@@ -40,6 +40,8 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - [x] Feed selected records into a bounded RepoProver smoke so failures become
   concrete benchmark examples.
 - [x] Mechanically review the 645 exact-label gold candidates at `$0.00` cost.
+- [x] Create a deterministic 24-record semantic-review queue from accepted
+  candidates.
 
 ## TODO Plan
 - [x] Clean duplicate/generated vendored TeX artifacts and document cleanup.
@@ -50,8 +52,8 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - [x] Run one selected-record RepoProver smoke and record the Qwen tool-loop
   failure.
 - [ ] Next useful step: semantically review a small stratified sample from the
-  645 mechanically accepted candidates, or try a bounded smoke with a stronger
-  current model and the repeated-tool-error guard.
+  generated 24-record queue, or try a bounded smoke with a stronger current
+  model and the repeated-tool-error guard.
 
 ## Blockers
 - The whole-corpus records are complete machine-generated candidates, not
@@ -90,8 +92,14 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - Static reviewer false positives were fixed in
   `scripts/adversarial_review_gold_candidates.py`: parent TeX labels cover
   Lean subpart references, and `sorry`/`admit` checks ignore comments.
+- Added `scripts/sample_minimal_context_semantic_review.py` and generated
+  `docs/minimal-context-semantic-review-sample.{jsonl,md}`: 24 records,
+  stratified across declaration kind and context-size bin, `$0.00` cost.
 - Focused validation passed:
-  `uv run pytest tests/test_minimal_context_static_adversarial_review.py`.
+  `uv run pytest tests/test_context_graph_generation.py
+  tests/test_minimal_context_static_adversarial_review.py
+  tests/test_minimal_context_gold_filter.py
+  tests/test_minimal_context_semantic_review_sample.py`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -104,6 +112,9 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - Static-review artifacts are
   `scripts/adversarial_review_gold_candidates.py` and
   `docs/minimal-context-gold-candidate-static-review.{jsonl,md}`.
+- Semantic-review queue artifacts are
+  `scripts/sample_minimal_context_semantic_review.py` and
+  `docs/minimal-context-semantic-review-sample.{jsonl,md}`.
 - Reviewed seed and comparison artifacts are in
   `docs/minimal-context-generated-records*.jsonl`,
   `docs/minimal-context-generated-review*.jsonl`, and

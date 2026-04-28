@@ -9,6 +9,7 @@ Run date: 2026-04-28.
 - Whole-corpus format: `docs/minimal-context-format.md`
 - Whole-corpus report: `docs/minimal-context-whole-corpus-report.md`
 - Gold-candidate static review: `docs/minimal-context-gold-candidate-static-review.md`
+- Semantic-review sample: `docs/minimal-context-semantic-review-sample.md`
 - Canonical dataset: `docs/minimal-context-generated-records.jsonl`
 - Batch 2 raw generation: `docs/minimal-context-generated-records-batch2.jsonl`
 - Batch 2 Qwen3.6 regeneration: `docs/minimal-context-generated-records-batch2-qwen3.6-35b-a3b.jsonl`
@@ -34,6 +35,11 @@ deterministic static adversarial review accepts all 645 mechanically after
 normalizing Lean subpart references to their parent TeX labels and stripping
 Lean comments before scanning for `sorry`/`admit`. This pass is local and costs
 `$0.00`; it is not a human semantic certification.
+
+A deterministic semantic-review queue now samples 24 of these 645 records
+across declaration kind and context-size strata. This queue is also local-only
+and costs `$0.00`; it is intended to make the next human/model semantic review
+reproducible.
 
 ## Cost And Time
 

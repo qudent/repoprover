@@ -85,7 +85,7 @@ def select_sample(
 ) -> list[dict[str, Any]]:
     eligible = [record for record in records if static_verdicts.get(record["id"]) == "provisionally_accept"]
     by_stratum: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for record in sorted(eligible, key=lambda row: (row.get("chapter_id", ""), row["id"])):
+    for record in sorted(eligible, key=lambda row: (row.get("chapter_id") or "", row["id"])):
         by_stratum[stratum_for_record(record)].append(record)
 
     selected: list[dict[str, Any]] = []
@@ -126,7 +126,7 @@ def report_markdown(
     eligible_count = sum(1 for record in records if static_verdicts.get(record["id"]) == "provisionally_accept")
     selected_strata = Counter(row["semantic_review_sample"]["stratum"] for row in selected)
     selected_kinds = Counter(row["output"].get("chunk_kind", "unknown") for row in selected)
-    selected_chapters = Counter(row.get("chapter_id", "missing_chapter_id") for row in selected)
+    selected_chapters = Counter((row.get("chapter_id") or "missing_chapter_id") for row in selected)
     payload = {
         "input_records": len(records),
         "mechanically_accepted_records": eligible_count,

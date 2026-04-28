@@ -54,6 +54,7 @@ def test_select_sample_keeps_only_static_accepts_and_caps_strata() -> None:
         record("thm-large-1", kind="theorem", source_lines=100),
         record("rejected", kind="theorem", source_lines=10),
     ]
+    records[0]["chapter_id"] = None
     verdicts = {row["id"]: "provisionally_accept" for row in records}
     verdicts["rejected"] = "reject"
 
