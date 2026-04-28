@@ -35,7 +35,10 @@ model selection has been refreshed from live catalog data: `qwen/qwen3-coder`
 is historical, while `qwen/qwen3.6-35b-a3b` is now the default open-weight Qwen
 model for minimal-context JSON generation/review. `Goedel-Prover-V2-32B` is the
 best documented self-hosted Lean-prover candidate found in current research,
-but it is not available in the OpenRouter catalog.
+but it is not available in the OpenRouter catalog. The 863 deterministic gold
+candidates now have a zero-cost static adversarial review pass: only 35 are
+mechanically clean, 656 need predecessor-context narrowing, and 172 are rejected
+for mechanical issues before semantic review.
 
 ## Active Goals
 - [x] Validate local RepoProver, Lean, and at least one live provider path.
@@ -73,7 +76,7 @@ but it is not available in the OpenRouter catalog.
   before using them as benchmark labels.
 - [x] Refresh OSS model choices online and rerun batch-2 generation/review with
   a current OpenRouter Qwen model.
-- [ ] Optionally adversarially review the 863 gold candidates before treating
+- [x] Optionally adversarially review the 863 gold candidates before treating
   them as final gold labels.
 
 ## Blockers
@@ -81,6 +84,11 @@ but it is not available in the OpenRouter catalog.
   fully human-certified gold. Trust fields distinguish exact Lean-comment label
   matches from low-trust manifest-position fallbacks and unmapped Lean support
   files.
+- Static adversarial review found that many apparent exact labels were TeX
+  references rather than label definitions because the graph generator's label
+  extractor accepts both `\label{...}` and `\ref{...}` tokens. Treat the 172
+  rejected gold candidates as mechanically invalid until label extraction is
+  separated.
 - The canonical generated records are Qwen-reviewed but not human-reviewed; keep
   their trust fields low and use reviewer verdicts for downstream selection.
   The newer Qwen3.6 rerun is a comparison artifact, not a human-certified gold
@@ -178,6 +186,15 @@ but it is not available in the OpenRouter catalog.
   10 records, 27,304 prompt / 7,115 completion tokens, estimated `$0.011269`.
   The Qwen3.6 review used 22,709 prompt / 7,729 completion tokens, estimated
   `$0.011121`, with verdicts 1 provisionally accepted, 6 revise, 3 reject.
+- Added `scripts/adversarial_review_gold_candidates.py`, tests, and the
+  generated review artifacts
+  `docs/minimal-context-gold-candidate-static-review.{jsonl,md}`. The local
+  pass reviewed all 863 selected candidates in under a second at `$0.00` model
+  cost, with verdicts 35 provisionally accepted, 656 revise, and 172 reject.
+  Issue categories were 170 source spans that cite a `\ref` rather than a
+  defining `\label`, 4 incomplete Lean outputs containing `sorry`/`admit`, 2
+  parsed line-range mismatches, 39 unrepresented doc-comment labels, and 2,069
+  likely oversized predecessor entries.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
