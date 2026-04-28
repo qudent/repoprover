@@ -6,6 +6,7 @@ from scripts.generate_context_graph import (
     TexLabel,
     clean_label_token,
     parse_lean_declarations,
+    parse_tex_labels,
     should_replace_tex_label,
 )
 
@@ -34,6 +35,30 @@ def test_prefers_chapter_tex_label_over_aggregate_all_tex() -> None:
 
     assert should_replace_tex_label(aggregate, chapter)
     assert not should_replace_tex_label(chapter, aggregate)
+
+
+def test_parse_tex_labels_ignores_refs(tmp_path: Path) -> None:
+    project = tmp_path
+    tex_dir = project / "AlgebraicCombinatorics" / "tex"
+    tex_dir.mkdir(parents=True)
+    tex_file = tex_dir / "Toy.tex"
+    tex_file.write_text(
+        "\n".join(
+            [
+                "See \\ref{thm.only.ref}.",
+                "\\begin{theorem}\\label{thm.real.label}",
+                "Real theorem.",
+                "\\end{theorem}",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    labels = parse_tex_labels(project)
+
+    assert "thm.only.ref" not in labels
+    assert labels["thm.real.label"].line == 2
 
 
 def test_parse_lean_declarations_tracks_namespace_and_doc_labels(tmp_path: Path) -> None:

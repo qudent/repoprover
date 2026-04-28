@@ -39,7 +39,8 @@ IMPORT_RE = re.compile(r"^\s*import\s+(?P<module>[A-Za-z0-9_'.]+)\s*$")
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
 SECTION_RE = re.compile(r"^\s*section(?:\s+[A-Za-z0-9_'.]+)?\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
-LABEL_RE = re.compile(r"\\(?:label|ref)\{([^}]+)\}")
+TEX_LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
+COMMENT_LABEL_RE = re.compile(r"\\(?:label|ref)\{([^}]+)\}")
 LABEL_TOKEN_RE = re.compile(
     r"\b(?:def|prop|thm|lem|cor|conv|exa|exe|sol|sec|subsec|eq|pf)"
     r"\.[A-Za-z0-9_.()=+\-/*]+"
@@ -106,7 +107,7 @@ def stable_node_id(kind: str, value: str) -> str:
 def extract_labels(text: str) -> list[str]:
     labels: list[str] = []
     seen: set[str] = set()
-    for label in [*LABEL_RE.findall(text), *LABEL_TOKEN_RE.findall(text)]:
+    for label in [*COMMENT_LABEL_RE.findall(text), *LABEL_TOKEN_RE.findall(text)]:
         cleaned = clean_label_token(label)
         if cleaned and cleaned not in seen:
             labels.append(cleaned)
@@ -134,7 +135,7 @@ def parse_tex_labels(project_root: Path) -> dict[str, TexLabel]:
         rel = relpath(path, project_root)
         raw: list[tuple[str, int]] = []
         for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
-            for label in LABEL_RE.findall(line):
+            for label in TEX_LABEL_RE.findall(line):
                 raw.append((label, line_number))
         raw_by_path[rel] = raw
 
