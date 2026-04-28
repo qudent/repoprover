@@ -12,8 +12,8 @@ Deliverable: A minimal context mapping (mapping line regions/files to lines), an
 Avoid editing above the line except to preserve new human direction.
 -------
 Start time of work: 2026-04-28T15:52:46Z
-Remaining openrouter budget: about 7.22 $ after the April 28 model refresh and
-Qwen3.6 generation/review rerun; refresh credits before more live runs.
+Remaining openrouter budget: about 7.03 $ after the corrected April 28
+semantic-review sample run; refresh credits before larger live runs.
 
 
 ## Current State
@@ -32,7 +32,10 @@ failure: context was sufficient, but `qwen/qwen3-coder` repeatedly produced
 malformed tool-call/edit arguments and was stopped before PR submission.
 Current OpenRouter model selection has been refreshed from live catalog data:
 `qwen/qwen3.6-35b-a3b` is the default open-weight Qwen model for
-minimal-context JSON generation/review with `--reasoning-effort none`.
+minimal-context JSON generation/review with `--reasoning-effort none`. A
+corrected 24-record semantic review now exists and shows that most remaining
+candidate failures are semantic-minimality problems around file-scope Lean
+context, import attribution, source-span breadth, and chunk boundaries.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -42,6 +45,7 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - [x] Mechanically review the 645 exact-label gold candidates at `$0.00` cost.
 - [x] Create a deterministic 24-record semantic-review queue from accepted
   candidates.
+- [x] Run a corrected live Qwen3.6 semantic review over the 24-record sample.
 
 ## TODO Plan
 - [x] Clean duplicate/generated vendored TeX artifacts and document cleanup.
@@ -51,9 +55,10 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - [x] Run static adversarial review over all 645 candidates at `$0.00` cost.
 - [x] Run one selected-record RepoProver smoke and record the Qwen tool-loop
   failure.
-- [ ] Next useful step: semantically review a small stratified sample from the
-  generated 24-record queue, or try a bounded smoke with a stronger current
-  model and the repeated-tool-error guard.
+- [x] Semantically review the generated 24-record queue with local evidence.
+- [ ] Next useful step: improve deterministic context generation for file-scope
+  namespace/section/typeclass context and import attribution, then rerun the
+  same 24-record semantic sample to measure verdict movement.
 
 ## Blockers
 - The whole-corpus records are complete machine-generated candidates, not
@@ -63,6 +68,9 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - The 645/645 static review only proves mechanical consistency. It normalizes
   Lean subpart labels to parent TeX labels and strips comments before scanning
   for `sorry`/`admit`; it does not prove semantic minimality.
+- The 24-record semantic review is model-reviewed, not human-certified. It is
+  useful as a failure map, but Qwen3.6 verdicts should not be treated as final
+  gold labels without human or compile-based confirmation.
 - `qwen/qwen3.6-35b-a3b` and `qwen/qwen3.6-27b` returned empty content on the
   first JSON generation request unless OpenRouter reasoning was disabled. Use
   `--reasoning-effort none` for schema-bound generation/review scripts.
@@ -95,11 +103,23 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - Added `scripts/sample_minimal_context_semantic_review.py` and generated
   `docs/minimal-context-semantic-review-sample.{jsonl,md}`: 24 records,
   stratified across declaration kind and context-size bin, `$0.00` cost.
+- Added local-source and predecessor-snippet support to
+  `scripts/review_minimal_context_records.py`; the reviewer now requests JSON
+  object responses from OpenRouter.
+- Corrected live semantic review artifacts:
+  `docs/minimal-context-semantic-review-qwen3.6-35b-a3b.{jsonl,md}` and
+  `docs/minimal-context-semantic-review-analysis.md`. Final artifact verdicts:
+  4 `provisionally_accept`, 14 `revise`, 6 `reject`, 0 `parse_error`; final
+  artifact cost `$0.043071`, exploratory balance delta about `$0.115251`.
+- The review indicates the next generator work should add file-scope context
+  nodes for namespace/section variables/typeclass assumptions and distinguish
+  "sufficient via Mathlib" from strict minimal imports.
 - Focused validation passed:
   `uv run pytest tests/test_context_graph_generation.py
   tests/test_minimal_context_static_adversarial_review.py
   tests/test_minimal_context_gold_filter.py
-  tests/test_minimal_context_semantic_review_sample.py`.
+  tests/test_minimal_context_semantic_review_sample.py`, and
+  `uv run pytest tests/test_minimal_context_review.py`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -115,6 +135,9 @@ minimal-context JSON generation/review with `--reasoning-effort none`.
 - Semantic-review queue artifacts are
   `scripts/sample_minimal_context_semantic_review.py` and
   `docs/minimal-context-semantic-review-sample.{jsonl,md}`.
+- Corrected semantic-review artifacts are
+  `docs/minimal-context-semantic-review-qwen3.6-35b-a3b.{jsonl,md}` and
+  `docs/minimal-context-semantic-review-analysis.md`.
 - Reviewed seed and comparison artifacts are in
   `docs/minimal-context-generated-records*.jsonl`,
   `docs/minimal-context-generated-review*.jsonl`, and
