@@ -66,8 +66,15 @@ as supervision for later bounded RepoProver runs.
   smoke passed.
 - Disk and existing `/tmp/repoprover-toy-gemini3-flash` state need care before
   another full toy or benchmark smoke.
+- Vendoring `facebookresearch/algebraic-combinatorics` is blocked in the shell:
+  `git clone --depth 1 https://github.com/facebookresearch/algebraic-combinatorics`
+  failed with `Could not resolve host: github.com`, explicit-IP `curl` could
+  not connect, and no full local checkout exists under `~/repos` or
+  `~/Dropbox`.
 
 ## Recent Results
+- Attempted to clone the formalization repo into `algebraic-combinatorics/`;
+  no files were created because local network access to GitHub is unavailable.
 - Added a root `AGENTS.md` contributor guide covering repo layout, `uv`/pytest
   commands, toy Lean smoke testing, coding style, and PR expectations.
 - Added and live-tested `scripts/generate_minimal_context_records.py`; the
