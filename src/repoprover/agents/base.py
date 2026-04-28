@@ -26,7 +26,14 @@ from typing import TYPE_CHECKING, Any
 
 from openai import OpenAI
 
-from .tools import DEFAULT_MAX_ITERATIONS, LLM_ERROR_MAX_LEN, ToolCallRecord, run_tool_loop, truncate_error
+from .tools import (
+    DEFAULT_MAX_CONSECUTIVE_TOOL_ERRORS,
+    DEFAULT_MAX_ITERATIONS,
+    LLM_ERROR_MAX_LEN,
+    ToolCallRecord,
+    run_tool_loop,
+    truncate_error,
+)
 
 if TYPE_CHECKING:
     from ..git_worktree import WorktreeManager
@@ -75,6 +82,7 @@ class AgentConfig:
     temperature: float = 0.7
     max_tokens: int = 8192
     max_iterations: int = DEFAULT_MAX_ITERATIONS
+    max_consecutive_tool_errors: int = DEFAULT_MAX_CONSECUTIVE_TOOL_ERRORS
     api_key: str = ""  # If empty, uses env var
     base_url: str = ""  # If empty, uses provider default
     # Mathlib grep tools configuration
@@ -441,6 +449,7 @@ class BaseAgent(ABC):
                 should_stop=self.should_stop,
                 recorder=self.recorder,
                 log_prefix=self.log_prefix,
+                max_consecutive_tool_errors=self.config.max_consecutive_tool_errors,
             )
 
             # Update run metadata from result
@@ -476,9 +485,14 @@ class BaseAgent(ABC):
                 self._current_run.dialog.append(dialog_entry)
 
             # Map stop_reason to status
-            if result.stop_reason == "max_iterations":
+            if result.stop_reason in ("max_iterations", "repeated_tool_error"):
                 self._current_run.status = "max_iterations"
-                logger.warning(f"Agent {self.agent_type} hit max iterations")
+                if result.stop_reason == "repeated_tool_error":
+                    self._current_run.status = "repeated_tool_error"
+                    self._current_run.error = result.final_text
+                    logger.warning(f"Agent {self.agent_type} stopped on repeated tool error")
+                else:
+                    logger.warning(f"Agent {self.agent_type} hit max iterations")
             else:
                 self._current_run.status = "done"
 

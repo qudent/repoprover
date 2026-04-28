@@ -62,7 +62,14 @@ def build_agent_config(args: argparse.Namespace) -> AgentConfig:
     if not api_key and not env_var:
         raise ValueError(f"API key not found for provider '{provider}'. Pass --api-key or set REPOPROVER_API_KEY.")
 
-    return AgentConfig(provider=provider, model=model, api_key=api_key, base_url=base_url)
+    return AgentConfig(
+        provider=provider,
+        model=model,
+        api_key=api_key,
+        base_url=base_url,
+        max_iterations=args.max_iterations,
+        max_consecutive_tool_errors=args.max_consecutive_tool_errors,
+    )
 
 
 def setup_logging(log_dir: Path | None = None, verbose: bool = False) -> None:
@@ -517,6 +524,24 @@ def main() -> int:
         action="store_true",
         dest="stop_after_first_merge",
         help="Stop the coordinator after the first successful PR merge; useful for bounded budget smokes.",
+    )
+    p_run.add_argument(
+        "--max-iterations",
+        type=int,
+        default=AgentConfig.max_iterations,
+        dest="max_iterations",
+        help=f"Maximum tool-loop iterations per agent (default: {AgentConfig.max_iterations}).",
+    )
+    p_run.add_argument(
+        "--max-consecutive-tool-errors",
+        type=int,
+        default=AgentConfig.max_consecutive_tool_errors,
+        dest="max_consecutive_tool_errors",
+        help=(
+            "Stop an agent after the same failing tool call repeats this many consecutive times; "
+            "set <=0 to disable "
+            f"(default: {AgentConfig.max_consecutive_tool_errors})."
+        ),
     )
     p_run.add_argument(
         "--provider",

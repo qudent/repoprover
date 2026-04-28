@@ -32,6 +32,10 @@ logger = getLogger(__name__)
 # Default max iterations for tool loops (same for all agents)
 DEFAULT_MAX_ITERATIONS = 512
 
+# Stop after a model repeats the same failing tool call this many times.
+# This catches malformed argument/edit loops before they burn a full iteration budget.
+DEFAULT_MAX_CONSECUTIVE_TOOL_ERRORS = 3
+
 # =============================================================================
 # Context Compaction Configuration
 # =============================================================================
@@ -314,7 +318,7 @@ class ToolLoopResult:
     messages: list[dict[str, Any]] = field(default_factory=list)
     tool_calls: list[ToolCallRecord] = field(default_factory=list)
     iteration_count: int = 0
-    stop_reason: str = "unknown"  # "stop", "no_tool_calls", "max_iterations", "custom_stop"
+    stop_reason: str = "unknown"  # "stop", "no_tool_calls", "max_iterations", "custom_stop", "repeated_tool_error"
     # Token usage tracking (from API response)
     total_input_tokens: int = 0  # Cumulative prompt tokens across all iterations
     total_output_tokens: int = 0  # Cumulative completion tokens across all iterations
@@ -387,6 +391,29 @@ def _call_with_retry(
     raise last_exception  # Should never reach here
 
 
+def _is_tool_failure(result: str) -> bool:
+    """Return True when a tool result represents a failure worth loop-guarding."""
+    stripped = result.lstrip()
+    return stripped.startswith("Error:") or stripped.startswith("## Compilation Errors")
+
+
+def _tool_error_signature(name: str, arguments: dict[str, Any], result: str) -> str:
+    """Build a stable signature for repeated failing tool calls."""
+    try:
+        arguments_json = json.dumps(arguments, sort_keys=True, ensure_ascii=False, default=str)
+    except TypeError:
+        arguments_json = repr(arguments)
+    return json.dumps(
+        {
+            "name": name,
+            "arguments": arguments_json,
+            "result": result[:1000],
+        },
+        sort_keys=True,
+        ensure_ascii=False,
+    )
+
+
 # =============================================================================
 # Core Tool Loop - THE implementation used by all agents
 # =============================================================================
@@ -408,6 +435,7 @@ def run_tool_loop(
     log_prefix: str = "",
     enable_compaction: bool = True,
     compaction_threshold: int = COMPACTION_THRESHOLD_TOKENS,
+    max_consecutive_tool_errors: int = DEFAULT_MAX_CONSECUTIVE_TOOL_ERRORS,
 ) -> ToolLoopResult:
     """Core tool loop - single implementation used by all agents.
 
@@ -440,6 +468,8 @@ def run_tool_loop(
         log_prefix: Prefix for log messages
         enable_compaction: Enable automatic context compaction (default True)
         compaction_threshold: Token threshold for triggering compaction (default 150k)
+        max_consecutive_tool_errors: Stop when the same failing tool call repeats this many times.
+            Set <=0 to disable.
 
       Returns:
         ToolLoopResult with final_text, messages, tool_calls, iteration_count, stop_reason
@@ -461,6 +491,9 @@ def run_tool_loop(
 
     # Track compaction events
     compaction_count = 0
+
+    repeated_tool_error_signature: str | None = None
+    repeated_tool_error_count = 0
 
     # Record initial user message(s)
     if recorder:
@@ -605,6 +638,7 @@ def run_tool_loop(
             stop_reason = "no_tool_calls"
             break
 
+        abort_tool_loop = False
         for tc in message.tool_calls:
             tc_name = tc.function.name
             try:
@@ -653,9 +687,36 @@ def run_tool_loop(
                     duration * 1000,
                 )
 
+            if max_consecutive_tool_errors > 0 and _is_tool_failure(result):
+                error_signature = _tool_error_signature(tc_name, tc_args, result)
+                if error_signature == repeated_tool_error_signature:
+                    repeated_tool_error_count += 1
+                else:
+                    repeated_tool_error_signature = error_signature
+                    repeated_tool_error_count = 1
+
+                if repeated_tool_error_count >= max_consecutive_tool_errors:
+                    stop_reason = "repeated_tool_error"
+                    final_text = (
+                        "Stopped after "
+                        f"{repeated_tool_error_count} consecutive identical failing `{tc_name}` tool calls."
+                    )
+                    logger.warning(
+                        f"{log_prefix} {final_text} "
+                        f"Last result: {truncate_error(result, DEFAULT_ERROR_MAX_LEN)}"
+                    )
+                    abort_tool_loop = True
+                    break
+            else:
+                repeated_tool_error_signature = None
+                repeated_tool_error_count = 0
+
         # Increment iteration in recorder
         if recorder:
             recorder.increment_iteration()
+
+        if abort_tool_loop:
+            break
 
     else:
         stop_reason = "max_iterations"

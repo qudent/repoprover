@@ -1210,6 +1210,27 @@ class ContributorAgent(
                 return match.group(1).strip()
             return ""
 
+        if agent_result.status == "repeated_tool_error":
+            error = "Stopped after repeated failing tool calls"
+            if agent_result.run and agent_result.run.error:
+                error = agent_result.run.error
+            return ContributorResult(
+                task=self.task,
+                status="failure",
+                error=error,
+                learnings=agent_result.learnings,
+                run=agent_result.run,
+            )
+
+        if agent_result.status == "max_iterations":
+            return ContributorResult(
+                task=self.task,
+                status="failure",
+                error="Agent hit max iterations before producing a valid marker",
+                learnings=agent_result.learnings,
+                run=agent_result.run,
+            )
+
         # Check for DONE marker
         if "-- DONE" in dialog_text:
             description = extract_description(dialog_text, "DONE")
