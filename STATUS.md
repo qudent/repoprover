@@ -8,9 +8,7 @@ The current research thread is a minimal-context gold-standard pilot for using
 the published Algebraic Combinatorics formalization as supervision for bounded
 RepoProver runs.
 
-`STATUS.md` is the single coordination source of truth for this repo. There is
-no separate human-agent whiteboard; active prompts, review notes, open questions,
-agent handoff notes, and TODOs belong here until resolved.
+`STATUS.md` is the single coordination source of truth for this repo.
 
 ## Active Goal
 Build a small, reviewed minimal-context benchmark and use it in a bounded
@@ -43,19 +41,13 @@ RepoProver smoke so failures become concrete examples for the next iteration.
   running another full toy smoke.
 
 ## TODO Plan For Human Review
-- [ ] Decide whether the next milestone is a retrieval/prompt smoke using the
-  three reviewed FPS records, or more record generation before integration.
-- [ ] If using the three records now, define the smallest prompt/retrieval hook:
-  how records are selected, where they are injected, and how token use is logged.
-- [ ] Add a minimal implementation that can feed selected JSONL records into one
-  bounded `repoprover run` without changing the broader coordinator contract.
-- [ ] Run one cheap dry or narrow smoke first to verify formatting, prompt size,
-  and record selection before spending on a live LLM build loop.
-- [ ] Run one live `--stop-after-first-merge` smoke with the cheapest model that
-  can plausibly complete the task, then save missing-context failures as new
-  benchmark examples.
-- [ ] After the smoke, update the record trust fields and this status file with
-  what failed, what context was missing, and whether to scale to more FPS chunks.
+This is a plan towards the goal "made as much progress as possible towards derisking and getting something publishable given the budget and time horizon I gave to you."
+- Trust: the trust should be _in the data format of the gold standard set_, ie annotation of the generated lemmata in the final optimization loop, you don't need to put trust into STATUS.md
+- I would recommend working on the gold standard set generation, keeping track of spend and time (ie probably first develop something, derisk with some pages, then higher...). you can generate it with python scripts, and yourself. Also check how hard the used context would be to infer from the textbook LaTeX only.
+- You should make decisions yourself in that timeframe, commit at decision points. bias for action, I can rewind if I don't like something.
+- generate the gold standard set based on the real thing, using codex itself and scripts. Decide how wellreasoned and how easily generable this "minimal backwards context" (ie relevant text, relevant used lemmata, relevant previous formalization defs etc) is
+- if you run out of context, start a new codex_commit_push as in ~/learnings/scripts/codex_wrap.sh until budget is spent
+- make sure you have enough reasoning.
 
 ## Recent Results
 - OpenRouter `z-ai/glm-5.1` completed the toy sketch/review/merge path; toy
