@@ -35,7 +35,10 @@ Current OpenRouter model selection has been refreshed from live catalog data:
 minimal-context JSON generation/review with `--reasoning-effort none`. A
 corrected 24-record semantic review now exists and shows that most remaining
 candidate failures are semantic-minimality problems around file-scope Lean
-context, import attribution, source-span breadth, and chunk boundaries.
+context, import attribution, source-span breadth, and chunk boundaries. New
+human direction on 2026-04-29: do not keep optimizing deterministic context
+generation as the main path; focus on model-selected/evaluated segmentation and
+verify the actual best OpenRouter-available FOSS/open-weight model.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -56,9 +59,9 @@ context, import attribution, source-span breadth, and chunk boundaries.
 - [x] Run one selected-record RepoProver smoke and record the Qwen tool-loop
   failure.
 - [x] Semantically review the generated 24-record queue with local evidence.
-- [ ] Next useful step: improve deterministic context generation for file-scope
-  namespace/section/typeclass context and import attribution, then rerun the
-  same 24-record semantic sample to measure verdict movement.
+- [ ] Next useful step: design a model-selected segmentation task using the
+  current best open-weight reviewer/critic as an adjudicator; do not make the
+  deterministic generator the center of the next iteration.
 
 ## Blockers
 - The whole-corpus records are complete machine-generated candidates, not
@@ -71,6 +74,10 @@ context, import attribution, source-span breadth, and chunk boundaries.
 - The 24-record semantic review is model-reviewed, not human-certified. It is
   useful as a failure map, but Qwen3.6 verdicts should not be treated as final
   gold labels without human or compile-based confirmation.
+- `deepseek/deepseek-v3.2-speciale` is the strongest OpenRouter-available
+  open-weight reasoning candidate found on April 29 (MIT weights on Hugging
+  Face; OpenRouter supports reasoning/structured outputs), but high reasoning
+  is slow and can produce malformed/truncated JSON in this harness.
 - `qwen/qwen3.6-35b-a3b` and `qwen/qwen3.6-27b` returned empty content on the
   first JSON generation request unless OpenRouter reasoning was disabled. Use
   `--reasoning-effort none` for schema-bound generation/review scripts.
@@ -114,6 +121,14 @@ context, import attribution, source-span breadth, and chunk boundaries.
 - The review indicates the next generator work should add file-scope context
   nodes for namespace/section variables/typeclass assumptions and distinguish
   "sufficient via Mathlib" from strict minimal imports.
+- Started then stopped a Qwen context-v2 comparison after 11 rows
+  (`docs/minimal-context-semantic-review-qwen3.6-35b-a3b-context-v2.*`);
+  it is a partial artifact, not a final result.
+- Verified the current open-weight model choice and ran a high-reasoning
+  DeepSeek V3.2 Speciale probe. `--max-tokens 3072` returned empty content;
+  `--max-tokens 8192` worked for one row. A 24-row run was stopped after
+  3 rows because it was slow/token-heavy and one row still hit a parse error.
+  See `docs/minimal-context-high-reasoning-review-probe.md`.
 - Focused validation passed:
   `uv run pytest tests/test_context_graph_generation.py
   tests/test_minimal_context_static_adversarial_review.py
@@ -138,6 +153,9 @@ context, import attribution, source-span breadth, and chunk boundaries.
 - Corrected semantic-review artifacts are
   `docs/minimal-context-semantic-review-qwen3.6-35b-a3b.{jsonl,md}` and
   `docs/minimal-context-semantic-review-analysis.md`.
+- High-reasoning model-selection/probe notes are in
+  `docs/minimal-context-high-reasoning-review-probe.md`; partial probe outputs
+  are `docs/minimal-context-semantic-review-deepseek-v3.2-speciale-high.*`.
 - Reviewed seed and comparison artifacts are in
   `docs/minimal-context-generated-records*.jsonl`,
   `docs/minimal-context-generated-review*.jsonl`, and
