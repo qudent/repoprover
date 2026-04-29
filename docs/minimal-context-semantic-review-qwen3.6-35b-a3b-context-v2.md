@@ -1,10 +1,10 @@
 # Minimal-Context Semantic Review Context V2
 
-Records reviewed: 9 from `docs/minimal-context-semantic-review-sample.jsonl`.
+Records reviewed: 11 from `docs/minimal-context-semantic-review-sample.jsonl`.
 Reviewer model: `qwen/qwen3.6-35b-a3b`.
 Run timestamp: `2026-04-29T01:41:20.441032+00:00`.
-Token usage: 43,923 prompt / 5,302 completion.
-Estimated OpenRouter cost: `$0.012198`.
+Token usage: 57,585 prompt / 7,256 completion.
+Estimated OpenRouter cost: `$0.016287`.
 
 ## Findings
 
@@ -150,4 +150,53 @@ Estimated OpenRouter cost: `$0.012198`.
 - Review notes:
   - The record fails to provide the actual code for the dependencies (`NPartition`, `skewYoungDiagram`). Lexical references are not sufficient for reproduction. The `open` and `variable` commands are present but the types they operate on are not defined in the provided context snippets.
   - The output snippet includes a namespace and variable declaration which are likely context, not part of the `structure` definition. This should be clarified.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean:NPartition
+
+- Verdict: `revise` (2,749 prompt / 960 completion, $0.001370).
+- Source span: The source span points to a TeX file, which is not the Lean source. While this is acceptable for documentation tracing, the Lean context is insufficient for formal verification.
+- Lean context: The context is insufficient. The declaration `structure NPartition (N : ℕ)` uses `Fin N`, `ℕ`, and `Antitone`. The context provides `open Finset BigOperators` and `variable {N : ℕ}`, but `Antitone` is a Mathlib class (from `Order.Monotone.Basic`) and `Fin` is from `Data.Fin.Basic`. The context claims `Mathlib` is imported but does not explicitly list the necessary imports or open commands for `Antitone` and `Fin` to be resolved in a minimal context. Specifically, `Antitone` requires `Order.Monotone.Basic` or similar, and `Fin` requires `Data.Fin.Basic`. The current context relies on a broad `Mathlib` import which is not minimal.
+- Missing context:
+  - Explicit import for `Data.Fin.Basic` (for `Fin`)
+  - Explicit import for `Order.Monotone.Basic` (for `Antitone`)
+  - The `variable {N : ℕ}` is present, but `ℕ` requires `Data.Nat.Basic` or `Mathlib.Data.Nat.Basic`
+  - The `open Finset BigOperators` is present, but `Finset` requires `Data.Finset.Basic`
+- Oversized context:
+  - The `import_analysis` states `minimal_imports_certified: false` and lists only `Mathlib`. This is too broad. A minimal context should list specific Mathlib imports like `Mathlib.Data.Fin.Basic`, `Mathlib.Order.Monotone.Basic`, etc.
+- Line or label issues:
+  - The `source_span` points to a TeX file, not the Lean file. This is fine for documentation but the Lean context must stand alone for formal checking.
+- Recommended edits:
+  - Replace the broad `Mathlib` import with specific minimal imports: `Mathlib.Data.Fin.Basic`, `Mathlib.Order.Monotone.Basic`, `Mathlib.Data.Nat.Basic`.
+  - Ensure `open Finset` is included if `Finset` is used (it is not used in the structure definition itself, but might be in the namespace below; however, the output line range includes the namespace start. The structure definition itself only uses `Fin` and `Antitone`.
+  - The `open Finset BigOperators` on line 84 is before the structure. If `Finset` is not used in the structure definition, it can be removed from the minimal context for the structure itself, but since the output includes the namespace start, we should check if `Finset` is used in the namespace. The snippet shows `/-! ## Compatibility aliases...` which suggests future content. The structure definition (lines 132-136) does not use `Finset`. So `open Finset` is likely unnecessary for the structure definition alone.
+  - Update `minimal_imports_certified` to true if the specific imports are listed.
+- Review notes:
+  - The record is a gold candidate but lacks minimal Lean context. The structure `NPartition` depends on `Fin` and `Antitone`. The current context relies on a broad `Mathlib` import which is not minimal. The context should be revised to include specific imports for `Fin` and `Antitone`.
+  - The `open Finset BigOperators` is likely unnecessary for the structure definition itself, as `Finset` is not used in the structure fields. It might be needed for the namespace content, but the output line range includes the namespace start. However, the structure definition is self-contained with respect to `Fin` and `Antitone`.
+  - The `variable {N : ℕ}` is correctly identified.
+- Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.35, "model_extraction": 0.0, "source_span": 0.75}`
+
+### AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.fubini_prod_invertible
+
+- Verdict: `revise` (10,913 prompt / 994 completion, $0.002719).
+- Source span: The source span correctly identifies the TeX label and the corresponding proposition in the LaTeX source. However, the record relies on a TeX source span for alignment, which is acceptable for documentation but the Lean context needs to be robust for formal verification.
+- Lean context: The provided Lean context is insufficient. It lists `variable {I : Type*}` at line 65, but the theorem `fubini_prod_invertible` (lines 2903-2932) uses two type variables `I` and `J` (`{I J : Type*}`). The context only provides `I`. Furthermore, the context is missing the definition of `PowerSeries` and the `Multipliable` predicate, which are essential for the theorem to be well-formed. The `lean_predecessors` list includes `Multipliable`, `multipliable_subfamily`, and `multipliable_reindex`, but these are not included in the `minimal_context` file_context or as explicit predecessor snippets in a way that guarantees their definitions are available for reproduction. Specifically, `PowerSeries` itself is not defined in the context snippets.
+- Missing context:
+  - Definition of `PowerSeries` (likely in `AlgebraicCombinatorics/FPS/Limits.lean` or similar, imported via `Mathlib` or direct import).
+  - Definition of `Multipliable` (provided in predecessor snippet, but should be explicitly included in context if not in scope).
+  - Variable declaration for `J : Type*`. The context only has `variable {I : Type*}`.
+  - The `lean_predecessors` snippets for `multipliable_subfamily` and `multipliable_reindex` are provided in the evidence but are not part of the `minimal_context.file_context` list. While `lean_predecessors` is a separate field, the `minimal_context` should ideally include the necessary definitions or ensure they are reachable. Given the instruction to evaluate if mapped snippets are sufficient, the snippets are present, but the missing `J` variable and `PowerSeries` definition are critical gaps.
+  - Import of `AlgebraicCombinatorics.FPS.XnEquivalence` is listed in `import_closure` but not in `imports`. This might be transitive, but `AlgebraicCombinatorics.FPS.Limits` is the direct import. The context should clarify if `PowerSeries` comes from there.
+- Line or label issues:
+  - The `source_span` points to a TeX file, which is fine for documentation alignment, but the Lean context must stand alone for formal checking.
+  - The `line_range` for the output [2903, 2932] is correct for the theorem.
+- Recommended edits:
+  - Add `variable {J : Type*}` to the `minimal_context.file_context` list.
+  - Ensure the definition of `PowerSeries` is included in the context, either by adding a snippet from its definition file or confirming it is available via the imports. Since `AlgebraicCombinatorics.FPS.Limits` is imported, and `PowerSeries` is likely defined there or in a file it imports, a snippet for `PowerSeries` definition should be added to `minimal_context.file_context` or `lean_predecessors`.
+  - Verify that `Multipliable` definition is accessible. It is in `lean_predecessors`, which is good, but ensure the record structure allows for its use.
+- Review notes:
+  - The record is missing the variable `J` which is used in the theorem statement. This is a critical omission for reproducibility.
+  - The definition of `PowerSeries` is not provided in the context snippets. Without it, the theorem cannot be checked.
+  - The `lean_predecessors` are present, but the context should explicitly include the definitions of `PowerSeries` and potentially `Multipliable` if they are not in the standard library scope assumed by the imports.
 - Trust updates: `{"human_review": 0.0, "lean_dependency_graph": 0.3, "model_extraction": 0.0, "source_span": 0.75}`
