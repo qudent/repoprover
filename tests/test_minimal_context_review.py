@@ -39,9 +39,11 @@ def test_build_evidence_bundle_includes_predecessor_snippets(tmp_path) -> None:
     (source_root / "Demo.lean").write_text(
         "\n".join(
             [
+                "namespace Demo",
                 "def helper : Nat := 1",
                 "",
                 "def target : Nat := helper",
+                "end Demo",
             ]
         ),
         encoding="utf-8",
@@ -51,16 +53,26 @@ def test_build_evidence_bundle_includes_predecessor_snippets(tmp_path) -> None:
         "id": "demo:target",
         "output": {
             "lean_path": "Demo.lean",
-            "line_range": [3, 3],
+            "line_range": [4, 4],
             "declaration_names": ["Demo.target"],
         },
         "minimal_context": {
             "source_spans": [{"path": "Demo.tex", "line_range": [1, 1], "labels": ["demo"]}],
+            "file_context": [
+                {
+                    "path": "Demo.lean",
+                    "kind": "namespace",
+                    "name": "Demo",
+                    "line_range": [1, 1],
+                    "method": "file_scope_context",
+                    "reason": "Active namespace.",
+                }
+            ],
             "lean_predecessors": [
                 {
                     "path": "Demo.lean",
                     "declaration": "Demo.helper",
-                    "line_range": [1, 1],
+                    "line_range": [2, 2],
                     "method": "lexical_reference",
                     "reason": "Used in target.",
                 }
@@ -74,10 +86,21 @@ def test_build_evidence_bundle_includes_predecessor_snippets(tmp_path) -> None:
         {
             "path": "Demo.lean",
             "declaration": "Demo.helper",
-            "line_range": [1, 1],
+            "line_range": [2, 2],
             "method": "lexical_reference",
             "reason": "Used in target.",
-            "snippet": "1: def helper : Nat := 1",
+            "snippet": "2: def helper : Nat := 1",
+        }
+    ]
+    assert evidence["file_context"] == [
+        {
+            "path": "Demo.lean",
+            "kind": "namespace",
+            "name": "Demo",
+            "line_range": [1, 1],
+            "method": "file_scope_context",
+            "reason": "Active namespace.",
+            "snippet": "1: namespace Demo",
         }
     ]
 

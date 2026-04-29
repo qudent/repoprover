@@ -27,7 +27,7 @@ Reject records with wrong target identity, incomplete Lean output, missing sourc
     "structure": 11,
     "theorem": 473
   },
-  "elapsed_seconds": 1.053,
+  "elapsed_seconds": 1.203,
   "issue_categories": {},
   "model_cost_usd": 0.0,
   "records_reviewed": 645,

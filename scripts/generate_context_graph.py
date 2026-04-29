@@ -39,6 +39,9 @@ IMPORT_RE = re.compile(r"^\s*import\s+(?P<module>[A-Za-z0-9_'.]+)\s*$")
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
 SECTION_RE = re.compile(r"^\s*section(?:\s+[A-Za-z0-9_'.]+)?\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
+VARIABLE_RE = re.compile(r"^\s*(?:variable|variables)\b")
+OPEN_RE = re.compile(r"^\s*open(?:\s+scoped)?\b")
+NOTATION_RE = re.compile(r"^\s*(?:scoped\s+notation|notation)\b")
 TEX_LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
 COMMENT_LABEL_RE = re.compile(r"\\(?:label|ref)\{([^}]+)\}")
 LABEL_TOKEN_RE = re.compile(
@@ -82,6 +85,7 @@ class LeanDecl:
     line_range: tuple[int, int]
     comment_labels: tuple[str, ...]
     imports: tuple[str, ...]
+    file_context: tuple[dict[str, Any], ...]
 
 
 def relpath(path: Path, root: Path) -> str:
@@ -205,6 +209,68 @@ def namespace_prefix(stack: list[str]) -> str:
     return ".".join(parts)
 
 
+def context_span(
+    *,
+    path: str,
+    kind: str,
+    line: int,
+    name: str,
+    reason: str,
+    method: str = "file_scope_context",
+) -> dict[str, Any]:
+    return {
+        "path": path,
+        "kind": kind,
+        "name": name,
+        "line_range": numbered_range(line, line),
+        "reason": reason,
+        "method": method,
+    }
+
+
+def context_command_kind(line: str) -> str | None:
+    if VARIABLE_RE.match(line):
+        return "variable"
+    if OPEN_RE.match(line):
+        return "open"
+    if NOTATION_RE.match(line):
+        return "notation"
+    return None
+
+
+def active_file_context(scope_stack: list[dict[str, Any]]) -> tuple[dict[str, Any], ...]:
+    spans: list[dict[str, Any]] = []
+    for scope in scope_stack:
+        scope_span = scope.get("span")
+        if scope_span is not None:
+            spans.append(scope_span)
+        spans.extend(scope.get("contexts", []))
+    return tuple(spans)
+
+
+def pop_scope(scope_stack: list[dict[str, Any]], namespace_stack: list[str], name: str | None) -> None:
+    if len(scope_stack) <= 1:
+        return
+    if name:
+        short_name = name.split(".")[-1]
+        pop_index = None
+        for index in range(len(scope_stack) - 1, 0, -1):
+            scope_name = str(scope_stack[index].get("name") or "")
+            if scope_name.split(".")[-1] == short_name:
+                pop_index = index
+                break
+        if pop_index is None:
+            pop_index = len(scope_stack) - 1
+    else:
+        pop_index = len(scope_stack) - 1
+
+    popped = scope_stack[pop_index:]
+    del scope_stack[pop_index:]
+    for scope in popped:
+        if scope.get("kind") == "namespace" and namespace_stack:
+            namespace_stack.pop()
+
+
 def parse_imports(text: str) -> list[str]:
     return [match.group("module") for line in text.splitlines() if (match := IMPORT_RE.match(line))]
 
@@ -216,24 +282,60 @@ def parse_lean_declarations(project_root: Path, lean_path: Path) -> list[LeanDec
     module = lean_module_from_path(path)
     imports = tuple(parse_imports(text))
     namespace_stack: list[str] = []
-    section_depth = 0
+    scope_stack: list[dict[str, Any]] = [{"kind": "file", "name": "", "contexts": []}]
     raw: list[dict[str, Any]] = []
 
     for index, line in enumerate(lines, start=1):
         if match := NAMESPACE_RE.match(line):
-            namespace_stack.append(match.group("name").strip())
+            name = match.group("name").strip()
+            namespace_stack.append(name)
+            scope_stack.append(
+                {
+                    "kind": "namespace",
+                    "name": name,
+                    "span": context_span(
+                        path=path,
+                        kind="namespace",
+                        line=index,
+                        name=name,
+                        reason="Active namespace for the declaration.",
+                    ),
+                    "contexts": [],
+                }
+            )
             continue
         if SECTION_RE.match(line):
-            section_depth += 1
+            section_name = line.strip().removeprefix("section").strip()
+            scope_stack.append(
+                {
+                    "kind": "section",
+                    "name": section_name,
+                    "span": context_span(
+                        path=path,
+                        kind="section",
+                        line=index,
+                        name=section_name,
+                        reason="Active Lean section for the declaration.",
+                    ),
+                    "contexts": [],
+                }
+            )
             continue
         if match := END_RE.match(line):
-            name = match.group("name")
-            if name and namespace_stack and namespace_stack[-1].split(".")[-1] == name.split(".")[-1]:
-                namespace_stack.pop()
-            elif not name and section_depth > 0:
-                section_depth -= 1
-            elif namespace_stack:
-                namespace_stack.pop()
+            pop_scope(scope_stack, namespace_stack, match.group("name"))
+            continue
+
+        if kind := context_command_kind(line):
+            stripped = line.strip()
+            scope_stack[-1]["contexts"].append(
+                context_span(
+                    path=path,
+                    kind=kind,
+                    line=index,
+                    name=stripped,
+                    reason=f"Active Lean {kind} command before the declaration.",
+                )
+            )
             continue
 
         match = DECL_RE.match(line)
@@ -256,6 +358,7 @@ def parse_lean_declarations(project_root: Path, lean_path: Path) -> list[LeanDec
                 "declaration_line": index,
                 "start_line": start_line,
                 "comment_labels": tuple(extract_labels(comment_text)),
+                "file_context": active_file_context(scope_stack),
             }
         )
 
@@ -276,6 +379,7 @@ def parse_lean_declarations(project_root: Path, lean_path: Path) -> list[LeanDec
                 line_range=(decl["start_line"], end_line),
                 comment_labels=decl["comment_labels"],
                 imports=imports,
+                file_context=decl["file_context"],
             )
         )
     return declarations
@@ -511,7 +615,13 @@ def record_for_declaration(
     )
     source_path = source_lookup.get(declaration.path)
     chapter = chapter_by_source.get(source_path or "", {})
-    dependency_trust = 0.45 if any(row["method"] == "lexical_reference" for row in lean_predecessors) else 0.25
+    has_lexical_reference = any(row["method"] == "lexical_reference" for row in lean_predecessors)
+    if has_lexical_reference:
+        dependency_trust = 0.45
+    elif declaration.file_context:
+        dependency_trust = 0.35
+    else:
+        dependency_trust = 0.25
     return {
         "id": f"{declaration.path}:{declaration.full_name}",
         "chapter_id": chapter.get("id"),
@@ -523,9 +633,20 @@ def record_for_declaration(
         },
         "minimal_context": {
             "source_spans": source_spans,
+            "file_context": list(declaration.file_context),
             "lean_predecessors": lean_predecessors,
             "imports": list(declaration.imports),
             "import_closure": import_closure,
+            "import_analysis": {
+                "direct_imports": list(declaration.imports),
+                "transitive_import_count": len(import_closure),
+                "broad_imports": [module for module in declaration.imports if module == "Mathlib"],
+                "minimal_imports_certified": False,
+                "reason": (
+                    "Imports are the source file imports plus transitive closure; deterministic generation "
+                    "does not certify a strict minimal Mathlib import set."
+                ),
+            },
             "mathlib_context": ["Mathlib APIs referenced by imported modules; exact proof-level facts not statically certified."],
         },
         "alignment": {
@@ -615,6 +736,23 @@ def build_graph(records: list[dict[str, Any]], declarations: list[LeanDecl], tex
         for predecessor in record["minimal_context"].get("lean_predecessors", []):
             target = stable_node_id("lean_decl", f"{predecessor['path']}:{predecessor['declaration']}")
             add_edge(decl_id, target, "lean_context", method=predecessor.get("method"))
+        for span in record["minimal_context"].get("file_context", []):
+            start, end = span["line_range"]
+            target = stable_node_id(
+                "lean_context_span",
+                f"{span['path']}:{span.get('kind', 'context')}:{start}-{end}",
+            )
+            add_node(
+                {
+                    "id": target,
+                    "kind": "lean_context_span",
+                    "path": span["path"],
+                    "context_kind": span.get("kind"),
+                    "name": span.get("name"),
+                    "line_range": span["line_range"],
+                }
+            )
+            add_edge(decl_id, target, "file_context", method=span.get("method"))
 
     source_methods = Counter(row["alignment"]["source_method"] for row in records)
     unresolved = [
@@ -636,6 +774,9 @@ def build_graph(records: list[dict[str, Any]], declarations: list[LeanDecl], tex
             "node_count": len(nodes),
             "edge_count": len(edges),
             "source_alignment_methods": dict(sorted(source_methods.items())),
+            "file_context_span_count": sum(
+                len(record["minimal_context"].get("file_context", [])) for record in records
+            ),
             "unresolved_or_low_trust_count": len(unresolved),
         },
         "nodes": nodes,

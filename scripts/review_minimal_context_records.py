@@ -155,6 +155,25 @@ def build_evidence_bundle(
             }
         )
 
+    file_context_snippets = []
+    for span in minimal_context.get("file_context", []):
+        line_range = span.get("line_range")
+        if not line_range:
+            continue
+        context_text = fetch_repo_file(span["path"], source_base_url, cache_dir, source_root)
+        start, end = line_range
+        file_context_snippets.append(
+            {
+                "path": span["path"],
+                "kind": span.get("kind"),
+                "name": span.get("name"),
+                "line_range": [start, end],
+                "method": span.get("method"),
+                "reason": span.get("reason"),
+                "snippet": numbered_snippet(context_text, start, end, context=0),
+            }
+        )
+
     return {
         "record": record,
         "lean_output": {
@@ -168,6 +187,7 @@ def build_evidence_bundle(
             ),
         },
         "source_spans": source_snippets,
+        "file_context": file_context_snippets,
         "lean_predecessors": lean_predecessor_snippets,
     }
 
@@ -230,6 +250,7 @@ def review_prompt(evidence: dict[str, Any]) -> list[dict[str, str]]:
         "LaTeX and Lean context needed to reproduce the provided Lean output. "
         "Only declarations inside record.output.line_range are the target output; do not treat "
         "neighboring context lines as declarations that the record must justify. "
+        "File-scope context snippets list active namespace, section, open, notation, and variable commands. "
         "The dataset stores Lean context as file/line mappings; if lean_predecessors snippets are present, "
         "evaluate whether those mapped snippets are sufficient rather than requiring code to be embedded elsewhere. "
         "Prefer concrete missing-context and oversized-context findings over praise. "

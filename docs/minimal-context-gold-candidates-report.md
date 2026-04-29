@@ -22,7 +22,7 @@ Exact Lean doc-comment references to TeX labels form a better first gold-candida
     "max_source_lines": 80,
     "source_method": "lean_comment_label"
   },
-  "elapsed_seconds": 0.444,
+  "elapsed_seconds": 0.749,
   "input_records": 5684,
   "model_cost_usd": 0.0,
   "rejected_records": 5039,

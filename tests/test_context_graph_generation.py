@@ -74,12 +74,14 @@ def test_parse_lean_declarations_tracks_namespace_and_doc_labels(tmp_path: Path)
         "\n".join(
             [
                 "import Mathlib",
+                "open Nat",
                 "namespace AlgebraicCombinatorics",
+                "variable {R : Type*} [CommRing R]",
                 "/-- Definition \\ref{def.toy.item}. -/",
-                "def toyItem : Nat := 1",
+                "def toyItem : R → Nat := fun _ => 1",
                 "",
                 "/-- Theorem thm.toy.item) follows. -/",
-                "theorem toyItem_eq : toyItem = 1 := rfl",
+                "theorem toyItem_eq (r : R) : toyItem r = 1 := rfl",
                 "end AlgebraicCombinatorics",
             ]
         )
@@ -96,6 +98,37 @@ def test_parse_lean_declarations_tracks_namespace_and_doc_labels(tmp_path: Path)
     assert declarations[0].comment_labels == ("def.toy.item",)
     assert declarations[1].comment_labels == ("thm.toy.item",)
     assert declarations[1].imports == ("Mathlib",)
+    assert [span["kind"] for span in declarations[0].file_context] == ["open", "namespace", "variable"]
+    assert declarations[0].file_context[1]["name"] == "AlgebraicCombinatorics"
+    assert declarations[0].file_context[2]["name"] == "variable {R : Type*} [CommRing R]"
+
+
+def test_parse_lean_declarations_pops_named_sections_without_losing_namespace(tmp_path: Path) -> None:
+    project = tmp_path
+    lean_dir = project / "AlgebraicCombinatorics"
+    lean_dir.mkdir()
+    lean_file = lean_dir / "Toy.lean"
+    lean_file.write_text(
+        "\n".join(
+            [
+                "namespace Outer",
+                "section Local",
+                "variable {R : Type*}",
+                "def first : Nat := 1",
+                "end Local",
+                "def second : Nat := 2",
+                "end Outer",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    declarations = parse_lean_declarations(project, lean_file)
+
+    assert [row.full_name for row in declarations] == ["Outer.first", "Outer.second"]
+    assert [span["kind"] for span in declarations[0].file_context] == ["namespace", "section", "variable"]
+    assert [span["kind"] for span in declarations[1].file_context] == ["namespace"]
 
 
 def test_find_predecessors_keeps_local_window_optional(tmp_path: Path) -> None:
