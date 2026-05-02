@@ -11,6 +11,7 @@ is used only by the grader, never in the prompt.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import os
 import re
@@ -64,7 +65,49 @@ class SourceEvalRecord:
     selected: SelectedRecord
 
 
-def select_source_statement_records(rows: list[dict[str, Any]], limit: int) -> list[SourceEvalRecord]:
+def _source_line_count(row: dict[str, Any]) -> int:
+    total = 0
+    for span in row.get("minimal_context", {}).get("source_spans", []):
+        start, end = span.get("line_range", [0, 0])
+        total += max(0, int(end) - int(start) + 1)
+    return total
+
+
+def _output_line_count(row: dict[str, Any]) -> int:
+    start, end = row.get("output", {}).get("line_range", [0, 0])
+    return max(0, int(end) - int(start) + 1)
+
+
+def _corpus_sort_key(row: dict[str, Any]) -> tuple[str, int, str]:
+    return (
+        str(row.get("output", {}).get("lean_path", "")),
+        int(row.get("output", {}).get("line_range", [0, 0])[0]),
+        str(row.get("id") or row.get("record_id")),
+    )
+
+
+def _easy_sort_key(row: dict[str, Any]) -> tuple[int, int, int, str, int, str]:
+    return (
+        _source_line_count(row),
+        _output_line_count(row),
+        len(row.get("minimal_context", {}).get("lean_predecessors", [])),
+        str(row.get("alignment", {}).get("source_method", "")),
+        int(row.get("output", {}).get("line_range", [0, 0])[0]),
+        str(row.get("id") or row.get("record_id")),
+    )
+
+
+def _spread_pick(candidates: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
+    if limit <= 0 or limit >= len(candidates):
+        return candidates
+    if limit == 1:
+        return [candidates[0]]
+    return [candidates[round(i * (len(candidates) - 1) / (limit - 1))] for i in range(limit)]
+
+
+def select_source_statement_records(
+    rows: list[dict[str, Any]], limit: int, sample_mode: str = "corpus-spread"
+) -> list[SourceEvalRecord]:
     candidates = [
         row
         for row in rows
@@ -72,20 +115,18 @@ def select_source_statement_records(rows: list[dict[str, Any]], limit: int) -> l
         and row.get("output", {}).get("chunk_kind") in {"theorem", "lemma"}
         and row.get("minimal_context", {}).get("source_spans")
     ]
-    candidates.sort(
-        key=lambda row: (
-            str(row.get("output", {}).get("lean_path", "")),
-            int(row.get("output", {}).get("line_range", [0, 0])[0]),
-            str(row.get("id") or row.get("record_id")),
-        )
-    )
-    if limit <= 0 or limit >= len(candidates):
-        picked = candidates
-    elif limit == 1:
-        picked = [candidates[0]]
+    if sample_mode == "easy":
+        picked = sorted(candidates, key=_easy_sort_key)
+        if limit > 0:
+            picked = picked[:limit]
+    elif sample_mode == "stratified-easy":
+        by_ease = sorted(candidates, key=_easy_sort_key)
+        pool_size = len(by_ease) if limit <= 0 else min(len(by_ease), max(limit * 4, limit))
+        picked = _spread_pick(sorted(by_ease[:pool_size], key=_corpus_sort_key), limit)
+    elif sample_mode == "corpus-spread":
+        picked = _spread_pick(sorted(candidates, key=_corpus_sort_key), limit)
     else:
-        # Evenly spread through corpus order rather than taking only the easiest first N.
-        picked = [candidates[round(i * (len(candidates) - 1) / (limit - 1))] for i in range(limit)]
+        raise ValueError(f"unknown sample mode: {sample_mode}")
     return [SourceEvalRecord(index=i, selected=SelectedRecord(row)) for i, row in enumerate(picked, start=1)]
 
 
@@ -488,101 +529,304 @@ def parse_model_json(response: dict[str, Any]) -> dict[str, Any]:
         return json.loads(match.group(0))
 
 
+def response_message_content(response: dict[str, Any]) -> str:
+    choices = response.get("choices") or []
+    if not choices:
+        return ""
+    message = choices[0].get("message") or {}
+    return str(message.get("content") or "")
+
+
+def response_finish_reason(response: dict[str, Any]) -> str | None:
+    choices = response.get("choices") or []
+    if not choices:
+        return None
+    reason = choices[0].get("finish_reason")
+    return str(reason) if reason is not None else None
+
+
+def classify_lean_failure(output: str) -> str:
+    if "__repoprover_source_statement_check" in output:
+        return "grader_gold_statement_not_proved"
+    return "generated_lean_does_not_compile"
+
+
+def classify_error(stage: str, exc: Exception, *, finish_reason: str | None = None) -> str:
+    message = str(exc).lower()
+    exc_name = type(exc).__name__.lower()
+    if stage == "openrouter":
+        if "timeout" in message or "timeout" in exc_name or "timed out" in message:
+            return "openrouter_timeout"
+        return "openrouter_error"
+    if stage == "model_json":
+        if finish_reason == "length":
+            return "no_content_or_length"
+        if "empty content" in message or "null content" in message:
+            return "no_content_or_length"
+        return "invalid_model_json"
+    if stage == "model_contract":
+        if "forbidden placeholder" in message:
+            return "forbidden_placeholder"
+        if "missing lean_declaration" in message:
+            return "missing_declaration"
+        return "model_contract_error"
+    return "eval_error"
+
+
+def aggregate_failure_classes(results: list[dict[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in results:
+        failure_class = row.get("failure_class")
+        if failure_class:
+            counts[str(failure_class)] = counts.get(str(failure_class), 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def prepare_record_run(args: argparse.Namespace, item: SourceEvalRecord) -> dict[str, Any]:
+    record = item.selected
+    record_dir = args.output / f"record-{item.index:03d}"
+    payload = build_payload(
+        model=args.model,
+        messages=build_messages(args.project_root, record),
+        max_tokens=args.max_tokens,
+        temperature=args.temperature,
+        reasoning_effort=args.reasoning_effort,
+    )
+    estimate = estimate_payload_cost(payload)
+    row: dict[str, Any] = {
+        "index": item.index,
+        "record_id": record.record_id,
+        "lean_path": record.lean_path,
+        "gold_declaration_names": record.declaration_names,
+        "gold_line_range": list(record.line_range),
+        "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+        "budget_estimate": estimate,
+    }
+    write_json(record_dir / "openrouter-payload.json", payload)
+    return {
+        "item": item,
+        "record": record,
+        "record_dir": record_dir,
+        "payload": payload,
+        "estimated_max_cost_usd": float(estimate.get("estimated_max_cost_usd") or 0.0),
+        "row": row,
+    }
+
+
+def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[str, Any]:
+    record: SelectedRecord = prepared["record"]
+    record_dir: Path = prepared["record_dir"]
+    payload: dict[str, Any] = prepared["payload"]
+    row = dict(prepared["row"])
+
+    if args.budget_only:
+        row["paid_call_made"] = False
+        row["status"] = "budget_only"
+        return row
+
+    try:
+        response = call_openrouter(payload, args.base_url, args.openrouter_timeout)
+    except Exception as exc:  # noqa: BLE001 - timeout/API failure should not abort the batch.
+        row["paid_call_made"] = True
+        row["api_request_attempted"] = True
+        row["response_received"] = False
+        row["success"] = False
+        row["failure_class"] = classify_error("openrouter", exc)
+        row["error"] = f"openrouter_{type(exc).__name__}: {exc}"
+        return row
+
+    row["api_request_attempted"] = True
+    row["response_received"] = True
+    write_json(record_dir / "openrouter-response.json", response)
+    cost_summary = summarize_openrouter_response_cost(response)
+    write_json(record_dir / "openrouter-cost-summary.json", cost_summary)
+    row["cost_summary"] = cost_summary
+    row["finish_reason"] = response_finish_reason(response)
+
+    try:
+        if not response_message_content(response).strip():
+            raise ValueError("model returned empty content")
+        model_json = parse_model_json(response)
+    except Exception as exc:  # noqa: BLE001 - classify malformed provider content.
+        row["success"] = False
+        row["failure_class"] = classify_error("model_json", exc, finish_reason=row["finish_reason"])
+        row["error"] = f"{type(exc).__name__}: {exc}"
+        row["paid_call_made"] = True
+        return row
+
+    try:
+        declaration = str(model_json.get("lean_declaration") or "")
+        generated_name = extract_generated_name(declaration, model_json.get("declaration_name"))
+        row["model_json"] = model_json
+        row["generated_name"] = generated_name
+        row["forbidden_placeholder"] = contains_forbidden_placeholder(declaration)
+        if not declaration.strip() or not generated_name:
+            raise ValueError("missing lean_declaration or declaration_name")
+        if row["forbidden_placeholder"]:
+            raise ValueError("model output contains forbidden placeholder")
+    except Exception as exc:  # noqa: BLE001 - per-record contract failures should continue.
+        row["success"] = False
+        row["failure_class"] = classify_error("model_contract", exc)
+        row["error"] = f"{type(exc).__name__}: {exc}"
+        row["paid_call_made"] = True
+        return row
+
+    try:
+        target_path = materialize_candidate_project(
+            project_root=args.project_root,
+            output_root=record_dir / "project",
+            record=record,
+            lean_declaration=declaration,
+            generated_name=str(generated_name),
+            lake_cache_from=args.lake_cache_from,
+        )
+        lean_result = run_lean(record_dir / "project", target_path, args.lean_timeout)
+        row["lean_check"] = lean_result
+        row["success"] = lean_result["exit_code"] == 0
+        if not row["success"]:
+            row["failure_class"] = classify_lean_failure(str(lean_result.get("output") or ""))
+    except Exception as exc:  # noqa: BLE001 - per-record eval should continue.
+        row["success"] = False
+        row["failure_class"] = "materialization_or_lean_error"
+        row["error"] = f"{type(exc).__name__}: {exc}"
+
+    row["paid_call_made"] = True
+    return row
+
+
+def append_jsonl(path: Path, row: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def sorted_results(results_by_index: dict[int, dict[str, Any]]) -> list[dict[str, Any]]:
+    return [results_by_index[index] for index in sorted(results_by_index)]
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     rows = load_jsonl(args.records)
-    records = select_source_statement_records(rows, args.limit)
+    records = select_source_statement_records(rows, args.limit, args.sample_mode)
     if not records:
         raise ValueError("no theorem/lemma source-statement records selected")
+    if args.concurrency < 1:
+        raise ValueError("--concurrency must be at least 1")
 
     eval_dir = args.output / "eval"
     eval_dir.mkdir(parents=True, exist_ok=True)
     selected_rows = [item.selected.row for item in records]
     write_jsonl(eval_dir / "selected-records.jsonl", selected_rows)
 
-    results: list[dict[str, Any]] = []
+    partial_jsonl = eval_dir / "partial-results.jsonl"
+    if partial_jsonl.exists():
+        partial_jsonl.unlink()
+    prepared_records = [prepare_record_run(args, item) for item in records]
+    if args.budget_only:
+        results = [run_one_record(args, prepared) for prepared in prepared_records]
+        for row in results:
+            append_jsonl(partial_jsonl, row)
+        write_json(eval_dir / "partial-results.json", {"results": results})
+    else:
+        results_by_index: dict[int, dict[str, Any]] = {}
+        running: dict[concurrent.futures.Future[dict[str, Any]], dict[str, Any]] = {}
+        next_record = 0
+        reserved_cost = 0.0
+        completed_actual_cost = 0.0
+
+        def record_partial_result(future: concurrent.futures.Future[dict[str, Any]]) -> None:
+            nonlocal reserved_cost, completed_actual_cost
+            prepared = running.pop(future)
+            reserved_cost -= float(prepared["estimated_max_cost_usd"])
+            try:
+                row = future.result()
+            except Exception as exc:  # noqa: BLE001 - worker bugs still become row-level failures.
+                item: SourceEvalRecord = prepared["item"]
+                row = dict(prepared["row"])
+                row["paid_call_made"] = False
+                row["success"] = False
+                row["failure_class"] = "worker_error"
+                row["error"] = f"{type(exc).__name__}: {exc}"
+                row["index"] = item.index
+            cost = row.get("cost_summary", {}).get("actual_cost_usd")
+            if cost is not None:
+                completed_actual_cost += float(cost)
+            results_by_index[int(row["index"])] = row
+            append_jsonl(partial_jsonl, row)
+            write_json(eval_dir / "partial-results.json", {"results": sorted_results(results_by_index)})
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+            while next_record < len(prepared_records) or running:
+                launched = False
+                while next_record < len(prepared_records) and len(running) < args.concurrency:
+                    prepared = prepared_records[next_record]
+                    estimated_cost = float(prepared["estimated_max_cost_usd"])
+                    cost_cap = float(args.max_actual_cost_usd or 0.0)
+                    if cost_cap and completed_actual_cost >= cost_cap:
+                        if running:
+                            break
+                        row = dict(prepared["row"])
+                        row["paid_call_made"] = False
+                        row["success"] = False
+                        row["failure_class"] = "skipped_cost_cap"
+                        row["error"] = "global cost cap already reached; no request launched"
+                        results_by_index[int(row["index"])] = row
+                        append_jsonl(partial_jsonl, row)
+                        write_json(eval_dir / "partial-results.json", {"results": sorted_results(results_by_index)})
+                        next_record += 1
+                        launched = True
+                        continue
+                    if cost_cap and completed_actual_cost + reserved_cost + estimated_cost > cost_cap:
+                        if running:
+                            break
+                        row = dict(prepared["row"])
+                        row["paid_call_made"] = False
+                        row["success"] = False
+                        row["failure_class"] = "skipped_cost_cap"
+                        row["error"] = (
+                            "estimated per-record max cost would exceed remaining global cost cap "
+                            f"(${estimated_cost:.6f} > ${max(0.0, cost_cap - completed_actual_cost):.6f})"
+                        )
+                        results_by_index[int(row["index"])] = row
+                        append_jsonl(partial_jsonl, row)
+                        write_json(eval_dir / "partial-results.json", {"results": sorted_results(results_by_index)})
+                        next_record += 1
+                        launched = True
+                        continue
+                    future = executor.submit(run_one_record, args, prepared)
+                    running[future] = prepared
+                    reserved_cost += estimated_cost
+                    next_record += 1
+                    launched = True
+
+                if not running:
+                    if not launched and next_record < len(prepared_records):
+                        continue
+                    break
+
+                done, _ = concurrent.futures.wait(
+                    running,
+                    return_when=concurrent.futures.FIRST_COMPLETED,
+                )
+                for future in done:
+                    record_partial_result(future)
+
+        results = sorted_results(results_by_index)
+
     total_actual_cost = 0.0
     paid_calls = 0
-    for item in records:
-        record = item.selected
-        record_dir = args.output / f"record-{item.index:03d}"
-        payload = build_payload(
-            model=args.model,
-            messages=build_messages(args.project_root, record),
-            max_tokens=args.max_tokens,
-            temperature=args.temperature,
-            reasoning_effort=args.reasoning_effort,
-        )
-        estimate = estimate_payload_cost(payload)
-        row: dict[str, Any] = {
-            "index": item.index,
-            "record_id": record.record_id,
-            "lean_path": record.lean_path,
-            "gold_declaration_names": record.declaration_names,
-            "gold_line_range": list(record.line_range),
-            "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
-            "budget_estimate": estimate,
-        }
-        write_json(record_dir / "openrouter-payload.json", payload)
-
-        if args.budget_only:
-            row["paid_call_made"] = False
-            results.append(row)
-            continue
-
-        try:
-            response = call_openrouter(payload, args.base_url, args.openrouter_timeout)
-        except Exception as exc:  # noqa: BLE001 - timeout/API failure should not abort the batch.
-            row["paid_call_made"] = True
-            row["success"] = False
-            row["error"] = f"openrouter_{type(exc).__name__}: {exc}"
-            results.append(row)
-            write_json(eval_dir / "partial-results.json", {"results": results})
-            continue
-        paid_calls += 1
-        write_json(record_dir / "openrouter-response.json", response)
-        cost_summary = summarize_openrouter_response_cost(response)
-        write_json(record_dir / "openrouter-cost-summary.json", cost_summary)
+    for row in results:
+        if row.get("response_received"):
+            paid_calls += 1
+        cost_summary = row.get("cost_summary", {})
         if cost_summary.get("actual_cost_usd") is not None:
             total_actual_cost += float(cost_summary["actual_cost_usd"])
-
-        try:
-            model_json = parse_model_json(response)
-            declaration = str(model_json.get("lean_declaration") or "")
-            generated_name = extract_generated_name(declaration, model_json.get("declaration_name"))
-            row["model_json"] = model_json
-            row["generated_name"] = generated_name
-            row["forbidden_placeholder"] = contains_forbidden_placeholder(declaration)
-            if not declaration.strip() or not generated_name:
-                raise ValueError("missing lean_declaration or declaration_name")
-            if row["forbidden_placeholder"]:
-                raise ValueError("model output contains forbidden placeholder")
-            target_path = materialize_candidate_project(
-                project_root=args.project_root,
-                output_root=record_dir / "project",
-                record=record,
-                lean_declaration=declaration,
-                generated_name=generated_name,
-                lake_cache_from=args.lake_cache_from,
-            )
-            lean_result = run_lean(record_dir / "project", target_path, args.lean_timeout)
-            row["lean_check"] = lean_result
-            row["success"] = lean_result["exit_code"] == 0
-        except Exception as exc:  # noqa: BLE001 - per-record eval should continue.
-            row["success"] = False
-            row["error"] = f"{type(exc).__name__}: {exc}"
-        row["paid_call_made"] = True
-        row["cost_summary"] = cost_summary
-        results.append(row)
-        write_json(eval_dir / "partial-results.json", {"results": results})
-
-        if args.max_actual_cost_usd and total_actual_cost >= args.max_actual_cost_usd:
-            break
 
     attempted = [row for row in results if row.get("paid_call_made")]
     successes = [row for row in attempted if row.get("success")]
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "records_selected": len(records),
+        "records_completed": len(results),
         "records_attempted": len(attempted),
         "successes": len(successes),
         "success_rate": (len(successes) / len(attempted)) if attempted else None,
@@ -591,6 +835,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "model": args.model,
         "max_tokens": args.max_tokens,
         "reasoning_effort": args.reasoning_effort,
+        "concurrency": args.concurrency,
+        "sample_mode": args.sample_mode,
+        "max_actual_cost_usd": args.max_actual_cost_usd,
+        "failure_classes": aggregate_failure_classes(results),
         "results": results,
     }
     write_json(eval_dir / "source-statement-live-results.json", summary)
@@ -607,10 +855,14 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Model: `{summary['model']}`",
         f"- Max tokens: `{summary['max_tokens']}`",
         f"- Reasoning effort: `{summary['reasoning_effort']}`",
+        f"- Concurrency: `{summary['concurrency']}`",
+        f"- Sample mode: `{summary['sample_mode']}`",
+        f"- Global cost cap: `${float(summary['max_actual_cost_usd'] or 0.0):.6f}`",
         f"- Records attempted: {summary['records_attempted']} / selected {summary['records_selected']}",
         f"- Successes: {summary['successes']}",
         f"- Success rate: {rate:.1%}" if rate is not None else "- Success rate: n/a",
         f"- Actual reported cost: `${summary['actual_cost_usd']:.6f}`",
+        f"- Failure classes: `{json.dumps(summary['failure_classes'], sort_keys=True)}`",
         "",
         "Success means: the prompt withheld the target Lean statement/name; the model generated a theorem/lemma; the generated theorem compiled; and a grader-only copy of the gold statement was proved by `simpa using <generated theorem>`. This is still an oracle source-span benchmark, not full feed-forward segmentation.",
         "",
@@ -618,7 +870,12 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         "|---:|---|---|---|---:|---|",
     ]
     for row in summary["results"]:
-        result = "✅" if row.get("success") else "❌"
+        if row.get("status") == "budget_only":
+            result = "BUDGET"
+        elif row.get("failure_class") == "skipped_cost_cap":
+            result = "SKIP"
+        else:
+            result = "PASS" if row.get("success") else "FAIL"
         cost = row.get("cost_summary", {}).get("actual_cost_usd")
         cost_text = f"${float(cost):.6f}" if cost is not None else ""
         err = row.get("error") or row.get("lean_check", {}).get("output", "")
@@ -644,6 +901,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--lean-timeout", type=int, default=90)
     parser.add_argument("--openrouter-timeout", type=float, default=240.0)
     parser.add_argument("--max-actual-cost-usd", type=float, default=2.0)
+    parser.add_argument("--concurrency", type=int, default=4, help="Maximum records to run concurrently.")
+    parser.add_argument(
+        "--sample-mode",
+        choices=["corpus-spread", "easy", "stratified-easy"],
+        default="corpus-spread",
+        help="Record selection mode. `stratified-easy` spreads over the easiest candidate pool.",
+    )
     parser.add_argument("--budget-only", action="store_true")
     args = parser.parse_args()
     return args

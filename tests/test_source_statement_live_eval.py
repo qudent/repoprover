@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import argparse
+import copy
 import json
+import threading
+import time
 from pathlib import Path
 
 from scripts.materialize_minimal_context_smoke import SelectedRecord
-from scripts.run_source_statement_live_eval import build_messages
+from scripts.run_source_statement_live_eval import build_messages, run, select_source_statement_records
 
 
 def _write_fixture_project(tmp_path: Path) -> tuple[Path, SelectedRecord]:
@@ -119,3 +123,157 @@ def test_source_statement_prompt_focuses_specific_part_of_multipart_source(tmp_p
     assert focus["specific_labeled_parts"] == ["a"]
     assert "formalize only the specified labeled part/source span" in instructions
     assert "Do not conjoin all parts" in instructions
+
+
+def _write_records(path: Path, row: dict, count: int) -> None:
+    with path.open("w", encoding="utf-8") as handle:
+        for index in range(count):
+            cloned = copy.deepcopy(row)
+            cloned["id"] = f"Demo.lean:Demo.target{index}"
+            cloned["output"]["declaration_names"] = [f"Demo.target{index}"]
+            handle.write(json.dumps(cloned, ensure_ascii=False) + "\n")
+
+
+def _run_args(project_root: Path, records: Path, output: Path, **overrides: object) -> argparse.Namespace:
+    values = {
+        "records": records,
+        "project_root": project_root,
+        "output": output,
+        "limit": 4,
+        "model": "test/model",
+        "base_url": "https://example.invalid/api/v1",
+        "max_tokens": 128,
+        "temperature": 0.0,
+        "reasoning_effort": None,
+        "lake_cache_from": None,
+        "lean_timeout": 1,
+        "openrouter_timeout": 1.0,
+        "max_actual_cost_usd": 2.0,
+        "concurrency": 2,
+        "sample_mode": "corpus-spread",
+        "budget_only": False,
+    }
+    values.update(overrides)
+    return argparse.Namespace(**values)
+
+
+def _fake_response(content: str, *, finish_reason: str = "stop", cost: float = 0.0001) -> dict:
+    return {
+        "model": "test/model",
+        "choices": [{"message": {"content": content}, "finish_reason": finish_reason}],
+        "usage": {"prompt_tokens": 10, "completion_tokens": 20, "total_tokens": 30, "cost": cost},
+    }
+
+
+def test_source_statement_live_eval_runs_records_concurrently_and_writes_partials(
+    tmp_path: Path, monkeypatch
+) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 4)
+
+    active = 0
+    max_active = 0
+    lock = threading.Lock()
+
+    def fake_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        nonlocal active, max_active
+        with lock:
+            active += 1
+            max_active = max(max_active, active)
+        time.sleep(0.05)
+        with lock:
+            active -= 1
+        body = json.dumps(
+            {
+                "lean_declaration": "theorem generated : True := by\n  trivial",
+                "declaration_name": "generated",
+                "used_context": [],
+                "notes": [],
+            }
+        )
+        return _fake_response(body)
+
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.call_openrouter", fake_call_openrouter)
+    monkeypatch.setattr(
+        "scripts.run_source_statement_live_eval.run_lean",
+        lambda project_root, target_path, timeout: {"exit_code": 0, "output": ""},
+    )
+
+    summary = run(_run_args(project_root, records_path, tmp_path / "out"))
+
+    assert max_active == 2
+    assert summary["records_attempted"] == 4
+    assert summary["paid_calls_made"] == 4
+    assert summary["successes"] == 4
+    assert summary["failure_classes"] == {}
+    partial_jsonl = tmp_path / "out/eval/partial-results.jsonl"
+    assert len(partial_jsonl.read_text(encoding="utf-8").splitlines()) == 4
+
+
+def test_source_statement_live_eval_enforces_global_estimated_cost_cap(
+    tmp_path: Path, monkeypatch
+) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 2)
+
+    def fail_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        raise AssertionError("cost-capped records must not call OpenRouter")
+
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.call_openrouter", fail_call_openrouter)
+
+    summary = run(
+        _run_args(
+            project_root,
+            records_path,
+            tmp_path / "out",
+            limit=2,
+            max_tokens=32768,
+            max_actual_cost_usd=0.00001,
+        )
+    )
+
+    assert summary["records_attempted"] == 0
+    assert summary["paid_calls_made"] == 0
+    assert summary["failure_classes"] == {"skipped_cost_cap": 2}
+
+
+def test_source_statement_live_eval_classifies_length_no_content(tmp_path: Path, monkeypatch) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 1)
+
+    monkeypatch.setattr(
+        "scripts.run_source_statement_live_eval.call_openrouter",
+        lambda payload, base_url, timeout: _fake_response("", finish_reason="length"),
+    )
+
+    summary = run(_run_args(project_root, records_path, tmp_path / "out", limit=1))
+
+    assert summary["records_attempted"] == 1
+    assert summary["failure_classes"] == {"no_content_or_length": 1}
+
+
+def test_source_statement_sample_mode_easy_prefers_smaller_records() -> None:
+    rows = []
+    for index, (source_end, output_end, predecessor_count) in enumerate([(20, 7, 2), (3, 5, 0), (8, 4, 1)]):
+        rows.append(
+            {
+                "id": f"r{index}",
+                "output": {
+                    "lean_path": "Demo.lean",
+                    "declaration_names": [f"Demo.t{index}"],
+                    "line_range": [4, output_end],
+                    "chunk_kind": "theorem",
+                },
+                "minimal_context": {
+                    "source_spans": [{"path": "Demo.tex", "line_range": [1, source_end]}],
+                    "lean_predecessors": [{"declaration": f"p{n}"} for n in range(predecessor_count)],
+                },
+            }
+        )
+
+    selected = select_source_statement_records(rows, limit=2, sample_mode="easy")
+
+    assert [item.selected.record_id for item in selected] == ["r1", "r2"]

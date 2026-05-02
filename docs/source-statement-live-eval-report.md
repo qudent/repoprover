@@ -153,13 +153,61 @@ Cauchy--Binet payload with `lem.det.minors-diag.a` as the specific source focus.
 
 ## Next recommended run
 
-Do not keep rerunning the same hard first record sequentially. The next batch should either:
+Do not keep rerunning the same hard first record sequentially. The runner now
+supports bounded nonblocking batch execution directly:
 
-1. sample easier/smaller source-statement records first, or
-2. run per-record calls as independent background jobs so one slow call does not block the whole batch, and use a high enough cap (at least 32,768) to get actual content.
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --output /tmp/repoprover-source-statement-live-10 \
+  --limit 10 \
+  --sample-mode stratified-easy \
+  --concurrency 4 \
+  --max-actual-cost-usd 0.50 \
+  --openrouter-timeout 240 \
+  --lean-timeout 90
+```
+
+The live path launches up to `--concurrency` records at once. Each record keeps
+its own OpenRouter timeout, Lean timeout, payload/response/cost artifacts, and
+materialized check project. Completed rows are written immediately to
+`eval/partial-results.jsonl` and the sorted snapshot
+`eval/partial-results.json`, so a slow or failed record does not hide earlier
+results. The global cost cap is enforced before launching a request using the
+record's estimated maximum cost plus already reserved in-flight cost; this is
+conservative, but it avoids starting calls that cannot fit under the cap.
+
+Sampling modes:
+
+- `corpus-spread`: previous deterministic spread through corpus order.
+- `easy`: shortest source spans/output declarations and fewest predecessors
+  first.
+- `stratified-easy`: corpus-spread sample from the easiest candidate pool,
+  intended for a 10-record first batch that is less likely to stall on the
+  hardest Cauchy--Binet case.
+
+API-free verification of the new supervisor path:
+
+```text
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest tests/test_source_statement_live_eval.py
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py --output /tmp/repoprover-source-statement-concurrency-budget --limit 10 --sample-mode stratified-easy --concurrency 4 --budget-only
+```
+
+The budget-only smoke selected 10 records, wrote 10 selected rows and 10 partial
+result rows, made `0` paid calls, and reported `sample_mode=stratified-easy` and
+`concurrency=4`.
+
+Use a high enough cap (at least 32,768 tokens) for DeepSeek V4-style reasoning
+models to get actual content.
 
 Scoring should continue to report three separate failure classes:
 
 - no content / length due reasoning-token exhaustion;
 - generated Lean does not parse/compile;
 - generated theorem compiles but does not prove withheld gold statement.
+
+The JSON summary now aggregates these and related classes under
+`failure_classes`, including `openrouter_timeout`, `openrouter_error`,
+`no_content_or_length`, `invalid_model_json`, `forbidden_placeholder`,
+`missing_declaration`, `generated_lean_does_not_compile`,
+`grader_gold_statement_not_proved`, `materialization_or_lean_error`, and
+`skipped_cost_cap`.

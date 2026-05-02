@@ -22,8 +22,8 @@ whole-corpus context graph, declaration-level minimal-context records, 645
 exact-label gold candidates, and a 24-record semantic-review sample. Current
 DeepSeek model choice remains `deepseek/deepseek-v4-pro`. The stricter
 target-statement-withheld source-eval runner now emits notation-aware Lean
-prefix context, local style guidance, and specific source-part focus metadata
-after the first Cauchy--Binet live failure.
+prefix context, local style guidance, specific source-part focus metadata, and
+a bounded concurrent live-eval supervisor path.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -66,9 +66,13 @@ after the first Cauchy--Binet live failure.
 - [x] Harden the source-statement prompt/context after the first Cauchy--Binet
   failure: include local notation support, local style examples, helper-name
   constraints, and specific multi-part source focus.
-- [ ] Next broader research step: run a non-blocking stratified/easier
-  source-statement batch or design a model-selected segmentation task using the
-  current best open-weight reviewer/critic as an adjudicator.
+- [x] Add a non-blocking stratified/easier source-statement batch path with
+  bounded concurrency, per-record timeouts, partial results, cost-cap guarding,
+  and failure-class aggregation.
+- [ ] Next broader research step: run a paid 10-record stratified/easy
+  source-statement batch only after explicitly deciding the OpenRouter spend
+  cap, or design a model-selected segmentation task using the current best
+  open-weight reviewer/critic as an adjudicator.
 
 ## Blockers
 - Whole-corpus/gold-candidate records are machine-generated, not fully
@@ -140,6 +144,20 @@ after the first Cauchy--Binet live failure.
   names, and focus multi-part source chunks on the specific record label (for
   Cauchy--Binet, `lem.det.minors-diag.a`). Added focused prompt tests and ran a
   one-record budget-only smoke; no paid provider call was made.
+- Hardened `scripts/run_source_statement_live_eval.py` for live batches:
+  `--concurrency` defaults to 4, `--sample-mode` supports `corpus-spread`,
+  `easy`, and `stratified-easy`, each record writes independent payload/response
+  artifacts, completed rows are streamed to `eval/partial-results.jsonl`, and
+  the summary aggregates `failure_classes`. The global cost cap is checked
+  before launching calls using estimated max cost plus in-flight reservations.
+- API-free verification passed:
+  `UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest
+  tests/test_source_statement_live_eval.py` and
+  `UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python
+  scripts/run_source_statement_live_eval.py --output
+  /tmp/repoprover-source-statement-concurrency-budget --limit 10 --sample-mode
+  stratified-easy --concurrency 4 --budget-only`; the smoke selected 10 records,
+  wrote 10 partial-result rows, and made 0 paid calls.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -175,9 +193,11 @@ after the first Cauchy--Binet live failure.
 - `scripts/run_source_statement_live_eval.py` is the stricter source-statement
   live-eval runner: target Lean statement/name withheld from the prompt, source
   chunk provided, generated theorem checked against a grader-only gold
-  statement. It now adds local notation support/style context and specific
-  source-part focus metadata. Current live attempts and the prompt/context fix
-  are documented in `docs/source-statement-live-eval-report.md`; avoid low
+  statement. It now adds local notation support/style context, specific
+  source-part focus metadata, bounded per-record concurrency, conservative
+  cost-cap launch checks, partial-result streaming, and failure-class
+  aggregation. Current live attempts and the concurrent command shape are
+  documented in `docs/source-statement-live-eval-report.md`; avoid low
   completion caps because DeepSeek V4 can spend all returned tokens on
   reasoning and produce null content.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
