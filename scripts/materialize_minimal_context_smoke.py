@@ -60,6 +60,10 @@ class SelectedRecord:
         return list(self.row.get("minimal_context", {}).get("lean_predecessors", []))
 
     @property
+    def file_context(self) -> list[dict[str, Any]]:
+        return list(self.row.get("minimal_context", {}).get("file_context", []))
+
+    @property
     def mathlib_context(self) -> list[str]:
         return list(self.row.get("minimal_context", {}).get("mathlib_context", []))
 
@@ -134,6 +138,18 @@ def declaration_with_sorry(original_chunk: str) -> str:
     return original_chunk[: marker + 2].rstrip() + " by\n  sorry\n"
 
 
+def context_close_commands(file_context: list[dict[str, Any]]) -> list[str]:
+    closes: list[str] = []
+    for span in file_context:
+        kind = str(span.get("kind") or "")
+        if kind == "namespace":
+            name = str(span.get("name") or "").strip()
+            closes.append(f"end {name}" if name else "end")
+        elif kind == "section":
+            closes.append("end")
+    return list(reversed(closes))
+
+
 def module_name_from_lean_path(path: str) -> str:
     return path.removesuffix(".lean").replace("/", ".")
 
@@ -165,13 +181,31 @@ def write_source_snippets(project_root: Path, output_root: Path, record: Selecte
     return first_source_path
 
 
-def build_target_lean(project_root: Path, record: SelectedRecord) -> str:
+def render_file_context(project_root: Path, record: SelectedRecord) -> tuple[list[str], list[str]]:
+    if record.file_context:
+        parts: list[str] = []
+        for span in record.file_context:
+            path = project_root / str(span["path"])
+            start, end = [int(value) for value in span["line_range"]]
+            parts.append(f"-- File context: {span['path']}:{start}-{end} ({span.get('kind', 'context')})")
+            parts.append(read_line_range(path, (start, end)).rstrip())
+        return parts, context_close_commands(record.file_context)
+
+    lean_file = project_root / record.lean_path
+    namespaces = active_namespaces_at_line(lean_file, record.line_range[0])
+    parts = [f"namespace {namespace}" for namespace in namespaces]
+    closes = [f"end {namespace}" for namespace in reversed(namespaces)]
+    return parts, closes
+
+
+def build_target_lean(project_root: Path, record: SelectedRecord, *, use_record_imports: bool = False) -> str:
     lean_file = project_root / record.lean_path
     target_chunk = declaration_with_sorry(read_line_range(lean_file, record.line_range))
-    namespaces = active_namespaces_at_line(lean_file, record.line_range[0])
+    context_parts, context_closes = render_file_context(project_root, record)
+    imports = record.imports if use_record_imports else ["Mathlib"]
 
     parts: list[str] = []
-    for module in record.imports:
+    for module in imports:
         parts.append(f"import {module}")
     parts.append("")
     parts.append("/-!")
@@ -184,9 +218,8 @@ def build_target_lean(project_root: Path, record: SelectedRecord) -> str:
     parts.append("-/")
     parts.append("")
 
-    for namespace in namespaces:
-        parts.append(f"namespace {namespace}")
-    if namespaces:
+    parts.extend(context_parts)
+    if context_parts:
         parts.append("")
 
     for predecessor in record.lean_predecessors:
@@ -198,8 +231,7 @@ def build_target_lean(project_root: Path, record: SelectedRecord) -> str:
 
     parts.append(target_chunk.rstrip())
     parts.append("")
-    for namespace in reversed(namespaces):
-        parts.append(f"end {namespace}")
+    parts.extend(context_closes)
     return "\n".join(parts).rstrip() + "\n"
 
 
@@ -272,6 +304,7 @@ def materialize_smoke_project(
     force: bool = False,
     lake_cache_from: Path | None = None,
     init_git: bool = True,
+    use_record_imports: bool = False,
 ) -> None:
     if not records:
         raise ValueError("no records selected")
@@ -291,7 +324,7 @@ def materialize_smoke_project(
 
     target_lean = output_root / record.lean_path
     target_lean.parent.mkdir(parents=True, exist_ok=True)
-    target_lean.write_text(build_target_lean(project_root, record), encoding="utf-8")
+    target_lean.write_text(build_target_lean(project_root, record, use_record_imports=use_record_imports), encoding="utf-8")
 
     root_module = Path(record.lean_path).parts[0]
     root_import = output_root / f"{root_module}.lean"
@@ -343,7 +376,7 @@ def materialize_smoke_project(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--records", type=Path, default=Path("docs/minimal-context-generated-records.jsonl"))
+    parser.add_argument("--records", type=Path, default=Path("docs/minimal-context-gold-candidates.jsonl"))
     parser.add_argument("--project-root", type=Path, default=Path("algebraic-combinatorics"))
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--record-id", action="append", default=[], help="Record id to materialize.")
@@ -354,6 +387,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--lake-cache-from",
         type=Path,
         help="Optional Lean project whose .lake/packages directory should be symlinked for a cheap dry build.",
+    )
+    parser.add_argument(
+        "--include-record-imports",
+        action="store_true",
+        help="Import the record's local import list instead of the default Mathlib-only benchmark baseline.",
     )
     return parser
 
@@ -369,13 +407,14 @@ def main() -> int:
         force=args.force,
         lake_cache_from=args.lake_cache_from,
         init_git=not args.no_git,
+        use_record_imports=args.include_record_imports,
     )
     record = selected[0]
     print(f"Materialized {record.record_id}")
     print(f"Project: {args.output}")
     print(
         "Run: uv run python -m repoprover run "
-        f"{args.output} --pool-size 1 --provider openrouter --model qwen/qwen3.6-35b-a3b "
+        f"{args.output} --pool-size 1 --provider openrouter --model deepseek/deepseek-v4-pro "
         "--no-background-agents --stop-after-first-merge --verbose"
     )
     return 0

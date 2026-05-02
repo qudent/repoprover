@@ -134,3 +134,54 @@ Selected rows include a top-level `selection` object documenting the selector
 version, criteria, timestamp, and caveat. Skipped records remain in
 `minimal-context-full-records.jsonl`; use the filter report for skipped-reason
 counts.
+
+## One-Record DeepSeek Evaluation
+
+The minimal evaluation pipeline materializes a single benchmark project from
+`docs/minimal-context-gold-candidates.jsonl` or
+`docs/minimal-context-semantic-review-sample.jsonl`. The generated Lean target
+imports `Mathlib` only by default, inserts recorded `file_context` lines such as
+`open`, `namespace`, `section`, and `variable`, inserts predecessor Lean
+snippets, and replaces the target body/proof with `sorry`.
+
+Emit the exact DeepSeek V4 Pro prompt payload and review command without making
+an OpenRouter call:
+
+```bash
+uv run python scripts/run_minimal_context_eval.py \
+  --records docs/minimal-context-semantic-review-sample.jsonl \
+  --project-root algebraic-combinatorics \
+  --output /tmp/repoprover-minimal-context-eval \
+  --force \
+  --no-git
+```
+
+The output project contains:
+
+- `eval/selected-record.jsonl`: the single record under test.
+- `eval/evidence.json`: local TeX, file-context, predecessor, and target
+  evidence assembled by the same helper used by
+  `scripts/review_minimal_context_records.py`.
+- `eval/openrouter-formalization-payload.json`: the exact OpenRouter chat
+  payload for `deepseek/deepseek-v4-pro`.
+- `eval/openrouter-formalization-command.txt`: the bounded live-call command.
+- `eval/review-command.txt`: the exact DeepSeek review command using
+  `scripts/review_minimal_context_records.py`.
+
+Only pass `--call-openrouter` for an explicit bounded paid smoke, and only when
+`OPENROUTER_API_KEY` is set:
+
+```bash
+uv run python scripts/run_minimal_context_eval.py \
+  --records docs/minimal-context-semantic-review-sample.jsonl \
+  --project-root algebraic-combinatorics \
+  --output /tmp/repoprover-minimal-context-eval \
+  --force \
+  --no-git \
+  --call-openrouter \
+  --max-tokens 8192 \
+  --reasoning-effort high
+```
+
+Use `--include-record-imports` only when you want to evaluate with the record's
+local import list instead of the stricter Mathlib-only baseline.

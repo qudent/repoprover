@@ -12,33 +12,19 @@ Deliverable: A minimal context mapping (mapping line regions/files to lines), an
 Avoid editing above the line except to preserve new human direction.
 -------
 Start time of work: 2026-04-28T15:52:46Z
-Remaining openrouter budget: about 7.03 $ after the corrected April 28
+Remaining OpenRouter budget: about `$7.03` after the corrected April 28
 semantic-review sample run; refresh credits before larger live runs.
-
 
 ## Current State
 RepoProver is locally installed with Python in `.venv` and Lean/Lake through
-`elan`. The Algebraic Combinatorics vendored snapshot has been cleaned of
-duplicate/generated blueprint chapter artifacts while retaining canonical
-TeX/Lean sources. The requested deliverable now exists: a complete deterministic
-whole-corpus context graph and declaration-level minimal-context collection for
-the vendored book/formalization snapshot, plus a reproducible local generator
-and documented data format. The exact-label gold-candidate queue contains 645
-bounded, file/line-validated records, and the zero-cost static adversarial
-review now mechanically accepts all 645 before semantic review. The reviewed
-14-record seed remains the higher-trust subset for model-evaluation
-experiments. The first selected-record RepoProver smoke is a recorded benchmark
-failure: context was sufficient, but `qwen/qwen3-coder` repeatedly produced
-malformed tool-call/edit arguments and was stopped before PR submission.
-Current OpenRouter model selection has been refreshed from live catalog data:
-`qwen/qwen3.6-35b-a3b` is the default open-weight Qwen model for
-minimal-context JSON generation/review with `--reasoning-effort none`. A
-corrected 24-record semantic review now exists and shows that most remaining
-candidate failures are semantic-minimality problems around file-scope Lean
-context, import attribution, source-span breadth, and chunk boundaries. New
-human direction on 2026-04-29: do not keep optimizing deterministic context
-generation as the main path; focus on model-selected/evaluated segmentation and
-verify the actual best OpenRouter-available FOSS/open-weight model.
+`elan`. The Algebraic Combinatorics vendored snapshot has a deterministic
+whole-corpus context graph, declaration-level minimal-context records, 645
+exact-label gold candidates, and a 24-record semantic-review sample. Current
+DeepSeek model choice remains `deepseek/deepseek-v4-pro`. A one-record
+Mathlib-only evaluation pipeline now exists: it materializes a Lean target with
+recorded TeX snippets, file-scope Lean context, predecessor snippets, and a
+target `sorry`, then emits the exact DeepSeek/OpenRouter prompt payload and
+review command without making paid calls by default.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -49,92 +35,55 @@ verify the actual best OpenRouter-available FOSS/open-weight model.
 - [x] Create a deterministic 24-record semantic-review queue from accepted
   candidates.
 - [x] Run a corrected live Qwen3.6 semantic review over the 24-record sample.
+- [x] Build an API-free one-record minimal-context evaluation materializer and
+  DeepSeek V4 Pro prompt/command emitter.
 
 ## TODO Plan
-- [x] Clean duplicate/generated vendored TeX artifacts and document cleanup.
-- [x] Build deterministic whole-corpus context graph and record format.
-- [x] Generate and review the 14-record seed with cost tracking.
-- [x] Filter 645 higher-trust exact-label gold candidates from 5,684 records.
-- [x] Run static adversarial review over all 645 candidates at `$0.00` cost.
-- [x] Run one selected-record RepoProver smoke and record the Qwen tool-loop
-  failure.
-- [x] Semantically review the generated 24-record queue with local evidence.
-- [ ] Next useful step: design a model-selected segmentation task using the
-  current best open-weight reviewer/critic as an adjudicator; do not make the
-  deterministic generator the center of the next iteration.
+- [x] Add file-context-aware, Mathlib-only target materialization.
+- [x] Add `scripts/run_minimal_context_eval.py` for selected-record JSONL,
+  evidence, prompt payload, and exact review/live command artifacts.
+- [x] Add API-free tests around materialization and eval artifact emission.
+- [ ] Optional next step: run a single explicit, bounded
+  `deepseek/deepseek-v4-pro` smoke with `--call-openrouter --max-tokens 8192`
+  only after confirming `OPENROUTER_API_KEY` and budget.
+- [ ] Next broader research step: design a model-selected segmentation task
+  using the current best open-weight reviewer/critic as an adjudicator.
 
 ## Blockers
-- The whole-corpus records are complete machine-generated candidates, not
-  fully human-certified gold. Trust fields distinguish exact Lean-comment label
-  matches from low-trust manifest-position fallbacks and unmapped Lean support
-  files.
-- The 645/645 static review only proves mechanical consistency. It normalizes
-  Lean subpart labels to parent TeX labels and strips comments before scanning
-  for `sorry`/`admit`; it does not prove semantic minimality.
-- The 24-record semantic review is model-reviewed, not human-certified. It is
-  useful as a failure map, but Qwen3.6 verdicts should not be treated as final
-  gold labels without human or compile-based confirmation.
-- `deepseek/deepseek-v3.2-speciale` is the strongest OpenRouter-available
-  open-weight reasoning candidate found on April 29 (MIT weights on Hugging
-  Face; OpenRouter supports reasoning/structured outputs), but high reasoning
-  is slow and can produce malformed/truncated JSON in this harness.
-- `qwen/qwen3.6-35b-a3b` and `qwen/qwen3.6-27b` returned empty content on the
-  first JSON generation request unless OpenRouter reasoning was disabled. Use
-  `--reasoning-effort none` for schema-bound generation/review scripts.
-- Disk and existing `/tmp/repoprover-toy-gemini3-flash` state need care before
-  another full toy or benchmark smoke; accidental `.lake` cache under the
-  vendored snapshot was removed after cleanup.
-- `qwen/qwen3-coder` is not currently reliable for this prover/tool loop even
-  on the trivial `binom_zero_of_lt` record: it found the right Mathlib theorem
-  but repeatedly called `lean_check`/`file_edit` with malformed strings such as
-  `{'n': 'ℕ'}`. Treat this as a model/tool-use failure, not a context-selection
-  failure.
-- The full `uv run pytest` suite currently includes the vendored
+- Whole-corpus/gold-candidate records are machine-generated, not fully
+  human-certified. The 24-record semantic-review sample is model-reviewed, not
+  final gold.
+- The new eval runner did not make a paid OpenRouter call in this session.
+  Use `--call-openrouter` only for an explicit one-record smoke with the key
+  present.
+- Some materialized Mathlib-only projects may expose missing transitive Lean
+  context in the record itself, e.g. predecessor snippets can reference earlier
+  declarations not included in that record. Treat these as useful benchmark
+  failures, not script failures.
+- Full `uv run pytest` still includes the vendored
   `algebraic-combinatorics/blueprint/test_docgen_data.py`, which fails because
-  `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is not
-  present. The repo-local focused tests passed.
+  `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is absent.
+  Focused repo tests passed.
 ## Recent Results
-- Current whole-corpus artifacts: 5,684 declaration records, 790 TeX labels,
-  6,573 graph nodes, and 40,436 graph edges. Source alignment methods: 1,062
-  `lean_comment_label`, 4,400 `manifest_position_fallback`, 222 `unmapped`.
-- Canonical reviewed seed: 14 `NotationsExamples.lean` records; recorded
-  generation/review cost `$0.036813`. Qwen3.6 comparison rerun cost about
-  `$0.022390` token-estimated.
-- `docs/minimal-context-gold-candidates.jsonl` contains 645 exact-label,
-  bounded records. `docs/minimal-context-gold-candidate-static-review.jsonl`
-  now reports 645 `provisionally_accept`, 0 issue categories, `$0.00` model
-  cost.
-- Static reviewer false positives were fixed in
-  `scripts/adversarial_review_gold_candidates.py`: parent TeX labels cover
-  Lean subpart references, and `sorry`/`admit` checks ignore comments.
-- Added `scripts/sample_minimal_context_semantic_review.py` and generated
-  `docs/minimal-context-semantic-review-sample.{jsonl,md}`: 24 records,
-  stratified across declaration kind and context-size bin, `$0.00` cost.
-- Added local-source and predecessor-snippet support to
-  `scripts/review_minimal_context_records.py`; the reviewer now requests JSON
-  object responses from OpenRouter.
-- Corrected live semantic review artifacts:
-  `docs/minimal-context-semantic-review-qwen3.6-35b-a3b.{jsonl,md}` and
-  `docs/minimal-context-semantic-review-analysis.md`. Final artifact verdicts:
-  4 `provisionally_accept`, 14 `revise`, 6 `reject`, 0 `parse_error`; final
-  artifact cost `$0.043071`, exploratory balance delta about `$0.115251`.
-- The review indicates the next generator work should add file-scope context
-  nodes for namespace/section variables/typeclass assumptions and distinguish
-  "sufficient via Mathlib" from strict minimal imports.
-- Started then stopped a Qwen context-v2 comparison after 11 rows
-  (`docs/minimal-context-semantic-review-qwen3.6-35b-a3b-context-v2.*`);
-  it is a partial artifact, not a final result.
-- Verified the current open-weight model choice and ran a high-reasoning
-  DeepSeek V3.2 Speciale probe. `--max-tokens 3072` returned empty content;
-  `--max-tokens 8192` worked for one row. A 24-row run was stopped after
-  3 rows because it was slow/token-heavy and one row still hit a parse error.
-  See `docs/minimal-context-high-reasoning-review-probe.md`.
-- Focused validation passed:
-  `uv run pytest tests/test_context_graph_generation.py
-  tests/test_minimal_context_static_adversarial_review.py
-  tests/test_minimal_context_gold_filter.py
-  tests/test_minimal_context_semantic_review_sample.py`, and
-  `uv run pytest tests/test_minimal_context_review.py`.
+- `scripts/materialize_minimal_context_smoke.py` now defaults to
+  `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
+  `--include-record-imports` is set, and materializes recorded `file_context`
+  before predecessor snippets and the target `sorry`.
+- Added `scripts/run_minimal_context_eval.py`. It writes
+  `eval/selected-record.jsonl`, `eval/evidence.json`,
+  `eval/openrouter-formalization-payload.json`,
+  `eval/openrouter-formalization-command.txt`, and `eval/review-command.txt`.
+- Documented the one-record DeepSeek eval flow in
+  `docs/minimal-context-format.md`.
+- Verified dry materialization from
+  `docs/minimal-context-semantic-review-sample.jsonl` at
+  `/tmp/repoprover-minimal-context-eval` and ran the review script with
+  `--dry-run`; no API call was made.
+- Focused validation passed with
+  `UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest
+  tests/test_minimal_context_smoke_materializer.py
+  tests/test_minimal_context_eval_runner.py
+  tests/test_minimal_context_review.py`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -156,16 +105,14 @@ verify the actual best OpenRouter-available FOSS/open-weight model.
 - High-reasoning model-selection/probe notes are in
   `docs/minimal-context-high-reasoning-review-probe.md`; partial probe outputs
   are `docs/minimal-context-semantic-review-deepseek-v3.2-speciale-high.*`.
-- Reviewed seed and comparison artifacts are in
-  `docs/minimal-context-generated-records*.jsonl`,
-  `docs/minimal-context-generated-review*.jsonl`, and
-  `docs/open-model-research-2026-04-28.md`.
-- `docs/minimal-context-repoprover-smoke-report.md` records the first
-  selected-record RepoProver smoke and its Qwen tool-use failure.
 - `scripts/materialize_minimal_context_smoke.py` generates one-record smoke
-  projects with snippet-only TeX, a single target `sorry`, and pre-seeded
-  `.repoprover/state.json`; use `--lake-cache-from` to avoid another Mathlib
-  download on this low-disk machine.
+  projects with snippet-only TeX, a single target `sorry`, pre-seeded
+  `.repoprover/state.json`, and Mathlib-only imports by default; use
+  `--lake-cache-from` to avoid another Mathlib download on this low-disk
+  machine.
+- `scripts/run_minimal_context_eval.py` is the DeepSeek V4 Pro one-record
+  prompt/command emitter. It refuses paid calls unless `--call-openrouter` is
+  passed and `OPENROUTER_API_KEY` is set.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.

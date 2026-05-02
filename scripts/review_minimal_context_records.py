@@ -26,7 +26,7 @@ from typing import Any
 from openai import OpenAI
 
 
-DEFAULT_MODEL = "qwen/qwen3.6-35b-a3b"
+DEFAULT_MODEL = "deepseek/deepseek-v4-pro"
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_SOURCE_BASE = "https://raw.githubusercontent.com/facebookresearch/algebraic-combinatorics/main"
 

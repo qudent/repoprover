@@ -116,3 +116,74 @@ def test_materialize_smoke_project_writes_single_sorry_project(tmp_path: Path) -
     state_text = (output_root / ".repoprover" / "state.json").read_text(encoding="utf-8")
     assert '"sketch_merged": true' in state_text
     assert '"target_theorems": [\n        "obvious"\n      ]' in state_text
+
+
+def test_materialize_smoke_project_uses_file_context_and_mathlib_only_default(tmp_path: Path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    (source_root / "lakefile.lean").write_text("import Lake\n", encoding="utf-8")
+    (source_root / "lean-toolchain").write_text("leanprover/lean4:v4.28.0\n", encoding="utf-8")
+
+    lean_dir = source_root / "Demo"
+    lean_dir.mkdir()
+    (lean_dir / "Context.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "open Nat",
+                "namespace Demo",
+                "variable {n : Nat}",
+                "",
+                "lemma helper : True := by",
+                "  trivial",
+                "",
+                "/-- Target theorem. -/",
+                "theorem target : True := by",
+                "  exact helper",
+                "",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (source_root / "Demo.tex").write_text("target text\n", encoding="utf-8")
+
+    record = SelectedRecord(
+        {
+            "id": "demo:target",
+            "chapter_id": "demo",
+            "output": {
+                "lean_path": "Demo/Context.lean",
+                "declaration_names": ["Demo.target"],
+                "line_range": [9, 11],
+                "chunk_kind": "theorem",
+            },
+            "minimal_context": {
+                "imports": ["Mathlib", "Demo.LocalDependency"],
+                "source_spans": [{"path": "Demo.tex", "line_range": [1, 1], "labels": ["target"]}],
+                "file_context": [
+                    {"path": "Demo/Context.lean", "kind": "open", "name": "open Nat", "line_range": [2, 2]},
+                    {"path": "Demo/Context.lean", "kind": "namespace", "name": "Demo", "line_range": [3, 3]},
+                    {"path": "Demo/Context.lean", "kind": "variable", "name": "variable {n : Nat}", "line_range": [4, 4]},
+                ],
+                "lean_predecessors": [
+                    {"path": "Demo/Context.lean", "declaration": "Demo.helper", "line_range": [6, 7]}
+                ],
+            },
+        }
+    )
+
+    output_root = tmp_path / "smoke"
+    materialize_smoke_project(source_root, output_root, [record], init_git=False)
+
+    lean_text = (output_root / "Demo" / "Context.lean").read_text(encoding="utf-8")
+    assert "import Mathlib\n" in lean_text
+    assert "import Demo.LocalDependency" not in lean_text
+    assert "open Nat" in lean_text
+    assert "namespace Demo" in lean_text
+    assert "variable {n : Nat}" in lean_text
+    assert "lemma helper : True := by\n  trivial" in lean_text
+    assert "theorem target : True := by\n  sorry" in lean_text
+    assert "exact helper" not in lean_text
+    assert lean_text.rstrip().endswith("end Demo")

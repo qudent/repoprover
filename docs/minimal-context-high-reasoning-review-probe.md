@@ -2,10 +2,19 @@
 
 ## Model Choice
 
-The current best OpenRouter-available open-weight/FOSS reasoning model for this
-review task appears to be `deepseek/deepseek-v3.2-speciale`.
+The current best OpenRouter-available DeepSeek reasoning model for this review
+task appears to be `deepseek/deepseek-v4-pro`; use that before returning to the
+older `deepseek/deepseek-v3.2-speciale` critic.
 
-Evidence checked on April 29, 2026:
+Evidence checked on May 2, 2026 from the live OpenRouter catalog:
+
+- OpenRouter lists `deepseek/deepseek-v4-pro` with 1,048,576 context,
+  reasoning support, structured outputs, tools, and lower completion pricing
+  than `deepseek/deepseek-v3.2-speciale`.
+- OpenRouter describes V4 Pro as a large-scale DeepSeek MoE model for advanced
+  reasoning and coding, with 1.6T total parameters and 49B activated parameters.
+
+Prior evidence checked on April 29, 2026 for the fallback:
 
 - OpenRouter lists `deepseek/deepseek-v3.2-speciale` with 163,840 context,
   reasoning support, structured outputs, and model-weight link.
@@ -16,8 +25,7 @@ Evidence checked on April 29, 2026:
 
 `qwen/qwen3.6-35b-a3b` remains the best cheap open-weight Qwen option for this
 harness: Apache 2.0, 262,144 context, structured outputs, and much faster JSON
-behavior. It is not the strongest open-weight reasoning model available on
-OpenRouter.
+behavior. It is not the strongest reasoning model available on OpenRouter.
 
 ## Probe Setup
 
@@ -31,12 +39,19 @@ Command shape:
 uv run python scripts/review_minimal_context_records.py \
   --records docs/minimal-context-semantic-review-sample.jsonl \
   --source-root algebraic-combinatorics \
-  --model deepseek/deepseek-v3.2-speciale \
+  --model deepseek/deepseek-v4-pro \
   --reasoning-effort high \
   --max-tokens 8192 \
-  --output docs/minimal-context-semantic-review-deepseek-v3.2-speciale-high.jsonl \
-  --summary docs/minimal-context-semantic-review-deepseek-v3.2-speciale-high.md
+  --output docs/minimal-context-semantic-review-deepseek-v4-pro-high.jsonl \
+  --summary docs/minimal-context-semantic-review-deepseek-v4-pro-high.md
 ```
+
+Note: the local shell environment on May 2 did not expose `OPENROUTER_API_KEY`,
+so this V4 Pro preference is based on live catalog metadata plus earlier V4 Pro
+transport evidence, not a new paid smoke. The old V4 Pro attempt with a 4,096
+completion-token cap returned empty content after spending hidden reasoning;
+retry with at least `--max-tokens 8192` and inspect JSON behavior before any
+bulk pass.
 
 The first single-record smoke with `--max-tokens 3072` failed: the model spent
 the entire cap on hidden reasoning and returned empty content. The same record
