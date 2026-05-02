@@ -3,7 +3,52 @@
 from argparse import Namespace
 from pathlib import Path
 
-from scripts.run_minimal_context_eval import DEFAULT_MODEL, materialize_eval
+import json
+
+from scripts.run_minimal_context_eval import (
+    DEFAULT_MODEL,
+    DEFAULT_PRICE,
+    estimate_payload_cost,
+    materialize_budget_report,
+    materialize_eval,
+    summarize_openrouter_response_cost,
+)
+
+
+def test_estimate_payload_cost_uses_prompt_and_completion_prices() -> None:
+    payload = {
+        "model": DEFAULT_MODEL,
+        "messages": [{"role": "user", "content": "a" * 400}],
+        "max_tokens": 100,
+    }
+
+    estimate = estimate_payload_cost(payload, DEFAULT_PRICE)
+
+    assert estimate["prompt_chars"] == 400
+    assert estimate["estimated_prompt_tokens"] == 100
+    assert estimate["max_completion_tokens"] == 100
+    assert estimate["estimated_max_cost_usd"] == (100 * DEFAULT_PRICE.prompt_per_token) + (
+        100 * DEFAULT_PRICE.completion_per_token
+    )
+
+
+def test_summarize_openrouter_response_cost_prefers_actual_usage_cost() -> None:
+    response = {
+        "model": DEFAULT_MODEL,
+        "usage": {
+            "prompt_tokens": 10,
+            "completion_tokens": 20,
+            "total_tokens": 30,
+            "cost": 0.00123,
+        },
+    }
+
+    summary = summarize_openrouter_response_cost(response, DEFAULT_PRICE)
+
+    assert summary["actual_cost_usd"] == 0.00123
+    assert summary["estimated_cost_from_usage_usd"] == (10 * DEFAULT_PRICE.prompt_per_token) + (
+        20 * DEFAULT_PRICE.completion_per_token
+    )
 
 
 def test_materialize_eval_writes_prompt_payload_without_api_call(tmp_path: Path) -> None:

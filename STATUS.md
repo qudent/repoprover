@@ -36,13 +36,18 @@ review command without making paid calls by default.
   candidates.
 - [x] Run a corrected live Qwen3.6 semantic review over the 24-record sample.
 - [x] Build an API-free one-record minimal-context evaluation materializer and
-  DeepSeek V4 Pro prompt/command emitter.
+  DeepSeek V4 Pro prompt/command emitter. An honest benchmark splitter now also
+  writes leakage-aware oracle/source/prefix tracks under
+  `docs/minimal-context-splits/`.
 
 ## TODO Plan
 - [x] Add file-context-aware, Mathlib-only target materialization.
 - [x] Add `scripts/run_minimal_context_eval.py` for selected-record JSONL,
   evidence, prompt payload, and exact review/live command artifacts.
 - [x] Add API-free tests around materialization and eval artifact emission.
+- [x] Add `scripts/split_minimal_context_benchmark.py` for leakage-aware
+  `oracle_proof_fill`, `oracle_source_statement`, and
+  `prefix_next_declaration` records plus manifest/report docs.
 - [ ] Optional next step: run a single explicit, bounded
   `deepseek/deepseek-v4-pro` smoke with `--call-openrouter --max-tokens 8192`
   only after confirming `OPENROUTER_API_KEY` and budget.
@@ -84,12 +89,18 @@ review command without making paid calls by default.
   tests/test_minimal_context_smoke_materializer.py
   tests/test_minimal_context_eval_runner.py
   tests/test_minimal_context_review.py`.
+- Added `scripts/split_minimal_context_benchmark.py` and generated
+  `docs/minimal-context-splits/{oracle_proof_fill,oracle_source_statement,prefix_next_declaration}.jsonl`
+  plus `manifest.json`/`README.md` from the 645 candidate records. Focused split
+  tests pass with `UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest
+  tests/test_split_minimal_context_benchmark.py`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
 - Whole-corpus deliverable artifacts are `docs/minimal-context-graph.json`,
   `docs/minimal-context-full-records.jsonl`,
   `docs/minimal-context-gold-candidates.jsonl`,
+  `docs/minimal-context-splits/`,
   `docs/minimal-context-format.md`,
   `docs/minimal-context-whole-corpus-report.md`, and
   `scripts/generate_context_graph.py`.

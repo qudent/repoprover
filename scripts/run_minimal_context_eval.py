@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -19,6 +21,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from scripts.materialize_minimal_context_smoke import (
     SelectedRecord,
+    build_target_lean,
     load_jsonl,
     materialize_smoke_project,
     select_records,
@@ -27,6 +30,26 @@ from scripts.review_minimal_context_records import DEFAULT_BASE_URL, build_evide
 
 
 DEFAULT_MODEL = "deepseek/deepseek-v4-pro"
+CHARS_PER_TOKEN_ESTIMATE = 4
+
+
+@dataclass(frozen=True)
+class OpenRouterPrice:
+    """OpenRouter per-token price snapshot for a model."""
+
+    model: str
+    prompt_per_token: float
+    completion_per_token: float
+    context_length: int | None = None
+    source: str = "openrouter-catalog-2026-05-02"
+
+
+DEFAULT_PRICE = OpenRouterPrice(
+    model=DEFAULT_MODEL,
+    prompt_per_token=0.000000435,
+    completion_per_token=0.00000087,
+    context_length=1_048_576,
+)
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -87,6 +110,77 @@ def build_openrouter_payload(
     return payload
 
 
+def estimate_text_tokens(text: str) -> int:
+    """Conservative tokenizer-free estimate used for API-free budget planning."""
+
+    if not text:
+        return 0
+    return math.ceil(len(text) / CHARS_PER_TOKEN_ESTIMATE)
+
+
+def estimate_payload_cost(payload: dict[str, Any], price: OpenRouterPrice = DEFAULT_PRICE) -> dict[str, Any]:
+    """Estimate prompt size and max-cost from an OpenRouter chat payload."""
+
+    messages = payload.get("messages", [])
+    message_contents = [str(message.get("content", "")) for message in messages if isinstance(message, dict)]
+    prompt_chars = sum(len(content) for content in message_contents)
+    payload_chars = len(json.dumps(payload, ensure_ascii=False))
+    prompt_tokens = estimate_text_tokens("".join(message_contents))
+    max_completion_tokens = int(payload.get("max_tokens") or 0)
+    estimated_prompt_cost = prompt_tokens * price.prompt_per_token
+    estimated_completion_cost = max_completion_tokens * price.completion_per_token
+    return {
+        "model": str(payload.get("model") or price.model),
+        "price_source": price.source,
+        "prompt_price_per_million": price.prompt_per_token * 1_000_000,
+        "completion_price_per_million": price.completion_per_token * 1_000_000,
+        "context_length": price.context_length,
+        "chars_per_token_estimate": CHARS_PER_TOKEN_ESTIMATE,
+        "payload_chars": payload_chars,
+        "prompt_chars": prompt_chars,
+        "estimated_prompt_tokens": prompt_tokens,
+        "max_completion_tokens": max_completion_tokens,
+        "estimated_prompt_cost_usd": estimated_prompt_cost,
+        "estimated_max_completion_cost_usd": estimated_completion_cost,
+        "estimated_max_cost_usd": estimated_prompt_cost + estimated_completion_cost,
+    }
+
+
+def summarize_openrouter_response_cost(
+    response: dict[str, Any], price: OpenRouterPrice = DEFAULT_PRICE
+) -> dict[str, Any]:
+    """Extract actual OpenRouter usage/cost when present, plus a fallback estimate."""
+
+    usage = response.get("usage") or {}
+    if not isinstance(usage, dict):
+        usage = {}
+    prompt_tokens = usage.get("prompt_tokens")
+    completion_tokens = usage.get("completion_tokens")
+    estimated_cost = None
+    if prompt_tokens is not None and completion_tokens is not None:
+        estimated_cost = (int(prompt_tokens) * price.prompt_per_token) + (
+            int(completion_tokens) * price.completion_per_token
+        )
+    actual_cost = usage.get("cost") or usage.get("total_cost") or response.get("cost")
+    return {
+        "model": str(response.get("model") or price.model),
+        "price_source": price.source,
+        "prompt_price_per_million": price.prompt_per_token * 1_000_000,
+        "completion_price_per_million": price.completion_per_token * 1_000_000,
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "total_tokens": usage.get("total_tokens"),
+        "actual_cost_usd": float(actual_cost) if actual_cost is not None else None,
+        "estimated_cost_from_usage_usd": estimated_cost,
+        "has_openrouter_reported_cost": actual_cost is not None,
+    }
+
+
+def write_openrouter_cost_summary(response_path: Path, output_path: Path) -> None:
+    response = json.loads(response_path.read_text(encoding="utf-8"))
+    write_json(output_path, summarize_openrouter_response_cost(response))
+
+
 def review_command(args: argparse.Namespace, selected_records_path: Path, eval_dir: Path) -> str:
     command = [
         "uv",
@@ -113,6 +207,121 @@ def review_command(args: argparse.Namespace, selected_records_path: Path, eval_d
     if args.reasoning_effort:
         command.extend(["--reasoning-effort", args.reasoning_effort])
     return shell_join(command)
+
+
+def live_command_for_record(args: argparse.Namespace, record_id: str, output: Path) -> str:
+    command = [
+        "OPENROUTER_API_KEY=$OPENROUTER_API_KEY",
+        "uv",
+        "run",
+        "python",
+        "scripts/run_minimal_context_eval.py",
+        "--records",
+        str(args.records),
+        "--project-root",
+        str(args.project_root),
+        "--output",
+        str(output),
+        "--record-id",
+        record_id,
+        "--force",
+        "--call-openrouter",
+        "--model",
+        args.model,
+        "--max-tokens",
+        str(args.max_tokens),
+    ]
+    if args.reasoning_effort:
+        command.extend(["--reasoning-effort", args.reasoning_effort])
+    return shell_join(command)
+
+
+def materialize_budget_report(args: argparse.Namespace) -> dict[str, Path]:
+    """Write an API-free per-record prompt/cost estimate for selected records."""
+
+    rows = load_jsonl(args.records)
+    selected = select_records(rows, args.record_id, args.limit)
+    if not selected:
+        raise ValueError("no records selected")
+    eval_dir = args.output / "eval"
+    eval_dir.mkdir(parents=True, exist_ok=True)
+
+    estimates: list[dict[str, Any]] = []
+    for index, record in enumerate(selected, start=1):
+        evidence = build_evidence_bundle(
+            record.row,
+            source_base_url="https://example.invalid",
+            cache_dir=None,
+            source_root=args.project_root,
+            source_context=args.source_context,
+            lean_context=args.lean_context,
+        )
+        target_lean = build_target_lean(
+            args.project_root,
+            record,
+            use_record_imports=args.include_record_imports,
+        )
+        payload = build_openrouter_payload(
+            model=args.model,
+            messages=build_formalization_messages(record, evidence, target_lean),
+            max_tokens=args.max_tokens,
+            temperature=args.temperature,
+            reasoning_effort=args.reasoning_effort,
+        )
+        estimate = estimate_payload_cost(payload)
+        estimate.update(
+            {
+                "record_id": record.record_id,
+                "lean_path": record.lean_path,
+                "declaration_names": record.declaration_names,
+                "live_command": live_command_for_record(args, record.record_id, args.output / f"live-{index:02d}"),
+            }
+        )
+        estimates.append(estimate)
+
+    totals = {
+        "records": len(estimates),
+        "estimated_prompt_tokens": sum(item["estimated_prompt_tokens"] for item in estimates),
+        "max_completion_tokens": sum(item["max_completion_tokens"] for item in estimates),
+        "estimated_max_cost_usd": sum(item["estimated_max_cost_usd"] for item in estimates),
+    }
+    report = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "model": args.model,
+        "openrouter_api_key_present": bool(os.environ.get("OPENROUTER_API_KEY")),
+        "paid_calls_made": False,
+        "totals": totals,
+        "records": estimates,
+    }
+    json_path = eval_dir / "openrouter-budget-estimate.json"
+    write_json(json_path, report)
+
+    lines = [
+        "# Minimal Context DeepSeek Budget Estimate",
+        "",
+        f"- Model: `{args.model}`",
+        f"- Records: {totals['records']}",
+        f"- Estimated prompt tokens: {totals['estimated_prompt_tokens']:,}",
+        f"- Max completion tokens: {totals['max_completion_tokens']:,}",
+        f"- Estimated max cost: ${totals['estimated_max_cost_usd']:.4f}",
+        f"- OPENROUTER_API_KEY present: `{report['openrouter_api_key_present']}`",
+        "- Paid calls made: `False`",
+        "",
+        "| # | Record | Prompt chars | Est. prompt tokens | Max completion | Est. max cost |",
+        "|---:|---|---:|---:|---:|---:|",
+    ]
+    for index, item in enumerate(estimates, start=1):
+        lines.append(
+            f"| {index} | `{item['record_id']}` | {item['prompt_chars']:,} | "
+            f"{item['estimated_prompt_tokens']:,} | {item['max_completion_tokens']:,} | "
+            f"${item['estimated_max_cost_usd']:.4f} |"
+        )
+    lines.extend(["", "## Live commands", ""])
+    for item in estimates:
+        lines.extend([f"### `{item['record_id']}`", "", "```bash", item["live_command"], "```", ""])
+    md_path = eval_dir / "openrouter-budget-estimate.md"
+    md_path.write_text("\n".join(lines), encoding="utf-8")
+    return {"eval_dir": eval_dir, "budget_json": json_path, "budget_md": md_path}
 
 
 def materialize_eval(args: argparse.Namespace) -> dict[str, Path]:
@@ -159,16 +368,10 @@ def materialize_eval(args: argparse.Namespace) -> dict[str, Path]:
     )
     payload_path = eval_dir / "openrouter-formalization-payload.json"
     write_json(payload_path, payload)
+    cost_estimate_path = eval_dir / "openrouter-formalization-cost-estimate.json"
+    write_json(cost_estimate_path, estimate_payload_cost(payload))
 
-    formalization_command = (
-        "OPENROUTER_API_KEY=$OPENROUTER_API_KEY uv run python "
-        "scripts/run_minimal_context_eval.py "
-        f"--records {args.records} --project-root {args.project_root} --output {args.output} "
-        f"--record-id {record.record_id} --force --call-openrouter --model {args.model} "
-        f"--max-tokens {args.max_tokens}"
-    )
-    if args.reasoning_effort:
-        formalization_command += f" --reasoning-effort {args.reasoning_effort}"
+    formalization_command = live_command_for_record(args, record.record_id, args.output)
     (eval_dir / "openrouter-formalization-command.txt").write_text(formalization_command + "\n", encoding="utf-8")
     (eval_dir / "review-command.txt").write_text(review_command(args, selected_records_path, eval_dir) + "\n", encoding="utf-8")
 
@@ -179,6 +382,7 @@ def materialize_eval(args: argparse.Namespace) -> dict[str, Path]:
         f"- Model: `{args.model}`",
         f"- Target file: `{target_lean_path.relative_to(args.output)}`",
         f"- Prompt payload: `{payload_path.relative_to(args.output)}`",
+        f"- Cost estimate: `{cost_estimate_path.relative_to(args.output)}`",
         f"- Evidence: `{evidence_path.relative_to(args.output)}`",
         "",
         "No OpenRouter call is made unless `--call-openrouter` is passed.",
@@ -188,6 +392,7 @@ def materialize_eval(args: argparse.Namespace) -> dict[str, Path]:
     return {
         "eval_dir": eval_dir,
         "payload": payload_path,
+        "cost_estimate": cost_estimate_path,
         "evidence": evidence_path,
         "selected_records": selected_records_path,
         "target_lean": target_lean_path,
@@ -244,6 +449,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--call-openrouter",
         action="store_true",
         help="Make the bounded OpenRouter call after writing the exact payload. Requires OPENROUTER_API_KEY.",
+    )
+    parser.add_argument(
+        "--budget-only",
+        action="store_true",
+        help="Do not materialize a project or call OpenRouter; emit a per-record prompt/cost estimate for --limit records.",
     )
     return parser
 
