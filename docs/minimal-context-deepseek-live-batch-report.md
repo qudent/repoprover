@@ -13,9 +13,9 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_minimal_context_
   --no-git
 ```
 
-No paid OpenRouter calls were made. `OPENROUTER_API_KEY` was missing in the execution environment.
+A one-record paid OpenRouter smoke was later run with `OPENROUTER_API_KEY` loaded from interactive Bash startup; the secret value was not printed or stored. The live result is recorded below.
 
-Price snapshot used by the script for `deepseek/deepseek-v4-pro`: OpenRouter public catalog, prompt `$0.435/M`, completion `$0.87/M`, context length `1,048,576`. Token counts are tokenizer-free estimates at 4 chars/token; actual OpenRouter usage/cost is captured after live calls in `eval/openrouter-response-cost-summary.json`.
+Price snapshot used by the script for `deepseek/deepseek-v4-pro`: OpenRouter public catalog, prompt `$0.435/M`, completion `$0.87/M`, context length `1,048,576`; OpenRouter resolved the live call to `deepseek/deepseek-v4-pro-20260423`. Token counts in API-free budgets are tokenizer-free estimates at 4 chars/token; actual OpenRouter usage/cost is captured after live calls in `eval/openrouter-response-cost-summary.json`.
 
 ## Budget summary: semantic-review smoke sample
 
@@ -62,6 +62,47 @@ Result: the current selector picked 473 theorem/lemma records from the 645 split
 | 2 | `AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.multipliable_coeff_eq_of_determines` | 16,800 | 4,200 | 8,192 | $0.0090 |
 | 3 | `AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.fubini_prod_invertible` | 33,440 | 8,360 | 8,192 | $0.0108 |
 | 4 | `AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeff_mul_one_add_eq_of_coeff_zero` | 12,777 | 3,195 | 8,192 | $0.0085 |
+
+## Live one-record oracle proof-fill result
+
+Command shape used the `oracle_proof_fill` split, `--call-openrouter`, `deepseek/deepseek-v4-pro`, `--reasoning-effort high`, and `--max-tokens 32768` for:
+
+`AlgebraicCombinatorics/FPS/ExpLog.lean:PowerSeries.logbar_constantCoeff`
+
+Artifacts:
+
+- Raw OpenRouter response: `/tmp/repoprover-live-proof-fill-32768-001/eval/openrouter-response.json`
+- Response cost summary: `/tmp/repoprover-live-proof-fill-32768-001/eval/openrouter-response-cost-summary.json`
+- Regenerated verification project after materializer fixes: `/tmp/repoprover-live-proof-fill-32768-001-fixed`
+
+Actual OpenRouter usage/cost:
+
+- Model: `deepseek/deepseek-v4-pro-20260423`
+- Prompt tokens: 4,257
+- Completion tokens: 841, including 725 reasoning tokens
+- Total tokens: 5,098
+- Actual reported cost: `$0.002583465`
+- Finish reason: `stop`
+
+Model JSON content:
+
+```json
+{
+  "lean_declaration": "theorem logbar_constantCoeff : constantCoeff (logbar K) = 0 := constantCoeff_logbar",
+  "used_context": ["PowerSeries.constantCoeff_logbar"],
+  "notes": ["The proof is trivial because constantCoeff_logbar is already proven and marked with @[simp]."]
+}
+```
+
+Mechanical verification: after fixing the materializer to preserve file-context chronology and include transitive same-file predecessor dependencies, the generated project contains `logbar`, `coeff_logbar`, and `constantCoeff_logbar` in source order. Inserting the returned declaration and running
+
+```bash
+cd /tmp/repoprover-live-proof-fill-32768-001-fixed
+lake exe cache get
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run lake env lean AlgebraicCombinatorics/FPS/ExpLog.lean
+```
+
+exited successfully. This is a success for the oracle proof-fill track, not evidence for feed-forward autoformalization.
 
 ## Exact live commands
 

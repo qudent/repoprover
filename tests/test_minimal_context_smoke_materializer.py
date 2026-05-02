@@ -4,6 +4,7 @@ from pathlib import Path
 
 from scripts.materialize_minimal_context_smoke import (
     SelectedRecord,
+    build_target_lean,
     materialize_smoke_project,
     select_records,
 )
@@ -187,3 +188,110 @@ def test_materialize_smoke_project_uses_file_context_and_mathlib_only_default(tm
     assert "theorem target : True := by\n  sorry" in lean_text
     assert "exact helper" not in lean_text
     assert lean_text.rstrip().endswith("end Demo")
+
+
+def test_build_target_lean_preserves_file_context_chronology_around_predecessors(tmp_path: Path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    lean_dir = source_root / "Demo"
+    lean_dir.mkdir()
+    (lean_dir / "Order.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "variable (K : Type*)",
+                "",
+                "def helper : Type* := K",
+                "",
+                "variable {K}",
+                "",
+                "theorem target : helper K = helper K := by",
+                "  rfl",
+                "",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    record = SelectedRecord(
+        {
+            "id": "demo:target",
+            "output": {
+                "lean_path": "Demo/Order.lean",
+                "declaration_names": ["Demo.target"],
+                "line_range": [9, 10],
+                "chunk_kind": "theorem",
+            },
+            "minimal_context": {
+                "file_context": [
+                    {"path": "Demo/Order.lean", "kind": "namespace", "name": "Demo", "line_range": [2, 2]},
+                    {"path": "Demo/Order.lean", "kind": "variable", "name": "variable (K : Type*)", "line_range": [3, 3]},
+                    {"path": "Demo/Order.lean", "kind": "variable", "name": "variable {K}", "line_range": [7, 7]},
+                ],
+                "lean_predecessors": [
+                    {"path": "Demo/Order.lean", "declaration": "Demo.helper", "line_range": [5, 5]},
+                ],
+            },
+        }
+    )
+
+    lean_text = build_target_lean(source_root, record)
+
+    assert lean_text.index("variable (K : Type*)") < lean_text.index("def helper")
+    assert lean_text.index("def helper") < lean_text.index("variable {K}")
+    assert lean_text.index("variable {K}") < lean_text.index("theorem target")
+
+
+def test_build_target_lean_adds_transitive_same_file_predecessors(tmp_path: Path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    lean_dir = source_root / "Demo"
+    lean_dir.mkdir()
+    (lean_dir / "Deps.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "",
+                "theorem base : True := by",
+                "  trivial",
+                "",
+                "theorem mid : True := by",
+                "  exact base",
+                "",
+                "theorem target : True := by",
+                "  exact mid",
+                "",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    record = SelectedRecord(
+        {
+            "id": "demo:target",
+            "output": {
+                "lean_path": "Demo/Deps.lean",
+                "declaration_names": ["Demo.target"],
+                "line_range": [10, 11],
+                "chunk_kind": "theorem",
+            },
+            "minimal_context": {
+                "file_context": [
+                    {"path": "Demo/Deps.lean", "kind": "namespace", "name": "Demo", "line_range": [2, 2]},
+                ],
+                "lean_predecessors": [
+                    {"path": "Demo/Deps.lean", "declaration": "Demo.mid", "line_range": [7, 8]},
+                ],
+            },
+        }
+    )
+
+    lean_text = build_target_lean(source_root, record)
+
+    assert "theorem base : True := by\n  trivial" in lean_text
+    assert lean_text.index("theorem base") < lean_text.index("theorem mid")
+    assert lean_text.count("theorem mid") == 1

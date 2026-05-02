@@ -16,6 +16,12 @@ from typing import Any
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
 SECTION_RE = re.compile(r"^\s*section(?:\s+[A-Za-z0-9_'.]+)?\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
+DECL_RE = re.compile(
+    r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
+    r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)"
+    r"(?:\s+(?P<name>[^\s:\{\(\[]+))?"
+)
+LEAN_WORD_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_']*")
 
 
 @dataclass(frozen=True)
@@ -150,6 +156,97 @@ def context_close_commands(file_context: list[dict[str, Any]]) -> list[str]:
     return list(reversed(closes))
 
 
+def namespace_prefix(stack: list[str]) -> str:
+    return ".".join(part for part in stack if part)
+
+
+def declaration_display_start(lines: list[str], declaration_index: int) -> int:
+    start = declaration_index
+    while start > 0:
+        previous = lines[start - 1].strip()
+        if previous.startswith("/--") or previous.startswith("@[") or previous.startswith("--"):
+            start -= 1
+            continue
+        break
+    return start + 1
+
+
+def trim_declaration_end(lines: list[str], end_line: int) -> int:
+    while end_line > 1 and not lines[end_line - 1].strip():
+        end_line -= 1
+    return end_line
+
+
+def declarations_in_file(project_root: Path, rel_path: str) -> list[dict[str, Any]]:
+    lines = (project_root / rel_path).read_text(encoding="utf-8").splitlines()
+    namespace_stack: list[str] = []
+    raw: list[dict[str, Any]] = []
+    for index, line in enumerate(lines, start=1):
+        if match := NAMESPACE_RE.match(line):
+            namespace_stack.append(match.group("name").strip())
+            continue
+        if END_RE.match(line):
+            if namespace_stack:
+                namespace_stack.pop()
+            continue
+        match = DECL_RE.match(line)
+        if not match:
+            continue
+        name = match.group("name")
+        if not name or name.startswith(("[", "{", "(")):
+            continue
+        prefix = namespace_prefix(namespace_stack)
+        raw.append(
+            {
+                "path": rel_path,
+                "declaration": f"{prefix}.{name}" if prefix else name,
+                "start_line": declaration_display_start(lines, index - 1),
+            }
+        )
+
+    declarations: list[dict[str, Any]] = []
+    for offset, row in enumerate(raw):
+        next_start = raw[offset + 1]["start_line"] if offset + 1 < len(raw) else len(lines) + 1
+        declarations.append(
+            {
+                "path": row["path"],
+                "declaration": row["declaration"],
+                "line_range": [row["start_line"], trim_declaration_end(lines, next_start - 1)],
+                "reason": "Transitive predecessor dependency referenced by another predecessor snippet.",
+                "method": "materializer_transitive_lexical_reference",
+            }
+        )
+    return declarations
+
+
+def expand_transitive_predecessors(project_root: Path, record: SelectedRecord) -> list[dict[str, Any]]:
+    predecessors = [dict(row) for row in record.lean_predecessors]
+    seen = {(str(row["path"]), str(row.get("declaration", ""))) for row in predecessors}
+    paths = {str(row["path"]) for row in predecessors}
+    declarations_by_path = {path: declarations_in_file(project_root, path) for path in paths}
+
+    changed = True
+    while changed:
+        changed = False
+        for predecessor in list(predecessors):
+            path = str(predecessor["path"])
+            start, end = [int(value) for value in predecessor["line_range"]]
+            words = set(LEAN_WORD_RE.findall(read_line_range(project_root / path, (start, end))))
+            for candidate in declarations_by_path.get(path, []):
+                candidate_start = int(candidate["line_range"][0])
+                key = (path, str(candidate["declaration"]))
+                if key in seen or candidate_start >= start:
+                    continue
+                short_name = str(candidate["declaration"]).rsplit(".", 1)[-1]
+                if short_name not in words:
+                    continue
+                predecessors.append(dict(candidate))
+                seen.add(key)
+                changed = True
+
+    return sorted(predecessors, key=lambda row: (str(row["path"]), int(row["line_range"][0])))
+
+
 def module_name_from_lean_path(path: str) -> str:
     return path.removesuffix(".lean").replace("/", ".")
 
@@ -198,10 +295,58 @@ def render_file_context(project_root: Path, record: SelectedRecord) -> tuple[lis
     return parts, closes
 
 
+def render_ordered_context_and_predecessors(project_root: Path, record: SelectedRecord) -> tuple[list[str], list[str]]:
+    context_closes = context_close_commands(record.file_context)
+    items: list[tuple[tuple[int, int, int], list[str]]] = []
+    ordinal = 0
+
+    if record.file_context:
+        for span in record.file_context:
+            path = str(span["path"])
+            start, end = [int(value) for value in span["line_range"]]
+            items.append(
+                (
+                    (0 if path == record.lean_path else 1, start, ordinal),
+                    [
+                        f"-- File context: {span['path']}:{start}-{end} ({span.get('kind', 'context')})",
+                        read_line_range(project_root / path, (start, end)).rstrip(),
+                    ],
+                )
+            )
+            ordinal += 1
+    else:
+        context_parts, context_closes = render_file_context(project_root, record)
+        for part in context_parts:
+            items.append(((0, 0, ordinal), [part]))
+            ordinal += 1
+
+    for predecessor in expand_transitive_predecessors(project_root, record):
+        path = str(predecessor["path"])
+        start, end = [int(value) for value in predecessor["line_range"]]
+        items.append(
+            (
+                (0 if path == record.lean_path else 1, start, ordinal),
+                [
+                    f"-- Predecessor context: {predecessor['path']}:{start}-{end}",
+                    read_line_range(project_root / path, (start, end)).rstrip(),
+                ],
+            )
+        )
+        ordinal += 1
+
+    parts: list[str] = []
+    for _, rendered in sorted(items, key=lambda item: item[0]):
+        parts.extend(rendered)
+        parts.append("")
+    if parts and parts[-1] == "":
+        parts.pop()
+    return parts, context_closes
+
+
 def build_target_lean(project_root: Path, record: SelectedRecord, *, use_record_imports: bool = False) -> str:
     lean_file = project_root / record.lean_path
     target_chunk = declaration_with_sorry(read_line_range(lean_file, record.line_range))
-    context_parts, context_closes = render_file_context(project_root, record)
+    context_parts, context_closes = render_ordered_context_and_predecessors(project_root, record)
     imports = record.imports if use_record_imports else ["Mathlib"]
 
     parts: list[str] = []
@@ -220,13 +365,6 @@ def build_target_lean(project_root: Path, record: SelectedRecord, *, use_record_
 
     parts.extend(context_parts)
     if context_parts:
-        parts.append("")
-
-    for predecessor in record.lean_predecessors:
-        path = project_root / str(predecessor["path"])
-        start, end = [int(value) for value in predecessor["line_range"]]
-        parts.append(f"-- Predecessor context: {predecessor['path']}:{start}-{end}")
-        parts.append(read_line_range(path, (start, end)).rstrip())
         parts.append("")
 
     parts.append(target_chunk.rstrip())

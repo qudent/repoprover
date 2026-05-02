@@ -54,9 +54,12 @@ review command without making paid calls by default.
   tokens, estimated max `$4.2543` on `deepseek/deepseek-v4-pro` at current
   OpenRouter catalog pricing. No paid call was made because
   `OPENROUTER_API_KEY` is missing in this execution environment.
-- [ ] Run a live bounded `deepseek/deepseek-v4-pro` smoke with
-  `--call-openrouter --max-tokens 8192` after restoring/exporting
-  `OPENROUTER_API_KEY` and confirming budget.
+- [x] Run a live bounded `deepseek/deepseek-v4-pro` smoke with
+  `--call-openrouter --max-tokens 32768` after loading `OPENROUTER_API_KEY`
+  from interactive Bash startup without printing the secret. The first
+  oracle-proof-fill record completed successfully and Lean-checked after
+  materializer context-order/transitive-predecessor fixes; actual reported cost
+  was `$0.002583465`.
 - [ ] Next broader research step: design a model-selected segmentation task
   using the current best open-weight reviewer/critic as an adjudicator.
 
@@ -64,13 +67,16 @@ review command without making paid calls by default.
 - Whole-corpus/gold-candidate records are machine-generated, not fully
   human-certified. The 24-record semantic-review sample is model-reviewed, not
   final gold.
-- The eval runner did not make a paid OpenRouter call in this session because
-  `OPENROUTER_API_KEY` is missing in the execution environment. It will still
-  refuse paid calls unless `--call-openrouter` is passed and the key is set.
-- Some materialized Mathlib-only projects may expose missing transitive Lean
-  context in the record itself, e.g. predecessor snippets can reference earlier
-  declarations not included in that record. Treat these as useful benchmark
-  failures, not script failures.
+- The eval runner now makes paid OpenRouter calls when `--call-openrouter` is
+  explicit and `OPENROUTER_API_KEY` is loaded. In this Hermes environment the
+  key is available through interactive Bash startup (`bash -ic`) rather than the
+  default non-interactive shell; never print the secret value.
+- Some materialized Mathlib-only projects may still expose missing non-local
+  transitive Lean context in the record itself. Same-file predecessor
+  dependencies are now expanded by the smoke materializer, and file-context
+  commands are rendered in source order with predecessor snippets; imported-file
+  or semantic dependencies can still be useful benchmark failures rather than
+  script failures.
 - Full `uv run pytest` still includes the vendored
   `algebraic-combinatorics/blueprint/test_docgen_data.py`, which fails because
   `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is absent.
@@ -106,7 +112,12 @@ review command without making paid calls by default.
   `docs/minimal-context-splits/oracle_proof_fill.jsonl`: 473 selected proof-fill
   theorem/lemma records, 2,030,412 estimated prompt tokens, 3,874,816 max
   completion tokens, estimated max cost `$4.2543`; no paid calls because the
-  OpenRouter key is missing in this environment.
+  OpenRouter key is missing in the default non-interactive shell.
+- Ran a paid one-record DeepSeek V4 Pro oracle-proof-fill smoke for
+  `PowerSeries.logbar_constantCoeff` with `--max-tokens 32768`: OpenRouter used
+  4,257 prompt tokens and 841 completion tokens for `$0.002583465`; the returned
+  Lean declaration `... := constantCoeff_logbar` compiles in the fixed generated
+  project.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -131,8 +142,10 @@ review command without making paid calls by default.
   are `docs/minimal-context-semantic-review-deepseek-v3.2-speciale-high.*`.
 - `scripts/materialize_minimal_context_smoke.py` generates one-record smoke
   projects with snippet-only TeX, a single target `sorry`, pre-seeded
-  `.repoprover/state.json`, and Mathlib-only imports by default; use
-  `--lake-cache-from` to avoid another Mathlib download on this low-disk
+  `.repoprover/state.json`, and Mathlib-only imports by default. It renders
+  file-context commands and predecessor snippets in original source order and
+  expands same-file predecessor dependencies referenced by predecessor snippets;
+  use `--lake-cache-from` to avoid another Mathlib download on this low-disk
   machine.
 - `scripts/run_minimal_context_eval.py` is the DeepSeek V4 Pro one-record
   prompt/command emitter. It refuses paid calls unless `--call-openrouter` is
