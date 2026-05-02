@@ -118,3 +118,82 @@ def test_materialize_eval_writes_prompt_payload_without_api_call(tmp_path: Path)
     review_command = (output / "eval" / "review-command.txt").read_text(encoding="utf-8")
     assert "scripts/review_minimal_context_records.py" in review_command
     assert "--model deepseek/deepseek-v4-pro" in review_command
+    assert paths["cost_estimate"].exists()
+
+
+def test_materialize_budget_report_writes_per_record_costs_without_api_call(tmp_path: Path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    (source_root / "Demo.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "",
+                "/-- True is true. -/",
+                "theorem target : True := by",
+                "  trivial",
+                "",
+                "/-- And true is true. -/",
+                "lemma target2 : True := by",
+                "  trivial",
+                "",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (source_root / "Demo.tex").write_text("Immediate propositions.\n", encoding="utf-8")
+    records = tmp_path / "records.jsonl"
+    rows = []
+    for record_id, decl, line_range in [
+        ("demo:target", "Demo.target", [4, 6]),
+        ("demo:target2", "Demo.target2", [8, 10]),
+    ]:
+        rows.append(
+            {
+                "id": record_id,
+                "chapter_id": "demo",
+                "output": {
+                    "lean_path": "Demo.lean",
+                    "declaration_names": [decl],
+                    "line_range": line_range,
+                    "chunk_kind": "theorem" if decl.endswith("target") else "lemma",
+                },
+                "minimal_context": {
+                    "imports": ["Mathlib"],
+                    "source_spans": [{"path": "Demo.tex", "line_range": [1, 1], "labels": ["demo"]}],
+                    "file_context": [{"path": "Demo.lean", "kind": "namespace", "name": "Demo", "line_range": [2, 2]}],
+                    "lean_predecessors": [],
+                },
+                "trust": {"human_review": 0.0, "source_span": 0.75, "lean_dependency_graph": 0.35},
+            }
+        )
+    records.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+
+    paths = materialize_budget_report(
+        Namespace(
+            records=records,
+            project_root=source_root,
+            output=tmp_path / "budget",
+            record_id=[],
+            limit=2,
+            include_record_imports=False,
+            model=DEFAULT_MODEL,
+            max_tokens=100,
+            temperature=0.0,
+            reasoning_effort="high",
+            source_context=0,
+            lean_context=0,
+        )
+    )
+
+    report = json.loads(paths["budget_json"].read_text(encoding="utf-8"))
+    assert report["paid_calls_made"] is False
+    assert report["totals"]["records"] == 2
+    assert len(report["records"]) == 2
+    assert all(item["estimated_max_cost_usd"] > 0 for item in report["records"])
+    markdown = paths["budget_md"].read_text(encoding="utf-8")
+    assert "## Live commands" in markdown
+    assert "--call-openrouter" in markdown

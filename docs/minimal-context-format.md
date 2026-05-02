@@ -198,9 +198,31 @@ The output project contains:
   `scripts/review_minimal_context_records.py`.
 - `eval/openrouter-formalization-payload.json`: the exact OpenRouter chat
   payload for `deepseek/deepseek-v4-pro`.
+- `eval/openrouter-formalization-cost-estimate.json`: tokenizer-free prompt
+  size and max-cost estimate from the payload, using the current DeepSeek V4
+  Pro OpenRouter price snapshot in the script.
 - `eval/openrouter-formalization-command.txt`: the bounded live-call command.
 - `eval/review-command.txt`: the exact DeepSeek review command using
   `scripts/review_minimal_context_records.py`.
+
+For a small API-free batch budget report, use `--budget-only`; it does not
+materialize a Lean project and does not call OpenRouter:
+
+```bash
+uv run python scripts/run_minimal_context_eval.py \
+  --records docs/minimal-context-semantic-review-sample.jsonl \
+  --project-root algebraic-combinatorics \
+  --output /tmp/repoprover-oracle-context-deepseek-budget \
+  --limit 5 \
+  --max-tokens 8192 \
+  --budget-only \
+  --no-git
+```
+
+This writes `eval/openrouter-budget-estimate.{json,md}` with per-record prompt
+chars, estimated prompt tokens, max-completion-token cost, and exact one-record
+live commands. The latest checked-in small-batch report is
+`docs/minimal-context-deepseek-live-batch-report.md`.
 
 Only pass `--call-openrouter` for an explicit bounded paid smoke, and only when
 `OPENROUTER_API_KEY` is set:
@@ -216,6 +238,11 @@ uv run python scripts/run_minimal_context_eval.py \
   --max-tokens 8192 \
   --reasoning-effort high
 ```
+
+After a live call, `eval/openrouter-response-cost-summary.json` records any
+OpenRouter-reported actual cost from `usage.cost`/`usage.total_cost`; if the
+response only has token counts, it also computes the estimated cost from the
+same price snapshot.
 
 Use `--include-record-imports` only when you want to evaluate with the record's
 local import list instead of the stricter Mathlib-only baseline.

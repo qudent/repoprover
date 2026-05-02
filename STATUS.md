@@ -43,14 +43,20 @@ review command without making paid calls by default.
 ## TODO Plan
 - [x] Add file-context-aware, Mathlib-only target materialization.
 - [x] Add `scripts/run_minimal_context_eval.py` for selected-record JSONL,
-  evidence, prompt payload, and exact review/live command artifacts.
+  evidence, prompt payload, exact review/live command artifacts, and API-free
+  DeepSeek V4 budget estimates.
 - [x] Add API-free tests around materialization and eval artifact emission.
 - [x] Add `scripts/split_minimal_context_benchmark.py` for leakage-aware
   `oracle_proof_fill`, `oracle_source_statement`, and
   `prefix_next_declaration` records plus manifest/report docs.
-- [ ] Optional next step: run a single explicit, bounded
-  `deepseek/deepseek-v4-pro` smoke with `--call-openrouter --max-tokens 8192`
-  only after confirming `OPENROUTER_API_KEY` and budget.
+- [x] Estimate the current oracle proof-fill dataset cost: 473 theorem/lemma
+  records selected, about 2.03M prompt tokens plus at most 3.87M completion
+  tokens, estimated max `$4.2543` on `deepseek/deepseek-v4-pro` at current
+  OpenRouter catalog pricing. No paid call was made because
+  `OPENROUTER_API_KEY` is missing in this execution environment.
+- [ ] Run a live bounded `deepseek/deepseek-v4-pro` smoke with
+  `--call-openrouter --max-tokens 8192` after restoring/exporting
+  `OPENROUTER_API_KEY` and confirming budget.
 - [ ] Next broader research step: design a model-selected segmentation task
   using the current best open-weight reviewer/critic as an adjudicator.
 
@@ -58,9 +64,9 @@ review command without making paid calls by default.
 - Whole-corpus/gold-candidate records are machine-generated, not fully
   human-certified. The 24-record semantic-review sample is model-reviewed, not
   final gold.
-- The new eval runner did not make a paid OpenRouter call in this session.
-  Use `--call-openrouter` only for an explicit one-record smoke with the key
-  present.
+- The eval runner did not make a paid OpenRouter call in this session because
+  `OPENROUTER_API_KEY` is missing in the execution environment. It will still
+  refuse paid calls unless `--call-openrouter` is passed and the key is set.
 - Some materialized Mathlib-only projects may expose missing transitive Lean
   context in the record itself, e.g. predecessor snippets can reference earlier
   declarations not included in that record. Treat these as useful benchmark
@@ -77,7 +83,9 @@ review command without making paid calls by default.
 - Added `scripts/run_minimal_context_eval.py`. It writes
   `eval/selected-record.jsonl`, `eval/evidence.json`,
   `eval/openrouter-formalization-payload.json`,
-  `eval/openrouter-formalization-command.txt`, and `eval/review-command.txt`.
+  `eval/openrouter-formalization-cost-estimate.json`,
+  `eval/openrouter-formalization-command.txt`, and `eval/review-command.txt`;
+  `--budget-only` emits per-record API-free budget estimates.
 - Documented the one-record DeepSeek eval flow in
   `docs/minimal-context-format.md`.
 - Verified dry materialization from
@@ -94,6 +102,11 @@ review command without making paid calls by default.
   plus `manifest.json`/`README.md` from the 645 candidate records. Focused split
   tests pass with `UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest
   tests/test_split_minimal_context_benchmark.py`.
+- Ran an API-free DeepSeek V4 budget estimate over
+  `docs/minimal-context-splits/oracle_proof_fill.jsonl`: 473 selected proof-fill
+  theorem/lemma records, 2,030,412 estimated prompt tokens, 3,874,816 max
+  completion tokens, estimated max cost `$4.2543`; no paid calls because the
+  OpenRouter key is missing in this environment.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;

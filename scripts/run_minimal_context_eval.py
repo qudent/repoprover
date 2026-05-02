@@ -233,6 +233,8 @@ def live_command_for_record(args: argparse.Namespace, record_id: str, output: Pa
     ]
     if args.reasoning_effort:
         command.extend(["--reasoning-effort", args.reasoning_effort])
+    if getattr(args, "no_git", False):
+        command.append("--no-git")
     return shell_join(command)
 
 
@@ -461,9 +463,17 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     try:
+        if args.budget_only:
+            paths = materialize_budget_report(args)
+            print(f"Budget report: {paths['budget_md']}")
+            print(f"Budget JSON: {paths['budget_json']}")
+            return 0
+
         paths = materialize_eval(args)
         if args.call_openrouter:
-            call_openrouter(paths["payload"], paths["eval_dir"] / "openrouter-response.json")
+            response_path = paths["eval_dir"] / "openrouter-response.json"
+            call_openrouter(paths["payload"], response_path)
+            write_openrouter_cost_summary(response_path, paths["eval_dir"] / "openrouter-response-cost-summary.json")
     except Exception as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
