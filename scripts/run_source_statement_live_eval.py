@@ -53,6 +53,9 @@ GENERATED_DECL_RE = re.compile(
     r"(?:theorem|lemma)\s+(?P<name>[^\s:\{\(\[]+)",
     re.MULTILINE,
 )
+SCOPED_NOTATION_RE = re.compile(r"scoped\s+notation\s+(?P<lhs>.*?)\s*=>\s*(?P<rhs>.*)$")
+PART_LABEL_RE = re.compile(r"\.([a-z])$")
+CONTEXT_NOTATION_HEADER_RE = re.compile(r"^-- File context: (?P<path>.*):(?P<start>\d+)-(?P<end>\d+) \(notation\)$")
 
 
 @dataclass(frozen=True)
@@ -101,11 +104,239 @@ def source_snippets(project_root: Path, record: SelectedRecord) -> list[dict[str
     return snippets
 
 
+def _record_comment_labels(record: SelectedRecord) -> list[str]:
+    return [str(label) for label in record.row.get("alignment", {}).get("comment_labels", [])]
+
+
+def _source_span_labels(record: SelectedRecord) -> list[str]:
+    labels: list[str] = []
+    for span in record.source_spans:
+        labels.extend(str(label) for label in span.get("labels", []))
+    return labels
+
+
+def source_focus(record: SelectedRecord) -> dict[str, Any]:
+    source_labels = _source_span_labels(record)
+    comment_labels = _record_comment_labels(record)
+    source_label_set = set(source_labels)
+    specific_labels = [
+        label
+        for label in comment_labels
+        if label not in source_label_set and any(label.startswith(f"{source_label}.") for source_label in source_labels)
+    ]
+    specific_parts = []
+    for label in specific_labels:
+        match = PART_LABEL_RE.search(label)
+        if match:
+            specific_parts.append(match.group(1))
+    return {
+        "source_span_labels": source_labels,
+        "record_comment_labels": comment_labels,
+        "specific_source_labels": specific_labels,
+        "specific_labeled_parts": specific_parts,
+        "instruction": (
+            "If the source snippet contains multiple labeled or numbered parts, formalize only the specific "
+            "part/source span indicated by specific_source_labels or specific_labeled_parts. Do not conjoin "
+            "all parts unless the record labels identify the whole multi-part result."
+        ),
+    }
+
+
+def _read_context_window(path: Path, line: int, *, before: int = 10, after: int = 24) -> str:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    start = max(1, line - before)
+    end = min(len(lines), line + after)
+    return "\n".join(lines[start - 1 : end]).rstrip()
+
+
+def _declaration_start(lines: list[str], index: int) -> int:
+    start = index
+    while start > 0:
+        previous = lines[start - 1].strip()
+        if previous.startswith("/--") or previous.startswith("@[") or previous.startswith("--") or previous.startswith("/-!"):
+            start -= 1
+            continue
+        if previous and start < index and lines[start].lstrip().startswith(("*", "##")):
+            start -= 1
+            continue
+        break
+    return start
+
+
+def _prior_example_blocks(project_root: Path, record: SelectedRecord, limit: int = 2) -> list[str]:
+    lean_file = project_root / record.lean_path
+    if not lean_file.exists():
+        return []
+    lines = lean_file.read_text(encoding="utf-8").splitlines()
+    target_start = record.line_range[0]
+    source_text = "\n".join(snippet.get("snippet", "") for snippet in source_snippets(project_root, record)).lower()
+    keywords = ["submatrix", "submatrixOfFinset"]
+    if "diagonal" in source_text:
+        keywords.append("diagonal")
+    if "minor" in source_text or "det" in source_text:
+        keywords.append(".det")
+
+    starts: list[int] = []
+    for index, line in enumerate(lines[: target_start - 1]):
+        if re.match(r"^\s*(?:example|theorem|lemma)\b", line):
+            starts.append(index)
+    candidates: list[tuple[tuple[int, int], str]] = []
+    for offset, start_index in enumerate(starts):
+        end_index = starts[offset + 1] if offset + 1 < len(starts) else target_start - 1
+        block_start = _declaration_start(lines, start_index)
+        block_lines = lines[block_start:end_index]
+        if len(block_lines) > 45:
+            continue
+        block = "\n".join(block_lines).rstrip()
+        score = sum(1 for keyword in keywords if keyword in block)
+        if score == 0:
+            continue
+        candidates.append(((score, start_index), block))
+    candidates.sort(key=lambda item: item[0], reverse=True)
+    return [block for _, block in candidates[:limit]]
+
+
+def _notation_surface(lhs: str) -> str:
+    parts: list[str] = []
+    for match in re.finditer(r'"([^"]*)"|([A-Za-z_][A-Za-z0-9_\']*)', lhs):
+        quoted, bare = match.groups()
+        parts.append(quoted if quoted is not None else bare)
+    return "".join(parts).strip() or lhs
+
+
+def _rhs_head_identifier(rhs: str) -> str | None:
+    match = re.match(r"\s*([A-Za-z_][A-Za-z0-9_']*)\b", rhs)
+    return match.group(1) if match else None
+
+
+def _named_declaration_block(lines: list[str], name: str, *, before_line: int | None = None, after_line: int = 1) -> tuple[int, int, str] | None:
+    matches: list[tuple[int, int, str]] = []
+    for index, line in enumerate(lines, start=1):
+        if index < after_line:
+            continue
+        if before_line is not None and index >= before_line:
+            break
+        match = DECL_RE.match(line)
+        if not match or match.group("name") != name:
+            continue
+        start_index = _declaration_start(lines, index - 1)
+        end_index = len(lines)
+        for next_index in range(index, len(lines)):
+            if DECL_RE.match(lines[next_index]):
+                end_index = _declaration_start(lines, next_index)
+                break
+        if before_line is not None:
+            end_index = min(end_index, before_line - 1)
+        block_lines = lines[start_index:end_index]
+        while block_lines and not block_lines[-1].strip():
+            block_lines.pop()
+        while block_lines and block_lines[-1].lstrip().startswith(("/--", "/-!", "@[", "--")):
+            block_lines.pop()
+            while block_lines and not block_lines[-1].strip():
+                block_lines.pop()
+        block = "\n".join(block_lines).rstrip()
+        end_index = start_index + len(block_lines)
+        matches.append((start_index + 1, end_index, block))
+    return matches[-1] if matches else None
+
+
+def _notation_support_blocks(project_root: Path, rel_path: str, notation_line_number: int, target_line: int) -> list[str]:
+    path = project_root / rel_path
+    lines = path.read_text(encoding="utf-8").splitlines()
+    notation_line = lines[notation_line_number - 1]
+    match = SCOPED_NOTATION_RE.search(notation_line)
+    if not match:
+        return []
+    helper_name = _rhs_head_identifier(match.group("rhs"))
+    if not helper_name:
+        return []
+
+    blocks: list[str] = []
+    helper_block = _named_declaration_block(lines, helper_name, before_line=notation_line_number)
+    if helper_block is not None:
+        start, end, text = helper_block
+        blocks.append(f"-- Local notation support: {rel_path}:{start}-{end} ({helper_name})\n{text}")
+
+    apply_block = _named_declaration_block(
+        lines,
+        f"{helper_name}_apply",
+        after_line=notation_line_number + 1,
+        before_line=target_line,
+    )
+    if apply_block is not None:
+        start, end, text = apply_block
+        blocks.append(f"-- Local notation support: {rel_path}:{start}-{end} ({helper_name}_apply)\n{text}")
+    return blocks
+
+
+def source_statement_context(project_root: Path, record: SelectedRecord) -> tuple[list[str], list[str]]:
+    context_parts, context_closes = render_ordered_context_and_predecessors(project_root, record)
+    expanded: list[str] = []
+    for part in context_parts:
+        if match := CONTEXT_NOTATION_HEADER_RE.match(part):
+            expanded.extend(
+                _notation_support_blocks(project_root, match.group("path"), int(match.group("start")), record.line_range[0])
+            )
+        expanded.append(part)
+    return expanded, context_closes
+
+
+def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
+    notation_contracts: list[dict[str, str]] = []
+    examples: list[str] = []
+    seen_examples: set[str] = set()
+
+    for span in record.file_context:
+        if str(span.get("kind", "")) != "notation":
+            continue
+        path = project_root / str(span["path"])
+        start, _ = [int(value) for value in span["line_range"]]
+        notation_line = read_line_range(path, (start, start)).strip()
+        if match := SCOPED_NOTATION_RE.search(notation_line):
+            notation_contracts.append(
+                {
+                    "notation": _notation_surface(match.group("lhs").strip()),
+                    "raw_notation": match.group("lhs").strip(),
+                    "expands_to": match.group("rhs").strip(),
+                    "source_line": f"{span['path']}:{start}",
+                }
+            )
+        window = _read_context_window(path, start)
+        if window and window not in seen_examples:
+            examples.append(window)
+            seen_examples.add(window)
+
+    for block in _prior_example_blocks(project_root, record):
+        if block not in seen_examples:
+            examples.append(block)
+            seen_examples.add(block)
+
+    guidance = [
+        "Match the local Lean style shown in local_lean_style.examples when it applies; prefer exact APIs and argument order already used in this file.",
+        "Use only identifiers that appear in the Lean prefix context/local examples or are standard Mathlib identifiers; do not cite or invent raw helper names from guessed notation expansions.",
+    ]
+    for contract in notation_contracts:
+        guidance.append(
+            f"The scoped notation {contract['notation']} expands to {contract['expands_to']}; use the exact surface syntax and keep the matrix argument after the bracketed index sets."
+        )
+        guidance.append(
+            "If a helper theorem for this notation is not displayed in the prompt, do not name it directly; use an explicit Mathlib form or prove by unfolding/simping displayed definitions."
+        )
+
+    return {
+        "guidance": guidance,
+        "notation_contracts": notation_contracts,
+        "examples": examples[:3],
+    }
+
+
 def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
-    context_parts, _ = render_ordered_context_and_predecessors(project_root, record)
+    context_parts, _ = source_statement_context(project_root, record)
     return {
         "source_statement_or_chunk": source_snippets(project_root, record),
+        "target_source_focus": source_focus(record),
         "lean_prefix_context": "\n".join(context_parts).strip(),
+        "local_lean_style": local_lean_style(project_root, record),
         "mathlib_context": record.mathlib_context,
         "benchmark_policy": {
             "target_lean_statement_available_to_model": False,
@@ -135,6 +366,8 @@ def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str,
             "Do not use sorry, admit, aesop? placeholders, or comments standing in for proof.",
             "Do not include import statements; the generated file already imports Mathlib.",
             "Do not assume access to the withheld target Lean statement or name.",
+            "For multi-part TeX chunks, formalize only the specified labeled part/source span. Do not conjoin all parts unless the record explicitly asks for the whole multi-part result.",
+            "Do not cite or invent raw helper names that are not present in the Lean prefix context/local examples; prefer displayed local style and standard Mathlib APIs.",
             "Prefer a short proof if the prefix context already contains the needed fact.",
         ],
         "context": build_prompt_context(project_root, record),
@@ -199,7 +432,7 @@ def materialize_candidate_project(
     if lake_cache_from is not None:
         copy_lake_cache(lake_cache_from, output_root)
 
-    context_parts, context_closes = render_ordered_context_and_predecessors(project_root, record)
+    context_parts, context_closes = source_statement_context(project_root, record)
     imports = ["Mathlib"]
     parts: list[str] = [*(f"import {module}" for module in imports), ""]
     parts.append("/-! Source-statement eval target. The target Lean statement was withheld from the model. -/")

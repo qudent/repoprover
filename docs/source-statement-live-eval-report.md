@@ -114,6 +114,43 @@ The real target-statement-withheld restart is underway as tooling, but the first
 
 The available evidence points away from a 90% easy setting and toward either low first-pass success or a need for a different selection/prompt/repair loop before running a larger batch.
 
+## Prompt/context fix after the Cauchy--Binet failure
+
+The first failed `CauchyBinet.lean` attempt exposed three prompt/context bugs:
+
+- the prompt showed the scoped notation line but not the local helper definition
+  and simp theorem behind it, so the model could infer names that were not
+  actually present in the check file;
+- the notation was not explained as a local `sub[U,V] A` surface form expanding
+  to `submatrixOfFinset A U V`;
+- the source span contained both parts `(a)` and `(b)` of
+  `lem.det.minors-diag`, while the record alignment identified the more
+  specific part label `lem.det.minors-diag.a`.
+
+`scripts/run_source_statement_live_eval.py` now hardens the emitted prompt and
+materialized check context:
+
+- notation support declarations are inserted into the Lean prefix context before
+  the notation line when the notation RHS is a local helper;
+- prompt context includes `local_lean_style` guidance and examples extracted
+  from prefix file context;
+- prompt instructions forbid citing or inventing raw helper names unless they
+  appear in the Lean prefix/local examples;
+- prompt context includes `target_source_focus`, with specific labels and
+  part letters inferred from record/source labels, and instructs the model not
+  to conjoin all parts of a multi-part source chunk when the record points to
+  one labeled part.
+
+API-free verification after this patch:
+
+```text
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest tests/test_source_statement_live_eval.py
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py --output /tmp/repoprover-source-statement-prompt-fix-budget --limit 1 --budget-only
+```
+
+The budget-only smoke made `0` paid calls and regenerated the first
+Cauchy--Binet payload with `lem.det.minors-diag.a` as the specific source focus.
+
 ## Next recommended run
 
 Do not keep rerunning the same hard first record sequentially. The next batch should either:

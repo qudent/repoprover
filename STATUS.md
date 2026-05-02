@@ -20,11 +20,10 @@ RepoProver is locally installed with Python in `.venv` and Lean/Lake through
 `elan`. The Algebraic Combinatorics vendored snapshot has a deterministic
 whole-corpus context graph, declaration-level minimal-context records, 645
 exact-label gold candidates, and a 24-record semantic-review sample. Current
-DeepSeek model choice remains `deepseek/deepseek-v4-pro`. A one-record
-Mathlib-only evaluation pipeline now exists: it materializes a Lean target with
-recorded TeX snippets, file-scope Lean context, predecessor snippets, and a
-target `sorry`, then emits the exact DeepSeek/OpenRouter prompt payload and
-review command without making paid calls by default.
+DeepSeek model choice remains `deepseek/deepseek-v4-pro`. The stricter
+target-statement-withheld source-eval runner now emits notation-aware Lean
+prefix context, local style guidance, and specific source-part focus metadata
+after the first Cauchy--Binet live failure.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -64,6 +63,9 @@ review command without making paid calls by default.
   live eval path. Added tooling and ran initial DeepSeek V4 calls; first
   completed selected record failed under Lean, and lower caps returned no JSON
   because the model spent the completion budget on reasoning tokens.
+- [x] Harden the source-statement prompt/context after the first Cauchy--Binet
+  failure: include local notation support, local style examples, helper-name
+  constraints, and specific multi-part source focus.
 - [ ] Next broader research step: run a non-blocking stratified/easier
   source-statement batch or design a model-selected segmentation task using the
   current best open-weight reviewer/critic as an adjudicator.
@@ -132,6 +134,12 @@ review command without making paid calls by default.
   it failed Lean verification at 32,768/high, while 8,192 and 4,096 caps
   returned no JSON content because all completion tokens were spent on
   reasoning. Completed live spend for these attempts was about `$0.0187`.
+- Patched `scripts/run_source_statement_live_eval.py` so source-statement
+  prompts include local Lean style guidance/examples, insert local notation
+  support declarations into the Lean prefix context, forbid invented raw helper
+  names, and focus multi-part source chunks on the specific record label (for
+  Cauchy--Binet, `lem.det.minors-diag.a`). Added focused prompt tests and ran a
+  one-record budget-only smoke; no paid provider call was made.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -167,10 +175,11 @@ review command without making paid calls by default.
 - `scripts/run_source_statement_live_eval.py` is the stricter source-statement
   live-eval runner: target Lean statement/name withheld from the prompt, source
   chunk provided, generated theorem checked against a grader-only gold
-  statement. Current live attempts are documented in
-  `docs/source-statement-live-eval-report.md`; avoid low completion caps because
-  DeepSeek V4 can spend all returned tokens on reasoning and produce null
-  content.
+  statement. It now adds local notation support/style context and specific
+  source-part focus metadata. Current live attempts and the prompt/context fix
+  are documented in `docs/source-statement-live-eval-report.md`; avoid low
+  completion caps because DeepSeek V4 can spend all returned tokens on
+  reasoning and produce null content.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.
