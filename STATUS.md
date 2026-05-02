@@ -60,8 +60,13 @@ review command without making paid calls by default.
   oracle-proof-fill record completed successfully and Lean-checked after
   materializer context-order/transitive-predecessor fixes; actual reported cost
   was `$0.002583465`.
-- [ ] Next broader research step: design a model-selected segmentation task
-  using the current best open-weight reviewer/critic as an adjudicator.
+- [x] Start the stricter target-statement-withheld `oracle_source_statement`
+  live eval path. Added tooling and ran initial DeepSeek V4 calls; first
+  completed selected record failed under Lean, and lower caps returned no JSON
+  because the model spent the completion budget on reasoning tokens.
+- [ ] Next broader research step: run a non-blocking stratified/easier
+  source-statement batch or design a model-selected segmentation task using the
+  current best open-weight reviewer/critic as an adjudicator.
 
 ## Blockers
 - Whole-corpus/gold-candidate records are machine-generated, not fully
@@ -118,6 +123,15 @@ review command without making paid calls by default.
   4,257 prompt tokens and 841 completion tokens for `$0.002583465`; the returned
   Lean declaration `... := constantCoeff_logbar` compiles in the fixed generated
   project.
+- Added `scripts/run_source_statement_live_eval.py` and
+  `docs/source-statement-live-eval-report.md` for the stricter
+  target-statement-withheld source-to-Lean restart. A 30-record budget-only
+  corpus-spread sample estimates 47,410 prompt tokens plus up to 983,040
+  completion tokens at a 32,768 cap (`$0.8759` max). Initial live DeepSeek V4
+  attempts completed only the first Cauchy--Binet record before being killed;
+  it failed Lean verification at 32,768/high, while 8,192 and 4,096 caps
+  returned no JSON content because all completion tokens were spent on
+  reasoning. Completed live spend for these attempts was about `$0.0187`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -150,6 +164,13 @@ review command without making paid calls by default.
 - `scripts/run_minimal_context_eval.py` is the DeepSeek V4 Pro one-record
   prompt/command emitter. It refuses paid calls unless `--call-openrouter` is
   passed and `OPENROUTER_API_KEY` is set.
+- `scripts/run_source_statement_live_eval.py` is the stricter source-statement
+  live-eval runner: target Lean statement/name withheld from the prompt, source
+  chunk provided, generated theorem checked against a grader-only gold
+  statement. Current live attempts are documented in
+  `docs/source-statement-live-eval-report.md`; avoid low completion caps because
+  DeepSeek V4 can spend all returned tokens on reasoning and produce null
+  content.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.
