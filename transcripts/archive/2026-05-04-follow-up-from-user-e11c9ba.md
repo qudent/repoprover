@@ -30,3 +30,7 @@ I picked up the follow-up. No child was launched before the interruption; the li
 ## 2026-05-04T22:47:52+0000 codex:follow-up-from-user-e11c9ba
 
 The STATUS update did land as commit `bb35fa5` through the wrapper’s tool-call commit flow. I’m going to make the diagnostic concrete now: a small script that materializes an oracle-assisted Cauchy check project, plus a report that is explicit about missing raw DeepSeek output and why the failure separates context leakage, Lean syntax, and API-staleness categories.
+
+## 2026-05-04T22:48:26+0000 codex:follow-up-from-user-e11c9ba
+
+I’m adding a diagnostic script rather than embedding the gold statement into any prompt path. It will materialize an explicitly oracle-assisted repair check under `/tmp`, write a JSON summary, and run Lean against the same `simpa using <generated theorem>` grader criterion used by the benchmark.
