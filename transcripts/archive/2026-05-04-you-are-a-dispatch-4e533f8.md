@@ -48,3 +48,7 @@ Dispatch contract:
 ## 2026-05-04T22:41:36+0000 codex:you-are-a-dispatch-4e533f8
 
 I’ll classify this as `active-orchestration`: it needs live repo inspection, task-surface updates, a first diagnostic slice, and a bounded delegated implementation thread. I’m going to read the current status/report plus the relevant learnings before routing anything.
+
+## 2026-05-04T22:41:44+0000 codex:you-are-a-dispatch-4e533f8
+
+The repo is already midstream: `STATUS.md` records the 10-record target-withheld batch as 0/10, and the report defines success as `simpa using <model_generated_theorem>` against the grader-only gold statement. I also see an unrelated modified active transcript file, so I’ll avoid touching it and route through the project coordination files.
