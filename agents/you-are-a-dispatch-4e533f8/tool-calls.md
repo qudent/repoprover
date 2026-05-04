@@ -18,3 +18,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224156Z | 1777934516 | user | item_14 | command_execution | completed | /bin/bash -lc "find /home/name/repos -maxdepth 4 -path '*/scripts/codex_wrap.sh' -o -path '*/scripts/branch_commands.sh'" | 8c99c6359009c10c | 0 |
 | 20260504T224156Z | 1777934516 | user | item_15 | command_execution | completed | /bin/bash -lc "git log --all --grep='\\[run-start\\]\\\|\\[status\\]\\\|\\[run-stop\\]' --pretty=format:'%h%x09%ct%x09%D%x09%s' -n 30" | 50a6f6cfe954398c | 0 |
 | 20260504T224204Z | 1777934524 | user | item_16 | command_execution | completed | /bin/bash -lc "find .git/codex-wrap -maxdepth 3 -type f \| sort \| sed -n '1,120p'" | 7c4f60dec9f3fd75 | 0 |
+| 20260504T224204Z | 1777934524 | user | item_17 | command_execution | completed | /bin/bash -lc "ps -eo pid,ppid,stat,etime,args \| rg 'codex\|4e533f8\|repoprover' \| rg -v 'rg '" | f1893b8c6ca35ce9 | 0 |
