@@ -26,3 +26,7 @@ Keep benchmark honesty: any gold-inspecting repair is manual/oracle-assisted dia
 ## 2026-05-04T22:47:19+0000 codex:follow-up-from-user-e11c9ba
 
 I picked up the follow-up. No child was launched before the interruption; the live work is still in this dispatcher thread, with `STATUS.md` already patched but not committed. I’ll fold in the raw-output absence, the Lean 4 migration checklist, and the staleness-vs-context distinction before committing.
+
+## 2026-05-04T22:47:52+0000 codex:follow-up-from-user-e11c9ba
+
+The STATUS update did land as commit `bb35fa5` through the wrapper’s tool-call commit flow. I’m going to make the diagnostic concrete now: a small script that materializes an oracle-assisted Cauchy check project, plus a report that is explicit about missing raw DeepSeek output and why the failure separates context leakage, Lean syntax, and API-staleness categories.
