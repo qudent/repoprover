@@ -44,3 +44,7 @@ Dispatch contract:
 - For long work, create periodic empty [status] commits that summarize the last interval and cite the commit hashes that matter for future routing.
 - Use one-line empty checkpoint commits before disruptive work, for example: git commit --allow-empty -m "checkpoint: last save state before <work>".
 - Finish with a quick status update saying what kind of work was dispatched and where.
+
+## 2026-05-04T22:41:36+0000 codex:you-are-a-dispatch-4e533f8
+
+I’ll classify this as `active-orchestration`: it needs live repo inspection, task-surface updates, a first diagnostic slice, and a bounded delegated implementation thread. I’m going to read the current status/report plus the relevant learnings before routing anything.
