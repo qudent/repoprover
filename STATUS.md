@@ -201,6 +201,15 @@ diagnostic for the documented failed source-statement record
   The paid call cost `$0.004565325`; success remained 0 because Lean checking
   ended in dependency setup noise (`git` exit 128 while cloning mathlib), so this
   run verifies artifact capture but is not an honest compile/grader result.
+- Reran the documented Cauchy--Binet failure with `--sample-mode corpus-spread
+  --limit 1` so the actual generated text is preserved. Artifacts are in
+  `/tmp/repoprover-source-statement-cauchy-store-generated-20260504T231258Z`;
+  the generated Lean declaration is `record-001/generated-lean-declaration.lean`
+  and the raw assistant JSON is `record-001/model-assistant-content.txt`. The
+  paid call cost `$0.008763075`; DeepSeek generated `det_sub_diagonal`, but Lean
+  checking again failed before semantic grading because the local Mathlib package
+  cache lacks built `Mathlib.olean` files (`unknown module prefix 'Mathlib'`).
+  This run verifies exact Cauchy output capture, not a compile/grader result.
 - Current dispatcher classified the target-statement-withheld follow-up as
   `active-orchestration`, selected the documented Cauchy--Binet failure because
   no prior 10-record `/tmp` artifacts were available, and verified the gold
