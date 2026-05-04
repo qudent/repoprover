@@ -186,6 +186,21 @@ diagnostic for the documented failed source-statement record
   /tmp/repoprover-source-statement-concurrency-budget --limit 10 --sample-mode
   stratified-easy --concurrency 4 --budget-only`; the smoke selected 10 records,
   wrote 10 partial-result rows, and made 0 paid calls.
+- Patched `scripts/run_source_statement_live_eval.py` to persist paid model
+  output explicitly: `record-NNN/model-assistant-content.txt` for raw assistant
+  content, `record-NNN/model-output.json` for parsed JSON, and
+  `record-NNN/generated-lean-declaration.lean` for the exact generated Lean
+  declaration. Focused tests pass with
+  `UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest
+  tests/test_source_statement_live_eval.py`.
+- Reran one live `deepseek/deepseek-v4-pro` stratified-easy source-statement
+  record with the persistence patch. Latest artifacts are in
+  `/tmp/repoprover-source-statement-rerun-store-generated-cachefix-20260504T230856Z`;
+  the stored generated Lean is `record-001/generated-lean-declaration.lean` for
+  `AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.sum_choose_pow_eq`.
+  The paid call cost `$0.004565325`; success remained 0 because Lean checking
+  ended in dependency setup noise (`git` exit 128 while cloning mathlib), so this
+  run verifies artifact capture but is not an honest compile/grader result.
 - Current dispatcher classified the target-statement-withheld follow-up as
   `active-orchestration`, selected the documented Cauchy--Binet failure because
   no prior 10-record `/tmp` artifacts were available, and verified the gold
@@ -227,12 +242,14 @@ diagnostic for the documented failed source-statement record
   live-eval runner: target Lean statement/name withheld from the prompt, source
   chunk provided, generated theorem checked against a grader-only gold
   statement. It now adds local notation support/style context, specific
-  source-part focus metadata, bounded per-record concurrency, conservative
-  cost-cap launch checks, partial-result streaming, and failure-class
-  aggregation. Current live attempts and the concurrent command shape are
-  documented in `docs/source-statement-live-eval-report.md`; avoid low
-  completion caps because DeepSeek V4 can spend all returned tokens on
-  reasoning and produce null content.
+  source-part focus metadata, persists raw and parsed model outputs plus the
+  exact generated Lean declaration under each `record-NNN/`, uses bounded
+  per-record concurrency, conservative cost-cap launch checks, partial-result
+  streaming, and failure-class aggregation. Current live attempts and the
+  concurrent command shape are documented in
+  `docs/source-statement-live-eval-report.md`; avoid low completion caps because
+  DeepSeek V4 can spend all returned tokens on reasoning and produce null
+  content.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.

@@ -30,6 +30,9 @@ A success therefore means the model generated a theorem strong/equivalent enough
 - API-free budget-only mode;
 - live OpenRouter calls guarded by `OPENROUTER_API_KEY`;
 - per-record payload/response/cost artifacts;
+- explicit generated-output artifacts for every received model response:
+  `model-assistant-content.txt`, `model-output.json`, and
+  `generated-lean-declaration.lean` when JSON parsing succeeds;
 - Lean verification of generated declarations against withheld gold statements;
 - per-call timeout and no OpenAI client retries.
 
