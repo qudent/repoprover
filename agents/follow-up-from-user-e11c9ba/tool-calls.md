@@ -17,3 +17,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224736Z | 1777934856 | user | item_11 | command_execution | completed | /bin/bash -lc "find agents -maxdepth 2 -type f \| sort \| sed -n '1,200p'" | fd6e79bc4da4c95e | 0 |
 | 20260504T224736Z | 1777934856 | user | item_12 | command_execution | completed | /bin/bash -lc '. /home/name/repos/ai-agent-learnings/scripts/codex_wrap.sh && . /home/name/repos/ai-agent-learnings/scripts/branch_commands.sh && codex_agents' | 3f40ed1e766dd6ec | 0 |
 | 20260504T224752Z | 1777934872 | user | item_14 | command_execution | completed | /bin/bash -lc "sed -n '1,220p' scripts/run_source_statement_live_eval.py" | fff56815d4c4a834 | 0 |
+| 20260504T224752Z | 1777934872 | user | item_15 | command_execution | failed | /bin/bash -lc 'rg -n "class SelectedRecord\|def select_records\|def read_jsonl\|def load\|def selected" scripts/run_source_statement_live_eval.py' | 1acacf4993becd25 | 0 |
