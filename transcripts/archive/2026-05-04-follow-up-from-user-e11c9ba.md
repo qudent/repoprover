@@ -22,3 +22,7 @@ Follow-up from user while the Cauchy target-statement-withheld repair task is ru
 4. If raw DeepSeek output cannot be recovered, do not imply we have it. Say only that the report records the returned theorem name `det_minors_diag` and key Lean errors. If you find the full raw output somewhere else, preserve/cite the path.
 
 Keep benchmark honesty: any gold-inspecting repair is manual/oracle-assisted diagnostic only, not a target-withheld feed-forward success.
+
+## 2026-05-04T22:47:19+0000 codex:follow-up-from-user-e11c9ba
+
+I picked up the follow-up. No child was launched before the interruption; the live work is still in this dispatcher thread, with `STATUS.md` already patched but not committed. I’ll fold in the raw-output absence, the Lean 4 migration checklist, and the staleness-vs-context distinction before committing.
