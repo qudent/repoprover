@@ -13,15 +13,19 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from scripts.materialize_minimal_context_smoke import SelectedRecord, load_jsonl, read_line_range
-from scripts.run_source_statement_live_eval import materialize_candidate_project, run_lean
-
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.materialize_minimal_context_smoke import SelectedRecord, load_jsonl, read_line_range  # noqa: E402
+from scripts.run_source_statement_live_eval import materialize_candidate_project, run_lean  # noqa: E402
+
+
 DEFAULT_RECORD_ID = (
     "AlgebraicCombinatorics/CauchyBinet.lean:"
     "AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq"

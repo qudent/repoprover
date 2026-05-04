@@ -2,9 +2,13 @@
 
 from pathlib import Path
 
+import pytest
+
 from scripts.materialize_minimal_context_smoke import (
     SelectedRecord,
     build_target_lean,
+    copy_lake_cache,
+    declarations_in_file,
     materialize_smoke_project,
     select_records,
 )
@@ -295,3 +299,88 @@ def test_build_target_lean_adds_transitive_same_file_predecessors(tmp_path: Path
     assert "theorem base : True := by\n  trivial" in lean_text
     assert lean_text.index("theorem base") < lean_text.index("theorem mid")
     assert lean_text.count("theorem mid") == 1
+
+
+def test_declarations_in_file_trims_trailing_doc_blocks_from_predecessors(tmp_path: Path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    (source_root / "Demo.lean").write_text(
+        "\n".join(
+            [
+                "namespace Demo",
+                "",
+                "/-- First declaration. -/",
+                "theorem first : True := by",
+                "  trivial",
+                "",
+                "/-!",
+                "Standalone section text for the next declaration.",
+                "-/",
+                "",
+                "/-- Second declaration. -/",
+                "theorem second : True := by",
+                "  trivial",
+                "",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    declarations = declarations_in_file(source_root, "Demo.lean")
+    first = next(row for row in declarations if row["declaration"] == "Demo.first")
+
+    assert first["line_range"] == [3, 5]
+
+
+def test_copy_lake_cache_decompresses_missing_mathlib_oleans(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    cache_from = tmp_path / "source"
+    source_lake = cache_from / ".lake"
+    (source_lake / "packages" / "mathlib").mkdir(parents=True)
+    (cache_from / "lakefile.lean").write_text("import Lake\n", encoding="utf-8")
+    output_root = tmp_path / "out"
+    output_root.mkdir()
+    calls = []
+
+    def fake_run(*args: object, **kwargs: object) -> object:
+        calls.append((args, kwargs))
+        mathlib_olean = (
+            source_lake / "packages" / "mathlib" / ".lake" / "build" / "lib" / "lean" / "Mathlib.olean"
+        )
+        mathlib_olean.parent.mkdir(parents=True)
+        mathlib_olean.write_text("", encoding="utf-8")
+        return object()
+
+    monkeypatch.setattr("scripts.materialize_minimal_context_smoke.subprocess.run", fake_run)
+
+    copy_lake_cache(cache_from, output_root)
+
+    assert calls
+    command = calls[0][0][0]
+    assert command == ["uv", "run", "lake", "exe", "cache", "get", "Mathlib"]
+    assert (output_root / ".lake" / "packages").is_symlink()
+    assert (output_root / ".lake" / "packages").resolve() == (source_lake / "packages").resolve()
+
+
+def test_copy_lake_cache_skips_decompression_when_mathlib_olean_exists(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    cache_from = tmp_path / "source"
+    source_lake = cache_from / ".lake"
+    mathlib_olean = source_lake / "packages" / "mathlib" / ".lake" / "build" / "lib" / "lean" / "Mathlib.olean"
+    mathlib_olean.parent.mkdir(parents=True)
+    mathlib_olean.write_text("", encoding="utf-8")
+    (cache_from / "lakefile.lean").write_text("import Lake\n", encoding="utf-8")
+    output_root = tmp_path / "out"
+    output_root.mkdir()
+
+    def fail_run(*args: object, **kwargs: object) -> object:
+        raise AssertionError("cache get should not run when Mathlib.olean exists")
+
+    monkeypatch.setattr("scripts.materialize_minimal_context_smoke.subprocess.run", fail_run)
+
+    copy_lake_cache(cache_from, output_root)
+
+    assert (output_root / ".lake" / "packages").is_symlink()
+    assert (output_root / ".lake" / "packages").resolve() == (source_lake / "packages").resolve()

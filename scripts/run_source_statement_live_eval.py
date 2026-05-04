@@ -57,6 +57,7 @@ GENERATED_DECL_RE = re.compile(
 SCOPED_NOTATION_RE = re.compile(r"scoped\s+notation\s+(?P<lhs>.*?)\s*=>\s*(?P<rhs>.*)$")
 PART_LABEL_RE = re.compile(r"\.([a-z])$")
 CONTEXT_NOTATION_HEADER_RE = re.compile(r"^-- File context: (?P<path>.*):(?P<start>\d+)-(?P<end>\d+) \(notation\)$")
+LOCAL_MODULE_PREFIX = "AlgebraicCombinatorics."
 
 
 @dataclass(frozen=True)
@@ -216,6 +217,12 @@ def _prior_example_blocks(project_root: Path, record: SelectedRecord, limit: int
         keywords.append("diagonal")
     if "minor" in source_text or "det" in source_text:
         keywords.append(".det")
+    if "laurent" in source_text or "x^{\\pm" in source_text or "x,x^{-1}" in source_text:
+        keywords.extend(["LaurentPolynomial", "K[T;T⁻¹]", "T_mul", "T_zero"])
+    if "coefficient" in source_text or "\\left[  x^" in source_text or "fps" in source_text:
+        keywords.extend(["coeff", "PowerSeries.X", "coeff_X", "coeff_one_X"])
+    if "tableau" in source_text or "content" in source_text or "x_t" in source_text:
+        keywords.extend(["Tableau", "contentTableau", "xPow", "monomialTableau"])
 
     starts: list[int] = []
     for index, line in enumerate(lines[: target_start - 1]):
@@ -310,15 +317,43 @@ def _notation_support_blocks(project_root: Path, rel_path: str, notation_line_nu
     return blocks
 
 
+def _declaration_names_in_text(text: str) -> set[str]:
+    names: set[str] = set()
+    for line in text.splitlines():
+        match = DECL_RE.match(line)
+        if match and match.group("name"):
+            names.add(str(match.group("name")))
+    return names
+
+
 def source_statement_context(project_root: Path, record: SelectedRecord) -> tuple[list[str], list[str]]:
     context_parts, context_closes = render_ordered_context_and_predecessors(project_root, record)
     expanded: list[str] = []
-    for part in context_parts:
-        if match := CONTEXT_NOTATION_HEADER_RE.match(part):
-            expanded.extend(
-                _notation_support_blocks(project_root, match.group("path"), int(match.group("start")), record.line_range[0])
-            )
+    seen_declaration_names = {name for part in context_parts for name in _declaration_names_in_text(part)}
+    seen_context_bodies: set[str] = set()
+    skip_next_body: str | None = None
+    for index, part in enumerate(context_parts):
+        if skip_next_body is not None and part.strip() == skip_next_body:
+            skip_next_body = None
+            continue
+        header = part.splitlines()[0] if part.splitlines() else part
+        if match := CONTEXT_NOTATION_HEADER_RE.match(header):
+            next_body = context_parts[index + 1].strip() if index + 1 < len(context_parts) else ""
+            if next_body and any(next_body in existing for existing in expanded):
+                skip_next_body = next_body
+                continue
+            for block in _notation_support_blocks(project_root, match.group("path"), int(match.group("start")), record.line_range[0]):
+                block_names = _declaration_names_in_text(block)
+                if block_names and block_names <= seen_declaration_names:
+                    continue
+                expanded.append(block)
+                seen_declaration_names.update(block_names)
+        body = part.strip()
+        if body in seen_context_bodies:
+            continue
         expanded.append(part)
+        if body:
+            seen_context_bodies.add(body)
     return expanded, context_closes
 
 
@@ -339,6 +374,8 @@ def lean_environment_context(project_root: Path) -> dict[str, Any]:
             "Generated code is checked with the repository lean-toolchain and current Mathlib, not Lean 3 or an older Lean 4 snapshot.",
             "Prefer Lean 4 syntax: `fun x => ...`, `by` tactic blocks, namespaces/dot notation as shown in the prompt, and current Mathlib names from displayed context.",
             "Do not invent old/deprecated identifiers such as guessed `*_apply`, `det_swap_rows`, `CommAlgebra`, or `LaurentPolynomial.X` unless they are explicitly present in context; use displayed local APIs or prove by unfolding/simping.",
+            "For power-series coefficients, follow the local examples' argument order such as `coeff n (X : R⟦X⟧)`, not `coeff (X : R⟦X⟧) n`.",
+            "For Laurent polynomial samples, prefer displayed current APIs such as `LaurentPolynomial.T n` and local notation `K[T;T⁻¹]`; do not use bare polynomial `X` for Laurent polynomials.",
             "Do not make typeclass objects (`CommRing α`, `Algebra R A`, etc.) components of an `∧`; those are types/classes, not propositions. Put them as assumptions/instances or use theorem statements about terms instead.",
             "If the source theorem is a narrow identity, formalize that identity directly rather than a broad bundled theorem whose components will not match the grader's withheld statement.",
         ],
@@ -439,8 +476,11 @@ def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str,
             "Do not assume access to the withheld target Lean statement or name.",
             "For multi-part TeX chunks, formalize only the specified labeled part/source span. Do not conjoin all parts unless the record explicitly asks for the whole multi-part result.",
             "Do not cite or invent raw helper names that are not present in the Lean prefix context/local examples; prefer displayed local style and standard Mathlib APIs.",
+            "Do not redeclare definitions, structures, abbrevs, notation helpers, or instances already present in the Lean prefix context; reference them directly.",
             "Use current Lean 4/Mathlib syntax and API names; if your memory conflicts with displayed local context, trust the displayed context.",
             "State a single proposition-level theorem/lemma that is likely to match the specified source part; do not bundle typeclass instances or unrelated source parts into conjunctions.",
+            "If an existing theorem or lemma in the prefix context has binders, apply it to the needed variables rather than using the theorem constant bare.",
+            "Prefer the narrowest theorem directly supported by the source sentence; avoid generalizing to a stronger forall/if statement unless that exact shape is in the source or prefix context.",
             "Prefer a short proof if the prefix context already contains the needed fact.",
         ],
         "context": build_prompt_context(project_root, record),
@@ -470,6 +510,96 @@ def extract_generated_name(declaration: str, declared_name: str | None) -> str |
     return None
 
 
+def declaration_binder_names(declaration_head: str, *, include_implicit: bool) -> list[str]:
+    """Extract simple binder variable names from a theorem/lemma head."""
+    names: list[str] = []
+    declaration_match = re.search(r"\b(?:theorem|lemma)\b", declaration_head)
+    signature = declaration_head[declaration_match.start() :] if declaration_match else declaration_head
+    head_match = re.match(r"\s*(?:theorem|lemma)\s+[^\s:\{\(\[]+", signature)
+    if head_match:
+        binder_source = signature[head_match.end() :]
+        depth = 0
+        stop = len(binder_source)
+        for index, char in enumerate(binder_source):
+            if char in "({[":
+                depth += 1
+            elif char in ")}]" and depth > 0:
+                depth -= 1
+            elif char == ":" and depth == 0:
+                stop = index
+                break
+        signature = binder_source[:stop]
+    for match in re.finditer(r"([\{\(])([^\{\}\(\)]*?)\s*:", signature, flags=re.DOTALL):
+        opener = match.group(1)
+        if opener == "{" and not include_implicit:
+            continue
+        binder_text = match.group(2).strip()
+        for name in binder_text.split():
+            if name and re.match(r"^[A-Za-z_][A-Za-z0-9_']*$", name) and name != "_":
+                if name not in names:
+                    names.append(name)
+    return names
+
+
+def generated_application_candidates(generated_name: str, declaration_head: str) -> list[str]:
+    explicit_args = declaration_binder_names(declaration_head, include_implicit=False)
+    all_args = declaration_binder_names(declaration_head, include_implicit=True)
+    candidates: list[str] = []
+    for args in (explicit_args, all_args):
+        app = " ".join([generated_name, *args]) if args else generated_name
+        if app not in candidates:
+            candidates.append(app)
+    if generated_name not in candidates:
+        candidates.append(generated_name)
+    return candidates
+
+
+def local_import_path(module: str) -> Path | None:
+    if not module.startswith(LOCAL_MODULE_PREFIX):
+        return None
+    return Path(*module.split(".")).with_suffix(".lean")
+
+
+def import_modules_from_lean(path: Path) -> list[str]:
+    modules: list[str] = []
+    if not path.exists():
+        return modules
+    for line in path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("import "):
+            continue
+        modules.extend(part for part in stripped.removeprefix("import ").split() if part)
+    return modules
+
+
+def copy_local_import_closure(
+    project_root: Path,
+    output_root: Path,
+    modules: list[str],
+    *,
+    skip_paths: set[Path],
+) -> None:
+    stack = list(reversed(modules))
+    seen: set[str] = set()
+    while stack:
+        module = stack.pop()
+        if module in seen:
+            continue
+        seen.add(module)
+        rel_path = local_import_path(module)
+        if rel_path is None or rel_path in skip_paths:
+            continue
+        source = project_root / rel_path
+        if not source.exists():
+            continue
+        destination = output_root / rel_path
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        for imported in reversed(import_modules_from_lean(source)):
+            if imported not in seen:
+                stack.append(imported)
+
+
 def gold_check_declaration(project_root: Path, record: SelectedRecord, generated_name: str) -> str:
     original = read_line_range(project_root / record.lean_path, record.line_range)
     marker = original.find(":=")
@@ -482,7 +612,9 @@ def gold_check_declaration(project_root: Path, record: SelectedRecord, generated
         head,
         count=1,
     )
-    return head + f" := by\n  simpa using {generated_name}\n"
+    candidates = generated_application_candidates(generated_name, head)
+    tactic_lines = ["  first", *(f"  | simpa using {candidate}" for candidate in candidates)]
+    return head + " := by\n" + "\n".join(tactic_lines) + "\n"
 
 
 def contains_forbidden_placeholder(declaration: str) -> bool:
@@ -497,6 +629,8 @@ def materialize_candidate_project(
     lean_declaration: str,
     generated_name: str,
     lake_cache_from: Path | None,
+    include_record_imports: bool = False,
+    include_grader: bool = True,
 ) -> Path:
     if output_root.exists():
         shutil.rmtree(output_root)
@@ -506,7 +640,11 @@ def materialize_candidate_project(
         copy_lake_cache(lake_cache_from, output_root)
 
     context_parts, context_closes = source_statement_context(project_root, record)
-    imports = ["Mathlib"]
+    imports = record.imports if include_record_imports else ["Mathlib"]
+    if "Mathlib" not in imports:
+        imports = ["Mathlib", *imports]
+    if include_record_imports:
+        copy_local_import_closure(project_root, output_root, imports, skip_paths={Path(record.lean_path)})
     parts: list[str] = [*(f"import {module}" for module in imports), ""]
     parts.append("/-! Source-statement eval target. The target Lean statement was withheld from the model. -/")
     parts.append("")
@@ -515,9 +653,10 @@ def materialize_candidate_project(
         parts.append("")
     parts.append("-- Model-generated declaration starts here.")
     parts.append(lean_declaration.strip())
-    parts.append("")
-    parts.append("-- Grader-only check: original target statement, proved from the model theorem.")
-    parts.append(gold_check_declaration(project_root, record, generated_name).rstrip())
+    if include_grader:
+        parts.append("")
+        parts.append("-- Grader-only check: original target statement, proved from the model theorem.")
+        parts.append(gold_check_declaration(project_root, record, generated_name).rstrip())
     parts.append("")
     parts.extend(context_closes)
 
@@ -528,6 +667,19 @@ def materialize_candidate_project(
 
 
 def run_lean(project_root: Path, target_path: Path, timeout: int) -> dict[str, Any]:
+    local_imports = [module for module in import_modules_from_lean(target_path) if local_import_path(module) is not None]
+    if local_imports:
+        build_proc = subprocess.run(
+            ["uv", "run", "lake", "build", *local_imports],
+            cwd=project_root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=timeout,
+            check=False,
+        )
+        if build_proc.returncode != 0:
+            return {"exit_code": build_proc.returncode, "output": build_proc.stdout[-8000:]}
     rel = target_path.relative_to(project_root)
     proc = subprocess.run(
         ["uv", "run", "lake", "env", "lean", str(rel)],
@@ -591,6 +743,8 @@ def response_finish_reason(response: dict[str, Any]) -> str | None:
 
 
 def classify_lean_failure(output: str) -> str:
+    if "unknown module prefix 'Mathlib'" in output or "No directory 'Mathlib' or file 'Mathlib.olean'" in output:
+        return "lean_environment_missing_mathlib_cache"
     if "__repoprover_source_statement_check" in output:
         return "grader_gold_statement_not_proved"
     return "generated_lean_does_not_compile"
@@ -728,6 +882,7 @@ def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[s
             lean_declaration=declaration,
             generated_name=str(generated_name),
             lake_cache_from=args.lake_cache_from,
+            include_record_imports=args.include_record_imports,
         )
         lean_result = run_lean(record_dir / "project", target_path, args.lean_timeout)
         row["lean_check"] = lean_result
@@ -947,6 +1102,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--reasoning-effort", default="high")
     parser.add_argument("--lake-cache-from", type=Path, default=None)
+    parser.add_argument(
+        "--include-record-imports",
+        action="store_true",
+        help="Copy and import local modules listed in each record instead of checking in a Mathlib-only project.",
+    )
     parser.add_argument("--lean-timeout", type=int, default=90)
     parser.add_argument("--openrouter-timeout", type=float, default=240.0)
     parser.add_argument("--max-actual-cost-usd", type=float, default=2.0)

@@ -10,7 +10,17 @@ import time
 from pathlib import Path
 
 from scripts.materialize_minimal_context_smoke import SelectedRecord
-from scripts.run_source_statement_live_eval import build_messages, run, select_source_statement_records
+from scripts.run_source_statement_live_eval import (
+    build_messages,
+    classify_lean_failure,
+    copy_local_import_closure,
+    generated_application_candidates,
+    import_modules_from_lean,
+    local_import_path,
+    materialize_candidate_project,
+    run,
+    select_source_statement_records,
+)
 
 
 def _write_fixture_project(tmp_path: Path) -> tuple[Path, SelectedRecord]:
@@ -145,6 +155,151 @@ def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_
     assert "do not bundle typeclass instances" in instructions
 
 
+def test_source_statement_context_does_not_duplicate_notation_support(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    row = copy.deepcopy(record.row)
+    row["minimal_context"]["lean_predecessors"] = [
+        {"path": "Demo.lean", "declaration": "Demo.submatrixOfFinset", "line_range": [9, 13]},
+    ]
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    prefix = user["context"]["lean_prefix_context"]
+
+    assert prefix.count("noncomputable def submatrixOfFinset") == 1
+    assert "Do not redeclare definitions" in "\n".join(user["instructions"])
+    assert "apply it to the needed variables" in "\n".join(user["instructions"])
+
+
+def test_generated_application_candidates_try_explicit_then_all_binders() -> None:
+    head = """theorem __repoprover_source_statement_check {n : ℕ} (d : Fin n → R) (P : Finset (Fin n)) :
+    ((Matrix.diagonal d).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det =
+    ∏ i ∈ P, d i"""
+
+    assert generated_application_candidates("generated", head) == ["generated d P", "generated n d P", "generated"]
+
+
+def test_generated_application_candidates_ignore_doc_comment_binders() -> None:
+    head = """/-- Source says this holds for each `(k : ℕ)`. -/
+theorem __repoprover_source_statement_check (k : ℕ) :
+    (PowerSeries.X : PowerSeries ℚ) ^ k = PowerSeries.X ^ k"""
+
+    assert generated_application_candidates("generated", head) == ["generated k", "generated"]
+
+
+def test_generated_application_candidates_ignore_parenthesized_terms_in_statement() -> None:
+    head = """theorem __repoprover_source_statement_check {lam mu : Fin N → ℕ} (T : Tableau lam mu) :
+    (monomialTableau T : MvPolynomial (Fin N) R) = xPow (contentTableau T)"""
+
+    assert generated_application_candidates("generated", head) == ["generated T", "generated lam mu T", "generated"]
+
+
+def test_copy_local_import_closure_copies_recursive_local_imports(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    output_root = tmp_path / "out"
+    dep = project_root / "AlgebraicCombinatorics" / "Dep.lean"
+    mid = project_root / "AlgebraicCombinatorics" / "Mid.lean"
+    dep.parent.mkdir(parents=True)
+    dep.write_text("import Mathlib\n\ndef dep : True := True.intro\n", encoding="utf-8")
+    mid.write_text("import AlgebraicCombinatorics.Dep\n\ndef mid : True := dep\n", encoding="utf-8")
+
+    assert local_import_path("AlgebraicCombinatorics.Mid") == Path("AlgebraicCombinatorics/Mid.lean")
+    assert import_modules_from_lean(mid) == ["AlgebraicCombinatorics.Dep"]
+
+    copy_local_import_closure(
+        project_root,
+        output_root,
+        ["Mathlib", "AlgebraicCombinatorics.Mid"],
+        skip_paths=set(),
+    )
+
+    assert (output_root / "AlgebraicCombinatorics" / "Mid.lean").exists()
+    assert (output_root / "AlgebraicCombinatorics" / "Dep.lean").exists()
+
+
+def test_materialize_candidate_project_can_include_record_imports_without_copying_target(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    target = project_root / "AlgebraicCombinatorics" / "Target.lean"
+    dep = project_root / "AlgebraicCombinatorics" / "Dep.lean"
+    target.parent.mkdir(parents=True)
+    (project_root / "lean-toolchain").write_text("leanprover/lean4:v4.28.0\n", encoding="utf-8")
+    (project_root / "lake-manifest.json").write_text('{"version":"1.1.0","packages":[],"name":"demo"}\n', encoding="utf-8")
+    (project_root / "lakefile.lean").write_text(
+        "import Lake\nopen Lake DSL\npackage «demo» where\nlean_lib «AlgebraicCombinatorics» where\n  globs := #[.submodules `AlgebraicCombinatorics]\n",
+        encoding="utf-8",
+    )
+    dep.write_text("import Mathlib\nnamespace AlgebraicCombinatorics\ndef dep : True := True.intro\nend AlgebraicCombinatorics\n", encoding="utf-8")
+    target.write_text(
+        "import Mathlib\nimport AlgebraicCombinatorics.Dep\nnamespace AlgebraicCombinatorics\ntheorem target : True := dep\nend AlgebraicCombinatorics\n",
+        encoding="utf-8",
+    )
+    record = SelectedRecord(
+        {
+            "id": "AlgebraicCombinatorics/Target.lean:AlgebraicCombinatorics.target",
+            "output": {
+                "lean_path": "AlgebraicCombinatorics/Target.lean",
+                "declaration_names": ["AlgebraicCombinatorics.target"],
+                "line_range": [4, 4],
+                "chunk_kind": "theorem",
+            },
+            "minimal_context": {
+                "imports": ["Mathlib", "AlgebraicCombinatorics.Dep"],
+                "file_context": [
+                    {
+                        "path": "AlgebraicCombinatorics/Target.lean",
+                        "kind": "namespace",
+                        "name": "AlgebraicCombinatorics",
+                        "line_range": [3, 3],
+                    },
+                ],
+                "lean_predecessors": [],
+                "source_spans": [{"path": "source.tex", "line_range": [1, 1]}],
+            },
+        }
+    )
+    (project_root / "source.tex").write_text("true\n", encoding="utf-8")
+
+    target_path = materialize_candidate_project(
+        project_root=project_root,
+        output_root=tmp_path / "out",
+        record=record,
+        lean_declaration="theorem generated : True := dep",
+        generated_name="generated",
+        lake_cache_from=None,
+        include_record_imports=True,
+    )
+
+    text = target_path.read_text(encoding="utf-8")
+    assert "import AlgebraicCombinatorics.Dep" in text
+    assert "theorem target : True := dep" not in text
+    assert (tmp_path / "out" / "AlgebraicCombinatorics" / "Dep.lean").exists()
+
+
+def test_materialize_candidate_project_can_omit_grader_for_repair_prompts(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+
+    target_path = materialize_candidate_project(
+        project_root=project_root,
+        output_root=tmp_path / "out",
+        record=record,
+        lean_declaration="theorem generated : True := by\n  trivial",
+        generated_name="generated",
+        lake_cache_from=None,
+        include_grader=False,
+    )
+
+    text = target_path.read_text(encoding="utf-8")
+    assert "theorem generated : True := by" in text
+    assert "__repoprover_source_statement_check" not in text
+    assert "theorem target" not in text
+
+
+def test_classify_lean_failure_separates_missing_mathlib_cache() -> None:
+    output = "AlgebraicCombinatorics/CauchyBinet.lean:1:0: error: unknown module prefix 'Mathlib'\nNo directory 'Mathlib' or file 'Mathlib.olean'"
+
+    assert classify_lean_failure(output) == "lean_environment_missing_mathlib_cache"
+
+
 def _write_records(path: Path, row: dict, count: int) -> None:
     with path.open("w", encoding="utf-8") as handle:
         for index in range(count):
@@ -166,6 +321,7 @@ def _run_args(project_root: Path, records: Path, output: Path, **overrides: obje
         "temperature": 0.0,
         "reasoning_effort": None,
         "lake_cache_from": None,
+        "include_record_imports": False,
         "lean_timeout": 1,
         "openrouter_timeout": 1.0,
         "max_actual_cost_usd": 2.0,

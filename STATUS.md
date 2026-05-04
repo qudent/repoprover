@@ -22,11 +22,14 @@ whole-corpus context graph, declaration-level minimal-context records, 645
 exact-label gold candidates, and a 24-record semantic-review sample. Current
 DeepSeek model choice remains `deepseek/deepseek-v4-pro`. The stricter
 target-statement-withheld source-eval runner now emits notation-aware Lean
-prefix context, local style guidance, current Lean/mathlib environment guidance,
-specific source-part focus metadata, and a bounded concurrent live-eval
-supervisor path. Active dispatch follow-up is a manual/oracle-assisted repair
-diagnostic for the documented failed source-statement record
-`AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq`.
+prefix context, local style/API examples, current Lean/mathlib environment
+guidance, specific source-part focus metadata, and a bounded concurrent
+live-eval supervisor path. The latest DeepSeek prompt-debug slice is documented
+in `docs/source-statement-deepseek-prompt-findings.md`: after fixing verifier
+and context-materialization bugs, the current honest five-sample first-pass
+result is 2/5 successes. Adding record-local imports plus one generated-only
+compiler-feedback repair prompt raises the same sample to 3/5, so the viable
+recipe is prompt plus repair, not migration-guidance wording alone.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -90,9 +93,19 @@ diagnostic for the documented failed source-statement record
   Downloaded current mathlib v4.28.0 source to `/tmp/mathlib4-v4.28.0-src` for
   API/style lookup and added current Lean/mathlib environment/migration guidance
   to the live-eval prompt.
-- [ ] Next broader research step: analyze whether context deduplication and
-  mathlib/API retrieval snippets improve source-statement pass rate on a cheap
-  dry/local diagnostic set before spending more on DeepSeek/OpenRouter.
+- [x] Analyze whether context deduplication and mathlib/API retrieval snippets
+  improve source-statement pass rate on a cheap diagnostic slice. Result:
+  context/verifier fixes reclassified 2/5 selected rows as true successes, but
+  prompt/local-example reruns over the remaining three rows stayed at 0/3.
+- [x] Add a self-contained cross-file local context strategy for source-statement
+  checks. `--include-record-imports` now copies and builds record-local import
+  closures while skipping the target file.
+- [x] Test one generated-only DeepSeek compiler-feedback repair round on the
+  three hard rows without exposing the hidden grader statement. Result: repaired
+  `FPS.X_coeff_one`, taking the five-sample result to 3/5.
+- [ ] Next broader research step: make the repair loop first-class in
+  `scripts/run_source_statement_live_eval.py` and improve the Laurent/tableau
+  hard cases before larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
   the failed generated Lean evidence available from
   `docs/source-statement-live-eval-report.md`, the grader-only gold statement,
@@ -206,15 +219,35 @@ diagnostic for the documented failed source-statement record
   `/tmp/repoprover-source-statement-cauchy-store-generated-20260504T231258Z`;
   the generated Lean declaration is `record-001/generated-lean-declaration.lean`
   and the raw assistant JSON is `record-001/model-assistant-content.txt`. The
-  paid call cost `$0.008763075`; DeepSeek generated `det_sub_diagonal`, but Lean
-  checking again failed before semantic grading because the local Mathlib package
-  cache lacks built `Mathlib.olean` files (`unknown module prefix 'Mathlib'`).
-  This run verifies exact Cauchy output capture, not a compile/grader result.
+  paid call cost `$0.008763075`; DeepSeek generated `det_sub_diagonal`. Initial
+  checking failed before semantic grading because the local Mathlib package
+  cache lacked built `Mathlib.olean` files (`unknown module prefix 'Mathlib'`),
+  which was a tooling/cache issue rather than a theorem-level result.
+- Fixed the Mathlib cache tooling path: `copy_lake_cache` now ensures
+  `Mathlib.olean` is available by running `uv run lake exe cache get Mathlib`
+  in the source cache project before symlinking `.lake/packages`, and source
+  live eval now classifies missing Mathlib cache as
+  `lean_environment_missing_mathlib_cache` rather than model compile failure.
+  After `cache get`, the stored Cauchy DeepSeek declaration reaches real Lean
+  errors at `/tmp/repoprover-cauchy-source-statement-generated-after-tooling-fix`:
+  bad Lean syntax `∏ i in ...`, a diagonal matrix type mismatch in the generated
+  theorem, and no semantic-grader success. A manual/oracle-assisted repaired
+  declaration with the same theorem name compiles and proves the grader check at
+  `/tmp/repoprover-cauchy-source-statement-manual-repair-after-tooling-fix`;
+  this is diagnostic-only, not benchmark success.
 - Current dispatcher classified the target-statement-withheld follow-up as
   `active-orchestration`, selected the documented Cauchy--Binet failure because
   no prior 10-record `/tmp` artifacts were available, and verified the gold
   statement lives at
   `algebraic-combinatorics/AlgebraicCombinatorics/CauchyBinet.lean:3410`.
+- `docs/source-statement-deepseek-prompt-findings.md` records the current
+  DeepSeek source-statement prompt recipe and live evidence. Important result:
+  fixing the relative Lake-cache symlink and duplicate predecessor/notation
+  context made two previously marked failed rows pass after rematerialization.
+  Rerunning the hard three rows with cleaned local examples still produced 0/3,
+  but one generated-only compiler-feedback repair round fixed `FPS.X_coeff_one`,
+  giving a combined same-sample result of 3/5. Paid cost for this prompt-debug
+  slice was about `$0.0529`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -243,22 +276,26 @@ diagnostic for the documented failed source-statement record
   file-context commands and predecessor snippets in original source order and
   expands same-file predecessor dependencies referenced by predecessor snippets;
   use `--lake-cache-from` to avoid another Mathlib download on this low-disk
-  machine.
+  machine. If the source cache lacks decompressed mathlib oleans, the materializer
+  now runs `uv run lake exe cache get Mathlib` in that source project before
+  symlinking `.lake/packages`.
 - `scripts/run_minimal_context_eval.py` is the DeepSeek V4 Pro one-record
   prompt/command emitter. It refuses paid calls unless `--call-openrouter` is
   passed and `OPENROUTER_API_KEY` is set.
 - `scripts/run_source_statement_live_eval.py` is the stricter source-statement
   live-eval runner: target Lean statement/name withheld from the prompt, source
   chunk provided, generated theorem checked against a grader-only gold
-  statement. It now adds local notation support/style context, specific
+  statement. It now adds local notation support/style/API context, specific
   source-part focus metadata, persists raw and parsed model outputs plus the
   exact generated Lean declaration under each `record-NNN/`, uses bounded
   per-record concurrency, conservative cost-cap launch checks, partial-result
-  streaming, and failure-class aggregation. Current live attempts and the
-  concurrent command shape are documented in
-  `docs/source-statement-live-eval-report.md`; avoid low completion caps because
-  DeepSeek V4 can spend all returned tokens on reasoning and produce null
-  content.
+  streaming, failure-class aggregation, optional record-local import closure
+  copying via `--include-record-imports`, and generated-only materialization for
+  repair prompts. Current live attempts and prompt findings are documented in
+  `docs/source-statement-live-eval-report.md` and
+  `docs/source-statement-deepseek-prompt-findings.md`; avoid low completion caps
+  because DeepSeek V4 can spend all returned tokens on reasoning and produce
+  null content.
 - `docs/minimal-context-budget-plan.md` records the pilot schema, cost model,
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.

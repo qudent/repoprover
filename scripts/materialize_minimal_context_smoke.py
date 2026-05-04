@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -172,8 +173,22 @@ def declaration_display_start(lines: list[str], declaration_index: int) -> int:
 
 
 def trim_declaration_end(lines: list[str], end_line: int) -> int:
-    while end_line > 1 and not lines[end_line - 1].strip():
-        end_line -= 1
+    while end_line > 1:
+        stripped = lines[end_line - 1].strip()
+        if not stripped:
+            end_line -= 1
+            continue
+        if stripped == "-/" or stripped.endswith("-/"):
+            block_start = end_line
+            while block_start > 1 and "/-" not in lines[block_start - 1]:
+                block_start -= 1
+            if block_start > 1:
+                end_line = block_start - 1
+                continue
+        if stripped.startswith(("/--", "/-!", "--", "@[")):
+            end_line -= 1
+            continue
+        break
     return end_line
 
 
@@ -220,8 +235,31 @@ def declarations_in_file(project_root: Path, rel_path: str) -> list[dict[str, An
 
 
 def expand_transitive_predecessors(project_root: Path, record: SelectedRecord) -> list[dict[str, Any]]:
-    predecessors = [dict(row) for row in record.lean_predecessors]
-    seen = {(str(row["path"]), str(row.get("declaration", ""))) for row in predecessors}
+    predecessors: list[dict[str, Any]] = []
+    seen_ranges: set[tuple[str, tuple[int, int]]] = set()
+    seen = set()
+    seen_short_names = set()
+    for row in record.lean_predecessors:
+        cloned = dict(row)
+        path = str(cloned["path"])
+        line_range = tuple(int(value) for value in cloned["line_range"])
+        declaration = str(cloned.get("declaration", ""))
+        short_name = declaration.rsplit(".", 1)[-1] if declaration else ""
+        range_key = (path, line_range)
+        decl_key = (path, declaration) if declaration else None
+        short_key = (path, short_name) if short_name else None
+        if (
+            range_key in seen_ranges
+            or (decl_key is not None and decl_key in seen)
+            or (short_key is not None and short_key in seen_short_names)
+        ):
+            continue
+        predecessors.append(cloned)
+        seen_ranges.add(range_key)
+        if decl_key is not None:
+            seen.add(decl_key)
+        if short_key is not None:
+            seen_short_names.add(short_key)
     paths = {str(row["path"]) for row in predecessors}
     declarations_by_path = {path: declarations_in_file(project_root, path) for path in paths}
 
@@ -235,13 +273,17 @@ def expand_transitive_predecessors(project_root: Path, record: SelectedRecord) -
             for candidate in declarations_by_path.get(path, []):
                 candidate_start = int(candidate["line_range"][0])
                 key = (path, str(candidate["declaration"]))
-                if key in seen or candidate_start >= start:
-                    continue
+                range_key = (path, tuple(int(value) for value in candidate["line_range"]))
                 short_name = str(candidate["declaration"]).rsplit(".", 1)[-1]
+                short_key = (path, short_name)
+                if key in seen or short_key in seen_short_names or range_key in seen_ranges or candidate_start >= start:
+                    continue
                 if short_name not in words:
                     continue
                 predecessors.append(dict(candidate))
                 seen.add(key)
+                seen_short_names.add(short_key)
+                seen_ranges.add(range_key)
                 changed = True
 
     return sorted(predecessors, key=lambda row: (str(row["path"]), int(row["line_range"][0])))
@@ -373,10 +415,39 @@ def build_target_lean(project_root: Path, record: SelectedRecord, *, use_record_
     return "\n".join(parts).rstrip() + "\n"
 
 
+def ensure_mathlib_cache_decompressed(cache_from: Path) -> None:
+    """Ensure a source Lake cache has importable Mathlib oleans.
+
+    `--lake-cache-from` symlinks an existing `.lake/packages` directory into the
+    materialized smoke project.  That avoids recloning dependencies, but Lean can
+    still fail with `unknown module prefix 'Mathlib'` when the mathlib package is
+    present only as source and its downloaded cache has not been decompressed.
+    """
+    mathlib_olean = cache_from / ".lake" / "packages" / "mathlib" / ".lake" / "build" / "lib" / "lean" / "Mathlib.olean"
+    if mathlib_olean.exists():
+        return
+    if not (cache_from / "lakefile.lean").exists() and not (cache_from / "lakefile.toml").exists():
+        return
+    env = os.environ.copy()
+    env.setdefault("MATHLIB_CACHE_USE_CLOUDFLARE", "1")
+    subprocess.run(
+        ["uv", "run", "lake", "exe", "cache", "get", "Mathlib"],
+        cwd=cache_from,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        timeout=600,
+        check=True,
+        env=env,
+    )
+
+
 def copy_lake_cache(cache_from: Path, output_root: Path) -> None:
+    cache_from = cache_from.resolve()
     source_lake = cache_from / ".lake"
     if not source_lake.exists():
         raise ValueError(f"lake cache source does not exist: {source_lake}")
+    ensure_mathlib_cache_decompressed(cache_from)
     lake_dir = output_root / ".lake"
     lake_dir.mkdir(exist_ok=True)
     for name in ("packages",):
