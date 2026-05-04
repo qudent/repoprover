@@ -25,3 +25,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224800Z | 1777934880 | user | item_20 | command_execution | completed | /bin/bash -lc "sed -n '180,360p' scripts/materialize_minimal_context_smoke.py" | 4d1e398f17636d55 | 0 |
 | 20260504T224807Z | 1777934887 | user | item_21 | command_execution | completed | /bin/bash -lc "sed -n '388,430p' scripts/materialize_minimal_context_smoke.py" | a0e5c5815da8beae | 0 |
 | 20260504T224807Z | 1777934887 | user | item_22 | command_execution | completed | /bin/bash -lc "sed -n '850,940p' scripts/run_source_statement_live_eval.py" | 356e4b53d512e168 | 0 |
+| 20260504T224808Z | 1777934888 | user | item_23 | command_execution | completed | /bin/bash -lc 'rg -n "project-root\|records\|split\|source-statement" scripts/run_source_statement_live_eval.py \| tail -40' | 3b343826b3ad135f | 0 |
