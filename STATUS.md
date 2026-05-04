@@ -22,8 +22,9 @@ whole-corpus context graph, declaration-level minimal-context records, 645
 exact-label gold candidates, and a 24-record semantic-review sample. Current
 DeepSeek model choice remains `deepseek/deepseek-v4-pro`. The stricter
 target-statement-withheld source-eval runner now emits notation-aware Lean
-prefix context, local style guidance, specific source-part focus metadata, and
-a bounded concurrent live-eval supervisor path.
+prefix context, local style guidance, current Lean/mathlib environment guidance,
+specific source-part focus metadata, and a bounded concurrent live-eval
+supervisor path.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -69,10 +70,23 @@ a bounded concurrent live-eval supervisor path.
 - [x] Add a non-blocking stratified/easier source-statement batch path with
   bounded concurrency, per-record timeouts, partial results, cost-cap guarding,
   and failure-class aggregation.
-- [ ] Next broader research step: run a paid 10-record stratified/easy
-  source-statement batch only after explicitly deciding the OpenRouter spend
-  cap, or design a model-selected segmentation task using the current best
-  open-weight reviewer/critic as an adjudicator.
+- [x] Completed the restarted remaining-5 source-statement batch after Hermes
+  restart (`proc_cc541d87914d`, output
+  `/tmp/repoprover-source-statement-concurrent-live-10b-resume-remaining5`).
+  Across the interrupted+resumed 10-record stratified/easy run: 10 paid calls,
+  0 successes, `$0.132727462` reported cost, failure classes
+  `generated_lean_does_not_compile=9` and `grader_gold_statement_not_proved=1`.
+- [x] Diagnosed the 10 failed source-statement attempts without more paid calls:
+  failures were not just generic proof difficulty; several show stale/missing
+  Lean API priors (`det_swap_rows`, `LaurentPolynomial.X`, `CommAlgebra`),
+  invalid proposition/typeclass bundling, overly broad theorem statements, and
+  some prompt/materialized-context noise such as duplicate predecessor snippets.
+  Downloaded current mathlib v4.28.0 source to `/tmp/mathlib4-v4.28.0-src` for
+  API/style lookup and added current Lean/mathlib environment/migration guidance
+  to the live-eval prompt.
+- [ ] Next broader research step: analyze whether context deduplication and
+  mathlib/API retrieval snippets improve source-statement pass rate on a cheap
+  dry/local diagnostic set before spending more on DeepSeek/OpenRouter.
 
 ## Blockers
 - Whole-corpus/gold-candidate records are machine-generated, not fully

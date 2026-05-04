@@ -125,6 +125,26 @@ def test_source_statement_prompt_focuses_specific_part_of_multipart_source(tmp_p
     assert "Do not conjoin all parts" in instructions
 
 
+def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "lean-toolchain").write_text("leanprover/lean4:v4.28.0\n", encoding="utf-8")
+
+    messages = build_messages(project_root, record)
+    system = messages[0]["content"]
+    user = json.loads(messages[1]["content"])
+    instructions = "\n".join(user["instructions"])
+    environment = user["context"]["lean_environment"]
+    guidance = "\n".join(environment["current_version_guidance"])
+
+    assert "current Mathlib-only project" in system
+    assert environment["toolchain"] == "leanprover/lean4:v4.28.0"
+    assert "Lean 3" in guidance
+    assert "LaurentPolynomial.X" in guidance
+    assert "typeclass objects" in guidance
+    assert "Use current Lean 4/Mathlib syntax" in instructions
+    assert "do not bundle typeclass instances" in instructions
+
+
 def _write_records(path: Path, row: dict, count: int) -> None:
     with path.open("w", encoding="utf-8") as handle:
         for index in range(count):

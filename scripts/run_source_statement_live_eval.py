@@ -322,6 +322,33 @@ def source_statement_context(project_root: Path, record: SelectedRecord) -> tupl
     return expanded, context_closes
 
 
+def lean_environment_context(project_root: Path) -> dict[str, Any]:
+    """Small, stable Lean/mathlib version context for source-statement prompts.
+
+    The model often has stale Lean/mathlib priors. This is intentionally concise:
+    it gives the current toolchain and common migration pitfalls observed in live
+    source-statement failures without leaking the withheld target statement.
+    """
+
+    toolchain_path = project_root / "lean-toolchain"
+    toolchain = toolchain_path.read_text(encoding="utf-8").strip() if toolchain_path.exists() else "unknown"
+    return {
+        "toolchain": toolchain,
+        "imports": ["Mathlib"],
+        "current_version_guidance": [
+            "Generated code is checked with the repository lean-toolchain and current Mathlib, not Lean 3 or an older Lean 4 snapshot.",
+            "Prefer Lean 4 syntax: `fun x => ...`, `by` tactic blocks, namespaces/dot notation as shown in the prompt, and current Mathlib names from displayed context.",
+            "Do not invent old/deprecated identifiers such as guessed `*_apply`, `det_swap_rows`, `CommAlgebra`, or `LaurentPolynomial.X` unless they are explicitly present in context; use displayed local APIs or prove by unfolding/simping.",
+            "Do not make typeclass objects (`CommRing α`, `Algebra R A`, etc.) components of an `∧`; those are types/classes, not propositions. Put them as assumptions/instances or use theorem statements about terms instead.",
+            "If the source theorem is a narrow identity, formalize that identity directly rather than a broad bundled theorem whose components will not match the grader's withheld statement.",
+        ],
+        "available_reference_corpus": [
+            "Current-version mathlib source can be searched locally at /tmp/mathlib4-v4.28.0-src when preparing/evaluating prompts.",
+            "Use nearby repository Lean prefix/local examples first; use mathlib source snippets only as API/style evidence, not as a source for the withheld target statement.",
+        ],
+    }
+
+
 def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
     notation_contracts: list[dict[str, str]] = []
     examples: list[str] = []
@@ -377,6 +404,7 @@ def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str
         "source_statement_or_chunk": source_snippets(project_root, record),
         "target_source_focus": source_focus(record),
         "lean_prefix_context": "\n".join(context_parts).strip(),
+        "lean_environment": lean_environment_context(project_root),
         "local_lean_style": local_lean_style(project_root, record),
         "mathlib_context": record.mathlib_context,
         "benchmark_policy": {
@@ -389,10 +417,12 @@ def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str
 
 def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str, str]]:
     system = (
-        "You are a Lean 4 autoformalization agent working in a Mathlib-only project. "
+        "You are a Lean 4 autoformalization agent working in a current Mathlib-only project. "
         "You must formalize the provided TeX/math source chunk into one Lean theorem or lemma, "
         "including a proof, using only the Lean prefix context provided. The target Lean statement, "
-        "target declaration name, and original proof are intentionally withheld. Return exactly one JSON object."
+        "target declaration name, and original proof are intentionally withheld. Avoid stale Lean 3/old Mathlib "
+        "syntax and identifiers; follow the lean_environment/current_version_guidance and local Lean examples. "
+        "Return exactly one JSON object."
     )
     schema = {
         "lean_declaration": "one complete Lean theorem or lemma, including proof/body; do not include imports or markdown",
@@ -409,6 +439,8 @@ def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str,
             "Do not assume access to the withheld target Lean statement or name.",
             "For multi-part TeX chunks, formalize only the specified labeled part/source span. Do not conjoin all parts unless the record explicitly asks for the whole multi-part result.",
             "Do not cite or invent raw helper names that are not present in the Lean prefix context/local examples; prefer displayed local style and standard Mathlib APIs.",
+            "Use current Lean 4/Mathlib syntax and API names; if your memory conflicts with displayed local context, trust the displayed context.",
+            "State a single proposition-level theorem/lemma that is likely to match the specified source part; do not bundle typeclass instances or unrelated source parts into conjunctions.",
             "Prefer a short proof if the prefix context already contains the needed fact.",
         ],
         "context": build_prompt_context(project_root, record),
