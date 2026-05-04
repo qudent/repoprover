@@ -17,3 +17,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224156Z | 1777934516 | user | item_13 | command_execution | completed | /bin/bash -lc "sed -n '1,220p' agents/you-are-a-dispatch-4e533f8/inbox.md" | 80a4a8b8c1e6e2cc | 0 |
 | 20260504T224156Z | 1777934516 | user | item_14 | command_execution | completed | /bin/bash -lc "find /home/name/repos -maxdepth 4 -path '*/scripts/codex_wrap.sh' -o -path '*/scripts/branch_commands.sh'" | 8c99c6359009c10c | 0 |
 | 20260504T224156Z | 1777934516 | user | item_15 | command_execution | completed | /bin/bash -lc "git log --all --grep='\\[run-start\\]\\\|\\[status\\]\\\|\\[run-stop\\]' --pretty=format:'%h%x09%ct%x09%D%x09%s' -n 30" | 50a6f6cfe954398c | 0 |
+| 20260504T224204Z | 1777934524 | user | item_16 | command_execution | completed | /bin/bash -lc "find .git/codex-wrap -maxdepth 3 -type f \| sort \| sed -n '1,120p'" | 7c4f60dec9f3fd75 | 0 |
