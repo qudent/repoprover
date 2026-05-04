@@ -23,3 +23,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224800Z | 1777934880 | user | item_18 | command_execution | completed | /bin/bash -lc 'rg -n "class SelectedRecord\|@dataclass.*SelectedRecord\|def __init__\|def copy_project_config\|def read_line_range\|def load_jsonl" scripts/materialize_minimal_context_s | a814c9668e976592 | 0 |
 | 20260504T224800Z | 1777934880 | user | item_19 | command_execution | completed | /bin/bash -lc "sed -n '1,180p' scripts/materialize_minimal_context_smoke.py" | bc85fd3601b7a25a | 0 |
 | 20260504T224800Z | 1777934880 | user | item_20 | command_execution | completed | /bin/bash -lc "sed -n '180,360p' scripts/materialize_minimal_context_smoke.py" | 4d1e398f17636d55 | 0 |
+| 20260504T224807Z | 1777934887 | user | item_21 | command_execution | completed | /bin/bash -lc "sed -n '388,430p' scripts/materialize_minimal_context_smoke.py" | a0e5c5815da8beae | 0 |
