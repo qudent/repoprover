@@ -19,3 +19,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224752Z | 1777934872 | user | item_14 | command_execution | completed | /bin/bash -lc "sed -n '1,220p' scripts/run_source_statement_live_eval.py" | fff56815d4c4a834 | 0 |
 | 20260504T224752Z | 1777934872 | user | item_15 | command_execution | failed | /bin/bash -lc 'rg -n "class SelectedRecord\|def select_records\|def read_jsonl\|def load\|def selected" scripts/run_source_statement_live_eval.py' | 1acacf4993becd25 | 0 |
 | 20260504T224752Z | 1777934872 | user | item_16 | command_execution | completed | /bin/bash -lc "sed -n '220,460p' scripts/run_source_statement_live_eval.py" | fdc3ece5fc8cf897 | 0 |
+| 20260504T224752Z | 1777934872 | user | item_17 | command_execution | completed | /bin/bash -lc "find . -maxdepth 2 -type f \\( -name 'lakefile.*' -o -name 'lean-toolchain' -o -name 'lake-manifest.json' \\) -print -exec sed -n '1,80p' {} \\;" | 06c4aaff5557590d | 0 |
