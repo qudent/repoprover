@@ -52,3 +52,7 @@ I’ll classify this as `active-orchestration`: it needs live repo inspection, t
 ## 2026-05-04T22:41:44+0000 codex:you-are-a-dispatch-4e533f8
 
 The repo is already midstream: `STATUS.md` records the 10-record target-withheld batch as 0/10, and the report defines success as `simpa using <model_generated_theorem>` against the grader-only gold statement. I also see an unrelated modified active transcript file, so I’ll avoid touching it and route through the project coordination files.
+
+## 2026-05-04T22:41:56+0000 codex:you-are-a-dispatch-4e533f8
+
+The dispatcher helper scripts are not present under this repo’s `scripts/`, so I need to locate the live wrapper surface instead of assuming the documented relative path is valid here. I’ll inspect the existing agent surface and helper locations, then either use the real wrapper path or report that wrapper dispatch is blocked.
