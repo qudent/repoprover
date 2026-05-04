@@ -35,3 +35,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224249Z | 1777934569 | user | item_32 | command_execution | completed | /bin/bash -lc "rg -l --fixed-strings 'det_minors_diag' . transcripts docs .git/codex-wrap/logs" | f887d3863741877b | 0 |
 | 20260504T224249Z | 1777934569 | user | item_33 | command_execution | completed | /bin/bash -lc "rg -n --fixed-strings 'det_minors_diag' docs transcripts -S" | 25ef4a66d59de7b3 | 0 |
 | 20260504T224249Z | 1777934569 | user | item_34 | command_execution | completed | /bin/bash -lc "rg -n --fixed-strings 'Unknown identifier "'`submatrixOfFinset`'"' docs transcripts .git/codex-wrap/logs -S" | c5f495d74e1ccdef | 0 |
+| 20260504T224249Z | 1777934569 | user | item_35 | command_execution | completed | /bin/bash -lc 'git rev-parse --short HEAD && git rev-parse HEAD && git symbolic-ref --short HEAD' | adf5d431d0c5e718 | 0 |
