@@ -24,7 +24,9 @@ DeepSeek model choice remains `deepseek/deepseek-v4-pro`. The stricter
 target-statement-withheld source-eval runner now emits notation-aware Lean
 prefix context, local style guidance, current Lean/mathlib environment guidance,
 specific source-part focus metadata, and a bounded concurrent live-eval
-supervisor path.
+supervisor path. Active dispatch follow-up is a manual/oracle-assisted repair
+diagnostic for the documented failed source-statement record
+`AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -39,6 +41,10 @@ supervisor path.
   DeepSeek V4 Pro prompt/command emitter. An honest benchmark splitter now also
   writes leakage-aware oracle/source/prefix tracks under
   `docs/minimal-context-splits/`.
+- [ ] Produce a reproducible manual/oracle-assisted diagnostic for the failed
+  target-statement-withheld Cauchy--Binet record, preserving benchmark honesty
+  by keeping the withheld gold Lean statement out of any model-facing prompt
+  path and labeling gold inspection as diagnostic-only.
 
 ## TODO Plan
 - [x] Add file-context-aware, Mathlib-only target materialization.
@@ -87,6 +93,11 @@ supervisor path.
 - [ ] Next broader research step: analyze whether context deduplication and
   mathlib/API retrieval snippets improve source-statement pass rate on a cheap
   dry/local diagnostic set before spending more on DeepSeek/OpenRouter.
+- [ ] For the active repair handoff, create a small script/report that records
+  the failed generated Lean evidence available from
+  `docs/source-statement-live-eval-report.md`, the grader-only gold statement,
+  the `simpa using <generated theorem>` semantic-equivalence criterion, and
+  either a compiling improved check project or exact Lean/API blockers.
 
 ## Blockers
 - Whole-corpus/gold-candidate records are machine-generated, not fully
@@ -106,6 +117,9 @@ supervisor path.
   `algebraic-combinatorics/blueprint/test_docgen_data.py`, which fails because
   `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is absent.
   Focused repo tests passed.
+- The prior 10-record stratified/easy live artifacts are not present under
+  `/tmp` in this session, so the active diagnostic uses the documented
+  Cauchy--Binet fallback failure from `docs/source-statement-live-eval-report.md`.
 ## Recent Results
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
@@ -172,6 +186,11 @@ supervisor path.
   /tmp/repoprover-source-statement-concurrency-budget --limit 10 --sample-mode
   stratified-easy --concurrency 4 --budget-only`; the smoke selected 10 records,
   wrote 10 partial-result rows, and made 0 paid calls.
+- Current dispatcher classified the target-statement-withheld follow-up as
+  `active-orchestration`, selected the documented Cauchy--Binet failure because
+  no prior 10-record `/tmp` artifacts were available, and verified the gold
+  statement lives at
+  `algebraic-combinatorics/AlgebraicCombinatorics/CauchyBinet.lean:3410`.
 
 ## Agent Notes
 - `STATUS.md` is the single coordination source of truth for this repo;
@@ -218,6 +237,9 @@ supervisor path.
   and execution strategy; keep concrete run commands and budget notes there or
   in this file, not in project-agnostic learnings.
 - Use `scripts/estimate_openrouter_budget.py` after live runs to recompute costs
+- Active handoff should remain explicitly labeled manual/oracle-assisted:
+  inspecting the withheld gold statement is allowed only as a diagnostic oracle,
+  not as feed-forward benchmark input or a success claim in the model prompt.
   from actual token logs and current OpenRouter pricing.
 - The next Qwen-style smoke should keep the default
   `--max-consecutive-tool-errors 3`; lower `--max-iterations` only if the smoke
