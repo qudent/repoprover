@@ -56,3 +56,7 @@ The repo is already midstream: `STATUS.md` records the 10-record target-withheld
 ## 2026-05-04T22:41:56+0000 codex:you-are-a-dispatch-4e533f8
 
 The dispatcher helper scripts are not present under this repo’s `scripts/`, so I need to locate the live wrapper surface instead of assuming the documented relative path is valid here. I’ll inspect the existing agent surface and helper locations, then either use the real wrapper path or report that wrapper dispatch is blocked.
+
+## 2026-05-04T22:42:40+0000 codex:you-are-a-dispatch-4e533f8
+
+The prior `/tmp` batch artifacts are not present on this machine now, so the fallback record is the documented `CauchyBinet.det_diagonal_submatrix_eq`. I’m doing a narrow diagnostic slice locally: recover the gold statement and any logged failed generated Lean, then I’ll update `STATUS.md` and delegate the repair/report work in an isolated worktree branch.
