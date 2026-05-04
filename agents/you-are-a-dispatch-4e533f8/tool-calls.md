@@ -15,3 +15,4 @@ Bounded metadata only. Raw tool outputs stay in ignored wrapper JSON/stderr logs
 | 20260504T224156Z | 1777934516 | user | item_11 | command_execution | failed | /bin/bash -lc "rg --files scripts \| sort \| rg 'codex\|branch_commands\|wrap'" | cd57b03d9b79e976 | 0 |
 | 20260504T224156Z | 1777934516 | user | item_12 | command_execution | completed | /bin/bash -lc "sed -n '1,200p' agents/you-are-a-dispatch-4e533f8/profile.md" | b673ce88e07cf9e4 | 0 |
 | 20260504T224156Z | 1777934516 | user | item_13 | command_execution | completed | /bin/bash -lc "sed -n '1,220p' agents/you-are-a-dispatch-4e533f8/inbox.md" | 80a4a8b8c1e6e2cc | 0 |
+| 20260504T224156Z | 1777934516 | user | item_14 | command_execution | completed | /bin/bash -lc "find /home/name/repos -maxdepth 4 -path '*/scripts/codex_wrap.sh' -o -path '*/scripts/branch_commands.sh'" | 8c99c6359009c10c | 0 |
