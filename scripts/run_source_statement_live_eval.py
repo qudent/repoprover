@@ -569,6 +569,19 @@ def response_message_content(response: dict[str, Any]) -> str:
     return str(message.get("content") or "")
 
 
+def write_text_artifact(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
+def write_generated_model_artifacts(record_dir: Path, *, assistant_content: str, model_json: dict[str, Any]) -> None:
+    write_json(record_dir / "model-output.json", model_json)
+    declaration = str(model_json.get("lean_declaration") or "")
+    if declaration and not declaration.endswith("\n"):
+        declaration += "\n"
+    write_text_artifact(record_dir / "generated-lean-declaration.lean", declaration)
+
+
 def response_finish_reason(response: dict[str, Any]) -> str | None:
     choices = response.get("choices") or []
     if not choices:
@@ -675,10 +688,14 @@ def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[s
     row["cost_summary"] = cost_summary
     row["finish_reason"] = response_finish_reason(response)
 
+    assistant_content = response_message_content(response)
+    write_text_artifact(record_dir / "model-assistant-content.txt", assistant_content)
+
     try:
-        if not response_message_content(response).strip():
+        if not assistant_content.strip():
             raise ValueError("model returned empty content")
         model_json = parse_model_json(response)
+        write_generated_model_artifacts(record_dir, assistant_content=assistant_content, model_json=model_json)
     except Exception as exc:  # noqa: BLE001 - classify malformed provider content.
         row["success"] = False
         row["failure_class"] = classify_error("model_json", exc, finish_reason=row["finish_reason"])

@@ -229,6 +229,30 @@ def test_source_statement_live_eval_runs_records_concurrently_and_writes_partial
     assert summary["failure_classes"] == {}
     partial_jsonl = tmp_path / "out/eval/partial-results.jsonl"
     assert len(partial_jsonl.read_text(encoding="utf-8").splitlines()) == 4
+    generated_path = tmp_path / "out/record-001/generated-lean-declaration.lean"
+    assert generated_path.read_text(encoding="utf-8") == "theorem generated : True := by\n  trivial\n"
+    parsed_json_path = tmp_path / "out/record-001/model-output.json"
+    assert json.loads(parsed_json_path.read_text(encoding="utf-8"))["declaration_name"] == "generated"
+
+
+def test_source_statement_live_eval_persists_raw_assistant_content_before_json_parse(
+    tmp_path: Path, monkeypatch
+) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 1)
+    raw_content = "not json, but this is the model text we paid for"
+
+    monkeypatch.setattr(
+        "scripts.run_source_statement_live_eval.call_openrouter",
+        lambda payload, base_url, timeout: _fake_response(raw_content),
+    )
+
+    summary = run(_run_args(project_root, records_path, tmp_path / "out", limit=1))
+
+    assert summary["failure_classes"] == {"invalid_model_json": 1}
+    raw_path = tmp_path / "out/record-001/model-assistant-content.txt"
+    assert raw_path.read_text(encoding="utf-8") == raw_content
 
 
 def test_source_statement_live_eval_enforces_global_estimated_cost_cap(
