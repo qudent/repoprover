@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DividingFPS.lean:137:11: error(lean.unknownIdentifier): Unknown constant `PowerSeries.constantCoeff_pow`\nAlgebraicCombinatorics/DividingFPS.lean:137:4: warning: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\n"
+}

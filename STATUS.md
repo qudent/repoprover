@@ -93,6 +93,10 @@ A zero-cost 36-record corpus-spread preflight now identifies 11 verifier-passing
 records for the next larger paid generation-only slice, with an estimated max
 generation cost of `$0.329978385`; see
 `docs/source-statement-preflight-corpus-spread-36-report.md`.
+The paid 11-record generation+repair run reached 5/11 cumulative verified
+successes for `$0.187203497`; this confirms the queue scales operationally but
+quality is still not high enough for feed-forward textbook formalization. See
+`docs/source-statement-preflight-passing-11-results.md`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -281,10 +285,17 @@ failures plus 1 hidden-grader mismatch; see
   artifacts and the 11-record passing queue are under
   `docs/source-statement-runs/2026-05-05-preflight-corpus-spread-36/eval/`.
   The estimated max generation cost for that passing queue is `$0.329978385`.
-- [ ] Run the next larger paid generation-only slice over the 11 preflight
+- [x] Run the next larger paid generation-only slice over the 11 preflight
   passing records with a hard cap around `$0.40`, then verify from saved
   artifacts and route compile/shape failures through the decoupled repair
-  queues.
+  queues. Result: 11/11 paid generations parsed for `$0.064530713`; initial
+  180s verification found 3/11 successes; two compiler-feedback repair passes
+  added 2 more successes for `$0.122672784`, bringing the cumulative slice to
+  5/11 for `$0.187203497`. See
+  `docs/source-statement-preflight-passing-11-results.md`.
+- [ ] Classify the six remaining 11-record failures by visible statement-shape
+  diagnostics and local API family before spending more on retries; rows 7, 9,
+  and 10 did not improve after a second compiler-feedback pass.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

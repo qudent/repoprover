@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:20:25: error: unsolved goals\nX : Type u_1\nα : X ≃ X\ni : ℕ\nih : (α ^ i).toFun = (⇑α)^[i]\n⊢ (⇑α)^[i] ∘ α.toFun = (⇑α)^[i] ∘ ⇑α\nAlgebraicCombinatorics/Permutations/Basics.lean:21:30: warning: This simp argument is unused:\n  Function.iterate_succ'\n\nHint: Omit it from the simp argument list.\n  simp ̵[̵F̵u̵n̵c̵t̵i̵o̵n̵.̵i̵t̵e̵r̵a̵t̵e̵_̵s̵u̵c̵c̵'̵]̵\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+}

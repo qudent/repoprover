@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem binom_symm (n k : ℕ) (hk : k ≤ n) : Nat.choose n k = Nat.choose n (n - k) := (Nat.choose_symm hk).symm",
+  "declaration_name": "binom_symm",
+  "used_context": [
+    "Nat.choose_symm (from Mathlib, available via open Nat)",
+    "hypothesis hk : k ≤ n"
+  ],
+  "notes": [
+    "The original error was a reversed equality; fixed by using .symm on the result of Nat.choose_symm hk."
+  ]
+}

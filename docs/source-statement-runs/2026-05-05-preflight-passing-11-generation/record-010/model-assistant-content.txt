@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "lemma pow_eq_iterate {X : Type*} (α : Equiv X X) (i : ℕ) : (α ^ i : X → X) = α^[i] := by\n  induction i with\n  | zero => simp\n  | succ i ih => simp [pow_succ, Function.iterate_succ', mul_apply, ih]",
+  "declaration_name": "pow_eq_iterate",
+  "used_context": ["open Equiv Function Finset", "namespace AlgebraicCombinatorics"],
+  "notes": ["Uses the group power defined in Equiv.Perm; the lemma relates group power to function iteration."]
+}

@@ -1,0 +1,158 @@
+{
+  "generated_at": "2026-05-05T06:47:53.513820+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation",
+  "work_root": "/tmp/repoprover-source-statement-verify-preflight-passing-11-generation",
+  "workers": 1,
+  "records_completed": 11,
+  "successes": 3,
+  "success_rate": 0.2727272727272727,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 6,
+    "grader_gold_statement_not_proved": 1,
+    "verification_error": 1
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-001",
+      "generated_name": "summable_and_tsum'_eq_of_coeffStabilizesTo_partial_sum",
+      "success": false,
+      "failure_class": "verification_error",
+      "error": "TimeoutExpired: Command '['uv', 'run', 'lake', 'build', 'AlgebraicCombinatorics.FPS.Limits']' timed out after 90 seconds"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_lowerTriangular",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-002",
+      "generated_name": "det_lowerTriangular",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:54:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:54:4: warning: 'simpa using det_lowerTriangular' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:50:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-003",
+      "generated_name": "fps_newton_binom",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/DividingFPS.lean:137:11: error(lean.unknownIdentifier): Unknown constant `PowerSeries.constantCoeff_pow`\nAlgebraicCombinatorics/DividingFPS.lean:137:4: warning: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInProd_of_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-004",
+      "generated_name": "coeffFinitelyDeterminedInProd_of_finite",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:62:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/InfiniteProducts.lean:62:4: warning: 'simpa using coeffFinitelyDeterminedInProd_of_finite' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/InfiniteProducts.lean:58:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.exists_xn_approximator",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-005",
+      "generated_name": "exists_isXnApproximator_of_multipliable",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:105:35: error: Type mismatch\n  Finset.subset_biUnion_of_mem ?m.67\nhas type\n  ?m.68 ∈ ?m.64 → ?m.67 ?m.68 ⊆ Finset.biUnion ?m.64 ?m.67\nbut is expected to have type\n  Exists.choose ⋯ ⊆ M\nAlgebraicCombinatorics/FPS/InfiniteProducts.lean:105:64: error: Application type mismatch: The argument\n  hk_range\nhas type\n  k ∈ Finset.range (n + 1)\nof sort `Prop` but is expected to have type\n  ?m.62 → Finset ?m.63\nof sort `Type (max ?u.18125 ?u.18126)` in the application\n  @Finset.subset_biUnion_of_mem ?m.62 ?m.63 ?m.64 ?m.65 hk_range\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-006",
+      "generated_name": "binom_symm",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:34:85: error: Type mismatch\n  choose_symm hk\nhas type\n  n.choose (n - k) = n.choose k\nbut is expected to have type\n  n.choose k = n.choose (n - k)\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-007",
+      "generated_name": "fps_comp_coeff_eq_finset_sum",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:60:41: error: unexpected token 'in'; expected ','\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-008",
+      "generated_name": "lem_fps_xa",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:59:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:59:4: warning: 'simpa using lem_fps_xa' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:55:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 9,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-009",
+      "generated_name": "size_eq_zero_iff_eq_empty",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:23:7: error: unknown tactic\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 10,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-010",
+      "generated_name": "pow_eq_iterate",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:12:60: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HPow (X → X) ℕ ?m.4\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Permutations/Basics.lean:14:9: error: unsolved goals\ncase zero\nX : Type u_1\nα : X ≃ X\n⊢ sorry () = id\nAlgebraicCombinatorics/Permutations/Basics.lean:15:57: error(lean.unknownIdentifier): Unknown identifier `mul_apply`\nAlgebraicCombinatorics/Permutations/Basics.lean:15:14: error: unsolved goals\ncase succ\nX : Type u_1\nα : X ≃ X\ni : ℕ\nih : sorry = (⇑α)^[i]\n⊢ ⇑(α ^ i) = ⇑(α ^ i) ∘ ⇑α\nAlgebraicCombinatorics/Permutations/Basics.lean:15:23: warning: This simp argument is unused:\n  pow_succ\n\nHint: Omit it from the simp argument list.\n  simp [p̵o̵w̵_̵s̵u̵c̵c̵,̵ ̵Function.iterate_succ', mul_apply, ih]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nAlgebraicCombinatorics/Permutations/Basics.lean:15:33: warning: This simp argument is unused:\n  Function.iterate_succ'\n\nHint: Omit it from the simp argument list.\n  simp [pow_succ, F̵u̵n̵c̵t̵i̵o̵n̵.̵i̵t̵e̵r̵a̵t̵e̵_̵s̵u̵c̵c̵'̵,̵ ̵mul_apply, ih]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-011",
+      "generated_name": "simpleTransposition_eq_transposition",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:79:4: error: Type mismatch: After simplification, term\n  simpleTransposition_eq_transposition\n has type\n  ∀ (i : Fin (?m.11 - 1)), s[i] = transposition ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩\nbut is expected to have type\n  Perm.IsSwap s[i]\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    }
+  ]
+}

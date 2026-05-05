@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "lemma pow_eq_iterate {X : Type*} (α : Equiv X X) (i : ℕ) : (α ^ i).toFun = α^[i] := by\n  induction i with\n  | zero =>\n    simp\n  | succ i ih =>\n    ext x\n    rw [pow_succ, Equiv.mul_apply, ih, Function.iterate_succ']\n    rfl",
+  "declaration_name": "pow_eq_iterate",
+  "used_context": [
+    "Equiv",
+    "Function.iterate_succ'",
+    "pow_succ",
+    "Equiv.mul_apply"
+  ],
+  "notes": [
+    "Using pointwise equality to avoid definitional coercion issues."
+  ]
+}

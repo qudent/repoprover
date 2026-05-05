@@ -1,0 +1,16 @@
+{
+  "lean_declaration": "theorem size_eq_zero_iff_eq_empty (p : Nat.Partition) : p.size = 0 ↔ p = empty := by\n  constructor\n  · intro h\n    have hsum : p.entries.sum = 0 := by\n      simpa [size] using h\n    have hnull : p.entries = [] := by\n      by_contra hne\n      have hzero : ∀ a ∈ p.entries, a = 0 :=\n        List.sum_eq_zero_iff.mp hsum\n      have hpos : ∀ a ∈ p.entries, 0 < a := p.pos\n      obtain ⟨a, ha⟩ := List.exists_mem_of_ne_nil hne\n      have hz := hzero a ha\n      have hp := hpos a ha\n      exact (lt_irrefl 0) (hz ▸ hp)\n    apply Nat.Partition.ext\n    exact hnull\n  · intro h\n    rw [h]\n    simp [size, empty]",
+  "declaration_name": "size_eq_zero_iff_eq_empty",
+  "used_context": [
+    "Nat.Partition",
+    "size",
+    "empty",
+    "Nat.Partition.ext",
+    "List.sum_eq_zero_iff",
+    "List.exists_mem_of_ne_nil",
+    "lt_irrefl"
+  ],
+  "notes": [
+    "Replaced non-existent linarom tactic with direct contradiction using List.sum_eq_zero_iff and positivity from p.pos."
+  ]
+}

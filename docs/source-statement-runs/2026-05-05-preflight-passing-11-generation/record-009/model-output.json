@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem size_eq_zero_iff_eq_empty (p : Nat.Partition) : p.size = 0 ↔ p = empty := by\n  constructor\n  · intro h\n    have hsum : p.entries.sum = 0 := by\n      simpa [size] using h\n    have hnull : p.entries = [] := by\n      by_contra hne\n      have hpos_sum : 0 < p.entries.sum := List.sum_pos p.pos hne\n      linarom\n    apply Nat.Partition.ext\n    exact hnull\n  · intro h\n    rw [h]\n    simp [size, empty]",
+  "declaration_name": "size_eq_zero_iff_eq_empty",
+  "used_context": [
+    "Nat.Partition structure with fields entries, pos, size",
+    "List.sum_pos",
+    "Nat.Partition.ext",
+    "empty partition definition"
+  ],
+  "notes": [
+    "Assumes the file defines `Nat.Partition` with entries, size (as `entries.sum`), and pos (positive entries).",
+    "Uses lemma `List.sum_pos` for a nonempty list of positive entries.",
+    "Assumes an extensionality lemma `Nat.Partition.ext` exists."
+  ]
+}

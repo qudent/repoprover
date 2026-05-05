@@ -1,0 +1,20 @@
+{
+  "index": 8,
+  "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-008",
+  "warnings": [
+    {
+      "code": "wrong_x_power_multiplication_side_or_shape",
+      "severity": "warning",
+      "message": "Visible context asks for the general right-multiplication `f * X^k` coefficient shape, but the generated statement appears to use the wrong side, a special `X` case, or whole-series `mk` equality.",
+      "visible_cue": "\"preferred_statement_family\": [\"Respect the side of multiplication in the source focus: `f * X ^ k` should use/right-match `coeff_mul_X_pow`; `X ^ k * f` should use/right-match `coeff_X_po",
+      "generated_cue": "theorem lem_fps_xa (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n - 1) f) := by ext n simp [",
+      "recommendation": "Use the right-multiplication coefficient theorem shape for `f * X ^ k`; do not collapse to `X * f` or a special whole-series equality unless the source asks for it."
+    }
+  ],
+  "generated_name": "lem_fps_xa",
+  "warning_count": 1,
+  "warning_codes": [
+    "wrong_x_power_multiplication_side_or_shape"
+  ]
+}

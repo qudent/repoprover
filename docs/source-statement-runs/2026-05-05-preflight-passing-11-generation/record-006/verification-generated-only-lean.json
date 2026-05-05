@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:34:85: error: Type mismatch\n  choose_symm hk\nhas type\n  n.choose (n - k) = n.choose k\nbut is expected to have type\n  n.choose k = n.choose (n - k)\n"
+}

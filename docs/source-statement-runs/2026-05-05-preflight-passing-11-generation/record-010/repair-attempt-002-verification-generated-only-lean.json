@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:18:18: error(lean.unknownIdentifier): Unknown constant `Equiv.mul_apply`\n"
+}

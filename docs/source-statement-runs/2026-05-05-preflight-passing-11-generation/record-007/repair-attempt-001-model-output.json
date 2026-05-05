@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "theorem fps_comp_coeff_eq_finset_sum (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :\n    coeff n (PowerSeries.subst g f) = Finset.sum (Finset.range (n+1)) (fun d => coeff d f * coeff n (g ^ d)) := by\n  rw [fps_comp_coeff f g hg n]\n  have hzero : ∀ (d : ℕ), d ∉ Finset.range (n+1) → coeff d f * coeff n (g ^ d) = 0 := by\n    intro d hd\n    rw [Finset.mem_range] at hd\n    have hn_succ_le_d : n+1 ≤ d := Nat.ge_of_not_lt hd\n    have h_lt : n < d := Nat.lt_of_succ_le hn_succ_le_d\n    have hcoeff : coeff n (g ^ d) = 0 := fps_subs_wd_firstCoeffs g hg d n h_lt\n    rw [hcoeff, mul_zero]\n  exact finsum_eq_sum_finset hzero",
+  "declaration_name": "fps_comp_coeff_eq_finset_sum",
+  "used_context": [
+    "fps_comp_coeff",
+    "fps_subs_wd_firstCoeffs",
+    "Finset.mem_range",
+    "Nat.ge_of_not_lt",
+    "Nat.lt_of_succ_le",
+    "finsum_eq_sum_finset"
+  ],
+  "notes": [
+    "Replaced `∑ d in ...` binder with `Finset.sum` to avoid `in` syntax error originating from missing `open scoped BigOperators`.",
+    "Used `finsum_eq_sum_finset` to reduce the `finsum` over ℕ to the finite range sum, avoiding the unsupported `finsum_eq_finset_sum`.",
+    "Explicit arithmetic reasoning with `Nat` lemmas to prove `n < d` from `¬ d < n+1`."
+  ]
+}

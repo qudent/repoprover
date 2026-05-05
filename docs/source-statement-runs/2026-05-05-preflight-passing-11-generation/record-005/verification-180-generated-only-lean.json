@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:105:35: error: Type mismatch\n  Finset.subset_biUnion_of_mem ?m.67\nhas type\n  ?m.68 ∈ ?m.64 → ?m.67 ?m.68 ⊆ Finset.biUnion ?m.64 ?m.67\nbut is expected to have type\n  Exists.choose ⋯ ⊆ M\nAlgebraicCombinatorics/FPS/InfiniteProducts.lean:105:64: error: Application type mismatch: The argument\n  hk_range\nhas type\n  k ∈ Finset.range (n + 1)\nof sort `Prop` but is expected to have type\n  ?m.62 → Finset ?m.63\nof sort `Type (max ?u.18125 ?u.18126)` in the application\n  @Finset.subset_biUnion_of_mem ?m.62 ?m.63 ?m.64 ?m.65 hk_range\n"
+}

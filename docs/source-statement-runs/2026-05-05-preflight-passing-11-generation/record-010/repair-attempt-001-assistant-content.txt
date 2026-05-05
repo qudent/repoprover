@@ -1,0 +1,16 @@
+{
+  "lean_declaration": "lemma pow_eq_iterate {X : Type*} (α : Equiv X X) (i : ℕ) : (α ^ i).toFun = α^[i] := by\n  induction i with\n  | zero =>\n    simp\n  | succ i ih =>\n    calc\n      (α ^ (i + 1)).toFun = ((α ^ i) * α).toFun := by simp [pow_succ]\n      _ = (α ^ i).toFun ∘ α.toFun := by ext x; simp\n      _ = (α^[i] ∘ α) := by rw [ih]\n      _ = α^[i+1] := by simp [Function.iterate_succ']",
+  "declaration_name": "pow_eq_iterate",
+  "used_context": [
+    "Equiv (Monoid instance for permutation group)",
+    "Function.iterate_succ'",
+    "pow_succ",
+    "pow_zero",
+    "Equiv.one_apply",
+    "Equiv.mul_apply (via `ext x; simp`)"
+  ],
+  "notes": [
+    "The original type ascription `(α ^ i : X → X)` caused an HPow instance failure; corrected to `.toFun`.",
+    "The induction uses `calc` and `ext x; simp` to handle `Equiv.mul_apply` pointwise equality."
+  ]
+}

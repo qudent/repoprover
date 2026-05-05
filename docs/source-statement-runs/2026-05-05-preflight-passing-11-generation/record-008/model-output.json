@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem lem_fps_xa (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n - 1) f) := by\n  ext n\n  simp [coeff_X_mul, coeff_mk]",
+  "declaration_name": "lem_fps_xa",
+  "used_context": [
+    "coeff_X_mul",
+    "coeff_mk",
+    "X",
+    "PowerSeries.mk"
+  ],
+  "notes": [
+    "The proof uses the existing coeff_X_mul theorem, which is the coefficient version. The equality form is deduced by extensionality."
+  ]
+}

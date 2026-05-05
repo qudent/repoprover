@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:66:8: error(lean.unknownIdentifier): Unknown identifier `finsum_eq_sum_finset`\n"
+}

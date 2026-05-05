@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem coeffFinitelyDeterminedInProd_of_finite [Fintype I] (a : I → PowerSeries R) (n : ℕ) :\n    CoeffFinitelyDeterminedInProd a n := by\n  refine ⟨Finset.univ, ?_⟩\n  intro J hJ\n  have h_eq : J = Finset.univ := Finset.Subset.antisymm (Finset.subset_univ J) hJ\n  subst h_eq\n  rfl",
+  "declaration_name": "coeffFinitelyDeterminedInProd_of_finite",
+  "used_context": [
+    "PowerSeries",
+    "DeterminesCoeffInProd",
+    "CoeffFinitelyDeterminedInProd",
+    "Finset.Subset.antisymm",
+    "Finset.subset_univ"
+  ],
+  "notes": [
+    "Assumes [Fintype I] so that Finset.univ is the full set determining the coefficient.",
+    "Uses the local definitions DeterminesCoeffInProd and CoeffFinitelyDeterminedInProd exactly as given."
+  ]
+}

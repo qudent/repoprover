@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777964801-fYWZF2SaVYjLHCC8L5IW",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem empty_partition_unique (p : Nat.Partition 0) : p = empty := by\\n  have hsum : p.entries.sum = 0 := p.sum_eq\\n  have hnull : p.entries = [] := by\\n    by_contra hne\\n    have hzero : ∀ a ∈ p.entries, a = 0 :=\\n      List.sum_eq_zero_iff.mp hsum\\n    have hpos : ∀ a ∈ p.entries, 0 < a := p.pos\\n    obtain ⟨a, ha⟩ := List.exists_mem_of_ne_nil hne\\n    have hz := hzero a ha\\n    have hp := hpos a ha\\n    exact (lt_irrefl 0) (hz ▸ hp)\\n  apply Nat.Partition.ext\\n  exact hnull\",\n  \"declaration_name\": \"empty_partition_unique\",\n  \"used_context\": [\n    \"Nat.Partition structure with fields entries, pos, sum_eq\",\n    \"Nat.Partition.ext\",\n    \"List.sum_eq_zero_iff\",\n    \"List.exists_mem_of_ne_nil\",\n    \"lt_irrefl\"\n  ],\n  \"notes\": [\n    \"Assumes p.sum_eq is the field that states entries.sum = 0 (since p: Partition 0). If the field has a different name, adjust accordingly.\",\n    \"empty is a constant of type Partition 0 implicitly defined as the empty tuple.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777964801,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 12279,
+    "prompt_tokens": 3016,
+    "total_tokens": 15295,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 11955,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.04797876,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.04797876,
+      "upstream_inference_prompt_cost": 0.00524784,
+      "upstream_inference_completions_cost": 0.04273092
+    }
+  },
+  "provider": "SiliconFlow"
+}

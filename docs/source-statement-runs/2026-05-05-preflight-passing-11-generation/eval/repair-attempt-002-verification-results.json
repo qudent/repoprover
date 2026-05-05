@@ -1,0 +1,115 @@
+{
+  "generated_at": "2026-05-05T07:14:58.861621+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation",
+  "work_root": "/tmp/repoprover-source-statement-verify-preflight-passing-11-repair2",
+  "workers": 1,
+  "records_completed": 11,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 3,
+    "missing_model_output": 8
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-001/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_lowerTriangular",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-002/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-003/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInProd_of_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-004",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-004/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.exists_xn_approximator",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-005",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-005/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-006",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-006/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-007",
+      "generated_name": "fps_comp_coeff_eq_finset_sum",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:66:43: error: Application type mismatch: The argument\n  hzero\nhas type\n  ∀ d ∉ Finset.range (n + 1), (coeff d) f * (coeff n) (g ^ d) = 0\nbut is expected to have type\n  (Function.support ?m.132).Finite\nin the application\n  finsum_eq_sum ?m.132 hzero\nAlgebraicCombinatorics/FPS/Substitution.lean:66:22: error: Application type mismatch: The argument\n  Finset.range (n + 1)\nhas type\n  Finset ℕ\nbut is expected to have type\n  ?m.122 → ?m.123\nin the application\n  finsum_eq_sum (Finset.range (n + 1))\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-008",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-008/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 9,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-009",
+      "generated_name": "empty_partition_unique",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:16:16: error(lean.invalidField): Invalid field `entries`: The environment does not contain `Nat.Partition.entries`, so it is not possible to project the field `entries` from an expression\n  p\nof type `Partition 0`\nAlgebraicCombinatorics/Partitions/Basics.lean:16:37: error(lean.invalidField): Invalid field `sum_eq`: The environment does not contain `Nat.Partition.sum_eq`, so it is not possible to project the field `sum_eq` from an expression\n  p\nof type `Partition 0`\nAlgebraicCombinatorics/Partitions/Basics.lean:17:17: error(lean.invalidField): Invalid field `entries`: The environment does not contain `Nat.Partition.entries`, so it is not possible to project the field `entries` from an expression\n  p\nof type `Partition 0`\nAlgebraicCombinatorics/Partitions/Basics.lean:15:68: error: unsolved goals\nempty p : Partition 0\nhsum : sorry = 0\n⊢ p = empty\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 10,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-010",
+      "generated_name": "pow_eq_iterate",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:18:18: error(lean.unknownIdentifier): Unknown constant `Equiv.mul_apply`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-011",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/record-011/repair-attempt-002-model-output.json"
+    }
+  ]
+}

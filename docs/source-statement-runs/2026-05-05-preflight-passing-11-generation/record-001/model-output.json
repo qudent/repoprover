@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem summable_and_tsum'_eq_of_coeffStabilizesTo_partial_sum\n    {f : ℕ → PowerSeries K} {L : PowerSeries K}\n    (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) L) :\n    IsSummable f ∧ tsum' f (isSummable_of_coeffStabilizesTo_partial_sum h) = L :=\n  And.intro (isSummable_of_coeffStabilizesTo_partial_sum h)\n    (tsum'_eq_of_coeffStabilizesTo_partial_sum h)",
+  "declaration_name": "summable_and_tsum'_eq_of_coeffStabilizesTo_partial_sum",
+  "used_context": [
+    "isSummable_of_coeffStabilizesTo_partial_sum",
+    "tsum'_eq_of_coeffStabilizesTo_partial_sum"
+  ],
+  "notes": [
+    "Directly combines two existing theorems from the context; the hypothesis `CoeffStabilizesTo … L` encodes the existence of the limit L of the partial sums."
+  ]
+}

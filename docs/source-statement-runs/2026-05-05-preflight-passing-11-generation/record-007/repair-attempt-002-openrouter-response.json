@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777964801-uWUyZjbnFKlioGvMaaIS",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_comp_coeff_eq_finset_sum (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :\\n    coeff n (PowerSeries.subst g f) = Finset.sum (Finset.range (n+1)) (fun d => coeff d f * coeff n (g ^ d)) := by\\n  rw [fps_comp_coeff f g hg n]\\n  have hzero : ∀ (d : ℕ), d ∉ Finset.range (n+1) → coeff d f * coeff n (g ^ d) = 0 := by\\n    intro d hd\\n    rw [Finset.mem_range] at hd\\n    have hn_succ_le_d : n+1 ≤ d := Nat.ge_of_not_lt hd\\n    have h_lt : n < d := Nat.lt_of_succ_le hn_succ_le_d\\n    have hcoeff : coeff n (g ^ d) = 0 := fps_subs_wd_firstCoeffs g hg d n h_lt\\n    rw [hcoeff, mul_zero]\\n  exact finsum_eq_sum (Finset.range (n+1)) hzero\",\n  \"declaration_name\": \"fps_comp_coeff_eq_finset_sum\",\n  \"used_context\": [\n    \"fps_comp_coeff\",\n    \"fps_subs_wd_firstCoeffs\",\n    \"finsum_eq_sum (from AlgebraicCombinatorics.FPS)\",\n    \"Nat.ge_of_not_lt\",\n    \"Nat.lt_of_succ_le\",\n    \"Finset.mem_range\"\n  ],\n  \"notes\": [\n    \"Uses finsum_eq_sum from the local AlgebraicCombinatorics.FPS API to convert the finsum to a finite sum over range (n+1).\",\n    \"The key vanishing condition coeff n (g ^ d) = 0 for d > n is provided by fps_subs_wd_firstCoeffs.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777964801,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-tp8-ep-3e86baa6",
+  "usage": {
+    "completion_tokens": 6783,
+    "prompt_tokens": 4476,
+    "total_tokens": 11259,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4887,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.03139308,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.03139308,
+      "upstream_inference_prompt_cost": 0.00778824,
+      "upstream_inference_completions_cost": 0.02360484
+    }
+  },
+  "provider": "Parasail"
+}

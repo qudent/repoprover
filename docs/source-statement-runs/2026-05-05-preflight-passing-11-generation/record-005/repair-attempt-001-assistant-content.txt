@@ -1,0 +1,18 @@
+{
+  "lean_declaration": "lemma exists_isXnApproximator_of_multipliable {a : I → PowerSeries R} (ha : Multipliable a) (n : ℕ) : ∃ M : Finset I, IsXnApproximator a M n := by\n  classical\n  let M := Finset.biUnion (Finset.range (n+1)) (fun m => (ha m).choose)\n  refine ⟨M, ?_⟩\n  intro k hk\n  have hk_range : k ∈ Finset.range (n+1) := Finset.mem_range.mpr (Nat.lt_succ_of_le hk)\n  have hdeterm : DeterminesCoeffInProd a ((ha k).choose) k := (ha k).choose_spec\n  have hsub : (ha k).choose ⊆ M := by\n    intro x hx\n    exact Finset.mem_biUnion.mpr ⟨k, hk_range, hx⟩\n  exact determinesCoeffInProd_mono hdeterm hsub",
+  "declaration_name": "exists_isXnApproximator_of_multipliable",
+  "used_context": [
+    "Multipliable",
+    "CoeffFinitelyDeterminedInProd",
+    "DeterminesCoeffInProd",
+    "IsXnApproximator",
+    "determinesCoeffInProd_mono",
+    "Finset.mem_range",
+    "Nat.lt_succ_of_le",
+    "Finset.biUnion",
+    "Finset.mem_biUnion"
+  ],
+  "notes": [
+    "Replaced Finset.subset_biUnion_of_mem with explicit Finset.mem_biUnion proof to avoid implicit argument resolution error."
+  ]
+}

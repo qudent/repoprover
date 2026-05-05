@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:16:16: error(lean.invalidField): Invalid field `entries`: The environment does not contain `Nat.Partition.entries`, so it is not possible to project the field `entries` from an expression\n  p\nof type `Partition 0`\nAlgebraicCombinatorics/Partitions/Basics.lean:16:37: error(lean.invalidField): Invalid field `sum_eq`: The environment does not contain `Nat.Partition.sum_eq`, so it is not possible to project the field `sum_eq` from an expression\n  p\nof type `Partition 0`\nAlgebraicCombinatorics/Partitions/Basics.lean:17:17: error(lean.invalidField): Invalid field `entries`: The environment does not contain `Nat.Partition.entries`, so it is not possible to project the field `entries` from an expression\n  p\nof type `Partition 0`\nAlgebraicCombinatorics/Partitions/Basics.lean:15:68: error: unsolved goals\nempty p : Partition 0\nhsum : sorry = 0\n⊢ p = empty\n"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777963733-cCX390OfZbOallk1sLYd",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma exists_isXnApproximator_of_multipliable {a : I → PowerSeries R} (ha : Multipliable a) (n : ℕ) : ∃ M : Finset I, IsXnApproximator a M n := by\\n  classical\\n  let M := Finset.biUnion (Finset.range (n+1)) (fun m => (ha m).choose)\\n  refine ⟨M, ?_⟩\\n  intro k hk\\n  have hk_range : k ∈ Finset.range (n+1) := Finset.mem_range.mpr (Nat.lt_succ_of_le hk)\\n  have hdeterm : DeterminesCoeffInProd a ((ha k).choose) k := (ha k).choose_spec\\n  have hsub : (ha k).choose ⊆ M := by\\n    intro x hx\\n    exact Finset.mem_biUnion.mpr ⟨k, hk_range, hx⟩\\n  exact determinesCoeffInProd_mono hdeterm hsub\",\n  \"declaration_name\": \"exists_isXnApproximator_of_multipliable\",\n  \"used_context\": [\n    \"Multipliable\",\n    \"CoeffFinitelyDeterminedInProd\",\n    \"DeterminesCoeffInProd\",\n    \"IsXnApproximator\",\n    \"determinesCoeffInProd_mono\",\n    \"Finset.mem_range\",\n    \"Nat.lt_succ_of_le\",\n    \"Finset.biUnion\",\n    \"Finset.mem_biUnion\"\n  ],\n  \"notes\": [\n    \"Replaced Finset.subset_biUnion_of_mem with explicit Finset.mem_biUnion proof to avoid implicit argument resolution error.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777963733,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5825,
+    "prompt_tokens": 6252,
+    "total_tokens": 12077,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 5433,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.007456074,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.007456074,
+      "upstream_inference_prompt_cost": 0.002388324,
+      "upstream_inference_completions_cost": 0.00506775
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777963794-fyLf8DWisLBLCbRyPVWC",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem size_eq_zero_iff_eq_empty (p : Nat.Partition) : p.size = 0 ↔ p = empty := by\\n  constructor\\n  · intro h\\n    have hsum : p.entries.sum = 0 := by\\n      simpa [size] using h\\n    have hnull : p.entries = [] := by\\n      by_contra hne\\n      have hzero : ∀ a ∈ p.entries, a = 0 :=\\n        List.sum_eq_zero_iff.mp hsum\\n      have hpos : ∀ a ∈ p.entries, 0 < a := p.pos\\n      obtain ⟨a, ha⟩ := List.exists_mem_of_ne_nil hne\\n      have hz := hzero a ha\\n      have hp := hpos a ha\\n      exact (lt_irrefl 0) (hz ▸ hp)\\n    apply Nat.Partition.ext\\n    exact hnull\\n  · intro h\\n    rw [h]\\n    simp [size, empty]\",\n  \"declaration_name\": \"size_eq_zero_iff_eq_empty\",\n  \"used_context\": [\n    \"Nat.Partition\",\n    \"size\",\n    \"empty\",\n    \"Nat.Partition.ext\",\n    \"List.sum_eq_zero_iff\",\n    \"List.exists_mem_of_ne_nil\",\n    \"lt_irrefl\"\n  ],\n  \"notes\": [\n    \"Replaced non-existent linarom tactic with direct contradiction using List.sum_eq_zero_iff and positivity from p.pos.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777963794,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4515,
+    "prompt_tokens": 2924,
+    "total_tokens": 7439,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4175,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.004868694,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.004868694,
+      "upstream_inference_prompt_cost": 0.000940644,
+      "upstream_inference_completions_cost": 0.00392805
+    }
+  },
+  "provider": "DeepSeek"
+}

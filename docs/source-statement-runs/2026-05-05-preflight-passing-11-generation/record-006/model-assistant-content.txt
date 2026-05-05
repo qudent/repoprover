@@ -1,0 +1,8 @@
+{
+  "lean_declaration": "theorem binom_symm (n k : ℕ) (hk : k ≤ n) : Nat.choose n k = Nat.choose n (n - k) := Nat.choose_symm hk",
+  "declaration_name": "binom_symm",
+  "used_context": ["Nat.choose_symm"],
+  "notes": [
+    "The source statement uses k ∈ ℝ, but the formalization uses ℕ with the condition k ≤ n; this matches the comment that the case for naturals with k ≤ n is given by Nat.choose_symm."
+  ]
+}

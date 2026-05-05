@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem det_lowerTriangular (A : Matrix (Fin n) (Fin n) K) (hA : ∀ i j, i < j → A i j = 0) : A.det = ∏ i, A i i := by\n  calc\n    A.det = Aᵀ.det := by rw [Matrix.det_transpose]\n    _ = ∏ i, Aᵀ i i := det_upperTriangular Aᵀ (fun i j hji => hA j i hji)\n    _ = ∏ i, A i i := by simp",
+  "declaration_name": "det_lowerTriangular",
+  "used_context": [
+    "det_upperTriangular",
+    "Matrix.det_transpose",
+    "Matrix.transpose_apply"
+  ],
+  "notes": [
+    "The proof converts the lower triangular matrix A to its transpose Aᵀ, which is upper triangular, applies the existing det_upperTriangular lemma, and uses that diagonal entries are unchanged by transpose."
+  ]
+}

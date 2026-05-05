@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:66:43: error: Application type mismatch: The argument\n  hzero\nhas type\n  ∀ d ∉ Finset.range (n + 1), (coeff d) f * (coeff n) (g ^ d) = 0\nbut is expected to have type\n  (Function.support ?m.132).Finite\nin the application\n  finsum_eq_sum ?m.132 hzero\nAlgebraicCombinatorics/FPS/Substitution.lean:66:22: error: Application type mismatch: The argument\n  Finset.range (n + 1)\nhas type\n  Finset ℕ\nbut is expected to have type\n  ?m.122 → ?m.123\nin the application\n  finsum_eq_sum (Finset.range (n + 1))\n"
+}
