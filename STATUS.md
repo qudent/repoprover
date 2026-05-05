@@ -21,7 +21,8 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - [x] Run paid generation-only on an 8-record easier source-only subset from the 64-row audit.
 - [x] Commit raw easy-8 paid outputs before Lean verification.
 - [x] Verify easy-8 generated outputs serially.
-- [ ] Triage easy-8 failures before another paid run; several are compile errors, and one output was a `def` despite the theorem/lemma contract.
+- [x] Triage easy-8 failures before another paid run.
+- [ ] Add low-cost diagnostics for definition-vs-theorem focus, conjunction over-bundling, and local-name collisions before another paid run.
 
 ## Blockers
 - Source-only context still often lacks exact theorem-family cues: target-comment focus terms are absent from visible source spans in `45/64` broader audit rows.
@@ -33,9 +34,9 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - Balanced-span rerun cost `$0.126677307`, still `1/11`; shape repairs cost `$0.020500999` and did not add passes.
 - Latest 64-row budget audit made zero paid calls, estimates max generation cost at `$1.976172810`, has `0` hidden target-name payload hits, and extracts focused labeled environments for `64/64` rows.
 - Easy-8 source-only generation made `8/8` paid calls, generated `8/8` JSON outputs, and cost `$0.071505155`.
-- Easy-8 verification passed `1/8`; failures were `6` generated-only compile errors and `1` hidden-grader semantic miss.
+- Easy-8 verification after fixing named-section materialization passed `1/8`; failures are now `3` generated-only compile errors, `3` hidden-grader semantic misses, and `1` invalid non-theorem output.
 - Focused tests pass with `76 passed`.
 
 ## Agent Notes
-- Do not run more paid calls until the next context-selection improvement is clear and budgeted.
+- Do not run more paid calls until the next context-selection/diagnostic improvement is clear and budgeted.
 - Current prompt improvements are generic infrastructure; row-specific repair guidance remains isolated as failure-driven diagnostics, not scale evidence.

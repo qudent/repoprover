@@ -151,6 +151,10 @@ Easy-8 paid source-only generation from the 64-row audit:
 - Generated names: `eq_fps_mulvar_exa1_res1`, `laurentPolynomial_T_isUnit_one`, `sgn`, `det_colop`, `xneq_multiple_iff`, `coeffFinitelyDeterminedInSum_iff`, `inverse_unique`, `qBinomial_eq_zero_of_gt`.
 - Serial verification: `1/8` passed. Failures: `6` generated-only compile errors, `1` hidden-grader semantic miss.
 - Contract fix after verification: future runs now reject non-theorem/non-lemma generations instead of counting a `def` as generation success.
+- Materialization fix after verification: named sections are now closed with
+  `end SectionName`. Corrected verification is still `1/8`, but failure
+  classes are now `3` compile failures, `3` semantic misses, and `1`
+  missing theorem/lemma declaration.
 
 ## Files And Evidence
 
@@ -171,6 +175,7 @@ Easy-8 paid source-only generation from the 64-row audit:
 - Gold64 context audit report: `docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/context-budget-audit.md`
 - Gold64 easy-8 source-only budget: `docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-budget/`
 - Gold64 easy-8 paid generation: `docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-generation/`
+- Easy-8 failure triage: `docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-generation/eval/easy8-failure-triage.md`
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`

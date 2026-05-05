@@ -7,6 +7,7 @@ import pytest
 from scripts.materialize_minimal_context_smoke import (
     SelectedRecord,
     build_target_lean,
+    context_close_commands,
     copy_lake_cache,
     declarations_in_file,
     materialize_smoke_project,
@@ -37,6 +38,17 @@ def test_select_records_prefers_reviewed_short_theorem() -> None:
     ]
 
     assert select_records(rows, [], 1)[0].record_id == "high"
+
+
+def test_context_close_commands_preserves_named_sections() -> None:
+    closes = context_close_commands(
+        [
+            {"kind": "namespace", "name": "Outer"},
+            {"kind": "section", "name": "Local"},
+        ]
+    )
+
+    assert closes == ["end Local", "end Outer"]
 
 
 def test_materialize_smoke_project_writes_single_sorry_project(tmp_path: Path) -> None:

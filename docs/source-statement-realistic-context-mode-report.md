@@ -420,6 +420,27 @@ also exposed a benchmark-contract bug: a model output containing a `def` was
 counted as a generation success. The validator now requires the generated
 declaration to syntactically contain a theorem or lemma.
 
+The verification was rerun after fixing named section closing in materialized
+projects:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/verify_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-generation \
+  --work-root /tmp/repoprover-gold64-easy8-verify-sectionfix \
+  --lake-cache-from algebraic-combinatorics --include-record-imports \
+  --workers 1 --lean-timeout 180 --output-prefix verification-sectionfix-180
+```
+
+Corrected result:
+
+- successes: `1/8`
+- generated-only compile failures: `3`
+- hidden-grader semantic misses: `3`
+- missing theorem/lemma declaration: `1`
+
+The detailed row-level triage is in
+`docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-generation/eval/easy8-failure-triage.md`.
+
 ## Tests
 
 Focused tests passed:

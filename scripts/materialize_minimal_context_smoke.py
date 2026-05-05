@@ -153,7 +153,8 @@ def context_close_commands(file_context: list[dict[str, Any]]) -> list[str]:
             name = str(span.get("name") or "").strip()
             closes.append(f"end {name}" if name else "end")
         elif kind == "section":
-            closes.append("end")
+            name = str(span.get("name") or "").strip()
+            closes.append(f"end {name}" if name else "end")
     return list(reversed(closes))
 
 
