@@ -62,6 +62,8 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
    - Ran compile-failure repair attempt 1 over the broader source-only slice: 7/8 repair outputs for `$0.058516809`, with 3/7 passing hidden-grader verification.
    - Retried the row-1 transient provider failure: one output for `$0.013631334`, but it still failed generated-only compilation.
    - Found row 11’s source-only prompt cut off at `\begin{proposition}` before the proposition body; added environment-balance span-risk flags plus bounded TeX span expansion and regenerated the 11-record budget audit.
+   - Ran a fresh 11-record paid source-only generation with balanced spans: `$0.126677307`, 10/11 usable outputs, 1/11 verified.
+   - Added visible `IsSwap` shape diagnostics and missing-helper repair guidance, then ran two shape-warning repairs for `$0.014849247`; no additional row passed.
 
 ## Current Best Results
 
@@ -82,6 +84,7 @@ Realistic source-only result so far:
 - The two compile-clean semantic misses were `det_triangular` answering a broader disjunction instead of lower-triangular only, and `simpleTransposition_sq_eq_one` answering order-two instead of `Perm.IsSwap`.
 - `fps_comp_coeff_finite` compiled after repair but still proved summability, not the finite coefficient formula; the source-only span is under-focused for that target.
 - `simpleTransposition_isSwap` exposed a source-span bug: the prompt stopped before a proposition body. The regenerated budget prompt expands that row from lines 256-278 to 255-290.
+- The balanced-span rerun did not improve aggregate pass rate: it still verified 1/11 before repair, and shape-warning repairs did not add a pass.
 
 ## Files And Evidence
 

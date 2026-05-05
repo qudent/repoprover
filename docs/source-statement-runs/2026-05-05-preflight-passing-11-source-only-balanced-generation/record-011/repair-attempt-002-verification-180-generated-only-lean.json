@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:73:4: error: omega could not prove the goal:\na possible counterexample may satisfy the constraints\n  d ≥ 0\n  c ≥ 0\n  c - d ≤ -1\nwhere\n c := ↑↑⟨↑i + 1, ⋯⟩\n d := ↑n\n"
+}

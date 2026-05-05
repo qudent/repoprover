@@ -20,7 +20,8 @@ Source-statement generation, archived provider-result capture, reusable-project 
 - [x] Run and verify a compile-failure repair pass over the broader source-only slice.
 - [x] Add TeX environment-balance risk flags for source snippets that cut off theorem/proposition bodies.
 - [x] Expand TeX source snippets to include missing environment begins/ends within a bounded window.
-- [ ] Rerun a small paid source-only validation with expanded TeX spans.
+- [x] Rerun and verify an 11-record paid source-only validation with expanded TeX spans.
+- [ ] Improve source selection beyond environment balancing; several rows still target the wrong theorem family.
 
 ## Blockers
 - Realistic context selection is still weak: context comparison found target-comment focus terms absent from source-only spans in 7/11 broader rows.
@@ -33,6 +34,7 @@ Source-statement generation, archived provider-result capture, reusable-project 
 - Verified the 11 generated files serially: 1/11 passed, 8 failed generated-only compilation, and 2 compiled but did not prove the withheld gold statement.
 - Repair attempt 1 over compile failures generated 7/8 repairs for `$0.058516809`; 3/7 passed hidden-grader verification. Row 1 retry generated for `$0.013631334` but still did not compile.
 - Regenerated the 11-record source-only budget audit with balanced TeX span expansion; row 11 expands from lines 256-278 to 255-290 and closes the proposition environment.
+- Balanced-span generation cost `$0.126677307` and verified 1/11; shape-warning repairs cost `$0.014849247` but did not add a pass.
 
 ## Agent Notes
-- Raw paid outputs are committed before verification: generation `2206e80`, repair attempt 1 `7a5412b`, row-1 retry `932b843`.
+- Raw paid outputs are committed before verification, including balanced generation `6d73159` and shape repairs `d5e98a4` / `dd59d2d`.

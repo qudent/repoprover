@@ -211,6 +211,47 @@ are not all ordinary proof-repair cases: `det_triangular`,
 `simpleTransposition_sq_eq_one`, and the repaired `summable_fps_comp` are
 statement-family/context-selection misses.
 
+## Balanced-Span Paid Rerun
+
+After adding bounded TeX environment expansion, a fresh 11-record source-only
+generation run was executed:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --records docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/eval/selected-records.jsonl \
+  --output docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation \
+  --limit 11 --sample-mode corpus-spread --include-record-imports \
+  --lake-cache-from algebraic-combinatorics --generation-only \
+  --context-mode source-only \
+  --max-actual-cost-usd 0.40 --concurrency 3 \
+  --max-tokens 32768 --reasoning-effort high
+```
+
+Result:
+
+- paid calls: `11`
+- generation cost: `$0.126677307`
+- usable generated declarations: `10/11`
+- rejected for forbidden placeholder: `1/11`
+- hidden-grader verification: `1/11`
+
+The pass was again the FPS `X_mul`/shift row. The balanced span changed row 11
+from an order-two theorem to a transposition-equality theorem, then a
+visible-context shape repair changed it to the correct `IsSwap` statement shape.
+That repair still did not compile because the generated proof could not prove
+the `Fin n` bound for `i.val + 1`.
+
+Shape-warning repairs:
+
+- repair attempt 1 targeted rows 7 and 11 from visible diagnostics; cost:
+  `$0.010895358`; result: `0/2` passed.
+- repair attempt 2 targeted row 11's missing-helper compiler error; cost:
+  `$0.003953889`; result: `0/1` passed.
+
+Takeaway: environment balancing is a real context-selection fix, but this
+11-row slice still does not mostly succeed. The next gains should come from
+better source target selection and local API retrieval, not trust scoring.
+
 ## Source-Span Balance Fix
 
 The row 11 failure exposed a concrete source-selection bug. The source-only
@@ -277,7 +318,8 @@ After adding targeted verifier indices for repair artifacts, the focused test
 set passes with `66 passed`.
 After adding TeX environment-balance span risks, the focused test set passes
 with `67 passed`. After adding bounded TeX span expansion, it passes with
-`68 passed`.
+`68 passed`. After adding visible `IsSwap` diagnostics and missing-helper
+repair guidance, it passes with `70 passed`.
 
 ## Next Step
 

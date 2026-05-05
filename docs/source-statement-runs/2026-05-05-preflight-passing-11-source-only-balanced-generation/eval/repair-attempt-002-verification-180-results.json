@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-05-05T10:56:37.323932+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation",
+  "work_root": "/tmp/repoprover-source-only-balanced-shape-repair2-verify",
+  "workers": 1,
+  "records_completed": 1,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1
+  },
+  "results": [
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation/record-011",
+      "generated_name": "simpleTransposition_isSwap",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:73:4: error: omega could not prove the goal:\na possible counterexample may satisfy the constraints\n  d ≥ 0\n  c ≥ 0\n  c - d ≤ -1\nwhere\n c := ↑↑⟨↑i + 1, ⋯⟩\n d := ↑n\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}
