@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "lemma x_coeff_spec : coeff 1 (X : R⟦X⟧) = 1 ∧ ∀ i : ℕ, i ≠ 1 → coeff i (X : R⟦X⟧) = 0 := by\n  constructor\n  · simp\n  · intro i hi\n    simp [hi]",
+  "declaration_name": "x_coeff_spec",
+  "used_context": ["PowerSeries.coeff_X"],
+  "notes": ["Uses Mathlib's built-in X as the indeterminate; avoids redefining FPS.x as a separate constant."]
+}

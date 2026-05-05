@@ -122,9 +122,16 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/verify_source_statem
   --work-root /tmp/repoprover-source-statement-verify-preflight-passing-6 \
   --include-record-imports \
   --lake-cache-from algebraic-combinatorics \
-  --workers 3 \
+  --workers 1 \
   --lean-timeout 90
 ```
+
+Use `--workers 1` by default. It keeps verification simple, uses one reusable
+Lean project, and still records a separate result for every generated
+declaration instead of stopping at the first failure. On the six-record
+generation probe, serial verification took `172.92s` total, about `29s` per
+record, and the reusable verifier work tree was about `20M`. More workers are a
+later throughput optimization, not needed for small probes.
 
 ## Missing Pipeline Tasks
 

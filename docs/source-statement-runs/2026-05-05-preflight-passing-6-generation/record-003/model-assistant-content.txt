@@ -1,0 +1,18 @@
+{
+  "lean_declaration": "theorem det_colop (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\n    (A.submatrix id (Equiv.swap i j)).det = -A.det ∧\n    ((∀ k, A k j = 0) → A.det = 0) ∧\n    ((A.updateColumn j (A · j + c • A · i)).det = A.det) ∧\n    ((A.updateColumn j (c • A · j)).det = c * A.det) :=\nby\n  have hswap : (A.submatrix id (Equiv.swap i j)).det = -A.det :=\n    det_swap_cols A i j hij\n  have hzero : (∀ k, A k j = 0) → A.det = 0 := by\n    intro h\n    have hrow : ∀ k, A.transpose j k = 0 := by\n      intro k; simpa [Matrix.transpose] using h k\n    rw [← Matrix.det_transpose A, det_zero_row A.transpose j hrow]\n  have hadd : (A.updateColumn j (A · j + c • A · i)).det = A.det := by\n    calc\n      (A.updateColumn j (A · j + c • A · i)).det\n          = (A.updateColumn j (A · j + c • A · i)).transpose.det := by rw [Matrix.det_transpose]\n      _ = (A.transpose.updateRow j (A.transpose j + c • A.transpose i)).det := by\n        ext a b; simp [Matrix.updateColumn, Matrix.transpose, Matrix.updateRow]\n      _ = A.transpose.det := det_add_mul_row A.transpose i j hij c\n      _ = A.det := by rw [Matrix.det_transpose]\n  have hmul : (A.updateColumn j (c • A · j)).det = c * A.det := by\n    calc\n      (A.updateColumn j (c • A · j)).det\n          = (A.updateColumn j (c • A · j)).transpose.det := by rw [Matrix.det_transpose]\n      _ = (A.transpose.updateRow j (c • A.transpose j)).det := by\n        ext a b; simp [Matrix.updateColumn, Matrix.transpose, Matrix.updateRow]\n      _ = c * A.transpose.det := det_mul_row A.transpose j c\n      _ = c * A.det := by rw [Matrix.det_transpose]\n  exact And.intro hswap (And.intro hzero (And.intro hadd hmul))",
+  "declaration_name": "det_colop",
+  "used_context": [
+    "det_swap_cols",
+    "det_zero_row",
+    "det_add_mul_row",
+    "det_mul_row",
+    "Matrix.det_transpose",
+    "Matrix.updateColumn",
+    "Matrix.updateRow",
+    "Matrix.transpose"
+  ],
+  "notes": [
+    "Assumes the existence of lemmas det_zero_row, det_add_mul_row, det_mul_row in the context.",
+    "The conjunction form models the LaTeX theorem environment’s multi-part statement; column operations are expressed using submatrix and updateColumn as suggested by the local style."
+  ]
+}

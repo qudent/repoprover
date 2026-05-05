@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "lemma partsCount_eq_card_filter_largestPart (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by\n  unfold partsCount numParts\n  apply Finset.card_congr (fun p _ => p.transpose)\n  · intro p hp\n    rw [Finset.mem_filter] at hp ⊢\n    obtain ⟨hp_univ, hp_eq⟩ := hp\n    refine ⟨hp_univ, ?_⟩\n    rw [transpose_largestPart_eq_length p, hp_eq]\n  · intro p hp q hq h\n    apply_fun fun p => p.transpose at h\n    simp [transpose_transpose] at h\n    exact h\n  · intro q hq\n    rw [Finset.mem_filter] at hq\n    obtain ⟨hq_univ, hq_eq⟩ := hq\n    use q.transpose\n    constructor\n    · rw [Finset.mem_filter]\n      refine ⟨Finset.mem_univ _, ?_⟩\n      rw [transpose_length_eq_largestPart q, hq_eq]\n    · rw [transpose_transpose]",
+  "declaration_name": "partsCount_eq_card_filter_largestPart",
+  "used_context": ["transpose_transpose", "transpose_largestPart_eq_length", "transpose_length_eq_largestPart", "numParts", "largestPart", "partsCount", "Finset.card_congr"],
+  "notes": []
+}

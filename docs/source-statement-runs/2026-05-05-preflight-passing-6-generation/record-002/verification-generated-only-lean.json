@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:26:21: error(lean.unknownIdentifier): Unknown identifier `det_swap_rows`\nAlgebraicCombinatorics/DeterminantsBasic.lean:25:12: error(lean.unknownIdentifier): Unknown constant `Matrix.submatrix_transpose`\n"
+}

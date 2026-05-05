@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777944443-7tgSSnlA9xTuGLwaZlRo",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma partsCount_eq_card_filter_largestPart (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by\\n  unfold partsCount numParts\\n  apply Finset.card_congr (fun p _ => p.transpose)\\n  · intro p hp\\n    rw [Finset.mem_filter] at hp ⊢\\n    obtain ⟨hp_univ, hp_eq⟩ := hp\\n    refine ⟨hp_univ, ?_⟩\\n    rw [transpose_largestPart_eq_length p, hp_eq]\\n  · intro p hp q hq h\\n    apply_fun fun p => p.transpose at h\\n    simp [transpose_transpose] at h\\n    exact h\\n  · intro q hq\\n    rw [Finset.mem_filter] at hq\\n    obtain ⟨hq_univ, hq_eq⟩ := hq\\n    use q.transpose\\n    constructor\\n    · rw [Finset.mem_filter]\\n      refine ⟨Finset.mem_univ _, ?_⟩\\n      rw [transpose_length_eq_largestPart q, hq_eq]\\n    · rw [transpose_transpose]\",\n  \"declaration_name\": \"partsCount_eq_card_filter_largestPart\",\n  \"used_context\": [\"transpose_transpose\", \"transpose_largestPart_eq_length\", \"transpose_length_eq_largestPart\", \"numParts\", \"largestPart\", \"partsCount\", \"Finset.card_congr\"],\n  \"notes\": []\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777944443,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5501,
+    "prompt_tokens": 11383,
+    "total_tokens": 16884,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 5133,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 384,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.009571827,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.009571827,
+      "upstream_inference_prompt_cost": 0.004785957,
+      "upstream_inference_completions_cost": 0.00478587
+    }
+  },
+  "provider": "DeepSeek"
+}

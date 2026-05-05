@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem det_colop (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) : (A.submatrix id (Equiv.swap i j)).det = -A.det := by\n  calc\n    (A.submatrix id (Equiv.swap i j)).det = (A.submatrix id (Equiv.swap i j))ᵀ.det := by symm; apply Matrix.det_transpose\n    _ = ((Aᵀ).submatrix (Equiv.swap i j) id).det := by\n      simp [Matrix.submatrix_transpose]\n    _ = -(Aᵀ).det := det_swap_rows (Aᵀ) i j hij\n    _ = -A.det := by simp [Matrix.det_transpose]",
+  "declaration_name": "det_colop",
+  "used_context": [
+    "det_swap_rows",
+    "Matrix.det_transpose",
+    "Matrix.submatrix_transpose",
+    "Equiv.swap",
+    "Matrix (Fin n) (Fin n) K"
+  ],
+  "notes": [
+    "The theorem formalizes the column analogue of row swapping; it may not cover all column operations as the original source might intend a bundled theorem. However, due to incomplete context, we provide the column swap property as the most likely corresponding statement."
+  ]
+}

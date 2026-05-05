@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777943991-gbzxzN9iN4NycBTbNerE",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_colop (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) : (A.submatrix id (Equiv.swap i j)).det = -A.det := by\\n  calc\\n    (A.submatrix id (Equiv.swap i j)).det = (A.submatrix id (Equiv.swap i j))ᵀ.det := by symm; apply Matrix.det_transpose\\n    _ = ((Aᵀ).submatrix (Equiv.swap i j) id).det := by\\n      simp [Matrix.submatrix_transpose]\\n    _ = -(Aᵀ).det := det_swap_rows (Aᵀ) i j hij\\n    _ = -A.det := by simp [Matrix.det_transpose]\",\n  \"declaration_name\": \"det_colop\",\n  \"used_context\": [\n    \"det_swap_rows\",\n    \"Matrix.det_transpose\",\n    \"Matrix.submatrix_transpose\",\n    \"Equiv.swap\",\n    \"Matrix (Fin n) (Fin n) K\"\n  ],\n  \"notes\": [\n    \"The theorem formalizes the column analogue of row swapping; it may not cover all column operations as the original source might intend a bundled theorem. However, due to incomplete context, we provide the column swap property as the most likely corresponding statement.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777943991,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 8498,
+    "prompt_tokens": 2352,
+    "total_tokens": 10850,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 8184,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.03366552,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.03366552,
+      "upstream_inference_prompt_cost": 0.00409248,
+      "upstream_inference_completions_cost": 0.02957304
+    }
+  },
+  "provider": "SiliconFlow"
+}

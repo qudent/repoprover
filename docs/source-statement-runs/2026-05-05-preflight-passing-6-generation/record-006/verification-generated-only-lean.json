@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:626:20: error: Tactic `unfold` failed to unfold `numParts` in\n  #{p | p.parts.card = k} = #{p | p.largestPart = k}\n"
+}

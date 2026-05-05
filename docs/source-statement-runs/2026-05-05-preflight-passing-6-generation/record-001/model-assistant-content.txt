@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "theorem sum_lim (f : ℕ → PowerSeries K) (hsum : Summable f) : CoeffStabilizesTo (fun i => ∑ n in Finset.range (i+1), f n) (tsum f hsum) := by\n  intro n\n  have hn := hsum n\n  rcases hn with ⟨s, hs⟩\n  by_cases hne : s.Nonempty\n  · let N := s.max' hne\n    use N\n    intro i hi\n    have hiN : N ≤ i := hi\n    have hsub : s ⊆ Finset.range (i+1) := by\n      intro x hx\n      rw [Finset.mem_range]\n      have hxN : x ≤ N := Finset.le_max' s x hx\n      exact Nat.lt_succ_of_le (Nat.le_trans hxN hiN)\n    have hzero_range : ∀ x, x ∈ Finset.range (i+1) → x ∉ s → coeff K n (f x) = 0 := by\n      intro x hx hxnot\n      by_contra h\n      apply hxnot\n      exact hs x h\n    calc\n      coeff K n (∑ j in Finset.range (i+1), f j) = ∑ j in Finset.range (i+1), coeff K n (f j) := by rw [coeff_sum]\n      _ = ∑ j in s, coeff K n (f j) := (Finset.sum_subset hsub hzero_range).symm\n      _ = coeff K n (tsum f hsum) := by\n        dsimp [tsum]\n        rw [coeff_mk]\n  · use 0\n    intro i hi\n    have hs_empty : s = ∅ := Finset.not_nonempty_iff_eq_empty.mp hne\n    have hzero_all : ∀ x, coeff K n (f x) = 0 := by\n      intro x\n      by_contra h\n      have hx_s : x ∈ s := hs x h\n      rw [hs_empty] at hx_s\n      exact Finset.not_mem_empty x hx_s\n    have hzero_tsum : coeff K n (tsum f hsum) = 0 := by\n      dsimp [tsum]\n      rw [coeff_mk, hs_empty, Finset.sum_empty]\n    calc\n      coeff K n (∑ j in Finset.range (i+1), f j) = ∑ j in Finset.range (i+1), coeff K n (f j) := by rw [coeff_sum]\n      _ = 0 := by\n        simp [hzero_all]\n      _ = coeff K n (tsum f hsum) := by rw [hzero_tsum]\nwhere\n  Summable (f : ℕ → PowerSeries K) : Prop := ∀ n, ∃ s : Finset ℕ, ∀ i, coeff K n (f i) ≠ 0 → i ∈ s\n  tsum (f : ℕ → PowerSeries K) (h : Summable f) : PowerSeries K :=\n    PowerSeries.mk (λ n => ∑ i in (Classical.choose (h n)), coeff K n (f i))",
+  "declaration_name": "sum_lim",
+  "used_context": [
+    "CoeffStabilizesTo",
+    "coeff_sum",
+    "coeff_mk",
+    "Finset.range",
+    "Finset.sum_subset",
+    "Finset.le_max'",
+    "Finset.not_nonempty_iff_eq_empty",
+    "Nat.lt_succ_of_le"
+  ],
+  "notes": [
+    "Defined Summable and tsum locally using where; this may not match project definitions, but follows source statement."
+  ]
+}
