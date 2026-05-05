@@ -1,0 +1,1923 @@
+{
+  "generated_at": "2026-05-05T06:28:24.520968+00:00",
+  "records_selected": 36,
+  "records_completed": 36,
+  "records_attempted": 0,
+  "successes": 0,
+  "success_rate": null,
+  "preflight_successes": 11,
+  "preflight_success_rate": 0.3055555555555556,
+  "generation_successes": 0,
+  "generation_success_rate": null,
+  "paid_calls_made": 0,
+  "actual_cost_usd": 0.0,
+  "model": "deepseek/deepseek-v4-pro",
+  "max_tokens": 32768,
+  "reasoning_effort": "high",
+  "concurrency": 1,
+  "sample_mode": "corpus-spread",
+  "max_actual_cost_usd": 2.0,
+  "repair_attempts": 0,
+  "repair_max_tokens": 32768,
+  "repair_reasoning_effort": "high",
+  "preflight_only": true,
+  "generation_only": false,
+  "reuse_project": true,
+  "failure_classes": {
+    "verifier_preflight_error": 2,
+    "verifier_preflight_failed": 23
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+      "lean_path": "AlgebraicCombinatorics/CauchyBinet.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq"
+      ],
+      "gold_line_range": [
+        3407,
+        3422
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 28018,
+        "prompt_chars": 26804,
+        "estimated_prompt_tokens": 6701,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.002914935,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.031423095
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 28018,
+        "prompt_chars": 26804,
+        "estimated_prompt_tokens": 6701,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.002914935,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.031423095
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.031423095,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/CauchyBinet.lean:80:22: error(lean.unknownIdentifier): Unknown identifier `sum_over_image_eq_sum_perm`\nAlgebraicCombinatorics/CauchyBinet.lean:114:16: error(lean.unknownIdentifier): Unknown identifier `sum_over_subset_eq_det_mul`\nAlgebraicCombinatorics/CauchyBinet.lean:128:28: error: Function expected at\n  permsMapping\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  P\n\nHint: The identifier `permsMapping` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/CauchyBinet.lean:129:13: error: Invalid argument: Variable `permsMapping` is not a proposition or let-declaration\nAlgebraicCombinatorics/CauchyBinet.lean:129:2: error: `simp` made no progress\nAlgebraicCombinatorics/CauchyBinet.lean:137:12: error: Function expected at\n  permsMapping\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  P\n\nHint: The identifier `permsMapping` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/CauchyBinet.lean:139:6: error(lean.unknownIdentifier): Unknown identifier `det_add_expand_step2`\nAlgebraicCombinatorics/CauchyBinet.lean:138:78: error: unsolved goals\nR : Type u_1\ninst✝ : CommRing R\nx✝ : Sort u_2\npermsMapping : x✝\nn : ℕ\nA B : Matrix (Fin n) (Fin n) R\n⊢ (A + B).det = ∑ P, ∑ Q, ∑ σ ∈ sorry, Equiv.Perm.sign σ • ((∏ i ∈ P, A (σ i) i) * ∏ i ∈ Pᶜ, B (σ i) i)\nAlgebraicCombinatorics/CauchyBinet.lean:182:14: error(lean.unknownIdentifier): Unknown identifier `sum_perms_mapping_eq_det_product`\nAlgebraicCombinatorics/CauchyBinet.lean:185:8: error(lean.unknownIdentifier): Unknown identifier `permsMapping_empty_of_card_ne`\nAlgebraicCombinatorics/CauchyBinet.lean:173:16: error: unsolved goals\nR : Type u_1\ninst✝ : CommRing R\nn : ℕ\nA B : Matrix (Fin n) (Fin n) R\n⊢ Sort ?u.43556\n\nR : Type u_1\ninst✝ : CommRing R\nn : ℕ\nA B : Matrix (Fin n) (Fin n) R\n⊢ ?m.75\nAlgebraicCombinatorics/CauchyBinet.lean:189:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DesnanotJacobi.lean:AlgebraicCombinatorics.Determinants.desnanot_jacobi_general",
+      "lean_path": "AlgebraicCombinatorics/DesnanotJacobi.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.Determinants.desnanot_jacobi_general"
+      ],
+      "gold_line_range": [
+        6181,
+        6225
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 127439,
+        "prompt_chars": 124583,
+        "estimated_prompt_tokens": 31146,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.01354851,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.042056670000000004
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 127439,
+        "prompt_chars": 124583,
+        "estimated_prompt_tokens": 31146,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.01354851,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.042056670000000004
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.042056670000000004,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "(Fin 4) R\nhpq : 0 < 3\nhuv : 1 < 3\n⊢ A.det * (submatrixRemove2 A 0 3 1 3 hpq huv).det =\n    (submatrixRemove A 0 1).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 0 3).det * (submatrixRemove A 3 1).det\n\ncase inl.inr.inr.inr.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 0 < 3\nhuv : 2 < 3\n⊢ A.det * (submatrixRemove2 A 0 3 2 3 hpq huv).det =\n    (submatrixRemove A 0 2).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 0 3).det * (submatrixRemove A 3 2).det\n\ncase inr.inl.inr.inr.inl.inl.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 2\nhuv : 0 < 1\n⊢ A.det * (submatrixRemove2 A 1 2 0 1 hpq huv).det =\n    (submatrixRemove A 1 0).det * (submatrixRemove A 2 1).det -\n      (submatrixRemove A 1 1).det * (submatrixRemove A 2 0).det\n\ncase inr.inl.inr.inr.inl.inl.inr.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 2\nhuv : 0 < 2\n⊢ A.det * (submatrixRemove2 A 1 2 0 2 hpq huv).det =\n    (submatrixRemove A 1 0).det * (submatrixRemove A 2 2).det -\n      (submatrixRemove A 1 2).det * (submatrixRemove A 2 0).det\n\ncase inr.inl.inr.inr.inl.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 2\nhuv : 0 < 3\n⊢ A.det * (submatrixRemove2 A 1 2 0 3 hpq huv).det =\n    (submatrixRemove A 1 0).det * (submatrixRemove A 2 3).det -\n      (submatrixRemove A 1 3).det * (submatrixRemove A 2 0).det\n\ncase inr.inl.inr.inr.inl.inr.inl.inr.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq huv : 1 < 2\n⊢ A.det * (submatrixRemove2 A 1 2 1 2 hpq huv).det =\n    (submatrixRemove A 1 1).det * (submatrixRemove A 2 2).det -\n      (submatrixRemove A 1 2).det * (submatrixRemove A 2 1).det\n\ncase inr.inl.inr.inr.inl.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 2\nhuv : 1 < 3\n⊢ A.det * (submatrixRemove2 A 1 2 1 3 hpq huv).det =\n    (submatrixRemove A 1 1).det * (submatrixRemove A 2 3).det -\n      (submatrixRemove A 1 3).det * (submatrixRemove A 2 1).det\n\ncase inr.inl.inr.inr.inl.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 2\nhuv : 2 < 3\n⊢ A.det * (submatrixRemove2 A 1 2 2 3 hpq huv).det =\n    (submatrixRemove A 1 2).det * (submatrixRemove A 2 3).det -\n      (submatrixRemove A 1 3).det * (submatrixRemove A 2 2).det\n\ncase inr.inl.inr.inr.inr.inl.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 3\nhuv : 0 < 1\n⊢ A.det * (submatrixRemove2 A 1 3 0 1 hpq huv).det =\n    (submatrixRemove A 1 0).det * (submatrixRemove A 3 1).det -\n      (submatrixRemove A 1 1).det * (submatrixRemove A 3 0).det\n\ncase inr.inl.inr.inr.inr.inl.inr.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 3\nhuv : 0 < 2\n⊢ A.det * (submatrixRemove2 A 1 3 0 2 hpq huv).det =\n    (submatrixRemove A 1 0).det * (submatrixRemove A 3 2).det -\n      (submatrixRemove A 1 2).det * (submatrixRemove A 3 0).det\n\ncase inr.inl.inr.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 3\nhuv : 0 < 3\n⊢ A.det * (submatrixRemove2 A 1 3 0 3 hpq huv).det =\n    (submatrixRemove A 1 0).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 1 3).det * (submatrixRemove A 3 0).det\n\ncase inr.inl.inr.inr.inr.inr.inl.inr.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 3\nhuv : 1 < 2\n⊢ A.det * (submatrixRemove2 A 1 3 1 2 hpq huv).det =\n    (submatrixRemove A 1 1).det * (submatrixRemove A 3 2).det -\n      (submatrixRemove A 1 2).det * (submatrixRemove A 3 1).det\n\ncase inr.inl.inr.inr.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq huv : 1 < 3\n⊢ A.det * (submatrixRemove2 A 1 3 1 3 hpq huv).det =\n    (submatrixRemove A 1 1).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 1 3).det * (submatrixRemove A 3 1).det\n\ncase inr.inl.inr.inr.inr.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 1 < 3\nhuv : 2 < 3\n⊢ A.det * (submatrixRemove2 A 1 3 2 3 hpq huv).det =\n    (submatrixRemove A 1 2).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 1 3).det * (submatrixRemove A 3 2).det\n\ncase inr.inr.inl.inr.inr.inr.inl.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 2 < 3\nhuv : 0 < 1\n⊢ A.det * (submatrixRemove2 A 2 3 0 1 hpq huv).det =\n    (submatrixRemove A 2 0).det * (submatrixRemove A 3 1).det -\n      (submatrixRemove A 2 1).det * (submatrixRemove A 3 0).det\n\ncase inr.inr.inl.inr.inr.inr.inl.inr.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 2 < 3\nhuv : 0 < 2\n⊢ A.det * (submatrixRemove2 A 2 3 0 2 hpq huv).det =\n    (submatrixRemove A 2 0).det * (submatrixRemove A 3 2).det -\n      (submatrixRemove A 2 2).det * (submatrixRemove A 3 0).det\n\ncase inr.inr.inl.inr.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 2 < 3\nhuv : 0 < 3\n⊢ A.det * (submatrixRemove2 A 2 3 0 3 hpq huv).det =\n    (submatrixRemove A 2 0).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 2 3).det * (submatrixRemove A 3 0).det\n\ncase inr.inr.inl.inr.inr.inr.inr.inl.inr.inr.inl\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 2 < 3\nhuv : 1 < 2\n⊢ A.det * (submatrixRemove2 A 2 3 1 2 hpq huv).det =\n    (submatrixRemove A 2 1).det * (submatrixRemove A 3 2).det -\n      (submatrixRemove A 2 2).det * (submatrixRemove A 3 1).det\n\ncase inr.inr.inl.inr.inr.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq : 2 < 3\nhuv : 1 < 3\n⊢ A.det * (submatrixRemove2 A 2 3 1 3 hpq huv).det =\n    (submatrixRemove A 2 1).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 2 3).det * (submatrixRemove A 3 1).det\n\ncase inr.inr.inl.inr.inr.inr.inr.inr.inl.inr.inr.inr\nR : Type u_1\ninst✝ : CommRing R\nA : Matrix (Fin 4) (Fin 4) R\nhpq huv : 2 < 3\n⊢ A.det * (submatrixRemove2 A 2 3 2 3 hpq huv).det =\n    (submatrixRemove A 2 2).det * (submatrixRemove A 3 3).det -\n      (submatrixRemove A 2 3).det * (submatrixRemove A 3 2).det\nAlgebraicCombinatorics/DesnanotJacobi.lean:1452:25: error(lean.unknownIdentifier): Unknown identifier `adjugate_toBlocks₁₁_det_of_invertible`\nAlgebraicCombinatorics/DesnanotJacobi.lean:1812:27: error: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached\n\nNote: Use `set_option maxHeartbeats <num>` to set the limit.\n\nHint: Additional diagnostic information may be available using the `set_option diagnostics true` command.\nAlgebraicCombinatorics/DesnanotJacobi.lean:1855:8: error: (deterministic) timeout at `«tactic execution»`, maximum number of heartbeats (200000) has been reached\n\nNote: Use `set_option maxHeartbeats <num>` to set the limit.\n\nHint: Additional diagnostic information may be available using the `set_option diagnostics true` command.\nAlgebraicCombinatorics/DesnanotJacobi.lean:2045:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/DesnanotJacobi.lean:2048:0: error: Invalid name after `end`: Expected `InverseAdjugateRelation`, but found `Determinants`\n\nHint: If you meant to end the outer scope(s) `Determinants`, you must end all the intervening scopes `Determinants.InverseAdjugateRelation`:\n  end Determinants.̲I̲n̲v̲e̲r̲s̲e̲A̲d̲j̲u̲g̲a̲t̲e̲R̲e̲l̲a̲t̲i̲o̲n̲\nAlgebraicCombinatorics/DesnanotJacobi.lean:2049:0: error: Invalid name after `end`: Expected `InverseAdjugateRelation`, but found `AlgebraicCombinatorics`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics`, you must end all the intervening scopes `AlgebraicCombinatorics.Determinants.InverseAdjugateRelation`:\n  end AlgebraicCombinatorics.̲D̲e̲t̲e̲r̲m̲i̲n̲a̲n̲t̲s̲.̲I̲n̲v̲e̲r̲s̲e̲A̲d̲j̲u̲g̲a̲t̲e̲R̲e̲l̲a̲t̲i̲o̲n̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "lean_path": "AlgebraicCombinatorics/Details/Limits.lean",
+      "gold_declaration_names": [
+        "PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'"
+      ],
+      "gold_line_range": [
+        354,
+        372
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18206,
+        "prompt_chars": 17378,
+        "estimated_prompt_tokens": 4345,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0018900750000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030398235000000003
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18206,
+        "prompt_chars": 17378,
+        "estimated_prompt_tokens": 4345,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0018900750000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030398235000000003
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030398235000000003,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Details/Limits.lean:66:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_lowerTriangular",
+      "lean_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.Det.det_lowerTriangular"
+      ],
+      "gold_line_range": [
+        441,
+        449
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 11000,
+        "prompt_chars": 10337,
+        "estimated_prompt_tokens": 2585,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001124475,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029632635
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 11000,
+        "prompt_chars": 10337,
+        "estimated_prompt_tokens": 2585,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001124475,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029632635
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029632635,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:41:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "lean_path": "AlgebraicCombinatorics/DividingFPS.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.fps_newtonBinomial_neg"
+      ],
+      "gold_line_range": [
+        593,
+        605
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18562,
+        "prompt_chars": 17726,
+        "estimated_prompt_tokens": 4432,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00192792,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03043608
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18562,
+        "prompt_chars": 17726,
+        "estimated_prompt_tokens": 4432,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00192792,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03043608
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03043608,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/DividingFPS.lean:128:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.module_add_zero",
+      "lean_path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.module_add_zero"
+      ],
+      "gold_line_range": [
+        306,
+        308
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12411,
+        "prompt_chars": 11488,
+        "estimated_prompt_tokens": 2872,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00124932,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029757480000000003
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12411,
+        "prompt_chars": 11488,
+        "estimated_prompt_tokens": 2872,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00124932,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029757480000000003
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029757480000000003,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:19:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:22:0: error: Missing name after `end`: Expected the current scope name `ModuleBasics`\n\nHint: To end the current scope `ModuleBasics`, specify its name:\n  end ̲M̲o̲d̲u̲l̲e̲B̲a̲s̲i̲c̲s̲\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:23:0: error: Invalid name after `end`: Expected `FPS.ModuleBasics`, but found `AlgebraicCombinatorics.FPS`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics.FPS`, you must end all the intervening scopes `AlgebraicCombinatorics.FPS.ModuleBasics`:\n  end AlgebraicCombinatorics.FPS.̲M̲o̲d̲u̲l̲e̲B̲a̲s̲i̲c̲s̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.fraction_one",
+      "lean_path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.fraction_one"
+      ],
+      "gold_line_range": [
+        672,
+        674
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 9555,
+        "prompt_chars": 8928,
+        "estimated_prompt_tokens": 2232,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00097092,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02947908
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 9555,
+        "prompt_chars": 8928,
+        "estimated_prompt_tokens": 2232,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00097092,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02947908
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02947908,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:25:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:28:0: error: Missing name after `end`: Expected the current scope name `InversesAndFractions`\n\nHint: To end the current scope `InversesAndFractions`, specify its name:\n  end ̲I̲n̲v̲e̲r̲s̲e̲s̲A̲n̲d̲F̲r̲a̲c̲t̲i̲o̲n̲s̲\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:29:0: error: Invalid name after `end`: Expected `FPS.InversesAndFractions`, but found `AlgebraicCombinatorics.FPS`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics.FPS`, you must end all the intervening scopes `AlgebraicCombinatorics.FPS.InversesAndFractions`:\n  end AlgebraicCombinatorics.FPS.̲I̲n̲v̲e̲r̲s̲e̲s̲A̲n̲d̲F̲r̲a̲c̲t̲i̲o̲n̲s̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/FPS/ExpLog.lean:PowerSeries.PowerSeries₀.zero_mem",
+      "lean_path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+      "gold_declaration_names": [
+        "PowerSeries.PowerSeries₀.zero_mem"
+      ],
+      "gold_line_range": [
+        520,
+        522
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 27366,
+        "prompt_chars": 25975,
+        "estimated_prompt_tokens": 6494,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00282489,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03133305
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 27366,
+        "prompt_chars": 25975,
+        "estimated_prompt_tokens": 6494,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00282489,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03133305
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03133305,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/ExpLog.lean:19:13: error: Missing name after `end`: Expected the current scope name `PowerSeriesSets`\n\nHint: To end the current scope `PowerSeriesSets`, specify its name:\n  i̵n̵e̲n̲d̲ ̲P̲o̲w̲e̲r̲S̲e̲r̲i̲e̲s̲S̲e̲t̲s̲\nAlgebraicCombinatorics/FPS/ExpLog.lean:176:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/FPS/ExpLog.lean:179:0: error: Missing name after `end`: Expected the current scope name `PowerSeriesSets`\n\nHint: To end the current scope `PowerSeriesSets`, specify its name:\n  end ̲P̲o̲w̲e̲r̲S̲e̲r̲i̲e̲s̲S̲e̲t̲s̲\nAlgebraicCombinatorics/FPS/ExpLog.lean:180:0: error: Invalid name after `end`: Expected `PowerSeriesSets`, but found `PowerSeries`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 9,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInProd_of_finite",
+      "lean_path": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean",
+      "gold_declaration_names": [
+        "PowerSeries.coeffFinitelyDeterminedInProd_of_finite"
+      ],
+      "gold_line_range": [
+        172,
+        182
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15583,
+        "prompt_chars": 14787,
+        "estimated_prompt_tokens": 3697,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001608195,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030116355
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15583,
+        "prompt_chars": 14787,
+        "estimated_prompt_tokens": 3697,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001608195,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030116355
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030116355,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:47:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 10,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.exists_xn_approximator",
+      "lean_path": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean",
+      "gold_declaration_names": [
+        "PowerSeries.exists_xn_approximator"
+      ],
+      "gold_line_range": [
+        443,
+        468
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 17953,
+        "prompt_chars": 17128,
+        "estimated_prompt_tokens": 4282,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00186267,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03037083
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 17953,
+        "prompt_chars": 17128,
+        "estimated_prompt_tokens": 4282,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00186267,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03037083
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03037083,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:98:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.tprod_fubini_full",
+      "lean_path": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean",
+      "gold_declaration_names": [
+        "PowerSeries.tprod_fubini_full"
+      ],
+      "gold_line_range": [
+        2880,
+        2901
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 50982,
+        "prompt_chars": 49340,
+        "estimated_prompt_tokens": 12335,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.005365725,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.033873885
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 50982,
+        "prompt_chars": 49340,
+        "estimated_prompt_tokens": 12335,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.005365725,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.033873885
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.033873885,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:737:2: error: Tactic `apply` failed: could not unify the conclusion of `@multipliable_one_add_of_summable`\n  (Summable fun i => ‖?f i‖) → _root_.Multipliable fun i => 1 + ?f i\nwith the goal\n  Multipliable fun i => 1 + X ^ 2 ^ i\n\nNote: The full type of `@multipliable_one_add_of_summable` is\n  ∀ {ι : Type ?u.36032} {R : Type ?u.36031} [inst : NormedCommRing R] [NormOneClass R] {f : ι → R} [CompleteSpace R],\n    (Summable fun i => ‖f i‖) → _root_.Multipliable fun i => 1 + f i\n\nR : Type u_1\ninst✝ : CommRing R\n⊢ Multipliable fun i => 1 + X ^ 2 ^ i\nAlgebraicCombinatorics/FPS/InfiniteProducts.lean:762:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 12,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts2.lean:coeff_mul_tprod_one_add_eq_coeff",
+      "lean_path": "AlgebraicCombinatorics/FPS/InfiniteProducts2.lean",
+      "gold_declaration_names": [
+        "coeff_mul_tprod_one_add_eq_coeff"
+      ],
+      "gold_line_range": [
+        2386,
+        2433
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 25091,
+        "prompt_chars": 23974,
+        "estimated_prompt_tokens": 5994,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0026073900000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.031115550000000002
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 25091,
+        "prompt_chars": 23974,
+        "estimated_prompt_tokens": 5994,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0026073900000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.031115550000000002
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.031115550000000002,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts2.lean:27:8: warning: automatically included section variable(s) unused in theorem `_private.AlgebraicCombinatorics.FPS.InfiniteProducts2.0.coeff_prod_one_add_eq_coeff_one_of_high_order`:\n  [TopologicalSpace K]\n  [IsTopologicalRing K]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [TopologicalSpace K] [IsTopologicalRing K] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:66:19: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  IsTopologicalRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:70:0: warning: automatically included section variable(s) unused in theorem `coeff_prod_eq_of_extra_high_order'`:\n  [TopologicalSpace K]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [TopologicalSpace K] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:107:0: error: `[T2Space K]` did not match any variables in the current scope\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:109:0: warning: automatically included section variable(s) unused in theorem `coeff_tprod_one_add_eq_coeff_prod_of_high_order'`:\n  [TopologicalSpace K]\n  [IsTopologicalRing K]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [TopologicalSpace K] [IsTopologicalRing K] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:134:38: error: Function expected at\n  S\nbut this term has type\n  ?m.4\n\nNote: Expected a function because this term is being applied to the argument\n  i\n\nHint: The identifier `S` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:134:55: error: Function expected at\n  S\nbut this term has type\n  ?m.4\n\nNote: Expected a function because this term is being applied to the argument\n  i\n\nHint: The identifier `S` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:133:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Classical.propDecidable', which is 'noncomputable'\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:139:19: error: Function expected at\n  S\nbut this term has type\n  ?m.4\n\nNote: Expected a function because this term is being applied to the argument\n  i\n\nHint: The identifier `S` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:141:38: error: Function expected at\n  S\nbut this term has type\n  ?m.4\n\nNote: Expected a function because this term is being applied to the argument\n  i\n\nHint: The identifier `S` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:143:49: error: unsolved goals\nK : Type u_1\ninst✝² : CommRing K\ninst✝¹ : TopologicalSpace K\ninst✝ : IsTopologicalRing K\nI : Type u_2\nx✝ : Sort u_3\nS : x✝\nI_n : Set I\nhI_n_finite : I_n.Finite\np : I → sorry → K⟦X⟧\nhp_zero : ∀ (i : I), p i 0 = 1\nf : ↥hI_n_finite.toFinset → sorry\n⊢ ∏ i, p (↑i) (f i) = ∏' (i : I), p i ?m.40\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:170:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/FPS/InfiniteProducts2.lean:173:0: error: Missing name after `end`: Expected the current scope name `IrrelevanceLemma`\n\nHint: To end the current scope `IrrelevanceLemma`, specify its name:\n  end ̲I̲r̲r̲e̲l̲e̲v̲a̲n̲c̲e̲L̲e̲m̲m̲a̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 13,
+      "record_id": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.T_neg_one_mul_T",
+      "lean_path": "AlgebraicCombinatorics/FPS/LaurentSeries.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.Laurent.T_neg_one_mul_T"
+      ],
+      "gold_line_range": [
+        283,
+        301
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13897,
+        "prompt_chars": 13154,
+        "estimated_prompt_tokens": 3289,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0014307150000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029938875
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13897,
+        "prompt_chars": 13154,
+        "estimated_prompt_tokens": 3289,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0014307150000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029938875
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029938875,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:32:4: error: failed to compile definition, compiler IR check failed at `AlgebraicCombinatorics.FPS.Laurent.laurentPolynomial_algebra._redArg`. Error: depends on declaration 'AlgebraicCombinatorics.laurentPolynomial_algebra', which has no executable code; consider marking definition as 'noncomputable'\nAlgebraicCombinatorics/FPS/LaurentSeries.lean:49:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/FPS/LaurentSeries.lean:52:0: error: Missing name after `end`: Expected the current scope name `LaurentPolynomialBasics`\n\nHint: To end the current scope `LaurentPolynomialBasics`, specify its name:\n  end ̲L̲a̲u̲r̲e̲n̲t̲P̲o̲l̲y̲n̲o̲m̲i̲a̲l̲B̲a̲s̲i̲c̲s̲\nAlgebraicCombinatorics/FPS/LaurentSeries.lean:53:0: error: Invalid name after `end`: Expected `FPS.Laurent.LaurentPolynomialBasics`, but found `AlgebraicCombinatorics.FPS.Laurent`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics.FPS.Laurent`, you must end all the intervening scopes `AlgebraicCombinatorics.FPS.Laurent.LaurentPolynomialBasics`:\n  end AlgebraicCombinatorics.FPS.Laurent.̲L̲a̲u̲r̲e̲n̲t̲P̲o̲l̲y̲n̲o̲m̲i̲a̲l̲B̲a̲s̲i̲c̲s̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 14,
+      "record_id": "AlgebraicCombinatorics/FPS/Limits.lean:PowerSeries.coeffStabilizesTo_mul",
+      "lean_path": "AlgebraicCombinatorics/FPS/Limits.lean",
+      "gold_declaration_names": [
+        "PowerSeries.coeffStabilizesTo_mul"
+      ],
+      "gold_line_range": [
+        497,
+        510
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 17460,
+        "prompt_chars": 16383,
+        "estimated_prompt_tokens": 4096,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00178176,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03028992
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 17460,
+        "prompt_chars": 16383,
+        "estimated_prompt_tokens": 4096,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00178176,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03028992
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03028992,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Limits.lean:59:0: error: Invalid `end`: There is no current scope to end\n\nNote: Scopes are introduced using `namespace` and `section`\nAlgebraicCombinatorics/FPS/Limits.lean:79:11: error(lean.unknownIdentifier): Unknown constant `Seq.StabilizesTo`\nAlgebraicCombinatorics/FPS/Limits.lean:78:4: warning: The namespace 'PowerSeries' is duplicated in the declaration 'PowerSeries.PowerSeries.CoeffStabilizesTo'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/Limits.lean:81:8: warning: declaration uses `sorry`\nAlgebraicCombinatorics/FPS/Limits.lean:85:2: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:86:2: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:87:2: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:88:2: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:81:8: warning: The namespace 'PowerSeries' is duplicated in the declaration 'PowerSeries.PowerSeries.coeffStabilizesTo_X_pow'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/Limits.lean:84:2: warning: 'use n + 1' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:85:2: warning: 'intro i hi' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:86:2: warning: 'simp only [map_zero, coeff_X_pow]' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:87:2: warning: 'have hne : n ≠ i := Nat.ne_of_lt (Nat.lt_of_succ_le hi)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:88:2: warning: 'simp [hne]' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/Limits.lean:101:8: error(lean.unknownIdentifier): Unknown identifier `xnEquiv_mul`\nAlgebraicCombinatorics/FPS/Limits.lean:102:2: error: No goals to be solved\nAlgebraicCombinatorics/FPS/Limits.lean:90:8: warning: The namespace 'PowerSeries' is duplicated in the declaration 'PowerSeries.PowerSeries.xnEquiv_div'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/Limits.lean:104:8: warning: The namespace 'PowerSeries' is duplicated in the declaration 'PowerSeries.PowerSeries.coeff_div_eq_of_coeff_eq'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/Limits.lean:118:2: error: expected a term of the shape `∀ xs, ∃ a, p xs a` or `∀ xs, p xs ∧ q xs`\nAlgebraicCombinatorics/FPS/Limits.lean:112:8: warning: The namespace 'PowerSeries' is duplicated in the declaration 'PowerSeries.PowerSeries.exists_xnEquiv_of_coeffStabilizesTo'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/Limits.lean:129:2: error: `simp` made no progress\nAlgebraicCombinatorics/FPS/Limits.lean:124:8: warning: The namespace 'PowerSeries' is duplicated in the declaration 'PowerSeries.PowerSeries.coeffStabilizesTo_add'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/Limits.lean:133:8: warning: The namespace 'PowerSeries' is duplicated in the declaration 'PowerSeries.PowerSeries.__repoprover_source_statement_preflight'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/Limits.lean:133:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 15,
+      "record_id": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean:AlgebraicCombinatorics.FPS.constantCoeff_fpsPow",
+      "lean_path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.constantCoeff_fpsPow"
+      ],
+      "gold_line_range": [
+        682,
+        687
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 19187,
+        "prompt_chars": 18313,
+        "estimated_prompt_tokens": 4579,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001991865,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030500025
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 19187,
+        "prompt_chars": 18313,
+        "estimated_prompt_tokens": 4579,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001991865,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030500025
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030500025,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean:99:36: error: Unknown identifier `fpsPow` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/FPS/NonIntegerPowers.lean:104:24: error: elaboration function for `AlgebraicCombinatorics.FPS.«term_^ᶠ_»` has not been implemented\n  f ^ᶠ c\nAlgebraicCombinatorics/FPS/NonIntegerPowers.lean:118:8: warning: automatically included section variable(s) unused in theorem `_private.AlgebraicCombinatorics.FPS.NonIntegerPowers.0.AlgebraicCombinatorics.FPS.subst_X'`:\n  [Algebra ℚ K]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Algebra ℚ K] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nAlgebraicCombinatorics/FPS/NonIntegerPowers.lean:180:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 16,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm",
+      "lean_path": "AlgebraicCombinatorics/FPS/NotationsExamples.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.binom_symm"
+      ],
+      "gold_line_range": [
+        355,
+        360
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12284,
+        "prompt_chars": 11581,
+        "estimated_prompt_tokens": 2896,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00125976,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02976792
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12284,
+        "prompt_chars": 11581,
+        "estimated_prompt_tokens": 2896,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00125976,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02976792
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02976792,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:34:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 17,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "lean_path": "AlgebraicCombinatorics/FPS/Substitution.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.fps_comp_coeff_finite"
+      ],
+      "gold_line_range": [
+        111,
+        126
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13902,
+        "prompt_chars": 13114,
+        "estimated_prompt_tokens": 3279,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001426365,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029934525
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13902,
+        "prompt_chars": 13114,
+        "estimated_prompt_tokens": 3279,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001426365,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029934525
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029934525,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:56:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 18,
+      "record_id": "AlgebraicCombinatorics/FPS/WeightedSets.lean:WeightedSet.weightGenFun_eq_of_isomorphic",
+      "lean_path": "AlgebraicCombinatorics/FPS/WeightedSets.lean",
+      "gold_declaration_names": [
+        "WeightedSet.weightGenFun_eq_of_isomorphic"
+      ],
+      "gold_line_range": [
+        115,
+        131
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13553,
+        "prompt_chars": 12536,
+        "estimated_prompt_tokens": 3134,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00136329,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02987145
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13553,
+        "prompt_chars": 12536,
+        "estimated_prompt_tokens": 3134,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00136329,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02987145
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02987145,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/WeightedSets.lean:31:4: warning: The namespace 'WeightedSet' is duplicated in the declaration 'WeightedSet.WeightedSet.IsFiniteType'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:36:47: error(lean.invalidField): Invalid field `IsFiniteType`: The environment does not contain `WeightedSet.IsFiniteType`, so it is not possible to project the field `IsFiniteType` from an expression\n  W\nof type `WeightedSet α`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:36:4: warning: The namespace 'WeightedSet' is duplicated in the declaration 'WeightedSet.WeightedSet.countOfWeight'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:45:46: error(lean.invalidField): Invalid field `IsFiniteType`: The environment does not contain `WeightedSet.IsFiniteType`, so it is not possible to project the field `IsFiniteType` from an expression\n  W\nof type `WeightedSet α`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:46:29: error(lean.invalidField): Invalid field `countOfWeight`: The environment does not contain `WeightedSet.countOfWeight`, so it is not possible to project the field `countOfWeight` from an expression\n  W\nof type `WeightedSet α`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:45:4: warning: The namespace 'WeightedSet' is duplicated in the declaration 'WeightedSet.WeightedSet.weightGenFun'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:49:25: error: Unknown identifier `AreIsomorphic` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/FPS/WeightedSets.lean:49:0: warning: The namespace 'WeightedSet' is duplicated in the declaration 'WeightedSet.WeightedSet.«term_≅ᵥ_»'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:49:0: warning: The namespace 'WeightedSet' is duplicated in the declaration 'WeightedSet.WeightedSet.«_aux_AlgebraicCombinatorics_FPS_WeightedSets___macroRules_WeightedSet_WeightedSet_term_≅ᵥ__1»'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:52:8: warning: The namespace 'WeightedSet' is duplicated in the declaration 'WeightedSet.WeightedSet.__repoprover_source_statement_preflight'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/FPS/WeightedSets.lean:52:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 19,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
+      "lean_path": "AlgebraicCombinatorics/FPSDefinition.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.X_mul_eq_shift"
+      ],
+      "gold_line_range": [
+        292,
+        298
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15435,
+        "prompt_chars": 14311,
+        "estimated_prompt_tokens": 3578,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015564300000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030064590000000002
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15435,
+        "prompt_chars": 14311,
+        "estimated_prompt_tokens": 3578,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015564300000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030064590000000002
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030064590000000002,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:47:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 20,
+      "record_id": "AlgebraicCombinatorics/LaurentSeries.lean:AlgebraicCombinatorics.DoublyInfinitePowerSeries.isLaurentSeries_ofLaurentSeries",
+      "lean_path": "AlgebraicCombinatorics/LaurentSeries.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.DoublyInfinitePowerSeries.isLaurentSeries_ofLaurentSeries"
+      ],
+      "gold_line_range": [
+        890,
+        911
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15421,
+        "prompt_chars": 14551,
+        "estimated_prompt_tokens": 3638,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00158253,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03009069
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15421,
+        "prompt_chars": 14551,
+        "estimated_prompt_tokens": 3638,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00158253,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03009069
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03009069,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/LaurentSeries.lean:30:4: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.coeff'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:36:8: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.coeff_zero'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:49:4: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.IsLaurentSeries'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:54:4: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.ofLaurentSeries'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:58:4: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.single'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:62:2: error: `simp` made no progress\nAlgebraicCombinatorics/LaurentSeries.lean:60:8: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.coeff_eq_single_contrib'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:65:8: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.IsLaurentSeries.support_bddBelow'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:75:8: warning: The namespace 'DoublyInfinitePowerSeries' is duplicated in the declaration 'AlgebraicCombinatorics.DoublyInfinitePowerSeries.DoublyInfinitePowerSeries.__repoprover_source_statement_preflight'\n\nNote: This linter can be disabled with `set_option linter.dupNamespace false`\nAlgebraicCombinatorics/LaurentSeries.lean:75:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/LaurentSeries.lean:79:0: error: Invalid name after `end`: Expected `DoublyInfinitePowerSeries`, but found `AlgebraicCombinatorics`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics`, you must end all the intervening scopes `AlgebraicCombinatorics.DoublyInfinitePowerSeries`:\n  end AlgebraicCombinatorics.̲D̲o̲u̲b̲l̲y̲I̲n̲f̲i̲n̲i̲t̲e̲P̲o̲w̲e̲r̲S̲e̲r̲i̲e̲s̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 21,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "lean_path": "AlgebraicCombinatorics/Partitions/Basics.lean",
+      "gold_declaration_names": [
+        "Nat.Partition.parts_eq_zero_of_partition_zero"
+      ],
+      "gold_line_range": [
+        438,
+        443
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10514,
+        "prompt_chars": 9797,
+        "estimated_prompt_tokens": 2450,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00106575,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029573910000000002
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10514,
+        "prompt_chars": 9797,
+        "estimated_prompt_tokens": 2450,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00106575,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029573910000000002
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029573910000000002,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:15:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 22,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_sum_eq_partsLeqCount",
+      "lean_path": "AlgebraicCombinatorics/Partitions/Basics.lean",
+      "gold_declaration_names": [
+        "Nat.Partition.partsCount_sum_eq_partsLeqCount"
+      ],
+      "gold_line_range": [
+        2267,
+        2278
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 47108,
+        "prompt_chars": 45540,
+        "estimated_prompt_tokens": 11385,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0049524750000000005,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.033460635
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 47108,
+        "prompt_chars": 45540,
+        "estimated_prompt_tokens": 11385,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0049524750000000005,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.033460635
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.033460635,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:738:32: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  Semiring R\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Partitions/Basics.lean:738:31: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HPow R⟦X⟧ ℕ ?m.26\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Partitions/Basics.lean:739:28: error: Type mismatch\n  #(restricted n fun x => x ≤ m)\nhas type\n  ℕ\nbut is expected to have type\n  R\nAlgebraicCombinatorics/Partitions/Basics.lean:740:12: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  TopologicalSpace R\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Partitions/Basics.lean:741:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  CommMonoid R⟦X⟧\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Partitions/Basics.lean:739:65: error: unsolved goals\ncase refine_3\nR : Type u_1\nm : ℕ\nh :\n  HasProd (fun i => if i + 1 ≤ m then ∑' (j : ℕ), X ^ ((i + 1) * j) else 1)\n    (PowerSeries.mk fun n => ↑(#(restricted n fun x => x ≤ m)))\n⊢ ∏ k ∈ range m, ∑' (j : ℕ), sorry = PowerSeries.mk fun n => sorry\n\ncase refine_1\nR : Type u_1\nm : ℕ\n⊢ TopologicalSpace R\n\ncase refine_2\nR : Type u_1\nm : ℕ\n⊢ CommSemiring R\nAlgebraicCombinatorics/Partitions/Basics.lean:757:4: error: Type mismatch\n  #(restricted n fun x => x ≤ m)\nhas type\n  ℕ\nbut is expected to have type\n  R\nAlgebraicCombinatorics/Partitions/Basics.lean:758:32: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  Semiring R\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Partitions/Basics.lean:758:31: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HPow R⟦X⟧ ℕ ?m.35\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Partitions/Basics.lean:759:6: error(lean.unknownIdentifier): Unknown identifier `partitionCount_genFun_partsLeq_finprod`\nAlgebraicCombinatorics/Partitions/Basics.lean:758:71: error: unsolved goals\nR : Type u_1\nm n : ℕ\n⊢ sorry = sorry\nAlgebraicCombinatorics/Partitions/Basics.lean:763:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 23,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "lean_path": "AlgebraicCombinatorics/Permutations/Basics.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.perm_pow_succ"
+      ],
+      "gold_line_range": [
+        208,
+        210
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10686,
+        "prompt_chars": 9939,
+        "estimated_prompt_tokens": 2485,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001080975,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029589135000000003
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10686,
+        "prompt_chars": 9939,
+        "estimated_prompt_tokens": 2485,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001080975,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029589135000000003
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029589135000000003,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:12:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 24,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "lean_path": "AlgebraicCombinatorics/Permutations/Basics.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.simpleTransposition_isSwap"
+      ],
+      "gold_line_range": [
+        820,
+        827
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15376,
+        "prompt_chars": 14582,
+        "estimated_prompt_tokens": 3646,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015860100000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03009417
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15376,
+        "prompt_chars": 14582,
+        "estimated_prompt_tokens": 3646,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015860100000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03009417
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03009417,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:66:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 25,
+      "record_id": "AlgebraicCombinatorics/Permutations/CycleDecomposition.lean:AlgebraicCombinatorics.CycleDecomposition.sign_eq_neg_one_pow_card_sub_numCycles",
+      "lean_path": "AlgebraicCombinatorics/Permutations/CycleDecomposition.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.CycleDecomposition.sign_eq_neg_one_pow_card_sub_numCycles"
+      ],
+      "gold_line_range": [
+        409,
+        441
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15528,
+        "prompt_chars": 14233,
+        "estimated_prompt_tokens": 3559,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001548165,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030056325000000002
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15528,
+        "prompt_chars": 14233,
+        "estimated_prompt_tokens": 3559,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001548165,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030056325000000002
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030056325000000002,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/CycleDecomposition.lean:18:2: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  DecidableEq α\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:18:31: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  Fintype α\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:18:48: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  DecidableEq α\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:22:51: error: numerals are data in Lean, but the expected type is universe polymorphic and may be a proposition\n  Perm α : Sort (max 1 ?u.492)\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:22:65: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  Fintype α\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:23:8: warning: declaration uses `sorry`\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:34:0: error: stuck at solving universe constraint\n  ?u.579+1 =?= max 1 ?u.576\nwhile trying to unify\n  Type ?u.579 : Type (?u.579 + 1)\nwith\n  Sort (max 1 ?u.576) : Type (max 1 ?u.576)\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:38:27: error: Function expected at\n  cycles\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  (1 : Perm α)\n\nHint: The identifier `cycles` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:39:8: error: Invalid argument: Variable `cycles` is not a proposition or let-declaration\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:38:54: error: unsolved goals\nx✝ : Sort u_1\ncycles : x✝\n⊢ sorry () = ∅\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:63:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:66:0: error: Missing name after `end`: Expected the current scope name `Sign`\n\nHint: To end the current scope `Sign`, specify its name:\n  end ̲S̲i̲g̲n̲\nAlgebraicCombinatorics/Permutations/CycleDecomposition.lean:67:0: error: Invalid name after `end`: Expected `CycleDecomposition.Sign`, but found `AlgebraicCombinatorics.CycleDecomposition`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics.CycleDecomposition`, you must end all the intervening scopes `AlgebraicCombinatorics.CycleDecomposition.Sign`:\n  end AlgebraicCombinatorics.CycleDecomposition.̲S̲i̲g̲n̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 26,
+      "record_id": "AlgebraicCombinatorics/Permutations/Signs.lean:Equiv.Perm.sign_coe_eq_neg_one_pow_invCount",
+      "lean_path": "AlgebraicCombinatorics/Permutations/Signs.lean",
+      "gold_declaration_names": [
+        "Equiv.Perm.sign_coe_eq_neg_one_pow_invCount"
+      ],
+      "gold_line_range": [
+        149,
+        154
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13071,
+        "prompt_chars": 12335,
+        "estimated_prompt_tokens": 3084,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00134154,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.0298497
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13071,
+        "prompt_chars": 12335,
+        "estimated_prompt_tokens": 3084,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00134154,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.0298497
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.0298497,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Signs.lean:86:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\nAlgebraicCombinatorics/Permutations/Signs.lean:89:0: error: Missing name after `end`: Expected the current scope name `SignDefinition`\n\nHint: To end the current scope `SignDefinition`, specify its name:\n  end ̲S̲i̲g̲n̲D̲e̲f̲i̲n̲i̲t̲i̲o̲n̲\nAlgebraicCombinatorics/Permutations/Signs.lean:90:0: error: Invalid name after `end`: Expected `Perm.SignDefinition`, but found `Equiv.Perm`\n\nHint: If you meant to end the outer scope(s) `Equiv.Perm`, you must end all the intervening scopes `Equiv.Perm.SignDefinition`:\n  end Equiv.Perm.̲S̲i̲g̲n̲D̲e̲f̲i̲n̲i̲t̲i̲o̲n̲\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 27,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.permAction_eq_rename",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.permAction_eq_rename"
+      ],
+      "gold_line_range": [
+        182,
+        184
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13379,
+        "prompt_chars": 12446,
+        "estimated_prompt_tokens": 3112,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00135372,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02986188
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13379,
+        "prompt_chars": 12446,
+        "estimated_prompt_tokens": 3112,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00135372,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02986188
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02986188,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:25:36: error: Unknown identifier `permAction` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:28:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 28,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.permAutomorphism_symm",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.permAutomorphism_symm"
+      ],
+      "gold_line_range": [
+        283,
+        287
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13804,
+        "prompt_chars": 12820,
+        "estimated_prompt_tokens": 3205,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001394175,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029902335000000002
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13804,
+        "prompt_chars": 12820,
+        "estimated_prompt_tokens": 3205,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001394175,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029902335000000002
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029902335000000002,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:28:36: error: Unknown identifier `permAction` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:39:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 29,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.S_neg_mem",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.S_neg_mem"
+      ],
+      "gold_line_range": [
+        418,
+        421
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 11941,
+        "prompt_chars": 11137,
+        "estimated_prompt_tokens": 2785,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001211475,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029719635
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 11941,
+        "prompt_chars": 11137,
+        "estimated_prompt_tokens": 2785,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001211475,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029719635
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029719635,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:25:36: error: Unknown identifier `permAction` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:28:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 30,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.Monomial.degree_zero",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.Monomial.degree_zero"
+      ],
+      "gold_line_range": [
+        547,
+        551
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12350,
+        "prompt_chars": 11610,
+        "estimated_prompt_tokens": 2903,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001262805,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029770965
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12350,
+        "prompt_chars": 11610,
+        "estimated_prompt_tokens": 2903,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001262805,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029770965
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029770965,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:25:36: error: Unknown identifier `permAction` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:35:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 31,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.Monomial.degree_ofFinset",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.Monomial.degree_ofFinset"
+      ],
+      "gold_line_range": [
+        709,
+        722
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12350,
+        "prompt_chars": 11610,
+        "estimated_prompt_tokens": 2903,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001262805,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029770965
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12350,
+        "prompt_chars": 11610,
+        "estimated_prompt_tokens": 2903,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001262805,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029770965
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029770965,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:25:36: error: Unknown identifier `permAction` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:35:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 32,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.eZ_isSymmetric",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.eZ_isSymmetric"
+      ],
+      "gold_line_range": [
+        894,
+        901
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 14317,
+        "prompt_chars": 13449,
+        "estimated_prompt_tokens": 3363,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001462905,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029971065
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 14317,
+        "prompt_chars": 13449,
+        "estimated_prompt_tokens": 3363,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001462905,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029971065
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029971065,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:28:36: error: Unknown identifier `permAction` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:55:26: error(lean.invalidField): Invalid field `IsSquarefree`: The environment does not contain `Finsupp.IsSquarefree`, so it is not possible to project the field `IsSquarefree` from an expression\n  ofFinset s\nof type `Fin N →₀ ℕ`\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:56:8: error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nN : ℕ\ns : Finset (Fin N)\n⊢ sorry\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:80:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 33,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.newtonGirard_psum",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.newtonGirard_psum"
+      ],
+      "gold_line_range": [
+        1162,
+        1175
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13486,
+        "prompt_chars": 12601,
+        "estimated_prompt_tokens": 3151,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001370685,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029878845
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13486,
+        "prompt_chars": 12601,
+        "estimated_prompt_tokens": 3151,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001370685,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029878845
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029878845,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:25:36: error: Unknown identifier `permAction` at quotation precheck\n\nNote: You can use `set_option quotPrecheck false` to disable this check.\nAlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:28:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 34,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:AlgebraicCombinatorics.alternant_eq_zero_of_repeated",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.alternant_eq_zero_of_repeated"
+      ],
+      "gold_line_range": [
+        1016,
+        1043
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 22956,
+        "prompt_chars": 21899,
+        "estimated_prompt_tokens": 5475,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.002381625,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030889785000000003
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 22956,
+        "prompt_chars": 21899,
+        "estimated_prompt_tokens": 5475,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.002381625,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030889785000000003
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030889785000000003,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "preflight_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:21:9: error: Function expected at\n  Tableau\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  lam\n\nHint: The identifier `Tableau` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:24:38: error(lean.unknownIdentifier): Unknown identifier `skewYoungDiagram`\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:55:8: error(lean.unknownIdentifier): Unknown identifier `prod_if_lt_eq_prod_Ioi'`\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:62:8: error(lean.unknownIdentifier): Unknown identifier `prod_neg_sub'`\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:61:84: error: unsolved goals\nR : Type u_1\ninst✝ : CommRing R\nN : ℕ\ni : Fin N\n⊢ ∏ j ∈ Ioi i, (MvPolynomial.X i - MvPolynomial.X j) =\n    (-1) ^ #(Ioi i) * ∏ j ∈ Ioi i, (MvPolynomial.X j - MvPolynomial.X i)\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:135:10: error(lean.unknownIdentifier): Unknown identifier `sum_sub_val_eq'`\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:110:73: error: unsolved goals\nn : ℕ\nh : ∀ (i j : Fin n), j ∈ Ioi i → (if Fin.revPerm i < Fin.revPerm j then 1 else -1) = -1\nh2 : (∏ i, ∏ j ∈ Ioi i, if Fin.revPerm i < Fin.revPerm j then 1 else -1) = ∏ i, ∏ j ∈ Ioi i, -1\nh3 : ∏ x, (-1) ^ (n - 1 - ↑x) = (-1) ^ ∑ x, (n - 1 - ↑x)\n⊢ (-1) ^ ∑ x, (n - 1 - ↑x) = (-1) ^ (n * (n - 1) / 2)\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:139:8: error(lean.unknownIdentifier): Unknown identifier `sum_sub_val_eq'`\nAlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:156:8: warning: The declaration '__repoprover_source_statement_preflight' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": false,
+      "failure_class": "verifier_preflight_failed"
+    },
+    {
+      "index": 35,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean:SymmetricFunctions.skewSchur_isSymmetric_jacobiTrudi",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+      "gold_declaration_names": [
+        "SymmetricFunctions.skewSchur_isSymmetric_jacobiTrudi"
+      ],
+      "gold_line_range": [
+        8134,
+        8151
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 302033,
+        "prompt_chars": 296108,
+        "estimated_prompt_tokens": 74027,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.032201745000000004,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.06070990500000001
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 302033,
+        "prompt_chars": 296108,
+        "estimated_prompt_tokens": 74027,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.032201745000000004,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.06070990500000001
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.06070990500000001,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "success": false,
+      "failure_class": "verifier_preflight_error",
+      "error": "TimeoutExpired: Command '['uv', 'run', 'lake', 'build', 'AlgebraicCombinatorics.Determinants.LGV2', 'AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution', 'AlgebraicCombinatorics.SymmetricFunctions.NPartition', 'AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson']' timed out after 90 seconds"
+    },
+    {
+      "index": 36,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+      "gold_declaration_names": [
+        "alternant_swap"
+      ],
+      "gold_line_range": [
+        3083,
+        3092
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 17042,
+        "prompt_chars": 16098,
+        "estimated_prompt_tokens": 4025,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001750875,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030259035
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 17042,
+        "prompt_chars": 16098,
+        "estimated_prompt_tokens": 4025,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001750875,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030259035
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030259035,
+      "paid_call_made": false,
+      "status": "preflight_only",
+      "success": false,
+      "failure_class": "verifier_preflight_error",
+      "error": "TimeoutExpired: Command '['uv', 'run', 'lake', 'build', 'AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson', 'AlgebraicCombinatorics.SymmetricFunctions.NPartition', 'AlgebraicCombinatorics.Permutations.Basics']' timed out after 90 seconds"
+    }
+  ]
+}

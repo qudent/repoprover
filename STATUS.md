@@ -89,6 +89,10 @@ The best cumulative hard-guidance result is now 6/8 verified for `$0.099924662`
 minimum generation+repair spend. Additional targeted diagnostics on the two
 remaining rows cost `$0.031700741` and did not improve the score, bringing the
 fully recorded hard-guidance run-family spend to `$0.131625403`.
+A zero-cost 36-record corpus-spread preflight now identifies 11 verifier-passing
+records for the next larger paid generation-only slice, with an estimated max
+generation cost of `$0.329978385`; see
+`docs/source-statement-preflight-corpus-spread-36-report.md`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -272,6 +276,15 @@ failures plus 1 hidden-grader mismatch; see
   simplification rewrites. Stop spending on this two-row family until the next
   step is either manual/oracle-assisted proof-shape diagnosis or a fresh prompt
   generation with improved source guidance.
+- [x] Run a wider zero-cost corpus-spread preflight before the next paid slice.
+  Result: 11/36 records passed verifier preflight with no provider calls; eval
+  artifacts and the 11-record passing queue are under
+  `docs/source-statement-runs/2026-05-05-preflight-corpus-spread-36/eval/`.
+  The estimated max generation cost for that passing queue is `$0.329978385`.
+- [ ] Run the next larger paid generation-only slice over the 11 preflight
+  passing records with a hard cap around `$0.40`, then verify from saved
+  artifacts and route compile/shape failures through the decoupled repair
+  queues.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
