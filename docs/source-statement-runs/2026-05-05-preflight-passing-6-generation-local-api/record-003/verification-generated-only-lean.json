@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:50:71: error: unsolved goals\ncase a\nK : Type u_1\ninst✝ : CommRing K\nn : ℕ\nA : Matrix (Fin n) (Fin n) K\ni j : Fin n\nhij : i ≠ j\nc : K\nhswap : (A.submatrix id ⇑(Equiv.swap i j)).det = -A.det\na b : Fin n\n⊢ Function.update (A b) i (A b i + c * A b j) a =\n    Function.update (of fun x y => A y x) i (of (fun x y => A y x) i + c • of (fun x y => A y x) j) a b\n"
+}

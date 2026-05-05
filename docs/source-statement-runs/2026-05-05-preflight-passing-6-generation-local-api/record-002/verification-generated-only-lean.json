@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:47:30: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  (of (Aᵀ ∘ ⇑(Equiv.swap i j))).det\nin the target expression\n  (Aᵀ.submatrix (⇑(Equiv.swap i j)) id).det = -Aᵀ.det\n\nK : Type u_1\ninst✝ : CommRing K\nn : ℕ\nA : Matrix (Fin n) (Fin n) K\ni j : Fin n\nhij : i ≠ j\n⊢ (Aᵀ.submatrix (⇑(Equiv.swap i j)) id).det = -Aᵀ.det\n"
+}

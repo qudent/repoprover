@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem sum_lim (f : ℕ → PowerSeries K) (h : Summable f) : HasSum f (∑' n, f n) :=\n  h.hasSum",
+  "declaration_name": "sum_lim",
+  "used_context": [
+    "HasSum",
+    "Summable",
+    "tsum"
+  ],
+  "notes": [
+    "Assumes that PowerSeries over a CommRing has the appropriate topological/adic topology instances and the corresponding Summable/HasSum API."
+  ]
+}

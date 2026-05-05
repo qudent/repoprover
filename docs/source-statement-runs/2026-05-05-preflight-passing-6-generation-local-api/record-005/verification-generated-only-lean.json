@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPSDefinition.lean:41:80: error: `simp` made no progress\n"
+}

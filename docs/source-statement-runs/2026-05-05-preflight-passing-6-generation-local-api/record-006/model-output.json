@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem partsCount_eq_card_largestPart (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card :=\nby\n  apply Finset.card_congr (fun p _ => p.transpose)\n  · intro p hp\n    rw [Finset.mem_filter] at hp\n    refine Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩\n    rw [transpose_largestPart_eq_length p, hp.2]\n  · intro q hq\n    rw [Finset.mem_filter] at hq\n    refine ⟨q.transpose, Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩, ?_⟩\n    · rw [transpose_length_eq_largestPart q, hq.2]\n    · exact transpose_transpose q\n  · intro p₁ p₂ hp₁ hp₂ h\n    rw [Finset.mem_filter] at hp₁ hp₂\n    have h' : p₁.transpose.transpose = p₂.transpose.transpose := by rw [h]\n    rw [transpose_transpose p₁, transpose_transpose p₂] at h'\n    exact h'",
+  "declaration_name": "partsCount_eq_card_largestPart",
+  "used_context": [
+    "partsCount",
+    "largestPart",
+    "transpose_largestPart_eq_length",
+    "transpose_length_eq_largestPart",
+    "transpose_transpose"
+  ],
+  "notes": [
+    "The proof uses the transpose involution to establish a bijection between partitions with exactly k parts and partitions with largest part k.",
+    "The lemma is noncomputable due to the noncomputable transpose, though the cardinalities are computable."
+  ]
+}

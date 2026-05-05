@@ -57,7 +57,10 @@ and their direct prior same-file dependencies while withholding the target
 statement/name. A six-record API-free budget inspection estimates the next
 small generation probe at about `$0.1808` max, and a serial shared-project
 preflight with the retrieval context passed 6/6 in about 160s with a 21M output
-tree.
+tree. The follow-up local-API generation-only probe completed 6/6 paid
+responses for `$0.041165848`; serial verification still found 0/6 successes,
+but failures are now narrower proof-repair/exact-statement issues rather than
+only missing local API context.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -183,9 +186,14 @@ failures plus 1 hidden-grader mismatch; see
   materialized into the prefix; zero-cost budget inspection estimated `$0.1808`
   max for the six-record slice; serial shared-project preflight passed 6/6.
   See `docs/source-statement-local-api-retrieval-preflight.md`.
-- [ ] Run the next small generation-only paid probe over the same six
-  preflight-passing records with local API retrieval, archive every response,
-  then verify the artifacts separately.
+- [x] Run the next small generation-only paid probe over the same six
+  preflight-passing records with local API retrieval. Result: 6/6 paid responses
+  parsed for `$0.041165848`; serial reusable-project verification remained 0/6
+  with 5 compile failures and 1 grader mismatch. See
+  `docs/source-statement-preflight-passing-6-local-api-comparison.md`.
+- [ ] Build a generated-failure repair queue over the five compile failures
+  from the local-API run, using generated-only compiler output plus the same
+  retrieved local API context.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
@@ -198,10 +206,13 @@ failures plus 1 hidden-grader mismatch; see
 - Whole-corpus/gold-candidate records are machine-generated, not fully
   human-certified. The 24-record semantic-review sample is model-reviewed, not
   final gold.
-- The eval runner now makes paid OpenRouter calls when `--call-openrouter` is
-  explicit and `OPENROUTER_API_KEY` is loaded. In this Hermes environment the
-  key is available through interactive Bash startup (`bash -ic`) rather than the
-  default non-interactive shell; never print the secret value.
+- `scripts/run_minimal_context_eval.py` still gates paid OpenRouter calls behind
+  `--call-openrouter`. `scripts/run_source_statement_live_eval.py` makes paid
+  calls by default unless `--budget-only` or `--preflight-only` is passed; use
+  `--generation-only` to archive provider outputs without Lean checks. In this
+  Hermes environment the key is available through interactive Bash startup
+  (`bash -ic`) rather than the default non-interactive shell; never print the
+  secret value.
 - Some materialized Mathlib-only projects may still expose missing non-local
   transitive Lean context in the record itself. Same-file predecessor
   dependencies are now expanded by the smoke materializer, and file-context
@@ -367,7 +378,9 @@ failures plus 1 hidden-grader mismatch; see
 - `scripts/run_source_statement_live_eval.py` is the stricter source-statement
   live-eval runner: target Lean statement/name withheld from the prompt, source
   chunk provided, generated theorem checked against a grader-only gold
-  statement. It now adds local notation support/style/API context, specific
+  statement. It makes paid calls unless `--budget-only` or `--preflight-only`
+  is passed; use `--generation-only` to log provider outputs first. It now adds
+  local notation support/style/API context, specific
   source-part focus metadata, persists raw and parsed model outputs plus the
   exact generated Lean declaration under each `record-NNN/`, uses bounded
   per-record concurrency, conservative cost-cap launch checks, partial-result

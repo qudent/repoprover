@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem coeff_X_fps (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := by simp",
+  "declaration_name": "coeff_X_fps",
+  "used_context": [
+    "coeff",
+    "X",
+    "variable {R : Type*} [CommRing R]",
+    "open PowerSeries"
+  ],
+  "notes": [
+    "Uses standard Mathlib lemma coeff_X via simp; matches the definition of the FPS x as (0,1,0,0,…) in the source."
+  ]
+}

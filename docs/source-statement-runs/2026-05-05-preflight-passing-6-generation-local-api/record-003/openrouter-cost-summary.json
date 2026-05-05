@@ -1,0 +1,12 @@
+{
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "price_source": "openrouter-catalog-2026-05-02",
+  "prompt_price_per_million": 0.435,
+  "completion_price_per_million": 0.87,
+  "prompt_tokens": 3081,
+  "completion_tokens": 6125,
+  "total_tokens": 9206,
+  "actual_cost_usd": 0.006503337,
+  "estimated_cost_from_usage_usd": 0.0066689850000000005,
+  "has_openrouter_reported_cost": true
+}

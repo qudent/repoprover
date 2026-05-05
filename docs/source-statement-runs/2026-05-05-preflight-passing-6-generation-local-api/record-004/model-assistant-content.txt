@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "theorem binom_rec (m n : ℕ) (hn : 0 < n) (hm : 0 < m) : m.choose n = (m - 1).choose (n - 1) + (m - 1).choose n :=\n  pascal_identity m n hn hm",
+  "declaration_name": "binom_rec",
+  "used_context": ["pascal_identity"],
+  "notes": ["This is a direct application of the existing `pascal_identity` from the environment with the same positivity assumptions."]
+}
