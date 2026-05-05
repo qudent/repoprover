@@ -129,13 +129,41 @@ Result:
 - paid calls: `11`
 - actual cost: `$0.081084638`
 - model: `deepseek/deepseek-v4-pro`
-- Lean verification: not run in this generation checkpoint
+- Lean verification: `1/11` passed after serial reusable-project checking
 
-Several generated declaration names already show statement-shape drift, for
-example `det_triangular` for the lower-triangular determinant row and
-`card_perm` for the permutation-power row. That is expected useful evidence:
-source-only prompts are honest, but the current context selector still often
-does not focus the exact intended theorem.
+Verification command:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/verify_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation \
+  --work-root /tmp/repoprover-source-only-11-verify \
+  --lake-cache-from algebraic-combinatorics --include-record-imports \
+  --workers 1 --lean-timeout 180 \
+  --output-prefix verification-180
+```
+
+Verification result:
+
+- pass: `1/11` (`X_mul_eq_shift`)
+- generated Lean did not compile: `8/11`
+- generated Lean compiled but did not prove the withheld gold statement: `2/11`
+
+The two compile-clean semantic misses are context/focus failures:
+
+- `det_triangular` proved a broader upper/lower triangular disjunction theorem,
+  but the withheld target expects the lower-triangular hypothesis directly.
+- `simpleTransposition_sq_eq_one` proved an order-two theorem, but the withheld
+  target expects `(simpleTransposition i).IsSwap`.
+
+Several compile failures are ordinary Lean/API failures, for example wrong
+PowerSeries integer-power syntax, unknown guessed helper names, reversed
+binomial symmetry, and unsupported partition/permutation APIs. These are good
+repair-prompt data, but not evidence that source-only context selection is
+solved.
+
+Visible-context shape diagnostics now report `0` warnings on this run after
+tightening the diagnostic so it no longer treats broad prompt guidance as if it
+were source evidence.
 
 ## What Changed In The Prompt
 
@@ -174,11 +202,13 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest \
 Result: `61 passed`.
 After adding TeX-derived focus extraction, the same focused test set passes
 with `63 passed`.
+After tightening the X-shift prompt/diagnostic distinction, the focused test set
+passes with `65 passed`.
 
 ## Next Step
 
 Use `source-only` as the default for realistic validation. The next work should
 not be another hand-tuned six-row repair loop. It should verify the 11-record
 source-only generation artifacts, classify the failures, and improve TeX/source
-focus selection from those failures without reading target Lean comments or
-names.
+focus selection plus generic repair prompts from those failures without reading
+target Lean comments or names.

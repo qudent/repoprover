@@ -15,8 +15,9 @@ Source-statement generation, archived provider-result capture, reusable-project 
 ## TODO Plan
 - [x] Add TeX-derived `tex_source_focus` to source-only prompts.
 - [x] Run an 11-record source-only generation pass.
-- [ ] Commit the raw 11-record paid generation artifacts.
-- [ ] Verify the 11 generated files serially in a reusable Lean project and record per-row outcomes.
+- [x] Commit the raw 11-record paid generation artifacts.
+- [x] Verify the 11 generated files serially in a reusable Lean project and record per-row outcomes.
+- [ ] Use the source-only failures to improve source/TeX focus selection and generic repair prompts.
 
 ## Blockers
 - Realistic context selection is still weak: context comparison found target-comment focus terms absent from source-only spans in 7/11 broader rows.
@@ -25,7 +26,8 @@ Source-statement generation, archived provider-result capture, reusable-project 
 ## Recent Results
 - Added `source-only` prompt mode and context-mode comparison artifacts; hidden target-name hits are 0 on the strict 6 and broader 11 prompt sets.
 - Added TeX-derived focus cues from visible source only: labels, refs, theorem-like environments, part markers, keyword cues, excerpts, and broad-span risk flags.
-- Completed an 11-record source-only generation-only run with DeepSeek V4 Pro: 11/11 generated, `$0.081084638`, no Lean verification yet.
+- Completed an 11-record source-only generation-only run with DeepSeek V4 Pro: 11/11 generated, `$0.081084638`.
+- Verified the 11 generated files serially: 1/11 passed, 8 failed generated-only compilation, and 2 compiled but did not prove the withheld gold statement.
 
 ## Agent Notes
-- Do not run Lean verification against the source-only generation run until its raw provider artifacts are committed.
+- Raw paid generation is committed in `2206e80`; verification artifacts are committed in `ea48ce5`.

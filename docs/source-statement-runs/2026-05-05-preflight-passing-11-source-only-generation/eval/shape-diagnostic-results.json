@@ -1,0 +1,110 @@
+{
+  "generated_at": "2026-05-05T09:45:56.900811+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation",
+  "payload_name": "openrouter-payload.json",
+  "model_output_name": "model-output.json",
+  "records_completed": 11,
+  "records_with_warnings": 0,
+  "warning_codes": {},
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-001",
+      "warnings": [],
+      "generated_name": "sum_lim_conv",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_lowerTriangular",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-002",
+      "warnings": [],
+      "generated_name": "det_triangular",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-003",
+      "warnings": [],
+      "generated_name": "fps_onePlusX_pow_int",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInProd_of_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-004",
+      "warnings": [],
+      "generated_name": "coeff_finitely_determined_iff",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.exists_xn_approximator",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-005",
+      "warnings": [],
+      "generated_name": "exists_isXnApproximator_of_multipliable",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-006",
+      "warnings": [],
+      "generated_name": "binom_sym",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-007",
+      "warnings": [],
+      "generated_name": "summable_fps_comp",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-008",
+      "warnings": [],
+      "generated_name": "X_mul_eq_shift",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 9,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-009",
+      "warnings": [],
+      "generated_name": "partition_weakly_decreasing_finite",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 10,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-010",
+      "warnings": [],
+      "generated_name": "card_perm",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-011",
+      "warnings": [],
+      "generated_name": "simpleTransposition_sq_eq_one",
+      "warning_count": 0,
+      "warning_codes": []
+    }
+  ]
+}

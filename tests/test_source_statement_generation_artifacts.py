@@ -383,6 +383,28 @@ def test_shape_diagnostic_flags_wrong_x_power_shape() -> None:
     assert [warning["code"] for warning in warnings] == ["wrong_x_power_multiplication_side_or_shape"]
 
 
+def test_shape_diagnostic_does_not_use_domain_guidance_as_x_power_source() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "source_statement_or_chunk": [
+                    {"snippet": "Lemma lem.fps.xa: x a = (0, a_0, a_1, ...)."}
+                ],
+                "domain_statement_shape_guidance": [
+                    {
+                        "preferred_statement_family": [
+                            "For shifted-coefficient targets, prefer the `f * X ^ k` theorem shape."
+                        ]
+                    }
+                ],
+            }
+        },
+        "theorem X_mul_eq_shift (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n-1) f) := by\n  ext n\n  simp",
+    )
+
+    assert [warning["code"] for warning in warnings] == []
+
+
 def test_shape_diagnostic_flags_fin_object_inequalities() -> None:
     warnings = diagnose_shape(
         {

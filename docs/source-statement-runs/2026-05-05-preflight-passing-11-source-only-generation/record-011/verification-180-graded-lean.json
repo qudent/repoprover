@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:76:4: error: Type mismatch: After simplification, term\n  simpleTransposition_sq_eq_one\n has type\n  ∀ (i : Fin (?m.11 - 1)), s[i] * s[i] = 1\nbut is expected to have type\n  Perm.IsSwap s[i]\n"
+}

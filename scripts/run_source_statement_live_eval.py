@@ -883,7 +883,8 @@ def domain_statement_shape_guidance(
                 ],
             }
         )
-    if fps_indeterminate_signal and any(term in combined for term in ["x^k", "x ^ k", "lem.fps.xa", "shifts"]):
+    x_power_shift_signal = any(term in combined for term in ["x^k", "x ^ k", "x^{k}", "x ^{k}"])
+    if fps_indeterminate_signal and x_power_shift_signal:
         guidance.append(
             {
                 "domain": "formal power series multiplication by powers of X",
@@ -896,6 +897,20 @@ def domain_statement_shape_guidance(
                 "avoid_statement_family": [
                     "Do not use a nearby predecessor with the opposite multiplication order as the generated statement.",
                     "Do not collapse the generalized `X^k` source into the special `X` case unless the source focus says `k = 1`.",
+                ],
+            }
+        )
+    elif fps_indeterminate_signal and "lem.fps.xa" in labels:
+        guidance.append(
+            {
+                "domain": "formal power series multiplication by X",
+                "trigger": "source label `lem.fps.xa` describes multiplying an FPS by the indeterminate `X`",
+                "preferred_statement_family": [
+                    "For the special `x a = (0, a_0, a_1, ...)` source sentence, prefer the left-multiplication statement `X * f = PowerSeries.mk ...` or the displayed coefficient form for `X * f`.",
+                    "Use displayed local facts such as `coeff_X_mul` when they appear in the prefix/local examples.",
+                ],
+                "avoid_statement_family": [
+                    "Do not upgrade this special `X * f` source sentence into the later generalized `f * X ^ k` theorem unless the source explicitly mentions a power `k`.",
                 ],
             }
         )

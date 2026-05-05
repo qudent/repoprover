@@ -60,6 +60,18 @@ def _context_text(user_payload: dict[str, Any]) -> str:
     return "\n".join(_json_text(part) for part in parts if part is not None)
 
 
+def _source_focus_text(user_payload: dict[str, Any]) -> str:
+    context = user_payload.get("context")
+    if not isinstance(context, dict):
+        return ""
+    parts = [
+        context.get("target_source_focus"),
+        context.get("source_statement_or_chunk"),
+        context.get("tex_source_focus"),
+    ]
+    return "\n".join(_json_text(part) for part in parts if part is not None)
+
+
 def _excerpt(text: str, pattern: str, *, window: int = 90) -> str:
     match = re.search(pattern, text, flags=re.IGNORECASE | re.DOTALL)
     if not match:
@@ -93,6 +105,8 @@ def diagnose_shape(user_payload: dict[str, Any], declaration: str) -> list[Warni
 
     context_text = _context_text(user_payload)
     context_lower = context_text.lower()
+    source_focus_text = _source_focus_text(user_payload)
+    source_focus_lower = source_focus_text.lower()
     warnings: list[WarningRow] = []
 
     if (
@@ -111,10 +125,10 @@ def diagnose_shape(user_payload: dict[str, Any], declaration: str) -> list[Warni
         )
 
     source_mentions_right_x_pow = (
-        "f * x^k" in context_lower
-        or "f * x ^ k" in context_lower
-        or "`f * x^k" in context_lower
-        or "`f * x ^ k" in context_lower
+        "f * x^k" in source_focus_lower
+        or "f * x ^ k" in source_focus_lower
+        or "`f * x^k" in source_focus_lower
+        or "`f * x ^ k" in source_focus_lower
     )
     if source_mentions_right_x_pow:
         generated_lower = declaration.lower()

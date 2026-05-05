@@ -73,8 +73,9 @@ Realistic source-only result so far:
 - 11/11 generated under source-only context.
 - Cost: `$0.081084638`.
 - Hidden target names absent from prompt payloads.
-- Lean verification not run yet.
-- Early generated names suggest statement-shape drift on several rows, which is useful evidence for improving context/focus selection.
+- Lean verification: 1/11 passed, 8 generated declarations did not compile, and 2 compiled but did not prove the withheld gold statement.
+- The one pass is `X_mul_eq_shift`.
+- The two compile-clean semantic misses were `det_triangular` answering a broader disjunction instead of lower-triangular only, and `simpleTransposition_sq_eq_one` answering order-two instead of `Perm.IsSwap`.
 
 ## Files And Evidence
 
@@ -87,6 +88,7 @@ Realistic source-only result so far:
 - Source prompt/repair builder: `scripts/run_source_statement_live_eval.py`
 - Realistic context report: `docs/source-statement-realistic-context-mode-report.md`
 - Source-only 11-record generation run: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/`
+- Source-only 11-record verification: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/eval/verification-180-results.md`
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`
@@ -97,3 +99,4 @@ Realistic source-only result so far:
 - The earlier 6-row loop did spend too much attention on one small hard slice; it produced useful infrastructure and failure taxonomy, but it should not be treated as scale evidence.
 - The prompt improvements split into two classes: generic infrastructure/guidance that can transfer, and target-comment guidance that is now isolated behind `target-comment` mode for diagnostics only.
 - The next useful work is to commit the source-only paid generation artifacts, run serial Lean verification, and use those failures to improve source/TeX context selection rather than keep repairing the same six examples.
+- A visible-context shape diagnostic initially flagged the passing `X_mul_eq_shift` row because it read broad prompt guidance as source evidence; that diagnostic has been tightened so warnings are anchored in source/focus text.

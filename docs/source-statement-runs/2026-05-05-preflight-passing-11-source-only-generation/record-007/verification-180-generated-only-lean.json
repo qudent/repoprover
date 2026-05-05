@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:61:56: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  ?a * 0\nin the target expression\n  (coeff n) f • 0 = 0\n\nK : Type u_1\ninst✝ : CommRing K\nf g : K⟦X⟧\nhg : constantCoeff g = 0\nd n : ℕ\nh : d < n\n⊢ (coeff n) f • 0 = 0\n"
+}

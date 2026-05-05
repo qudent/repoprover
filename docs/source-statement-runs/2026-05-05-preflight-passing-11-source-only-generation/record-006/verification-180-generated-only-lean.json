@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:35:2: error: mod_cast has type\n  n.choose (n - k) = n.choose k\nbut is expected to have type\n  n.choose k = n.choose (n - k)\n"
+}

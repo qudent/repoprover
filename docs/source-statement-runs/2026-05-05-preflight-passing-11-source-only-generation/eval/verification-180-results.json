@@ -1,0 +1,158 @@
+{
+  "generated_at": "2026-05-05T09:43:25.320098+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation",
+  "work_root": "/tmp/repoprover-source-only-11-verify",
+  "workers": 1,
+  "records_completed": 11,
+  "successes": 1,
+  "success_rate": 0.09090909090909091,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 8,
+    "grader_gold_statement_not_proved": 2
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-001",
+      "generated_name": "sum_lim_conv",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Details/Limits.lean:66:160: error: Invalid `⟨...⟩` notation: The expected type\n  ∀ (n : ℕ), {i | (coeff n) (f i) ≠ 0}.Finite\nis not an inductive type\n\nNote: This notation can only be used when the expected type is an inductive type with a single constructor\nAlgebraicCombinatorics/Details/Limits.lean:68:30: error: Invalid `⟨...⟩` notation: The expected type\n  ∀ (n : ℕ), {i | (coeff n) (f i) ≠ 0}.Finite\nis not an inductive type\n\nNote: This notation can only be used when the expected type is an inductive type with a single constructor\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_lowerTriangular",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-002",
+      "generated_name": "det_triangular",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:60:33: error: Application type mismatch: The argument\n  hA\nhas type\n  ∀ (i j : Fin n), i < j → A i j = 0\nbut is expected to have type\n  (∀ (i j : Fin n), j < i → A i j = 0) ∨ ∀ (i j : Fin n), i < j → A i j = 0\nin the application\n  det_triangular A hA\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-003",
+      "generated_name": "fps_onePlusX_pow_int",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/DividingFPS.lean:129:4: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HPow (PowerSeries F) ℤ ?m.19\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/DividingFPS.lean:132:4: error: lift tactic failed. Tactic is only applicable when the target is a proposition.\nAlgebraicCombinatorics/DividingFPS.lean:136:13: error(lean.unknownIdentifier): Unknown constant `Int.natAbs_of_nonpos`\nAlgebraicCombinatorics/DividingFPS.lean:136:6: error: Tactic `assumption` failed\n\nF : Type u_2\ninst✝¹ : Field F\ninst✝ : BinomialRing F\nn : ℤ\nh : ¬0 ≤ n\nh_nonpos : n ≤ 0\n⊢ n = -|n|\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInProd_of_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-004",
+      "generated_name": "coeff_finitely_determined_iff",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:48:3: error: Function expected at\n  CoeffFinitelyDeterminedInSum\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  a\n\nHint: The identifier `CoeffFinitelyDeterminedInSum` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.exists_xn_approximator",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-005",
+      "generated_name": "exists_isXnApproximator_of_multipliable",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:106:32: error: Type mismatch\n  Finset.subset_biUnion_of_mem ?m.64\nhas type\n  ?m.65 ∈ ?m.61 → ?m.64 ?m.65 ⊆ Finset.biUnion ?m.61 ?m.64\nbut is expected to have type\n  M m ⊆ M_all\nAlgebraicCombinatorics/FPS/InfiniteProducts.lean:106:61: error: Application type mismatch: The argument\n  hmem_range\nhas type\n  m ∈ Finset.range (n + 1)\nof sort `Prop` but is expected to have type\n  ?m.59 → Finset ?m.60\nof sort `Type (max ?u.18123 ?u.18124)` in the application\n  @Finset.subset_biUnion_of_mem ?m.59 ?m.60 ?m.61 ?m.62 hmem_range\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-006",
+      "generated_name": "binom_sym",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:35:2: error: mod_cast has type\n  n.choose (n - k) = n.choose k\nbut is expected to have type\n  n.choose k = n.choose (n - k)\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-007",
+      "generated_name": "summable_fps_comp",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:61:56: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  ?a * 0\nin the target expression\n  (coeff n) f • 0 = 0\n\nK : Type u_1\ninst✝ : CommRing K\nf g : K⟦X⟧\nhg : constantCoeff g = 0\nd n : ℕ\nh : d < n\n⊢ (coeff n) f • 0 = 0\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-008",
+      "generated_name": "X_mul_eq_shift",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:59:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:59:4: warning: 'simpa using X_mul_eq_shift' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:55:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 9,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-009",
+      "generated_name": "partition_weakly_decreasing_finite",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:15:48: error: type expected, got\n  (Partition : ℕ → Type)\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 10,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-010",
+      "generated_name": "card_perm",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:12:90: error: unexpected token '!'; expected ':=', 'where' or '|'\nAlgebraicCombinatorics/Permutations/Basics.lean:12:44: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  Fintype (Perm X)\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-011",
+      "generated_name": "simpleTransposition_sq_eq_one",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:76:4: error: Type mismatch: After simplification, term\n  simpleTransposition_sq_eq_one\n has type\n  ∀ (i : Fin (?m.11 - 1)), s[i] * s[i] = 1\nbut is expected to have type\n  Perm.IsSwap s[i]\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    }
+  ]
+}

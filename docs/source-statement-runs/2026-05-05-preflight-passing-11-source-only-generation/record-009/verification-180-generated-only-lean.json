@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:15:48: error: type expected, got\n  (Partition : ℕ → Type)\n"
+}
