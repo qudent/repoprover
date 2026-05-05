@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:23:42: error: Application type mismatch: The argument\n  X\nhas type\n  Type u_1\nbut is expected to have type\n  Perm ?m.21\nin the application\n  perm_pow_apply_eq_iterate X\n"
+}

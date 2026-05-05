@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DividingFPS.lean:129:4: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HPow (PowerSeries F) ℤ ?m.19\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/DividingFPS.lean:131:4: error: lift tactic failed. Tactic is only applicable when the target is a proposition.\nAlgebraicCombinatorics/DividingFPS.lean:137:4: error: lift tactic failed. Tactic is only applicable when the target is a proposition.\n"
+}

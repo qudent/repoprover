@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:63:6: error: Type mismatch: After simplification, term\n  hd\n has type\n  ¬(coeff d) f * (coeff n) (g ^ d) = 0\nbut is expected to have type\n  n < d\nAlgebraicCombinatorics/FPS/Substitution.lean:57:105: error: unsolved goals\ncase h\nK : Type u_1\ninst✝ : CommRing K\nf g : K⟦X⟧\nhg : constantCoeff g = 0\nn d : ℕ\nhd : d ∈ Function.support fun i => (coeff i) f * (coeff n) (g ^ i)\nhzero : (coeff n) (g ^ d) = 0\n⊢ d ≤ n\nAlgebraicCombinatorics/FPS/Substitution.lean:65:8: warning: This simp argument is unused:\n  hzero\n\nHint: Omit it from the simp argument list.\n  simp ̵[̵h̵z̵e̵r̵o̵]̵\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+}

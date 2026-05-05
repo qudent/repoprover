@@ -117,6 +117,12 @@ syntax, direct `p.parts = 0`, group-power statement shape for permutation
 powers, and constructor-style `IsSwap` proof shape. The six-row budget-only
 prompt check cost `$0.00`, included all expected cues, and kept hidden target
 names absent; see `docs/source-statement-strict-guidance-six-budget-report.md`.
+A capped paid strict-guidance retry then cost `$0.0308386` and improved the
+hard six-row slice from 0/6 to 2/6 verified successes: FPS limits and
+partition-zero now pass. The remaining failures are three generated-only compile
+failures (negative binomial, finite `finsum`, `IsSwap`) plus one permutation
+power statement-shape mismatch; see
+`docs/source-statement-strict-guidance-six-generation-report.md`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -327,9 +333,14 @@ failures plus 1 hidden-grader mismatch; see
 - [ ] Replace broad row guidance with exact visible API/example retrieval or a
   statement-shape-first contract for the six hard rows; another generic paid
   repair pass is not justified by the 0/6 targeted-guidance retry.
-- [ ] Run at most one capped paid retry of the strict-guidance six-row prompt;
-  if it does not improve over 0/6, switch to statement-shape-first generation
-  or row-specific visible examples instead of more prose guidance.
+- [x] Run at most one capped paid retry of the strict-guidance six-row prompt.
+  It improved the hard slice to 2/6, so the next action is a targeted
+  compiler-feedback repair for the three compile failures plus a separate
+  statement-shape-first treatment for the permutation power mismatch.
+- [ ] Run one small generated-only compiler-feedback repair over strict-guidance
+  compile failures rows 2, 3, and 6, then verify serially.
+- [ ] Design a statement-shape-first generation stage for row 5-style semantic
+  mismatches before another fresh broad generation pass.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
@@ -375,6 +386,10 @@ failures plus 1 hidden-grader mismatch; see
 - Added a stricter six-row prompt checkpoint derived from that 0/6 result and
   validated emitted payloads with no provider calls. Focused tests now pass with
   `60 passed`; see `docs/source-statement-strict-guidance-six-budget-report.md`.
+- Ran the capped paid strict-guidance retry: generation cost `$0.0308386`, all
+  raw provider artifacts committed before checking, and serial verification
+  found 2/6 successes. See
+  `docs/source-statement-strict-guidance-six-generation-report.md`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`
