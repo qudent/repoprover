@@ -1,0 +1,234 @@
+{
+  "target_comment_run": "docs/source-statement-runs/2026-05-05-preflight-passing-11-generation",
+  "source_only_run": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-budget",
+  "records": 11,
+  "records_with_lost_domains": 0,
+  "records_with_target_comment_terms_absent_from_source": 7,
+  "records_with_hidden_target_names_in_source_payload": 0,
+  "source_only_estimated_max_cost_usd": 0.32919364500000003,
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "formal power series limits"
+      ],
+      "source_domains": [
+        "formal power series limits"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "partial",
+        "converge",
+        "detailed",
+        "follows",
+        "structure",
+        "stabilizes",
+        "stabilization",
+        "therefore",
+        "finitely"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029971065
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_lowerTriangular",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [],
+      "source_domains": [],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029578695000000002
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [],
+      "source_domains": [
+        "negative binomial formal power series"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "newton's",
+        "negative",
+        "integer",
+        "exponents",
+        "inverse"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03050655
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInProd_of_finite",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "formal power series indeterminate"
+      ],
+      "source_domains": [
+        "formal power series indeterminate"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03005502
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.exists_xn_approximator",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [],
+      "source_domains": [],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030312540000000002
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [],
+      "source_domains": [],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "natural",
+        "numbers",
+        "choose_symm"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02970267
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "formal power series substitution"
+      ],
+      "source_domains": [
+        "formal power series substitution"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "alternative",
+        "coefficient",
+        "formula",
+        "actually",
+        "constant"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02987232
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "formal power series indeterminate",
+        "formal power series multiplication by powers of X"
+      ],
+      "source_domains": [
+        "formal power series indeterminate",
+        "formal power series multiplication by powers of X"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "equals",
+        "coefficients",
+        "shifted",
+        "equality",
+        "directly",
+        "expresses"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.0300063
+    },
+    {
+      "index": 9,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "partition transpose cardinality"
+      ],
+      "source_domains": [
+        "partition transpose cardinality"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "unique"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029515185
+    },
+    {
+      "index": 10,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "simple transposition statement shape"
+      ],
+      "source_domains": [
+        "simple transposition statement shape"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02962698
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "simple transposition statement shape"
+      ],
+      "source_domains": [
+        "simple transposition statement shape"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "cycles"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03004632
+    }
+  ]
+}

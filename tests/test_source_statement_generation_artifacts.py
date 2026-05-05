@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from scripts.repair_source_statement_generation import run as run_repair_queue
+from scripts.compare_source_statement_context_modes import compare_runs
 from scripts.diagnose_source_statement_shape import diagnose_shape, run as run_shape_diagnostic
 from scripts.run_source_statement_live_eval import build_repair_messages
 from scripts.verify_source_statement_generation import load_tasks
@@ -285,6 +286,57 @@ def test_verifier_can_load_repair_model_outputs(tmp_path: Path) -> None:
 
     assert tasks[0]["model_output_path"].endswith("repair-attempt-001-model-output.json")
     assert tasks[1]["failure_class"] == "missing_model_output"
+
+
+def test_compare_context_modes_flags_lost_domains_and_hidden_names(tmp_path: Path) -> None:
+    target_run = tmp_path / "target"
+    source_run = tmp_path / "source"
+    _write_jsonl(
+        source_run / "eval/selected-records.jsonl",
+        [
+            {
+                "id": "Demo.lean:Demo.secretName",
+                "output": {"declaration_names": ["Demo.secretName"]},
+            }
+        ],
+    )
+    _write_json(
+        source_run / "eval/source-statement-live-results.json",
+        {"results": [{"index": 1, "budget_estimate": {"estimated_max_cost_usd": 0.01}}]},
+    )
+    _write_json(target_run / "eval/source-statement-live-results.json", {"results": []})
+    target_user = {
+        "context": {
+            "context_mode": "target-comment",
+            "source_statement_or_chunk": [{"snippet": "Let f be summable."}],
+            "target_source_focus": {"target_declaration_source_comment": {"text": "Alternative coefficient formula."}},
+            "domain_statement_shape_guidance": [{"domain": "finite coefficient"}],
+        }
+    }
+    source_user = {
+        "context": {
+            "context_mode": "source-only",
+            "source_statement_or_chunk": [{"snippet": "Let f be summable."}],
+            "target_source_focus": {"target_declaration_source_comment": None},
+            "domain_statement_shape_guidance": [],
+        }
+    }
+    _write_json(
+        target_run / "record-001/openrouter-payload.json",
+        {"messages": [{"role": "user", "content": json.dumps(target_user)}]},
+    )
+    _write_json(
+        source_run / "record-001/openrouter-payload.json",
+        {"messages": [{"role": "user", "content": json.dumps(source_user)}]},
+    )
+
+    summary = compare_runs(target_run, source_run)
+
+    assert summary["records_with_lost_domains"] == 1
+    assert summary["records_with_target_comment_terms_absent_from_source"] == 1
+    assert summary["records_with_hidden_target_names_in_source_payload"] == 0
+    assert summary["results"][0]["lost_domains"] == ["finite coefficient"]
+    assert "alternative" in summary["results"][0]["target_comment_terms_absent_from_source"]
 
 
 def test_shape_diagnostic_flags_pointwise_sequence_equality() -> None:

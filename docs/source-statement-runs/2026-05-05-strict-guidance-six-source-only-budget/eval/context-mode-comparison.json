@@ -1,0 +1,145 @@
+{
+  "target_comment_run": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation",
+  "source_only_run": "docs/source-statement-runs/2026-05-05-strict-guidance-six-source-only-budget",
+  "records": 6,
+  "records_with_lost_domains": 0,
+  "records_with_target_comment_terms_absent_from_source": 5,
+  "records_with_hidden_target_names_in_source_payload": 0,
+  "source_only_estimated_max_cost_usd": 0.17953842,
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "formal power series limits"
+      ],
+      "source_domains": [
+        "formal power series limits"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "partial",
+        "converge",
+        "detailed",
+        "follows",
+        "structure",
+        "stabilizes",
+        "stabilization",
+        "therefore",
+        "finitely"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029971065
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "negative binomial formal power series"
+      ],
+      "source_domains": [
+        "negative binomial formal power series"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "newton's",
+        "negative",
+        "integer",
+        "exponents",
+        "inverse"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03050655
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "formal power series substitution"
+      ],
+      "source_domains": [
+        "formal power series substitution"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "alternative",
+        "coefficient",
+        "formula",
+        "actually",
+        "constant"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02987232
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "partition transpose cardinality"
+      ],
+      "source_domains": [
+        "partition transpose cardinality"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "unique"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029515185
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "simple transposition statement shape"
+      ],
+      "source_domains": [
+        "simple transposition statement shape"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02962698
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "target_context_mode": "",
+      "source_context_mode": "source-only",
+      "target_comment_present": true,
+      "source_target_comment_present": false,
+      "target_domains": [
+        "simple transposition statement shape"
+      ],
+      "source_domains": [
+        "simple transposition statement shape"
+      ],
+      "lost_domains": [],
+      "target_comment_terms_absent_from_source": [
+        "cycles"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03004632
+    }
+  ]
+}

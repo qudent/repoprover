@@ -84,6 +84,29 @@ The row 1 source-only payload also has
 `prefix_has_imported_label=false`, confirming that imported source-label API
 retrieval is disabled in this mode.
 
+## Context Gap Audit
+
+The comparison tool:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/compare_source_statement_context_modes.py \
+  --target-comment-run docs/source-statement-runs/2026-05-05-preflight-passing-11-generation \
+  --source-only-run docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-budget \
+  --output-json docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-budget/eval/context-mode-comparison.json \
+  --output-md docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-budget/eval/context-mode-comparison.md
+```
+
+11-record result:
+
+- rows with hidden target names in source-only payloads: `0`
+- rows with target-comment terms absent from the source span: `7/11`
+- source-only estimated max cost: `$0.329193645`
+
+The same comparison over the strict six-row slice found `0` hidden target-name
+hits and `5/6` rows where target-comment terms are absent from the source span.
+That is the concrete context-selection gap: source-only prompts are cleaner, but
+they often do not know which part of the TeX/source span the target formalizes.
+
 ## What Changed In The Prompt
 
 In `source-only` mode:

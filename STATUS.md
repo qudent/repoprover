@@ -31,6 +31,7 @@ Main reports: `docs/source-statement-strict-guidance-six-generation-report.md` a
 - Regenerated shape diagnostics so row 3 no longer gets a false finite-composition warning; only the already-repaired row 5 group-power warning remains.
 - Repair attempt 3 for rows 2 and 3 completed with 2/2 parsed outputs, 2 paid calls, `$0.012440043` actual cost, and both rows verified.
 - `source-only` budget checkpoints were generated for the strict 6-row and broader 11-row slices at `$0.00`; estimated max generation costs are `$0.17953842` and `$0.329193645`.
+- Context-mode comparison shows no hidden target-name hits in source-only payloads, but target-comment focus terms are absent from source-only spans in 5/6 strict rows and 7/11 broader rows.
 
 ## Agent Notes
 - A 72-record local preflight was stopped because it spent about 30 minutes compiling heavy modules without final row results. Treat long preflight runtime as a scaling issue; do not run larger Lean preflights without better module/build reuse.
