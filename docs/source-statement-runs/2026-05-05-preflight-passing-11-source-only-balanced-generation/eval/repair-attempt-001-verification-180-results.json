@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-05-05T10:54:00.083094+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation",
+  "work_root": "/tmp/repoprover-source-only-balanced-shape-repair-verify",
+  "workers": 1,
+  "records_completed": 2,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1,
+    "grader_gold_statement_not_proved": 1
+  },
+  "results": [
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation/record-007",
+      "generated_name": "fps_subst_eq_mk_finsum",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:69:16: error: Function expected at\n  fps_subst_eq_mk_finsum f g hg\nbut this term has type\n  subst g f = mk fun n => ∑ᶠ (d : ℕ), (coeff d) f * (coeff n) (g ^ d)\n\nNote: Expected a function because this term is being applied to the argument\n  n\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation/record-011",
+      "generated_name": "simpleTransposition_isSwap",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:68:36: error(lean.unknownIdentifier): Unknown constant `Equiv.swap_isSwap`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}

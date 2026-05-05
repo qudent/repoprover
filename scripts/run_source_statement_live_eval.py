@@ -1374,6 +1374,23 @@ def repair_domain_guidance_from_failure(
             }
         )
 
+    if "equiv.swap_isswap" in combined_lower or "unknown constant `equiv.swap_isswap`" in combined_lower:
+        guidance.append(
+            {
+                "domain": "simple transposition IsSwap repair",
+                "trigger": "compiler output reports nonexistent `Equiv.swap_isSwap` helper",
+                "preferred_repair_shape": [
+                    "Do not use `Equiv.swap_isSwap`; it is not available in this Lean environment.",
+                    "Prove `(simpleTransposition i).IsSwap` using the `Perm.IsSwap` constructor-style proof shape displayed in the prompt guidance: provide the two swapped points, prove they are distinct, and identify the permutation with the swap.",
+                    "If unfolding `simpleTransposition` reveals an existing swap/transposition expression, finish by constructing `IsSwap` directly rather than citing an unavailable helper theorem.",
+                ],
+                "avoid_repair_shape": [
+                    "Do not replace the target with an equality-to-transposition theorem or an order-two theorem; keep the conclusion as `(simpleTransposition i).IsSwap`.",
+                    "Do not invent helper names such as `Equiv.swap_isSwap`.",
+                ],
+            }
+        )
+
     return guidance
 
 

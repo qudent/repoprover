@@ -451,6 +451,41 @@ def test_shape_diagnostic_flags_simple_transposition_equality_instead_of_isswap(
     assert [warning["code"] for warning in warnings] == ["simple_transposition_equality_instead_of_isswap"]
 
 
+def test_repair_guidance_handles_missing_swap_isswap_helper() -> None:
+    messages = build_repair_messages(
+        original_messages=[
+            {"role": "system", "content": ""},
+            {
+                "role": "user",
+                "content": json.dumps(
+                    {
+                        "context": {
+                            "domain_statement_shape_guidance": [
+                                {"domain": "simple transposition statement shape"}
+                            ]
+                        }
+                    }
+                ),
+            },
+        ],
+        failed_declaration=(
+            "theorem simpleTransposition_isSwap {n : ℕ} (i : Fin (n - 1)) : "
+            "(simpleTransposition i).IsSwap := by\n"
+            "  unfold simpleTransposition; exact Equiv.swap_isSwap _ _"
+        ),
+        generated_only_lean_result={
+            "exit_code": 1,
+            "output": "error(lean.unknownIdentifier): Unknown constant `Equiv.swap_isSwap`",
+        },
+    )
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["repair_domain_guidance"], ensure_ascii=False)
+
+    assert "Do not use `Equiv.swap_isSwap`" in guidance_text
+    assert "constructor-style proof shape" in guidance_text
+    assert "(simpleTransposition i).IsSwap" in guidance_text
+
+
 def test_shape_diagnostic_flags_pointwise_permutation_power() -> None:
     warnings = diagnose_shape(
         {
