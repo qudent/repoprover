@@ -63,7 +63,7 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
    - Retried the row-1 transient provider failure: one output for `$0.013631334`, but it still failed generated-only compilation.
    - Found row 11’s source-only prompt cut off at `\begin{proposition}` before the proposition body; added environment-balance span-risk flags plus bounded TeX span expansion and regenerated the 11-record budget audit.
    - Ran a fresh 11-record paid source-only generation with balanced spans: `$0.126677307`, 10/11 usable outputs, 1/11 verified.
-   - Added visible `IsSwap` shape diagnostics and missing-helper repair guidance, then ran two shape-warning repairs for `$0.014849247`; no additional row passed.
+   - Added visible `IsSwap` shape diagnostics and missing-helper repair guidance, then ran three shape-warning repairs for `$0.020500999`; no additional row passed.
 
 ## Current Best Results
 

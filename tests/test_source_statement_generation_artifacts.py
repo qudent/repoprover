@@ -486,6 +486,7 @@ def test_repair_guidance_handles_missing_swap_isswap_helper() -> None:
     assert "(simpleTransposition i).IsSwap" in guidance_text
     assert "prefer direct witness introduction" in guidance_text
     assert "Avoid `let b : Fin n" in guidance_text
+    assert "Do not prove distinctness by manufacturing" in guidance_text
 
 
 def test_shape_diagnostic_flags_pointwise_permutation_power() -> None:

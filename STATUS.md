@@ -34,7 +34,7 @@ Source-statement generation, archived provider-result capture, reusable-project 
 - Verified the 11 generated files serially: 1/11 passed, 8 failed generated-only compilation, and 2 compiled but did not prove the withheld gold statement.
 - Repair attempt 1 over compile failures generated 7/8 repairs for `$0.058516809`; 3/7 passed hidden-grader verification. Row 1 retry generated for `$0.013631334` but still did not compile.
 - Regenerated the 11-record source-only budget audit with balanced TeX span expansion; row 11 expands from lines 256-278 to 255-290 and closes the proposition environment.
-- Balanced-span generation cost `$0.126677307` and verified 1/11; shape-warning repairs cost `$0.014849247` but did not add a pass.
+- Balanced-span generation cost `$0.126677307` and verified 1/11; shape-warning repairs cost `$0.020500999` but did not add a pass.
 
 ## Agent Notes
-- Raw paid outputs are committed before verification, including balanced generation `6d73159` and shape repairs `d5e98a4` / `dd59d2d`.
+- Raw paid outputs are committed before verification, including balanced generation `6d73159` and shape repairs `d5e98a4` / `dd59d2d` / `e1c3ad9`.

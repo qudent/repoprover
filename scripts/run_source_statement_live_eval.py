@@ -1389,6 +1389,7 @@ def repair_domain_guidance_from_failure(
                     "Do not replace the target with an equality-to-transposition theorem or an order-two theorem; keep the conclusion as `(simpleTransposition i).IsSwap`.",
                     "Do not invent helper names such as `Equiv.swap_isSwap`.",
                     "Avoid `let b : Fin n := ⟨i.val + 1, by omega⟩` when Lean fails to prove the bound; introduce the witness directly with `use` as shown above.",
+                    "Do not prove distinctness by manufacturing `i.val = i.val + 1` and applying `Nat.succ_ne_self`; the orientation is brittle. Use the direct Fin-ext/simp proof shape instead.",
                 ],
             }
         )

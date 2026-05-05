@@ -247,6 +247,10 @@ Shape-warning repairs:
   `$0.010895358`; result: `0/2` passed.
 - repair attempt 2 targeted row 11's missing-helper compiler error; cost:
   `$0.003953889`; result: `0/1` passed.
+- repair attempt 3 targeted row 11's direct-constructor proof after the `Fin n`
+  bound failure; cost: `$0.005651752`; result: `0/1` passed. The remaining
+  compiler error is a brittle distinctness proof that uses `Nat.succ_ne_self`
+  in the wrong equality direction.
 
 Takeaway: environment balancing is a real context-selection fix, but this
 11-row slice still does not mostly succeed. The next gains should come from
@@ -319,7 +323,8 @@ set passes with `66 passed`.
 After adding TeX environment-balance span risks, the focused test set passes
 with `67 passed`. After adding bounded TeX span expansion, it passes with
 `68 passed`. After adding visible `IsSwap` diagnostics and missing-helper
-repair guidance, it passes with `70 passed`.
+repair guidance, it passes with `70 passed`. The final repair-guidance update
+keeps that same focused suite green with `70 passed`.
 
 ## Next Step
 

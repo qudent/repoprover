@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:71:35: warning: Try `simp at hval` instead of `simpa using hval`\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\nAlgebraicCombinatorics/Permutations/Basics.lean:72:35: error: Application type mismatch: The argument\n  this\nhas type\n  ↑i = ↑i + 1\nbut is expected to have type\n  (↑i).succ = ↑i\nin the application\n  Nat.succ_ne_self (↑i) this\n"
+}
