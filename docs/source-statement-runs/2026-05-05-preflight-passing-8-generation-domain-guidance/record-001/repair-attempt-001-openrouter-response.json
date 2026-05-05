@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777955910-wke41qDhJzrnUGnWFMxt",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem subst_tprod {I : Type*} [DecidableEq I] (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0)\\n  (hf : Multipliable f) : (∏' i, f i).subst g = ∏' i, (f i).subst g := by\\n  have hf_approx : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, f i) = coeff n (∏ i∈M, f i) :=\\n    fun n => hf.exists_approx n\\n  have hcomp_approx : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, (f i).subst g) = coeff n (∏ i∈M, (f i).subst g) :=\\n    comp_prod_multipliable f g hg hf_approx\\n  have h_comp_mul : Multipliable (fun i : I => (f i).subst g) :=\\n    Multipliable.mk hcomp_approx\\n  ext n\\n  have h_approx_all : ∃ M : Finset I, ∀ k ≤ n, ∀ J : Finset I, M ⊆ J → coeff k (∏ i∈J, f i) = coeff k (∏ i∈M, f i) := by\\n    choose M_k hM_k using hf_approx\\n    use Finset.biUnion (Finset.range (n+1)) M_k\\n    intro k hk J hJ\\n    have hMk_sub : M_k k ⊆ Finset.biUnion (Finset.range (n+1)) M_k := by\\n      apply Finset.subset_biUnion_of_mem; simp [hk]\\n    exact hM_k k J (hMk_sub.trans hJ)\\n  rcases h_approx_all with ⟨M, hMall⟩\\n  have hMall_n : ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, f i) = coeff n (∏ i∈M, f i) :=\\n    fun J hMJ => hMall n (le_refl n) J hMJ\\n  have hcoeff_tprod_f : coeff n (∏' i, f i) = coeff n (∏ i∈M, f i) :=\\n    hf.coeff_tprod n M hMall_n\\n  have hcoeff_tprod_comp : coeff n (∏' i, (f i).subst g) = coeff n (∏ i∈M, (f i).subst g) := by\\n    have h_act : ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, (f i).subst g) = coeff n (∏ i∈M, (f i).subst g) := by\\n      intro J hMJ\\n      apply comp_prod_approx_determines f g hg n M (fun k hk J' hMJ' => hMall k hk J' hMJ') J hMJ\\n    apply h_comp_mul.coeff_tprod n M h_act\\n  have h_equality_up_to_n : ∀ k ≤ n, coeff k (∏' i, f i) = coeff k (∏ i∈M, f i) := by\\n    intro k hk\\n    have hMall_k : ∀ J : Finset I, M ⊆ J → coeff k (∏ i∈J, f i) = coeff k (∏ i∈M, f i) :=\\n      fun J hMJ => hMall k hk J hMJ\\n    exact hf.coeff_tprod k M hMall_k\\n  have hn_eq : coeff n ((∏' i, f i).subst g) = coeff n ((∏ i∈M, f i).subst g) :=\\n    (xnEquiv_comp h_equality_up_to_n hg n (le_refl n)) n (le_refl n)\\n  rw [hn_eq]\\n  rw [comp_prod_finite M f g hg]\\n  rw [hcoeff_tprod_comp]\",\n  \"declaration_name\": \"subst_tprod\",\n  \"used_context\": [\n    \"comp_prod_multipliable\",\n    \"comp_prod_approx_determines\",\n    \"xnEquiv_comp\",\n    \"comp_prod_finite\",\n    \"hf.exists_approx\",\n    \"hf.coeff_tprod\",\n    \"Multipliable.mk\",\n    \"h_comp_mul.coeff_tprod\"\n  ],\n  \"notes\": [\n    \"Proof avoids topological continuity issues by leveraging combinatorial approximators, assuming Multipliable exposes exists_approx and coeff_tprod fields.\",\n    \"Added [DecidableEq I] because the original omitted it but the lemmas require it.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777955910,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 22653,
+    "prompt_tokens": 7216,
+    "total_tokens": 29869,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 21488,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.022515774,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.022515774,
+      "upstream_inference_prompt_cost": 0.002807664,
+      "upstream_inference_completions_cost": 0.01970811
+    }
+  },
+  "provider": "DeepSeek"
+}

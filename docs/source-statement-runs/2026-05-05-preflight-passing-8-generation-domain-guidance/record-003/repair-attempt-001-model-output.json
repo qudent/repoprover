@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem comp_y_coeff (f g : ℕ → PowerSeries R) (h : embedUnivInBiv f = embedUnivInBiv g) : f = g := by\n  ext k n\n  simpa [coeff_embedUnivInBiv] using congrArg (fun s => s (Finsupp.single 0 n + Finsupp.single 1 k)) h",
+  "declaration_name": "comp_y_coeff",
+  "used_context": [
+    "embedUnivInBiv",
+    "coeff_embedUnivInBiv",
+    "Finsupp.single"
+  ],
+  "notes": [
+    "Replace 'apply PowerSeries.ext; intro n' with 'ext k n' to use the extensionality lemma chain directly and avoid the apply unification error."
+  ]
+}

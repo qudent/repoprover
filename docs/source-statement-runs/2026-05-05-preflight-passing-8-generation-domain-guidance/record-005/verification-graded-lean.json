@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPSDefinition.lean:63:16: error: Function expected at\n  lem_fps_xa ?m.37\nbut this term has type\n  X * ?m.37 = PowerSeries.mk fun n => if n = 0 then 0 else (coeff (n - 1)) ?m.37\n\nNote: Expected a function because this term is being applied to the argument\n  f\nAlgebraicCombinatorics/FPSDefinition.lean:63:27: error: Application type mismatch: The argument\n  k\nhas type\n  ℕ\nbut is expected to have type\n  ?m.35⟦X⟧\nin the application\n  lem_fps_xa k\n"
+}

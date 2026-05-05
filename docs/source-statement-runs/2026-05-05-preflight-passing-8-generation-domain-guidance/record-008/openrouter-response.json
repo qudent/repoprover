@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777955495-q2JKLKA5ZKptksHocfOo",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem lexLt_irrefl {n : ℕ} (a : Fin n → ℤ) : ¬ lexLt a a := by\\n  intro h\\n  rcases h with ⟨k, _, hlt⟩\\n  exact lt_irrefl (a k) hlt\",\n  \"declaration_name\": \"lexLt_irrefl\",\n  \"used_context\": [\"lexLt\"],\n  \"notes\": [\"irreflexivity of lexLt as defined earlier\"]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777955495,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 1974,
+    "prompt_tokens": 2593,
+    "total_tokens": 4567,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 1855,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.002569255,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.002569255,
+      "upstream_inference_prompt_cost": 0.000851875,
+      "upstream_inference_completions_cost": 0.00171738
+    }
+  },
+  "provider": "DeepSeek"
+}

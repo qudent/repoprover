@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777955910-2hoLKu03MhAQfOmzP1Gr",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_subst_X (g : K⟦X⟧) : PowerSeries.subst X g = g := by\\n  have hX : constantCoeff (X : K⟦X⟧) = 0 := by simp\\n  ext n\\n  rw [fps_comp_coeff g X hX n]\\n  have hzero : ∀ d, d ≠ n → coeff d g * coeff n (X ^ d) = 0 := by\\n    intro d hdne\\n    simp [coeff_X_pow, hdne]\\n  rw [finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n hzero]\\n  simp\",\n  \"declaration_name\": \"fps_subst_X\",\n  \"used_context\": [\n    \"fps_comp_coeff\",\n    \"finsum_eq_single\",\n    \"coeff_X_pow\",\n    \"simp\"\n  ],\n  \"notes\": [\n    \"Uses hX : constantCoeff X = 0 obtained by simp; the theorem does not require a hypothesis on g because X has zero constant coefficient.\",\n    \"The proof reduces the coefficient identity via fps_comp_coeff and then selects the single nonzero term using finsum_eq_single.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777955910,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 10289,
+    "prompt_tokens": 7018,
+    "total_tokens": 17307,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 9997,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.011672964,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.011672964,
+      "upstream_inference_prompt_cost": 0.002721534,
+      "upstream_inference_completions_cost": 0.00895143
+    }
+  },
+  "provider": "DeepSeek"
+}

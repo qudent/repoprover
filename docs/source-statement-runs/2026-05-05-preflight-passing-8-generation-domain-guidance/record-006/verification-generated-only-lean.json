@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:15:6: error: invalid declaration name `parts_sum`, structure `Nat.Partition` has field `parts_sum`\n"
+}

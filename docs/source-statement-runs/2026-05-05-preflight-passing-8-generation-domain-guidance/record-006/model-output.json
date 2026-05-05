@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "lemma parts_sum (n : ℕ) (p : Partition n) : p.parts.sum = n :=\n  p.property",
+  "declaration_name": "parts_sum",
+  "used_context": [
+    "source snippet def.pars.parts part (c)"
+  ],
+  "notes": [
+    "Assumes `Partition n` is a subtype whose property equates the size (computed as sum of parts) to `n`.",
+    "The proof is definitional via `p.property` because the size is defined as `p.parts.sum`."
+  ]
+}

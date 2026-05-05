@@ -71,7 +71,12 @@ verified successes for `$0.198753983`, with only the FPS limits
 source-label API retrieval plus domain-specific statement-shape guidance for FPS
 limits, FPS `X` coefficients, and partition transpose produced the first 6/6
 verified six-record slice: 4/6 first-pass successes plus 2/2 generated-only
-compiler-feedback repairs for `$0.063246158`.
+compiler-feedback repairs for `$0.063246158`. Scaling the same queue to a
+larger corpus-spread preflight found 8/24 records whose verifier setup passes;
+the paid 8-record generation+repair validation reached only 3/8 cumulative
+verified successes for `$0.102229350`, exposing the next hard examples in FPS
+infinite-products/substitution, multivariate coefficient projection, and exact
+statement-shape matching.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -220,9 +225,16 @@ failures plus 1 hidden-grader mismatch; see
   generic Lean/mathlib guesses. Result: the six preflight-passing records
   reached 4/6 on first generation and 6/6 after one repair pass for
   `$0.063246158`. See `docs/source-statement-domain-guidance-results.md`.
-- [ ] Scale the same generation-only plus verifier queue to a larger
-  preflight-passing slice; keep provider outputs logged before Lean checks and
-  stop if first-pass+repair success drops below a useful diagnostic threshold.
+- [x] Scale the same generation-only plus verifier queue to a larger
+  preflight-passing slice. Result: zero-cost 24-record preflight passed 8/24;
+  paid generation+one repair pass over those 8 reached 3/8 cumulative verified
+  successes for `$0.102229350`, with all provider outputs logged before Lean
+  checks. See `docs/source-statement-larger-slice-results.md`.
+- [ ] Use the failed 8-record hard examples to improve context selection before
+  further paid scale: FPS infinite-products/substitution should avoid
+  topological APIs unless imported context supports them, multivariate FPS needs
+  exact coefficient projection snippets, and generated theorem shapes need a
+  semantic-equivalence guard before repair.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

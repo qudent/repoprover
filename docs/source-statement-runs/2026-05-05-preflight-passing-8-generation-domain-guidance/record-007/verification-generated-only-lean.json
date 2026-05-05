@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:50:210: error: unsolved goals\nn : ℕ\ni : Fin (n - 1)\nk : Fin n\nh1 : k ≠ ⟨↑i, ⋯⟩\nh2 : k ≠ ⟨↑i + 1, ⋯⟩\n⊢ (Equiv.swap ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩) k = k\nAlgebraicCombinatorics/Permutations/Basics.lean:51:29: warning: This simp argument is unused:\n  h1\n\nHint: Omit it from the simp argument list.\n  simp [simpleTransposition, h1̵,̵ ̵h̵2]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nAlgebraicCombinatorics/Permutations/Basics.lean:51:33: warning: This simp argument is unused:\n  h2\n\nHint: Omit it from the simp argument list.\n  simp [simpleTransposition, h1,̵ ̵h̵2̵]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+}

@@ -1,0 +1,18 @@
+{
+  "lean_declaration": "theorem subst_tprod {I : Type*} [DecidableEq I] (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0)\n  (hf : Multipliable f) : (∏' i, f i).subst g = ∏' i, (f i).subst g := by\n  have hf_approx : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, f i) = coeff n (∏ i∈M, f i) :=\n    fun n => hf.exists_approx n\n  have hcomp_approx : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, (f i).subst g) = coeff n (∏ i∈M, (f i).subst g) :=\n    comp_prod_multipliable f g hg hf_approx\n  have h_comp_mul : Multipliable (fun i : I => (f i).subst g) :=\n    Multipliable.mk hcomp_approx\n  ext n\n  have h_approx_all : ∃ M : Finset I, ∀ k ≤ n, ∀ J : Finset I, M ⊆ J → coeff k (∏ i∈J, f i) = coeff k (∏ i∈M, f i) := by\n    choose M_k hM_k using hf_approx\n    use Finset.biUnion (Finset.range (n+1)) M_k\n    intro k hk J hJ\n    have hMk_sub : M_k k ⊆ Finset.biUnion (Finset.range (n+1)) M_k := by\n      apply Finset.subset_biUnion_of_mem; simp [hk]\n    exact hM_k k J (hMk_sub.trans hJ)\n  rcases h_approx_all with ⟨M, hMall⟩\n  have hMall_n : ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, f i) = coeff n (∏ i∈M, f i) :=\n    fun J hMJ => hMall n (le_refl n) J hMJ\n  have hcoeff_tprod_f : coeff n (∏' i, f i) = coeff n (∏ i∈M, f i) :=\n    hf.coeff_tprod n M hMall_n\n  have hcoeff_tprod_comp : coeff n (∏' i, (f i).subst g) = coeff n (∏ i∈M, (f i).subst g) := by\n    have h_act : ∀ J : Finset I, M ⊆ J → coeff n (∏ i∈J, (f i).subst g) = coeff n (∏ i∈M, (f i).subst g) := by\n      intro J hMJ\n      apply comp_prod_approx_determines f g hg n M (fun k hk J' hMJ' => hMall k hk J' hMJ') J hMJ\n    apply h_comp_mul.coeff_tprod n M h_act\n  have h_equality_up_to_n : ∀ k ≤ n, coeff k (∏' i, f i) = coeff k (∏ i∈M, f i) := by\n    intro k hk\n    have hMall_k : ∀ J : Finset I, M ⊆ J → coeff k (∏ i∈J, f i) = coeff k (∏ i∈M, f i) :=\n      fun J hMJ => hMall k hk J hMJ\n    exact hf.coeff_tprod k M hMall_k\n  have hn_eq : coeff n ((∏' i, f i).subst g) = coeff n ((∏ i∈M, f i).subst g) :=\n    (xnEquiv_comp h_equality_up_to_n hg n (le_refl n)) n (le_refl n)\n  rw [hn_eq]\n  rw [comp_prod_finite M f g hg]\n  rw [hcoeff_tprod_comp]",
+  "declaration_name": "subst_tprod",
+  "used_context": [
+    "comp_prod_multipliable",
+    "comp_prod_approx_determines",
+    "xnEquiv_comp",
+    "comp_prod_finite",
+    "hf.exists_approx",
+    "hf.coeff_tprod",
+    "Multipliable.mk",
+    "h_comp_mul.coeff_tprod"
+  ],
+  "notes": [
+    "Proof avoids topological continuity issues by leveraging combinatorial approximators, assuming Multipliable exposes exists_approx and coeff_tprod fields.",
+    "Added [DecidableEq I] because the original omitted it but the lemmas require it."
+  ]
+}

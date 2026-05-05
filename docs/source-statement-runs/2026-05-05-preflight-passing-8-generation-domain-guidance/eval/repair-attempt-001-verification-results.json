@@ -1,0 +1,107 @@
+{
+  "generated_at": "2026-05-05T04:52:39.126859+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance",
+  "work_root": "/tmp/repoprover-source-statement-verify-domain-guidance-8-repair1-serial",
+  "workers": 1,
+  "records_completed": 8,
+  "successes": 1,
+  "success_rate": 0.125,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 3,
+    "grader_gold_statement_not_proved": 1,
+    "missing_model_output": 3
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-001",
+      "generated_name": "subst_tprod",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:127:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  TopologicalSpace K⟦X⟧\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Details/InfiniteProducts2.lean:127:48: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  TopologicalSpace (MvPowerSeries Unit K)\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Details/InfiniteProducts2.lean:127:27: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  TopologicalSpace K⟦X⟧\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Details/InfiniteProducts2.lean:132:20: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  TopologicalSpace (MvPowerSeries Unit K)\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Details/InfiniteProducts2.lean:133:4: error(lean.unknownIdentifier): Unknown constant `Multipliable.mk`\nAlgebraicCombinatorics/Details/InfiniteProducts2.lean:134:2: error: No applicable extensionality theorem found for type\n  ?m.36 f g hg hf\n\nNote: Extensionality theorems can be registered by marking them with the `[ext]` attribute\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-002/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.eq_of_embedUnivInBiv_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-003",
+      "generated_name": "comp_y_coeff",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Multivariate.lean:45:2: error: Type mismatch: After simplification, term\n  congrArg (fun s => s ((fun₀ | 0 => n) + fun₀ | 1 => k)) h\n has type\n  embedUnivInBiv f ((fun₀ | 0 => n) + fun₀ | 1 => k) = embedUnivInBiv g ((fun₀ | 0 => n) + fun₀ | 1 => k)\nbut is expected to have type\n  (PowerSeries.coeff n) (f k) = (PowerSeries.coeff n) (g k)\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_subs_X_right",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-004",
+      "generated_name": "fps_subst_X",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:126:63: error: unsolved goals\nK : Type u_1\ninst✝ : CommRing K\ng : K⟦X⟧\nhX : constantCoeff X = 0\nn d : ℕ\nhdne : d ≠ n\n⊢ n = d → (coeff d) g = 0\nAlgebraicCombinatorics/FPS/Substitution.lean:128:23: warning: This simp argument is unused:\n  hdne\n\nHint: Omit it from the simp argument list.\n  simp [coeff_X_pow,̵ ̵h̵d̵n̵e̵]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.coeff_mul_X_pow",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-005",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-005/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.size_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-006",
+      "generated_name": "sum_parts_eq",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:27:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Partitions/Basics.lean:28:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Partitions/Basics.lean:27:4: warning: 'simpa using sum_parts_eq' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Partitions/Basics.lean:28:4: warning: 'simpa using sum_parts_eq p' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Partitions/Basics.lean:24:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_apply_of_ne",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-007",
+      "generated_name": "simpleTransposition_apply_of_ne_ne",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:63:55: error: Application type mismatch: The argument\n  k\nhas type\n  Fin n\nof sort `Type` but is expected to have type\n  i ≠ ⟨↑?m.24, ⋯⟩\nof sort `Prop` in the application\n  simpleTransposition_apply_of_ne_ne ?m.24 i k\nAlgebraicCombinatorics/Permutations/Basics.lean:63:51: error: Application type mismatch: The argument\n  n\nhas type\n  ℕ\nbut is expected to have type\n  Fin (n - 1 - 1)\nin the application\n  simpleTransposition_apply_of_ne_ne n\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/Permutations/Inversions1.lean:AlgebraicCombinatorics.lexLt_irrefl",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-008",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-008/repair-attempt-001-model-output.json"
+    }
+  ]
+}

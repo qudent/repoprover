@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777955469-q315GuTRbVTCv9hqCj1a",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"/-- Simple transposition `s_i` fixes any `k ≠ i, i+1`. (def.perm.si) -/\\ntheorem simpleTransposition_apply_of_ne_ne {n : ℕ} (i : Fin (n - 1)) (k : Fin n) (h1 : k ≠ ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩) (h2 : k ≠ ⟨i.val + 1, by omega⟩) : simpleTransposition i k = k := by\\n  simp [simpleTransposition, h1, h2]\",\n  \"declaration_name\": \"simpleTransposition_apply_of_ne_ne\",\n  \"used_context\": [\n    \"simpleTransposition\",\n    \"simp\"\n  ],\n  \"notes\": [\n    \"The proof uses `simp` with `swap_apply` and the hypotheses `h1`, `h2` to simplify the conditional expression.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777955469,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 6424,
+    "prompt_tokens": 3300,
+    "total_tokens": 9724,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 6206,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.0067483,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.0067483,
+      "upstream_inference_prompt_cost": 0.00115942,
+      "upstream_inference_completions_cost": 0.00558888
+    }
+  },
+  "provider": "DeepSeek"
+}

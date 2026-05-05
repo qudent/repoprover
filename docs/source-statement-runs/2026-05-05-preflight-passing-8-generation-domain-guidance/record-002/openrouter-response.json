@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777955244-2XE3LEPgK1hGb1vO4cCr",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :\\n    (A.submatrix id (Equiv.swap i j)).det = -A.det := by\\n  have h_trans : (A.submatrix id (Equiv.swap i j))ᵀ = Aᵀ.submatrix (Equiv.swap i j) id := by\\n    ext i' j'; simp [Matrix.submatrix_apply]\\n  have h_eq : Aᵀ.submatrix (Equiv.swap i j) id = Matrix.of (Aᵀ ∘ Equiv.swap i j) := by\\n    ext i' j'; simp [Matrix.submatrix_apply, Matrix.of_apply]\\n  calc\\n    (A.submatrix id (Equiv.swap i j)).det = ((A.submatrix id (Equiv.swap i j))ᵀ).det := by rw [Matrix.det_transpose]\\n    _ = (Aᵀ.submatrix (Equiv.swap i j) id).det := by rw [h_trans]\\n    _ = (Matrix.of (Aᵀ ∘ Equiv.swap i j)).det := by rw [h_eq]\\n    _ = -(Aᵀ).det := by rw [det_swap_rows Aᵀ i j hij]\\n    _ = -A.det := by rw [Matrix.det_transpose]\",\n  \"declaration_name\": \"det_swap_cols\",\n  \"used_context\": [\n    \"det_swap_rows\"\n  ],\n  \"notes\": [\n    \"The proof follows the source's idea of using transposes and the row-swap theorem. It uses `Matrix.det_transpose` from Mathlib.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777955244,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 6818,
+    "prompt_tokens": 3302,
+    "total_tokens": 10120,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 6406,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 3200,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.00598763,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.00598763,
+      "upstream_inference_prompt_cost": 5.597e-05,
+      "upstream_inference_completions_cost": 0.00593166
+    }
+  },
+  "provider": "DeepSeek"
+}

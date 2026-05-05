@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:125:32: error: Application type mismatch: The argument\n  hX\nhas type\n  Eq.{1} (constantCoeff X) 0\nbut is expected to have type\n  Eq.{u_1 + 1} (constantCoeff X) 0\nin the application\n  fps_comp_coeff_finite g X hX\nAlgebraicCombinatorics/FPS/Substitution.lean:122:62: error: unsolved goals\ncase h\nK : Type u_1\ninst✝ : CommRing K\ng : K⟦X⟧\nhX : constantCoeff X = 0\nn : ℕ\n⊢ (coeff n) (subst X g) = (coeff n) g\n"
+}

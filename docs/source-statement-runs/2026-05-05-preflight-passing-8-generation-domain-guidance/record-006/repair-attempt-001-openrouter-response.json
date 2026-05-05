@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777956145-rnVpuepZJgwyoLn1MFiB",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma sum_parts_eq (n : ℕ) (p : Partition n) : p.parts.sum = n :=\\n  p.parts_sum\",\n  \"declaration_name\": \"sum_parts_eq\",\n  \"used_context\": [\n    \"Nat.Partition.parts_sum field\"\n  ],\n  \"notes\": [\n    \"Renamed from `parts_sum` to avoid collision with the structure field of the same name; the proof directly uses the existing field.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777956145,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 3540,
+    "prompt_tokens": 2823,
+    "total_tokens": 6363,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 3429,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.003976509,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.003976509,
+      "upstream_inference_prompt_cost": 0.000896709,
+      "upstream_inference_completions_cost": 0.0030798
+    }
+  },
+  "provider": "DeepSeek"
+}

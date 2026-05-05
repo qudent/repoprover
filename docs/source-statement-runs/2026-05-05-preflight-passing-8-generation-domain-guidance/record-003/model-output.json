@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem comp_y_coeff (f g : ℕ → PowerSeries R) (h : embedUnivInBiv f = embedUnivInBiv g) : f = g := by\n  ext k\n  apply PowerSeries.ext\n  intro n\n  simpa [coeff_embedUnivInBiv] using congrArg (fun s => s (Finsupp.single 0 n + Finsupp.single 1 k)) h",
+  "declaration_name": "comp_y_coeff",
+  "used_context": [
+    "embedUnivInBiv",
+    "coeff_embedUnivInBiv",
+    "PowerSeries.ext",
+    "Finsupp.single"
+  ],
+  "notes": [
+    "Assumes R : Type* [CommSemiring R] as in the context.",
+    "States that the embedding of sequences of univariate power series into bivariate series via ∑_k f_k y^k is injective.",
+    "Uses the lemma coeff_embedUnivInBiv to relate bivariate coefficients to univariate ones."
+  ]
+}

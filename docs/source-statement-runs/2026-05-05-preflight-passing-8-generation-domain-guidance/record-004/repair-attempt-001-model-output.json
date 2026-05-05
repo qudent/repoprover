@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem fps_subst_X (g : K⟦X⟧) : PowerSeries.subst X g = g := by\n  have hX : constantCoeff (X : K⟦X⟧) = 0 := by simp\n  ext n\n  rw [fps_comp_coeff g X hX n]\n  have hzero : ∀ d, d ≠ n → coeff d g * coeff n (X ^ d) = 0 := by\n    intro d hdne\n    simp [coeff_X_pow, hdne]\n  rw [finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n hzero]\n  simp",
+  "declaration_name": "fps_subst_X",
+  "used_context": [
+    "fps_comp_coeff",
+    "finsum_eq_single",
+    "coeff_X_pow",
+    "simp"
+  ],
+  "notes": [
+    "Uses hX : constantCoeff X = 0 obtained by simp; the theorem does not require a hypothesis on g because X has zero constant coefficient.",
+    "The proof reduces the coefficient identity via fps_comp_coeff and then selects the single nonzero term using finsum_eq_single."
+  ]
+}

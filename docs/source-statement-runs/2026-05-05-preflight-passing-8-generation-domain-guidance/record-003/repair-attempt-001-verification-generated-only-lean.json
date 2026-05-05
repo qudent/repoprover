@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Multivariate.lean:45:2: error: Type mismatch: After simplification, term\n  congrArg (fun s => s ((fun₀ | 0 => n) + fun₀ | 1 => k)) h\n has type\n  embedUnivInBiv f ((fun₀ | 0 => n) + fun₀ | 1 => k) = embedUnivInBiv g ((fun₀ | 0 => n) + fun₀ | 1 => k)\nbut is expected to have type\n  (PowerSeries.coeff n) (f k) = (PowerSeries.coeff n) (g k)\n"
+}

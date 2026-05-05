@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem fps_subst_X (g : K⟦X⟧) : PowerSeries.subst X g = g := by\n  have hX : constantCoeff X = 0 := constantCoeff_X\n  ext n\n  rw [fps_comp_coeff_finite g X hX n]\n  simp [coeff_X_pow, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_range, Nat.lt_succ_self n]",
+  "declaration_name": "fps_subst_X",
+  "used_context": [
+    "fps_comp_coeff_finite",
+    "constantCoeff_X",
+    "coeff_X_pow"
+  ],
+  "notes": [
+    "Uses fps_comp_coeff_finite to expand coefficients and simplifies with coeff_X_pow and sum_ite_eq.",
+    "Proves the identity g ∘ X = g from part (g) of Proposition 7.3.4."
+  ]
+}

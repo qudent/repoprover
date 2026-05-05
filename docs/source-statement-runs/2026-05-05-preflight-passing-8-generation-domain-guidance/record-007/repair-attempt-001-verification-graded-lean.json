@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:63:55: error: Application type mismatch: The argument\n  k\nhas type\n  Fin n\nof sort `Type` but is expected to have type\n  i ≠ ⟨↑?m.24, ⋯⟩\nof sort `Prop` in the application\n  simpleTransposition_apply_of_ne_ne ?m.24 i k\nAlgebraicCombinatorics/Permutations/Basics.lean:63:51: error: Application type mismatch: The argument\n  n\nhas type\n  ℕ\nbut is expected to have type\n  Fin (n - 1 - 1)\nin the application\n  simpleTransposition_apply_of_ne_ne n\n"
+}

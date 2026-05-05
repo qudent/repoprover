@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem subst_tprod {I : Type*} (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0) (hf : Multipliable f) : (∏' i, f i).subst g = ∏' i, (f i).subst g := by\n  have hSubst : HasSubst g := HasSubst.of_constantCoeff_zero' hg\n  have h_cont : Continuous (subst g) := continuous_subst hSubst\n  simpa using hf.map_tprod (subst g) h_cont",
+  "declaration_name": "subst_tprod",
+  "used_context": [
+    "hf.map_tprod",
+    "continuous_subst",
+    "HasSubst.of_constantCoeff_zero'",
+    "PowerSeries.subst"
+  ],
+  "notes": [
+    "Assumes `continuous_subst` is available from Mathlib (which it is for series with zero constant term).",
+    "The proof follows the same pattern as the existing `tprod_rescale_substitution` lemma."
+  ]
+}

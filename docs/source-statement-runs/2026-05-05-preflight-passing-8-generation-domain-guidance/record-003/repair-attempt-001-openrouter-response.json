@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777955910-hSo39F2et8QJDEhU37gt",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem comp_y_coeff (f g : ℕ → PowerSeries R) (h : embedUnivInBiv f = embedUnivInBiv g) : f = g := by\\n  ext k n\\n  simpa [coeff_embedUnivInBiv] using congrArg (fun s => s (Finsupp.single 0 n + Finsupp.single 1 k)) h\",\n  \"declaration_name\": \"comp_y_coeff\",\n  \"used_context\": [\n    \"embedUnivInBiv\",\n    \"coeff_embedUnivInBiv\",\n    \"Finsupp.single\"\n  ],\n  \"notes\": [\n    \"Replace 'apply PowerSeries.ext; intro n' with 'ext k n' to use the extensionality lemma chain directly and avoid the apply unification error.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777955910,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 8858,
+    "prompt_tokens": 4243,
+    "total_tokens": 13101,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 8665,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.009220869,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.009220869,
+      "upstream_inference_prompt_cost": 0.001514409,
+      "upstream_inference_completions_cost": 0.00770646
+    }
+  },
+  "provider": "DeepSeek"
+}

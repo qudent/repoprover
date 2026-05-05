@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "lemma sum_parts_eq (n : ℕ) (p : Partition n) : p.parts.sum = n :=\n  p.parts_sum",
+  "declaration_name": "sum_parts_eq",
+  "used_context": [
+    "Nat.Partition.parts_sum field"
+  ],
+  "notes": [
+    "Renamed from `parts_sum` to avoid collision with the structure field of the same name; the proof directly uses the existing field."
+  ]
+}
