@@ -9,6 +9,7 @@ def _unit(
     label: str,
     source_text: str,
     aligned_name: str | None = None,
+    referencing_name: str | None = None,
     refs: list[dict] | None = None,
 ) -> dict:
     row = {
@@ -29,6 +30,7 @@ def _unit(
         },
         "posthoc_lean_alignment": {
             "aligned_lean_declarations": [],
+            "referencing_lean_declarations": [],
         },
         "selection": {"status": "gold_candidate"},
     }
@@ -40,6 +42,17 @@ def _unit(
                 "path": "AlgebraicCombinatorics/Demo.lean",
                 "line_range": [10, 12],
                 "declared_source_labels": [label],
+            }
+        )
+    if referencing_name:
+        row["posthoc_lean_alignment"]["referencing_lean_declarations"].append(
+            {
+                "full_name": referencing_name,
+                "kind": "def",
+                "path": "AlgebraicCombinatorics/Demo.lean",
+                "line_range": [20, 22],
+                "declared_source_labels": [],
+                "referenced_source_labels": [label],
             }
         )
     return row
@@ -72,6 +85,29 @@ def test_theorem_level_selector_hides_target_alignment_but_keeps_prior_context()
     assert "prior_project_context" in prompt
     assert "previous_source_context" in prompt
     assert "Do not write theorem/lemma Lean code in target_statement_sketch" in prompt
+
+
+def test_theorem_level_selector_uses_source_unit_only_referencing_declarations() -> None:
+    prior = _unit(
+        unit_id="prior-definition",
+        label="def.prior",
+        source_text="\\begin{definition}\\label{def.prior}Prior definition.\\end{definition}",
+        referencing_name="Demo.PriorPredicate",
+    )
+    target = _unit(
+        unit_id="target",
+        label="thm.target",
+        source_text="\\begin{theorem}\\label{thm.target}Target uses the prior definition.\\end{theorem}",
+        aligned_name="Demo.hidden_target",
+        refs=[{"unit_id": "prior-definition", "label": "def.prior", "resolved": True}],
+    )
+
+    messages = build_messages([SelectedUnit(public_key="unit-001", row=target)], [target], source_units=[prior, target])
+    prompt = messages[1]["content"]
+
+    assert "Demo.PriorPredicate" in prompt
+    assert "referencing_prior_declaration" in prompt
+    assert "Demo.hidden_target" not in prompt
 
 
 def test_select_units_supports_offset_and_exact_id() -> None:

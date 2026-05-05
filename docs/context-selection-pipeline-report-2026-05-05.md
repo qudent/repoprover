@@ -265,6 +265,50 @@ version of that verifier now exists and confirms this probe is still an oracle
 shape mismatch, because the generated theorem asks for symmetric multiplication
 hypotheses rather than using the project `IsInverse` predicate shape.
 
+Selector context follow-up:
+
+`docs/latex-statement-context-runs/2026-05-05-inverse-unique-prior-project-v3-budget/`
+
+- no paid call; budget-only payload inspection.
+- prior source context: `def.commring.inverse`.
+- prior project context now includes snippets for
+  `AlgebraicCombinatorics.FPS.IsInverse` and
+  `AlgebraicCombinatorics.FPS.IsInvertible`, sourced from the full
+  `docs/latex-statement-units.jsonl` index's `referencing_lean_declarations`.
+- target leak check: the selected unit's aligned target theorem
+  `AlgebraicCombinatorics.FPS.isInverse_unique` is still absent from the
+  payload.
+
+This is the generic fix that the failed inverse semantic check points toward:
+the generator needs the actual project predicate shape in its prompt before it
+can plausibly produce a theorem that covers the aligned gold statement.
+
+Paid v3 rerun:
+
+`docs/latex-statement-context-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`
+and
+`docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`
+
+- selector cost: `$0.00038332`; generation cost: `$0.0004417`; both with
+  `reasoning_effort=none` and `0` reasoning tokens.
+- selector selected the project predicate `AlgebraicCombinatorics.FPS.IsInverse`.
+- hydration checked `mul_comm` and marked `mul_left_cancel₀` as not an exact
+  Lean identifier.
+- generation emitted `IsInverse.unique`, a theorem in the project predicate
+  shape.
+- generated-only compile: `1/1` when checked with the needed project
+  import/open context.
+- exact name overlap: `0/1`.
+- semantic theorem coverage: `1/1`; the grader-only aligned gold statement
+  `AlgebraicCombinatorics.FPS.isInverse_unique` is proved from the generated
+  theorem by `simpa using`.
+
+This is a small but important benchmark-honesty result: exact textual/name
+matching still says failure, while the semantic verifier says the generated
+statement covers the theorem. It also exposes the next automation gap: verifier
+contexts need to be derived from selected project declarations rather than
+manually supplied imports/opens.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

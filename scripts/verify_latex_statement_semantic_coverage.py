@@ -51,8 +51,9 @@ def generation_output_paths(run_dir: Path) -> list[Path]:
     return sorted(run_dir.glob("batch-*/generation-output.json"))
 
 
-def verification_results(run_dir: Path) -> dict[str, dict[str, Any]]:
-    path = run_dir / "eval" / "verification-results.json"
+def verification_results(run_dir: Path, path: Path | None = None) -> dict[str, dict[str, Any]]:
+    if path is None:
+        path = run_dir / "eval" / "verification-results.json"
     if not path.exists():
         return {}
     data = read_json(path)
@@ -239,7 +240,7 @@ def check_aligned_declaration(
 
 def compare(args: argparse.Namespace) -> dict[str, Any]:
     selected_by_key = selected_units_by_key(args.selector_run)
-    verification_by_key = verification_results(args.generation_run)
+    verification_by_key = verification_results(args.generation_run, args.verification_results)
     units: list[dict[str, Any]] = []
 
     semantic_root = args.output.parent / "semantic-coverage"
@@ -315,6 +316,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--selector-run", type=Path, required=True)
     parser.add_argument("--generation-run", type=Path, required=True)
+    parser.add_argument(
+        "--verification-results",
+        type=Path,
+        help="Optional verification-results JSON to decide which generated units are compile-clean.",
+    )
     parser.add_argument("--project-root", type=Path, default=REPO_ROOT / "algebraic-combinatorics")
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
     parser.add_argument("--output", type=Path, required=True)

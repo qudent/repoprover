@@ -84,6 +84,16 @@ aligned gold statement from the generated theorem using `simpa using`; it also
 reports `0/1` for this probe and classifies the failure as
 `shape_mismatch_against_oracle`.
 
+The selector payload builder now also pulls safe prior project declarations
+from the full LaTeX source-unit index, not only from gold-candidate rows. For
+the same inverse-uniqueness source unit, a budget-only v3 payload includes the
+prior source definition's `AlgebraicCombinatorics.FPS.IsInverse` and
+`IsInvertible` Lean snippets while still hiding the aligned target theorem.
+The paid v3 rerun cost `$0.00038332` for selection and `$0.0004417` for
+generation. It generated `IsInverse.unique`, compiled with the appropriate
+project import/open context, and the semantic grader proved the aligned gold
+statement `1/1` even though exact declaration-name overlap remained `0/1`.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

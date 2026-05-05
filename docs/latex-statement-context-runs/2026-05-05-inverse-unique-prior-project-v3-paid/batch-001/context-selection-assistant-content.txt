@@ -1,0 +1,43 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "straightforward uniqueness statement"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem mul_left_cancel₀ (ha : a ≠ 0) (h : a * b = a * c) : b = c",
+              "name_or_query": "mul_left_cancel₀",
+              "why_needed": "to prove uniqueness of inverse in a commutative ring"
+            },
+            {
+              "expected_signature_or_shape": "theorem mul_comm (a b : L) : a * b = b * a",
+              "name_or_query": "mul_comm",
+              "why_needed": "commutativity used in proof"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.FPS.IsInverse",
+              "why_needed": "defines the property of being an inverse"
+            }
+          ],
+          "needed_source_context": [
+            "source unit: thm.commring.inverse-uni"
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "theorem: In a commutative ring L, for any a : L, there is at most one b such that IsInverse a b.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Uniqueness of inverse in a commutative ring",
+      "unit_key": "unit-001"
+    }
+  ]
+}

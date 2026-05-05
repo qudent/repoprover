@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "IsInverse.unique"
+      ],
+      "lean_file_body": "theorem IsInverse.unique {L : Type u} [CommRing L] {a b c : L} (h₁ : IsInverse a b) (h₂ : IsInverse a c) : b = c :=\nby\n  have hb : a * b = 1 := h₁\n  have hc : a * c = 1 := h₂\n  calc\n    b = b * 1 := by simp\n    _ = b * (a * c) := by rw [hc]\n    _ = (b * a) * c := by ring\n    _ = (a * b) * c := by rw [mul_comm b a]\n    _ = 1 * c := by rw [hb]\n    _ = c := by simp",
+      "notes": [
+        "Uses CommRing for commutativity and ring operations; IsInverse is defined as a * b = 1 (commutative ring implies b*a=1 automatically)."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "AlgebraicCombinatorics.FPS.IsInverse",
+        "mul_comm",
+        "CommRing"
+      ]
+    }
+  ]
+}

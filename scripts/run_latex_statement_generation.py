@@ -84,6 +84,22 @@ def load_selected_units(selector_run: Path) -> list[dict[str, Any]]:
     return read_jsonl(selected_path)
 
 
+def load_selector_prompt_units(selector_run: Path) -> dict[str, dict[str, Any]]:
+    payload_path = selector_run / "batch-001" / "context-selection-payload.json"
+    if not payload_path.exists():
+        return {}
+    payload = read_json(payload_path)
+    messages = payload.get("messages") or []
+    user_message = next((message for message in messages if message.get("role") == "user"), None)
+    if not user_message:
+        return {}
+    try:
+        user_payload = json.loads(str(user_message.get("content") or ""))
+    except json.JSONDecodeError:
+        return {}
+    return {str(unit.get("unit_key") or ""): unit for unit in user_payload.get("units") or []}
+
+
 def units_by_public_key(selected_units: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return {f"unit-{index + 1:03d}": row for index, row in enumerate(selected_units)}
 
@@ -101,6 +117,7 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
     hydration = load_hydration(selector_run)
     selected_units = load_selected_units(selector_run)
     selected_by_key = units_by_public_key(selected_units)
+    prompt_units_by_key = load_selector_prompt_units(selector_run)
 
     units_payload: list[dict[str, Any]] = []
     for unit in selector.get("units") or []:
@@ -108,6 +125,7 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
         source_row = selected_by_key.get(unit_key)
         if source_row is None:
             continue
+        prompt_unit = prompt_units_by_key.get(unit_key, {})
         planned_tasks: list[dict[str, Any]] = []
         for task in unit.get("planned_declarations") or []:
             task_id = str(task.get("task_id") or "")
@@ -123,6 +141,7 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
                     ),
                     "needed_source_context": task.get("needed_source_context", []),
                     "needed_project_context": task.get("needed_project_context", []),
+                    "available_prior_project_context": prompt_unit.get("prior_project_context", []),
                     "hydrated_mathlib_context": hydrated_for_task(hydration, unit_key=unit_key, task_id=task_id),
                     "missing_or_uncertain_context": task.get("missing_or_uncertain_context", []),
                 }
@@ -131,6 +150,7 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
             {
                 "unit_key": unit_key,
                 "source_unit": public_source_unit(source_row),
+                "previous_source_context": prompt_unit.get("previous_source_context", []),
                 "source_focus_summary": unit.get("source_focus_summary"),
                 "formalization_risks": unit.get("formalization_risks", []),
                 "planned_declarations": planned_tasks,
@@ -173,7 +193,8 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
             "Follow the Lean-checked signatures exactly when they differ from the selector's expected shape.",
             "Use the actual Lean-checked argument order from hydrated_mathlib_context. If the selector expected shape conflicts with the checked signature, the checked signature wins.",
             "If a selected Mathlib API is field-specific, unit-specific, or otherwise not strong enough for the source statement, say so in notes and generate only declarations justified by the visible context.",
-            "Do not invent project helper names that are not shown in needed_project_context or source context.",
+            "Do not invent project helper names that are not shown in available_prior_project_context, needed_project_context, or source context.",
+            "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",
             "Prefer a narrow declaration sequence over a broad bundled conjunction when the source unit decomposes into multiple Lean declarations.",
             "Keep theorem-local assumptions explicit rather than relying on unavailable global variables.",
             "If you cannot produce a complete proof from visible context, set status to cannot_prove_from_visible_context and leave lean_file_body empty. Never output Lean containing sorry/admit/placeholders.",

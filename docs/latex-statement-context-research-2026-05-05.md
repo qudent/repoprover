@@ -195,6 +195,37 @@ name `inverse_unique`, while the aligned existing theorem is
 concrete: the generated theorem requires a `b * a = 1`-style symmetric
 hypothesis that the gold `IsInverse` statement does not provide directly.
 
+Context-selection follow-up:
+
+- script change: `scripts/run_latex_statement_context_selection.py` now builds
+  prior project context from the full source-unit index, not only from
+  gold-candidate rows.
+- budget-only run:
+  `docs/latex-statement-context-runs/2026-05-05-inverse-unique-prior-project-v3-budget/`
+- result: the payload includes prior `AlgebraicCombinatorics.FPS.IsInverse` and
+  `AlgebraicCombinatorics.FPS.IsInvertible` snippets from source unit
+  `def.commring.inverse`, while still hiding the selected unit's aligned target
+  theorem `isInverse_unique`.
+
+Paid v3 result:
+
+- selector:
+  `docs/latex-statement-context-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`,
+  cost `$0.00038332`, valid JSON, `0` reasoning tokens.
+- selector behavior: selected project predicate
+  `AlgebraicCombinatorics.FPS.IsInverse`; requested `mul_comm` plus a bad
+  `mul_left_cancel₀` query.
+- hydration: `mul_comm` checked; `mul_left_cancel₀` was rejected as
+  `not_exact_identifier`.
+- generation:
+  `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`,
+  cost `$0.0004417`, valid JSON, `0` reasoning tokens.
+- generated theorem: `IsInverse.unique`, using the project `IsInverse` predicate
+  rather than raw symmetric multiplication hypotheses.
+- verification: generated-only compile passes `1/1` when the verifier includes
+  the relevant project module and namespace open; exact name overlap remains
+  `0/1`; semantic coverage is `1/1`.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

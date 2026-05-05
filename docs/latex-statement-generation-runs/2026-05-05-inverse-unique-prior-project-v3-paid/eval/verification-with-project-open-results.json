@@ -1,0 +1,41 @@
+{
+  "batches": [
+    {
+      "compile_passed_units": 1,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/batch-001/generation-output.json",
+      "unit_count": 1,
+      "units": [
+        {
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "IsInverse.unique"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 1,
+  "generated_at": "2026-05-05T22:25:27.343529+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid",
+  "imports": [
+    "Mathlib",
+    "AlgebraicCombinatorics.FPS.CommutativeRings"
+  ],
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset",
+    "open AlgebraicCombinatorics.FPS"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

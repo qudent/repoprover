@@ -50,7 +50,10 @@ retired from `main`; historical run logs remain. The current dataset is
   was forced to `none`; v2 still copied `coeff K m` and emitted an incomplete
   theorem body despite reporting `cannot_prove_from_visible_context`.
 - Previous-project context has been more useful than pure Mathlib lookup so far,
-  but it must not leak exact target declarations.
+  but it must not leak exact target declarations. The selector now pulls safe
+  prior project declarations from the full source-unit index, including
+  source-only rows' `referencing_lean_declarations`, but this needs more
+  sampling before it can be trusted as complete.
 - The old declaration-level verifier can reject useful source-theorem progress
   when the generated declaration sequence does not match one hidden Lean row.
 - The inverse-uniqueness theorem-level attempt now compiles, but the generated
@@ -62,6 +65,10 @@ retired from `main`; historical run logs remain. The current dataset is
   `shape_mismatch_against_oracle`: the generated theorem requires symmetric
   multiplication hypotheses that the gold `IsInverse` statement does not have
   directly.
+- A v3 rerun with prior project context fixes that specific shape issue and
+  reaches semantic coverage `1/1`, but generated-only verification currently
+  needs explicit project imports/opens to see names such as `IsInverse`.
+  Automating that verification context is still open.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` instead of rerunning Lean
   unless needed.
@@ -99,6 +106,20 @@ retired from `main`; historical run logs remain. The current dataset is
 - New script `scripts/verify_latex_statement_semantic_coverage.py` materializes
   grader-only aligned-gold checks after generation. The inverse artifact is
   `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/eval/semantic-coverage.json`.
+- Selector payloads now include prior project declarations from full source
+  units, not only gold-candidate rows. Budget-only proof:
+  `docs/latex-statement-context-runs/2026-05-05-inverse-unique-prior-project-v3-budget/`
+  includes prior `IsInverse`/`IsInvertible` snippets from
+  `def.commring.inverse` and still hides the target `isInverse_unique`
+  alignment.
+- Paid v3 inverse rerun:
+  `docs/latex-statement-context-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`
+  cost `$0.00038332`, valid JSON, `0` reasoning tokens, selected
+  `AlgebraicCombinatorics.FPS.IsInverse`; hydration checked `mul_comm` and
+  rejected `mul_left_cancel₀` as not an exact identifier. Generation in
+  `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`
+  cost `$0.0004417`, emitted `IsInverse.unique`, compiled `1/1` with project
+  imports/opens, exact name overlap `0/1`, semantic coverage `1/1`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.

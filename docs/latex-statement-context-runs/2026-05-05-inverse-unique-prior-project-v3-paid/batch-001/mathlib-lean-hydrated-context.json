@@ -1,0 +1,77 @@
+{
+  "exact_identifier_count": 1,
+  "generated_at": "2026-05-05T22:22:35.487525+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": null,
+      "expected_signature_or_shape": "theorem mul_left_cancel₀ (ha : a ≠ 0) (h : a * b = a * c) : b = c",
+      "lean_check": {
+        "status": "not_exact_identifier"
+      },
+      "query": "mul_left_cancel₀",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "to prove uniqueness of inverse in a commutative ring"
+    },
+    {
+      "exact_identifier": "mul_comm",
+      "expected_signature_or_shape": "theorem mul_comm (a b : L) : a * b = b * a",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "mul_comm.{u_1} {G : Type u_1} [CommMagma G] (a b : G) : a * b = b * a",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "mul_comm.{u_1} {G : Type u_1} [CommMagma G] (a b : G) : a * b = b * a",
+        "status": "checked"
+      },
+      "query": "mul_comm",
+      "request_index": 2,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "commutativity used in proof"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "mul_comm": {
+        "messages": [
+          {
+            "data": "mul_comm.{u_1} {G : Type u_1} [CommMagma G] (a b : G) : a * b = b * a",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "mul_comm.{u_1} {G : Type u_1} [CommMagma G] (a b : G) : a * b = b * a",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "1c73049d64ca2231be67ecbc06f2ef8bc79ffa5130228a8b95e0693b8357a315",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "request_count": 2,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

@@ -99,19 +99,71 @@ def public_source_unit(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def declaration_stub(decl: dict[str, Any]) -> dict[str, Any]:
+def declaration_snippet(decl: dict[str, Any], project_root: Path | None) -> dict[str, Any]:
+    if project_root is None:
+        return {}
+    path = project_root / str(decl.get("path") or "")
+    line_range = decl.get("line_range") or []
+    if not path.exists() or len(line_range) != 2:
+        return {}
+    start, end = int(line_range[0]), int(line_range[1])
+    lines = path.read_text(encoding="utf-8").splitlines()
+    snippet_lines = lines[start - 1 : min(end, start + 39)]
+    snippet = "\n".join(snippet_lines).rstrip()
     return {
+        "lean_snippet": snippet[:3000],
+        "snippet_truncated": end - start + 1 > 40 or len(snippet) > 3000,
+    }
+
+
+def declaration_stub(decl: dict[str, Any], *, project_root: Path | None = None, source: str) -> dict[str, Any]:
+    row = {
         "name": decl["full_name"],
         "kind": decl["kind"],
         "path": decl["path"],
         "line_range": decl["line_range"],
+        "module": decl.get("module"),
+        "imports": decl.get("imports", []),
         "declared_source_labels": decl.get("declared_source_labels", []),
+        "referenced_source_labels": decl.get("referenced_source_labels", []),
+        "context_source": source,
     }
+    row.update(declaration_snippet(decl, project_root))
+    return row
 
 
-def prior_project_context(row: dict[str, Any], rows_by_id: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
-    contexts: list[dict[str, Any]] = []
+def project_declarations_for_prior(
+    prior: dict[str, Any],
+    *,
+    project_root: Path | None,
+    limit: int = 12,
+) -> list[dict[str, Any]]:
+    declarations: list[dict[str, Any]] = []
     seen: set[tuple[str, str]] = set()
+    alignment = prior.get("posthoc_lean_alignment", {})
+    sources = [
+        ("aligned_prior_declaration", alignment.get("aligned_lean_declarations", [])),
+        ("referencing_prior_declaration", alignment.get("referencing_lean_declarations", [])),
+    ]
+    for source, decls in sources:
+        for decl in decls or []:
+            key = (str(decl.get("path") or ""), str(decl.get("full_name") or ""))
+            if key in seen:
+                continue
+            declarations.append(declaration_stub(decl, project_root=project_root, source=source))
+            seen.add(key)
+            if len(declarations) >= limit:
+                return declarations
+    return declarations
+
+
+def prior_project_context(
+    row: dict[str, Any],
+    rows_by_id: dict[str, dict[str, Any]],
+    *,
+    project_root: Path | None = None,
+) -> list[dict[str, Any]]:
+    contexts: list[dict[str, Any]] = []
 
     candidate_refs = []
     candidate_refs.extend(row.get("context_candidates", {}).get("referenced_source_units", []))
@@ -121,23 +173,21 @@ def prior_project_context(row: dict[str, Any], rows_by_id: dict[str, dict[str, A
         unit_id = ref.get("unit_id")
         if not unit_id:
             continue
+        if str(unit_id) == str(row.get("id") or ""):
+            continue
         prior = rows_by_id.get(str(unit_id))
         if prior is None:
             continue
-        aligned = prior.get("posthoc_lean_alignment", {}).get("aligned_lean_declarations", [])
-        declarations = []
-        for decl in aligned[:12]:
-            key = (decl["path"], decl["full_name"])
-            if key in seen:
-                continue
-            declarations.append(declaration_stub(decl))
-            seen.add(key)
+        declarations = project_declarations_for_prior(prior, project_root=project_root)
         if declarations:
             contexts.append(
                 {
                     "source_unit_id": prior["id"],
                     "source_labels": prior["source_unit"].get("labels", []),
-                    "reason": "Earlier or explicitly referenced source unit with post-hoc project declarations.",
+                    "reason": (
+                        "Earlier or explicitly referenced source unit with project declarations. "
+                        "These declarations are prior context, not aligned target declarations for the selected unit."
+                    ),
                     "project_declarations": declarations,
                 }
             )
@@ -173,8 +223,8 @@ def build_messages(
     all_rows: list[dict[str, Any]],
     *,
     source_units: list[dict[str, Any]] | None = None,
+    project_root: Path | None = None,
 ) -> list[dict[str, str]]:
-    rows_by_id = unit_index(all_rows)
     source_rows_by_id = unit_index(source_units or all_rows)
     system = (
         "You are a Lean 4/Mathlib context-planning agent. Prepare a compact "
@@ -247,7 +297,11 @@ def build_messages(
                 "source_unit": public_source_unit(row),
                 "source_context_candidates": row.get("context_candidates", {}),
                 "previous_source_context": previous_source_context(row, source_rows_by_id),
-                "prior_project_context": prior_project_context(row, rows_by_id),
+                "prior_project_context": prior_project_context(
+                    row,
+                    source_rows_by_id,
+                    project_root=project_root,
+                ),
                 "benchmark_policy": {
                     "target_lean_available_to_selector": False,
                     "posthoc_alignment_hidden": True,
@@ -298,7 +352,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     rows = read_jsonl(args.records)
     source_units = read_jsonl(args.source_units) if args.source_units else rows
     selected = select_units(rows, args.limit, offset=args.offset, unit_id=args.unit_id)
-    messages = build_messages(selected, rows, source_units=source_units)
+    messages = build_messages(selected, rows, source_units=source_units, project_root=args.project_root)
     run_dir = args.output
     batch_dir = run_dir / "batch-001"
     eval_dir = run_dir / "eval"
@@ -312,6 +366,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "max_tokens": args.max_tokens,
         "response_format": {"type": "json_object"},
     }
+    if args.reasoning_effort:
+        request_payload["extra_body"] = {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
     write_json(batch_dir / "context-selection-payload.json", request_payload)
     write_jsonl(eval_dir / "selected-units.jsonl", [item.row for item in selected])
 
@@ -321,6 +377,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "records_input": len(rows),
         "units_selected": len(selected),
         "model": args.model,
+        "reasoning_effort": args.reasoning_effort,
         "budget_only": args.budget_only,
         "paid_call_made": False,
         "valid_json": False,
@@ -356,6 +413,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--records", type=Path, default=REPO_ROOT / "docs/latex-statement-gold-candidates.jsonl")
     parser.add_argument("--source-units", type=Path, default=REPO_ROOT / "docs/latex-statement-units.jsonl")
+    parser.add_argument("--project-root", type=Path, default=REPO_ROOT / "algebraic-combinatorics")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int, default=1)
     parser.add_argument("--offset", type=int, default=0, help="Skip this many gold candidates before selection.")
@@ -364,6 +422,10 @@ def main() -> None:
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument(
+        "--reasoning-effort",
+        help="OpenRouter reasoning effort override; use 'none' for schema-bound JSON selection.",
+    )
     parser.add_argument("--budget-only", action="store_true")
     args = parser.parse_args()
 

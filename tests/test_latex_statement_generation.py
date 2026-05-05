@@ -55,6 +55,42 @@ def _write_selector_run(tmp_path: Path) -> Path:
         ),
         encoding="utf-8",
     )
+    (run_dir / "batch-001/context-selection-payload.json").write_text(
+        json.dumps(
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": json.dumps(
+                            {
+                                "units": [
+                                    {
+                                        "unit_key": "unit-001",
+                                        "previous_source_context": [
+                                            {"source_unit": {"id": "source:prior", "source_text": "Prior definition."}}
+                                        ],
+                                        "prior_project_context": [
+                                            {
+                                                "source_unit_id": "source:prior",
+                                                "project_declarations": [
+                                                    {
+                                                        "name": "Demo.PriorPredicate",
+                                                        "kind": "def",
+                                                        "lean_snippet": "def PriorPredicate (n : Nat) : Prop := n + 0 = n",
+                                                    }
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ]
+                            }
+                        ),
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
     (run_dir / "batch-001/mathlib-lean-hydrated-context.json").write_text(
         json.dumps(
             {
@@ -86,6 +122,9 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
 
     assert "For all n" in prompt
     assert "Nat.add_zero (n : Nat)" in prompt
+    assert "PriorPredicate" in prompt
+    assert "available_prior_project_context" in prompt
+    assert "previous_source_context" in prompt
     assert "Follow the Lean-checked signatures exactly" in prompt
     assert "selector_unchecked_statement_sketch" in prompt
     assert "do not copy its Lean syntax verbatim" in prompt

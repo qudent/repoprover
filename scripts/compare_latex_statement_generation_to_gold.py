@@ -33,8 +33,9 @@ def generation_output_paths(run_dir: Path) -> list[Path]:
     return sorted(run_dir.glob("batch-*/generation-output.json"))
 
 
-def verification_results(run_dir: Path) -> dict[str, dict[str, Any]]:
-    path = run_dir / "eval" / "verification-results.json"
+def verification_results(run_dir: Path, path: Path | None = None) -> dict[str, dict[str, Any]]:
+    if path is None:
+        path = run_dir / "eval" / "verification-results.json"
     if not path.exists():
         return {}
     data = read_json(path)
@@ -46,10 +47,10 @@ def verification_results(run_dir: Path) -> dict[str, dict[str, Any]]:
     return rows
 
 
-def compare(selector_run: Path, generation_run: Path) -> dict[str, Any]:
+def compare(selector_run: Path, generation_run: Path, *, verification_path: Path | None = None) -> dict[str, Any]:
     selected_units = read_jsonl(selector_run / "eval" / "selected-units.jsonl")
     selected_by_key = {f"unit-{index + 1:03d}": row for index, row in enumerate(selected_units)}
-    verification_by_key = verification_results(generation_run)
+    verification_by_key = verification_results(generation_run, verification_path)
 
     unit_rows: list[dict[str, Any]] = []
     for output_path in generation_output_paths(generation_run):
@@ -109,9 +110,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--selector-run", type=Path, required=True)
     parser.add_argument("--generation-run", type=Path, required=True)
+    parser.add_argument(
+        "--verification-results",
+        type=Path,
+        help="Optional verification-results JSON to decide which generated units are compile-clean.",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    summary = compare(args.selector_run, args.generation_run)
+    summary = compare(args.selector_run, args.generation_run, verification_path=args.verification_results)
     write_json(args.output, summary)
     print(json.dumps(summary, indent=2, sort_keys=True))
 
