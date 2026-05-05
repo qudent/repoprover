@@ -91,6 +91,34 @@ def selected_project_context_summary(selection: dict[str, Any]) -> list[str]:
     return lines
 
 
+def context_inventory_summary(selection: dict[str, Any]) -> list[str]:
+    inventory = selection.get("context_inventory")
+    if not isinstance(inventory, dict):
+        return []
+    labels = {
+        "source_theorem_text": "Source theorem text/context",
+        "previous_book_source_statements": "Previous book/source statements",
+        "previous_project_declarations": "Previous project Lean context",
+        "local_file_style_and_import_context": "Local file/import/style context",
+        "selected_mathlib_apis": "Selected Mathlib/API context",
+        "missing_or_uncertain_context": "Missing or uncertain context",
+    }
+    lines: list[str] = []
+    for key, label in labels.items():
+        raw_items = inventory.get(key) or []
+        if isinstance(raw_items, str):
+            items = [raw_items]
+        elif isinstance(raw_items, list):
+            items = [str(item).strip() for item in raw_items if str(item).strip()]
+        else:
+            continue
+        if not items:
+            continue
+        lines.append(f"{label}:")
+        lines.extend(f"- {item}" for item in items)
+    return lines
+
+
 def hydrate_snippet_lines(resolved: list[dict[str, Any]], *, max_chars: int) -> list[str]:
     lines: list[str] = []
     used_chars = 0
@@ -130,6 +158,10 @@ def context_selection_lines(selection: dict[str, Any], hydrated: list[dict[str, 
     boundary = str(selection.get("supporting_context_boundary") or "").strip()
     if boundary:
         lines.append(f"Supporting context boundary: {boundary}")
+    inventory_lines = context_inventory_summary(selection)
+    if inventory_lines:
+        lines.append("Selector context inventory:")
+        lines.extend(inventory_lines)
     sketch = [str(item).strip() for item in selection.get("formalization_sketch") or [] if str(item).strip()]
     if sketch:
         lines.append("Formalization sketch:")

@@ -194,9 +194,11 @@ def build_context_selection_messages(
     system = (
         "You are a Lean 4/Mathlib context-selection agent. Your task is to prepare "
         "a compact context pack for a later autoformalization agent. You see only "
-        "source-side mathematical text plus prefix/local Lean context. The target "
-        "Lean declaration name, statement, and proof are withheld. Return exactly "
-        "one JSON object."
+        "source-side mathematical text plus prefix/local Lean context. Mathlib is "
+        "not the only context: you must separately account for source text, prior "
+        "book/source statements, previous project Lean context, local file/import "
+        "context, and selected Mathlib APIs. The target Lean declaration name, "
+        "statement, and proof are withheld. Return exactly one JSON object."
     )
     schema = {
         "records": [
@@ -206,6 +208,26 @@ def build_context_selection_messages(
                 "selected_source_part": "the single declaration-level source part chosen for the withheld row; not a bundle of prior/supporting facts",
                 "source_part_rationale": "why this one part was chosen, using source labels and prefix progress when available",
                 "supporting_context_boundary": "which displayed prior/imported facts are support only and must not be restated or bundled into the target theorem",
+                "context_inventory": {
+                    "source_theorem_text": [
+                        "source labels/spans/part markers/excerpts that define the math target"
+                    ],
+                    "previous_book_source_statements": [
+                        "earlier source labels or named book statements this target depends on"
+                    ],
+                    "previous_project_declarations": [
+                        "already formalized Lean declarations/definitions/notations/instances from the project, with signatures when known"
+                    ],
+                    "local_file_style_and_import_context": [
+                        "local variables, namespaces, notation, instances, imports, and style constraints needed by the generator"
+                    ],
+                    "selected_mathlib_apis": [
+                        "exact Mathlib declarations/docstrings/signatures or narrow search queries needed by the generator"
+                    ],
+                    "missing_or_uncertain_context": [
+                        "context still unresolved after this selector round"
+                    ],
+                },
                 "formalization_sketch": [
                     "Lean-level sketch of the likely statement shape and proof plan, without inventing hidden target names"
                 ],
@@ -242,9 +264,11 @@ def build_context_selection_messages(
     }
     user = {
         "task": (
-            "For each record, sketch the formalization and select the tight local/Mathlib "
-            "context a later proof-writing model should see. Prefer a few thousand tokens "
-            "or less of Mathlib facts per record."
+            "For each record, sketch the formalization and select the tight context a later "
+            "proof-writing model should see. Explicitly enumerate source theorem text, "
+            "previous book/source statements, previous project Lean declarations/definitions/"
+            "notations/instances, local file/import/style context, and selected Mathlib APIs. "
+            "Prefer a few thousand tokens or less of added Mathlib facts per record."
         ),
         "round": round_name,
         "required_json_schema": schema,
@@ -255,9 +279,10 @@ def build_context_selection_messages(
         },
         "instructions": [
             "Do not ask for or infer the withheld target Lean declaration name, statement, or proof.",
+            "Do not treat Mathlib as the only needed context. Fill `context_inventory` with all five context classes: source theorem text, previous book/source statements, previous project Lean context, local file/import/style context, and selected Mathlib APIs.",
             "Do not rely on legacy broad `Mathlib` imports as context; select concrete APIs/signatures/docstrings needed by the later generator.",
             "If a Mathlib name is uncertain, return a narrow search query plus the expected type/signature shape.",
-            "Include previous formalized local declarations only if they are displayed in the prefix/local context.",
+            "Include previous formalized local declarations only if they are displayed in the prefix/local context, source-progress context, or imported project context.",
             "If `source_progress_context.imported_source_label_declarations` contains a previous imported project theorem matching the selected source part, include it in `candidate_project_context` and prefer it over reproving a long result.",
             "The benchmark rows are declaration-level targets aligned to source labels, not one row per LaTeX theorem environment. Select one likely target declaration, not every claim under the label.",
             "If `source_progress_context.same_label_progress_summary` or `prior_same_label_declarations` shows that earlier declarations already formalized source parts, do not re-formalize those parts or bundle them into a conjunction; select the remaining/next declaration-level part.",

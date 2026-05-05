@@ -65,6 +65,8 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - Declaration-progress prompt fix adds `same_label_progress_summary` and `supporting_context_boundary`; zero-cost diverse3 audit `2026-05-05-context-selection-decl-progress-diverse3-budget` made `0` paid calls and kept target-name leaks at `0`.
 - Paid declaration-progress selector `2026-05-05-context-selection-decl-progress-diverse3-paid` cost `$0.00558124`; it selected the narrow equality for `prod-lim-conv` and marked multipliability as support-only. Follow-up generation-only `2026-05-05-decl-progress-diverse3-generation-paid` returned `3/3` outputs for `$0.019770489`; not Lean-verified yet.
 - Report `docs/context-selection-pipeline-report-2026-05-05.md` now states the revised pipeline: one LaTeX theorem as planning unit, Lean declarations as inner-loop verification units, Mathlib plus project/source context as separate packs. `README.md` records corpus and Mathlib scale estimates.
+- Selector prompt/schema now explicitly inventories source theorem text, previous book/source statements, previous project declarations, local file/import/style context, selected Mathlib APIs, and missing context.
+- The context/dependency tree is usable as an index/retrieval substrate: 5,684 declaration records, 64,311 edges, 1,062 exact Lean-comment label alignments, and 645 mechanically clean gold candidates. It is not an exact proof-dependency oracle.
 - Focused tests pass with source-statement, source-context-selection, context graph, and materializer tests.
 
 ## Agent Notes

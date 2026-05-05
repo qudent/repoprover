@@ -1,6 +1,7 @@
 # Whole-Corpus Minimal Context Deliverable
 
-Generated on 2026-04-28 with `scripts/generate_context_graph.py`.
+Generated with `scripts/generate_context_graph.py`. The current checked-in graph
+artifact was generated at `2026-04-29T01:40:15.039191+00:00`.
 
 ## Deliverable Status
 
@@ -36,16 +37,18 @@ Latest generated summary:
 
 ```json
 {
-  "edge_count": 40436,
+  "edge_count": 64311,
+  "elapsed_seconds": 23.059,
+  "file_context_span_count": 23875,
   "lean_declaration_count": 5684,
-  "node_count": 6573,
+  "node_count": 7018,
   "record_count": 5684,
   "source_alignment_methods": {
     "lean_comment_label": 1062,
     "manifest_position_fallback": 4400,
     "unmapped": 222
   },
-  "source_label_count": 790,
+  "source_label_count": 768,
   "unresolved_or_low_trust_count": 4622
 }
 ```

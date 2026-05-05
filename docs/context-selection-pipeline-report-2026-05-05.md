@@ -53,6 +53,52 @@ The TeX label/source span is context metadata. It is not currently the atomic
 target. This is why the term "gold standard dataset" is potentially misleading:
 it is a declaration-level gold/eval set, not a book-theorem-level gold set.
 
+### Context/Dependency Tree Status
+
+The original context/dependency tree works as a deterministic index and
+retrieval substrate. It should not be treated as an exact proof-dependency
+oracle.
+
+Current checked-in graph summary from `docs/minimal-context-graph.json`:
+
+```json
+{
+  "edge_count": 64311,
+  "elapsed_seconds": 23.059,
+  "file_context_span_count": 23875,
+  "lean_declaration_count": 5684,
+  "node_count": 7018,
+  "record_count": 5684,
+  "source_alignment_methods": {
+    "lean_comment_label": 1062,
+    "manifest_position_fallback": 4400,
+    "unmapped": 222
+  },
+  "source_label_count": 768,
+  "unresolved_or_low_trust_count": 4622
+}
+```
+
+Accuracy boundaries:
+
+- Source alignment is strong for the `lean_comment_label` subset: the Lean
+  doc/comment explicitly references a TeX label found in the source tree.
+- The 645 `docs/minimal-context-gold-candidates.jsonl` rows are the bounded,
+  mechanically clean subset of those exact-label alignments. They are useful
+  benchmark candidates, not human-certified semantic gold.
+- The 4,400 `manifest_position_fallback` rows and 222 `unmapped` rows are useful
+  for recall and hard-case discovery, but too low-trust for accuracy claims.
+- Lean predecessor edges are static heuristics based on file order, lexical
+  references, local context, and imports. They miss some file-scope variables,
+  local instances, notation, namespace state, and proof-only dependencies.
+- Import context is sufficient for reproduction when broad imports such as
+  `Mathlib` are allowed, but it is not minimal-context certification.
+
+Practical use: keep the tree as the source-label -> Lean-declaration grouping
+index, project-context candidate source, file/import-context retriever, and
+benchmark sampler. Pair it with selector/critic passes and Lean `#check` or
+compilation before claiming that selected context is complete.
+
 ### Source-Only Prompt Assembly
 
 For generation and selector runs, `context_mode=source-only` removes target Lean
@@ -493,14 +539,14 @@ Below are the full static prompt contracts from the current code path.
 ### Context Selector System Prompt
 
 ```text
-You are a Lean 4/Mathlib context-selection agent. Your task is to prepare a compact context pack for a later autoformalization agent. You see only source-side mathematical text plus prefix/local Lean context. The target Lean declaration name, statement, and proof are withheld. Return exactly one JSON object.
+You are a Lean 4/Mathlib context-selection agent. Your task is to prepare a compact context pack for a later autoformalization agent. You see only source-side mathematical text plus prefix/local Lean context. Mathlib is not the only context: you must separately account for source text, prior book/source statements, previous project Lean context, local file/import context, and selected Mathlib APIs. The target Lean declaration name, statement, and proof are withheld. Return exactly one JSON object.
 ```
 
 ### Context Selector User Prompt Skeleton
 
 ```json
 {
-  "task": "For each record, sketch the formalization and select the tight local/Mathlib context a later proof-writing model should see. Prefer a few thousand tokens or less of Mathlib facts per record.",
+  "task": "For each record, sketch the formalization and select the tight context a later proof-writing model should see. Explicitly enumerate source theorem text, previous book/source statements, previous project Lean declarations/definitions/notations/instances, local file/import/style context, and selected Mathlib APIs. Prefer a few thousand tokens or less of added Mathlib facts per record.",
   "required_json_schema": {
     "records": [
       {
@@ -509,6 +555,26 @@ You are a Lean 4/Mathlib context-selection agent. Your task is to prepare a comp
         "selected_source_part": "the single declaration-level source part chosen for the withheld row; not a bundle of prior/supporting facts",
         "source_part_rationale": "why this one part was chosen, using source labels and prefix progress when available",
         "supporting_context_boundary": "which displayed prior/imported facts are support only and must not be restated or bundled into the target theorem",
+        "context_inventory": {
+          "source_theorem_text": [
+            "source labels/spans/part markers/excerpts that define the math target"
+          ],
+          "previous_book_source_statements": [
+            "earlier source labels or named book statements this target depends on"
+          ],
+          "previous_project_declarations": [
+            "already formalized Lean declarations/definitions/notations/instances from the project, with signatures when known"
+          ],
+          "local_file_style_and_import_context": [
+            "local variables, namespaces, notation, instances, imports, and style constraints needed by the generator"
+          ],
+          "selected_mathlib_apis": [
+            "exact Mathlib declarations/docstrings/signatures or narrow search queries needed by the generator"
+          ],
+          "missing_or_uncertain_context": [
+            "context still unresolved after this selector round"
+          ]
+        },
         "formalization_sketch": [
           "Lean-level sketch of the likely statement shape and proof plan, without inventing hidden target names"
         ],
@@ -554,9 +620,10 @@ You are a Lean 4/Mathlib context-selection agent. Your task is to prepare a comp
   },
   "instructions": [
     "Do not ask for or infer the withheld target Lean declaration name, statement, or proof.",
+    "Do not treat Mathlib as the only needed context. Fill `context_inventory` with all five context classes: source theorem text, previous book/source statements, previous project Lean context, local file/import/style context, and selected Mathlib APIs.",
     "Do not rely on legacy broad `Mathlib` imports as context; select concrete APIs/signatures/docstrings needed by the later generator.",
     "If a Mathlib name is uncertain, return a narrow search query plus the expected type/signature shape.",
-    "Include previous formalized local declarations only if they are displayed in the prefix/local context.",
+    "Include previous formalized local declarations only if they are displayed in the prefix/local context, source-progress context, or imported project context.",
     "If `source_progress_context.imported_source_label_declarations` contains a previous imported project theorem matching the selected source part, include it in `candidate_project_context` and prefer it over reproving a long result.",
     "The benchmark rows are declaration-level targets aligned to source labels, not one row per LaTeX theorem environment. Select one likely target declaration, not every claim under the label.",
     "If `source_progress_context.same_label_progress_summary` or `prior_same_label_declarations` shows that earlier declarations already formalized source parts, do not re-formalize those parts or bundle them into a conjunction; select the remaining/next declaration-level part.",
