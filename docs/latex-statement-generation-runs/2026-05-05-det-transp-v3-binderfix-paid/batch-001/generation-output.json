@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "det_transpose_eq_det"
+      ],
+      "lean_file_body": "theorem det_transpose_eq_det (A : Matrix (Fin n) (Fin n) K) : A.transpose.det = A.det :=\n  Matrix.det_transpose A",
+      "notes": [
+        "Directly uses Mathlib's Matrix.det_transpose with Fin n as index type."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source: thm.det.transp",
+        "Mathlib: Matrix.det_transpose"
+      ]
+    }
+  ]
+}

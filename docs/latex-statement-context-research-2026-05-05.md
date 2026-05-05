@@ -226,6 +226,35 @@ Paid v3 result:
   from the generation payload's prior project context; exact name overlap
   remains `0/1`; semantic coverage is `1/1`.
 
+Determinant transpose source-unit probe:
+
+- selector:
+  `docs/latex-statement-context-runs/2026-05-05-det-transp-v3-paid/`,
+  source unit
+  `AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp`,
+  cost `$0.00104314`, valid JSON, `0` reasoning tokens.
+- selected Mathlib context: `Matrix.det_transpose`; Lean hydration checked the
+  exact signature successfully.
+- selector caveat: the prompt payload was 26,956 bytes for one easy unit because
+  prior same-file determinant context is still too broad. This must be compacted
+  before batch size greater than one.
+- generation:
+  `docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-paid/`,
+  cost `$0.00104314`, valid JSON, but standalone verification `0/1`.
+- generic prompt tweak: the generator now explicitly asks for binders and
+  typeclass assumptions for every non-imported theorem-statement identifier.
+- generation rerun:
+  `docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-binderfix-paid/`,
+  cost `$0.00104678`, valid JSON, but standalone verification still `0/1`; the
+  model again emitted a theorem using ambient `K` and `n`.
+- semantic coverage with the grader's `--run-uncompiled` mode: `1/1` for
+  aligned gold theorem `AlgebraicCombinatorics.Det.det_transpose'`.
+
+Interpretation: the selector succeeded on the central Mathlib API and the
+generator produced the right theorem shape, but only under the original target
+file's local context. This should be counted as a local-context-policy finding,
+not a standalone benchmark pass.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

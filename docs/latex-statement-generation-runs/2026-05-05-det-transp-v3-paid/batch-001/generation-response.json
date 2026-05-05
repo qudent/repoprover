@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"det_transpose_eq_det\"\n      ],\n      \"lean_file_body\": \"theorem det_transpose_eq_det (A : Matrix (Fin n) (Fin n) K) : (A.transpose).det = A.det :=\\n  Matrix.det_transpose A\",\n      \"notes\": [\n        \"The theorem is a direct application of Mathlib's Matrix.det_transpose. The source statement is for any n×n matrix over a commutative ring K; Matrix.det_transpose works for any Fintype n and CommRing R, so it applies directly. No additional context from the project is needed beyond the Mathlib signature.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"Matrix.det_transpose (Mathlib signature)\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778020507,
+  "id": "gen-1778020507-X6im4Xy0naKS4y3i2Ar1",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 197,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00104314,
+    "cost_details": {
+      "upstream_inference_completions_cost": 5.516e-05,
+      "upstream_inference_cost": 0.00104314,
+      "upstream_inference_prompt_cost": 0.00098798
+    },
+    "is_byok": false,
+    "prompt_tokens": 7057,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 7254
+  }
+}

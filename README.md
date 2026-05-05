@@ -95,6 +95,20 @@ project import/open context inferred from the generation payload, and the
 semantic grader proved the aligned gold statement `1/1` even though exact
 declaration-name overlap remained `0/1`.
 
+The next theorem-level probe used determinant transposition,
+`AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp`.
+The selector cost `$0.00104314`, returned valid JSON with no reasoning tokens,
+and selected the exact Mathlib theorem `Matrix.det_transpose`; Lean hydration
+checked its signature successfully. Generation cost `$0.00104314` on the first
+attempt and `$0.00104678` after a generic binder-instruction prompt tweak. Both
+generated attempts still failed standalone checking because the output referred
+to file-local variables `K` and `n` without explicit binders or typeclass
+instances. The post-hoc semantic grader, run under the original target file
+prefix, proved the aligned gold theorem `AlgebraicCombinatorics.Det.det_transpose'`
+`1/1`. This is useful evidence that the selected Mathlib context was correct,
+but it is not a standalone source-only compile pass: the remaining issue is
+local file context versus explicit standalone binder generation.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

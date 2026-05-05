@@ -88,6 +88,7 @@ def test_compare_records_semantic_failure(monkeypatch, tmp_path: Path) -> None:
             project_root=project,
             timeout_seconds=1.0,
             verification_results=None,
+            run_uncompiled=False,
             output=generation / "eval/semantic-coverage.json",
         )
     )

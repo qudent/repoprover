@@ -197,6 +197,7 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
             "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",
             "Prefer a narrow declaration sequence over a broad bundled conjunction when the source unit decomposes into multiple Lean declarations.",
             "Keep theorem-local assumptions explicit rather than relying on unavailable global variables.",
+            "Every identifier used in a theorem statement must be introduced by an explicit binder, local declaration, or imported/opened declaration. In particular, source parameters such as coefficient types, matrix sizes, rings, variables, and typeclass assumptions must be bound in the generated theorem, e.g. `{K : Type*} [CommRing K] {n : ℕ}` when the source quantifies over a commutative ring and a natural number.",
             "If you cannot produce a complete proof from visible context, set status to cannot_prove_from_visible_context and leave lean_file_body empty. Never output Lean containing sorry/admit/placeholders.",
         ],
         "lean_environment": {

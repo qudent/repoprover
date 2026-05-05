@@ -1,0 +1,40 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "source ambiguity: none",
+        "missing notation: none",
+        "broad multi-part theorem: single statement"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "det_transpose : det (Aᵀ) = det A",
+              "name_or_query": "Matrix.det_transpose",
+              "why_needed": "core theorem for determinant of transpose"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.Det.det_eq_sum_sign_prod_textbook",
+              "why_needed": "provides the textbook determinant formula used in proof"
+            }
+          ],
+          "needed_source_context": [
+            "thm.det.transp: Let n ∈ ℕ. If A ∈ K^{n×n} is any n×n-matrix, then det(A^T) = det A."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any square matrix A over a commutative ring K, the determinant of its transpose equals its determinant.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 1.0,
+      "source_focus_summary": "Theorem: det(A^T) = det(A)",
+      "unit_key": "unit-001"
+    }
+  ]
+}

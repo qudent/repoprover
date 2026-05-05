@@ -1,0 +1,18 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "det_transpose_eq_det"
+      ],
+      "lean_file_body": "theorem det_transpose_eq_det (A : Matrix (Fin n) (Fin n) K) : (A.transpose).det = A.det :=\n  Matrix.det_transpose A",
+      "notes": [
+        "The theorem is a direct application of Mathlib's Matrix.det_transpose. The source statement is for any n×n matrix over a commutative ring K; Matrix.det_transpose works for any Fintype n and CommRing R, so it applies directly. No additional context from the project is needed beyond the Mathlib signature."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "Matrix.det_transpose (Mathlib signature)"
+      ]
+    }
+  ]
+}

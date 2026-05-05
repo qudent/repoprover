@@ -254,7 +254,7 @@ def compare(args: argparse.Namespace) -> dict[str, Any]:
             generated_names = [str(name) for name in generated.get("declaration_names") or []]
             compile_passed = bool(verification_by_key.get(unit_key, {}).get("compile_passed"))
             checks: list[dict[str, Any]] = []
-            if compile_passed:
+            if compile_passed or args.run_uncompiled:
                 for index, aligned in enumerate(aligned_rows):
                     checks.append(
                         check_aligned_declaration(
@@ -269,12 +269,12 @@ def compare(args: argparse.Namespace) -> dict[str, Any]:
                         )
                     )
             passed_count = sum(1 for row in checks if row.get("semantic_check_passed"))
-            if not compile_passed:
-                coverage_status = "generated_not_compiled"
-            elif aligned_rows and passed_count == len(aligned_rows):
+            if aligned_rows and passed_count == len(aligned_rows):
                 coverage_status = "all_aligned_gold_proved"
             elif passed_count:
                 coverage_status = "partial_aligned_gold_proved"
+            elif not compile_passed:
+                coverage_status = "generated_not_compiled"
             elif aligned_rows:
                 coverage_status = "no_aligned_gold_proved"
             else:
@@ -285,6 +285,7 @@ def compare(args: argparse.Namespace) -> dict[str, Any]:
                     "source_unit_id": selected.get("id"),
                     "generation_output": str(output_path),
                     "compile_passed": compile_passed,
+                    "compile_gate_bypassed": bool(args.run_uncompiled and not compile_passed),
                     "aligned_gold_declaration_count": len(aligned_rows),
                     "semantic_passed_gold_declarations": passed_count,
                     "coverage_status": coverage_status,
@@ -320,6 +321,11 @@ def main() -> None:
         "--verification-results",
         type=Path,
         help="Optional verification-results JSON to decide which generated units are compile-clean.",
+    )
+    parser.add_argument(
+        "--run-uncompiled",
+        action="store_true",
+        help="Run semantic gold checks even when generated-only verification did not compile.",
     )
     parser.add_argument("--project-root", type=Path, default=REPO_ROOT / "algebraic-combinatorics")
     parser.add_argument("--timeout-seconds", type=float, default=120.0)

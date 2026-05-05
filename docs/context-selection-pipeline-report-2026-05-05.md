@@ -308,6 +308,40 @@ This is a small but important benchmark-honesty result: exact textual/name
 matching still says failure, while the semantic verifier says the generated
 statement covers the theorem.
 
+Third theorem-level source-unit probe:
+
+`docs/latex-statement-context-runs/2026-05-05-det-transp-v3-paid/`
+and
+`docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-binderfix-paid/`
+
+- source unit:
+  `AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp`
+- selector: valid JSON, `$0.00104314`, `0` reasoning tokens, prompt/completion
+  tokens `6735` / `358`.
+- selected Mathlib context: exact theorem `Matrix.det_transpose`.
+- hydration: Lean checked the exact signature
+  `Matrix.det_transpose ... (M : Matrix n n R) : M.transpose.det = M.det`.
+- first generation: valid JSON, `$0.00104314`, generated
+  `det_transpose_eq_det`, but standalone compile failed `0/1` because Lean
+  could not synthesize `CommRing K`.
+- generic prompt tweak: the generator prompt now says every identifier in the
+  theorem statement must be introduced by an explicit binder/local/imported
+  declaration, with examples for `{K : Type*} [CommRing K] {n : Nat}`.
+- second generation: valid JSON, `$0.00104678`, but still failed standalone
+  compile `0/1` for the same missing-binder/typeclass-context reason.
+- semantic coverage with `--run-uncompiled`: `1/1`; the grader inserted the
+  generated theorem under the original target file prefix and proved
+  `AlgebraicCombinatorics.Det.det_transpose'`.
+
+Interpretation: context selection worked for the core Mathlib fact, but the
+generation/verifier contract is still under-specified about local file context.
+This is not a clean standalone pass. It shows that the model found the right
+theorem and proof shape, while relying on ambient variables that exist in the
+target file. The next honest fix is to either include selected local
+namespace/variable/import context as part of the generation environment, or
+force standalone declarations and reject outputs that depend on hidden file
+variables.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

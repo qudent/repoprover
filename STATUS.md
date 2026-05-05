@@ -70,6 +70,13 @@ retired from `main`; historical run logs remain. The current dataset is
 - A v3 rerun with prior project context fixes that specific shape issue and
   reaches semantic coverage `1/1`. Generated-only verification now infers the
   needed project import/open context from the generation payload.
+- The determinant-transpose probe selected and hydrated the right Mathlib theorem
+  (`Matrix.det_transpose`) and semantically covered the aligned gold theorem
+  under the original file prefix, but both generated attempts failed standalone
+  verification because the model relied on ambient file variables/typeclasses.
+- The theorem-level selector payload for determinant transpose was too large
+  (26,956 bytes for one easy unit) because same-file prior determinant context
+  is still broad. Compact/prune prior/local context before batch size > 1.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` instead of rerunning Lean
   unless needed.
@@ -121,6 +128,16 @@ retired from `main`; historical run logs remain. The current dataset is
   `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`
   cost `$0.0004417`, emitted `IsInverse.unique`, compiled `1/1` with inferred
   project imports/opens, exact name overlap `0/1`, semantic coverage `1/1`.
+- Determinant-transpose probe:
+  `docs/latex-statement-context-runs/2026-05-05-det-transp-v3-paid/`
+  selected `Matrix.det_transpose`; hydration checked `1/1` exact identifier.
+  Generation attempts in
+  `docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-paid/` and
+  `docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-binderfix-paid/`
+  were valid JSON but standalone verification stayed `0/1`. Semantic coverage
+  under the target file prefix passed `1/1`; this is evidence for correct
+  context selection plus a remaining local-context policy issue, not a clean
+  standalone pass.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
