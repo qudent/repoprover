@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-05-05T13:05:32.011100+00:00",
+  "records_selected": 8,
+  "batches": 2,
+  "batch_size": 4,
+  "model": "deepseek/deepseek-v4-pro",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.435,
+  "completion_price_per_million": 0.87,
+  "context_length": 1048576,
+  "max_tokens": 8192,
+  "reasoning_effort": "low",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": true,
+  "paid_calls_made": 0,
+  "actual_cost_usd": 0.0,
+  "max_actual_cost_usd": 0.25,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002",
+        "record-003",
+        "record-004"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+        "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.module_add_zero",
+        "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.tprod_fubini_full",
+        "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 111015,
+        "prompt_chars": 106198,
+        "estimated_prompt_tokens": 26550,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.01154925,
+        "estimated_max_completion_cost_usd": 0.00712704,
+        "estimated_max_cost_usd": 0.01867629
+      },
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "batch_index": 2,
+      "record_keys": [
+        "record-005",
+        "record-006",
+        "record-007",
+        "record-008"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+        "AlgebraicCombinatorics/Permutations/Signs.lean:Equiv.Perm.sign_coe_eq_neg_one_pow_invCount",
+        "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.Monomial.degree_ofFinset",
+        "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 63355,
+        "prompt_chars": 59382,
+        "estimated_prompt_tokens": 14846,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.00645801,
+        "estimated_max_completion_cost_usd": 0.00712704,
+        "estimated_max_cost_usd": 0.013585050000000001
+      },
+      "paid_call_made": false,
+      "status": "budget_only"
+    }
+  ]
+}

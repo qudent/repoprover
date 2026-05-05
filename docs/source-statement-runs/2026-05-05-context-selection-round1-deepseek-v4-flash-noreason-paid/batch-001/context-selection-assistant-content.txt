@@ -1,0 +1,151 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "source_focus_summary": "Lemma lem.det.minors-diag: For a diagonal n×n matrix D with entries d_i, (a) det(sub_P^P D) = ∏_{i∈P} d_i for any subset P of [n]; (b) if P and Q are distinct subsets of [n] with |P|=|Q|, then det(sub_P^Q D)=0.",
+      "formalization_sketch": [
+        "Statement: For n:ℕ, d: Fin n → R, let D := Matrix.diagonal d : Matrix (Fin n) (Fin n) R. Then (a) for any P : Finset (Fin n), det (sub[P,P] D) = ∏ i in P, d i; (b) for any P Q : Finset (Fin n), P ≠ Q → P.card = Q.card → det (sub[P,Q] D) = 0.",
+        "Proof plan: (a) sub[P,P] D is itself diagonal with entries d_i for i∈P, so its determinant is the product of those entries. (b) Since |P|=|Q| and P≠Q, there exists i∈P\\Q; the row of sub[P,Q] D corresponding to that i is zero, hence determinant zero."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "sub[U,V] A",
+          "why_needed": "notation for submatrixOfFinset A U V, used in the statement"
+        },
+        {
+          "name_or_snippet": "submatrixOfFinset",
+          "why_needed": "definition of the submatrix operation"
+        },
+        {
+          "name_or_snippet": "Matrix.diagonal",
+          "why_needed": "to construct the diagonal matrix D"
+        },
+        {
+          "name_or_snippet": "Matrix.det_diagonal",
+          "why_needed": "determinant of a diagonal matrix equals product of diagonal entries"
+        },
+        {
+          "name_or_snippet": "Finset.prod",
+          "why_needed": "product over a Finset"
+        }
+      ],
+      "mathlib_queries": [
+        "Matrix.det_diagonal",
+        "Matrix.diagonal_apply",
+        "Finset.prod_congr",
+        "Finset.card_eq_iff_eq_empty_of_subset"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Matrix.det_diagonal",
+          "kind": "theorem",
+          "expected_signature_or_shape": "det (diagonal v) = ∏ i, v i",
+          "why_needed": "to compute det of the diagonal submatrix in part (a)",
+          "confidence": 0.9
+        },
+        {
+          "name": "Matrix.diagonal_apply",
+          "kind": "theorem",
+          "expected_signature_or_shape": "diagonal v i j = if i=j then v i else 0",
+          "why_needed": "to reason about entries of D",
+          "confidence": 0.9
+        },
+        {
+          "name": "Finset.card_eq_iff_eq_empty_of_subset",
+          "kind": "theorem",
+          "expected_signature_or_shape": "s ⊆ t → (s.card = t.card ↔ s = t)",
+          "why_needed": "to deduce existence of i∈P\\Q from P≠Q and equal cardinalities",
+          "confidence": 0.5
+        },
+        {
+          "name": "Finset.exists_mem_not_mem_of_ne",
+          "kind": "theorem",
+          "expected_signature_or_shape": "s ≠ t → ∃ a, a ∈ s ∧ a ∉ t",
+          "why_needed": "to get i∈P\\Q",
+          "confidence": 0.7
+        }
+      ],
+      "proof_notes": [
+        "Use submatrixOfFinset_apply to relate entries of sub[P,Q] D to D entries.",
+        "For part (b), after finding i∈P\\Q, show that row i of sub[P,Q] D is zero because D i j = 0 for all j (since D is diagonal and i≠j for j∈Q).",
+        "The determinant of a matrix with a zero row is zero (Matrix.det_eq_zero_of_row_eq_zero)."
+      ],
+      "uncertainties": [
+        "Exact name of lemma that a matrix with a zero row has zero determinant: likely Matrix.det_eq_zero_of_row_eq_zero or similar.",
+        "Whether Finset.exists_mem_not_mem_of_ne is available in Mathlib; may need to use Finset.ssubset_iff_subset_ne and Finset.exists_mem_not_mem."
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "source_focus_summary": "Lemma lem.sf.alternant-0: For α: Fin N → ℕ, (a) if α has two equal entries then a_α = 0; (b) if β is obtained from α by swapping two entries, then a_β = -a_α.",
+      "formalization_sketch": [
+        "Statement: (a) If α i = α j for some i≠j, then alternant α = 0. (b) For any transposition τ = (i j), alternant (α ∘ τ) = - alternant α.",
+        "Proof plan: (a) The sum over permutations defining alternant pairs each σ with σ∘τ, where τ swaps the two equal indices; the two terms cancel because sign(σ∘τ) = -sign(σ) and xPow(α∘(σ∘τ)) = xPow(α∘σ) since α has equal entries at i,j. (b) Directly from the definition: alternant (α∘τ) = ∑_σ sign(σ) xPow(α∘τ∘σ) = ∑_σ sign(σ∘τ) xPow(α∘σ) = -∑_σ sign(σ) xPow(α∘σ) = -alternant α."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "alternant (α : Fin N → ℕ) : MvPolynomial (Fin N) R",
+          "why_needed": "the object a_α being studied"
+        },
+        {
+          "name_or_snippet": "xPow (α : Fin N → ℕ) : MvPolynomial (Fin N) R",
+          "why_needed": "the monomial x^α used in the definition of alternant"
+        },
+        {
+          "name_or_snippet": "Equiv.Perm.sign",
+          "why_needed": "sign of a permutation, used in alternant definition"
+        },
+        {
+          "name_or_snippet": "Equiv.swap",
+          "why_needed": "to construct the transposition τ"
+        }
+      ],
+      "mathlib_queries": [
+        "Equiv.Perm.sign_swap",
+        "Equiv.Perm.sign_mul",
+        "Finset.sum_involution",
+        "Equiv.Perm.mul_swap_involutive"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Equiv.Perm.sign_swap",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sign (swap i j) = -1 if i≠j",
+          "why_needed": "to get sign(σ∘τ) = -sign(σ)",
+          "confidence": 0.9
+        },
+        {
+          "name": "Equiv.Perm.sign_mul",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sign (σ * τ) = sign σ * sign τ",
+          "why_needed": "to compute sign of composition",
+          "confidence": 0.9
+        },
+        {
+          "name": "Finset.sum_involution",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sum_involution f h ...",
+          "why_needed": "to pair terms in the sum for part (a)",
+          "confidence": 0.8
+        },
+        {
+          "name": "Equiv.Perm.mul_swap_involutive",
+          "kind": "theorem",
+          "expected_signature_or_shape": "mul_swap_involutive i j σ",
+          "why_needed": "to show the involution property",
+          "confidence": 0.7
+        }
+      ],
+      "proof_notes": [
+        "For part (a), use Finset.sum_involution with σ ↦ σ * Equiv.swap i j.",
+        "Need to show xPow (α ∘ (σ * swap i j)) = xPow (α ∘ σ) when α i = α j. This follows from xPow being invariant under permuting equal entries.",
+        "For part (b), reindex the sum by σ' = σ∘τ⁻¹.",
+        "The local definition of alternant uses Equiv.Perm.sign σ • xPow (α ∘ σ); note the scalar multiplication •."
+      ],
+      "uncertainties": [
+        "Whether there is a lemma xPow_comp_perm that relates xPow (α ∘ σ) to xPow α under permutation; may need to unfold xPow definition.",
+        "Exact name of the lemma that sign(swap i j) = -1 when i≠j: likely Equiv.Perm.sign_swap."
+      ]
+    }
+  ]
+}

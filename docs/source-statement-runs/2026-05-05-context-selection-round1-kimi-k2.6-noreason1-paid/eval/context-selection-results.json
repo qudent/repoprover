@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-05-05T13:05:27.464427+00:00",
+  "records_selected": 1,
+  "batches": 1,
+  "batch_size": 1,
+  "model": "moonshotai/kimi-k2.6",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.74,
+  "completion_price_per_million": 3.49,
+  "context_length": 262142,
+  "max_tokens": 4096,
+  "reasoning_effort": "",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": false,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.02593245,
+  "max_actual_cost_usd": 0.04,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq"
+      ],
+      "budget_estimate": {
+        "model": "moonshotai/kimi-k2.6",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.74,
+        "completion_price_per_million": 3.49,
+        "context_length": 262142,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 35833,
+        "prompt_chars": 33941,
+        "estimated_prompt_tokens": 8486,
+        "max_completion_tokens": 4096,
+        "estimated_prompt_cost_usd": 0.00627964,
+        "estimated_max_completion_cost_usd": 0.01429504,
+        "estimated_max_cost_usd": 0.02057468
+      },
+      "paid_call_made": true,
+      "reused_existing_response": true,
+      "response_received": true,
+      "finish_reason": "length",
+      "cost_summary": {
+        "model": "moonshotai/kimi-k2.6-20260420",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.74,
+        "completion_price_per_million": 3.49,
+        "prompt_tokens": 10051,
+        "completion_tokens": 4096,
+        "total_tokens": 14147,
+        "actual_cost_usd": 0.02593245,
+        "estimated_cost_from_usage_usd": 0.02173278,
+        "has_openrouter_reported_cost": true
+      },
+      "success": false,
+      "failure_class": "no_content_or_length",
+      "error": "ValueError: model returned empty content"
+    }
+  ]
+}

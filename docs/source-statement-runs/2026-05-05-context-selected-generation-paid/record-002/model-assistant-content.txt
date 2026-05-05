@@ -1,0 +1,21 @@
+{
+  "lean_declaration": "theorem alternant_properties (α : Fin N → ℕ) (i j : Fin N) (hij : i ≠ j) (hα : α i = α j) :\n    alternant N α = 0 ∧ alternant N (α ∘ Equiv.swap i j) = - alternant N α :=\nby\n  have hswap : Equiv.Perm.sign (Equiv.swap i j : Equiv.Perm (Fin N)) = -1 :=\n    Equiv.Perm.sign_swap hij\n  have hcomp_same : α ∘ Equiv.swap i j = α := by\n    ext k\n    by_cases hik : k = i\n    · subst hik; simp [hα]\n    · by_cases hjk : k = j\n      · subst hjk; simp [hα]\n      · simp [hik, hjk]\n  constructor\n  · -- part (a): alternant α = 0\n    have hsum : (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)) = 0 := by\n      apply Finset.sum_involution (fun σ _ => Equiv.swap i j * σ) ?_ ?_ ?_ ?_\n      · intro σ hσ; exact Finset.mem_univ _\n      · intro σ hσ; simp [mul_assoc, Equiv.swap_mul_self]\n      · intro σ hσ\n        simp [Equiv.Perm.sign_mul, hswap, hcomp_same, Function.comp.assoc, smul_smul]\n    simpa [alternant, AlgebraicCombinatorics.alternant] using hsum\n  · -- part (b): alternant (α ∘ swap) = - alternant α\n    have hsum_b : (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow ((α ∘ Equiv.swap i j) ∘ σ)) =\n        - (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)) := by\n      calc\n        (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow ((α ∘ Equiv.swap i j) ∘ σ)) =\n            (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ (Equiv.swap i j ∘ σ))) :=\n          by simp [Function.comp.assoc]\n        _ = (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign (Equiv.swap i j * τ) • xPow (α ∘ τ)) := by\n          apply Finset.sum_bij (fun τ _ => Equiv.swap i j * τ) ?_ ?_ ?_ ?_ ?_\n          · intro τ hτ; exact Finset.mem_univ _\n          · intro τ₁ hτ₁ τ₂ hτ₂ h_eq\n            apply_fun (fun t => Equiv.swap i j * t) at h_eq\n            simpa [mul_assoc, Equiv.swap_mul_self] using h_eq\n          · intro σ hσ\n            refine ⟨Equiv.swap i j * σ, Finset.mem_univ _, ?_⟩\n            simp\n          · intro σ hσ; simp\n        _ = (∑ τ : Equiv.Perm (Fin N), (- Equiv.Perm.sign τ) • xPow (α ∘ τ)) := by\n          simp [hswap, Equiv.Perm.sign_mul]\n        _ = - (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign τ • xPow (α ∘ τ)) := by\n          simp [Finset.sum_neg_distrib, neg_smul]\n    simpa [alternant, AlgebraicCombinatorics.alternant] using hsum_b",
+  "declaration_name": "alternant_properties",
+  "used_context": [
+    "Finset.sum_involution",
+    "Finset.sum_bij",
+    "Equiv.Perm.sign_mul",
+    "Equiv.Perm.sign_swap",
+    "Equiv.swap_mul_self",
+    "Function.comp.assoc",
+    "neg_smul",
+    "Finset.sum_neg_distrib",
+    "alternant (abbreviation in SchurBasics)",
+    "AlgebraicCombinatorics.alternant (definition in LittlewoodRichardson)",
+    "xPow"
+  ],
+  "notes": [
+    "Combines parts (a) and (b) of the source Lemma lem.sf.alternant-0 as a single ∧ statement.",
+    "Uses Finset.sum_involution for the cancellation proof in (a) and Finset.sum_bij for the reindexing in (b)."
+  ]
+}

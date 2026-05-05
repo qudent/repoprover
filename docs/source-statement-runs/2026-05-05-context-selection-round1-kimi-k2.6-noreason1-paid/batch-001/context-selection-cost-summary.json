@@ -1,0 +1,12 @@
+{
+  "model": "moonshotai/kimi-k2.6-20260420",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.74,
+  "completion_price_per_million": 3.49,
+  "prompt_tokens": 10051,
+  "completion_tokens": 4096,
+  "total_tokens": 14147,
+  "actual_cost_usd": 0.02593245,
+  "estimated_cost_from_usage_usd": 0.02173278,
+  "has_openrouter_reported_cost": true
+}

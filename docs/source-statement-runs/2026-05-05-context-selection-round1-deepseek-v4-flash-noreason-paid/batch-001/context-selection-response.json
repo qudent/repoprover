@@ -1,0 +1,52 @@
+{
+  "id": "gen-1777985529-yjGCBi46de32uXicdfLR",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"records\": [\n    {\n      \"record_key\": \"record-001\",\n      \"source_focus_summary\": \"Lemma lem.det.minors-diag: For a diagonal n×n matrix D with entries d_i, (a) det(sub_P^P D) = ∏_{i∈P} d_i for any subset P of [n]; (b) if P and Q are distinct subsets of [n] with |P|=|Q|, then det(sub_P^Q D)=0.\",\n      \"formalization_sketch\": [\n        \"Statement: For n:ℕ, d: Fin n → R, let D := Matrix.diagonal d : Matrix (Fin n) (Fin n) R. Then (a) for any P : Finset (Fin n), det (sub[P,P] D) = ∏ i in P, d i; (b) for any P Q : Finset (Fin n), P ≠ Q → P.card = Q.card → det (sub[P,Q] D) = 0.\",\n        \"Proof plan: (a) sub[P,P] D is itself diagonal with entries d_i for i∈P, so its determinant is the product of those entries. (b) Since |P|=|Q| and P≠Q, there exists i∈P\\\\Q; the row of sub[P,Q] D corresponding to that i is zero, hence determinant zero.\"\n      ],\n      \"needed_local_context\": [\n        {\n          \"name_or_snippet\": \"sub[U,V] A\",\n          \"why_needed\": \"notation for submatrixOfFinset A U V, used in the statement\"\n        },\n        {\n          \"name_or_snippet\": \"submatrixOfFinset\",\n          \"why_needed\": \"definition of the submatrix operation\"\n        },\n        {\n          \"name_or_snippet\": \"Matrix.diagonal\",\n          \"why_needed\": \"to construct the diagonal matrix D\"\n        },\n        {\n          \"name_or_snippet\": \"Matrix.det_diagonal\",\n          \"why_needed\": \"determinant of a diagonal matrix equals product of diagonal entries\"\n        },\n        {\n          \"name_or_snippet\": \"Finset.prod\",\n          \"why_needed\": \"product over a Finset\"\n        }\n      ],\n      \"mathlib_queries\": [\n        \"Matrix.det_diagonal\",\n        \"Matrix.diagonal_apply\",\n        \"Finset.prod_congr\",\n        \"Finset.card_eq_iff_eq_empty_of_subset\"\n      ],\n      \"candidate_mathlib_context\": [\n        {\n          \"name\": \"Matrix.det_diagonal\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"det (diagonal v) = ∏ i, v i\",\n          \"why_needed\": \"to compute det of the diagonal submatrix in part (a)\",\n          \"confidence\": 0.9\n        },\n        {\n          \"name\": \"Matrix.diagonal_apply\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"diagonal v i j = if i=j then v i else 0\",\n          \"why_needed\": \"to reason about entries of D\",\n          \"confidence\": 0.9\n        },\n        {\n          \"name\": \"Finset.card_eq_iff_eq_empty_of_subset\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"s ⊆ t → (s.card = t.card ↔ s = t)\",\n          \"why_needed\": \"to deduce existence of i∈P\\\\Q from P≠Q and equal cardinalities\",\n          \"confidence\": 0.5\n        },\n        {\n          \"name\": \"Finset.exists_mem_not_mem_of_ne\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"s ≠ t → ∃ a, a ∈ s ∧ a ∉ t\",\n          \"why_needed\": \"to get i∈P\\\\Q\",\n          \"confidence\": 0.7\n        }\n      ],\n      \"proof_notes\": [\n        \"Use submatrixOfFinset_apply to relate entries of sub[P,Q] D to D entries.\",\n        \"For part (b), after finding i∈P\\\\Q, show that row i of sub[P,Q] D is zero because D i j = 0 for all j (since D is diagonal and i≠j for j∈Q).\",\n        \"The determinant of a matrix with a zero row is zero (Matrix.det_eq_zero_of_row_eq_zero).\"\n      ],\n      \"uncertainties\": [\n        \"Exact name of lemma that a matrix with a zero row has zero determinant: likely Matrix.det_eq_zero_of_row_eq_zero or similar.\",\n        \"Whether Finset.exists_mem_not_mem_of_ne is available in Mathlib; may need to use Finset.ssubset_iff_subset_ne and Finset.exists_mem_not_mem.\"\n      ]\n    },\n    {\n      \"record_key\": \"record-002\",\n      \"source_focus_summary\": \"Lemma lem.sf.alternant-0: For α: Fin N → ℕ, (a) if α has two equal entries then a_α = 0; (b) if β is obtained from α by swapping two entries, then a_β = -a_α.\",\n      \"formalization_sketch\": [\n        \"Statement: (a) If α i = α j for some i≠j, then alternant α = 0. (b) For any transposition τ = (i j), alternant (α ∘ τ) = - alternant α.\",\n        \"Proof plan: (a) The sum over permutations defining alternant pairs each σ with σ∘τ, where τ swaps the two equal indices; the two terms cancel because sign(σ∘τ) = -sign(σ) and xPow(α∘(σ∘τ)) = xPow(α∘σ) since α has equal entries at i,j. (b) Directly from the definition: alternant (α∘τ) = ∑_σ sign(σ) xPow(α∘τ∘σ) = ∑_σ sign(σ∘τ) xPow(α∘σ) = -∑_σ sign(σ) xPow(α∘σ) = -alternant α.\"\n      ],\n      \"needed_local_context\": [\n        {\n          \"name_or_snippet\": \"alternant (α : Fin N → ℕ) : MvPolynomial (Fin N) R\",\n          \"why_needed\": \"the object a_α being studied\"\n        },\n        {\n          \"name_or_snippet\": \"xPow (α : Fin N → ℕ) : MvPolynomial (Fin N) R\",\n          \"why_needed\": \"the monomial x^α used in the definition of alternant\"\n        },\n        {\n          \"name_or_snippet\": \"Equiv.Perm.sign\",\n          \"why_needed\": \"sign of a permutation, used in alternant definition\"\n        },\n        {\n          \"name_or_snippet\": \"Equiv.swap\",\n          \"why_needed\": \"to construct the transposition τ\"\n        }\n      ],\n      \"mathlib_queries\": [\n        \"Equiv.Perm.sign_swap\",\n        \"Equiv.Perm.sign_mul\",\n        \"Finset.sum_involution\",\n        \"Equiv.Perm.mul_swap_involutive\"\n      ],\n      \"candidate_mathlib_context\": [\n        {\n          \"name\": \"Equiv.Perm.sign_swap\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"sign (swap i j) = -1 if i≠j\",\n          \"why_needed\": \"to get sign(σ∘τ) = -sign(σ)\",\n          \"confidence\": 0.9\n        },\n        {\n          \"name\": \"Equiv.Perm.sign_mul\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"sign (σ * τ) = sign σ * sign τ\",\n          \"why_needed\": \"to compute sign of composition\",\n          \"confidence\": 0.9\n        },\n        {\n          \"name\": \"Finset.sum_involution\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"sum_involution f h ...\",\n          \"why_needed\": \"to pair terms in the sum for part (a)\",\n          \"confidence\": 0.8\n        },\n        {\n          \"name\": \"Equiv.Perm.mul_swap_involutive\",\n          \"kind\": \"theorem\",\n          \"expected_signature_or_shape\": \"mul_swap_involutive i j σ\",\n          \"why_needed\": \"to show the involution property\",\n          \"confidence\": 0.7\n        }\n      ],\n      \"proof_notes\": [\n        \"For part (a), use Finset.sum_involution with σ ↦ σ * Equiv.swap i j.\",\n        \"Need to show xPow (α ∘ (σ * swap i j)) = xPow (α ∘ σ) when α i = α j. This follows from xPow being invariant under permuting equal entries.\",\n        \"For part (b), reindex the sum by σ' = σ∘τ⁻¹.\",\n        \"The local definition of alternant uses Equiv.Perm.sign σ • xPow (α ∘ σ); note the scalar multiplication •.\"\n      ],\n      \"uncertainties\": [\n        \"Whether there is a lemma xPow_comp_perm that relates xPow (α ∘ σ) to xPow α under permutation; may need to unfold xPow definition.\",\n        \"Exact name of the lemma that sign(swap i j) = -1 when i≠j: likely Equiv.Perm.sign_swap.\"\n      ]\n    }\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null,
+        "reasoning": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777985529,
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 2122,
+    "prompt_tokens": 14246,
+    "total_tokens": 16368,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.0025886,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.0025886,
+      "upstream_inference_prompt_cost": 0.00199444,
+      "upstream_inference_completions_cost": 0.00059416
+    }
+  },
+  "provider": "DeepInfra"
+}

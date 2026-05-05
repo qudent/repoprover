@@ -1,0 +1,149 @@
+{
+  "mathlib_source_available": true,
+  "mathlib_root": "algebraic-combinatorics/.lake/packages/mathlib",
+  "records": [
+    {
+      "record_key": "record-001",
+      "resolved_mathlib_context": [
+        {
+          "query": "Matrix.det_diagonal",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+              "line": 76,
+              "text": "theorem det_diagonal {d : n → R} : det (diagonal d) = ∏ i, d i := by",
+              "snippet": "theorem det_diagonal {d : n → R} : det (diagonal d) = ∏ i, d i := by\n  rw [det_apply']\n  refine (Finset.sum_eq_single 1 ?_ ?_).trans ?_\n  · rintro σ - h2\n    obtain ⟨x, h3⟩ := not_forall.1 (mt Equiv.ext h2)\n    convert mul_zero (ε σ)\n    apply Finset.prod_eq_zero (mem_univ x)\n    exact if_neg h3\n  · simp\n  · simp"
+            }
+          ]
+        },
+        {
+          "query": "Matrix.diagonal_apply",
+          "matches": [
+            {
+              "file": "Mathlib/Combinatorics/HalesJewett.lean",
+              "line": 332,
+              "text": "theorem diagonal_apply {α ι} [Nonempty ι] (x : α) : diagonal α ι x = fun _ => x := by",
+              "snippet": "theorem diagonal_apply {α ι} [Nonempty ι] (x : α) : diagonal α ι x = fun _ => x := by\n  ext; simp [diagonal]\n\n/-- The **Hales-Jewett theorem**. This version has a restriction on universe levels which is\nnecessary for the proof. See `exists_mono_in_high_dimension` for a fully universe-polymorphic\nversion. -/"
+            },
+            {
+              "file": "Mathlib/Data/Matrix/Diagonal.lean",
+              "line": 54,
+              "text": "theorem diagonal_apply [Zero α] (d : n → α) (i j) : diagonal d i j = if i = j then d i else 0 :=",
+              "snippet": "theorem diagonal_apply [Zero α] (d : n → α) (i j) : diagonal d i j = if i = j then d i else 0 :=\n  rfl\n\n@[simp]"
+            }
+          ]
+        },
+        {
+          "query": "Finset.prod_congr",
+          "matches": [
+            {
+              "file": "Mathlib/Data/Fintype/BigOperators.lean",
+              "line": 70,
+              "text": "theorem prod_congr (f g : α → M) (h : ∀ a, f a = g a) : ∏ a, f a = ∏ a, g a :=",
+              "snippet": "theorem prod_congr (f g : α → M) (h : ∀ a, f a = g a) : ∏ a, f a = ∏ a, g a :=\n  Finset.prod_congr rfl fun a _ha => h a\n\n@[to_additive]"
+            },
+            {
+              "file": "Mathlib/Algebra/BigOperators/Fin.lean",
+              "line": 153,
+              "text": "theorem prod_congr' {a b : ℕ} (f : Fin b → M) (h : a = b) :",
+              "snippet": "theorem prod_congr' {a b : ℕ} (f : Fin b → M) (h : a = b) :\n    (∏ i : Fin a, f (i.cast h)) = ∏ i : Fin b, f i := by\n  subst h\n  congr\n\n@[to_additive]"
+            },
+            {
+              "file": "Mathlib/Algebra/BigOperators/Finsupp/Basic.lean",
+              "line": 179,
+              "text": "theorem prod_congr {f : α →₀ M} {g1 g2 : α → M → N} (h : ∀ x ∈ f.support, g1 x (f x) = g2 x (f x)) :",
+              "snippet": "theorem prod_congr {f : α →₀ M} {g1 g2 : α → M → N} (h : ∀ x ∈ f.support, g1 x (f x) = g2 x (f x)) :\n    f.prod g1 = f.prod g2 :=\n  Finset.prod_congr rfl h\n\n@[to_additive]"
+            }
+          ]
+        },
+        {
+          "query": "Finset.card_eq_iff_eq_empty_of_subset",
+          "matches": []
+        },
+        {
+          "query": "Finset.exists_mem_not_mem_of_ne",
+          "matches": []
+        }
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "resolved_mathlib_context": [
+        {
+          "query": "Equiv.Perm.sign_swap",
+          "matches": [
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 388,
+              "text": "theorem sign_swap {x y : α} (h : x ≠ y) : sign (swap x y) = -1 :=",
+              "snippet": "theorem sign_swap {x y : α} (h : x ≠ y) : sign (swap x y) = -1 :=\n  (signAux3_mul_and_swap 1 1 _ mem_univ).2 h\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 392,
+              "text": "theorem sign_swap' {x y : α} : sign (swap x y) = if x = y then 1 else -1 :=",
+              "snippet": "theorem sign_swap' {x y : α} : sign (swap x y) = if x = y then 1 else -1 :=\n  if H : x = y then by simp [H, swap_self] else by simp [sign_swap H, H]"
+            }
+          ]
+        },
+        {
+          "query": "Equiv.Perm.sign_mul",
+          "matches": [
+            {
+              "file": "Mathlib/Data/EReal/Inv.lean",
+              "line": 103,
+              "text": "theorem sign_mul (x y : EReal) : sign (x * y) = sign x * sign y := by",
+              "snippet": "theorem sign_mul (x y : EReal) : sign (x * y) = sign x * sign y := by\n  induction x, y using induction₂_symm_neg with\n  | top_zero => simp only [mul_zero, sign_zero]\n  | top_top => rfl\n  | symm h => rwa [mul_comm, EReal.mul_comm]\n  | coe_coe => simp only [← coe_mul, sign_coe, _root_.sign_mul]\n  | top_pos _ h =>\n    rw [top_mul_coe_of_pos h, sign_top, one_mul, sign_pos (EReal.coe_pos.2 h)]\n  | neg_left h => rw [neg_mul, sign_neg, sign_neg, h, neg_mul]\n\n@[simp] protected theorem sign_mul_abs : ∀ x : EReal, (sign x * x.abs : EReal) = x\n  | ⊥ => by simp\n  | ⊤ => by simp\n  | (x : ℝ) => by rw [sign_coe, coe_abs, ← coe_coe_sign, ← coe_mul, sign_mul_abs]\n\n@[simp] protected theorem abs_mul_sign (x : EReal) : (x.abs * sign x : EReal) = x := by\n  rw [EReal.mul_comm, EReal.sign_mul_abs]"
+            },
+            {
+              "file": "Mathlib/Data/Sign/Basic.lean",
+              "line": 100,
+              "text": "theorem sign_mul (x y : α) : sign (x * y) = sign x * sign y := by",
+              "snippet": "theorem sign_mul (x y : α) : sign (x * y) = sign x * sign y := by\n  rcases lt_trichotomy x 0 with (hx | hx | hx) <;> rcases lt_trichotomy y 0 with (hy | hy | hy) <;>\n    simp [hx, hy, mul_pos_of_neg_of_neg, mul_neg_of_neg_of_pos, mul_neg_of_pos_of_neg]\n\n@[simp] theorem sign_mul_abs (x : α) : (sign x * |x| : α) = x := by\n  rcases lt_trichotomy x 0 with hx | rfl | hx <;> simp [*, abs_of_pos, abs_of_neg]\n\n@[simp] theorem abs_mul_sign (x : α) : (|x| * sign x : α) = x := by\n  rcases lt_trichotomy x 0 with hx | rfl | hx <;> simp [*, abs_of_pos, abs_of_neg]\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 365,
+              "text": "theorem sign_mul (f g : Perm α) : sign (f * g) = sign f * sign g :=",
+              "snippet": "theorem sign_mul (f g : Perm α) : sign (f * g) = sign f * sign g :=\n  map_mul sign f g\n\n@[simp]"
+            }
+          ]
+        },
+        {
+          "query": "Finset.sum_involution",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/Alternating/DomCoprod.lean",
+              "line": 142,
+              "text": "        Finset.sum_involution (fun σ _ => Equiv.swap i j • σ)",
+              "snippet": "        Finset.sum_involution (fun σ _ => Equiv.swap i j • σ)\n          (fun σ _ => domCoprod.summand_add_swap_smul_eq_zero a b σ hv hij)\n          (fun σ _ => mt <| domCoprod.summand_eq_zero_of_smul_invariant a b σ hv hij)\n          (fun σ _ => Finset.mem_univ _) fun σ _ =>\n          Equiv.swap_smul_involutive i j σ }"
+            },
+            {
+              "file": "Mathlib/LinearAlgebra/Alternating/Basic.lean",
+              "line": 814,
+              "text": "    Finset.sum_involution (fun σ _ => swap i j * σ)",
+              "snippet": "    Finset.sum_involution (fun σ _ => swap i j * σ)\n      (fun σ _ => by simp [Perm.sign_swap i_ne_j, apply_swap_eq_self hv])\n      (fun σ _ _ => (not_congr swap_mul_eq_iff).mpr i_ne_j) (fun σ _ => Finset.mem_univ _)\n      fun σ _ => swap_mul_involutive i j σ\n\n/-- Produce an `AlternatingMap` out of a `MultilinearMap`, by summing over all argument\npermutations. -/"
+            },
+            {
+              "file": "Mathlib/RingTheory/MvPolynomial/Symmetric/NewtonIdentities.lean",
+              "line": 22,
+              "text": "from an identity implemented in mathlib as `Finset.sum_involution`. Namely, we use",
+              "snippet": "from an identity implemented in mathlib as `Finset.sum_involution`. Namely, we use\n`Finset.sum_involution` to show that `∑ t ∈ pairs σ k, weight σ R k t = 0`. We then identify\n`(-1) ^ k * k * esymm σ R k` with the terms of the weight sum for which `t.fst` has\ncardinality `k`, and `(-1) ^ i * esymm σ R i * psum σ R (k - i)` with the terms of the weight sum\nfor which `t.fst` has cardinality `i` for `i < k`, and we thereby derive the main result\n`(-1) ^ k * k * esymm σ R k + ∑ i ∈ range k, (-1) ^ i * esymm σ R i * psum σ R (k - i) = 0` (or\nrather, two equivalent forms which provide direct definitions for `esymm` and `psum` in lower-degree\nterms).\n\n## Main declarations\n\n* `MvPolynomial.mul_esymm_eq_sum`: a recurrence relation for the `k`th elementary\n  symmetric polynomial in terms of lower-degree elementary symmetric polynomials and power sums.\n\n* `MvPolynomial.psum_eq_mul_esymm_sub_sum`: a recurrence relation for the degree-`k` power sum\n  in terms of lower-degree elementary symmetric polynomials and power sums.\n\n## References\n\nSee [zeilberger1984] for the combinatorial proof of Newton's identities.\n-/\n\npublic section\n\nopen Equiv (Perm)\n\nopen MvPolynomial"
+            }
+          ]
+        },
+        {
+          "query": "Equiv.Perm.mul_swap_involutive",
+          "matches": [
+            {
+              "file": "Mathlib/Algebra/Group/End.lean",
+              "line": 572,
+              "text": "theorem mul_swap_involutive (i j : α) : Function.Involutive (· * Equiv.swap i j) :=",
+              "snippet": "theorem mul_swap_involutive (i j : α) : Function.Involutive (· * Equiv.swap i j) :=\n  mul_swap_mul_self i j\n\n@[simp]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-05-05T13:05:44.026916+00:00",
+  "records_selected": 4,
+  "batches": 1,
+  "batch_size": 4,
+  "model": "google/gemini-2.5-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.3,
+  "completion_price_per_million": 2.5,
+  "context_length": 1048576,
+  "max_tokens": 8192,
+  "reasoning_effort": "low",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": true,
+  "paid_calls_made": 0,
+  "actual_cost_usd": 0.0,
+  "max_actual_cost_usd": 0.25,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002",
+        "record-003",
+        "record-004"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+        "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.laurentPoly_add_coeff",
+        "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_inv",
+        "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap"
+      ],
+      "budget_estimate": {
+        "model": "google/gemini-2.5-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.3,
+        "completion_price_per_million": 2.5,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 77552,
+        "prompt_chars": 73268,
+        "estimated_prompt_tokens": 18317,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.0054951,
+        "estimated_max_completion_cost_usd": 0.02048,
+        "estimated_max_cost_usd": 0.0259751
+      },
+      "paid_call_made": false,
+      "status": "budget_only"
+    }
+  ]
+}

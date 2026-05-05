@@ -1,0 +1,172 @@
+{
+  "generated_at": "2026-05-05T13:16:47.514712+00:00",
+  "records_selected": 2,
+  "records_completed": 2,
+  "records_attempted": 2,
+  "successes": 0,
+  "success_rate": 0.0,
+  "preflight_successes": 0,
+  "preflight_success_rate": null,
+  "generation_successes": 1,
+  "generation_success_rate": 1.0,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.02031073,
+  "model": "deepseek/deepseek-v4-pro",
+  "max_tokens": 32768,
+  "reasoning_effort": "high",
+  "concurrency": 2,
+  "sample_mode": "corpus-spread",
+  "max_actual_cost_usd": 0.1,
+  "repair_attempts": 0,
+  "repair_max_tokens": 32768,
+  "repair_reasoning_effort": "high",
+  "context_mode": "source-only",
+  "preflight_only": false,
+  "generation_only": true,
+  "reuse_project": false,
+  "failure_classes": {
+    "openrouter_error": 1
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+      "lean_path": "AlgebraicCombinatorics/CauchyBinet.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq"
+      ],
+      "gold_line_range": [
+        3407,
+        3422
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 36197,
+        "prompt_chars": 34527,
+        "estimated_prompt_tokens": 8632,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00375492,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03226308
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 36197,
+        "prompt_chars": 34527,
+        "estimated_prompt_tokens": 8632,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00375492,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03226308
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03226308,
+      "paid_call_made": true,
+      "api_request_attempted": true,
+      "response_received": false,
+      "success": false,
+      "failure_class": "openrouter_error",
+      "error": "openrouter_JSONDecodeError: Expecting value: line 331 column 1 (char 1815)"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap",
+      "lean_path": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+      "gold_declaration_names": [
+        "alternant_swap"
+      ],
+      "gold_line_range": [
+        3083,
+        3092
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 20817,
+        "prompt_chars": 19656,
+        "estimated_prompt_tokens": 4914,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00213759,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03064575
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 20817,
+        "prompt_chars": 19656,
+        "estimated_prompt_tokens": 4914,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00213759,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03064575
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03064575,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 5814,
+        "completion_tokens": 20756,
+        "total_tokens": 26570,
+        "actual_cost_usd": 0.02031073,
+        "estimated_cost_from_usage_usd": 0.02058681,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem alternant_properties (α : Fin N → ℕ) (i j : Fin N) (hij : i ≠ j) (hα : α i = α j) :\n    alternant N α = 0 ∧ alternant N (α ∘ Equiv.swap i j) = - alternant N α :=\nby\n  have hswap : Equiv.Perm.sign (Equiv.swap i j : Equiv.Perm (Fin N)) = -1 :=\n    Equiv.Perm.sign_swap hij\n  have hcomp_same : α ∘ Equiv.swap i j = α := by\n    ext k\n    by_cases hik : k = i\n    · subst hik; simp [hα]\n    · by_cases hjk : k = j\n      · subst hjk; simp [hα]\n      · simp [hik, hjk]\n  constructor\n  · -- part (a): alternant α = 0\n    have hsum : (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)) = 0 := by\n      apply Finset.sum_involution (fun σ _ => Equiv.swap i j * σ) ?_ ?_ ?_ ?_\n      · intro σ hσ; exact Finset.mem_univ _\n      · intro σ hσ; simp [mul_assoc, Equiv.swap_mul_self]\n      · intro σ hσ\n        simp [Equiv.Perm.sign_mul, hswap, hcomp_same, Function.comp.assoc, smul_smul]\n    simpa [alternant, AlgebraicCombinatorics.alternant] using hsum\n  · -- part (b): alternant (α ∘ swap) = - alternant α\n    have hsum_b : (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow ((α ∘ Equiv.swap i j) ∘ σ)) =\n        - (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)) := by\n      calc\n        (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow ((α ∘ Equiv.swap i j) ∘ σ)) =\n            (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ (Equiv.swap i j ∘ σ))) :=\n          by simp [Function.comp.assoc]\n        _ = (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign (Equiv.swap i j * τ) • xPow (α ∘ τ)) := by\n          apply Finset.sum_bij (fun τ _ => Equiv.swap i j * τ) ?_ ?_ ?_ ?_ ?_\n          · intro τ hτ; exact Finset.mem_univ _\n          · intro τ₁ hτ₁ τ₂ hτ₂ h_eq\n            apply_fun (fun t => Equiv.swap i j * t) at h_eq\n            simpa [mul_assoc, Equiv.swap_mul_self] using h_eq\n          · intro σ hσ\n            refine ⟨Equiv.swap i j * σ, Finset.mem_univ _, ?_⟩\n            simp\n          · intro σ hσ; simp\n        _ = (∑ τ : Equiv.Perm (Fin N), (- Equiv.Perm.sign τ) • xPow (α ∘ τ)) := by\n          simp [hswap, Equiv.Perm.sign_mul]\n        _ = - (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign τ • xPow (α ∘ τ)) := by\n          simp [Finset.sum_neg_distrib, neg_smul]\n    simpa [alternant, AlgebraicCombinatorics.alternant] using hsum_b",
+        "declaration_name": "alternant_properties",
+        "used_context": [
+          "Finset.sum_involution",
+          "Finset.sum_bij",
+          "Equiv.Perm.sign_mul",
+          "Equiv.Perm.sign_swap",
+          "Equiv.swap_mul_self",
+          "Function.comp.assoc",
+          "neg_smul",
+          "Finset.sum_neg_distrib",
+          "alternant (abbreviation in SchurBasics)",
+          "AlgebraicCombinatorics.alternant (definition in LittlewoodRichardson)",
+          "xPow"
+        ],
+        "notes": [
+          "Combines parts (a) and (b) of the source Lemma lem.sf.alternant-0 as a single ∧ statement.",
+          "Uses Finset.sum_involution for the cancellation proof in (a) and Finset.sum_bij for the reindexing in (b)."
+        ]
+      },
+      "generated_name": "alternant_properties",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    }
+  ]
+}

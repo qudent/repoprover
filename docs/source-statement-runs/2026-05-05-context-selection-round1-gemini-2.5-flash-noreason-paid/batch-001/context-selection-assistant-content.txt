@@ -1,0 +1,202 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "source_focus_summary": "Formalize Lemma lem.det.minors-diag, which states properties of minors of a diagonal matrix. Part (a) says that the determinant of a principal submatrix (sub_P^P D) of a diagonal matrix D is the product of the diagonal entries indexed by P. Part (b) says that if P and Q are distinct subsets of the same cardinality, then the determinant of the submatrix sub_P^Q D is 0.",
+      "formalization_sketch": [
+        "The lemma will likely be a single theorem with two `by_cases` or `ite` statements for parts (a) and (b).",
+        "The diagonal matrix `D` can be represented using `Matrix.diagonal` or by defining its entries explicitly `D i j = if i = j then d i else 0`.",
+        "Part (a): The submatrix `sub[P,P] D` will itself be a diagonal matrix. Its determinant will be the product of its diagonal entries. The diagonal entries of `sub[P,P] D` are `d (P.orderEmbOfFin rfl i)` for `i : Fin P.card`. This product needs to be shown equal to `∏ i ∈ P, d i`.",
+        "Part (b): If `P ≠ Q` and `P.card = Q.card`, then `sub[P,Q] D` will have a zero row. This can be shown by finding an `i ∈ P \ Q`. The corresponding row in `sub[P,Q] D` will be `D (P.orderEmbOfFin rfl i) (Q.orderEmbOfFin rfl j)` for `j : Fin Q.card`. Since `i ∈ P \ Q`, `P.orderEmbOfFin rfl i` is an index in `P` but not in `Q`. For any `j`, `Q.orderEmbOfFin rfl j` is an index in `Q`. Thus, `P.orderEmbOfFin rfl i ≠ Q.orderEmbOfFin rfl j`, making all entries in that row zero. A matrix with a zero row has determinant zero."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "R : Type*",
+          "why_needed": "Type of matrix entries"
+        },
+        {
+          "name_or_snippet": "[CommRing R]",
+          "why_needed": "Required for matrix determinants"
+        },
+        {
+          "name_or_snippet": "submatrixOfFinset",
+          "why_needed": "Definition of submatrix, used in the statement"
+        },
+        {
+          "name_or_snippet": "sub[U,V] A",
+          "why_needed": "Notation for submatrixOfFinset"
+        },
+        {
+          "name_or_snippet": "submatrixOfFinset_apply",
+          "why_needed": "To access elements of the submatrix"
+        }
+      ],
+      "mathlib_queries": [
+        "Matrix.diagonal",
+        "Matrix.det_diagonal",
+        "Matrix.det_zero_row",
+        "Finset.card_eq_card_iff_ne",
+        "Finset.exists_mem_sdiff"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Matrix.diagonal",
+          "kind": "def",
+          "expected_signature_or_shape": "def diagonal [Zero α] (d : n → α) : Matrix n n α",
+          "why_needed": "To construct the diagonal matrix D",
+          "confidence": 1.0
+        },
+        {
+          "name": "Matrix.det_diagonal",
+          "kind": "theorem",
+          "expected_signature_or_shape": "theorem det_diagonal [Fintype n] [DecidableEq n] [CommRing R] (d : n → R) : (diagonal d).det = ∏ i, d i",
+          "why_needed": "To compute the determinant of the diagonal submatrix in part (a)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Matrix.det_eq_zero_of_row_eq_zero",
+          "kind": "theorem",
+          "expected_signature_or_shape": "theorem det_eq_zero_of_row_eq_zero [Fintype n] [DecidableEq n] [CommRing R] {A : Matrix n n R} (i : n) (h : ∀ j, A i j = 0) : A.det = 0",
+          "why_needed": "To prove part (b) when a row is zero",
+          "confidence": 1.0
+        },
+        {
+          "name": "Finset.orderEmbOfFin_apply",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma orderEmbOfFin_apply {α : Type*} [LinearOrder α] (s : Finset α) (h : s.card = n) (i : Fin n) : s.orderEmbOfFin h i = s.toList.nthLe i i.isLt",
+          "why_needed": "To understand the mapping of indices by `orderEmbOfFin` for submatrix entries",
+          "confidence": 0.8
+        },
+        {
+          "name": "Finset.card_eq_card_iff_ne",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma card_eq_card_iff_ne {α : Type*} [Fintype α] {s t : Finset α} : s.card = t.card ↔ s ≠ t → ∃ x, x ∈ s ∧ x ∉ t",
+          "why_needed": "To show existence of an element in P \\ Q when P ≠ Q and |P| = |Q|",
+          "confidence": 0.7
+        },
+        {
+          "name": "Finset.exists_mem_sdiff",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma exists_mem_sdiff {α : Type*} {s t : Finset α} : s ≠ t → s.card = t.card → ∃ x, x ∈ s ∧ x ∉ t",
+          "why_needed": "More direct lemma for finding an element in P \\ Q",
+          "confidence": 0.9
+        },
+        {
+          "name": "Finset.prod_image",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma prod_image {α β : Type*} [CommMonoid β] (s : Finset α) (f : α → β) (g : α → α) (hg : Set.InjOn g s) : ∏ x in s, f (g x) = ∏ x in g '' s, f x",
+          "why_needed": "Potentially useful for relating `∏ i ∈ P, d i` to the product over `Fin P.card`",
+          "confidence": 0.6
+        },
+        {
+          "name": "Finset.prod_congr",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma prod_congr {α β : Type*} [CommMonoid β] {s t : Finset α} (h : s = t) (f : α → β) (g : α → β) (H : ∀ x ∈ s, f x = g x) : ∏ x in s, f x = ∏ x in t, g x",
+          "why_needed": "To equate products over different index sets if a bijection is established",
+          "confidence": 0.6
+        }
+      ],
+      "proof_notes": [
+        "The `n` in the source is `Fin n` in Lean. The `d_i` are `d : Fin n → R`.",
+        "The set `[n]` in the source corresponds to `Finset.univ : Finset (Fin n)`.",
+        "For part (a), the submatrix `sub[P,P] D` is a diagonal matrix. Its entries are `D (P.orderEmbOfFin rfl i) (P.orderEmbOfFin rfl j)`. If `i = j`, this is `d (P.orderEmbOfFin rfl i)`. If `i ≠ j`, this is `0`.",
+        "The determinant of `sub[P,P] D` will be `∏ i : Fin P.card, d (P.orderEmbOfFin rfl i)`. This product needs to be re-indexed to `∏ i ∈ P, d i`.",
+        "For part (b), if `P ≠ Q` and `P.card = Q.card`, there exists `k ∈ P` such that `k ∉ Q`. Consider the row of `sub[P,Q] D` corresponding to `k`. This row is indexed by `i : Fin P.card` such that `P.orderEmbOfFin rfl i = k`. For any `j : Fin Q.card`, the entry is `D k (Q.orderEmbOfFin rfl j)`. Since `k ∉ Q`, `k ≠ Q.orderEmbOfFin rfl j` for any `j`. Thus, all entries in this row are 0."
+      ],
+      "uncertainties": [
+        "The exact Mathlib lemma for re-indexing a product over `Fin P.card` to a product over `P`.",
+        "The precise way to construct the diagonal matrix `D` and its entries `d_i` in Lean. `Matrix.diagonal` seems appropriate.",
+        "How `Finset.orderEmbOfFin` interacts with `Matrix.diagonal` to show the submatrix is diagonal."
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "source_focus_summary": "Formalize Lemma lem.sf.alternant-0, which describes properties of the alternant polynomial `a_α`. Part (a) states that if the N-tuple `α` has two equal entries, then `a_α = 0`. Part (b) states that if `β` is obtained from `α` by swapping two entries, then `a_β = -a_α`.",
+      "formalization_sketch": [
+        "The alternant `a_α` is defined as `∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)`.",
+        "Part (a): If `α` has two equal entries, say `α i = α j` for `i ≠ j`. We can use a permutation `τ` that swaps `i` and `j`. Then `α ∘ σ = α ∘ (σ * τ)` if `α i = α j`. The sum can be split into pairs `(σ, σ * τ)`. The terms for `σ` and `σ * τ` will cancel out because `sign(σ * τ) = -sign(σ)` and `xPow (α ∘ σ) = xPow (α ∘ (σ * τ))`.",
+        "Part (b): If `β` is obtained from `α` by swapping two entries, say `α_k` and `α_l` are swapped to get `β`. This means `β = α ∘ τ` for some `τ = Equiv.swap k l`. Then `a_β = ∑ σ sign(σ) xPow(β ∘ σ) = ∑ σ sign(σ) xPow(α ∘ τ ∘ σ)`. We can re-index the sum by `σ' = τ ∘ σ`. Then `σ = τ ∘ σ'`. `sign(σ) = sign(τ ∘ σ') = sign(τ) * sign(σ') = -sign(σ')`. The sum becomes `∑ σ' (-sign(σ')) xPow(α ∘ σ') = - ∑ σ' sign(σ') xPow(α ∘ σ') = -a_α`."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "N : ℕ",
+          "why_needed": "Dimension of the N-tuple"
+        },
+        {
+          "name_or_snippet": "[NeZero N]",
+          "why_needed": "Ensures N is not zero, which is often needed for Fin N and permutations"
+        },
+        {
+          "name_or_snippet": "R : Type*",
+          "why_needed": "Type of coefficients for the polynomial"
+        },
+        {
+          "name_or_snippet": "[CommRing R]",
+          "why_needed": "Required for polynomial operations and scalar multiplication"
+        },
+        {
+          "name_or_snippet": "alternant (N : ℕ) (α : Fin N → ℕ) : MvPolynomial (Fin N) R",
+          "why_needed": "The definition of the alternant polynomial `a_α`"
+        },
+        {
+          "name_or_snippet": "xPow (α : Fin N → ℕ) : MvPolynomial (Fin N) R",
+          "why_needed": "The monomial `x^α` used in the definition of alternant"
+        }
+      ],
+      "mathlib_queries": [
+        "Equiv.Perm.sign_mul",
+        "Equiv.Perm.sign_swap",
+        "Equiv.Perm.involutive_swap",
+        "Finset.sum_involution",
+        "Function.Injective",
+        "Function.Surjective",
+        "Function.Bijective",
+        "Finset.sum_equiv"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Equiv.Perm.sign_mul",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma sign_mul (σ τ : Perm α) : sign (σ * τ) = sign σ * sign τ",
+          "why_needed": "To relate `sign(σ * τ)` to `sign(σ)` and `sign(τ)`",
+          "confidence": 1.0
+        },
+        {
+          "name": "Equiv.Perm.sign_swap",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma sign_swap {α : Type*} [Fintype α] [DecidableEq α] {i j : α} (h : i ≠ j) : sign (swap i j) = -1",
+          "why_needed": "To show `sign(τ) = -1` for a swap `τ`",
+          "confidence": 1.0
+        },
+        {
+          "name": "Equiv.Perm.involutive_swap",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma involutive_swap {α : Type*} [DecidableEq α] (i j : α) : Involutive (swap i j)",
+          "why_needed": "To show `(swap i j) * (swap i j) = 1`",
+          "confidence": 0.9
+        },
+        {
+          "name": "Finset.sum_involution",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma sum_involution {α β : Type*} [AddCommMonoid β] (f : α → α) (hf : Involutive f) (s : Finset α) (hs : ∀ x ∈ s, f x ∈ s) (g : α → β) (h_g : ∀ x ∈ s, g (f x) = -g x) : ∑ x in s, g x = 0",
+          "why_needed": "For part (a), to pair up terms that cancel due to `α i = α j`",
+          "confidence": 1.0
+        },
+        {
+          "name": "MvPolynomial.x_pow_eq_x_pow_iff",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma x_pow_eq_x_pow_iff {R : Type*} [CommSemiring R] {σ τ : Fin N → ℕ} : xPow σ = xPow τ ↔ σ = τ",
+          "why_needed": "To show `xPow (α ∘ σ) = xPow (α ∘ (σ * τ))` implies `α ∘ σ = α ∘ (σ * τ)`",
+          "confidence": 0.7
+        },
+        {
+          "name": "MvPolynomial.monomial_eq_monomial_iff",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma monomial_eq_monomial_iff {R : Type*} [CommSemiring R] {s t : Fin N → ℕ} {a b : R} : monomial s a = monomial t b ↔ (s = t ∧ a = b) ∨ (a = 0 ∧ b = 0)",
+          "why_needed": "Alternative to `x_pow_eq_x_pow_iff` if `xPow` is defined via `monomial`",
+          "confidence": 0.6
+        },
+        {
+          "name": "Finset.sum_equiv",
+          "kind": "lemma",
+          "expected_signature_or_shape": "lemma sum_equiv {α β γ : Type*} [AddCommMonoid γ] (e : α ≃ β) (s : Finset α) (f : β → γ) : ∑ x in s, f (e x) = ∑ x in

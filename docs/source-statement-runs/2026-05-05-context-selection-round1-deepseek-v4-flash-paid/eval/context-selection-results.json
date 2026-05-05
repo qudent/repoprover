@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-05-05T12:51:41.164982+00:00",
+  "records_selected": 4,
+  "batches": 1,
+  "batch_size": 4,
+  "model": "deepseek/deepseek-v4-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.14,
+  "completion_price_per_million": 0.28,
+  "context_length": 1048576,
+  "max_tokens": 8192,
+  "reasoning_effort": "low",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": false,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.00540708,
+  "max_actual_cost_usd": 0.02,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002",
+        "record-003",
+        "record-004"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+        "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.laurentPoly_add_coeff",
+        "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_inv",
+        "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 77555,
+        "prompt_chars": 73268,
+        "estimated_prompt_tokens": 18317,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.0025643800000000002,
+        "estimated_max_completion_cost_usd": 0.00229376,
+        "estimated_max_cost_usd": 0.00485814
+      },
+      "paid_call_made": true,
+      "response_received": true,
+      "finish_reason": "length",
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash-20260423",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "prompt_tokens": 22238,
+        "completion_tokens": 8192,
+        "total_tokens": 30430,
+        "actual_cost_usd": 0.00540708,
+        "estimated_cost_from_usage_usd": 0.00540708,
+        "has_openrouter_reported_cost": true
+      },
+      "success": false,
+      "failure_class": "no_content_or_length",
+      "error": "ValueError: model returned empty content"
+    }
+  ]
+}

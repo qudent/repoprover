@@ -1,0 +1,69 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "record_id": "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+      "selected_mathlib_names": [
+        "Matrix.det_diagonal",
+        "Matrix.diagonal_apply",
+        "Finset.card_eq_iff_eq_empty_of_subset",
+        "Finset.exists_mem_not_mem_of_ne"
+      ],
+      "gold_identifier_sample": [
+        "lem.det.minors",
+        "diag.a",
+        "Matrix.diagonal",
+        "P.orderEmbOfFin",
+        "Matrix.submatrix_diagonal_embedding",
+        "Matrix.det_diagonal",
+        "Function.comp",
+        "Fintype.prod_equiv",
+        "P.orderIsoOfFin",
+        "Finset.prod_coe_sort",
+        "Finset.coe_orderIsoOfFin_apply",
+        "Part",
+        "Principal",
+        "Lemma",
+        "Label",
+        "Fin",
+        "Finset",
+        "Matrix",
+        "Function",
+        "Fintype"
+      ],
+      "selected_name_gold_overlap": [
+        "det_diagonal"
+      ],
+      "selected_name_count": 4,
+      "gold_identifier_count": 20,
+      "policy": "Gold text is used only after model selection output is written; it is never included in selector prompts."
+    },
+    {
+      "record_key": "record-002",
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap",
+      "selected_mathlib_names": [
+        "Equiv.Perm.sign_swap",
+        "Equiv.Perm.sign_mul",
+        "Finset.sum_involution",
+        "Equiv.Perm.mul_swap_involutive"
+      ],
+      "gold_identifier_sample": [
+        "lem.sf.alternant",
+        "AlgebraicCombinatorics.alternant_swap",
+        "Equiv.swap",
+        "Swapping",
+        "Lemma",
+        "This",
+        "AlgebraicCombinatorics",
+        "Type",
+        "CommRing",
+        "Fin",
+        "Equiv"
+      ],
+      "selected_name_gold_overlap": [],
+      "selected_name_count": 4,
+      "gold_identifier_count": 11,
+      "policy": "Gold text is used only after model selection output is written; it is never included in selector prompts."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "model": "google/gemini-2.5-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.3,
+  "completion_price_per_million": 2.5,
+  "prompt_tokens": 14985,
+  "completion_tokens": 4096,
+  "total_tokens": 19081,
+  "actual_cost_usd": 0.0147355,
+  "estimated_cost_from_usage_usd": 0.0147355,
+  "has_openrouter_reported_cost": true
+}

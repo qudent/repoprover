@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-05-05T13:05:07.774769+00:00",
+  "records_selected": 2,
+  "batches": 1,
+  "batch_size": 2,
+  "model": "google/gemini-2.5-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.3,
+  "completion_price_per_million": 2.5,
+  "context_length": 1048576,
+  "max_tokens": 4096,
+  "reasoning_effort": "",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": false,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.0147355,
+  "max_actual_cost_usd": 0.03,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+        "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap"
+      ],
+      "budget_estimate": {
+        "model": "google/gemini-2.5-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.3,
+        "completion_price_per_million": 2.5,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 47963,
+        "prompt_chars": 45405,
+        "estimated_prompt_tokens": 11352,
+        "max_completion_tokens": 4096,
+        "estimated_prompt_cost_usd": 0.0034056,
+        "estimated_max_completion_cost_usd": 0.01024,
+        "estimated_max_cost_usd": 0.0136456
+      },
+      "paid_call_made": true,
+      "reused_existing_response": true,
+      "response_received": true,
+      "finish_reason": "length",
+      "cost_summary": {
+        "model": "google/gemini-2.5-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.3,
+        "completion_price_per_million": 2.5,
+        "prompt_tokens": 14985,
+        "completion_tokens": 4096,
+        "total_tokens": 19081,
+        "actual_cost_usd": 0.0147355,
+        "estimated_cost_from_usage_usd": 0.0147355,
+        "has_openrouter_reported_cost": true
+      },
+      "success": false,
+      "failure_class": "no_content_or_length",
+      "error": "JSONDecodeError: Invalid \\escape: line 10 column 133 (char 1183)"
+    }
+  ]
+}

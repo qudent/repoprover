@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777986467-0jgxJiFMmhPnycsTBcve",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem alternant_properties (α : Fin N → ℕ) (i j : Fin N) (hij : i ≠ j) (hα : α i = α j) :\\n    alternant N α = 0 ∧ alternant N (α ∘ Equiv.swap i j) = - alternant N α :=\\nby\\n  have hswap : Equiv.Perm.sign (Equiv.swap i j : Equiv.Perm (Fin N)) = -1 :=\\n    Equiv.Perm.sign_swap hij\\n  have hcomp_same : α ∘ Equiv.swap i j = α := by\\n    ext k\\n    by_cases hik : k = i\\n    · subst hik; simp [hα]\\n    · by_cases hjk : k = j\\n      · subst hjk; simp [hα]\\n      · simp [hik, hjk]\\n  constructor\\n  · -- part (a): alternant α = 0\\n    have hsum : (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)) = 0 := by\\n      apply Finset.sum_involution (fun σ _ => Equiv.swap i j * σ) ?_ ?_ ?_ ?_\\n      · intro σ hσ; exact Finset.mem_univ _\\n      · intro σ hσ; simp [mul_assoc, Equiv.swap_mul_self]\\n      · intro σ hσ\\n        simp [Equiv.Perm.sign_mul, hswap, hcomp_same, Function.comp.assoc, smul_smul]\\n    simpa [alternant, AlgebraicCombinatorics.alternant] using hsum\\n  · -- part (b): alternant (α ∘ swap) = - alternant α\\n    have hsum_b : (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow ((α ∘ Equiv.swap i j) ∘ σ)) =\\n        - (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)) := by\\n      calc\\n        (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow ((α ∘ Equiv.swap i j) ∘ σ)) =\\n            (∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ (Equiv.swap i j ∘ σ))) :=\\n          by simp [Function.comp.assoc]\\n        _ = (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign (Equiv.swap i j * τ) • xPow (α ∘ τ)) := by\\n          apply Finset.sum_bij (fun τ _ => Equiv.swap i j * τ) ?_ ?_ ?_ ?_ ?_\\n          · intro τ hτ; exact Finset.mem_univ _\\n          · intro τ₁ hτ₁ τ₂ hτ₂ h_eq\\n            apply_fun (fun t => Equiv.swap i j * t) at h_eq\\n            simpa [mul_assoc, Equiv.swap_mul_self] using h_eq\\n          · intro σ hσ\\n            refine ⟨Equiv.swap i j * σ, Finset.mem_univ _, ?_⟩\\n            simp\\n          · intro σ hσ; simp\\n        _ = (∑ τ : Equiv.Perm (Fin N), (- Equiv.Perm.sign τ) • xPow (α ∘ τ)) := by\\n          simp [hswap, Equiv.Perm.sign_mul]\\n        _ = - (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign τ • xPow (α ∘ τ)) := by\\n          simp [Finset.sum_neg_distrib, neg_smul]\\n    simpa [alternant, AlgebraicCombinatorics.alternant] using hsum_b\",\n  \"declaration_name\": \"alternant_properties\",\n  \"used_context\": [\n    \"Finset.sum_involution\",\n    \"Finset.sum_bij\",\n    \"Equiv.Perm.sign_mul\",\n    \"Equiv.Perm.sign_swap\",\n    \"Equiv.swap_mul_self\",\n    \"Function.comp.assoc\",\n    \"neg_smul\",\n    \"Finset.sum_neg_distrib\",\n    \"alternant (abbreviation in SchurBasics)\",\n    \"AlgebraicCombinatorics.alternant (definition in LittlewoodRichardson)\",\n    \"xPow\"\n  ],\n  \"notes\": [\n    \"Combines parts (a) and (b) of the source Lemma lem.sf.alternant-0 as a single ∧ statement.\",\n    \"Uses Finset.sum_involution for the cancellation proof in (a) and Finset.sum_bij for the reindexing in (b).\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777986467,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 20756,
+    "prompt_tokens": 5814,
+    "total_tokens": 26570,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 19648,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.02031073,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.02031073,
+      "upstream_inference_prompt_cost": 0.00225301,
+      "upstream_inference_completions_cost": 0.01805772
+    }
+  },
+  "provider": "DeepSeek"
+}

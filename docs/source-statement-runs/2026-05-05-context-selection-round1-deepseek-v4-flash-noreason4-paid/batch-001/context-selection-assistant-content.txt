@@ -1,0 +1,260 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "source_focus_summary": "Lemma lem.det.minors-diag: For a diagonal matrix D with diagonal entries d_i, (a) det(sub_P^P D) = ∏_{i∈P} d_i, (b) if P≠Q and |P|=|Q| then det(sub_P^Q D)=0.",
+      "formalization_sketch": [
+        "Use the local notation sub[U,V] A for submatrixOfFinset.",
+        "Define D as Matrix.diagonal d where d : Fin n → R.",
+        "Part (a): Show that sub[P,P] (diagonal d) is diagonal with entries d_i for i∈P, then apply Matrix.det_diagonal.",
+        "Part (b): Since P≠Q and |P|=|Q|, there exists i∈P\\Q. Then the row of sub[P,Q] D corresponding to i is zero, so determinant zero."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "submatrixOfFinset",
+          "why_needed": "definition of submatrix"
+        },
+        {
+          "name_or_snippet": "sub[U,V] A",
+          "why_needed": "notation for submatrix"
+        },
+        {
+          "name_or_snippet": "submatrixOfFinset_apply",
+          "why_needed": "to compute entries"
+        },
+        {
+          "name_or_snippet": "Matrix.diagonal",
+          "why_needed": "to represent diagonal matrix"
+        },
+        {
+          "name_or_snippet": "Matrix.det_diagonal",
+          "why_needed": "determinant of diagonal matrix"
+        },
+        {
+          "name_or_snippet": "Finset.orderEmbOfFin",
+          "why_needed": "used in submatrix definition"
+        }
+      ],
+      "mathlib_queries": [
+        "Matrix.det_diagonal",
+        "Matrix.diagonal_submatrix"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Matrix.det_diagonal",
+          "kind": "theorem",
+          "expected_signature_or_shape": "det (diagonal v) = ∏ i, v i",
+          "why_needed": "to compute determinant of diagonal submatrix",
+          "confidence": 1.0
+        },
+        {
+          "name": "Matrix.diagonal_submatrix",
+          "kind": "theorem",
+          "expected_signature_or_shape": "submatrix (diagonal v) f g = diagonal (fun i => v (f i)) if f and g are injective? Not sure",
+          "why_needed": "to express submatrix of diagonal",
+          "confidence": 0.5
+        }
+      ],
+      "proof_notes": [
+        "For part (a), use submatrixOfFinset_apply to show that sub[P,P] (diagonal d) is diagonal.",
+        "For part (b), use the existence of i∈P\\Q to show that the row is zero."
+      ],
+      "uncertainties": [
+        "Exact lemma for submatrix of diagonal matrix may not exist; may need to prove directly.",
+        "The type of P and Q: Finset (Fin n)."
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "source_focus_summary": "Definition def.fps.laure.laupol: Laurent polynomials as essentially finite families, with multiplication and element x.",
+      "formalization_sketch": [
+        "Use the existing LaurentPolynomial K = K[T;T⁻¹] as the type of Laurent polynomials.",
+        "The multiplication defined in the source is the usual convolution, which is already the multiplication in LaurentPolynomial.",
+        "The element x is T 1, which is already defined as laurentPoly_X.",
+        "The theorem that it is a commutative K-algebra is already an instance."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "LaurentPoly",
+          "why_needed": "abbreviation for LaurentPolynomial K"
+        },
+        {
+          "name_or_snippet": "laurentPoly_X",
+          "why_needed": "the indeterminate x"
+        },
+        {
+          "name_or_snippet": "laurentPoly_X_coeff",
+          "why_needed": "coefficient of x"
+        },
+        {
+          "name_or_snippet": "laurentPoly_one_coeff",
+          "why_needed": "coefficient of 1"
+        },
+        {
+          "name_or_snippet": "T",
+          "why_needed": "LaurentPolynomial.T for monomials"
+        }
+      ],
+      "mathlib_queries": [
+        "LaurentPolynomial.T",
+        "LaurentPolynomial.instCommRing"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "LaurentPolynomial.T",
+          "kind": "def",
+          "expected_signature_or_shape": "T (n : ℤ) : LaurentPolynomial R",
+          "why_needed": "to define x as T 1",
+          "confidence": 1.0
+        },
+        {
+          "name": "LaurentPolynomial.instCommRing",
+          "kind": "instance",
+          "expected_signature_or_shape": "CommRing (LaurentPolynomial R)",
+          "why_needed": "to show it's a commutative K-algebra",
+          "confidence": 1.0
+        }
+      ],
+      "proof_notes": [
+        "The definition is essentially the same as the existing LaurentPolynomial type.",
+        "No new proof needed; just note that the multiplication matches."
+      ],
+      "uncertainties": [
+        "The source defines multiplication explicitly; we may need to show it matches the Mathlib multiplication, but likely it's definitionally the same."
+      ]
+    },
+    {
+      "record_key": "record-003",
+      "source_focus_summary": "Proposition prop.perm.si.rules: (a) s_i^2 = id, (b) s_i s_j = s_j s_i if |i-j|>1, (c) s_i s_{i+1} s_i = s_{i+1} s_i s_{i+1}.",
+      "formalization_sketch": [
+        "Use the local simpleTransposition and notation s[i].",
+        "Part (a) is already proven as simpleTransposition_sq_eq_one.",
+        "Part (b): Show that if |i-j|>1, then s[i] and s[j] commute. Use ext and case analysis on k: Fin n. Since the swaps are disjoint, they commute.",
+        "Part (c): Show the braid relation. Use ext and case analysis on k: Fin n, considering cases k = i, i+1, i+2, or other."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "simpleTransposition",
+          "why_needed": "definition of s_i"
+        },
+        {
+          "name_or_snippet": "s[i]",
+          "why_needed": "notation"
+        },
+        {
+          "name_or_snippet": "simpleTransposition_apply_self",
+          "why_needed": "action on i"
+        },
+        {
+          "name_or_snippet": "simpleTransposition_apply_succ",
+          "why_needed": "action on i+1"
+        },
+        {
+          "name_or_snippet": "simpleTransposition_apply_of_ne",
+          "why_needed": "action on other elements"
+        },
+        {
+          "name_or_snippet": "Equiv.swap_apply_self",
+          "why_needed": "swap properties"
+        },
+        {
+          "name_or_snippet": "Equiv.swap_apply_of_ne_of_ne",
+          "why_needed": "swap properties"
+        }
+      ],
+      "mathlib_queries": [
+        "Equiv.swap_mul_swap",
+        "Equiv.swap_comm",
+        "Equiv.swap_mul_swap_mul_swap"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Equiv.swap_apply_self",
+          "kind": "theorem",
+          "expected_signature_or_shape": "swap a b a = b",
+          "why_needed": "to compute s_i(i)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Equiv.swap_apply_of_ne_of_ne",
+          "kind": "theorem",
+          "expected_signature_or_shape": "swap a b x = x if x ≠ a and x ≠ b",
+          "why_needed": "to compute s_i(k) for k not i,i+1",
+          "confidence": 1.0
+        },
+        {
+          "name": "Equiv.swap_mul_swap",
+          "kind": "theorem",
+          "expected_signature_or_shape": "swap a b * swap a b = 1",
+          "why_needed": "for part (a) already used",
+          "confidence": 1.0
+        }
+      ],
+      "proof_notes": [
+        "For part (b), use the fact that the swaps are disjoint, so they commute.",
+        "For part (c), do case analysis on the three relevant elements."
+      ],
+      "uncertainties": [
+        "The exact condition |i-j|>1: we need to express this in terms of Fin (n-1) values. Use i.val and j.val.",
+        "The braid relation may require careful handling of the order of composition."
+      ]
+    },
+    {
+      "record_key": "record-004",
+      "source_focus_summary": "Lemma lem.sf.alternant-0: (a) If α has two equal entries, then a_α = 0. (b) Swapping two entries changes sign.",
+      "formalization_sketch": [
+        "Use the definition of alternant as ∑_{σ} sign(σ) • xPow (α ∘ σ).",
+        "Part (a): Suppose α i = α j for i≠j. Define an involution on permutations: σ ↦ σ ∘ (i j). Show that the terms cancel because sign changes and xPow (α ∘ σ) is invariant.",
+        "Part (b): If β = α ∘ (i j), then alternant β = - alternant α, because composing with (i j) on the right changes sign."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "alternant",
+          "why_needed": "definition of alternant"
+        },
+        {
+          "name_or_snippet": "xPow",
+          "why_needed": "monomial exponent"
+        },
+        {
+          "name_or_snippet": "Equiv.Perm.sign",
+          "why_needed": "sign of permutation"
+        },
+        {
+          "name_or_snippet": "Equiv.swap",
+          "why_needed": "transposition"
+        }
+      ],
+      "mathlib_queries": [
+        "Equiv.Perm.sign_swap",
+        "Equiv.Perm.sign_mul",
+        "Finset.sum_involution"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Equiv.Perm.sign_swap",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sign (swap i j) = -1 if i ≠ j",
+          "why_needed": "to get sign change",
+          "confidence": 1.0
+        },
+        {
+          "name": "Equiv.Perm.sign_mul",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sign (σ * τ) = sign σ * sign τ",
+          "why_needed": "to compute sign of composition",
+          "confidence": 1.0
+        },
+        {
+          "name": "Finset.sum_involution",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sum_involution f ...",
+          "why_needed": "to cancel terms in sum",
+          "confidence": 0.8
+        }
+      ],
+      "proof_notes": [
+        "For part (a), use Finset.sum_involution with the involution σ ↦ σ ∘ (i j).",
+        "For part (b), use the fact that alternant (α ∘ (i j)) = ∑_σ sign(σ) • xPow (α ∘ (i j) ∘ σ) = ∑_σ sign(σ) • xPow (α ∘ (σ ∘ (i j))) = ... = - alternant α."
+      ],
+      "unc

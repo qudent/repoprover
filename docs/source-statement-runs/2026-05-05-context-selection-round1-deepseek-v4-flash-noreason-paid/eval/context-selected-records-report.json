@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-05-05T13:07:17.650711+00:00",
+  "context_selection_run": "docs/source-statement-runs/2026-05-05-context-selection-round1-deepseek-v4-flash-noreason-paid",
+  "records_input": 2,
+  "records_output": 2,
+  "records_missing_selection": [],
+  "output": "docs/source-statement-runs/2026-05-05-context-selection-round1-deepseek-v4-flash-noreason-paid/eval/context-selected-records.jsonl",
+  "used_gold_comparison": false
+}
