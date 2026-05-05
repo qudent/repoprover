@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:34:0: error: Missing name after `end`: Expected the current scope name `InversesAndFractions`\n\nHint: To end the current scope `InversesAndFractions`, specify its name:\n  end ̲I̲n̲v̲e̲r̲s̲e̲s̲A̲n̲d̲F̲r̲a̲c̲t̲i̲o̲n̲s̲\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:35:0: error: Invalid name after `end`: Expected `FPS.InversesAndFractions`, but found `AlgebraicCombinatorics.FPS`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics.FPS`, you must end all the intervening scopes `AlgebraicCombinatorics.FPS.InversesAndFractions`:\n  end AlgebraicCombinatorics.FPS.̲I̲n̲v̲e̲r̲s̲e̲s̲A̲n̲d̲F̲r̲a̲c̲t̲i̲o̲n̲s̲\n"
+}

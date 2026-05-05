@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/LaurentSeries.lean:36:0: error: Missing name after `end`: Expected the current scope name `LaurentPolynomials`\n\nHint: To end the current scope `LaurentPolynomials`, specify its name:\n  end ̲L̲a̲u̲r̲e̲n̲t̲P̲o̲l̲y̲n̲o̲m̲i̲a̲l̲s̲\nAlgebraicCombinatorics/LaurentSeries.lean:37:0: error: Invalid name after `end`: Expected `LaurentPolynomials`, but found `AlgebraicCombinatorics`\n\nHint: If you meant to end the outer scope(s) `AlgebraicCombinatorics`, you must end all the intervening scopes `AlgebraicCombinatorics.LaurentPolynomials`:\n  end AlgebraicCombinatorics.̲L̲a̲u̲r̲e̲n̲t̲P̲o̲l̲y̲n̲o̲m̲i̲a̲l̲s̲\n"
+}

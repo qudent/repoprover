@@ -1560,8 +1560,6 @@ def build_payload(*, model: str, messages: list[dict[str, str]], max_tokens: int
 
 
 def extract_generated_name(declaration: str, declared_name: str | None) -> str | None:
-    if declared_name:
-        return declared_name.strip().strip("`")
     match = GENERATED_DECL_RE.search(declaration)
     if match:
         return match.group("name")
@@ -2048,6 +2046,8 @@ def run_repair_attempt(
         row["model_json"] = model_json
         row["generated_name"] = generated_name
         row["forbidden_placeholder"] = contains_forbidden_placeholder(declaration)
+        if declaration.strip() and not generated_name:
+            raise ValueError("lean_declaration must be a theorem or lemma")
         if not declaration.strip() or not generated_name:
             raise ValueError("missing lean_declaration or declaration_name")
         if row["forbidden_placeholder"]:
@@ -2138,6 +2138,8 @@ def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[s
         row["model_json"] = model_json
         row["generated_name"] = generated_name
         row["forbidden_placeholder"] = contains_forbidden_placeholder(declaration)
+        if declaration.strip() and not generated_name:
+            raise ValueError("lean_declaration must be a theorem or lemma")
         if not declaration.strip() or not generated_name:
             raise ValueError("missing lean_declaration or declaration_name")
         if row["forbidden_placeholder"]:

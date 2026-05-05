@@ -149,6 +149,8 @@ Easy-8 paid source-only generation from the 64-row audit:
 - Parsed generated declarations: `8/8`.
 - Actual cost: `$0.071505155`.
 - Generated names: `eq_fps_mulvar_exa1_res1`, `laurentPolynomial_T_isUnit_one`, `sgn`, `det_colop`, `xneq_multiple_iff`, `coeffFinitelyDeterminedInSum_iff`, `inverse_unique`, `qBinomial_eq_zero_of_gt`.
+- Serial verification: `1/8` passed. Failures: `6` generated-only compile errors, `1` hidden-grader semantic miss.
+- Contract fix after verification: future runs now reject non-theorem/non-lemma generations instead of counting a `def` as generation success.
 
 ## Files And Evidence
 
@@ -172,7 +174,7 @@ Easy-8 paid source-only generation from the 64-row audit:
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`
-- Latest focused test result: `75 passed`.
+- Latest focused test result: `76 passed`.
 
 ## Practical Conclusions
 

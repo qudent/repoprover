@@ -1323,6 +1323,34 @@ def test_source_statement_live_eval_generation_only_skips_lean_check(tmp_path: P
     assert not (tmp_path / "out/record-001/project").exists()
 
 
+def test_source_statement_live_eval_rejects_non_theorem_generation(tmp_path: Path, monkeypatch) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 1)
+
+    def fake_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        body = json.dumps(
+            {
+                "lean_declaration": "def generated : True := True",
+                "declaration_name": "generated",
+                "used_context": [],
+                "notes": [],
+            }
+        )
+        return _fake_response(body, cost=0.0003)
+
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.call_openrouter", fake_call_openrouter)
+
+    summary = run(_run_args(project_root, records_path, tmp_path / "out", limit=1, generation_only=True))
+
+    assert summary["paid_calls_made"] == 1
+    assert summary["generation_successes"] == 0
+    assert summary["failure_classes"] == {"model_contract_error": 1}
+    assert summary["results"][0]["generated_name"] is None
+    assert (tmp_path / "out/record-001/model-output.json").exists()
+    assert not (tmp_path / "out/record-001/project").exists()
+
+
 def test_source_statement_live_eval_reuse_project_requires_serial_execution(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     records_path = tmp_path / "records.jsonl"

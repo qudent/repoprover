@@ -398,10 +398,27 @@ Result:
 - paid calls: `8/8`
 - parsed generated declarations: `8/8`
 - actual reported cost: `$0.071505155`
-- Lean verification: not run yet
+- Lean verification: `1/8` passed
+- failure classes: `6` generated-only compile errors, `1` hidden-grader
+  semantic miss
 
 This is the first paid slice selected after the larger context audit rather
 than from the old six-row hard loop.
+
+Verification command:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/verify_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-generation \
+  --work-root /tmp/repoprover-gold64-easy8-verify \
+  --lake-cache-from algebraic-combinatorics --include-record-imports \
+  --workers 1 --lean-timeout 180 --output-prefix verification-180
+```
+
+The passing row was `AlgebraicCombinatorics.sum_choose_pow_eq`. One failure
+also exposed a benchmark-contract bug: a model output containing a `def` was
+counted as a generation success. The validator now requires the generated
+declaration to syntactically contain a theorem or lemma.
 
 ## Tests
 
@@ -427,7 +444,8 @@ repair guidance, it passes with `70 passed`. The final repair-guidance update
 keeps that same focused suite green with `70 passed`. After adding same-file
 source-label API retrieval, it passes with `71 passed`. After adding hidden-name
 context filtering, focused labeled-environment extraction, and the context-audit
-script, it passes with `75 passed`.
+script, it passes with `75 passed`. After tightening the generation contract to
+reject non-theorem/non-lemma outputs, it passes with `76 passed`.
 
 ## Next Step
 

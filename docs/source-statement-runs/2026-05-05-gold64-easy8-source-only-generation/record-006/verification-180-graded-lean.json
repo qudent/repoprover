@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:105:16: error: Function expected at\n  coeffFinitelyDeterminedInSum_iff a n\nbut this term has type\n  CoeffFinitelyDeterminedInSum a n ↔ ∃ M, DeterminesCoeffInSum a M n\n\nNote: Expected a function because this term is being applied to the argument\n  M₁\n"
+}

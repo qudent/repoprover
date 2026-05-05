@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Signs.lean:88:0: error: Missing name after `end`: Expected the current scope name `SignDefinition`\n\nHint: To end the current scope `SignDefinition`, specify its name:\n  end ̲S̲i̲g̲n̲D̲e̲f̲i̲n̲i̲t̲i̲o̲n̲\nAlgebraicCombinatorics/Permutations/Signs.lean:89:0: error: Invalid name after `end`: Expected `Perm.SignDefinition`, but found `Equiv.Perm`\n\nHint: If you meant to end the outer scope(s) `Equiv.Perm`, you must end all the intervening scopes `Equiv.Perm.SignDefinition`:\n  end Equiv.Perm.̲S̲i̲g̲n̲D̲e̲f̲i̲n̲i̲t̲i̲o̲n̲\n"
+}
