@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-05-05T05:29:41.920705+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance",
+  "payload_name": "openrouter-payload.json",
+  "model_output_name": "model-output.json",
+  "records_completed": 8,
+  "records_with_warnings": 3,
+  "warning_codes": {
+    "fin_object_inequality_instead_of_value_inequality": 1,
+    "topological_infprod_api_instead_of_local_approximator": 1,
+    "wrong_x_power_multiplication_side_or_shape": 1
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-001",
+      "warnings": [
+        {
+          "code": "topological_infprod_api_instead_of_local_approximator",
+          "severity": "warning",
+          "message": "Generated statement appears to switch from the visible finite-approximator API to topological infinite-product APIs.",
+          "visible_cue": "Proposition prop.fps.subs.rule-infprod, second part)\\n\\nThe hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`\\n(a finite set such that all supersets",
+          "generated_cue": "{I : Type*} (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0) (hf : Multipliable f) : (∏' i, f i).subst g = ∏' i, (f i).subst g := by have hSubst : HasSubst g := HasSub",
+          "recommendation": "Stay in the local coefficient-approximator API with finite sets `M`/`J` and `prod_f` when those are the visible cues."
+        }
+      ],
+      "generated_name": "subst_tprod",
+      "warning_count": 1,
+      "warning_codes": [
+        "topological_infprod_api_instead_of_local_approximator"
+      ]
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-002",
+      "warnings": [],
+      "generated_name": "det_swap_cols",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.eq_of_embedUnivInBiv_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-003",
+      "warnings": [],
+      "generated_name": "comp_y_coeff",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_subs_X_right",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-004",
+      "warnings": [],
+      "generated_name": "fps_subst_X",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.coeff_mul_X_pow",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-005",
+      "warnings": [
+        {
+          "code": "wrong_x_power_multiplication_side_or_shape",
+          "severity": "warning",
+          "message": "Visible context asks for the general right-multiplication `f * X^k` coefficient shape, but the generated statement appears to use the wrong side, a special `X` case, or whole-series `mk` equality.",
+          "visible_cue": "n doc comment only; target Lean declaration name and statement remain withheld\", \"text\": \"f * X^k shifts f by k positions (generalization of Lemma lem.fps.xa)\"}} [{\"labels\": [\"lem.fps.xa\"",
+          "generated_cue": "theorem lem_fps_xa (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n - 1) f) := X_mul_eq_shift f",
+          "recommendation": "Use the right-multiplication coefficient theorem shape for `f * X ^ k`; do not collapse to `X * f` or a special whole-series equality unless the source asks for it."
+        }
+      ],
+      "generated_name": "lem_fps_xa",
+      "warning_count": 1,
+      "warning_codes": [
+        "wrong_x_power_multiplication_side_or_shape"
+      ]
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.size_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-006",
+      "warnings": [],
+      "generated_name": "parts_sum",
+      "warning_count": 0,
+      "warning_codes": []
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_apply_of_ne",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-007",
+      "warnings": [
+        {
+          "code": "fin_object_inequality_instead_of_value_inequality",
+          "severity": "warning",
+          "message": "Generated statement uses constructed `Fin` object inequalities where the visible local guidance asks for value inequalities.",
+          "visible_cue": "ation name and statement remain withheld\", \"text\": \"Simple transposition `s_i` fixes any `k ≠ i, i+1`. (def.perm.si)\"}} [{\"labels\": [\"def.perm.si\"], \"line_range\": [256, 278], \"path\": \"Algebr",
+          "generated_cue": "-/ theorem simpleTransposition_apply_of_ne_ne {n : ℕ} (i : Fin (n - 1)) (k : Fin n) (h1 : k ≠ ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩) (h2 : k ≠ ⟨i.val + 1, by omega⟩) : simpleTransposition i k = k := by simp [simpleTra",
+          "recommendation": "Use assumptions on values such as `k.val ≠ i.val` and `k.val ≠ i.val + 1`, then discharge the `Fin` inequalities inside the proof."
+        }
+      ],
+      "generated_name": "simpleTransposition_apply_of_ne_ne",
+      "warning_count": 1,
+      "warning_codes": [
+        "fin_object_inequality_instead_of_value_inequality"
+      ]
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/Permutations/Inversions1.lean:AlgebraicCombinatorics.lexLt_irrefl",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-008",
+      "warnings": [],
+      "generated_name": "lexLt_irrefl",
+      "warning_count": 0,
+      "warning_codes": []
+    }
+  ]
+}

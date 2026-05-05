@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:97:2: error: Tactic `apply` failed: could not unify the conclusion of `finsum_eq_single (fun d => (coeff d) g * (coeff n) (X ^ d)) n`\n  ∑ᶠ (x : ℕ), (coeff x) g * (coeff n) (X ^ x) = (coeff n) g * (coeff n) (X ^ n)\nwith the goal\n  ∑ᶠ (d : ℕ), (coeff d) g • (coeff n) (X ^ d) = (coeff n) g\n\nNote: The full type of `finsum_eq_single (fun d => (coeff d) g * (coeff n) (X ^ d)) n` is\n  (∀ (x : ℕ), x ≠ n → (coeff x) g * (coeff n) (X ^ x) = 0) →\n    ∑ᶠ (x : ℕ), (coeff x) g * (coeff n) (X ^ x) = (coeff n) g * (coeff n) (X ^ n)\n\ncase h\nK : Type u_1\ninst✝ : CommRing K\ng : K⟦X⟧\nhX0 : constantCoeff X = 0\nha : HasSubst X\nn : ℕ\n⊢ ∑ᶠ (d : ℕ), (coeff d) g • (coeff n) (X ^ d) = (coeff n) g\n"
+}

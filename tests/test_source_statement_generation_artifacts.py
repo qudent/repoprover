@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from scripts.repair_source_statement_generation import run as run_repair_queue
+from scripts.diagnose_source_statement_shape import diagnose_shape, run as run_shape_diagnostic
 from scripts.verify_source_statement_generation import load_tasks
 
 
@@ -90,6 +91,9 @@ def _repair_args(run_output: Path, **overrides) -> argparse.Namespace:
         "concurrency": 2,
         "budget_only": False,
         "include_non_compile_failures": False,
+        "shape_diagnostic_results": None,
+        "include_shape_warnings": False,
+        "shape_warnings_only": False,
     }
     values.update(overrides)
     return argparse.Namespace(**values)
@@ -107,6 +111,54 @@ def test_repair_queue_targets_compile_failures_and_writes_payload(tmp_path: Path
     assert "theorem bad : True" in user["failed_generated_declaration"]
     assert "unknown identifier 'missingFact'" in user["generated_only_lean_output"]
     assert not (run_output / "record-002/repair-attempt-001-openrouter-payload.json").exists()
+
+
+def test_repair_queue_can_target_shape_warning_rows(tmp_path: Path) -> None:
+    run_output = _write_archived_run(tmp_path)
+    _write_json(
+        run_output / "record-002/model-output.json",
+        {
+            "lean_declaration": "theorem generated : True := by\n  trivial",
+            "declaration_name": "generated",
+        },
+    )
+    _write_json(run_output / "record-002/verification-generated-only-lean.json", {"exit_code": 0, "output": ""})
+    _write_json(
+        run_output / "record-002/openrouter-payload.json",
+        {"messages": [{"role": "system", "content": "system"}, {"role": "user", "content": json.dumps({"context": {}})}]},
+    )
+    _write_json(
+        run_output / "eval/shape-diagnostic-results.json",
+        {
+            "results": [
+                {"index": 1, "warnings": []},
+                {
+                    "index": 2,
+                    "warnings": [
+                        {
+                            "code": "pointwise_conclusion_instead_of_sequence_equality",
+                            "message": "Visible context asks for sequence equality.",
+                        }
+                    ],
+                },
+            ]
+        },
+    )
+
+    summary = run_repair_queue(
+        _repair_args(
+            run_output,
+            budget_only=True,
+            include_shape_warnings=True,
+            shape_diagnostic_results="shape-diagnostic-results.json",
+        )
+    )
+
+    assert summary["records_completed"] == 2
+    assert summary["include_shape_warnings"] is True
+    payload = json.loads((run_output / "record-002/repair-attempt-001-openrouter-payload.json").read_text(encoding="utf-8"))
+    user = json.loads(payload["messages"][1]["content"])
+    assert user["shape_diagnostic_warnings"][0]["code"] == "pointwise_conclusion_instead_of_sequence_equality"
 
 
 def test_repair_queue_writes_repair_model_artifacts(tmp_path: Path, monkeypatch) -> None:
@@ -150,3 +202,103 @@ def test_verifier_can_load_repair_model_outputs(tmp_path: Path) -> None:
 
     assert tasks[0]["model_output_path"].endswith("repair-attempt-001-model-output.json")
     assert tasks[1]["failure_class"] == "missing_model_output"
+
+
+def test_shape_diagnostic_flags_pointwise_sequence_equality() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "domain_statement_shape_guidance": [
+                    {
+                        "preferred_statement_family": [
+                            "For equality of embedded bivariate series, prove sequence equality by `funext k`."
+                        ]
+                    }
+                ],
+                "local_lean_style": {"examples": ["theorem coeff_embedUnivInBiv : True := by trivial"]},
+            }
+        },
+        "lemma generated (h : embedUnivInBiv f = embedUnivInBiv g) : ∀ k, f k = g k := by\n  intro k\n  sorry",
+    )
+
+    assert [warning["code"] for warning in warnings] == ["pointwise_conclusion_instead_of_sequence_equality"]
+
+
+def test_shape_diagnostic_flags_wrong_x_power_shape() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "target_source_focus": {
+                    "target_declaration_source_comment": {
+                        "text": "f * X^k shifts f by k positions (generalization of Lemma lem.fps.xa)"
+                    }
+                },
+                "domain_statement_shape_guidance": [
+                    {
+                        "preferred_statement_family": [
+                            "For shifted-coefficient targets, prefer the displayed coefficient theorem shape."
+                        ]
+                    }
+                ],
+            }
+        },
+        "theorem generated (a : R⟦X⟧) : X * a = PowerSeries.mk (fun n => coeff n a) := by\n  ext n\n  simp",
+    )
+
+    assert [warning["code"] for warning in warnings] == ["wrong_x_power_multiplication_side_or_shape"]
+
+
+def test_shape_diagnostic_flags_fin_object_inequalities() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "target_source_focus": {
+                    "target_declaration_source_comment": {
+                        "text": "Simple transposition `s_i` fixes any `k ≠ i, i+1`."
+                    }
+                },
+                "domain_statement_shape_guidance": [
+                    {"preferred_statement_family": ["For the fixed-point theorem, prefer assumptions on values."]}
+                ],
+            }
+        },
+        "theorem generated (i : Fin (n - 1)) (k : Fin n) (h1 : k ≠ ⟨i.val, by omega⟩) : simpleTransposition i k = k := by\n  simp",
+    )
+
+    assert [warning["code"] for warning in warnings] == ["fin_object_inequality_instead_of_value_inequality"]
+
+
+def test_shape_diagnostic_writes_run_artifacts(tmp_path: Path) -> None:
+    run_output = tmp_path / "run"
+    _write_jsonl(run_output / "eval/selected-records.jsonl", [{"id": "Demo.lean:Demo.generated"}])
+    user_payload = {
+        "context": {
+            "target_source_focus": {
+                "target_declaration_source_comment": {"text": "g ∘ X = g; use `PowerSeries.subst X g`."}
+            }
+        }
+    }
+    _write_json(
+        run_output / "record-001/openrouter-payload.json",
+        {"messages": [{"role": "user", "content": json.dumps(user_payload)}]},
+    )
+    _write_json(
+        run_output / "record-001/model-output.json",
+        {
+            "lean_declaration": "theorem generated (g : K⟦X⟧) : PowerSeries.subst g X = g := by\n  simp",
+            "declaration_name": "generated",
+        },
+    )
+
+    summary = run_shape_diagnostic(
+        argparse.Namespace(
+            run_output=run_output,
+            payload_name="openrouter-payload.json",
+            model_output_name="model-output.json",
+        )
+    )
+
+    assert summary["records_with_warnings"] == 1
+    assert summary["warning_codes"] == {"substitution_argument_order_swapped": 1}
+    assert (run_output / "eval/shape-diagnostic-results.md").exists()
+    assert (run_output / "record-001/shape-diagnostic.json").exists()

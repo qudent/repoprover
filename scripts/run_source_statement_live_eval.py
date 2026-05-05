@@ -949,13 +949,15 @@ def build_repair_messages(
     original_messages: list[dict[str, str]],
     failed_declaration: str,
     generated_only_lean_result: dict[str, Any],
+    shape_diagnostic_warnings: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, str]]:
+    shape_diagnostic_warnings = shape_diagnostic_warnings or []
     system = (
         "You are a Lean 4 repair agent. Repair exactly one generated theorem/lemma so it compiles "
         "in the displayed current Lean/mathlib project. The original target Lean statement and target "
         "declaration name are still withheld. Do not ask for or infer hidden grader text. Use only the "
         "source chunk, prefix context, imports, local examples, the failed generated declaration, and "
-        "compiler errors. Return exactly one JSON object."
+        "compiler errors or visible-context shape diagnostics. Return exactly one JSON object."
     )
     original_user_payload = json.loads(original_messages[1]["content"])
     schema = {
@@ -977,12 +979,15 @@ def build_repair_messages(
             "Do not redeclare context definitions; reference them directly.",
             "Do not add theorem-local `where` definitions or redefine project concepts; repair using the displayed APIs instead.",
             "Do not introduce helper theorem names that were not displayed in the original context or compiler output.",
+            "If shape diagnostics are provided, rewrite the statement/proof to address those visible-context warnings without using or guessing hidden grader text.",
         ],
         "original_prompt_user_payload": original_user_payload,
         "failed_generated_declaration": failed_declaration,
         "generated_only_lean_exit_code": generated_only_lean_result.get("exit_code"),
         "generated_only_lean_output": generated_only_lean_result.get("output", ""),
     }
+    if shape_diagnostic_warnings:
+        user["shape_diagnostic_warnings"] = shape_diagnostic_warnings
     return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(user, indent=2, ensure_ascii=False)}]
 
 

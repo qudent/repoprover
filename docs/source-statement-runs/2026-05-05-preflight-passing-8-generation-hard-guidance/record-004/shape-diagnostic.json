@@ -1,0 +1,20 @@
+{
+  "index": 4,
+  "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_subs_X_right",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-004",
+  "warnings": [
+    {
+      "code": "substitution_proof_uses_avoided_finite_composition_helper",
+      "severity": "info",
+      "message": "Visible guidance suggests the direct `HasSubst.X'`/`coeff_subst'` proof shape, but the generated proof uses the avoided finite-composition helper.",
+      "visible_cue": "the\\nfollowing lemma:\\n\\n\\\\begin{lemma}\\n\"}] [{\"avoid_statement_family\": [\"Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is ava",
+      "generated_cue": "(X : K⟦X⟧) g = g := by have hX0 : constantCoeff (X : K⟦X⟧) = 0 := by simp ext n rw [fps_comp_coeff g (X : K⟦X⟧) hX0 n] apply finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n ?_",
+      "recommendation": "Prefer `ext n`; rewrite with `coeff_subst'`; then use `coeff_X_pow` and `finsum_eq_single`."
+    }
+  ],
+  "generated_name": "fps_subs_X_right",
+  "warning_count": 1,
+  "warning_codes": [
+    "substitution_proof_uses_avoided_finite_composition_helper"
+  ]
+}

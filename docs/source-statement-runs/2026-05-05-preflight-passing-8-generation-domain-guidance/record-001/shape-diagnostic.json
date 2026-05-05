@@ -1,0 +1,20 @@
+{
+  "index": 1,
+  "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance/record-001",
+  "warnings": [
+    {
+      "code": "topological_infprod_api_instead_of_local_approximator",
+      "severity": "warning",
+      "message": "Generated statement appears to switch from the visible finite-approximator API to topological infinite-product APIs.",
+      "visible_cue": "Proposition prop.fps.subs.rule-infprod, second part)\\n\\nThe hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`\\n(a finite set such that all supersets",
+      "generated_cue": "{I : Type*} (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0) (hf : Multipliable f) : (∏' i, f i).subst g = ∏' i, (f i).subst g := by have hSubst : HasSubst g := HasSub",
+      "recommendation": "Stay in the local coefficient-approximator API with finite sets `M`/`J` and `prod_f` when those are the visible cues."
+    }
+  ],
+  "generated_name": "subst_tprod",
+  "warning_count": 1,
+  "warning_codes": [
+    "topological_infprod_api_instead_of_local_approximator"
+  ]
+}

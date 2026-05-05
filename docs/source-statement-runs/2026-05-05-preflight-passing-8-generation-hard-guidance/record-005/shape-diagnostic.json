@@ -1,0 +1,20 @@
+{
+  "index": 5,
+  "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.coeff_mul_X_pow",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-005",
+  "warnings": [
+    {
+      "code": "wrong_x_power_multiplication_side_or_shape",
+      "severity": "warning",
+      "message": "Visible context asks for the general right-multiplication `f * X^k` coefficient shape, but the generated statement appears to use the wrong side, a special `X` case, or whole-series `mk` equality.",
+      "visible_cue": "n doc comment only; target Lean declaration name and statement remain withheld\", \"text\": \"f * X^k shifts f by k positions (generalization of Lemma lem.fps.xa)\"}} [{\"labels\": [\"lem.fps.xa\"",
+      "generated_cue": "theorem lem_fps_xa (a : R⟦X⟧) : X * a = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n - 1) a) := by ext n rw [co",
+      "recommendation": "Use the right-multiplication coefficient theorem shape for `f * X ^ k`; do not collapse to `X * f` or a special whole-series equality unless the source asks for it."
+    }
+  ],
+  "generated_name": "lem_fps_xa",
+  "warning_count": 1,
+  "warning_codes": [
+    "wrong_x_power_multiplication_side_or_shape"
+  ]
+}

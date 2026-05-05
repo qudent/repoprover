@@ -1,0 +1,20 @@
+{
+  "index": 7,
+  "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_apply_of_ne",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-007",
+  "warnings": [
+    {
+      "code": "fin_object_inequality_instead_of_value_inequality",
+      "severity": "warning",
+      "message": "Generated statement uses constructed `Fin` object inequalities where the visible local guidance asks for value inequalities.",
+      "visible_cue": "ation name and statement remain withheld\", \"text\": \"Simple transposition `s_i` fixes any `k ≠ i, i+1`. (def.perm.si)\"}} [{\"labels\": [\"def.perm.si\"], \"line_range\": [256, 278], \"path\": \"Algebr",
+      "generated_cue": "theorem simpleTransposition_apply_of_ne_of_ne {n : ℕ} (i : Fin (n - 1)) (k : Fin n) (h1 : k ≠ ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩) (h2 : k ≠ ⟨i.val + 1, by omega⟩) : simpleTransposition i k = k := by unfold simp",
+      "recommendation": "Use assumptions on values such as `k.val ≠ i.val` and `k.val ≠ i.val + 1`, then discharge the `Fin` inequalities inside the proof."
+    }
+  ],
+  "generated_name": "simpleTransposition_apply_of_ne_of_ne",
+  "warning_count": 1,
+  "warning_codes": [
+    "fin_object_inequality_instead_of_value_inequality"
+  ]
+}

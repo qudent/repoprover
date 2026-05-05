@@ -78,9 +78,14 @@ verified successes for `$0.102229350`, exposing the next hard examples in FPS
 infinite-products/substitution, multivariate coefficient projection, and exact
 statement-shape matching. A follow-up hard-guidance rerun over the same
 8-record slice changed failure modes but stayed at 3/8 cumulative verified
-successes for another `$0.076759868`, confirming that the next improvement
-needs a visible-context semantic-shape diagnostic rather than more generic
-prompt wording.
+successes for another `$0.076759868`. The no-cost shape diagnostic now runs on
+archived prompt/output artifacts and flagged 4/8 rows in that hard-guidance run,
+including the three semantic-shape failures called out in the report. Wiring
+those warnings into the repair queue and running four bounded shape-rewrite
+calls added `$0.01844748` and verified 3/4 warning rows; one extra compiler
+repair for the remaining substitution row cost `$0.004717314` but still failed.
+The best cumulative hard-guidance result is now 6/8 verified for `$0.099924662`
+total generation+repair spend.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -242,11 +247,25 @@ failures plus 1 hidden-grader mismatch; see
   cumulative verified successes, showing that semantic-shape mismatches now need
   a separate visible-context diagnostic layer. See
   `docs/source-statement-hard-guidance-results.md`.
-- [ ] Add a no/low-cost semantic-shape diagnostic for source-statement outputs
-  before further paid scale: flag generated theorem shapes that likely do not
-  match visible source focus, such as `∀ k, f k = g k` instead of `f = g`,
-  left-vs-right `X^k` multiplication, and `Fin` object inequalities vs value
-  inequalities.
+- [x] Add a no/low-cost semantic-shape diagnostic for source-statement outputs
+  before further paid scale. Result:
+  `scripts/diagnose_source_statement_shape.py` reads archived prompt payloads
+  and model outputs without hidden gold, flags visible-context shape risks, and
+  writes per-record plus aggregate diagnostic artifacts. It found 4 warning rows
+  on the hard-guidance 8-record run and 3 on the previous domain-guidance run.
+  See `docs/source-statement-shape-diagnostic-results.md`.
+- [x] Use the shape-diagnostic warning rows to build the next cheap queue:
+  compile-only failures go to generated-only compiler-feedback repair; grader
+  failures or shape-warning rows should get visible-context statement-shape
+  rewrite/context retrieval before another paid proof attempt. Result: optional
+  shape-warning selection in `scripts/repair_source_statement_generation.py`,
+  4 paid warning-row rewrites for `$0.01844748`, 3 verified successes, and a
+  failed single-row compiler-feedback follow-up for `$0.004717314`.
+- [ ] Diagnose the two remaining failures on the hard-guidance 8-record slice:
+  `PowerSeries.comp_prod_infinite` needs equality-direction/API repair, while
+  `fps_subs_X_right` still has a scalar-vs-multiplication proof mismatch around
+  `finsum_eq_single`. Do this before using another larger paid slice as quality
+  evidence.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

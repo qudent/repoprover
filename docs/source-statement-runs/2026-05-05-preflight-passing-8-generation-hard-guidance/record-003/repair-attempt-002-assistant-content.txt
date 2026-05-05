@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "lemma prop_fps_mulvar_comp_y_coeff {f g : ℕ → PowerSeries R} (h : embedUnivInBiv f = embedUnivInBiv g) : f = g := by\n  funext k\n  ext n\n  have hcoeff := congrArg (fun φ : BivFPS R => φ (Finsupp.single 0 n + Finsupp.single 1 k)) h\n  simpa [coeff_embedUnivInBiv] using hcoeff",
+  "declaration_name": "prop_fps_mulvar_comp_y_coeff",
+  "used_context": ["coeff_embedUnivInBiv", "embedUnivInBiv", "Finsupp.single", "BivFPS"],
+  "notes": ["Repaired conclusion to sequence equality (f = g) using funext k and ext n, as recommended by shape diagnostic."]
+}

@@ -1,0 +1,104 @@
+{
+  "generated_at": "2026-05-05T05:40:01.151275+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance",
+  "work_root": "/tmp/repoprover-source-statement-verify-hard-guidance-8-shape-repair2",
+  "workers": 1,
+  "records_completed": 8,
+  "successes": 3,
+  "success_rate": 0.375,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1,
+    "missing_model_output": 4
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-001/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-002/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.eq_of_embedUnivInBiv_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-003",
+      "generated_name": "prop_fps_mulvar_comp_y_coeff",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/Multivariate.lean:60:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/Multivariate.lean:61:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/Multivariate.lean:60:4: warning: 'simpa using prop_fps_mulvar_comp_y_coeff f g h' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/Multivariate.lean:61:4: warning: 'simpa using prop_fps_mulvar_comp_y_coeff' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/Multivariate.lean:55:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_subs_X_right",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-004",
+      "generated_name": "fps_subs_X_right",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:97:9: error: Function expected at\n  finsum_eq_single (fun d => (coeff d) g * (coeff n) (X ^ d)) n ?m.66\nbut this term has type\n  ∑ᶠ (x : ℕ), (fun d => (coeff d) g * (coeff n) (X ^ d)) x = (fun d => (coeff d) g * (coeff n) (X ^ d)) n\n\nNote: Expected a function because this term is being applied to the argument\n  ?_\nAlgebraicCombinatorics/FPS/Substitution.lean:98:2: error: No goals to be solved\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.coeff_mul_X_pow",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-005",
+      "generated_name": "lem_fps_xa",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:62:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:63:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:62:4: warning: 'simpa using lem_fps_xa' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:63:4: warning: 'simpa using lem_fps_xa k f n' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:58:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.size_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-006",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-006/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_apply_of_ne",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-007",
+      "generated_name": "simpleTransposition_apply_of_ne_of_ne",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:88:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:88:4: warning: 'simpa using simpleTransposition_apply_of_ne_of_ne n i k hi hi1' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:80:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/Permutations/Inversions1.lean:AlgebraicCombinatorics.lexLt_irrefl",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-008",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-008/repair-attempt-002-model-output.json"
+    }
+  ]
+}

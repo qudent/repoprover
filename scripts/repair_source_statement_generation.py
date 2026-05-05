@@ -33,14 +33,34 @@ from scripts.run_source_statement_live_eval import (  # noqa: E402
 )
 
 
+def load_shape_warning_rows(run_output: Path, results_name: str | None) -> dict[int, list[dict[str, Any]]]:
+    if not results_name:
+        return {}
+    path = run_output / "eval" / results_name
+    if not path.exists():
+        raise FileNotFoundError(f"shape diagnostic results not found: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    rows: dict[int, list[dict[str, Any]]] = {}
+    for row in payload.get("results", []):
+        warnings = row.get("warnings") or []
+        if warnings:
+            rows[int(row["index"])] = list(warnings)
+    return rows
+
+
 def load_repair_tasks(args: argparse.Namespace) -> list[dict[str, Any]]:
     selected_rows = load_jsonl(args.run_output / "eval" / "selected-records.jsonl")
     verification = json.loads((args.run_output / "eval" / args.verification_results).read_text(encoding="utf-8"))
+    shape_warnings_by_index = load_shape_warning_rows(args.run_output, args.shape_diagnostic_results)
     tasks: list[dict[str, Any]] = []
     for row in verification.get("results", []):
-        if row.get("failure_class") != "generated_lean_does_not_compile" and not args.include_non_compile_failures:
-            continue
         index = int(row["index"])
+        shape_warnings = shape_warnings_by_index.get(index, [])
+        compile_failure = row.get("failure_class") == "generated_lean_does_not_compile"
+        selected_by_failure = False if args.shape_warnings_only else compile_failure or args.include_non_compile_failures
+        selected_by_shape = args.include_shape_warnings and bool(shape_warnings)
+        if not selected_by_failure and not selected_by_shape:
+            continue
         record_dir = args.run_output / f"record-{index:03d}"
         failed_model_path = record_dir / args.failed_model_output_name
         lean_result_path = record_dir / args.generated_only_lean_name
@@ -66,6 +86,7 @@ def load_repair_tasks(args: argparse.Namespace) -> list[dict[str, Any]]:
             original_messages=original_payload["messages"],
             failed_declaration=str(failed_model.get("lean_declaration") or ""),
             generated_only_lean_result=lean_result,
+            shape_diagnostic_warnings=shape_warnings,
         )
         repair_payload = build_payload(
             model=args.model,
@@ -81,6 +102,7 @@ def load_repair_tasks(args: argparse.Namespace) -> list[dict[str, Any]]:
                 "record_dir": str(record_dir),
                 "payload": repair_payload,
                 "budget_estimate": estimate_payload_cost(repair_payload),
+                "shape_warning_codes": [warning.get("code") for warning in shape_warnings],
             }
         )
     return tasks
@@ -99,6 +121,7 @@ def repair_task(args: argparse.Namespace, task: dict[str, Any], cost_state: dict
         "record_dir": str(record_dir),
         "attempt": args.attempt,
         "budget_estimate": task["budget_estimate"],
+        "shape_warning_codes": task.get("shape_warning_codes", []),
     }
     if args.budget_only:
         row["status"] = "budget_only"
@@ -178,7 +201,7 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         "|---:|---|---|---|---|",
     ]
     for row in summary["results"]:
-        result = "PASS" if row.get("repair_generation_success") else "FAIL"
+        result = "BUDGET" if row.get("status") == "budget_only" else "PASS" if row.get("repair_generation_success") else "FAIL"
         lines.append(
             f"| {row['index']} | {result} | `{row.get('record_id') or ''}` | `{row.get('generated_name') or ''}` | `{row.get('failure_class') or ''}` |"
         )
@@ -220,6 +243,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "reasoning_effort": args.reasoning_effort,
         "concurrency": args.concurrency,
         "budget_only": args.budget_only,
+        "shape_diagnostic_results": args.shape_diagnostic_results,
+        "include_shape_warnings": args.include_shape_warnings,
+        "shape_warnings_only": args.shape_warnings_only,
         "max_actual_cost_usd": args.max_actual_cost_usd,
         "failure_classes": aggregate_failure_classes(results),
         "results": results,
@@ -248,11 +274,28 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--concurrency", type=int, default=3)
     parser.add_argument("--budget-only", action="store_true")
     parser.add_argument("--include-non-compile-failures", action="store_true")
+    parser.add_argument(
+        "--shape-diagnostic-results",
+        default=None,
+        help="Optional eval/ artifact with visible-context shape warnings to include in repair prompts.",
+    )
+    parser.add_argument(
+        "--include-shape-warnings",
+        action="store_true",
+        help="Target rows that have shape diagnostic warnings, even when generated-only Lean compiled.",
+    )
+    parser.add_argument(
+        "--shape-warnings-only",
+        action="store_true",
+        help="When using --include-shape-warnings, skip ordinary compile-failure selection and target only warning rows.",
+    )
     args = parser.parse_args()
     if args.concurrency < 1:
         raise ValueError("--concurrency must be at least 1")
     if args.attempt < 1:
         raise ValueError("--attempt must be at least 1")
+    if args.shape_warnings_only and not args.include_shape_warnings:
+        raise ValueError("--shape-warnings-only requires --include-shape-warnings")
     return args
 
 

@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777959258-vaCapxgvne7jiZCwz6vF",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem lem_fps_xa (f : R⟦X⟧) (k : ℕ) (n : ℕ) : coeff n (f * X ^ k) = if n < k then 0 else coeff (n - k) f := by\\n  rw [mul_comm, coeff_X_pow_mul]\",\n  \"declaration_name\": \"lem_fps_xa\",\n  \"used_context\": [\n    \"mul_comm\",\n    \"coeff_X_pow_mul\",\n    \"CommRing R\"\n  ],\n  \"notes\": [\n    \"The theorem generalizes the original lemma to f * X^k by reducing to the left-multiplication version via commutativity.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777959258,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 2809,
+    "prompt_tokens": 4971,
+    "total_tokens": 7780,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 2644,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.004606215,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.004606215,
+      "upstream_inference_prompt_cost": 0.002162385,
+      "upstream_inference_completions_cost": 0.00244383
+    }
+  },
+  "provider": "DeepSeek"
+}

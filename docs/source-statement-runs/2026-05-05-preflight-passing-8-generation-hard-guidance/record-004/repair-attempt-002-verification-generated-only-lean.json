@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:97:9: error: Function expected at\n  finsum_eq_single (fun d => (coeff d) g * (coeff n) (X ^ d)) n ?m.66\nbut this term has type\n  ∑ᶠ (x : ℕ), (fun d => (coeff d) g * (coeff n) (X ^ d)) x = (fun d => (coeff d) g * (coeff n) (X ^ d)) n\n\nNote: Expected a function because this term is being applied to the argument\n  ?_\nAlgebraicCombinatorics/FPS/Substitution.lean:98:2: error: No goals to be solved\n"
+}

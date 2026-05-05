@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem simpleTransposition_apply_of_ne_of_ne {n : ℕ} (i : Fin (n - 1)) (k : Fin n) (h_val1 : k.val ≠ i.val) (h_val2 : k.val ≠ i.val + 1) : simpleTransposition i k = k := by\n  have hk1 : k ≠ ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩ := by\n    intro h\n    apply h_val1\n    simpa using congr_arg Fin.val h\n  have hk2 : k ≠ ⟨i.val + 1, by omega⟩ := by\n    intro h\n    apply h_val2\n    simpa using congr_arg Fin.val h\n  unfold simpleTransposition\n  exact Equiv.swap_apply_of_ne_of_ne hk1 hk2",
+  "declaration_name": "simpleTransposition_apply_of_ne_of_ne",
+  "used_context": [
+    "simpleTransposition",
+    "Equiv.swap_apply_of_ne_of_ne",
+    "Fin.val",
+    "congr_arg Fin.val",
+    "Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)",
+    "omega"
+  ],
+  "notes": [
+    "Adjusted statement to use value inequalities k.val ≠ i.val and k.val ≠ i.val+1 as recommended by shape diagnostics, then built Fin object inequalities via Fin.ext inside the proof."
+  ]
+}

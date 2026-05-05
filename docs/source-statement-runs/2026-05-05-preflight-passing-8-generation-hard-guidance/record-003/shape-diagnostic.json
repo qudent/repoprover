@@ -1,0 +1,20 @@
+{
+  "index": 3,
+  "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.eq_of_embedUnivInBiv_eq",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-003",
+  "warnings": [
+    {
+      "code": "pointwise_conclusion_instead_of_sequence_equality",
+      "severity": "warning",
+      "message": "Generated statement concludes pointwise equality where the visible context asks for sequence equality.",
+      "visible_cue": "t goal is already a coefficient equality.\", \"Do not leave the goal as an equality of raw `embedUnivInBiv` evaluations; rewrite it with `coeff_embedUnivInBiv`.\"], \"domain\": \"multivariate FPS coef",
+      "generated_cue": "s_mulvar_comp_y_coeff {f g : ℕ → PowerSeries R} (h : embedUnivInBiv f = embedUnivInBiv g) : ∀ k, f k = g k := by intro k ext n have hcoeff := congrArg (fun φ : BivFPS R => φ (Finsupp.single",
+      "recommendation": "Prefer a statement whose conclusion is function/sequence equality, proving it with `funext k` internally."
+    }
+  ],
+  "generated_name": "prop_fps_mulvar_comp_y_coeff",
+  "warning_count": 1,
+  "warning_codes": [
+    "pointwise_conclusion_instead_of_sequence_equality"
+  ]
+}
