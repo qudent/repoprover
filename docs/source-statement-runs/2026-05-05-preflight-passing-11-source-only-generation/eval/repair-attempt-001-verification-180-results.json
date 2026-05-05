@@ -1,33 +1,16 @@
 {
-  "generated_at": "2026-05-05T10:01:43.866550+00:00",
+  "generated_at": "2026-05-05T10:17:06.514869+00:00",
   "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation",
   "work_root": "/tmp/repoprover-source-only-11-repair-verify",
   "workers": 1,
-  "records_completed": 11,
+  "records_completed": 7,
   "successes": 3,
-  "success_rate": 0.2727272727272727,
+  "success_rate": 0.42857142857142855,
   "failure_classes": {
     "generated_lean_does_not_compile": 3,
-    "grader_gold_statement_not_proved": 1,
-    "missing_model_output": 4
+    "grader_gold_statement_not_proved": 1
   },
   "results": [
-    {
-      "index": 1,
-      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
-      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-001",
-      "success": false,
-      "failure_class": "missing_model_output",
-      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-001/repair-attempt-001-model-output.json"
-    },
-    {
-      "index": 2,
-      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_lowerTriangular",
-      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-002",
-      "success": false,
-      "failure_class": "missing_model_output",
-      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-002/repair-attempt-001-model-output.json"
-    },
     {
       "index": 3,
       "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
@@ -102,14 +85,6 @@
       "failure_class": "grader_gold_statement_not_proved"
     },
     {
-      "index": 8,
-      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_eq_shift",
-      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-008",
-      "success": false,
-      "failure_class": "missing_model_output",
-      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-008/repair-attempt-001-model-output.json"
-    },
-    {
       "index": 9,
       "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
       "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-009",
@@ -132,14 +107,6 @@
       },
       "success": false,
       "failure_class": "generated_lean_does_not_compile"
-    },
-    {
-      "index": 11,
-      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
-      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-011",
-      "success": false,
-      "failure_class": "missing_model_output",
-      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/record-011/repair-attempt-001-model-output.json"
     }
   ]
 }

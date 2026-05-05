@@ -288,6 +288,14 @@ def test_verifier_can_load_repair_model_outputs(tmp_path: Path) -> None:
     assert tasks[1]["failure_class"] == "missing_model_output"
 
 
+def test_verifier_load_tasks_can_filter_indices(tmp_path: Path) -> None:
+    run_output = _write_archived_run(tmp_path)
+
+    tasks = load_tasks(run_output, indices={2})
+
+    assert [task["index"] for task in tasks] == [2]
+
+
 def test_compare_context_modes_flags_lost_domains_and_hidden_names(tmp_path: Path) -> None:
     target_run = tmp_path / "target"
     source_run = tmp_path / "source"

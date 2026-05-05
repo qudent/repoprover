@@ -27,11 +27,18 @@ from scripts.run_source_statement_live_eval import (  # noqa: E402
 )
 
 
-def load_tasks(run_output: Path, *, model_output_name: str = "model-output.json") -> list[dict[str, Any]]:
+def load_tasks(
+    run_output: Path,
+    *,
+    model_output_name: str = "model-output.json",
+    indices: set[int] | None = None,
+) -> list[dict[str, Any]]:
     selected_path = run_output / "eval" / "selected-records.jsonl"
     rows = load_jsonl(selected_path)
     tasks: list[dict[str, Any]] = []
     for index, row in enumerate(rows, start=1):
+        if indices is not None and index not in indices:
+            continue
         record_dir = run_output / f"record-{index:03d}"
         model_output_path = record_dir / model_output_name
         if not model_output_path.exists():
@@ -175,7 +182,8 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
 def run(args: argparse.Namespace) -> dict[str, Any]:
     if args.workers < 1:
         raise ValueError("--workers must be at least 1")
-    tasks = load_tasks(args.run_output, model_output_name=args.model_output_name)
+    selected_indices = set(args.indices) if args.indices else None
+    tasks = load_tasks(args.run_output, model_output_name=args.model_output_name, indices=selected_indices)
     if args.work_root.exists():
         shutil.rmtree(args.work_root)
     args.work_root.mkdir(parents=True)
@@ -228,6 +236,13 @@ def parse_args() -> argparse.Namespace:
         "--output-prefix",
         default="verification",
         help="Prefix for verification artifacts written into record dirs and eval/.",
+    )
+    parser.add_argument(
+        "--indices",
+        type=int,
+        nargs="*",
+        default=None,
+        help="Optional 1-based record indices to verify from the selected run.",
     )
     return parser.parse_args()
 

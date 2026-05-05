@@ -165,6 +165,51 @@ Visible-context shape diagnostics now report `0` warnings on this run after
 tightening the diagnostic so it no longer treats broad prompt guidance as if it
 were source evidence.
 
+## First Source-Only Repair Pass
+
+Compile-failure repair attempt 1 targeted only rows whose generated declaration
+did not compile:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/repair_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation \
+  --verification-results verification-180-results.json \
+  --generated-only-lean-name verification-180-generated-only-lean.json \
+  --attempt 1 --max-tokens 32768 --reasoning-effort high \
+  --max-actual-cost-usd 0.35 --concurrency 3
+```
+
+Generation result:
+
+- targeted compile failures: `8`
+- repair outputs generated: `7/8`
+- paid calls: `7`
+- actual cost: `$0.058516809`
+- provider failure: row 1 failed with `openrouter_JSONDecodeError`
+
+Verification result after adding targeted verifier indices:
+
+- repairs verified: `7`
+- repairs passing hidden-grader check: `3/7`
+- still generated-only compile failures: `3/7`
+- compiled but failed hidden-grader check: `1/7`
+
+Passing repairs:
+
+- `fps_onePlusX_pow_int`
+- `exists_isXnApproximator_of_multipliable`
+- `binom_sym`
+
+Row 1 was retried in repair attempt 2 for `$0.013631334`, but the repair still
+failed generated-only compilation (`coeff_sum` unknown and a range-membership
+proof mismatch).
+
+Cumulative realistic source-only result for this 11-row slice is now `4/11`
+passed for `$0.153232781` in generation plus repair calls. The remaining rows
+are not all ordinary proof-repair cases: `det_triangular`,
+`simpleTransposition_sq_eq_one`, and the repaired `summable_fps_comp` are
+statement-family/context-selection misses.
+
 ## What Changed In The Prompt
 
 In `source-only` mode:
@@ -204,11 +249,12 @@ After adding TeX-derived focus extraction, the same focused test set passes
 with `63 passed`.
 After tightening the X-shift prompt/diagnostic distinction, the focused test set
 passes with `65 passed`.
+After adding targeted verifier indices for repair artifacts, the focused test
+set passes with `66 passed`.
 
 ## Next Step
 
 Use `source-only` as the default for realistic validation. The next work should
-not be another hand-tuned six-row repair loop. It should verify the 11-record
-source-only generation artifacts, classify the failures, and improve TeX/source
-focus selection plus generic repair prompts from those failures without reading
-target Lean comments or names.
+not be another hand-tuned six-row repair loop. It should improve TeX/source
+focus selection for rows where the selected source span is too broad or points
+at the wrong theorem family, then rerun a small broader-slice validation.

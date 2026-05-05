@@ -1,6 +1,6 @@
-# RepoProver Work Report - Last ~8 Hours
+# RepoProver Work Report - Last ~9 Hours
 
-Report time: 2026-05-05 09:40 UTC.
+Report time: 2026-05-05 10:20 UTC.
 
 ## Goal Being Advanced
 
@@ -57,7 +57,9 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
    - Generated zero-cost source-only budget checkpoints for the strict 6 and broader 11 slices.
    - Context comparison found 0 hidden target-name hits, but target-comment focus terms were absent from source-only spans in 5/6 strict rows and 7/11 broader rows.
    - Added TeX-derived focus extraction to recover generic source cues without reading target Lean comments or names.
-   - Ran an 11-record source-only generation-only validation with DeepSeek V4 Pro: 11/11 generated for `$0.081084638`; Lean verification is still pending.
+   - Ran an 11-record source-only generation-only validation with DeepSeek V4 Pro: 11/11 generated for `$0.081084638`; initial Lean verification passed 1/11.
+   - Ran compile-failure repair attempt 1 over the broader source-only slice: 7/8 repair outputs for `$0.058516809`, with 3/7 passing hidden-grader verification.
+   - Retried the row-1 transient provider failure: one output for `$0.013631334`, but it still failed generated-only compilation.
 
 ## Current Best Results
 
@@ -71,11 +73,12 @@ Validated strict hard-slice result:
 Realistic source-only result so far:
 
 - 11/11 generated under source-only context.
-- Cost: `$0.081084638`.
+- Generation plus repair cost: `$0.153232781`.
 - Hidden target names absent from prompt payloads.
 - Lean verification: 1/11 passed, 8 generated declarations did not compile, and 2 compiled but did not prove the withheld gold statement.
-- The one pass is `X_mul_eq_shift`.
+- Cumulative after compile-failure repair: 4/11 pass (`X_mul_eq_shift`, `fps_onePlusX_pow_int`, `exists_isXnApproximator_of_multipliable`, `binom_sym`).
 - The two compile-clean semantic misses were `det_triangular` answering a broader disjunction instead of lower-triangular only, and `simpleTransposition_sq_eq_one` answering order-two instead of `Perm.IsSwap`.
+- `fps_comp_coeff_finite` compiled after repair but still proved summability, not the finite coefficient formula; the source-only span is under-focused for that target.
 
 ## Files And Evidence
 
@@ -89,6 +92,7 @@ Realistic source-only result so far:
 - Realistic context report: `docs/source-statement-realistic-context-mode-report.md`
 - Source-only 11-record generation run: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/`
 - Source-only 11-record verification: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/eval/verification-180-results.md`
+- Source-only repair verification: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/eval/repair-attempt-001-verification-180-results.md`
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`
@@ -98,5 +102,5 @@ Realistic source-only result so far:
 - The architecture is now good enough for cheap iteration: provider calls, verification, diagnostics, and repairs are decoupled and file-backed.
 - The earlier 6-row loop did spend too much attention on one small hard slice; it produced useful infrastructure and failure taxonomy, but it should not be treated as scale evidence.
 - The prompt improvements split into two classes: generic infrastructure/guidance that can transfer, and target-comment guidance that is now isolated behind `target-comment` mode for diagnostics only.
-- The next useful work is to commit the source-only paid generation artifacts, run serial Lean verification, and use those failures to improve source/TeX context selection rather than keep repairing the same six examples.
+- The next useful work is context selection, not more row-local repair: remaining failures include under-focused source spans and semantic theorem-family misses that compiler-only repair cannot honestly fix.
 - A visible-context shape diagnostic initially flagged the passing `X_mul_eq_shift` row because it read broad prompt guidance as source evidence; that diagnostic has been tightened so warnings are anchored in source/focus text.
