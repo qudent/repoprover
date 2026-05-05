@@ -35,6 +35,10 @@ directly via `--repair-attempts`, with separate repair artifacts and cost
 accounting. `docs/cheap-autoformalization-iteration-plan.md` treats the
 remaining `$7` OpenRouter budget as the whole autonomous research envelope,
 starting with a small gated 12-record probe rather than a large final run.
+That first live probe was attempted and then stopped after 5 paid responses
+(`$0.062798456`) because the first completed rows all hit verifier/materializer
+timeouts before repair could run; see
+`docs/source-statement-live-12-repair1-aborted.md`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -114,10 +118,16 @@ starting with a small gated 12-record probe rather than a large final run.
 - [x] Add a `$7`-envelope cheap-autoformalization iteration plan with concrete
   spend gates, API-free 80-record budget evidence, and a trust-scoring boundary
   that waits until the iterative textbook pipeline mostly succeeds.
-- [ ] Next broader research step: run the gated 12-record stratified-easy live
-  probe with `--include-record-imports --repair-attempts 1 --max-actual-cost-usd
-  0.80`, then decide whether context selection, API retrieval, or repair shape
-  is the bottleneck before any larger spend.
+- [x] Attempt the gated 12-record stratified-easy live probe with
+  `--include-record-imports --repair-attempts 1 --max-actual-cost-usd 0.80`.
+  Stopped after 5 paid responses because verifier/materializer timeouts made the
+  result non-diagnostic for prompt quality.
+- [ ] Next broader research step: add an API-free verifier/cache preflight or
+  warmed-cache strategy so selected records can be checked cheaply before paid
+  source-statement calls.
+- [ ] After verifier throughput is fixed, rerun a smaller live probe over records
+  whose generated-only projects pass the preflight, then decide whether context
+  selection, API retrieval, or repair shape is the bottleneck before larger spend.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
