@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem fps_newton_binom (F : Type*) [Field F] [BinomialRing F] (n : ℕ) : ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ n = PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F) :=\n  fps_onePlusX_pow_neg' F n",
+  "declaration_name": "fps_newton_binom",
+  "used_context": [
+    "fps_onePlusX_pow_neg'"
+  ],
+  "notes": [
+    "Repair uses the existing corollary Fps_onePlusX_pow_neg' which handles the negative-exponent identity without integer exponentiation, avoiding the HPow synthesis error."
+  ]
+}

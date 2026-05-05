@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777967786-Hs5B8A57Hqz6E9PgM7Bj",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_newton_binom (F : Type*) [Field F] [BinomialRing F] (n : ℕ) : ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ n = PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F) :=\\n  fps_onePlusX_pow_neg' F n\",\n  \"declaration_name\": \"fps_newton_binom\",\n  \"used_context\": [\"fps_onePlusX_pow_neg'\"],\n  \"notes\": [\"Repair uses the existing corollary Fps_onePlusX_pow_neg' which handles the negative-exponent identity without integer exponentiation, avoiding the HPow synthesis error.\"]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777967786,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5581,
+    "prompt_tokens": 6492,
+    "total_tokens": 12073,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 5414,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.007348194,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.007348194,
+      "upstream_inference_prompt_cost": 0.002492724,
+      "upstream_inference_completions_cost": 0.00485547
+    }
+  },
+  "provider": "DeepSeek"
+}
