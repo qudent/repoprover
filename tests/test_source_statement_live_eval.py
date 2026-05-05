@@ -582,7 +582,7 @@ def test_source_statement_prompt_includes_x_power_multiplication_shape_guidance(
     assert "theorem target" not in guidance_text
 
 
-def test_source_statement_prompt_keeps_special_x_shift_separate_from_x_power_guidance(tmp_path: Path) -> None:
+def test_source_only_prompt_omits_hardcoded_domain_shape_guidance(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     (project_root / "Demo.tex").write_text(
         "Lemma lem.fps.xa: x a is the FPS (0, a_0, a_1, a_2, ...).\n",
@@ -597,10 +597,11 @@ def test_source_statement_prompt_keeps_special_x_shift_separate_from_x_power_gui
     user = json.loads(messages[1]["content"])
     guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
 
-    assert "formal power series multiplication by X" in guidance_text
+    assert user["context"]["domain_statement_shape_guidance"] == []
+    assert "formal power series multiplication by X" not in guidance_text
     assert "formal power series multiplication by powers of X" not in guidance_text
-    assert "X * f" in guidance_text
-    assert "f * X ^ k" in guidance_text
+    assert "X * f" not in guidance_text
+    assert "f * X ^ k" not in guidance_text
 
 
 def test_source_statement_prompt_includes_substitution_shape_guidance(tmp_path: Path) -> None:
