@@ -732,20 +732,29 @@ def domain_statement_shape_guidance(
     summability_signal = any(term in combined for term in ["summable", "sum-lim", "partial sum", "partial sums"])
     limit_signal = any(term in combined for term in ["limit", "lim.", "lim-"])
     if fps_limit_signal and summability_signal and limit_signal:
+        limit_preferred = [
+            "Use the repository's coefficientwise limit API when it is displayed or imported: `CoeffStabilizesTo`, `IsSummable`, and `tsum'`.",
+            "Phrase finite partial sums with `Finset.range`; this file uses partial sums indexed by an upper natural bound.",
+            "For a theorem/comment named like `isSummable_of_coeffStabilizesTo_partial_sum'`, prefer the narrow conclusion `IsSummable f`; for a theorem/comment named like `tsum'_eq...`, prefer only the `tsum'` equality.",
+        ]
+        limit_avoid = [
+            "Do not translate this FPS limit prose into Mathlib's topological `HasSum`, `Summable`, or `∑'` API unless that exact API appears in the local context.",
+            "Do not add topological assumptions such as `TopologicalSpace K⟦X⟧` just because the prose says limit.",
+            "Do not bundle `IsSummable f` and `tsum' f ... = L` into a conjunction unless the source focus asks for the combined theorem.",
+        ]
+        if "family is summable" in target_comment_text and "limit equals" not in target_comment_text:
+            limit_preferred.append(
+                "For this source focus, the statement shape should conclude only `IsSummable f` from the partial-sum stabilization hypothesis."
+            )
+            limit_avoid.append(
+                "Do not include a `tsum'` equality, an `And.intro`, or any `∧` in this theorem when the source-facing target comment only asks that the family is summable."
+            )
         guidance.append(
             {
                 "domain": "formal power series limits",
                 "trigger": "source/import context discusses summable FPS families, partial sums, and limits",
-                "preferred_statement_family": [
-                    "Use the repository's coefficientwise limit API when it is displayed or imported: `CoeffStabilizesTo`, `IsSummable`, and `tsum'`.",
-                    "Phrase finite partial sums with `Finset.range`; this file uses partial sums indexed by an upper natural bound.",
-                    "For a theorem/comment named like `isSummable_of_coeffStabilizesTo_partial_sum'`, prefer the narrow conclusion `IsSummable f`; for a theorem/comment named like `tsum'_eq...`, prefer only the `tsum'` equality.",
-                ],
-                "avoid_statement_family": [
-                    "Do not translate this FPS limit prose into Mathlib's topological `HasSum`, `Summable`, or `∑'` API unless that exact API appears in the local context.",
-                    "Do not add topological assumptions such as `TopologicalSpace K⟦X⟧` just because the prose says limit.",
-                    "Do not bundle `IsSummable f` and `tsum' f ... = L` into a conjunction unless the source focus asks for the combined theorem.",
-                ],
+                "preferred_statement_family": limit_preferred,
+                "avoid_statement_family": limit_avoid,
             }
         )
 
@@ -816,11 +825,15 @@ def domain_statement_shape_guidance(
             preferred_substitution.extend(
                 [
                     "For finite coefficient formulas for substitution, derive the infinite coefficient formula from `fps_comp_coeff`, then restrict the finite sum with `finsum_eq_sum_of_support_subset`.",
+                    "Use Lean's standard support-subset proof shape: `apply finsum_eq_sum_of_support_subset`; then `intro d hd`; then prove the term is unsupported outside `Finset.range (n + 1)`.",
                     "The support proof usually shows terms outside `Finset.range (n + 1)` vanish: from `d ∉ Finset.range (n + 1)`, derive `n < d`, use `fps_subs_wd_firstCoeffs`, and finish the coefficient term with `mul_zero`.",
                 ]
             )
             avoid_substitution.append(
                 "Do not use guessed helpers such as `finsum_eq_finset_sum` or wrong-arity `finsum_eq_sum`."
+            )
+            avoid_substitution.append(
+                "Do not write pseudo-syntax such as `∀ d in ...`, `intro d in`, or binder forms copied from mathematical prose; use ordinary Lean binders and tactics."
             )
         guidance.append(
             {
@@ -920,12 +933,16 @@ def domain_statement_shape_guidance(
         if partition_zero_signal:
             preferred_partition.extend(
                 [
-                    "For `(p : Partition 0)`, use `p.parts`, `partition_zero_parts p`, a displayed cardinality fact such as `parts_card_zero p` if available, and `eq_iff_parts_eq` for equality reductions.",
-                    "If proving uniqueness of partitions of `0`, reduce equality to equality of `parts` rather than inventing entries or sum fields.",
+                    "For `(p : Partition 0)`, prefer the direct statement `p.parts = 0` and prove it with the standard/imported fact `partition_zero_parts p`.",
+                    "If the source-facing target comment says the partition of 0 has no parts, do not instead prove uniqueness as an equality between partition objects.",
+                    "Only use local wrappers such as `parts_card_zero` or `eq_iff_parts_eq` if those exact declarations are displayed in the prompt prefix or examples.",
                 ]
             )
             avoid_partition.append(
                 "Do not invent partition fields or methods such as `.entries` or `.sum_eq`; use the displayed `parts` API."
+            )
+            avoid_partition.append(
+                "Do not cite later same-file wrappers such as `eq_iff_parts_eq` unless they appear in the prompt; they may be after the withheld target declaration."
             )
         guidance.append(
             {
@@ -966,20 +983,28 @@ def domain_statement_shape_guidance(
         if permutation_power_signal:
             preferred_permutation.extend(
                 [
+                    "When the source focus is the group-power law for `α^(n+1)`, prefer the theorem statement `α ^ (n + 1) = α ^ n * α` over a pointwise statement about iterated functions.",
                     "For powers of permutations, use current `Equiv.Perm`/function coercion APIs such as `pow_succ`, `pow_succ'`, `Equiv.Perm.coe_mul`, `Equiv.Perm.mul_apply`, `Function.comp_apply`, and `Function.iterate_succ_apply'`.",
                     "When proving pointwise statements about `(α ^ (n + 1)) x`, rewrite multiplication/application through the permutation coercion API instead of applying a generic equivalence helper.",
                 ]
+            )
+            avoid_permutation.append(
+                "Do not formalize the power law as `Function.iterate`/`^[n]` unless the source focus explicitly asks for pointwise iteration."
             )
             avoid_permutation.append("Do not use nonexistent helpers such as `Equiv.mul_apply`.")
         if simple_transposition_is_swap_signal:
             preferred_permutation.extend(
                 [
                     "If the source says the simple transposition is a swap, state `(simpleTransposition i).IsSwap`; this is not just an equality-to-transposition theorem.",
-                    "Use a displayed local `IsSwap` theorem directly if one appears in context, or prove `IsSwap` from `simpleTransposition_eq_transposition` and the swap API.",
+                    "For an `IsSwap` proof, use the constructor-style proof shape: provide the two swapped `Fin` points with `use`, prove they are distinct, then prove the permutation equals the swap.",
+                    "Use a displayed local `IsSwap` theorem directly if one appears in context, or prove `IsSwap` from displayed `simpleTransposition`/swap facts.",
                 ]
             )
             avoid_permutation.append(
                 "Do not answer only `simpleTransposition i = transposition ...` when the requested statement shape is `Perm.IsSwap`."
+            )
+            avoid_permutation.append(
+                "Do not invent unavailable helper names such as `Equiv.swap_isSwap`; use the `IsSwap` constructor/proof shape instead."
             )
         guidance.append(
             {

@@ -111,6 +111,12 @@ retry over the same six rows produced 6/6 parsed DeepSeek responses for
 This confirms serial Lean verification is not the bottleneck at this scale; the
 next issue is stronger visible API examples or stricter statement-shape
 contracts. See `docs/source-statement-targeted-guidance-six-generation-report.md`.
+The follow-up strict-guidance prompt checkpoint now encodes the concrete 0/6
+failure lessons: no bundled FPS limit theorem, ordinary `finsum` support-subset
+syntax, direct `p.parts = 0`, group-power statement shape for permutation
+powers, and constructor-style `IsSwap` proof shape. The six-row budget-only
+prompt check cost `$0.00`, included all expected cues, and kept hidden target
+names absent; see `docs/source-statement-strict-guidance-six-budget-report.md`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -321,6 +327,9 @@ failures plus 1 hidden-grader mismatch; see
 - [ ] Replace broad row guidance with exact visible API/example retrieval or a
   statement-shape-first contract for the six hard rows; another generic paid
   repair pass is not justified by the 0/6 targeted-guidance retry.
+- [ ] Run at most one capped paid retry of the strict-guidance six-row prompt;
+  if it does not improve over 0/6, switch to statement-shape-first generation
+  or row-specific visible examples instead of more prose guidance.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
@@ -363,6 +372,9 @@ failures plus 1 hidden-grader mismatch; see
   was `$0.03896991` and all outputs were committed before Lean checking; serial
   verification with one reusable work root found 0/6 successes. See
   `docs/source-statement-targeted-guidance-six-generation-report.md`.
+- Added a stricter six-row prompt checkpoint derived from that 0/6 result and
+  validated emitted payloads with no provider calls. Focused tests now pass with
+  `60 passed`; see `docs/source-statement-strict-guidance-six-budget-report.md`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`

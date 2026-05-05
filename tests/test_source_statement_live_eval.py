@@ -298,6 +298,29 @@ def test_source_statement_prompt_includes_fps_limit_shape_guidance(tmp_path: Pat
     assert "theorem target" not in guidance_text
 
 
+def test_source_statement_prompt_narrows_fps_limit_when_comment_only_asks_summable(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "If the limit of partial sums exists, then the family is summable and later the sum can be identified.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["minimal_context"]["imports"] = ["Mathlib", "AlgebraicCombinatorics.FPS.Limits"]
+    lines = (project_root / "Demo.lean").read_text(encoding="utf-8").splitlines()
+    lines[27] = "/-- If partial sums converge, the family is summable - detailed proof."
+    lines[28] = "    Label: demo.minors.a -/"
+    (project_root / "Demo.lean").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
+
+    assert "conclude only `IsSummable f`" in guidance_text
+    assert "Do not include a `tsum'` equality" in guidance_text
+    assert "And.intro" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
 def test_source_statement_prompt_includes_fps_indeterminate_guidance(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     (project_root / "Demo.tex").write_text(
@@ -352,7 +375,7 @@ def test_source_statement_prompt_includes_substitution_shape_guidance(tmp_path: 
 
     messages = build_messages(project_root, SelectedRecord(row))
     user = json.loads(messages[1]["content"])
-    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
 
     assert "formal power series substitution" in guidance_text
     assert "PowerSeries.subst X g" in guidance_text
@@ -374,11 +397,14 @@ def test_source_statement_prompt_includes_finite_finsum_substitution_guidance(tm
 
     messages = build_messages(project_root, SelectedRecord(row))
     user = json.loads(messages[1]["content"])
-    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
 
     assert "finsum_eq_sum_of_support_subset" in guidance_text
+    assert "apply finsum_eq_sum_of_support_subset" in guidance_text
+    assert "intro d hd" in guidance_text
     assert "fps_subs_wd_firstCoeffs" in guidance_text
     assert "wrong-arity `finsum_eq_sum`" in guidance_text
+    assert "intro d in" in guidance_text
     assert "theorem target" not in guidance_text
 
 
@@ -491,8 +517,10 @@ def test_source_statement_prompt_includes_partition_zero_guidance(tmp_path: Path
 
     assert "partition_zero_parts" in guidance_text
     assert "p.parts" in guidance_text
+    assert "p.parts = 0" in guidance_text
     assert ".entries" in guidance_text
     assert ".sum_eq" in guidance_text
+    assert "unless they appear in the prompt" in guidance_text
     assert "theorem target" not in guidance_text
 
 
@@ -532,10 +560,12 @@ def test_source_statement_prompt_includes_permutation_power_guidance(tmp_path: P
 
     messages = build_messages(project_root, SelectedRecord(row))
     user = json.loads(messages[1]["content"])
-    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
 
     assert "Equiv.Perm.coe_mul" in guidance_text
     assert "Function.comp_apply" in guidance_text
+    assert "α ^ (n + 1) = α ^ n * α" in guidance_text
+    assert "Function.iterate" in guidance_text
     assert "Equiv.mul_apply" in guidance_text
     assert "theorem target" not in guidance_text
 
@@ -556,8 +586,10 @@ def test_source_statement_prompt_includes_simple_transposition_isswap_guidance(t
     guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
 
     assert "(simpleTransposition i).IsSwap" in guidance_text
+    assert "constructor-style proof shape" in guidance_text
     assert "displayed local `IsSwap` theorem" in guidance_text
     assert "simpleTransposition_isSwap" not in guidance_text
+    assert "Equiv.swap_isSwap" in guidance_text
     assert "Do not answer only `simpleTransposition i = transposition ...`" in guidance_text
     assert "theorem target" not in guidance_text
 
