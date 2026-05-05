@@ -44,7 +44,12 @@ without `--lake-cache-from`. The runner now has `--preflight-only` and
 `--reuse-project` modes so future checks can reuse one materialized project and
 filter bad verifier candidates before paid calls. A one-record zero-cost smoke
 with `--lake-cache-from algebraic-combinatorics --reuse-project
---preflight-only` passed and produced a 248K output tree.
+--preflight-only` passed and produced a 248K output tree. A 12-record zero-cost
+preflight then passed 6/12 with a 73M shared-project output tree; see
+`docs/source-statement-preflight-reuse-12-report.md`. The runner now also has
+`--generation-only`, which decouples OpenRouter artifact capture from Lean
+checking so paid DeepSeek results can be written directly into a git-trackable
+run directory without creating project trees.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -131,9 +136,18 @@ with `--lake-cache-from algebraic-combinatorics --reuse-project
 - [x] Add API-free verifier preflight and single shared materialized project
   reuse (`--preflight-only --reuse-project`) so selected records can be checked
   cheaply before paid source-statement calls.
-- [ ] After verifier throughput is fixed, rerun a smaller live probe over records
-  whose generated-only projects pass the preflight, then decide whether context
-  selection, API retrieval, or repair shape is the bottleneck before larger spend.
+- [x] Run a 12-record zero-cost shared-project preflight. Result: 6/12 records
+  pass verifier setup; failed rows expose nested-scope close bugs, unresolved
+  local context, and two heavy-import timeouts.
+- [x] Split provider generation from Lean checking for the source-statement
+  runner with `--generation-only`, so paid DeepSeek artifacts can be archived
+  durably before any verifier work.
+- [ ] Add the matching verifier consumer queue: read generation artifacts and
+  check them with a pool of reusable Lean projects, then write small
+  verification result artifacts back into the run directory.
+- [ ] Run a smaller paid generation-only probe over the 6 preflight-passing
+  records into `docs/source-statement-runs/...`, commit the raw paid artifacts,
+  then verify them with the reusable-project pool.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

@@ -1091,6 +1091,13 @@ def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[s
         row["paid_call_made"] = True
         return row
 
+    if args.generation_only:
+        row["paid_call_made"] = True
+        row["status"] = "generation_only"
+        row["generation_success"] = True
+        row["success"] = False
+        return row
+
     row["repair_results"] = []
     row["repair_attempts_used"] = 0
 
@@ -1193,6 +1200,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("--concurrency must be at least 1")
     if args.preflight_only and args.budget_only:
         raise ValueError("--preflight-only and --budget-only are mutually exclusive")
+    if args.generation_only and (args.preflight_only or args.budget_only):
+        raise ValueError("--generation-only cannot be combined with --preflight-only or --budget-only")
     if args.reuse_project and args.concurrency != 1:
         raise ValueError("--reuse-project requires --concurrency 1 because generated target files are overwritten in place")
 
@@ -1304,6 +1313,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     successes = [row for row in attempted if row.get("success")]
     preflight_rows = [row for row in results if row.get("status") == "preflight_only"]
     preflight_successes = [row for row in preflight_rows if row.get("success")]
+    generation_rows = [row for row in results if row.get("status") == "generation_only"]
+    generation_successes = [row for row in generation_rows if row.get("generation_success")]
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "records_selected": len(records),
@@ -1313,6 +1324,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "success_rate": (len(successes) / len(attempted)) if attempted else None,
         "preflight_successes": len(preflight_successes),
         "preflight_success_rate": (len(preflight_successes) / len(preflight_rows)) if preflight_rows else None,
+        "generation_successes": len(generation_successes),
+        "generation_success_rate": (len(generation_successes) / len(generation_rows)) if generation_rows else None,
         "paid_calls_made": paid_calls,
         "actual_cost_usd": total_actual_cost,
         "model": args.model,
@@ -1325,6 +1338,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "repair_max_tokens": args.repair_max_tokens,
         "repair_reasoning_effort": args.repair_reasoning_effort,
         "preflight_only": args.preflight_only,
+        "generation_only": args.generation_only,
         "reuse_project": args.reuse_project,
         "failure_classes": aggregate_failure_classes(results),
         "results": results,
@@ -1347,6 +1361,7 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Repair max tokens: `{summary['repair_max_tokens']}`",
         f"- Repair reasoning effort: `{summary['repair_reasoning_effort']}`",
         f"- Preflight only: `{summary['preflight_only']}`",
+        f"- Generation only: `{summary['generation_only']}`",
         f"- Reuse project: `{summary['reuse_project']}`",
         f"- Concurrency: `{summary['concurrency']}`",
         f"- Sample mode: `{summary['sample_mode']}`",
@@ -1357,6 +1372,10 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         (
             f"- Preflight successes: {summary['preflight_successes']} / "
             f"{sum(1 for row in summary['results'] if row.get('status') == 'preflight_only')}"
+        ),
+        (
+            f"- Generation successes: {summary['generation_successes']} / "
+            f"{sum(1 for row in summary['results'] if row.get('status') == 'generation_only')}"
         ),
         f"- Actual reported cost: `${summary['actual_cost_usd']:.6f}`",
         f"- Failure classes: `{json.dumps(summary['failure_classes'], sort_keys=True)}`",
@@ -1422,6 +1441,11 @@ def parse_args() -> argparse.Namespace:
         "--preflight-only",
         action="store_true",
         help="Materialize and Lean-check selected records with a trivial generated theorem; make no paid calls.",
+    )
+    parser.add_argument(
+        "--generation-only",
+        action="store_true",
+        help="Call the provider and persist model artifacts, but do not run Lean verification.",
     )
     parser.add_argument(
         "--reuse-project",

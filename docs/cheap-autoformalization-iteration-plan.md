@@ -94,6 +94,28 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement
   --concurrency 1
 ```
 
+For recoverable paid generation logs, decouple provider calls from Lean checks
+and write generation artifacts directly under a git-trackable run directory:
+
+```bash
+bash -ic 'UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --records /tmp/repoprover-source-statement-preflight-passing-6.jsonl \
+  --output docs/source-statement-runs/2026-05-05-preflight-passing-6-generation \
+  --limit 6 \
+  --sample-mode corpus-spread \
+  --generation-only \
+  --repair-attempts 0 \
+  --max-tokens 32768 \
+  --max-actual-cost-usd 0.30 \
+  --concurrency 3'
+```
+
+That mode records `openrouter-payload.json`, `openrouter-response.json`,
+`openrouter-cost-summary.json`, `model-assistant-content.txt`,
+`model-output.json`, and `generated-lean-declaration.lean` for each paid row,
+without creating Lean project trees. Lean verification should consume those
+artifacts separately with a pool of reusable materialized projects.
+
 ## Missing Pipeline Tasks
 
 - Context picking validation: compare the gold minimal context against cheaper

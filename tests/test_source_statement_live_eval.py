@@ -368,6 +368,7 @@ def _run_args(project_root: Path, records: Path, output: Path, **overrides: obje
         "repair_max_tokens": 128,
         "repair_reasoning_effort": None,
         "preflight_only": False,
+        "generation_only": False,
         "reuse_project": False,
         "lake_cache_from": None,
         "include_record_imports": False,
@@ -564,6 +565,41 @@ def test_source_statement_live_eval_preflight_makes_no_openrouter_call(tmp_path:
     assert [row["status"] for row in summary["results"]] == ["preflight_only", "preflight_only"]
     assert all(row["success"] for row in summary["results"])
     assert (tmp_path / "out/shared-project/Demo.lean").exists()
+
+
+def test_source_statement_live_eval_generation_only_skips_lean_check(tmp_path: Path, monkeypatch) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 2)
+
+    def fake_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        body = json.dumps(
+            {
+                "lean_declaration": "theorem generated : True := by\n  trivial",
+                "declaration_name": "generated",
+                "used_context": [],
+                "notes": [],
+            }
+        )
+        return _fake_response(body, cost=0.0003)
+
+    def fail_run_lean(project_root: Path, target_path: Path, timeout: int) -> dict:
+        raise AssertionError("generation-only mode must not run Lean")
+
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.call_openrouter", fake_call_openrouter)
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.run_lean", fail_run_lean)
+
+    summary = run(_run_args(project_root, records_path, tmp_path / "out", limit=2, generation_only=True))
+
+    assert summary["paid_calls_made"] == 2
+    assert summary["actual_cost_usd"] == 0.0006
+    assert summary["generation_successes"] == 2
+    assert summary["generation_success_rate"] == 1.0
+    assert summary["successes"] == 0
+    assert [row["status"] for row in summary["results"]] == ["generation_only", "generation_only"]
+    assert (tmp_path / "out/record-001/openrouter-response.json").exists()
+    assert (tmp_path / "out/record-001/generated-lean-declaration.lean").exists()
+    assert not (tmp_path / "out/record-001/project").exists()
 
 
 def test_source_statement_live_eval_reuse_project_requires_serial_execution(tmp_path: Path) -> None:
