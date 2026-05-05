@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "e_eq_zero_of_lt"
+      ],
+      "lean_file_body": "open scoped Polynomial\nopen MvPolynomial Finset\n\nnamespace AlgebraicCombinatorics\nnamespace SymmetricPolynomials\n\nvariable {K : Type*} [CommRing K] {N : ℕ}\n\ntheorem e_eq_zero_of_lt (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\n  have hcard : Fintype.card (Fin N) < n := h\n  have := MvPolynomial.esymm_eq_zero_of_lt (Fin N) K n hcard\n  simpa [e] using this\n\nend SymmetricPolynomials\nend AlgebraicCombinatorics",
+      "notes": [
+        "The theorem uses MvPolynomial.esymm_eq_zero_of_lt, which is not available in the checked Mathlib context. The proof sketch assumes it exists; if it does not, the statement cannot be proven from visible context. The selector sketch used n > N, which we interpret as Fintype.card (Fin N) < n."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition: e_n = 0 for n > N",
+        "project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)",
+        "Mathlib candidate: MvPolynomial.esymm_eq_zero_of_lt (failed lean_check, not used)",
+        "local file context: open scoped Polynomial, open MvPolynomial Finset, namespace AlgebraicCombinatorics, namespace SymmetricPolynomials, variable {K : Type*} [CommRing K] {N : ℕ}"
+      ]
+    }
+  ]
+}

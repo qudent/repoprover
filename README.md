@@ -131,6 +131,16 @@ unit, including `e_eq_sum_prod_subsets`, `h_eq_sum_prod_sym`, and
 before the selected unit placement line with the target declaration omitted. The
 payload is 30,156 bytes for one unit and made no paid model call.
 
+The paid v5 selector still guessed the nonexistent
+`MvPolynomial.esymm_eq_zero_of_lt` despite that local context. Hydration marked
+the name unavailable and supplied fallback `MvPolynomial.esymm` candidates.
+Generation v5 still used the unavailable theorem and failed Lean compilation;
+generation v5b added an explicit `do_not_use` policy for failed hydrated
+identifiers, but the model then reported `cannot_prove_from_visible_context`
+while still emitting Lean code. The verifier now flags both invalid nonempty
+body and nonempty declaration-name contracts for that case. Paid cost for this
+selector plus two generator probes was `$0.00444964`.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

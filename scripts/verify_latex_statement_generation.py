@@ -166,10 +166,13 @@ def verify_generation_output(
     for unit in output_json.get("units") or []:
         body = str(unit.get("lean_file_body") or "")
         status = str(unit.get("status") or "generated")
+        declaration_names = unit.get("declaration_names", [])
         placeholders = sorted(set(PLACEHOLDER_RE.findall(body)))
         contract_violations: list[str] = []
         if status == "cannot_prove_from_visible_context" and body.strip():
             contract_violations.append("cannot_prove_output_must_have_empty_lean_file_body")
+        if status == "cannot_prove_from_visible_context" and declaration_names:
+            contract_violations.append("cannot_prove_output_must_have_empty_declaration_names")
         if status == "generated" and not body.strip():
             contract_violations.append("generated_output_must_have_nonempty_lean_file_body")
         if placeholders:
@@ -185,7 +188,7 @@ def verify_generation_output(
             {
                 "unit_key": unit.get("unit_key"),
                 "reported_status": status,
-                "declaration_names": unit.get("declaration_names", []),
+                "declaration_names": declaration_names,
                 "placeholder_tokens": placeholders,
                 "contract_violations": contract_violations,
                 "lean_returncode": lean_result["returncode"],

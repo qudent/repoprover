@@ -68,6 +68,34 @@ def test_verify_generation_output_skips_empty_cannot_prove(monkeypatch, tmp_path
     assert rows[0]["compile_passed"] is False
 
 
+def test_verify_generation_output_flags_cannot_prove_names_and_body(monkeypatch, tmp_path) -> None:
+    def fake_run_lean_source(source, *, project_root, timeout_seconds):
+        return {"returncode": 1, "messages": [], "stderr": ""}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
+    rows = verify_generation_output(
+        {
+            "units": [
+                {
+                    "unit_key": "unit-001",
+                    "status": "cannot_prove_from_visible_context",
+                    "declaration_names": ["bad_name"],
+                    "lean_file_body": "theorem bad_name : True := by\n  trivial",
+                }
+            ]
+        },
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        opens=[],
+        timeout_seconds=1,
+    )
+
+    assert rows[0]["contract_violations"] == [
+        "cannot_prove_output_must_have_empty_lean_file_body",
+        "cannot_prove_output_must_have_empty_declaration_names",
+    ]
+
+
 def test_payload_context_infers_project_imports_and_opens(tmp_path) -> None:
     batch = tmp_path / "run/batch-001"
     batch.mkdir(parents=True)

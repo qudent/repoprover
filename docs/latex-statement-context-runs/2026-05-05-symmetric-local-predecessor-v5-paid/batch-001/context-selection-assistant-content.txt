@@ -1,0 +1,40 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "The statement is simple: e_n = 0 for n > N. The main risk is ensuring the integer n is treated as ℕ (since e is defined on ℕ) and that the condition n > N is correctly expressed using ℕ ordering."
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for esymm vanishing when degree exceeds number of variables."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "esymm_eq_zero_of_lt (σ : Type*) [Fintype σ] (R : Type*) [CommRing R] (n : ℕ) (h : Fintype.card σ < n) : esymm σ R n = 0",
+              "name_or_query": "MvPolynomial.esymm_eq_zero_of_lt",
+              "why_needed": "Directly gives the result for e (which is defined as esymm)."
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+              "why_needed": "The target theorem is about e, which is defined as an abbrev for esymm."
+            }
+          ],
+          "needed_source_context": [
+            "The source proposition: For each integer n > N, we have e_n = 0."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For n : ℕ, if n > N (i.e., Fintype.card (Fin N) < n), then e (K := K) (N := N) n = 0.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Proposition: e_n = 0 for n > N.",
+      "unit_key": "unit-001"
+    }
+  ]
+}

@@ -120,6 +120,14 @@ def _write_selector_run(tmp_path: Path) -> Path:
                             "status": "checked",
                             "signature": "Nat.add_zero (n : Nat) : n + 0 = n",
                         },
+                    },
+                    {
+                        "unit_key": "unit-001",
+                        "task_id": "unit-001-task-1",
+                        "query": "Demo.bad_guess",
+                        "exact_identifier": "Demo.bad_guess",
+                        "lean_check": {"status": "error", "error": "Unknown constant `Demo.bad_guess`"},
+                        "fallback_mathlib_candidates": [{"name": "Demo.nearby"}],
                     }
                 ],
             }
@@ -145,6 +153,8 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "prior_helper" in prompt
     assert "variable {K : Type*} [CommRing K]" in prompt
     assert "Follow the Lean-checked signatures exactly" in prompt
+    assert "Never use a hydrated Mathlib exact_identifier whose lean_check.status is not `checked`" in prompt
+    assert "exact_identifier_failed_lean_check_do_not_use" in prompt
     assert "Every identifier used in a theorem statement must be introduced" in prompt
     assert "you may include the needed commands in lean_file_body" in prompt
     assert "you may reuse those exact helper names" in prompt

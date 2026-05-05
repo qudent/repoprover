@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"e_eq_zero_of_lt\"\n      ],\n      \"lean_file_body\": \"open scoped Polynomial\\nopen MvPolynomial Finset\\n\\nnamespace AlgebraicCombinatorics\\nnamespace SymmetricPolynomials\\n\\nvariable {K : Type*} [CommRing K] {N : ℕ}\\n\\ntheorem e_eq_zero_of_lt (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\\n  have hcard : Fintype.card (Fin N) < n := h\\n  have := MvPolynomial.esymm_eq_zero_of_lt (Fin N) K n hcard\\n  simpa [e] using this\\n\\nend SymmetricPolynomials\\nend AlgebraicCombinatorics\",\n      \"notes\": [\n        \"The theorem uses MvPolynomial.esymm_eq_zero_of_lt, which is not available in the checked Mathlib context. The proof sketch assumes it exists; if it does not, the statement cannot be proven from visible context. The selector sketch used n > N, which we interpret as Fintype.card (Fin N) < n.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source proposition: e_n = 0 for n > N\",\n        \"project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)\",\n        \"Mathlib candidate: MvPolynomial.esymm_eq_zero_of_lt (failed lean_check, not used)\",\n        \"local file context: open scoped Polynomial, open MvPolynomial Finset, namespace AlgebraicCombinatorics, namespace SymmetricPolynomials, variable {K : Type*} [CommRing K] {N : ℕ}\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778023092,
+  "id": "gen-1778023092-JmaHGgbiRiWLJnowgoMd",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 429,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00138432,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00012012,
+      "upstream_inference_cost": 0.00138432,
+      "upstream_inference_prompt_cost": 0.0012642
+    },
+    "is_byok": false,
+    "prompt_tokens": 9030,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 9459
+  }
+}

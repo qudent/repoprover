@@ -329,6 +329,33 @@ Local predecessor context follow-up:
   production pipeline still needs to decide the destination Lean file/position
   without oracle access.
 
+Paid v5/v5b result:
+
+- selector:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-paid/`,
+  cost `$0.00114492`, valid JSON, `0` reasoning tokens.
+- selector behavior: still requested nonexistent
+  `MvPolynomial.esymm_eq_zero_of_lt`.
+- hydration: marked the exact identifier as an error and supplied fallback
+  `MvPolynomial.esymm` candidates.
+- generation v5:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid/`,
+  cost `$0.0019204`, valid JSON, compile `0/1` because it used the unavailable
+  theorem anyway.
+- generation v5b:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-paid/`,
+  cost `$0.00138432`, valid JSON, compile `0/1`; after adding a generic
+  `do_not_use` policy for failed hydrated identifiers, the model reported
+  `cannot_prove_from_visible_context` but still emitted code and a declaration
+  name. The verifier now catches both contract violations.
+
+This is evidence against relying on a single cheap generation pass after
+context selection. The model understood the intended theorem shape, but it did
+not synthesize the available local proof route from `e_eq_sum_prod_subsets` and
+finite-set cardinality facts. A second repair/planning round must be tool-driven
+and should ask for concrete Lean-checked proof ingredients, not just name
+fallbacks.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

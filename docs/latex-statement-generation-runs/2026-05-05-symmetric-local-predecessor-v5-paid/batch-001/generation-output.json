@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "e_eq_zero_of_lt_card"
+      ],
+      "lean_file_body": "open scoped Polynomial\nopen MvPolynomial Finset\n\nnamespace AlgebraicCombinatorics\nnamespace SymmetricPolynomials\n\nvariable {K : Type*} [CommRing K] {N : ℕ}\n\ntheorem e_eq_zero_of_lt_card (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\n  have := MvPolynomial.esymm_eq_zero_of_lt (Fin N) K n h\n  simpa [e] using this\n\nend SymmetricPolynomials\nend AlgebraicCombinatorics",
+      "notes": [
+        "The theorem uses the Mathlib lemma `MvPolynomial.esymm_eq_zero_of_lt` which was not found in the hydrated context; however, the statement is a direct consequence of that lemma. If the lemma does not exist, this proof would fail. The selector sketch suggests the condition n > N, which is equivalent to Fintype.card (Fin N) < n. The proof uses `simpa` with the definition of `e` as `esymm`."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition: For each integer n > N, e_n = 0.",
+        "prior project context: `e` is defined as `esymm (Fin N) K n`.",
+        "Mathlib signature: `MvPolynomial.esymm_eq_zero_of_lt` (assumed to exist, though not found in hydrated context).",
+        "local file context: `open scoped Polynomial`, `open MvPolynomial Finset`, `namespace AlgebraicCombinatorics`, `namespace SymmetricPolynomials`, `variable {K : Type*} [CommRing K]`, `variable {N : ℕ}`."
+      ]
+    }
+  ]
+}

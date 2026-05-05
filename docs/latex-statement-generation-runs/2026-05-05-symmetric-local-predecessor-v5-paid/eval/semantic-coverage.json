@@ -1,0 +1,30 @@
+{
+  "all_aligned_gold_proved_units": 0,
+  "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
+  "coverage_status_counts": {
+    "generated_not_compiled": 1
+  },
+  "generated_at": "2026-05-05T23:17:26.763075+00:00",
+  "generated_not_compiled_units": 1,
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+  "no_aligned_gold_proved_units": 0,
+  "no_aligned_gold_to_check_units": 0,
+  "partial_aligned_gold_proved_units": 0,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+  "unit_count": 1,
+  "units": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+      "unit_key": "unit-001"
+    }
+  ]
+}

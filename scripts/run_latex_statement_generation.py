@@ -108,7 +108,18 @@ def hydrated_for_task(hydration: dict[str, Any], *, unit_key: str, task_id: str)
     rows: list[dict[str, Any]] = []
     for item in hydration.get("hydrated_mathlib_context") or []:
         if item.get("unit_key") == unit_key and item.get("task_id") == task_id:
-            rows.append(item)
+            row = dict(item)
+            lean_status = (row.get("lean_check") or {}).get("status")
+            if lean_status == "checked":
+                row["usage_policy"] = "checked_signature_authoritative"
+            elif row.get("exact_identifier"):
+                row["usage_policy"] = (
+                    "exact_identifier_failed_lean_check_do_not_use; "
+                    "fallback_mathlib_candidates are search hints, not checked facts"
+                )
+            else:
+                row["usage_policy"] = "not_exact_identifier; use only as a search hint"
+            rows.append(row)
     return rows
 
 
@@ -201,6 +212,8 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
             "Treat selector_unchecked_statement_sketch as non-authoritative mathematical intent only; do not copy its Lean syntax verbatim.",
             "Follow the Lean-checked signatures exactly when they differ from the selector's expected shape.",
             "Use the actual Lean-checked argument order from hydrated_mathlib_context. If the selector expected shape conflicts with the checked signature, the checked signature wins.",
+            "Never use a hydrated Mathlib exact_identifier whose lean_check.status is not `checked`; treat it as unavailable even if the selector expected it to exist.",
+            "Treat fallback_mathlib_candidates as search hints only. Do not cite or use a fallback candidate as a theorem unless its statement in the prompt is sufficient for the proof.",
             "If a selected Mathlib API is field-specific, unit-specific, or otherwise not strong enough for the source statement, say so in notes and generate only declarations justified by the visible context.",
             "Do not invent project helper names that are not shown in available_prior_project_context, needed_project_context, or source context.",
             "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",

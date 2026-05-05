@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"The statement is simple: e_n = 0 for n > N. The main risk is ensuring the integer n is treated as ℕ (since e is defined on ℕ) and that the condition n > N is correctly expressed using ℕ ordering.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib lemma for esymm vanishing when degree exceeds number of variables.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"esymm_eq_zero_of_lt (σ : Type*) [Fintype σ] (R : Type*) [CommRing R] (n : ℕ) (h : Fintype.card σ < n) : esymm σ R n = 0\",\n              \"name_or_query\": \"MvPolynomial.esymm_eq_zero_of_lt\",\n              \"why_needed\": \"Directly gives the result for e (which is defined as esymm).\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"AlgebraicCombinatorics.SymmetricPolynomials.e\",\n              \"why_needed\": \"The target theorem is about e, which is defined as an abbrev for esymm.\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"The source proposition: For each integer n > N, we have e_n = 0.\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For n : ℕ, if n > N (i.e., Fintype.card (Fin N) < n), then e (K := K) (N := N) n = 0.\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.95,\n      \"source_focus_summary\": \"Proposition: e_n = 0 for n > N.\",\n      \"unit_key\": \"unit-001\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778022916,
+  "id": "gen-1778022916-dGvlRlfZ1UPuThYys3gs",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 475,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00114492,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.000133,
+      "upstream_inference_cost": 0.00114492,
+      "upstream_inference_prompt_cost": 0.00101192
+    },
+    "is_byok": false,
+    "prompt_tokens": 7228,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 7703
+  }
+}

@@ -431,6 +431,37 @@ Same-file predecessor context follow-up:
   before generation; benchmark reports must not count this as target-statement
   leakage.
 
+Paid v5/v5b probe:
+
+- selector:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-paid/`,
+  valid JSON, `$0.00114492`, prompt/completion tokens `7228` / `475`, `0`
+  reasoning tokens.
+- selector behavior: still guessed nonexistent
+  `MvPolynomial.esymm_eq_zero_of_lt` and did not use the local predecessor
+  helper to plan the finite-set cardinality proof.
+- hydration: rejected that exact identifier and attached fallback
+  `MvPolynomial.esymm` candidates.
+- generation v5:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid/`,
+  cost `$0.0019204`, valid JSON, generated code using the unavailable theorem,
+  Lean compile `0/1`.
+- generation prompt tightening: failed hydrated exact identifiers now carry
+  `usage_policy = exact_identifier_failed_lean_check_do_not_use`, and the
+  prompt says never to use `lean_check.status != checked` identifiers.
+- generation v5b:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-paid/`,
+  cost `$0.00138432`, valid JSON, compile `0/1`; the model reported
+  `cannot_prove_from_visible_context` but still emitted a nonempty body and
+  declaration name. The verifier now flags both contract violations.
+
+Interpretation: the bottleneck is now sharper. The selector/generator are not
+missing only type signatures; for this unit, they need either a real repair loop
+that asks Lean/tooling for a proof route through `powersetCard`/cardinality
+lemmas, or a stronger agentic prover step. Merely showing the local helper
+statement and fallback Mathlib names was not enough for DeepSeek V4 Flash to
+switch away from the hallucinated direct theorem.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

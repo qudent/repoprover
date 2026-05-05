@@ -54,6 +54,9 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
 - The new fallback search finds the relevant `MvPolynomial.esymm` declarations
   for that unknown-name guess, but not a direct vanishing theorem; the symmetric
   unit likely needs local proof-pattern context as well.
+- Paid v5/v5b symmetric probes show the model still over-trusts an unavailable
+  Mathlib lemma even when hydration marks it as failed; the verifier now flags
+  both nonempty body and nonempty names for invalid `cannot_prove` outputs.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is needed.
 
@@ -91,6 +94,11 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   `docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-budget/`
   is budget-only/no paid call and exposes same-file prior helpers such as
   `e_eq_sum_prod_subsets` while omitting the selected target theorem.
+- Symmetric paid v5:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-paid/`
+  cost `$0.00114492`; generation v5 cost `$0.0019204`, v5b cost `$0.00138432`.
+  Both generated outputs failed `0/1`; v5 used the unknown Mathlib theorem, and
+  v5b marked `cannot_prove_from_visible_context` but still emitted code/names.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
