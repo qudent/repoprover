@@ -64,6 +64,21 @@ PART_LABEL_RE = re.compile(r"\.([a-z])$")
 CONTEXT_NOTATION_HEADER_RE = re.compile(r"^-- File context: (?P<path>.*):(?P<start>\d+)-(?P<end>\d+) \(notation\)$")
 LOCAL_MODULE_PREFIX = "AlgebraicCombinatorics."
 CONTEXT_MODES = ("target-comment", "source-only")
+TEX_ENV_RE = re.compile(r"\\begin\{(?P<env>theorem|lemma|proposition|definition|corollary|example|equation|align\*?)\}")
+TEX_LABEL_RE = re.compile(r"\\label\{(?P<label>[^}]+)\}")
+TEX_REF_RE = re.compile(r"\\(?:ref|eqref)\{(?P<label>[^}]+)\}")
+TEX_PART_RE = re.compile(r"\\textbf\{\((?P<part>[a-z])\)\}|\\item\s+(?:\\textbf\{\((?P<item_part>[a-z])\)\})?")
+SOURCE_KEYWORD_PATTERNS = [
+    ("finite coefficient", re.compile(r"\bfinite\b|all but finitely|first\s+\$?n|coefficient of")),
+    ("summability", re.compile(r"summable|well-defined|all but finitely|infinite sum")),
+    ("limit", re.compile(r"limit|lim|converge|stabiliz")),
+    ("substitution", re.compile(r"substitut|composition|\\circ")),
+    ("negative binomial", re.compile(r"negative|binomial|\\dbinom|choose")),
+    ("inverse power", re.compile(r"inverse|\^-|1\s*\+\s*x|\(1\+x\)")),
+    ("partition", re.compile(r"partition|parts|largest part|transpose")),
+    ("permutation", re.compile(r"permutation|transposition|swap|cycle|power")),
+    ("shifted coefficient", re.compile(r"shift|x\^\{?k\}?|coefficient")),
+]
 
 
 @dataclass(frozen=True)
@@ -150,6 +165,79 @@ def source_snippets(project_root: Path, record: SelectedRecord) -> list[dict[str
             }
         )
     return snippets
+
+
+def _tex_plain_text(text: str) -> str:
+    plain = re.sub(r"%.*", "", text)
+    plain = re.sub(r"\\(?:label|ref|eqref)\{[^}]+\}", " ", plain)
+    plain = re.sub(r"\\(?:begin|end)\{[^}]+\}", " ", plain)
+    plain = re.sub(r"\\textbf\{([^}]*)\}", r"\1", plain)
+    plain = re.sub(r"\\emph\{([^}]*)\}", r"\1", plain)
+    plain = re.sub(r"\\[A-Za-z]+\*?(?:\[[^]]*\])?", " ", plain)
+    plain = re.sub(r"[{}$]", " ", plain)
+    return re.sub(r"\s+", " ", plain).strip()
+
+
+def _sentence_excerpts(text: str, *, count: int = 2) -> list[str]:
+    plain = _tex_plain_text(text)
+    if not plain:
+        return []
+    pieces = [piece.strip() for piece in re.split(r"(?<=[.!?])\s+", plain) if piece.strip()]
+    if not pieces:
+        return [plain[:260]]
+    return [piece[:260] for piece in pieces[:count]]
+
+
+def _part_excerpts(text: str) -> list[dict[str, str]]:
+    parts: list[dict[str, str]] = []
+    matches = list(TEX_PART_RE.finditer(text))
+    for index, match in enumerate(matches):
+        prefix = text[max(0, match.start() - 90) : match.start()]
+        if "\\ref{" in prefix or "\\eqref{" in prefix:
+            continue
+        part = match.group("part") or match.group("item_part") or ""
+        start = match.end()
+        end = matches[index + 1].start() if index + 1 < len(matches) else min(len(text), start + 500)
+        excerpt = _tex_plain_text(text[start:end])[:260]
+        parts.append({"part": part, "excerpt": excerpt})
+    return parts[:8]
+
+
+def tex_source_focus(snippets: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Extract focus cues from TeX/source snippets without using Lean targets."""
+
+    focus_rows: list[dict[str, Any]] = []
+    for snippet in snippets:
+        text = str(snippet.get("snippet") or "")
+        line_range = list(snippet.get("line_range") or [])
+        line_count = 0
+        if len(line_range) == 2:
+            line_count = int(line_range[1]) - int(line_range[0]) + 1
+        lower_text = text.lower()
+        cues = [name for name, pattern in SOURCE_KEYWORD_PATTERNS if pattern.search(lower_text)]
+        row = {
+            "path": snippet.get("path"),
+            "line_range": line_range,
+            "line_count": line_count,
+            "span_labels": list(snippet.get("labels") or []),
+            "declared_labels": TEX_LABEL_RE.findall(text),
+            "referenced_labels": TEX_REF_RE.findall(text)[:12],
+            "environments": [match.group("env") for match in TEX_ENV_RE.finditer(text)],
+            "part_markers": _part_excerpts(text),
+            "keyword_cues": cues,
+            "opening_excerpts": _sentence_excerpts(text[:1200]),
+            "closing_excerpts": _sentence_excerpts(text[-1200:]),
+            "span_risks": [],
+            "policy": "derived only from provided TeX/source snippet; no target Lean comments, names, or statements",
+        }
+        if line_count >= 25:
+            row["span_risks"].append("broad_source_span")
+        if "\\begin{" in text and "\\end{" not in text:
+            row["span_risks"].append("snippet_may_end_inside_environment_or_before_next_statement")
+        if "\\end{" in text and "\\begin{" not in text:
+            row["span_risks"].append("snippet_may_start_inside_environment")
+        focus_rows.append(row)
+    return focus_rows
 
 
 def _record_comment_labels(record: SelectedRecord) -> list[str]:
@@ -1047,6 +1135,7 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
     focus = source_focus(project_root, record, context_mode=context_mode)
     return {
         "source_statement_or_chunk": snippets,
+        "tex_source_focus": tex_source_focus(snippets),
         "target_source_focus": focus,
         "context_mode": context_mode,
         "available_imports": record.imports,

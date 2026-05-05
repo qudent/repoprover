@@ -47,7 +47,7 @@ Result:
 
 - paid calls: `0`
 - actual cost: `$0.00`
-- estimated max generation cost: `$0.17953842`
+- estimated max generation cost: `$0.18052935`
 
 Broader 11-record preflight-passing slice:
 
@@ -64,7 +64,7 @@ Result:
 
 - paid calls: `0`
 - actual cost: `$0.00`
-- estimated max generation cost: `$0.329193645`
+- estimated max generation cost: `$0.330879705`
 
 Hidden-name check over the 11-record source-only prompt artifacts:
 
@@ -100,7 +100,7 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/compare_source_state
 
 - rows with hidden target names in source-only payloads: `0`
 - rows with target-comment terms absent from the source span: `7/11`
-- source-only estimated max cost: `$0.329193645`
+- source-only estimated max cost: `$0.330879705`
 
 The same comparison over the strict six-row slice found `0` hidden target-name
 hits and `5/6` rows where target-comment terms are absent from the source span.
@@ -117,6 +117,10 @@ In `source-only` mode:
   target-derived comments;
 - hidden target declaration names are not used for domain-guidance triggers;
 - imported declarations found only by matching source labels are not injected.
+- `tex_source_focus` is added from the visible TeX/source span, including
+  declared labels, referenced labels, theorem-like environments, source-keyword
+  cues, part markers that are not merely inline `\ref{...} \textbf{(b)}`
+  references, and broad-span risk flags.
 
 This intentionally makes some prompts less helpful. For example, the
 `fps_comp_coeff_finite` source-only prompt sees the source span label
@@ -138,6 +142,8 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest \
 ```
 
 Result: `61 passed`.
+After adding TeX-derived focus extraction, the same focused test set passes
+with `63 passed`.
 
 ## Next Step
 

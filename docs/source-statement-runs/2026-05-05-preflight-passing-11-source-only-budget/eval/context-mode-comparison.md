@@ -6,7 +6,7 @@
 - Rows with lost guidance domains: 0
 - Rows with target-comment terms absent from source span: 7
 - Rows with hidden target names in source-only payload: 0
-- Source-only estimated max cost: `$0.329193645`
+- Source-only estimated max cost: `$0.330879705`
 
 | # | Record | Lost Domains | Comment Terms Missing From Source | Hidden Names In Source Payload |
 |---:|---|---|---|---|

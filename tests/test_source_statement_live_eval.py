@@ -143,6 +143,22 @@ def test_source_statement_prompt_focuses_specific_part_of_multipart_source(tmp_p
     assert "Do not conjoin all parts" in instructions
 
 
+def test_source_statement_prompt_includes_tex_derived_focus(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+
+    messages = build_messages(project_root, record, context_mode="source-only")
+    user = json.loads(messages[1]["content"])
+    tex_focus = user["context"]["tex_source_focus"][0]
+
+    assert tex_focus["declared_labels"] == ["demo.minors"]
+    assert "lemma" in tex_focus["environments"]
+    assert tex_focus["part_markers"][0]["part"] == "a"
+    assert "principal minors" in tex_focus["part_markers"][0]["excerpt"]
+    assert "Demo.target" not in json.dumps(tex_focus)
+    assert "theorem target" not in json.dumps(tex_focus)
+    assert tex_focus["policy"].startswith("derived only from provided TeX")
+
+
 def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     (project_root / "lean-toolchain").write_text("leanprover/lean4:v4.28.0\n", encoding="utf-8")
