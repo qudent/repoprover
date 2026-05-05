@@ -240,6 +240,55 @@ def _part_excerpts(text: str) -> list[dict[str, str]]:
     return parts[:8]
 
 
+def _labeled_environment_focus(text: str, line_start: int, labels: list[str]) -> list[dict[str, Any]]:
+    lines = text.splitlines()
+    focus_rows: list[dict[str, Any]] = []
+    for label in labels:
+        label_line_index = next((idx for idx, line in enumerate(lines) if f"\\label{{{label}}}" in line), None)
+        if label_line_index is None:
+            continue
+        begin_index: int | None = None
+        env_name: str | None = None
+        for idx in range(label_line_index, -1, -1):
+            for match in reversed(list(TEX_ENV_BOUNDARY_RE.finditer(lines[idx]))):
+                if match.group("kind") == "begin":
+                    begin_index = idx
+                    env_name = match.group("env")
+                    break
+            if begin_index is not None:
+                break
+        if begin_index is None or env_name is None:
+            continue
+        depth = 0
+        end_index: int | None = None
+        for idx in range(begin_index, len(lines)):
+            for match in TEX_ENV_BOUNDARY_RE.finditer(lines[idx]):
+                if match.group("env") != env_name:
+                    continue
+                if match.group("kind") == "begin":
+                    depth += 1
+                else:
+                    depth -= 1
+                    if depth == 0:
+                        end_index = idx
+                        break
+            if end_index is not None:
+                break
+        if end_index is None:
+            continue
+        env_text = "\n".join(lines[begin_index : end_index + 1])
+        focus_rows.append(
+            {
+                "label": label,
+                "environment": env_name,
+                "line_range": [line_start + begin_index, line_start + end_index],
+                "declared_labels": TEX_LABEL_RE.findall(env_text),
+                "excerpt": _tex_plain_text(env_text)[:520],
+            }
+        )
+    return focus_rows[:8]
+
+
 def _tex_environment_balance(text: str) -> dict[str, list[str]]:
     stack: list[str] = []
     unmatched_end: list[str] = []
@@ -273,15 +322,24 @@ def tex_source_focus(snippets: list[dict[str, Any]]) -> list[dict[str, Any]]:
             line_count = int(line_range[1]) - int(line_range[0]) + 1
         lower_text = text.lower()
         cues = [name for name, pattern in SOURCE_KEYWORD_PATTERNS if pattern.search(lower_text)]
+        span_labels = list(snippet.get("labels") or [])
+        declared_labels = TEX_LABEL_RE.findall(text)
+        environments = [match.group("env") for match in TEX_ENV_RE.finditer(text)]
+        part_markers = _part_excerpts(text)
         row = {
             "path": snippet.get("path"),
             "line_range": line_range,
             "line_count": line_count,
-            "span_labels": list(snippet.get("labels") or []),
-            "declared_labels": TEX_LABEL_RE.findall(text),
+            "span_labels": span_labels,
+            "declared_labels": declared_labels,
             "referenced_labels": TEX_REF_RE.findall(text)[:12],
-            "environments": [match.group("env") for match in TEX_ENV_RE.finditer(text)],
-            "part_markers": _part_excerpts(text),
+            "environments": environments,
+            "labeled_environment_focus": _labeled_environment_focus(
+                text,
+                int(line_range[0]) if len(line_range) == 2 else 1,
+                [str(label) for label in span_labels],
+            ),
+            "part_markers": part_markers,
             "keyword_cues": cues,
             "opening_excerpts": _sentence_excerpts(text[:1200]),
             "closing_excerpts": _sentence_excerpts(text[-1200:]),
@@ -290,6 +348,12 @@ def tex_source_focus(snippets: list[dict[str, Any]]) -> list[dict[str, Any]]:
         }
         if line_count >= 25:
             row["span_risks"].append("broad_source_span")
+        if len(environments) > 1:
+            row["span_risks"].append("source_span_contains_multiple_theorem_environments")
+        if len(set(declared_labels) - set(span_labels)) > 0:
+            row["span_risks"].append("source_span_contains_extra_labels")
+        if len(part_markers) > 1:
+            row["span_risks"].append("source_span_contains_multiple_parts")
         env_balance = _tex_environment_balance(text)
         for env in env_balance["unclosed"]:
             row["span_risks"].append(f"snippet_ends_with_unclosed_environment:{env}")
@@ -757,6 +821,34 @@ def _declaration_names_in_text(text: str) -> set[str]:
         if match and match.group("name"):
             names.add(str(match.group("name")))
     return names
+
+
+def _lean_identifier_pattern(identifier: str) -> re.Pattern[str]:
+    return re.compile(rf"(?<![A-Za-z0-9_'.]){re.escape(identifier)}(?![A-Za-z0-9_'])")
+
+
+def _withheld_target_identifiers(record: SelectedRecord) -> list[str]:
+    identifiers: list[str] = []
+    for name in record.declaration_names:
+        for candidate in (str(name), str(name).split(".")[-1]):
+            if candidate and candidate not in identifiers:
+                identifiers.append(candidate)
+    return identifiers
+
+
+def _contains_withheld_target_identifier(record: SelectedRecord, text: str) -> bool:
+    return any(_lean_identifier_pattern(identifier).search(text) for identifier in _withheld_target_identifiers(record))
+
+
+def _without_withheld_target_blocks(record: SelectedRecord, blocks: list[str]) -> tuple[list[str], int]:
+    kept: list[str] = []
+    removed = 0
+    for block in blocks:
+        if _contains_withheld_target_identifier(record, block):
+            removed += 1
+            continue
+        kept.append(block)
+    return kept, removed
 
 
 def source_statement_context(
@@ -1249,6 +1341,19 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
         record,
         include_imported_label_api=context_mode != "source-only",
     )
+    removed_hidden_target_context_blocks = 0
+    if context_mode == "source-only":
+        context_parts, removed_hidden_target_context_blocks = _without_withheld_target_blocks(record, context_parts)
+    style = local_lean_style(project_root, record)
+    if context_mode == "source-only":
+        examples, removed_examples = _without_withheld_target_blocks(record, list(style.get("examples") or []))
+        style = dict(style)
+        style["examples"] = examples
+        removed_hidden_target_context_blocks += removed_examples
+    mathlib_context = list(record.mathlib_context)
+    if context_mode == "source-only":
+        mathlib_context, removed_mathlib = _without_withheld_target_blocks(record, mathlib_context)
+        removed_hidden_target_context_blocks += removed_mathlib
     snippets = source_snippets(project_root, record)
     focus = source_focus(project_root, record, context_mode=context_mode)
     return {
@@ -1259,7 +1364,7 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
         "available_imports": record.imports,
         "lean_prefix_context": "\n".join(context_parts).strip(),
         "lean_environment": lean_environment_context(project_root),
-        "local_lean_style": local_lean_style(project_root, record),
+        "local_lean_style": style,
         "domain_statement_shape_guidance": domain_statement_shape_guidance(
             record,
             snippets=snippets,
@@ -1267,11 +1372,12 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
             target_focus=focus,
             context_mode=context_mode,
         ),
-        "mathlib_context": record.mathlib_context,
+        "mathlib_context": mathlib_context,
         "benchmark_policy": {
             "target_lean_statement_available_to_model": False,
             "target_declaration_name_available_to_model": False,
             "grading_uses_withheld_gold_statement": True,
+            "source_only_removed_hidden_target_context_blocks": removed_hidden_target_context_blocks,
         },
     }
 

@@ -292,10 +292,16 @@ In `source-only` mode:
 - earlier same-file declarations whose visible doc comments contain source-span
   labels are injected as `Same-file source-label API` blocks, as long as they
   appear before the withheld target declaration.
+- exact hidden target identifiers are filtered out of source-only Lean context
+  blocks using Lean identifier boundaries. This avoids both real context leaks
+  and false positives such as `e_zero` inside `one_ne_zero`.
 - `tex_source_focus` is added from the visible TeX/source span, including
   declared labels, referenced labels, theorem-like environments, source-keyword
   cues, part markers that are not merely inline `\ref{...} \textbf{(b)}`
   references, and broad-span risk flags.
+- `tex_source_focus.labeled_environment_focus` identifies the theorem-like
+  environment containing each selected source-span label, so a broad multi-label
+  source span still has an explicit source-only focus cue.
 
 This intentionally makes some prompts less helpful. For example, the
 `fps_comp_coeff_finite` source-only prompt sees the source span label
@@ -317,6 +323,59 @@ These are prior declarations in the same file with visible source-label
 comments. This is a generic context-selection improvement: it does not inspect
 the withheld target declaration, and it only uses labels already present in the
 selected source span.
+
+## 64-Record Source-Only Context Audit
+
+To move beyond the 11-row slice without paid calls or Lean preflight, budget
+artifacts were generated for 64 records from
+`docs/minimal-context-gold-candidates.jsonl`:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --records docs/minimal-context-gold-candidates.jsonl \
+  --output docs/source-statement-runs/2026-05-05-gold64-source-only-budget \
+  --limit 64 --sample-mode corpus-spread --include-record-imports \
+  --lake-cache-from algebraic-combinatorics --budget-only \
+  --context-mode source-only --max-tokens 32768 --reasoning-effort high
+```
+
+The matching target-comment budget run was generated only for comparison:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --records docs/minimal-context-gold-candidates.jsonl \
+  --output docs/source-statement-runs/2026-05-05-gold64-target-comment-budget \
+  --limit 64 --sample-mode corpus-spread --include-record-imports \
+  --lake-cache-from algebraic-combinatorics --budget-only \
+  --context-mode target-comment --max-tokens 32768 --reasoning-effort high
+```
+
+After adding hidden-name context filtering and focused labeled-environment
+extraction, the zero-cost audit reports:
+
+- records: `64`
+- paid calls: `0`
+- source-only estimated max generation cost: `$1.976172810`
+- hidden target-name rows: `0/64`
+- target-comment gap rows: `45/64`
+- broad source-span rows: `62/64`
+- multi-environment rows: `61/64`
+- extra-label rows: `60/64`
+- rows with focused labeled environments: `64/64`
+- focused labeled environments extracted: `65`
+- hidden-name context blocks removed: `4`
+
+The durable audit artifacts are:
+
+- `docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/context-mode-comparison.md`
+- `docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/context-budget-audit.md`
+
+Takeaway: the source-only prompt surface is now cleaner and more focused, but
+the deterministic gold-candidate source spans are still usually too broad to
+treat a 64-row paid generation as the next best spend. A paid next slice should
+choose a small subset where `labeled_environment_focus` is clean enough to test
+generation, while continuing to use high-risk rows to improve source-span
+selection.
 
 ## Tests
 
@@ -340,7 +399,9 @@ with `67 passed`. After adding bounded TeX span expansion, it passes with
 `68 passed`. After adding visible `IsSwap` diagnostics and missing-helper
 repair guidance, it passes with `70 passed`. The final repair-guidance update
 keeps that same focused suite green with `70 passed`. After adding same-file
-source-label API retrieval, it passes with `71 passed`.
+source-label API retrieval, it passes with `71 passed`. After adding hidden-name
+context filtering, focused labeled-environment extraction, and the context-audit
+script, it passes with `75 passed`.
 
 ## Next Step
 
@@ -348,4 +409,4 @@ Use `source-only` as the default for realistic validation. The next work should
 not be another hand-tuned six-row repair loop. It should improve TeX/source
 focus selection for rows where the selected source span is too broad, begins or
 ends inside theorem-like environments, or points at the wrong theorem family,
-then rerun a small paid broader-slice validation.
+then rerun a small paid broader-slice validation selected from the 64-row audit.

@@ -79,10 +79,14 @@ def _important_comment_terms(comment: str, source: str) -> list[str]:
     return terms[:12]
 
 
-def _contains_any(text: str, needles: list[str]) -> list[str]:
+def _lean_identifier_pattern(identifier: str) -> re.Pattern[str]:
+    return re.compile(rf"(?<![A-Za-z0-9_'.]){re.escape(identifier)}(?![A-Za-z0-9_'])")
+
+
+def _contains_any_identifier(text: str, needles: list[str]) -> list[str]:
     found: list[str] = []
     for needle in needles:
-        if needle and needle in text:
+        if needle and _lean_identifier_pattern(needle).search(text):
             found.append(needle)
     return found
 
@@ -114,7 +118,9 @@ def compare_runs(target_comment_run: Path, source_only_run: Path) -> dict[str, A
                 "source_domains": source_domains,
                 "lost_domains": [domain for domain in target_domains if domain not in source_domains],
                 "target_comment_terms_absent_from_source": _important_comment_terms(target_comment, source_text),
-                "hidden_target_names_found_in_source_payload": _contains_any(source_payload_text, declaration_names),
+                "hidden_target_names_found_in_source_payload": _contains_any_identifier(
+                    source_payload_text, declaration_names
+                ),
                 "source_only_estimated_max_cost_usd": (
                     source_results_by_index.get(index, {}).get("budget_estimate", {}).get("estimated_max_cost_usd")
                 ),

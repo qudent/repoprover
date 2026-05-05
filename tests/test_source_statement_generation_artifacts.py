@@ -7,7 +7,8 @@ import json
 from pathlib import Path
 
 from scripts.repair_source_statement_generation import run as run_repair_queue
-from scripts.compare_source_statement_context_modes import compare_runs
+from scripts.compare_source_statement_context_modes import _contains_any_identifier, compare_runs
+from scripts.audit_source_statement_context_budget import audit_run
 from scripts.diagnose_source_statement_shape import diagnose_shape, run as run_shape_diagnostic
 from scripts.run_source_statement_live_eval import build_repair_messages
 from scripts.verify_source_statement_generation import load_tasks
@@ -345,6 +346,65 @@ def test_compare_context_modes_flags_lost_domains_and_hidden_names(tmp_path: Pat
     assert summary["records_with_hidden_target_names_in_source_payload"] == 0
     assert summary["results"][0]["lost_domains"] == ["finite coefficient"]
     assert "alternative" in summary["results"][0]["target_comment_terms_absent_from_source"]
+
+
+def test_hidden_name_detection_uses_lean_identifier_boundaries() -> None:
+    assert _contains_any_identifier("exact one_ne_zero h", ["e_zero"]) == []
+    assert _contains_any_identifier("theorem e_zero : True := by trivial", ["e_zero"]) == ["e_zero"]
+
+
+def test_context_budget_audit_summarizes_prompt_risks(tmp_path: Path) -> None:
+    run_output = tmp_path / "source"
+    comparison_path = run_output / "eval/context-mode-comparison.json"
+    _write_json(
+        comparison_path,
+        {
+            "source_only_estimated_max_cost_usd": 0.12,
+            "results": [
+                {
+                    "index": 1,
+                    "record_id": "Demo.lean:Demo.target",
+                    "target_comment_terms_absent_from_source": ["alternative"],
+                    "hidden_target_names_found_in_source_payload": [],
+                    "source_only_estimated_max_cost_usd": 0.12,
+                }
+            ],
+        },
+    )
+    user_payload = {
+        "context": {
+            "tex_source_focus": [
+                {
+                    "span_risks": [
+                        "broad_source_span",
+                        "source_span_contains_multiple_theorem_environments",
+                        "source_span_contains_extra_labels",
+                    ],
+                    "labeled_environment_focus": [{"label": "demo"}],
+                }
+            ],
+            "benchmark_policy": {"source_only_removed_hidden_target_context_blocks": 1},
+        }
+    }
+    _write_json(
+        run_output / "record-001/openrouter-payload.json",
+        {"messages": [{"role": "user", "content": json.dumps(user_payload)}]},
+    )
+
+    summary = audit_run(run_output, comparison_path)
+
+    assert summary["records"] == 1
+    assert summary["rows_with_broad_source_span"] == 1
+    assert summary["rows_with_focused_labeled_environment"] == 1
+    assert summary["hidden_target_context_blocks_removed"] == 1
+    assert summary["results"][0]["flags"] == [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env",
+        "hidden-name-block-filtered",
+    ]
 
 
 def test_shape_diagnostic_flags_pointwise_sequence_equality() -> None:

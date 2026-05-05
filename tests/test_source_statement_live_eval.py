@@ -154,6 +154,8 @@ def test_source_statement_prompt_includes_tex_derived_focus(tmp_path: Path) -> N
 
     assert tex_focus["declared_labels"] == ["demo.minors"]
     assert "lemma" in tex_focus["environments"]
+    assert tex_focus["labeled_environment_focus"][0]["label"] == "demo.minors"
+    assert tex_focus["labeled_environment_focus"][0]["environment"] == "lemma"
     assert tex_focus["part_markers"][0]["part"] == "a"
     assert "principal minors" in tex_focus["part_markers"][0]["excerpt"]
     assert "Demo.target" not in json.dumps(tex_focus)
@@ -178,6 +180,35 @@ def test_tex_source_focus_flags_unclosed_environment_after_closed_earlier_enviro
     )[0]
 
     assert "snippet_ends_with_unclosed_environment:proposition" in focus["span_risks"]
+
+
+def test_tex_source_focus_extracts_labeled_environment_inside_broad_span() -> None:
+    focus = tex_source_focus(
+        [
+            {
+                "path": "Demo.tex",
+                "line_range": [100, 110],
+                "labels": ["target.label"],
+                "snippet": (
+                    "\\begin{lemma}\\label{target.label}The intended theorem.\\end{lemma}\n"
+                    "\\begin{proof}A proof.\\end{proof}\n"
+                    "\\begin{proposition}\\label{other.label}A different theorem.\\end{proposition}\n"
+                ),
+            }
+        ]
+    )[0]
+
+    assert focus["labeled_environment_focus"] == [
+        {
+            "label": "target.label",
+            "environment": "lemma",
+            "line_range": [100, 100],
+            "declared_labels": ["target.label"],
+            "excerpt": "The intended theorem.",
+        }
+    ]
+    assert "source_span_contains_multiple_theorem_environments" in focus["span_risks"]
+    assert "source_span_contains_extra_labels" in focus["span_risks"]
 
 
 def test_balanced_tex_line_range_expands_to_close_environment(tmp_path: Path) -> None:
@@ -796,6 +827,51 @@ def test_source_only_context_mode_includes_prior_same_file_source_label_api(tmp_
 
     assert "Same-file source-label API" in prefix
     assert "same_label_helper" in prefix
+
+
+def test_source_only_context_mode_drops_hidden_target_name_context_blocks(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "/-- Helper that leaks the withheld target name `secretName`. -/",
+                "theorem leaky_helper : True := by",
+                "  trivial",
+                "/-- Safe helper for the same source label. (demo.minors) -/",
+                "theorem safe_helper : True := by",
+                "  trivial",
+                "/-- Target theorem. -/",
+                "theorem secretName : True := by",
+                "  trivial",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    row = copy.deepcopy(record.row)
+    row["id"] = "Demo.lean:Demo.secretName"
+    row["output"]["declaration_names"] = ["Demo.secretName"]
+    row["output"]["line_range"] = [10, 11]
+    row["minimal_context"]["file_context"] = [
+        {"path": "Demo.lean", "kind": "namespace", "line_range": [2, 2], "name": "Demo"}
+    ]
+    row["minimal_context"]["lean_predecessors"] = [
+        {"path": "Demo.lean", "line_range": [3, 5], "declaration": "Demo.leaky_helper"},
+        {"path": "Demo.lean", "line_range": [6, 8], "declaration": "Demo.safe_helper"},
+    ]
+
+    messages = build_messages(project_root, SelectedRecord(row), context_mode="source-only")
+    user = json.loads(messages[1]["content"])
+    context_text = json.dumps(user["context"], ensure_ascii=False)
+
+    assert "safe_helper" in context_text
+    assert "leaky_helper" not in context_text
+    assert "secretName" not in context_text
+    assert user["context"]["benchmark_policy"]["source_only_removed_hidden_target_context_blocks"] >= 1
 
 
 def test_generated_application_candidates_try_explicit_then_all_binders() -> None:

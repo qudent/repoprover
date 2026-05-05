@@ -1,0 +1,1600 @@
+{
+  "source_only_run": "docs/source-statement-runs/2026-05-05-gold64-source-only-budget",
+  "context_comparison": "docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/context-mode-comparison.json",
+  "records": 64,
+  "source_only_estimated_max_cost_usd": 1.97617281,
+  "rows_with_hidden_target_names_in_source_payload": 0,
+  "rows_with_target_comment_terms_absent_from_source": 45,
+  "rows_with_broad_source_span": 62,
+  "rows_with_multiple_theorem_environments": 61,
+  "rows_with_extra_declared_labels": 60,
+  "rows_with_multiple_parts": 30,
+  "rows_with_focused_labeled_environment": 64,
+  "focused_labeled_environments": 65,
+  "rows_with_hidden_target_context_blocks_removed": 4,
+  "hidden_target_context_blocks_removed": 4,
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "principal",
+        "products"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03182025
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DesnanotJacobi.lean:AlgebraicCombinatorics.Determinants.mul_adjugate'",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "fundamental",
+        "property",
+        "multiplying",
+        "yields",
+        "determinant",
+        "including",
+        "trivial"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03044391
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DesnanotJacobi.lean:AlgebraicCombinatorics.Determinants.cauchy_det",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env",
+        "hidden-name-block-filtered"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 1,
+      "target_comment_terms_absent_from_source": [
+        "formula",
+        "cauchy_det_of_poly",
+        "derives",
+        "version",
+        "cauchy_det_poly",
+        "strategy",
+        "textbook",
+        "cleared",
+        "factor",
+        "hunting",
+        "divisibility",
+        "degree"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.05282379
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.coeff_zero_of_dvd",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "divides",
+        "coefficients"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03113121
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 2,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "converge",
+        "equals",
+        "conclude",
+        "unique"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.031733685
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_const_matrix_eq_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "corollary"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02996367
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_col",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "adding",
+        "another",
+        "preserves",
+        "special"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030075030000000003
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.binomUpperNegation",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "negation",
+        "binomial",
+        "coefficients",
+        "binomialring",
+        "mathlib",
+        "generalized",
+        "defined",
+        "generalizes",
+        "classical"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030568320000000003
+    },
+    {
+      "index": 9,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_coeff_X_pow_mul_eq_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030678375
+    },
+    {
+      "index": 10,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.module_add_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030138105000000002
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.module_neg_eq_neg_one_smul",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "modules",
+        "explicit",
+        "negation"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030138105000000002
+    },
+    {
+      "index": 12,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.fraction_unit_one",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "identity",
+        "denominator"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030059370000000002
+    },
+    {
+      "index": 13,
+      "record_id": "AlgebraicCombinatorics/FPS/ExpLog.lean:PowerSeries.exp_constantCoeff",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "constant"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030105045
+    },
+    {
+      "index": 14,
+      "record_id": "AlgebraicCombinatorics/FPS/ExpLog.lean:PowerSeries.PowerSeries₁.div_mem",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.031684095
+    },
+    {
+      "index": 15,
+      "record_id": "AlgebraicCombinatorics/FPS/ExpLog.lean:PowerSeries.loder_prod",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env",
+        "hidden-name-block-filtered"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 1,
+      "target_comment_terms_absent_from_source": [
+        "product",
+        "algebra"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.031161225
+    },
+    {
+      "index": 16,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInSum_value_unique",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "unique",
+        "determining",
+        "values"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03081801
+    },
+    {
+      "index": 17,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.isXnApproximator_determines_coeff",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030634875000000002
+    },
+    {
+      "index": 18,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.multipliable_empty",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030852375
+    },
+    {
+      "index": 19,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.tprod_fubini_full",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "computed",
+        "iterated",
+        "either",
+        "combines",
+        "directions"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.034229715
+    },
+    {
+      "index": 20,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts1.lean:AlgebraicCombinatorics.FPS.xnEquiv_div",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env",
+        "hidden-name-block-filtered"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 1,
+      "target_comment_terms_absent_from_source": [
+        "coefficients",
+        "numerators",
+        "denominators",
+        "quotients"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030276435
+    },
+    {
+      "index": 21,
+      "record_id": "AlgebraicCombinatorics/FPS/IntegerCompositions.lean:AlgebraicCombinatorics.Composition.card_ofSizeIntoParts_pos",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "number",
+        "choose",
+        "states",
+        "integer",
+        "binomial",
+        "coefficients",
+        "lean's",
+        "truncating",
+        "subtraction",
+        "incorrect",
+        "additionally",
+        "formula"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03094155
+    },
+    {
+      "index": 22,
+      "record_id": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.laurentPoly_add_coeff",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "addition",
+        "coefficientwise"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030165075
+    },
+    {
+      "index": 23,
+      "record_id": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.order_mul_ge",
+      "risks": [
+        "broad_source_span"
+      ],
+      "flags": [
+        "broad",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "orders",
+        "respectively",
+        "showing",
+        "closure"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030555270000000002
+    },
+    {
+      "index": 24,
+      "record_id": "AlgebraicCombinatorics/FPS/Limits.lean:PowerSeries.coeff_div_eq_of_coeff_eq",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "coefficients",
+        "denominators",
+        "quotients",
+        "direct",
+        "consequence",
+        "coefficient",
+        "quotient",
+        "depends",
+        "through",
+        "factor",
+        "alternative",
+        "formulation"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030535695
+    },
+    {
+      "index": 25,
+      "record_id": "AlgebraicCombinatorics/FPS/Limits.lean:PowerSeries.coeffStabilizesTo_derivativeFun",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "respect",
+        "derivatives"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030735795
+    },
+    {
+      "index": 26,
+      "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.sum_choose_pow_eq",
+      "risks": [
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "generating",
+        "function",
+        "identity",
+        "derived",
+        "bivariate"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03043608
+    },
+    {
+      "index": 27,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_neg_one",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029822295000000002
+    },
+    {
+      "index": 28,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.binom_symm",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels"
+      ],
+      "flags": [
+        "broad",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "natural",
+        "numbers",
+        "choose_symm"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029910165000000002
+    },
+    {
+      "index": 29,
+      "record_id": "AlgebraicCombinatorics/FPS/Polynomials.lean:FPS.isPolynomial_smul",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "scalar",
+        "series"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030889350000000003
+    },
+    {
+      "index": 30,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_fg_coeffs_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03075537
+    },
+    {
+      "index": 31,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_subs_X_left",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.031023330000000002
+    },
+    {
+      "index": 32,
+      "record_id": "AlgebraicCombinatorics/FPS/XnEquivalence.lean:PowerSeries.xnEquiv_iff_dvd",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03068316
+    },
+    {
+      "index": 33,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_mul_coeff_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03027861
+    },
+    {
+      "index": 34,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_pow_coeff",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "elsewhere"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03025686
+    },
+    {
+      "index": 35,
+      "record_id": "AlgebraicCombinatorics/LaurentSeries.lean:AlgebraicCombinatorics.DoublyInfinitePowerSeries.eq_coeff_at_position",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "equals",
+        "position",
+        "pointwise",
+        "characterization",
+        "coefficient",
+        "formalizes",
+        "representation",
+        "mentioned",
+        "formal",
+        "identity",
+        "contributes"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030551355000000002
+    },
+    {
+      "index": 36,
+      "record_id": "AlgebraicCombinatorics/LaurentSeries.lean:AlgebraicCombinatorics.laurentPolynomial_T_neg_mul_T",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02994279
+    },
+    {
+      "index": 37,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "unique"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029930175
+    },
+    {
+      "index": 38,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.filter_largestPart_le_eq_restricted",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "equals",
+        "restricted",
+        "equivalence"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03017769
+    },
+    {
+      "index": 39,
+      "record_id": "AlgebraicCombinatorics/Partitions/QBinomialFormulas.lean:AlgebraicCombinatorics.QBinomialRec.qBinomial_eq_zero_of_lt",
+      "risks": [
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "qbinomial_gt",
+        "hypothesis",
+        "stated"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030046755
+    },
+    {
+      "index": 40,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.symmetricGroup_card",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "elements"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030061110000000002
+    },
+    {
+      "index": 41,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.symmetricGroup_iso_of_equiv",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "bijective",
+        "isomorphic",
+        "conclusion"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030286875
+    },
+    {
+      "index": 42,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_apply_succ",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030415635
+    },
+    {
+      "index": 43,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_inv",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "simple",
+        "transpositions",
+        "inverse"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030470010000000002
+    },
+    {
+      "index": 44,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.isInvolution_of_disjoint_transpositions",
+      "risks": [
+        "broad_source_span"
+      ],
+      "flags": [
+        "broad",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "stated",
+        "informally"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.0301803
+    },
+    {
+      "index": 45,
+      "record_id": "AlgebraicCombinatorics/Permutations/Inversions1.lean:AlgebraicCombinatorics.lexLt_asymm",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "asymmetric",
+        "strict"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030034575
+    },
+    {
+      "index": 46,
+      "record_id": "AlgebraicCombinatorics/Permutations/Signs.lean:Equiv.Perm.sign_coe_eq_neg_one_pow_invCount",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "corollary",
+        "equals",
+        "invcount"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030457395
+    },
+    {
+      "index": 47,
+      "record_id": "AlgebraicCombinatorics/SignedCounting/AlternatingSums.lean:AlgebraicCombinatorics.SignedCounting.isPrimitiveRoot_iff_pow_eq_one_and_pow_ne_one",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "characterization"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03027774
+    },
+    {
+      "index": 48,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.isSymm_iff_permAction",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030646185
+    },
+    {
+      "index": 49,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.permAutomorphism_one",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "permutation",
+        "preserves"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03012375
+    },
+    {
+      "index": 50,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.S_one_mem",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029914950000000003
+    },
+    {
+      "index": 51,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.isSymm_mul",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "product"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.02996541
+    },
+    {
+      "index": 52,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.S_pow_mem",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "powers"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.029914950000000003
+    },
+    {
+      "index": 53,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.Monomial.toPoly_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030427815
+    },
+    {
+      "index": 54,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.Monomial.isPrimal_single",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "single",
+        "variable"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030427815
+    },
+    {
+      "index": 55,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.Monomial.degree_ofFinset",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030554400000000002
+    },
+    {
+      "index": 56,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.e_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030395625000000003
+    },
+    {
+      "index": 57,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.hZ_of_nonneg",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "agrees",
+        "negative",
+        "integers"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030633135000000002
+    },
+    {
+      "index": 58,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.h_eq_sum_prod_sym",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "tuples",
+        "multisets",
+        "product",
+        "defining"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03066054
+    },
+    {
+      "index": 59,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean:AlgebraicCombinatorics.SymmetricPolynomials.isAntisymm_zero",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.031027245000000002
+    },
+    {
+      "index": 60,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/LittlewoodRichardson.lean:AlgebraicCombinatorics.subTuple_apply'",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030070680000000002
+    },
+    {
+      "index": 61,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/MonomialSymmetric.lean:AlgebraicCombinatorics.SymmetricFunctions.monomialSymm_isSymmetric",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "follows",
+        "rename",
+        "monomialexp",
+        "sorttuple",
+        "therefore",
+        "sortpreimage",
+        "invariant"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.03083019
+    },
+    {
+      "index": 62,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean:SymmetricFunctions.SkewPartition.horizontalStrip_iff_entries",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "characterization"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.0300237
+    },
+    {
+      "index": 63,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:SkewSSYT.col_strict_of_lt",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 0,
+      "target_comment_terms_absent_from_source": [
+        "entries",
+        "strictly",
+        "columns"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.0313461
+    },
+    {
+      "index": 64,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap",
+      "risks": [
+        "broad_source_span",
+        "source_span_contains_extra_labels",
+        "source_span_contains_multiple_parts",
+        "source_span_contains_multiple_theorem_environments"
+      ],
+      "flags": [
+        "broad",
+        "multi-env",
+        "extra-labels",
+        "multi-part",
+        "target-comment-gap",
+        "focused-label-env",
+        "hidden-name-block-filtered"
+      ],
+      "focused_labeled_environments": 1,
+      "removed_hidden_target_context_blocks": 1,
+      "target_comment_terms_absent_from_source": [
+        "columns",
+        "multiplies",
+        "delegates",
+        "algebraiccombinatorics",
+        "alternant_swap"
+      ],
+      "hidden_target_names_found_in_source_payload": [],
+      "source_only_estimated_max_cost_usd": 0.030053715
+    }
+  ]
+}

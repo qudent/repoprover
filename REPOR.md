@@ -1,6 +1,6 @@
 # RepoProver Work Report - Last ~9 Hours
 
-Report time: 2026-05-05 11:15 UTC.
+Report time: 2026-05-05 11:25 UTC.
 
 ## Goal Being Advanced
 
@@ -28,6 +28,8 @@ This is no longer intended as a serial "call model, immediately check Lean, then
 
 The newest context-selection improvement is generic: row 11 now receives earlier same-file `simpleTransposition_*` helpers because they are prior declarations in the same Lean file with visible source-label comments. This does not inspect the withheld target theorem.
 
+After scaling the audit to 64 deterministic gold-candidate records, source-only prompts now also filter exact hidden target identifiers out of Lean context blocks and extract a `labeled_environment_focus` entry for the selected source label inside broad TeX spans. This is still an oracle source-span benchmark, but it is a better approximation to realistic prompt focus than handing the model a long multi-label chunk and hoping it picks the right theorem.
+
 ## Overfitting Assessment
 
 Yes: too much of the earlier 8-hour cycle was spent squeezing the same small hard slice. That produced useful infrastructure, but the 6/6 strict result should not be treated as evidence that the book-scale system works, because it used target-comment context.
@@ -49,6 +51,8 @@ The less transferable pieces are the row/domain-specific repair hints for FPS, p
 - Added context-mode comparison artifacts to quantify the gap between target-comment debugging prompts and realistic source-only prompts.
 - Added TeX environment-balance span risks and bounded line-range expansion so source-only prompts can include missing theorem/proposition bodies.
 - Added same-file source-label local API retrieval so realistic prompts can see earlier declarations attached to the same visible source labels.
+- Added exact hidden-target-name filtering for source-only Lean context blocks.
+- Added focused labeled-environment extraction inside broad TeX source spans.
 
 ## Experiment Timeline
 
@@ -96,6 +100,13 @@ The less transferable pieces are the row/domain-specific repair hints for FPS, p
    - Ran a fresh 11-record paid source-only generation with balanced spans: `$0.126677307`, 10/11 usable outputs, 1/11 verified.
    - Added visible `IsSwap` shape diagnostics and missing-helper repair guidance, then ran three shape-warning repairs for `$0.020500999`; no additional row passed.
 
+7. Larger zero-cost context audit:
+   - Built source-only and target-comment budget artifacts for 64 records from `docs/minimal-context-gold-candidates.jsonl`.
+   - Initial comparison exposed 5 hidden-name hits; 4 were exact context-block leaks and 1 was a substring false positive (`e_zero` inside `one_ne_zero`).
+   - Added exact Lean-identifier boundary matching and source-only filtering of hidden-name context blocks.
+   - Regenerated the 64-row audit: 0 hidden target-name hits, estimated max generation cost `$1.976172810`.
+   - Added `labeled_environment_focus`; every row now has a focused labeled environment, but the underlying selected spans are still broad in 62/64 rows.
+
 ## Current Best Results
 
 Validated strict hard-slice result:
@@ -118,6 +129,18 @@ Realistic source-only result so far:
 - The balanced-span rerun did not improve aggregate pass rate: it still verified 1/11 before repair, and shape-warning repairs did not add a pass.
 - The latest zero-cost budget regeneration keeps hidden target-name hits at 0 and shows row 11 now receives prior same-file `simpleTransposition_*` helpers.
 
+Larger source-only audit:
+
+- 64 deterministic gold-candidate theorem/lemma records audited at `$0.00`.
+- Source-only estimated max generation cost: `$1.976172810`.
+- Hidden target-name rows after filtering: `0/64`.
+- Target-comment gap rows: `45/64`.
+- Broad source-span rows: `62/64`.
+- Multi-environment rows: `61/64`.
+- Extra-label rows: `60/64`.
+- Focused labeled environments extracted: `65` across `64/64` rows.
+- Hidden-name context blocks removed: `4`.
+
 ## Files And Evidence
 
 - Main run: `docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/`
@@ -132,10 +155,13 @@ Realistic source-only result so far:
 - Source-only 11-record verification: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/eval/verification-180-results.md`
 - Source-only repair verification: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/eval/repair-attempt-001-verification-180-results.md`
 - Regenerated source-only budget audit: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-budget/`
+- Gold64 source-only budget audit: `docs/source-statement-runs/2026-05-05-gold64-source-only-budget/`
+- Gold64 target-comment budget audit: `docs/source-statement-runs/2026-05-05-gold64-target-comment-budget/`
+- Gold64 context audit report: `docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/context-budget-audit.md`
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`
-- Latest focused test result: `71 passed`.
+- Latest focused test result: `75 passed`.
 
 ## Practical Conclusions
 
@@ -144,4 +170,4 @@ Realistic source-only result so far:
 - The prompt improvements split into two classes: generic infrastructure/guidance that can transfer, and target-comment guidance that is now isolated behind `target-comment` mode for diagnostics only.
 - The next useful work is context selection, not more row-local repair: remaining failures include under-focused source spans and semantic theorem-family misses that compiler-only repair cannot honestly fix.
 - A visible-context shape diagnostic initially flagged the passing `X_mul_eq_shift` row because it read broad prompt guidance as source evidence; that diagnostic has been tightened so warnings are anchored in source/focus text.
-- The next slice should validate better context selection, especially theorem-family selection inside broad source spans, before spending on larger generation.
+- The next paid slice should be selected from rows where the focused labeled environment is clean enough to test generation, not from the highest-risk broad multi-label rows.
