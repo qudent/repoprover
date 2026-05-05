@@ -995,7 +995,13 @@ def test_materialize_candidate_project_can_include_record_imports_without_copyin
                         "line_range": [3, 3],
                     },
                 ],
-                "lean_predecessors": [],
+                "lean_predecessors": [
+                    {
+                        "path": "AlgebraicCombinatorics/Dep.lean",
+                        "declaration": "AlgebraicCombinatorics.dep",
+                        "line_range": [3, 3],
+                    }
+                ],
                 "source_spans": [{"path": "source.tex", "line_range": [1, 1]}],
             },
         }
@@ -1015,6 +1021,8 @@ def test_materialize_candidate_project_can_include_record_imports_without_copyin
     text = target_path.read_text(encoding="utf-8")
     assert "import AlgebraicCombinatorics.Dep" in text
     assert "theorem target : True := dep" not in text
+    assert "-- Predecessor context: AlgebraicCombinatorics/Dep.lean" not in text
+    assert text.count("def dep : True") == 0
     assert (tmp_path / "out" / "AlgebraicCombinatorics" / "Dep.lean").exists()
 
 

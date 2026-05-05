@@ -851,6 +851,36 @@ def _without_withheld_target_blocks(record: SelectedRecord, blocks: list[str]) -
     return kept, removed
 
 
+CONTEXT_BLOCK_PATH_RE = re.compile(
+    r"^-- (?:File context|Predecessor context|Local API retrieval|Same-file source-label API): (?P<path>[^:\n]+):",
+    re.MULTILINE,
+)
+
+
+def _context_block_path(block: str) -> Path | None:
+    match = CONTEXT_BLOCK_PATH_RE.match(block)
+    if not match:
+        return None
+    return Path(match.group("path"))
+
+
+def _without_imported_context_blocks(record: SelectedRecord, blocks: list[str]) -> list[str]:
+    target_path = Path(record.lean_path)
+    kept: list[str] = []
+    skip_next_body = False
+    for block in blocks:
+        if skip_next_body:
+            skip_next_body = False
+            continue
+        block_path = _context_block_path(block)
+        if block_path is not None and block_path != target_path:
+            if block.startswith("-- Predecessor context: ") or block.startswith("-- File context: "):
+                skip_next_body = True
+            continue
+        kept.append(block)
+    return kept
+
+
 def source_statement_context(
     project_root: Path,
     record: SelectedRecord,
@@ -1740,6 +1770,7 @@ def materialize_candidate_project(
         imports = ["Mathlib", *imports]
     if include_record_imports:
         copy_local_import_closure(project_root, output_root, imports, skip_paths={Path(record.lean_path)})
+        context_parts = _without_imported_context_blocks(record, context_parts)
     parts: list[str] = [*(f"import {module}" for module in imports), ""]
     parts.append("/-! Source-statement eval target. The target Lean statement was withheld from the model. -/")
     parts.append("")

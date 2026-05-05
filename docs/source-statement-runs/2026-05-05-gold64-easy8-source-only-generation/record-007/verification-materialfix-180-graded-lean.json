@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:42:31: error: Application type mismatch: The argument\n  b\nhas type\n  L\nof sort `Type u_1` but is expected to have type\n  ?m.9 * ?m.10 = 1\nof sort `Prop` in the application\n  inverse_unique b\n"
+}
