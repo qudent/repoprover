@@ -409,6 +409,12 @@ failures plus 1 hidden-grader mismatch; see
 - Added exact negative-binomial helper application guidance: use
   `fps_onePlusX_pow_neg' n` or named type arguments, not positional
   `fps_onePlusX_pow_neg' F n`. Focused tests still pass with `61 passed`.
+- Extended the no-gold shape diagnostic to flag row 5-style permutation
+  group-power mismatches where the visible prompt asks for `α ^ (n + 1) =
+  α ^ n * α` but the generated declaration states pointwise iteration. Running
+  it on the strict-guidance generation artifacts flags row 5 as
+  `pointwise_iteration_instead_of_group_power_statement`; focused tests pass
+  with `62 passed`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`

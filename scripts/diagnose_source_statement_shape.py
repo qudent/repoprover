@@ -149,6 +149,29 @@ def diagnose_shape(user_payload: dict[str, Any], declaration: str) -> list[Warni
         )
 
     if (
+        (
+            "group-power law" in context_lower
+            or "α ^ (n + 1) = α ^ n * α" in context_text
+            or "alpha ^ (n + 1) = alpha ^ n * alpha" in context_lower
+        )
+        and (
+            "Function.iterate" in declaration
+            or "^["
+            in declaration
+            or re.search(r"\(\s*\w+\s*\^\s*\(\s*\w+\s*\+\s*1\s*\)\s*\)\s+\w+\s*=", declaration)
+        )
+    ):
+        warnings.append(
+            _warning(
+                "pointwise_iteration_instead_of_group_power_statement",
+                "Visible context asks for the permutation group-power equality, but the generated statement appears to formalize pointwise iteration/application instead.",
+                visible_cue=_excerpt(context_text, r"group-power law|α \^ \(n \+ 1\) = α \^ n \* α|Function\.iterate"),
+                generated_cue=_excerpt(declaration, r"Function\.iterate|\^\[|\(\s*\w+\s*\^\s*\(\s*\w+\s*\+\s*1\s*\)\s*\)\s+\w+\s*="),
+                recommendation="State the group equality directly, e.g. `α ^ (n + 1) = α ^ n * α`, and keep pointwise/function-iteration reasoning inside the proof only if needed.",
+            )
+        )
+
+    if (
         ("prod_f" in context_text or "finite approximator" in context_lower)
         and ("infinite product" in context_lower or "finite coefficient approximators" in context_lower)
         and re.search(r"∏'|Multipliable|map_tprod|TopologicalSpace|Continuous", declaration)

@@ -311,6 +311,33 @@ def test_shape_diagnostic_flags_fin_object_inequalities() -> None:
     assert [warning["code"] for warning in warnings] == ["fin_object_inequality_instead_of_value_inequality"]
 
 
+def test_shape_diagnostic_flags_pointwise_permutation_power() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "target_source_focus": {
+                    "target_declaration_source_comment": {
+                        "text": "For `i ≥ 0`, `α^i = α ∘ α ∘ ⋯ ∘ α` (i times)."
+                    }
+                },
+                "domain_statement_shape_guidance": [
+                    {
+                        "preferred_statement_family": [
+                            "When the source focus is the group-power law for `α^(n+1)`, prefer the theorem statement `α ^ (n + 1) = α ^ n * α` over a pointwise statement about iterated functions."
+                        ],
+                        "avoid_statement_family": [
+                            "Do not formalize the power law as `Function.iterate`/`^[n]` unless the source focus explicitly asks for pointwise iteration."
+                        ],
+                    }
+                ],
+            }
+        },
+        "theorem generated {X : Type*} (α : Equiv.Perm X) (n : ℕ) (x : X) : (α ^ (n + 1)) x = (α^[n + 1]) x := by\n  sorry",
+    )
+
+    assert [warning["code"] for warning in warnings] == ["pointwise_iteration_instead_of_group_power_statement"]
+
+
 def test_shape_diagnostic_flags_weak_hprod_contract() -> None:
     warnings = diagnose_shape(
         {

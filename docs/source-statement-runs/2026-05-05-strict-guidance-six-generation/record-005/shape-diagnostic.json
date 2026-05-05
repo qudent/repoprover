@@ -1,0 +1,20 @@
+{
+  "index": 5,
+  "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+  "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-005",
+  "warnings": [
+    {
+      "code": "pointwise_iteration_instead_of_group_power_statement",
+      "severity": "warning",
+      "message": "Visible context asks for the permutation group-power equality, but the generated statement appears to formalize pointwise iteration/application instead.",
+      "visible_cue": "pply_of_ne_of_ne` gives the exact proof obligation.\", \"Do not formalize the power law as `Function.iterate`/`^[n]` unless the source focus explicitly asks for pointwise iteration.\", \"Do not use no",
+      "generated_cue": "theorem perm_pow_apply_eq_iterate (α : Equiv.Perm X) (n : ℕ) (x : X) : (α ^ n) x = (α ^[n]) x := by rw [Equiv.Perm.coe_pow]",
+      "recommendation": "State the group equality directly, e.g. `α ^ (n + 1) = α ^ n * α`, and keep pointwise/function-iteration reasoning inside the proof only if needed."
+    }
+  ],
+  "generated_name": "perm_pow_apply_eq_iterate",
+  "warning_count": 1,
+  "warning_codes": [
+    "pointwise_iteration_instead_of_group_power_statement"
+  ]
+}
