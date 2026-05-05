@@ -358,6 +358,49 @@ def test_repair_prompt_uses_generated_only_error_without_grader_feedback(tmp_pat
     assert "theorem target" not in prompt_text
 
 
+def test_gold_check_declaration_ignores_named_argument_markers(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    project_root.mkdir()
+    (project_root / "Demo.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "def f {R : Type*} [CommRing R] (x : R) : R := x",
+                "/-- Target with named implicit argument in the statement. -/",
+                "theorem target {R : Type*} [CommRing R] (x : R) : f (R := R) x = x := by",
+                "  rfl",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    record = SelectedRecord(
+        {
+            "id": "Demo.lean:Demo.target",
+            "output": {
+                "lean_path": "Demo.lean",
+                "declaration_names": ["Demo.target"],
+                "line_range": [5, 7],
+                "chunk_kind": "theorem",
+            },
+            "minimal_context": {"source_spans": [], "file_context": [], "lean_predecessors": []},
+        }
+    )
+
+    check = gold_check_declaration(
+        project_root,
+        record,
+        "generated",
+        "theorem generated (x : R) : f (R := R) x = x := by\n  rfl",
+    )
+
+    assert "f (R := R) x = x := by" in check
+    assert "simpa using generated (R := R) (x := x)" in check
+    assert "R := by" not in check
+
+
 def test_source_statement_context_does_not_duplicate_notation_support(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     row = copy.deepcopy(record.row)
@@ -961,7 +1004,12 @@ def test_generated_application_candidates_try_explicit_then_all_binders() -> Non
     ((Matrix.diagonal d).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det =
     ∏ i ∈ P, d i"""
 
-    assert generated_application_candidates("generated", head) == ["generated d P", "generated n d P", "generated"]
+    assert generated_application_candidates("generated", head) == [
+        "generated d P",
+        "generated n d P",
+        "generated (n := n) (d := d) (P := P)",
+        "generated",
+    ]
 
 
 def test_generated_application_candidates_ignore_doc_comment_binders() -> None:
@@ -969,21 +1017,34 @@ def test_generated_application_candidates_ignore_doc_comment_binders() -> None:
 theorem __repoprover_source_statement_check (k : ℕ) :
     (PowerSeries.X : PowerSeries ℚ) ^ k = PowerSeries.X ^ k"""
 
-    assert generated_application_candidates("generated", head) == ["generated k", "generated"]
+    assert generated_application_candidates("generated", head) == [
+        "generated k",
+        "generated (k := k)",
+        "generated",
+    ]
 
 
 def test_generated_application_candidates_ignore_parenthesized_terms_in_statement() -> None:
     head = """theorem __repoprover_source_statement_check {lam mu : Fin N → ℕ} (T : Tableau lam mu) :
     (monomialTableau T : MvPolynomial (Fin N) R) = xPow (contentTableau T)"""
 
-    assert generated_application_candidates("generated", head) == ["generated T", "generated lam mu T", "generated"]
+    assert generated_application_candidates("generated", head) == [
+        "generated T",
+        "generated lam mu T",
+        "generated (lam := lam) (mu := mu) (T := T)",
+        "generated",
+    ]
 
 
 def test_generated_application_candidates_parse_nested_type_binders() -> None:
     head = """theorem generated (α : Equiv.Perm X) (n : ℕ) :
     α ^ (n + 1) = α ^ n * α"""
 
-    assert generated_application_candidates("generated", head) == ["generated α n", "generated"]
+    assert generated_application_candidates("generated", head) == [
+        "generated α n",
+        "generated (α := α) (n := n)",
+        "generated",
+    ]
 
 
 def test_gold_check_tries_generated_binder_order_before_gold_order(tmp_path: Path) -> None:

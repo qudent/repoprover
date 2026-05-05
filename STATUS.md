@@ -10,7 +10,7 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 ## Active Goals
 - [ ] Keep every paid OpenRouter output recoverable in git before Lean checking.
 - [ ] Improve realistic context selection, especially source-part disambiguation and Mathlib API selection, before larger generation runs.
-- [ ] Prove that selector-selected previous project context plus Mathlib context improves generation/repair success on a small diverse slice.
+- [ ] Expand selector-selected previous project context plus Mathlib context from the current 1-pass proof to a small diverse slice.
 - [ ] Use broader source-only slices as the main evidence, not the old six-row loop.
 
 ## TODO Plan
@@ -28,13 +28,14 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - [x] Apply successful selector output to context-enhanced records and run a small generation/verification probe.
 - [x] Add source-part disambiguation before generation to avoid broad `(a)/(b)` conjunction outputs.
 - [x] Add imported previous-project source-label context candidates to selector payloads.
-- [ ] Apply the project-context selector output and run generation/verification after committing paid selector artifacts.
+- [x] Apply the project-context selector output and run generation/verification after committing paid selector artifacts.
+- [ ] Pick the next small diverse records where previous-project or Mathlib context should make a narrow proof possible.
 - [ ] Shrink selector schema so 4-record batches complete as valid JSON.
 
 ## Blockers
 - Source-only context still often lacks exact theorem-family cues: target-comment focus terms are absent from visible source spans in `45/64` broader audit rows.
 - The deterministic gold-candidate source spans are usually broad: `62/64` broad, `61/64` multi-environment, `60/64` extra-label rows in the latest audit.
-- Existing generated proofs still fail Lean on the latest two-record source-progress run: `det_minors_diag` invents unavailable helper names; `alternant_swap` needed previous-project context and explicit type arguments.
+- `det_minors_diag` still fails: the model invents unavailable Cauchy-Binet helper names and produces malformed proof syntax. Treat it as a harder repair/context case, not evidence that project-context selection failed.
 - A 72-record preflight was too slow with current Lean setup; keep validation slices bounded until verification reuse is improved.
 
 ## Recent Results
@@ -48,8 +49,9 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - Context-selected generation probe cost `$0.02031073` for one returned output; verification passed `0/2`.
 - Source-progress selector plus generation fixed the semantic over-bundling for `alternant_swap`, but verification stayed `0/2`; a generic `noncomputable section` materialization fix removed the first alternant compiler blocker.
 - New project-context selector run `2026-05-05-context-selection-project-context-paid` cost `$0.002581152`; `alternant_swap` selected part (b) and identified imported `AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson.alternant_swap` as the direct proof route.
+- Project-context generation run `2026-05-05-project-context-selected-generation-paid` cost `$0.022922122`; after grader fixes, verification passed `1/2`, with `alternant_swap_of_ne` proving the withheld `alternant_swap` target.
 - Focused tests pass with source-statement, source-context-selection, context graph, and materializer tests.
 
 ## Agent Notes
-- Commit the project-context selector artifacts before applying them to a new generation/verification run.
-- Next generation should prefer selector-selected previous project context; for `alternant_swap`, the desired proof shape is `simpa [alternant] using AlgebraicCombinatorics.alternant_swap hij`.
+- Latest useful proof path: selector found imported previous theorem -> generator wrote `AlgebraicCombinatorics.alternant_swap (R := R) hij` -> verifier/grader passed after named-argument application fixes.
+- Next work should broaden the success beyond this single alternant wrapper before claiming the system works for a diverse set.

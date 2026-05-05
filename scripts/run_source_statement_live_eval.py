@@ -35,6 +35,7 @@ from scripts.materialize_minimal_context_smoke import (  # noqa: E402
     copy_lake_cache,
     copy_project_config,
     context_close_commands,
+    declaration_body_marker_index,
     load_jsonl,
     read_line_range,
     render_ordered_context_and_predecessors,
@@ -1803,6 +1804,10 @@ def generated_application_candidates(generated_name: str, declaration_head: str)
         app = " ".join([generated_name, *args]) if args else generated_name
         if app not in candidates:
             candidates.append(app)
+    if all_args:
+        named_app = " ".join([generated_name, *(f"({arg} := {arg})" for arg in all_args)])
+        if named_app not in candidates:
+            candidates.append(named_app)
     if generated_name not in candidates:
         candidates.append(generated_name)
     return candidates
@@ -1855,14 +1860,18 @@ def copy_local_import_closure(
 
 
 def _declaration_head(declaration: str) -> str:
-    marker = declaration.find(":=")
+    try:
+        marker = declaration_body_marker_index(declaration)
+    except ValueError:
+        marker = -1
     return declaration[:marker].rstrip() if marker != -1 else declaration.rstrip()
 
 
 def gold_check_declaration(project_root: Path, record: SelectedRecord, generated_name: str, generated_declaration: str) -> str:
     original = read_line_range(project_root / record.lean_path, record.line_range)
-    marker = original.find(":=")
-    if marker == -1:
+    try:
+        marker = declaration_body_marker_index(original)
+    except ValueError:
         raise ValueError(f"target declaration lacks ':=': {record.record_id}")
     head = original[:marker].rstrip()
     head = re.sub(

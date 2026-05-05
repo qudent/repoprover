@@ -232,10 +232,62 @@ def read_line_range(path: Path, line_range: tuple[int, int]) -> str:
     return "\n".join(lines[start - 1 : end]).rstrip() + "\n"
 
 
+def declaration_body_marker_index(original_chunk: str) -> int:
+    """Return the top-level declaration body `:=` marker.
+
+    Lean terms can contain named arguments such as `(R := R)` before the actual
+    theorem/definition body. A raw string `find(":= ")` splits those statements
+    in the wrong place, so scan from the declaration keyword and ignore markers
+    nested inside parentheses/braces/brackets, comments, and strings.
+    """
+
+    declaration_start = 0
+    offset = 0
+    for line in original_chunk.splitlines(keepends=True):
+        if DECL_RE.match(line):
+            declaration_start = offset
+            break
+        offset += len(line)
+
+    depth = 0
+    index = declaration_start
+    while index < len(original_chunk) - 1:
+        if original_chunk.startswith("--", index):
+            newline = original_chunk.find("\n", index)
+            if newline == -1:
+                break
+            index = newline + 1
+            continue
+        if original_chunk.startswith("/-", index):
+            end = original_chunk.find("-/", index + 2)
+            if end == -1:
+                break
+            index = end + 2
+            continue
+        char = original_chunk[index]
+        if char == '"':
+            index += 1
+            while index < len(original_chunk):
+                if original_chunk[index] == "\\":
+                    index += 2
+                    continue
+                if original_chunk[index] == '"':
+                    index += 1
+                    break
+                index += 1
+            continue
+        if char in "([{":
+            depth += 1
+        elif char in ")]}":
+            depth = max(0, depth - 1)
+        elif char == ":" and original_chunk[index + 1] == "=" and depth == 0:
+            return index
+        index += 1
+    raise ValueError("target declaration chunk does not contain a top-level ':='")
+
+
 def declaration_with_sorry(original_chunk: str) -> str:
-    marker = original_chunk.find(":=")
-    if marker == -1:
-        raise ValueError("target declaration chunk does not contain ':='")
+    marker = declaration_body_marker_index(original_chunk)
     return original_chunk[: marker + 2].rstrip() + " by\n  sorry\n"
 
 

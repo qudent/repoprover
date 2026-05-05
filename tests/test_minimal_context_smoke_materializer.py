@@ -8,6 +8,7 @@ from scripts.materialize_minimal_context_smoke import (
     SelectedRecord,
     build_target_lean,
     context_close_commands,
+    declaration_with_sorry,
     copy_lake_cache,
     declarations_in_file,
     materialize_smoke_project,
@@ -49,6 +50,27 @@ def test_context_close_commands_preserves_named_sections() -> None:
     )
 
     assert closes == ["end Local", "end Outer"]
+
+
+def test_declaration_with_sorry_ignores_named_argument_markers() -> None:
+    chunk = "\n".join(
+        [
+            "/-- Uses a named implicit argument in the statement. -/",
+            "theorem target {R : Type*} [CommRing R] (x : R) :",
+            "    id (α := R) x = x := by",
+            "  rfl",
+        ]
+    )
+
+    assert declaration_with_sorry(chunk) == "\n".join(
+        [
+            "/-- Uses a named implicit argument in the statement. -/",
+            "theorem target {R : Type*} [CommRing R] (x : R) :",
+            "    id (α := R) x = x := by",
+            "  sorry",
+            "",
+        ]
+    )
 
 
 def test_materialize_smoke_project_writes_single_sorry_project(tmp_path: Path) -> None:

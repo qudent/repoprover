@@ -148,6 +148,16 @@ as the direct previous-project theorem, and kept unexplained payload target-name
 leaks at `0`. The audit records one allowed previous-project name overlap because
 the imported theorem has the same local name as the wrapper target.
 
+The applied project-context generation run:
+
+`docs/source-statement-runs/2026-05-05-project-context-selected-generation-paid/`
+
+cost `$0.022922122`. Verification with the named-argument grader fix passed
+`1/2`: `alternant_swap_of_ne` proved the withheld `alternant_swap` target by
+applying the imported previous theorem. The determinant record still failed
+generated-only Lean checking because the model invented unavailable Cauchy-Binet
+helper names and emitted malformed proof syntax.
+
 ## Practical Takeaways
 
 - Use no-reasoning mode for cheap selector models. Reasoning mode consumed the
@@ -163,11 +173,14 @@ the imported theorem has the same local name as the wrapper target.
 - Source-part disambiguation is now working on the alternant broad-label case;
   the next proof-generation run should apply previous-project context before
   trying to reprove long imported facts.
+- The verifier/grader must treat named implicit arguments like `(R := R)` as
+  term syntax, not declaration-body markers; otherwise valid generated proofs
+  can be hidden by malformed grader code.
 
 ## Next Steps
 
-1. Apply the project-context selector output to records and run a generation-only
-   probe, committing paid artifacts before Lean verification.
+1. Broaden beyond the current alternant wrapper success to a small diverse set
+   where selected Mathlib/project context should make narrow proofs possible.
 2. Reduce selector schema verbosity so 4-record batches can finish in JSON.
 3. Split selection into two compact rounds if the combined schema remains too
    verbose: source-part/project-context selection first, Mathlib API selection
