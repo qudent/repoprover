@@ -293,6 +293,7 @@ def test_source_statement_prompt_includes_fps_limit_shape_guidance(tmp_path: Pat
     assert "CoeffStabilizesTo" in guidance_text
     assert "IsSummable" in guidance_text
     assert "tsum'" in guidance_text
+    assert "Do not bundle `IsSummable f` and `tsum' f ... = L` into a conjunction" in guidance_text
     assert "TopologicalSpace" in guidance_text
     assert "theorem target" not in guidance_text
 
@@ -310,7 +311,7 @@ def test_source_statement_prompt_includes_fps_indeterminate_guidance(tmp_path: P
 
     messages = build_messages(project_root, SelectedRecord(row))
     user = json.loads(messages[1]["content"])
-    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
 
     assert "formal power series indeterminate" in guidance_text
     assert "coeff_X" in guidance_text
@@ -332,7 +333,7 @@ def test_source_statement_prompt_includes_x_power_multiplication_shape_guidance(
 
     messages = build_messages(project_root, SelectedRecord(row))
     user = json.loads(messages[1]["content"])
-    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
 
     assert "formal power series multiplication by powers of X" in guidance_text
     assert "coeff_mul_X_pow" in guidance_text
@@ -357,6 +358,51 @@ def test_source_statement_prompt_includes_substitution_shape_guidance(tmp_path: 
     assert "PowerSeries.subst X g" in guidance_text
     assert "HasSubst.X'" in guidance_text
     assert "coeff_subst'" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_finite_finsum_substitution_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Lemma fps_comp_coeff_finite: the coefficient of finite composition follows by restricting finsum support.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["fps_comp_coeff_finite"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["fps_comp_coeff_finite"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/FPS/Substitution.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "finsum_eq_sum_of_support_subset" in guidance_text
+    assert "fps_subs_wd_firstCoeffs" in guidance_text
+    assert "wrong-arity `finsum_eq_sum`" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_negative_binomial_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Theorem fps_newtonBinomial_neg gives the inverse of (1 + X)^n using Ring.choose (-(n : ℤ)).\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["fps_newtonBinomial_neg"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["fps_newtonBinomial_neg"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/DividingFPS.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"], ensure_ascii=False)
+
+    assert "negative binomial formal power series" in guidance_text
+    assert "negative-binomial inverse-power theorem" in guidance_text
+    assert "fps_onePlusX_pow_neg'" in guidance_text
+    assert "Ring.choose (-(n : ℤ)) k : F" in guidance_text
+    assert "BinomialRing F" in guidance_text
+    assert "fps_newtonBinomial_neg" not in guidance_text
     assert "theorem target" not in guidance_text
 
 
@@ -428,6 +474,28 @@ def test_source_statement_prompt_includes_partition_transpose_guidance(tmp_path:
     assert "theorem target" not in guidance_text
 
 
+def test_source_statement_prompt_includes_partition_zero_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "For p : Partition 0, the parts of p are zero, so there is a unique partition of 0.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["partition_zero"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["partition_zero"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/Partitions/Basics.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "partition_zero_parts" in guidance_text
+    assert "p.parts" in guidance_text
+    assert ".entries" in guidance_text
+    assert ".sum_eq" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
 def test_source_statement_prompt_includes_simple_transposition_guidance(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     (project_root / "Demo.tex").write_text(
@@ -448,6 +516,49 @@ def test_source_statement_prompt_includes_simple_transposition_guidance(tmp_path
     assert "k.val" in guidance_text
     assert "i.val" in guidance_text
     assert "Fin-object inequalities" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_permutation_power_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "For a permutation α, the power α ^ (n + 1) applies as α after α ^ n by function composition.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["perm_pow_succ"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["perm_pow_succ"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/Permutations/Basics.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "Equiv.Perm.coe_mul" in guidance_text
+    assert "Function.comp_apply" in guidance_text
+    assert "Equiv.mul_apply" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_simple_transposition_isswap_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "The simple transposition s_i is a swap.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["simpleTransposition_isSwap"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["simpleTransposition_isSwap"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/Permutations/Basics.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "(simpleTransposition i).IsSwap" in guidance_text
+    assert "displayed local `IsSwap` theorem" in guidance_text
+    assert "simpleTransposition_isSwap" not in guidance_text
+    assert "Do not answer only `simpleTransposition i = transposition ...`" in guidance_text
     assert "theorem target" not in guidance_text
 
 

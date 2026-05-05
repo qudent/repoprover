@@ -721,6 +721,7 @@ def domain_statement_shape_guidance(
     imports = " ".join(record.imports)
     prefix = "\n".join(context_parts)
     combined = f"{source_text}\n{labels}\n{target_comment_text}\n{imports}\n{record.lean_path}"
+    hidden_target_names = " ".join(record.declaration_names).lower()
 
     guidance: list[dict[str, Any]] = []
     fps_limit_signal = (
@@ -738,10 +739,12 @@ def domain_statement_shape_guidance(
                 "preferred_statement_family": [
                     "Use the repository's coefficientwise limit API when it is displayed or imported: `CoeffStabilizesTo`, `IsSummable`, and `tsum'`.",
                     "Phrase finite partial sums with `Finset.range`; this file uses partial sums indexed by an upper natural bound.",
+                    "For a theorem/comment named like `isSummable_of_coeffStabilizesTo_partial_sum'`, prefer the narrow conclusion `IsSummable f`; for a theorem/comment named like `tsum'_eq...`, prefer only the `tsum'` equality.",
                 ],
                 "avoid_statement_family": [
                     "Do not translate this FPS limit prose into Mathlib's topological `HasSum`, `Summable`, or `∑'` API unless that exact API appears in the local context.",
                     "Do not add topological assumptions such as `TopologicalSpace K⟦X⟧` just because the prose says limit.",
+                    "Do not bundle `IsSummable f` and `tsum' f ... = L` into a conjunction unless the source focus asks for the combined theorem.",
                 ],
             }
         )
@@ -785,19 +788,68 @@ def domain_statement_shape_guidance(
 
     substitution_signal = "Substitution.lean" in record.lean_path or "prop.fps.subs.rules" in labels
     if substitution_signal:
+        finite_coeff_signal = any(
+            term in combined
+            for term in [
+                "fps_comp_coeff_finite",
+                "finite coefficient",
+                "finite composition",
+                "finsum",
+                "support subset",
+                "alternative coefficient formula",
+                "actually finite",
+                "for any fixed n",
+                "d > n",
+            ]
+        )
+        preferred_substitution = [
+            "For the rule `g ∘ X = g`, state `PowerSeries.subst X g = g` and use the local `HasSubst.X'`/`coeff_subst'` style when needed.",
+            "Keep the argument order from displayed local APIs: `PowerSeries.subst inner outer`, so `PowerSeries.subst X g` means substitute `X` into `g`.",
+            "If proving by coefficients, the local proof pattern is `ext n`; rewrite with `coeff_subst'`; then use `coeff_X_pow` and `finsum_eq_single`.",
+            "After `rw [coeff_subst' ha g n]`, simplify scalar actions with `simp only [coeff_X_pow, smul_eq_mul]` before applying `finsum_eq_single`; do not apply a multiplication-valued `finsum_eq_single` directly to a scalar-action goal.",
+        ]
+        avoid_substitution = [
+            "Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is available.",
+            "Do not swap the rule into `PowerSeries.subst g X = g`; that is a different local lemma.",
+        ]
+        if finite_coeff_signal:
+            preferred_substitution.extend(
+                [
+                    "For finite coefficient formulas for substitution, derive the infinite coefficient formula from `fps_comp_coeff`, then restrict the finite sum with `finsum_eq_sum_of_support_subset`.",
+                    "The support proof usually shows terms outside `Finset.range (n + 1)` vanish: from `d ∉ Finset.range (n + 1)`, derive `n < d`, use `fps_subs_wd_firstCoeffs`, and finish the coefficient term with `mul_zero`.",
+                ]
+            )
+            avoid_substitution.append(
+                "Do not use guessed helpers such as `finsum_eq_finset_sum` or wrong-arity `finsum_eq_sum`."
+            )
         guidance.append(
             {
                 "domain": "formal power series substitution",
                 "trigger": "source context is a substitution rule for formal power series",
+                "preferred_statement_family": preferred_substitution,
+                "avoid_statement_family": avoid_substitution,
+            }
+        )
+
+    negative_binomial_signal = (
+        "DividingFPS.lean" in record.lean_path
+        or "newtonbinomial" in combined
+        or "oneplusx_pow_neg" in combined
+        or "ring.choose (-(n" in combined
+    )
+    if negative_binomial_signal:
+        guidance.append(
+            {
+                "domain": "negative binomial formal power series",
+                "trigger": "source context describes inverse powers of `1 + X` and negative binomial coefficients",
                 "preferred_statement_family": [
-                    "For the rule `g ∘ X = g`, state `PowerSeries.subst X g = g` and use the local `HasSubst.X'`/`coeff_subst'` style when needed.",
-                    "Keep the argument order from displayed local APIs: `PowerSeries.subst inner outer`, so `PowerSeries.subst X g` means substitute `X` into `g`.",
-                    "If proving by coefficients, the local proof pattern is `ext n`; rewrite with `coeff_subst'`; then use `coeff_X_pow` and `finsum_eq_single`.",
-                    "After `rw [coeff_subst' ha g n]`, simplify scalar actions with `simp only [coeff_X_pow, smul_eq_mul]` before applying `finsum_eq_single`; do not apply a multiplication-valued `finsum_eq_single` directly to a scalar-action goal.",
+                    "For the negative-binomial inverse-power theorem, use the exact local binder/typeclass shape `{F : Type*} [Field F] [BinomialRing F] (n : ℕ)`.",
+                    "State the right hand side as `PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F)`; keep the negative upper argument in `ℤ` and cast the coefficient to `F`.",
+                    "Prefer the displayed local helper `fps_onePlusX_pow_neg' n` when it appears in context.",
                 ],
                 "avoid_statement_family": [
-                    "Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is available.",
-                    "Do not swap the rule into `PowerSeries.subst g X = g`; that is a different local lemma.",
+                    "Do not change the upper argument to `-(n : F)` or leave `BinomialRing`/coefficient types to metavariable inference.",
+                    "Do not replace the local `Ring.choose` family with `Nat.choose` or an ad hoc binomial coefficient definition.",
                 ],
             }
         )
@@ -847,36 +899,94 @@ def domain_statement_shape_guidance(
         or ("transpose" in combined and "largest part" in combined and "number of parts" in combined)
     )
     if partition_transpose_signal:
+        partition_zero_signal = (
+            "partition 0" in combined
+            or "partition of 0" in combined
+            or "partitions of 0" in combined
+            or "empty partition" in combined
+            or "has no parts" in combined
+            or "parts_eq_zero" in hidden_target_names
+            or "parts_eq_zero" in prefix
+        )
+        preferred_partition = [
+            "Use the displayed local API for partitions: `numParts p`, `largestPart p`, `transpose`, `transpose_transpose`, `transpose_length_eq_largestPart`, and `transpose_largestPart_eq_length` when present.",
+            "Treat `numParts` and `largestPart` as functions unless local context shows field notation.",
+            "For cardinalities of filtered `Finset.univ`, prefer a current Mathlib bijection/image/cardinality API that actually exists in this Lean version; avoid guessed names.",
+        ]
+        avoid_partition = [
+            "Do not call non-existent helpers such as `Finset.card_congr`.",
+            "Do not use `.numParts` or `.largestPart` field notation when Lean reports that the partition type is not inferred.",
+        ]
+        if partition_zero_signal:
+            preferred_partition.extend(
+                [
+                    "For `(p : Partition 0)`, use `p.parts`, `partition_zero_parts p`, a displayed cardinality fact such as `parts_card_zero p` if available, and `eq_iff_parts_eq` for equality reductions.",
+                    "If proving uniqueness of partitions of `0`, reduce equality to equality of `parts` rather than inventing entries or sum fields.",
+                ]
+            )
+            avoid_partition.append(
+                "Do not invent partition fields or methods such as `.entries` or `.sum_eq`; use the displayed `parts` API."
+            )
         guidance.append(
             {
                 "domain": "partition transpose cardinality",
                 "trigger": "source context uses partition transpose to swap number of parts and largest part",
-                "preferred_statement_family": [
-                    "Use the displayed local API for partitions: `numParts p`, `largestPart p`, `transpose`, `transpose_transpose`, `transpose_length_eq_largestPart`, and `transpose_largestPart_eq_length` when present.",
-                    "Treat `numParts` and `largestPart` as functions unless local context shows field notation.",
-                    "For cardinalities of filtered `Finset.univ`, prefer a current Mathlib bijection/image/cardinality API that actually exists in this Lean version; avoid guessed names.",
-                ],
-                "avoid_statement_family": [
-                    "Do not call non-existent helpers such as `Finset.card_congr`.",
-                    "Do not use `.numParts` or `.largestPart` field notation when Lean reports that the partition type is not inferred.",
-                ],
+                "preferred_statement_family": preferred_partition,
+                "avoid_statement_family": avoid_partition,
             }
         )
     permutation_signal = "Permutations/Basics.lean" in record.lean_path or "def.perm.si" in labels
     if permutation_signal:
+        permutation_power_signal = any(
+            term in combined
+            for term in [
+                "α^(n+1)",
+                "α ^ (n+1)",
+                "α ^ (n + 1)",
+                "perm_pow",
+                "power",
+                "iterate",
+            ]
+        )
+        simple_transposition_is_swap_signal = (
+            "is a swap" in combined
+            or "are swaps" in combined
+            or "2-cycles" in combined
+            or "isswap" in hidden_target_names
+        )
+        preferred_permutation = [
+            "Use the local `simpleTransposition` definition and `Equiv.swap_apply_of_ne_of_ne` proof shape when proving a fixed point.",
+            "For the fixed-point theorem, prefer assumptions on values, e.g. `k.val ≠ i.val` and `k.val ≠ i.val + 1`, if the displayed local context uses `Fin` representatives.",
+            "If the source says `k ≠ i, i+1`, make the generated statement match the local index representation rather than inventing new `Fin` literals.",
+        ]
+        avoid_permutation = [
+            "Do not produce a theorem whose assumptions are stronger/different Fin-object inequalities if the source focus likely expects value inequalities.",
+            "Do not rely on bare `simp [simpleTransposition, h1, h2]` when `Equiv.swap_apply_of_ne_of_ne` gives the exact proof obligation.",
+        ]
+        if permutation_power_signal:
+            preferred_permutation.extend(
+                [
+                    "For powers of permutations, use current `Equiv.Perm`/function coercion APIs such as `pow_succ`, `pow_succ'`, `Equiv.Perm.coe_mul`, `Equiv.Perm.mul_apply`, `Function.comp_apply`, and `Function.iterate_succ_apply'`.",
+                    "When proving pointwise statements about `(α ^ (n + 1)) x`, rewrite multiplication/application through the permutation coercion API instead of applying a generic equivalence helper.",
+                ]
+            )
+            avoid_permutation.append("Do not use nonexistent helpers such as `Equiv.mul_apply`.")
+        if simple_transposition_is_swap_signal:
+            preferred_permutation.extend(
+                [
+                    "If the source says the simple transposition is a swap, state `(simpleTransposition i).IsSwap`; this is not just an equality-to-transposition theorem.",
+                    "Use a displayed local `IsSwap` theorem directly if one appears in context, or prove `IsSwap` from `simpleTransposition_eq_transposition` and the swap API.",
+                ]
+            )
+            avoid_permutation.append(
+                "Do not answer only `simpleTransposition i = transposition ...` when the requested statement shape is `Perm.IsSwap`."
+            )
         guidance.append(
             {
                 "domain": "simple transposition statement shape",
                 "trigger": "source focus describes the simple transposition `s_i` and the fixed-point case",
-                "preferred_statement_family": [
-                    "Use the local `simpleTransposition` definition and `Equiv.swap_apply_of_ne_of_ne` proof shape when proving a fixed point.",
-                    "For the fixed-point theorem, prefer assumptions on values, e.g. `k.val ≠ i.val` and `k.val ≠ i.val + 1`, if the displayed local context uses `Fin` representatives.",
-                    "If the source says `k ≠ i, i+1`, make the generated statement match the local index representation rather than inventing new `Fin` literals.",
-                ],
-                "avoid_statement_family": [
-                    "Do not produce a theorem whose assumptions are stronger/different Fin-object inequalities if the source focus likely expects value inequalities.",
-                    "Do not rely on bare `simp [simpleTransposition, h1, h2]` when `Equiv.swap_apply_of_ne_of_ne` gives the exact proof obligation.",
-                ],
+                "preferred_statement_family": preferred_permutation,
+                "avoid_statement_family": avoid_permutation,
             }
         )
     return guidance

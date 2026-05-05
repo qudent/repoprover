@@ -100,7 +100,11 @@ quality is still not high enough for feed-forward textbook formalization. See
 The six remaining failures are classified in
 `docs/source-statement-preflight-passing-11-failure-diagnosis.md`; do not spend
 more on generic compiler-feedback repair for rows 7, 9, or 10 without new local
-API/statement-shape context.
+API/statement-shape context. Targeted guidance for those six buckets is now
+implemented and zero-cost prompt-checked; the six-row budget-only run completed
+with 0 paid calls and all expected row-specific cues present, while keeping
+hidden target declaration names out of emitted payloads. See
+`docs/source-statement-targeted-guidance-six-budget-report.md`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -301,10 +305,13 @@ failures plus 1 hidden-grader mismatch; see
   diagnostics and local API family before spending more on retries; rows 7, 9,
   and 10 did not improve after a second compiler-feedback pass. See
   `docs/source-statement-preflight-passing-11-failure-diagnosis.md`.
-- [ ] Add targeted visible-context retrieval/guidance for the 11-record failure
+- [x] Add targeted visible-context retrieval/guidance for the 11-record failure
   buckets: FPS limits statement narrowing, binomial/FPS typeclass specificity,
   `finsum` finite-support APIs, partition constructors/projections, permutation
   powers/function coercions, and `Perm.IsSwap` statement shape.
+- [ ] Run one small paid generation-only retry over the same six targeted
+  failure rows, then verify serially with reusable Lean projects and archive
+  every provider output before checking.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
@@ -338,6 +345,11 @@ failures plus 1 hidden-grader mismatch; see
   `/tmp` in this session, so the active diagnostic uses the documented
   Cauchy--Binet fallback failure from `docs/source-statement-live-eval-report.md`.
 ## Recent Results
+- Added targeted statement/API prompt guidance for the six remaining failures
+  from the 11-record source-statement run and validated the exact emitted
+  payloads with a `$0.00` six-row budget-only run. Focused tests passed with
+  `59 passed`; see
+  `docs/source-statement-targeted-guidance-six-budget-report.md`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`
