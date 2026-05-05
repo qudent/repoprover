@@ -632,6 +632,13 @@ def test_generated_application_candidates_ignore_parenthesized_terms_in_statemen
     assert generated_application_candidates("generated", head) == ["generated T", "generated lam mu T", "generated"]
 
 
+def test_generated_application_candidates_parse_nested_type_binders() -> None:
+    head = """theorem generated (α : Equiv.Perm X) (n : ℕ) :
+    α ^ (n + 1) = α ^ n * α"""
+
+    assert generated_application_candidates("generated", head) == ["generated α n", "generated"]
+
+
 def test_gold_check_tries_generated_binder_order_before_gold_order(tmp_path: Path) -> None:
     project_root = tmp_path / "project"
     project_root.mkdir()

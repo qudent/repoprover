@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-05-05T08:14:41.399406+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation",
+  "work_root": "/tmp/repoprover-strict-guidance-six-shape-repair-verify",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "grader_gold_statement_not_proved": 1,
+    "missing_model_output": 5
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-001/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-002/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-003/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-004",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-004/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-005",
+      "generated_name": "perm_pow_succ",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:22:30: error: Application type mismatch: The argument\n  X\nhas type\n  Type u_1\nbut is expected to have type\n  Perm ?m.21\nin the application\n  perm_pow_succ X\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-006",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-006/repair-attempt-002-model-output.json"
+    }
+  ]
+}

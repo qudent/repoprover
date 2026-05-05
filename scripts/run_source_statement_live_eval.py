@@ -1170,13 +1170,42 @@ def declaration_binder_names(declaration_head: str, *, include_implicit: bool) -
                 stop = index
                 break
         signature = binder_source[:stop]
-    for match in re.finditer(r"([\{\(])([^\{\}\(\)]*?)\s*:", signature, flags=re.DOTALL):
-        opener = match.group(1)
+    index = 0
+    while index < len(signature):
+        opener = signature[index]
+        if opener not in "({":
+            index += 1
+            continue
+        closer = ")" if opener == "(" else "}"
+        depth = 1
+        end = index + 1
+        while end < len(signature) and depth:
+            if signature[end] == opener:
+                depth += 1
+            elif signature[end] == closer:
+                depth -= 1
+            end += 1
+        if depth:
+            break
+        group = signature[index + 1 : end - 1]
+        index = end
         if opener == "{" and not include_implicit:
             continue
-        binder_text = match.group(2).strip()
+        colon_index: int | None = None
+        nested = 0
+        for group_index, char in enumerate(group):
+            if char in "({[":
+                nested += 1
+            elif char in ")}]" and nested > 0:
+                nested -= 1
+            elif char == ":" and nested == 0:
+                colon_index = group_index
+                break
+        if colon_index is None:
+            continue
+        binder_text = group[:colon_index].strip()
         for name in binder_text.split():
-            if name and re.match(r"^[A-Za-z_][A-Za-z0-9_']*$", name) and name != "_":
+            if name and re.match(r"^[^\W\d][\w']*$", name, flags=re.UNICODE) and name != "_":
                 if name not in names:
                     names.append(name)
     return names

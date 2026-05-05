@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-05-05T08:17:14.457570+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation",
+  "work_root": "/tmp/repoprover-strict-guidance-six-shape-repair-verify-fixed",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 1,
+  "success_rate": 0.16666666666666666,
+  "failure_classes": {
+    "missing_model_output": 5
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-001/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-002/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-003/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-004",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-004/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-005",
+      "generated_name": "perm_pow_succ",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:21:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:22:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:21:4: warning: 'simpa using perm_pow_succ' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:22:4: warning: 'simpa using perm_pow_succ X α n' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:17:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-006",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-006/repair-attempt-002-model-output.json"
+    }
+  ]
+}

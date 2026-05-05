@@ -127,7 +127,11 @@ repair over the three compile failures recovered row 6, taking the cumulative
 strict-guidance hard slice to 3/6 verified successes, but cost `$0.166295128`
 because the old repair queue launched all three concurrent calls before
 reserved-cost accounting. The repair queue now reserves estimated cost before
-launch; focused tests cover this cap behavior.
+launch; focused tests cover this cap behavior. A shape-warning repair then
+recovered row 5 after the verifier application-candidate parser was fixed for
+nested type binders and Unicode Lean identifiers. The strict-guidance hard slice
+is now 4/6 cumulative verified successes for `$0.203257397`; rows 2 and 3
+remain open.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -350,8 +354,11 @@ failures plus 1 hidden-grader mismatch; see
 - [x] For remaining row 2, add exact visible application guidance for
   `fps_onePlusX_pow_neg'` without leaking the target theorem name; the model
   keeps passing the type argument where Lean expects the natural exponent.
-- [ ] Design a statement-shape-first generation stage for row 5-style semantic
-  mismatches before another fresh broad generation pass.
+- [x] Design a statement-shape-first generation stage for row 5-style semantic
+  mismatches before another fresh broad generation pass. Row 5 now verifies
+  after shape-warning repair plus a verifier parser fix.
+- [ ] For remaining row 3, decide whether to spend on one repaired finite
+  `finsum` proof attempt or switch to an exact visible proof-example injection.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
@@ -415,6 +422,11 @@ failures plus 1 hidden-grader mismatch; see
   it on the strict-guidance generation artifacts flags row 5 as
   `pointwise_iteration_instead_of_group_power_statement`; focused tests pass
   with `62 passed`.
+- Ran the row 5 shape-warning repair for `$0.006123669`; it generated the
+  correct group-power statement. A verifier parser fix for nested type binders
+  and Unicode Lean identifiers let the hidden-grader check pass, raising the
+  strict hard-slice cumulative result to 4/6. Focused tests pass with
+  `63 passed`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`

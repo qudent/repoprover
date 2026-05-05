@@ -119,3 +119,52 @@ Repair verification:
 Cumulative strict-guidance hard-slice result after repair: `3/6` verified
 successes for `$0.197133728` across strict generation plus repair. The successes
 are rows `1`, `4`, and `6`.
+
+## Shape-Warning Repair
+
+After adding the no-gold diagnostic
+`pointwise_iteration_instead_of_group_power_statement`, a shape-warning-only
+repair targeted row `5`.
+
+Command:
+
+```bash
+bash -ic 'UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/repair_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-strict-guidance-six-generation \
+  --verification-results verification-180-results.json \
+  --generated-only-lean-name verification-180-generated-only-lean.json \
+  --attempt 2 --include-shape-warnings --shape-warnings-only \
+  --shape-diagnostic-results shape-diagnostic-results.json \
+  --indices 5 --max-tokens 32768 --reasoning-effort high \
+  --max-actual-cost-usd 0.04 --concurrency 1'
+```
+
+Result:
+
+- paid calls: `1`
+- parsed repair generations: `1/1`
+- actual reported cost: `$0.006123669`
+- generated statement: `α ^ (n + 1) = α ^ n * α`
+
+The first verifier attempt exposed a checker-side binder parser issue: the
+generated theorem had a binder `(α : Equiv.Perm X)`, but the application
+candidate parser missed the Unicode binder name and tried bad applications. The
+parser now handles nested type binders and Unicode Lean identifiers.
+
+Reverification with the fixed checker:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/verify_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-strict-guidance-six-generation \
+  --work-root /tmp/repoprover-strict-guidance-six-shape-repair-verify-fixed \
+  --lake-cache-from algebraic-combinatorics --include-record-imports \
+  --workers 1 --lean-timeout 180 \
+  --model-output-name repair-attempt-002-model-output.json \
+  --output-prefix repair-attempt-002-verification-fixed
+```
+
+Row `5` passes generated-only and hidden-grader verification.
+
+Cumulative strict-guidance hard-slice result after repair and shape-warning
+repair: `4/6` verified successes for `$0.203257397` across strict generation
+plus repairs. The successes are rows `1`, `4`, `5`, and `6`.
