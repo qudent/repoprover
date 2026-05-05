@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:97:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  ∑ᶠ (x : ℕ), (coeff x) g * (coeff n) (X ^ x)\nin the target expression\n  (∑ᶠ (d : ℕ), (coeff d) g * if n = d then 1 else 0) = (coeff n) g\n\ncase h\nK : Type u_1\ninst✝ : CommRing K\ng : K⟦X⟧\nha : HasSubst X\nn : ℕ\n⊢ (∑ᶠ (d : ℕ), (coeff d) g * if n = d then 1 else 0) = (coeff n) g\n"
+}

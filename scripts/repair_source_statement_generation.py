@@ -52,9 +52,12 @@ def load_repair_tasks(args: argparse.Namespace) -> list[dict[str, Any]]:
     selected_rows = load_jsonl(args.run_output / "eval" / "selected-records.jsonl")
     verification = json.loads((args.run_output / "eval" / args.verification_results).read_text(encoding="utf-8"))
     shape_warnings_by_index = load_shape_warning_rows(args.run_output, args.shape_diagnostic_results)
+    selected_indices = set(args.indices or [])
     tasks: list[dict[str, Any]] = []
     for row in verification.get("results", []):
         index = int(row["index"])
+        if selected_indices and index not in selected_indices:
+            continue
         shape_warnings = shape_warnings_by_index.get(index, [])
         compile_failure = row.get("failure_class") == "generated_lean_does_not_compile"
         selected_by_failure = False if args.shape_warnings_only else compile_failure or args.include_non_compile_failures
@@ -288,6 +291,13 @@ def parse_args() -> argparse.Namespace:
         "--shape-warnings-only",
         action="store_true",
         help="When using --include-shape-warnings, skip ordinary compile-failure selection and target only warning rows.",
+    )
+    parser.add_argument(
+        "--indices",
+        type=int,
+        nargs="*",
+        default=None,
+        help="Optional 1-based record indices to target from the selected run.",
     )
     args = parser.parse_args()
     if args.concurrency < 1:

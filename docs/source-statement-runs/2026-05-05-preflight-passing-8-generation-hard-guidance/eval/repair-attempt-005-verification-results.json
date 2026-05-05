@@ -1,0 +1,92 @@
+{
+  "generated_at": "2026-05-05T06:04:59.613684+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance",
+  "work_root": "/tmp/repoprover-source-statement-verify-hard-guidance-8-repair5-rows1-4",
+  "workers": 1,
+  "records_completed": 8,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1,
+    "grader_gold_statement_not_proved": 1,
+    "missing_model_output": 6
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-001",
+      "generated_name": "prop_fps_subs_rule_infprod",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:161:16: error: typeclass instance problem is stuck\n  DecidableEq ?m.90\n\nNote: Lean will not try to resolve this typeclass instance problem because the type argument to `DecidableEq` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass.\n\nHint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-002/repair-attempt-005-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.eq_of_embedUnivInBiv_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-003/repair-attempt-005-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_subs_X_right",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-004",
+      "generated_name": "fps_subs_X_right",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:97:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  ∑ᶠ (x : ℕ), (coeff x) g * (coeff n) (X ^ x)\nin the target expression\n  (∑ᶠ (d : ℕ), (coeff d) g * if n = d then 1 else 0) = (coeff n) g\n\ncase h\nK : Type u_1\ninst✝ : CommRing K\ng : K⟦X⟧\nha : HasSubst X\nn : ℕ\n⊢ (∑ᶠ (d : ℕ), (coeff d) g * if n = d then 1 else 0) = (coeff n) g\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.coeff_mul_X_pow",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-005",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-005/repair-attempt-005-model-output.json"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.size_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-006",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-006/repair-attempt-005-model-output.json"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_apply_of_ne",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-007",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-007/repair-attempt-005-model-output.json"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/Permutations/Inversions1.lean:AlgebraicCombinatorics.lexLt_irrefl",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-008",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-008/repair-attempt-005-model-output.json"
+    }
+  ]
+}

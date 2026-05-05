@@ -94,6 +94,7 @@ def _repair_args(run_output: Path, **overrides) -> argparse.Namespace:
         "shape_diagnostic_results": None,
         "include_shape_warnings": False,
         "shape_warnings_only": False,
+        "indices": None,
     }
     values.update(overrides)
     return argparse.Namespace(**values)
@@ -159,6 +160,29 @@ def test_repair_queue_can_target_shape_warning_rows(tmp_path: Path) -> None:
     payload = json.loads((run_output / "record-002/repair-attempt-001-openrouter-payload.json").read_text(encoding="utf-8"))
     user = json.loads(payload["messages"][1]["content"])
     assert user["shape_diagnostic_warnings"][0]["code"] == "pointwise_conclusion_instead_of_sequence_equality"
+
+
+def test_repair_queue_can_limit_to_indices(tmp_path: Path) -> None:
+    run_output = _write_archived_run(tmp_path)
+    _write_json(
+        run_output / "record-002/model-output.json",
+        {
+            "lean_declaration": "theorem generated : True := by\n  trivial",
+            "declaration_name": "generated",
+        },
+    )
+    _write_json(run_output / "record-002/verification-generated-only-lean.json", {"exit_code": 0, "output": ""})
+    _write_json(
+        run_output / "record-002/openrouter-payload.json",
+        {"messages": [{"role": "system", "content": "system"}, {"role": "user", "content": json.dumps({"context": {}})}]},
+    )
+
+    summary = run_repair_queue(_repair_args(run_output, budget_only=True, include_non_compile_failures=True, indices=[2]))
+
+    assert summary["records_completed"] == 1
+    assert summary["results"][0]["index"] == 2
+    assert not (run_output / "record-001/repair-attempt-001-openrouter-payload.json").exists()
+    assert (run_output / "record-002/repair-attempt-001-openrouter-payload.json").exists()
 
 
 def test_repair_queue_writes_repair_model_artifacts(tmp_path: Path, monkeypatch) -> None:
@@ -266,6 +290,40 @@ def test_shape_diagnostic_flags_fin_object_inequalities() -> None:
     )
 
     assert [warning["code"] for warning in warnings] == ["fin_object_inequality_instead_of_value_inequality"]
+
+
+def test_shape_diagnostic_flags_weak_hprod_contract() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "target_source_focus": {
+                    "target_declaration_source_comment": {
+                        "text": "The hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`, the coefficient of `prod_f` equals the coefficient of the finite product over `M`."
+                    }
+                }
+            }
+        },
+        "theorem generated (prod_f : PowerSeries K) (hprod : ∀ n, ∃ M : Finset I, coeff n prod_f = coeff n (∏ i ∈ M, f i)) : True := by\n  trivial",
+    )
+
+    assert [warning["code"] for warning in warnings] == ["weak_exists_hprod_instead_of_any_approximator_contract"]
+
+
+def test_shape_diagnostic_flags_infprod_conclusion_bundling() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "target_source_focus": {
+                    "target_declaration_source_comment": {
+                        "text": "The hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`, the coefficient of `prod_f` equals the coefficient of the finite product over `M`."
+                    }
+                }
+            }
+        },
+        "theorem generated (prod_f : PowerSeries K) (hprod : True) : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) ∧ coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\n  sorry",
+    )
+
+    assert [warning["code"] for warning in warnings] == ["infprod_conclusion_bundles_approximator_proof"]
 
 
 def test_shape_diagnostic_writes_run_artifacts(tmp_path: Path) -> None:

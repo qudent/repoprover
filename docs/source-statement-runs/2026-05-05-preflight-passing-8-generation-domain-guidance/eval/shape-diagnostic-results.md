@@ -1,6 +1,6 @@
 # Source-statement shape diagnostic
 
-- Generated at: `2026-05-05T05:29:41.920705+00:00`
+- Generated at: `2026-05-05T06:05:31.644534+00:00`
 - Run output: `docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance`
 - Payload artifact: `openrouter-payload.json`
 - Model artifact: `model-output.json`

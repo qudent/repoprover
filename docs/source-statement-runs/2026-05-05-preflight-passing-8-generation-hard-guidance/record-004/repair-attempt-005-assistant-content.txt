@@ -1,0 +1,16 @@
+{
+  "lean_declaration": "theorem fps_subs_X_right (g : K⟦X⟧) : PowerSeries.subst (X : K⟦X⟧) g = g := by\n  have ha : HasSubst (X : K⟦X⟧) := HasSubst.of_constantCoeff_zero' (by simp)\n  ext n\n  rw [coeff_subst' ha g n]\n  simp only [coeff_X_pow, smul_eq_mul]\n  rw [finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n (by\n    intro d hd\n    simp [hd.symm, coeff_X_pow])\n  ]\n  simp",
+  "declaration_name": "fps_subs_X_right",
+  "used_context": [
+    "HasSubst.of_constantCoeff_zero'",
+    "coeff_subst'",
+    "coeff_X_pow",
+    "smul_eq_mul",
+    "finsum_eq_single",
+    "simp"
+  ],
+  "notes": [
+    "Followed shape diagnostic to avoid finite-composition helper and use direct HasSubst instance.",
+    "Used HasSubst.of_constantCoeff_zero' (by simp) because constantCoeff X = 0 trivially."
+  ]
+}

@@ -36,13 +36,16 @@ Hard-guidance run:
 `docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance`
 
 - Records: 8
-- Records with warnings: 4
+- Records with warnings: 5
 - Warning codes:
-  `{"fin_object_inequality_instead_of_value_inequality": 1, "pointwise_conclusion_instead_of_sequence_equality": 1, "substitution_proof_uses_avoided_finite_composition_helper": 1, "wrong_x_power_multiplication_side_or_shape": 1}`
+  `{"fin_object_inequality_instead_of_value_inequality": 1, "infprod_conclusion_bundles_approximator_proof": 1, "pointwise_conclusion_instead_of_sequence_equality": 1, "substitution_proof_uses_avoided_finite_composition_helper": 1, "weak_exists_hprod_instead_of_any_approximator_contract": 1, "wrong_x_power_multiplication_side_or_shape": 1}`
 - The warning rows match the hard-guidance report's remaining semantic-shape
   failures on multivariate coefficient projection, `X^k` multiplication side,
   and simple transposition assumptions, plus one proof-shape warning on
-  substitution.
+  substitution. The infinite-product row now also receives two statement-contract
+  warnings: the original generated statement weakened `hprod` from "any
+  approximator" to an existential contract and bundled an approximator proof in
+  the conclusion.
 
 Previous domain-guidance larger run:
 `docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-domain-guidance`
@@ -74,7 +77,7 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run pytest \
   tests/test_minimal_context_smoke_materializer.py
 ```
 
-Result: `50 passed in 1.16s`.
+Result after the latest diagnostic/repair-queue changes: `54 passed in 1.29s`.
 
 ## Interpretation
 
@@ -127,3 +130,55 @@ Best cumulative hard-guidance result after this diagnostic-driven repair path:
 6/8 verified successes for an added `$0.023164794` beyond the hard-guidance
 run, or `$0.099924662` total for hard-guidance generation plus all repair
 attempts recorded here.
+
+## Remaining-Failure Diagnostic
+
+The diagnostic layer was extended again to flag the infinite-product
+statement-contract mismatch explicitly, and the repair queue gained `--indices`
+so a follow-up can target only selected records without rewriting successful
+rows.
+
+Targeted row-1 shape repair:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/repair_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance \
+  --verification-results verification-results.json \
+  --attempt 4 \
+  --include-shape-warnings \
+  --shape-warnings-only \
+  --shape-diagnostic-results shape-diagnostic-results.json \
+  --indices 1 \
+  --max-tokens 32768 \
+  --reasoning-effort high \
+  --max-actual-cost-usd 0.06 \
+  --concurrency 1
+```
+
+Result: one paid call, `$0.014952429`; the repaired declaration compiled but
+still failed the hidden grader due to exact statement/application shape.
+
+Targeted row-1 plus row-4 retry after refining diagnostics:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/repair_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance \
+  --verification-results verification-results.json \
+  --attempt 5 \
+  --include-shape-warnings \
+  --shape-warnings-only \
+  --shape-diagnostic-results shape-diagnostic-results.json \
+  --indices 1 4 \
+  --max-tokens 32768 \
+  --reasoning-effort high \
+  --max-actual-cost-usd 0.12 \
+  --concurrency 2
+```
+
+Result: two paid calls, `$0.016748312`; row `#1` again compiled but missed the
+grader, and row `#4` still failed generated-only Lean after rewriting
+`finsum_eq_single`.
+
+The latest cumulative verified score remains 6/8. Total spend recorded in this
+hard-guidance run family including the non-improving diagnostic attempts is
+`$0.131625403`.

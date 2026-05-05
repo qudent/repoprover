@@ -1,14 +1,16 @@
 {
-  "generated_at": "2026-05-05T05:29:28.217101+00:00",
+  "generated_at": "2026-05-05T05:56:52.951727+00:00",
   "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance",
   "payload_name": "openrouter-payload.json",
   "model_output_name": "model-output.json",
   "records_completed": 8,
-  "records_with_warnings": 4,
+  "records_with_warnings": 5,
   "warning_codes": {
     "fin_object_inequality_instead_of_value_inequality": 1,
+    "infprod_conclusion_bundles_approximator_proof": 1,
     "pointwise_conclusion_instead_of_sequence_equality": 1,
     "substitution_proof_uses_avoided_finite_composition_helper": 1,
+    "weak_exists_hprod_instead_of_any_approximator_contract": 1,
     "wrong_x_power_multiplication_side_or_shape": 1
   },
   "results": [
@@ -16,10 +18,30 @@
       "index": 1,
       "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
       "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-001",
-      "warnings": [],
+      "warnings": [
+        {
+          "code": "weak_exists_hprod_instead_of_any_approximator_contract",
+          "severity": "warning",
+          "message": "Visible context says `hprod` works for any finite approximator, but the generated statement weakens it to existence of some finite product.",
+          "visible_cue": "I} (f_i ∘ g)`.\\n(Proposition prop.fps.subs.rule-infprod, second part)\\n\\nThe hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`\\n(a finite set such that all supersets give the same coefficient), the coefficient of",
+          "generated_cue": "I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) (prod_f : PowerSeries K) (hprod : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) ∧ coeff n pr",
+          "recommendation": "State `hprod` with arguments `n` and `M`, taking the approximator proof as a hypothesis and returning the coefficient equality for that same `M`."
+        },
+        {
+          "code": "infprod_conclusion_bundles_approximator_proof",
+          "severity": "warning",
+          "message": "Visible context asks for an approximator existence whose payload is the substituted product coefficient equality, but the generated conclusion also bundles a proof that the chosen set is an approximator.",
+          "visible_cue": "d, second part)\\n\\nThe hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`\\n(a finite set such that all supersets give the same coefficient), the coefficient of",
+          "generated_cue": "I] (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0) (hf_mulable : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) (prod_f : PowerSeries K) (hprod : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) ∧ coeff n prod_f = coeff n (∏ i ∈ M, f i)) : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → co",
+          "recommendation": "Return only `∀ n, ∃ M, coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g)`; keep the approximator facts as internal proof obligations."
+        }
+      ],
       "generated_name": "prop_fps_subs_rule_infprod",
-      "warning_count": 0,
-      "warning_codes": []
+      "warning_count": 2,
+      "warning_codes": [
+        "weak_exists_hprod_instead_of_any_approximator_contract",
+        "infprod_conclusion_bundles_approximator_proof"
+      ]
     },
     {
       "index": 2,
@@ -61,7 +83,7 @@
           "message": "Visible guidance suggests the direct `HasSubst.X'`/`coeff_subst'` proof shape, but the generated proof uses the avoided finite-composition helper.",
           "visible_cue": "the\\nfollowing lemma:\\n\\n\\\\begin{lemma}\\n\"}] [{\"avoid_statement_family\": [\"Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is ava",
           "generated_cue": "(X : K⟦X⟧) g = g := by have hX0 : constantCoeff (X : K⟦X⟧) = 0 := by simp ext n rw [fps_comp_coeff g (X : K⟦X⟧) hX0 n] apply finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n ?_",
-          "recommendation": "Prefer `ext n`; rewrite with `coeff_subst'`; then use `coeff_X_pow` and `finsum_eq_single`."
+          "recommendation": "Prefer `have ha : HasSubst (X : K⟦X⟧) := HasSubst.X'`; `ext n`; `rw [coeff_subst' ha g n]`; `simp only [coeff_X_pow, smul_eq_mul]`; then `rw [finsum_eq_single _ n (fun d hd => by simp [hd.symm])]`; `simp`."
         }
       ],
       "generated_name": "fps_subs_X_right",

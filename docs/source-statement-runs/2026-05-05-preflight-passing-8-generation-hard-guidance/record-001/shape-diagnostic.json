@@ -2,8 +2,28 @@
   "index": 1,
   "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
   "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-001",
-  "warnings": [],
+  "warnings": [
+    {
+      "code": "weak_exists_hprod_instead_of_any_approximator_contract",
+      "severity": "warning",
+      "message": "Visible context says `hprod` works for any finite approximator, but the generated statement weakens it to existence of some finite product.",
+      "visible_cue": "I} (f_i ∘ g)`.\\n(Proposition prop.fps.subs.rule-infprod, second part)\\n\\nThe hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`\\n(a finite set such that all supersets give the same coefficient), the coefficient of",
+      "generated_cue": "I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) (prod_f : PowerSeries K) (hprod : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) ∧ coeff n pr",
+      "recommendation": "State `hprod` with arguments `n` and `M`, taking the approximator proof as a hypothesis and returning the coefficient equality for that same `M`."
+    },
+    {
+      "code": "infprod_conclusion_bundles_approximator_proof",
+      "severity": "warning",
+      "message": "Visible context asks for an approximator existence whose payload is the substituted product coefficient equality, but the generated conclusion also bundles a proof that the chosen set is an approximator.",
+      "visible_cue": "d, second part)\\n\\nThe hypothesis `hprod` says that `prod_f` is the infinite product: for any approximator `M`\\n(a finite set such that all supersets give the same coefficient), the coefficient of",
+      "generated_cue": "I] (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0) (hf_mulable : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) (prod_f : PowerSeries K) (hprod : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) ∧ coeff n prod_f = coeff n (∏ i ∈ M, f i)) : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → co",
+      "recommendation": "Return only `∀ n, ∃ M, coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g)`; keep the approximator facts as internal proof obligations."
+    }
+  ],
   "generated_name": "prop_fps_subs_rule_infprod",
-  "warning_count": 0,
-  "warning_codes": []
+  "warning_count": 2,
+  "warning_codes": [
+    "weak_exists_hprod_instead_of_any_approximator_contract",
+    "infprod_conclusion_bundles_approximator_proof"
+  ]
 }

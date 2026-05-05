@@ -793,6 +793,7 @@ def domain_statement_shape_guidance(
                     "For the rule `g ∘ X = g`, state `PowerSeries.subst X g = g` and use the local `HasSubst.X'`/`coeff_subst'` style when needed.",
                     "Keep the argument order from displayed local APIs: `PowerSeries.subst inner outer`, so `PowerSeries.subst X g` means substitute `X` into `g`.",
                     "If proving by coefficients, the local proof pattern is `ext n`; rewrite with `coeff_subst'`; then use `coeff_X_pow` and `finsum_eq_single`.",
+                    "After `rw [coeff_subst' ha g n]`, simplify scalar actions with `simp only [coeff_X_pow, smul_eq_mul]` before applying `finsum_eq_single`; do not apply a multiplication-valued `finsum_eq_single` directly to a scalar-action goal.",
                 ],
                 "avoid_statement_family": [
                     "Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is available.",
@@ -829,8 +830,9 @@ def domain_statement_shape_guidance(
                 "trigger": "source focus describes substitution through an infinite product via finite coefficient approximators",
                 "preferred_statement_family": [
                     "Follow the target source comment's approximator API: hypotheses should quantify finite sets `M`/`J` and coefficients of finite products, plus a `prod_f` and `hprod` if the comment mentions them.",
+                    "If the source comment says `hprod` works for any approximator `M`, state `hprod` as `∀ n M, approximator M n → coeff n prod_f = coeff n (∏ i ∈ M, f i)`, not as existence of some finite product.",
                     "Use displayed local helpers such as `comp_prod_finite`, `xnEquiv_comp`, `comp_prod_approx_determines`, and `comp_prod_multipliable`.",
-                    "State the result as an existence of a finite approximator for each coefficient when the source comment says the infinite product is represented by `prod_f`.",
+                    "State the result as `∀ n, ∃ M, coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g)` when the source comment says the infinite product is represented by `prod_f`; keep approximator facts inside the proof, not bundled in the conclusion.",
                 ],
                 "avoid_statement_family": [
                     "Do not switch to Mathlib/topological `Multipliable`, `∏'`, `map_tprod`, or continuity APIs unless those exact assumptions are in the source focus and displayed local context.",

@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-05-05T05:53:51.971914+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance",
+  "attempt": 4,
+  "records_completed": 1,
+  "repair_generation_successes": 1,
+  "repair_generation_success_rate": 1.0,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.014952429,
+  "model": "deepseek/deepseek-v4-pro",
+  "max_tokens": 32768,
+  "reasoning_effort": "high",
+  "concurrency": 1,
+  "budget_only": false,
+  "shape_diagnostic_results": "shape-diagnostic-results.json",
+  "include_shape_warnings": true,
+  "shape_warnings_only": true,
+  "max_actual_cost_usd": 0.06,
+  "failure_classes": {},
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-001",
+      "attempt": 4,
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 26168,
+        "prompt_chars": 25083,
+        "estimated_prompt_tokens": 6271,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.002727885,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.031236045
+      },
+      "shape_warning_codes": [
+        "weak_exists_hprod_instead_of_any_approximator_contract"
+      ],
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 8261,
+        "completion_tokens": 13437,
+        "total_tokens": 21698,
+        "actual_cost_usd": 0.014952429,
+        "estimated_cost_from_usage_usd": 0.015283725,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "success": true,
+      "repair_generation_success": true,
+      "generated_name": "prop_fps_subs_rule_infprod"
+    }
+  ]
+}

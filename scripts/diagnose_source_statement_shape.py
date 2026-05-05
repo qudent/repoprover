@@ -164,6 +164,37 @@ def diagnose_shape(user_payload: dict[str, Any], declaration: str) -> list[Warni
         )
 
     if (
+        "hprod" in context_text
+        and "any approximator" in context_lower
+        and re.search(r"\(hprod\s*:\s*∀\s+\w+\s*,\s*∃\s+\w+\s*:\s*Finset", declaration)
+    ):
+        warnings.append(
+            _warning(
+                "weak_exists_hprod_instead_of_any_approximator_contract",
+                "Visible context says `hprod` works for any finite approximator, but the generated statement weakens it to existence of some finite product.",
+                visible_cue=_excerpt(context_text, r"hprod.*any approximator|any approximator.*hprod"),
+                generated_cue=_excerpt(declaration, r"\(hprod\s*:\s*∀\s+\w+\s*,\s*∃\s+\w+\s*:\s*Finset"),
+                recommendation="State `hprod` with arguments `n` and `M`, taking the approximator proof as a hypothesis and returning the coefficient equality for that same `M`.",
+            )
+        )
+
+    if (
+        "hprod" in context_text
+        and "any approximator" in context_lower
+        and re.search(r":\s*∀\s+\w+\s*,\s*∃\s+\w+\s*:\s*Finset[^:]+,\s*\(", declaration, flags=re.DOTALL)
+        and re.search(r"∧\s*coeff\s+\w+\s+\([^)]*prod_f\.subst", declaration, flags=re.DOTALL)
+    ):
+        warnings.append(
+            _warning(
+                "infprod_conclusion_bundles_approximator_proof",
+                "Visible context asks for an approximator existence whose payload is the substituted product coefficient equality, but the generated conclusion also bundles a proof that the chosen set is an approximator.",
+                visible_cue=_excerpt(context_text, r"coeff n \(prod_f\.subst g\)|represented by `prod_f`|any approximator"),
+                generated_cue=_excerpt(declaration, r":\s*∀\s+\w+\s*,\s*∃\s+\w+\s*:\s*Finset.*?∧\s*coeff"),
+                recommendation="Return only `∀ n, ∃ M, coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g)`; keep the approximator facts as internal proof obligations.",
+            )
+        )
+
+    if (
         ("g ∘ x = g" in context_lower or "powerseries.subst x g" in context_lower or "subst x g" in context_lower)
         and re.search(r"PowerSeries\.subst\s+g\s+X", declaration)
     ):
@@ -188,7 +219,7 @@ def diagnose_shape(user_payload: dict[str, Any], declaration: str) -> list[Warni
                 "Visible guidance suggests the direct `HasSubst.X'`/`coeff_subst'` proof shape, but the generated proof uses the avoided finite-composition helper.",
                 visible_cue=_excerpt(context_text, r"HasSubst\.X'|coeff_subst'|finite-composition helper"),
                 generated_cue=_excerpt(declaration, r"fps_comp_coeff"),
-                recommendation="Prefer `ext n`; rewrite with `coeff_subst'`; then use `coeff_X_pow` and `finsum_eq_single`.",
+                recommendation="Prefer `have ha : HasSubst (X : K⟦X⟧) := HasSubst.X'`; `ext n`; `rw [coeff_subst' ha g n]`; `simp only [coeff_X_pow, smul_eq_mul]`; then `rw [finsum_eq_single _ n (fun d hd => by simp [hd.symm])]`; `simp`.",
                 severity="info",
             )
         )

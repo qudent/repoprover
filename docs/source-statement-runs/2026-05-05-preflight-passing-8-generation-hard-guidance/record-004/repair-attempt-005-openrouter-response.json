@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777960621-abDf8bCk7VOBvgtUhwBi",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_subs_X_right (g : K⟦X⟧) : PowerSeries.subst (X : K⟦X⟧) g = g := by\\n  have ha : HasSubst (X : K⟦X⟧) := HasSubst.of_constantCoeff_zero' (by simp)\\n  ext n\\n  rw [coeff_subst' ha g n]\\n  simp only [coeff_X_pow, smul_eq_mul]\\n  rw [finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n (by\\n    intro d hd\\n    simp [hd.symm, coeff_X_pow])\\n  ]\\n  simp\",\n  \"declaration_name\": \"fps_subs_X_right\",\n  \"used_context\": [\n    \"HasSubst.of_constantCoeff_zero'\",\n    \"coeff_subst'\",\n    \"coeff_X_pow\",\n    \"smul_eq_mul\",\n    \"finsum_eq_single\",\n    \"simp\"\n  ],\n  \"notes\": [\n    \"Followed shape diagnostic to avoid finite-composition helper and use direct HasSubst instance.\",\n    \"Used HasSubst.of_constantCoeff_zero' (by simp) because constantCoeff X = 0 trivially.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777960621,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 7263,
+    "prompt_tokens": 7052,
+    "total_tokens": 14315,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 6958,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 6912,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.006404766,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.006404766,
+      "upstream_inference_prompt_cost": 8.5956e-05,
+      "upstream_inference_completions_cost": 0.00631881
+    }
+  },
+  "provider": "DeepSeek"
+}

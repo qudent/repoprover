@@ -1,0 +1,16 @@
+{
+  "lean_declaration": "theorem prop_fps_subs_rule_infprod {I : Type*} [DecidableEq I] (f : I → PowerSeries K) (g : PowerSeries K)\n    (hg : constantCoeff g = 0) (hf_mulable : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i))\n    (prod_f : PowerSeries K) (hprod : ∀ (n : ℕ) (M : Finset I), (∀ (J : Finset I), M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) → coeff n prod_f = coeff n (∏ i ∈ M, f i)) :\n    ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, (f i).subst g) = coeff n (∏ i ∈ M, (f i).subst g)) ∧ coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g) :=\nby\n  intro n\n  choose M_k hM_k using hf_mulable\n  let M := Finset.biUnion (Finset.range (n + 1)) M_k\n  have hM_approx : ∀ k ≤ n, ∀ J : Finset I, M ⊆ J → coeff k (∏ i ∈ J, f i) = coeff k (∏ i ∈ M, f i) := by\n    intro k hk J hMJ\n    have hMk_sub : M_k k ⊆ M := by\n      apply Finset.subset_biUnion_of_mem\n      simp [hk]\n    have hMkJ : M_k k ⊆ J := hMk_sub.trans hMJ\n    calc\n      coeff k (∏ i ∈ J, f i) = coeff k (∏ i ∈ M_k k, f i) := hM_k k J hMkJ\n      _ = coeff k (∏ i ∈ M, f i) := (hM_k k M hMk_sub).symm\n  have hcoeff_prod_f : ∀ k ≤ n, coeff k prod_f = coeff k (∏ i ∈ M, f i) := by\n    intro k hk\n    exact hprod k M (hM_approx k hk)\n  have hcomp_approx : ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, (f i).subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\n    intro J hMJ\n    apply comp_prod_approx_determines f g hg n M\n    · exact hM_approx\n    · exact hMJ\n  have hsecond : coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\n    have hequiv : coeff n (prod_f.subst g) = coeff n ((∏ i ∈ M, f i).subst g) :=\n      xnEquiv_comp hcoeff_prod_f hg n (le_refl n)\n    rw [hequiv, comp_prod_finite M f g hg]\n  exact ⟨M, hcomp_approx, hsecond⟩",
+  "declaration_name": "prop_fps_subs_rule_infprod",
+  "used_context": [
+    "comp_prod_finite",
+    "xnEquiv_comp",
+    "comp_prod_approx_determines",
+    "hf_mulable (given as hypothesis)"
+  ],
+  "notes": [
+    "Changed `hprod` hypothesis from `∃ M, ...` to `∀ (M : Finset I), ... → ...` as per target source comment (any approximator).",
+    "Fixed `Finset.subset_union_left`/`Finset.subset_union_right` misuse by explicitly constructing subset proofs via `Finset.mem_union_left/_right`.",
+    "Fixed reversed equality from `hM_k` by using `.symm`.",
+    "Proof simplified using direct construction of `M` as union of approximators, then applying `comp_prod_approx_determines` and `xnEquiv_comp`."
+  ]
+}
