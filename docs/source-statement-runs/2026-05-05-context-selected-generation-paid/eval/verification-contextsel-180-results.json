@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-05-05T13:20:30.831028+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-context-selected-generation-paid",
+  "work_root": "/tmp/repoprover-context-selected-generation-verify",
+  "workers": 1,
+  "records_completed": 2,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1,
+    "missing_model_output": 1
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-context-selected-generation-paid/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-context-selected-generation-paid/record-001/model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-context-selected-generation-paid/record-002",
+      "generated_name": "alternant_properties",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:32:4: error: failed to compile definition, compiler IR check failed at `alternantTextbook._redArg._lam_0`. Error: depends on declaration 'MvPolynomial.X', which has no executable code; consider marking definition as 'noncomputable'\nAlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:47:20: error: typeclass instance problem is stuck\n  OfNat (MvPolynomial (Fin N) ?m.5) 0\n\nNote: Lean will not try to resolve this typeclass instance problem because the first type argument to `OfNat` contains metavariables. This argument must be fully determined before Lean will try to resolve the typeclass.\n\nHint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.\nnumerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is\n  MvPolynomial (Fin N) ?m.5\ndue to the absence of the instance above\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}
