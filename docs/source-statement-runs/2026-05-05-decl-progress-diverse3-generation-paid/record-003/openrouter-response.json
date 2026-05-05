@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777993279-r9gEXXwOBY1pOdFWz7LU",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem laurentPoly_unity_and_invertible : (1 : LaurentPoly K) = T 0 ∧ IsUnit (T 1 : LaurentPoly K) := by\\n  constructor\\n  · exact laurentPolynomial_one_eq_T_zero\\n  · exact T_isUnit\",\n  \"declaration_name\": \"laurentPoly_unity_and_invertible\",\n  \"used_context\": [\n    \"laurentPolynomial_one_eq_T_zero\",\n    \"T_isUnit\"\n  ],\n  \"notes\": [\n    \"Bundles unity and invertibility claims of Thm thm.fps.laure.laupol-ring, using already proved lemmas; the commutative K-algebra structure is already an instance.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777993279,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 3514,
+    "prompt_tokens": 9715,
+    "total_tokens": 13229,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 3351,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 256,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.007172773,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.007172773,
+      "upstream_inference_prompt_cost": 0.004115593,
+      "upstream_inference_completions_cost": 0.00305718
+    }
+  },
+  "provider": "DeepSeek"
+}

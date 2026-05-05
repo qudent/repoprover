@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem laurentPoly_unity_and_invertible : (1 : LaurentPoly K) = T 0 ∧ IsUnit (T 1 : LaurentPoly K) := by\n  constructor\n  · exact laurentPolynomial_one_eq_T_zero\n  · exact T_isUnit",
+  "declaration_name": "laurentPoly_unity_and_invertible",
+  "used_context": [
+    "laurentPolynomial_one_eq_T_zero",
+    "T_isUnit"
+  ],
+  "notes": [
+    "Bundles unity and invertibility claims of Thm thm.fps.laure.laupol-ring, using already proved lemmas; the commutative K-algebra structure is already an instance."
+  ]
+}

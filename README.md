@@ -11,6 +11,45 @@ RepoProver is a multi-agent scaffold for large-scale formalization of mathematic
 
 This code produced an [automatic formalization](https://github.com/facebookresearch/algebraic-combinatorics) of the graduate textbook [Algebraic Combinatorics](https://arxiv.org/abs/2506.00738) by Darij Grinberg.
 
+## Scale of the current Algebraic Combinatorics corpus
+
+These counts are from the local vendored snapshot under
+`algebraic-combinatorics/` as of 2026-05-05. Token counts are rough
+characters-divided-by-four estimates, intended for budget sizing rather than
+exact tokenizer accounting.
+
+| Surface | Measured scale |
+|---|---:|
+| TeX source files | 45 |
+| TeX source bytes | 1,508,796 |
+| TeX source estimated tokens | ~377,000 |
+| Unique TeX labels | 768 |
+| Theorem-like TeX environments | 462 total, 360 labeled |
+| Generated Lean declaration records | 5,684 |
+| Exact Lean-doc-comment to TeX-label alignments | 1,062 |
+| Deterministic gold-candidate declaration records | 645 |
+| Local Mathlib Lean files | 7,648 |
+| Local Mathlib source bytes | ~87.4 MB |
+| Local Mathlib source estimated tokens | ~21.9M |
+| Mathlib doc/module comments | 84,971 comments, ~15.4 MB |
+| Mathlib doc/module comment estimated tokens | ~3.78M |
+
+The theorem-like TeX environments counted here are `theorem`, `lemma`,
+`proposition`, `corollary`, `definition`, `conjecture`, `statement`, and
+`example`. The current minimal-context benchmark is declaration-level: one row
+per Lean declaration, aligned back to TeX labels. A single book theorem can
+therefore correspond to several Lean declarations.
+
+The context-selection experiments do not put all Mathlib docs in the prompt. In
+the latest three-record declaration-progress selector probe, the selector chose
+5 unique Mathlib names and hydration inserted 20 local Mathlib source snippets:
+7,408 characters, or about 1,850 estimated tokens. The final selected context
+packs for those three records carried about 13,300 characters, or 3,300
+estimated tokens, including selector notes and project-context summaries. That
+is roughly 0.05-0.09% of the estimated Mathlib doc-comment token pool for the
+probe, which is the intended operating regime: tight context packs, not broad
+Mathlib dumps.
+
 ## Setup
 
 Requires Python 3.10+. Install in editable mode:

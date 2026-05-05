@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-05-05T14:58:11.560136+00:00",
+  "context_selection_run": "docs/source-statement-runs/2026-05-05-context-selection-decl-progress-diverse3-paid",
+  "records_input": 3,
+  "records_output": 3,
+  "records_missing_selection": [],
+  "output": "docs/source-statement-runs/2026-05-05-context-selection-decl-progress-diverse3-paid/eval/context-selected-records.jsonl",
+  "used_gold_comparison": false
+}

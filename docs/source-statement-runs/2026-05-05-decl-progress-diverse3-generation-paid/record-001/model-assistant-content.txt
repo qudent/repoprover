@@ -1,0 +1,16 @@
+{
+  "lean_declaration": "theorem tprod'_eq_of_coeffStabilizesTo_partial_prod' {f : ℕ → PowerSeries K} {lim : PowerSeries K}\n    (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) lim)\n    (hconst : ∀ i, constantCoeff (f i) = 1) :\n    tprod' f (isMultipliable_of_coeffStabilizesTo_partial_prod' h hconst) = lim :=\n  tprod'_eq_of_coeffStabilizesTo_partial_prod h hconst",
+  "declaration_name": "tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+  "used_context": [
+    "CoeffStabilizesTo",
+    "IsMultipliable",
+    "tprod'",
+    "constantCoeff",
+    "Finset.range",
+    "isMultipliable_of_coeffStabilizesTo_partial_prod'",
+    "tprod'_eq_of_coeffStabilizesTo_partial_prod"
+  ],
+  "notes": [
+    "This lemma is a thin wrapper around the imported theorem tprod'_eq_of_coeffStabilizesTo_partial_prod. It uses the local wrapper isMultipliable_of_coeffStabilizesTo_partial_prod' to obtain the multipliability hypothesis."
+  ]
+}

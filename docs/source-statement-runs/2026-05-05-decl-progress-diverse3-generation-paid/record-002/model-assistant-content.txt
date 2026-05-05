@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem isInverse_unique {a b c : L} (h1 : IsInverse a b) (h2 : IsInverse a c) : b = c :=\n  AlgebraicCombinatorics.DividingFPS.inverse_unique h1 h2",
+  "declaration_name": "isInverse_unique",
+  "used_context": [
+    "AlgebraicCombinatorics.DividingFPS.inverse_unique",
+    "IsInverse"
+  ],
+  "notes": [
+    "Direct application of the previously imported theorem `inverse_unique` from `AlgebraicCombinatorics.DividingFPS`."
+  ]
+}
