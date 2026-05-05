@@ -114,7 +114,17 @@ That mode records `openrouter-payload.json`, `openrouter-response.json`,
 `openrouter-cost-summary.json`, `model-assistant-content.txt`,
 `model-output.json`, and `generated-lean-declaration.lean` for each paid row,
 without creating Lean project trees. Lean verification should consume those
-artifacts separately with a pool of reusable materialized projects.
+artifacts separately with a pool of reusable materialized projects:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/verify_source_statement_generation.py \
+  --run-output docs/source-statement-runs/2026-05-05-preflight-passing-6-generation \
+  --work-root /tmp/repoprover-source-statement-verify-preflight-passing-6 \
+  --include-record-imports \
+  --lake-cache-from algebraic-combinatorics \
+  --workers 3 \
+  --lean-timeout 90
+```
 
 ## Missing Pipeline Tasks
 

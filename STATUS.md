@@ -49,7 +49,9 @@ preflight then passed 6/12 with a 73M shared-project output tree; see
 `docs/source-statement-preflight-reuse-12-report.md`. The runner now also has
 `--generation-only`, which decouples OpenRouter artifact capture from Lean
 checking so paid DeepSeek results can be written directly into a git-trackable
-run directory without creating project trees.
+run directory without creating project trees. `scripts/verify_source_statement_generation.py`
+is the matching verifier consumer: it reads those generation artifacts and
+checks them with a pool of reusable Lean projects under `/tmp`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -142,9 +144,12 @@ run directory without creating project trees.
 - [x] Split provider generation from Lean checking for the source-statement
   runner with `--generation-only`, so paid DeepSeek artifacts can be archived
   durably before any verifier work.
-- [ ] Add the matching verifier consumer queue: read generation artifacts and
-  check them with a pool of reusable Lean projects, then write small
-  verification result artifacts back into the run directory.
+- [x] Add the matching verifier consumer queue:
+`scripts/verify_source_statement_generation.py` reads generation artifacts,
+checks them with a pool of reusable Lean projects, and writes small
+verification result artifacts back into the run directory. A smoke against the
+interrupted generation directory correctly produced 6 `missing_model_output`
+rows without running Lean.
 - [ ] Run a smaller paid generation-only probe over the 6 preflight-passing
   records into `docs/source-statement-runs/...`, commit the raw paid artifacts,
   then verify them with the reusable-project pool.
