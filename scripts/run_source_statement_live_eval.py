@@ -716,6 +716,34 @@ def _prior_source_label_declaration_summaries(project_root: Path, record: Select
     return summaries[:limit]
 
 
+def _same_label_progress_summary(
+    project_root: Path,
+    record: SelectedRecord,
+    *,
+    prior: list[dict[str, Any]] | None = None,
+    imported: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    prior = prior if prior is not None else _prior_source_label_declaration_summaries(project_root, record)
+    imported = imported if imported is not None else _imported_source_label_declaration_summaries(project_root, record)
+    return {
+        "target_unit": "one withheld Lean declaration row aligned to the visible TeX/source label, not necessarily the whole LaTeX theorem environment",
+        "source_span_labels": _source_span_labels(record),
+        "prior_same_file_count": len(prior),
+        "prior_same_file_declarations": [item.get("declaration") for item in prior],
+        "imported_same_label_count": len(imported),
+        "imported_same_label_declarations": [
+            item.get("full_name") or item.get("declaration")
+            for item in imported
+        ],
+        "selection_rule": (
+            "Treat prior_same_label_declarations and imported_source_label_declarations as progress/support. "
+            "They may prove earlier parts or reusable facts, but they are not evidence that the target should bundle "
+            "all available facts into a conjunction. Select the single remaining declaration-level source part that "
+            "the next withheld row is likely to formalize."
+        ),
+    }
+
+
 def _imported_label_declaration_blocks(project_root: Path, record: SelectedRecord, limit: int = 3) -> list[str]:
     """Find imported local declarations whose doc comments carry source labels.
 
@@ -1512,19 +1540,27 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
         removed_hidden_target_context_blocks += removed_mathlib
     snippets = source_snippets(project_root, record)
     focus = source_focus(project_root, record, context_mode=context_mode)
+    prior_same_label_declarations = _prior_source_label_declaration_summaries(project_root, record)
+    imported_source_label_declarations = _imported_source_label_declaration_summaries(project_root, record)
     return {
         "source_statement_or_chunk": snippets,
         "tex_source_focus": tex_source_focus(snippets),
         "target_source_focus": focus,
         "source_progress_context": {
-            "prior_same_label_declarations": _prior_source_label_declaration_summaries(project_root, record),
-            "imported_source_label_declarations": _imported_source_label_declaration_summaries(project_root, record),
+            "same_label_progress_summary": _same_label_progress_summary(
+                project_root,
+                record,
+                prior=prior_same_label_declarations,
+                imported=imported_source_label_declarations,
+            ),
+            "prior_same_label_declarations": prior_same_label_declarations,
+            "imported_source_label_declarations": imported_source_label_declarations,
             "instruction": (
                 "When the source span has multiple labeled or lettered parts, use prior_same_label_declarations "
-                "as prefix-progress evidence. If an earlier declaration already formalizes one part, prefer the "
-                "remaining or next source part instead of bundling all parts. Use imported_source_label_declarations "
-                "as previous formalized project statements when they match the selected source part; prefer applying "
-                "an imported theorem over reproving its full internal proof."
+                "as prefix-progress evidence for one declaration-level target row. If an earlier declaration already "
+                "formalizes one part, prefer the remaining or next source part instead of bundling all parts. Use "
+                "imported_source_label_declarations as previous formalized project statements when they match the "
+                "selected source part; prefer applying an imported theorem over reproving its full internal proof."
             ),
             "policy": "same-file entries are before the withheld target; imported entries are from imported modules, never from the target file",
         },
@@ -1573,6 +1609,7 @@ def build_messages(project_root: Path, record: SelectedRecord, *, context_mode: 
             "Do not include import statements; the generated file already imports Mathlib.",
             "Do not assume access to the withheld target Lean statement or name.",
             "For multi-part TeX chunks, formalize only the specified labeled part/source span. Do not conjoin all parts unless the record explicitly asks for the whole multi-part result.",
+            "This benchmark row expects one declaration-level theorem/lemma, not a restatement of every source claim sharing the same TeX label.",
             "Do not cite or invent raw helper names that are not present in the Lean prefix context/local examples; prefer displayed local style and standard Mathlib APIs.",
             "Do not redeclare definitions, structures, abbrevs, notation helpers, or instances already present in the Lean prefix context; reference them directly.",
             "Do not introduce theorem-local `where` definitions or redefine concepts such as summability, limits, binomial coefficients, or matrix operations. If a needed definition is not in context, state a narrower theorem using the displayed APIs.",
@@ -1580,6 +1617,7 @@ def build_messages(project_root: Path, record: SelectedRecord, *, context_mode: 
             "State a single proposition-level theorem/lemma that is likely to match the specified source part; do not bundle typeclass instances or unrelated source parts into conjunctions.",
             "Every nonstandard helper theorem or local API used in the proof should appear explicitly in the Lean prefix context or local examples. If it is not displayed, do not use its name.",
             "If source_progress_context lists imported_source_label_declarations for the selected source part, prefer applying those previous formalized project theorems over reproving a long imported result.",
+            "If source_progress_context says a prior/imported same-label declaration is support only, use it as a proof fact but do not include it as an extra conclusion of the generated theorem.",
             "When a displayed local/project signature uses named implicit arguments such as `(R := R)`, preserve those named arguments in your theorem statement and proof terms rather than relying on typeclass inference.",
             "If an existing theorem or lemma in the prefix context has binders, apply it to the needed variables rather than using the theorem constant bare.",
             "Prefer the narrowest theorem directly supported by the source sentence; avoid generalizing to a stronger forall/if statement unless that exact shape is in the source or prefix context.",

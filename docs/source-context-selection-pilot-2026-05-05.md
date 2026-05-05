@@ -158,6 +158,36 @@ applying the imported previous theorem. The determinant record still failed
 generated-only Lean checking because the model invented unavailable Cauchy-Binet
 helper names and emitted malformed proof syntax.
 
+## Diverse Project-Context Probe and Declaration-Progress Fix
+
+The diverse project-context selector run:
+
+`docs/source-statement-runs/2026-05-05-context-selection-project-context-diverse3-paid/`
+
+cost `$0.004148956`, made two paid selector calls for three records, and kept
+`payload_target_name_audit.leak_count = 0`. The follow-up generation run:
+
+`docs/source-statement-runs/2026-05-05-project-context-diverse3-generation-paid/`
+
+cost `$0.021010413`. Verification passed `1/3`: `isInverse_unique` passed by
+applying the imported previous theorem `inverse_unique`; `prod-lim-conv` failed
+the hidden grader because the generated theorem bundled a prior multipliability
+result with the target equality theorem; `T_inv` failed generated-only Lean
+checking after the selector/generator chose an over-broad Laurent polynomial
+ring theorem.
+
+That failure exposed a generic benchmark-contract issue: records are
+declaration-level targets aligned to TeX labels, not one row per LaTeX theorem
+environment. The selector prompt now includes `same_label_progress_summary` and
+requires `supporting_context_boundary`, so prior/imported same-label facts are
+treated as support rather than extra conclusions to bundle into the generated
+target. A zero-cost payload audit:
+
+`docs/source-statement-runs/2026-05-05-context-selection-decl-progress-diverse3-budget/`
+
+made `0` paid calls and confirmed the new source-only prompt includes the
+declaration-level target policy with `0` target-name leaks.
+
 ## Practical Takeaways
 
 - Use no-reasoning mode for cheap selector models. Reasoning mode consumed the

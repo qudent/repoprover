@@ -949,9 +949,14 @@ def test_source_only_context_mode_includes_prior_same_file_source_label_api(tmp_
     messages = build_messages(project_root, SelectedRecord(row), context_mode="source-only")
     user = json.loads(messages[1]["content"])
     prefix = user["context"]["lean_prefix_context"]
+    progress = user["context"]["source_progress_context"]
 
     assert "Same-file source-label API" in prefix
     assert "same_label_helper" in prefix
+    assert progress["same_label_progress_summary"]["target_unit"].startswith("one withheld Lean declaration row")
+    assert progress["same_label_progress_summary"]["prior_same_file_declarations"] == ["same_label_helper"]
+    assert "one declaration-level target row" in progress["instruction"]
+    assert "one declaration-level theorem/lemma" in json.dumps(user["instructions"])
 
 
 def test_source_only_context_mode_drops_hidden_target_name_context_blocks(tmp_path: Path) -> None:

@@ -30,7 +30,8 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - [x] Add imported previous-project source-label context candidates to selector payloads.
 - [x] Apply the project-context selector output and run generation/verification after committing paid selector artifacts.
 - [x] Run a small diverse project-context generation/verification probe.
-- [ ] Tighten selector behavior for shared TeX labels where the target is the next declaration-level formalization, not the whole labeled theorem.
+- [x] Tighten selector behavior for shared TeX labels where the target is the next declaration-level formalization, not the whole labeled theorem.
+- [ ] Re-run a small paid selector/generation probe after the declaration-progress prompt fix, if the zero-cost payload audit looks right.
 - [ ] Shrink selector schema so 4-record batches complete as valid JSON.
 
 ## Blockers
@@ -54,8 +55,9 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - New project-context selector run `2026-05-05-context-selection-project-context-paid` cost `$0.002581152`; `alternant_swap` selected part (b) and identified imported `AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson.alternant_swap` as the direct proof route.
 - Project-context generation run `2026-05-05-project-context-selected-generation-paid` cost `$0.022922122`; after grader fixes, verification passed `1/2`, with `alternant_swap_of_ne` proving the withheld `alternant_swap` target.
 - Diverse project-context selector run `2026-05-05-context-selection-project-context-diverse3-paid` cost `$0.004148956`; generation run `2026-05-05-project-context-diverse3-generation-paid` cost `$0.021010413`; verification passed `1/3` with `isInverse_unique` proving via imported `inverse_unique`.
+- Declaration-progress prompt fix adds `same_label_progress_summary` and `supporting_context_boundary`; zero-cost diverse3 audit `2026-05-05-context-selection-decl-progress-diverse3-budget` made `0` paid calls and kept target-name leaks at `0`.
 - Focused tests pass with source-statement, source-context-selection, context graph, and materializer tests.
 
 ## Agent Notes
 - Useful proof paths so far are previous-project theorem reuse: `alternant_swap` via imported `AlgebraicCombinatorics.alternant_swap`, and `isInverse_unique` via imported `inverse_unique`.
-- Next work should fix shared-label declaration-progress guidance before another paid broad run; selector/generator currently over-bundle source parts that share one TeX theorem label.
+- Next work should test whether the declaration-progress prompt fix prevents over-bundling on the `prod-lim-conv`/Laurent failure modes before another paid broad run.

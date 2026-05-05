@@ -203,8 +203,9 @@ def build_context_selection_messages(
             {
                 "record_key": "record-001",
                 "source_focus_summary": "what precise source statement or part should be formalized",
-                "selected_source_part": "specific source part/label chosen for formalization, or whole statement if unambiguous",
-                "source_part_rationale": "why this part was chosen, using source labels and prefix progress when available",
+                "selected_source_part": "the single declaration-level source part chosen for the withheld row; not a bundle of prior/supporting facts",
+                "source_part_rationale": "why this one part was chosen, using source labels and prefix progress when available",
+                "supporting_context_boundary": "which displayed prior/imported facts are support only and must not be restated or bundled into the target theorem",
                 "formalization_sketch": [
                     "Lean-level sketch of the likely statement shape and proof plan, without inventing hidden target names"
                 ],
@@ -258,7 +259,9 @@ def build_context_selection_messages(
             "If a Mathlib name is uncertain, return a narrow search query plus the expected type/signature shape.",
             "Include previous formalized local declarations only if they are displayed in the prefix/local context.",
             "If `source_progress_context.imported_source_label_declarations` contains a previous imported project theorem matching the selected source part, include it in `candidate_project_context` and prefer it over reproving a long result.",
-            "If `source_progress_context.prior_same_label_declarations` shows that an earlier declaration already formalized a lettered source part, do not re-formalize that part or bundle it into a conjunction; select the remaining/next part.",
+            "The benchmark rows are declaration-level targets aligned to source labels, not one row per LaTeX theorem environment. Select one likely target declaration, not every claim under the label.",
+            "If `source_progress_context.same_label_progress_summary` or `prior_same_label_declarations` shows that earlier declarations already formalized source parts, do not re-formalize those parts or bundle them into a conjunction; select the remaining/next declaration-level part.",
+            "Do not infer that the target should bundle all imported/prior same-label facts just because several such facts are available. Put reused facts in `candidate_project_context` and explain their boundary in `supporting_context_boundary`.",
             "Separate mathematical understanding from Lean API uncertainty in `uncertainties`.",
             "Do not over-select: every requested fact should have a role in statement typing or proof construction.",
         ],

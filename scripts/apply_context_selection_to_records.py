@@ -127,6 +127,9 @@ def context_selection_lines(selection: dict[str, Any], hydrated: list[dict[str, 
     part_rationale = str(selection.get("source_part_rationale") or "").strip()
     if part_rationale:
         lines.append(f"Source-part rationale: {part_rationale}")
+    boundary = str(selection.get("supporting_context_boundary") or "").strip()
+    if boundary:
+        lines.append(f"Supporting context boundary: {boundary}")
     sketch = [str(item).strip() for item in selection.get("formalization_sketch") or [] if str(item).strip()]
     if sketch:
         lines.append("Formalization sketch:")

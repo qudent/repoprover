@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-05-05T14:52:23.516359+00:00",
+  "records_selected": 3,
+  "batches": 2,
+  "batch_size": 2,
+  "model": "deepseek/deepseek-v4-flash",
+  "price_source": "openrouter-catalog-2026-05-02",
+  "prompt_price_per_million": 0.435,
+  "completion_price_per_million": 0.87,
+  "context_length": 1048576,
+  "max_tokens": 8192,
+  "reasoning_effort": "",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": true,
+  "paid_calls_made": 0,
+  "actual_cost_usd": 0.0,
+  "max_actual_cost_usd": 0.03,
+  "hydrate_mathlib": false,
+  "compare_gold": false,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": [],
+    "allowed_previous_project_context_count": 0,
+    "allowed_previous_project_context": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+        "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.isInverse_unique"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 66286,
+        "prompt_chars": 63224,
+        "estimated_prompt_tokens": 15806,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.00687561,
+        "estimated_max_completion_cost_usd": 0.00712704,
+        "estimated_max_cost_usd": 0.01400265
+      },
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "batch_index": 2,
+      "record_keys": [
+        "record-003"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.T_inv"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 33808,
+        "prompt_chars": 31910,
+        "estimated_prompt_tokens": 7978,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.00347043,
+        "estimated_max_completion_cost_usd": 0.00712704,
+        "estimated_max_cost_usd": 0.010597470000000001
+      },
+      "paid_call_made": false,
+      "status": "budget_only"
+    }
+  ]
+}

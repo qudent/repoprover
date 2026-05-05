@@ -109,6 +109,9 @@ def test_context_selection_prompt_excludes_target_name_and_placeholder_mathlib(t
     assert "prior_part" in prompt_text
     assert "source_progress_context" in prompt_text
     assert "candidate_project_context" in prompt_text
+    assert "supporting_context_boundary" in prompt_text
+    assert "declaration-level targets aligned to source labels" in prompt_text
+    assert "same_label_progress_summary" in prompt_text
     assert "hiddenTarget" not in prompt_text
     assert "Target declaration comment must not be exposed" not in prompt_text
     assert "exact proof-level facts not statically certified" not in prompt_text
@@ -208,6 +211,7 @@ def test_apply_context_selection_injects_hydrated_mathlib_without_gold(tmp_path:
                                 "confidence": 0.9,
                             }
                         ],
+                        "supporting_context_boundary": "Demo.previous_fact is support only, not an extra target conclusion.",
                         "proof_notes": ["Use the displayed hypothesis."],
                     }
                 ]
@@ -258,5 +262,6 @@ def test_apply_context_selection_injects_hydrated_mathlib_without_gold(tmp_path:
     context = "\n".join(enhanced["minimal_context"]["mathlib_context"])
     assert "Nat.choose_symm" in context
     assert "Demo.previous_fact" in context
+    assert "support only, not an extra target conclusion" in context
     assert "theorem choose_symm" in context
     assert enhanced["minimal_context"]["context_selection"]["used_gold_comparison"] is False
