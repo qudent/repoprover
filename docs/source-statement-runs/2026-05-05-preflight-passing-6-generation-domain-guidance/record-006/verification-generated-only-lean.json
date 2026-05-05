@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:656:31: error: unsolved goals\nn k : ℕ\nh_transpose_involutive : Function.Involutive fun p => p.transpose\nh_transpose_injective : Function.Injective fun p => p.transpose\nA : Finset n.Partition := {p | p.numParts = k}\nhA : A = {p | p.numParts = k}\nB : Finset n.Partition := {p | p.largestPart = k}\nhB : B = {p | p.largestPart = k}\nh_sub1 : image (fun p => p.transpose) A ⊆ B\nh_sub2 : B ⊆ image (fun p => p.transpose) A\nh_image_A_eq_B : image (fun p => p.transpose) A = B\nhcard : #(image (fun p => p.transpose) A) = #A\n⊢ #{p | p.parts.card = k} = #{p | p.numParts = k}\n"
+}

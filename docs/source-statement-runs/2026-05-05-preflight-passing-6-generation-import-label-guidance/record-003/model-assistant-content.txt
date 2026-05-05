@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "theorem det_add_smul_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\n    (A.updateCol i (fun k => A k i + c • A k j)).det = A.det := by\n  have h_eq : (A.updateCol i (fun k => A k i + c • A k j)).transpose =\n      (A.transpose).updateRow i (A.transpose i + c • A.transpose j) := by\n    ext a b; simp [Matrix.updateCol, Matrix.transpose, Matrix.updateRow]\n  rw [← Matrix.det_transpose, h_eq, det_add_smul_row A.transpose i j hij c, Matrix.det_transpose]",
+  "declaration_name": "det_add_smul_col",
+  "used_context": ["det_add_smul_row", "Matrix.det_transpose", "Matrix.updateCol", "Matrix.updateRow", "Matrix.transpose"],
+  "notes": ["Uses the row operation theorem via transpose."]
+}

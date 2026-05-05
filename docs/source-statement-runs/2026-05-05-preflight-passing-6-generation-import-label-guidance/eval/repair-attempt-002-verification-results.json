@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-05-05T03:52:59.847332+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance",
+  "work_root": "/tmp/repoprover-source-statement-verify-import-label-guidance-repair2-serial",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 2,
+    "missing_model_output": 4
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-001/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-002/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_smul_col",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-003/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.pascal_identity_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-004",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-004/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_coeff_one",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-005",
+      "generated_name": "coeff_X_eq",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:41:74: error: unsolved goals\nR : Type u_1\ninst✝ : CommRing R\nn : ℕ\n⊢ (coeff n) (MvPowerSeries.X ()) = if n = 1 then 1 else 0\nAlgebraicCombinatorics/FPSDefinition.lean:42:11: warning: This simp argument is unused:\n  coeff_mk\n\nHint: Omit it from the simp argument list.\n  simp [̵X̵,̵ ̵c̵o̵e̵f̵f̵_̵m̵k̵]̵[̲ ̲X̲]̲\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_eq_largestPartCount",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-006",
+      "generated_name": "partsCount_eq_largestPart_count",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:639:4: error: unsolved goals\ncase h.mp\nk n : ℕ\nhinj : Function.Injective transpose\nhcard_image : #(image transpose {p | p.numParts = k}) = #{p | p.numParts = k}\np : n.Partition\nhp : p ∈ {p | p.numParts = k}\nh : p.transpose ∈ image transpose {p | p.numParts = k}\n⊢ p.numParts = k\nAlgebraicCombinatorics/Partitions/Basics.lean:653:13: error: No goals to be solved\nAlgebraicCombinatorics/Partitions/Basics.lean:641:31: warning: This simp argument is unused:\n  hp\n\nHint: Omit it from the simp argument list.\n  simp [Finset.mem_filter, h̵p̵,̵ ̵transpose_largestPart_eq_length]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}

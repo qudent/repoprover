@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:632:29: error(lean.invalidField): Invalid field notation: Type of\n  p\nis not known; cannot resolve field `numParts`\n\nHint: Consider replacing the field projection `.numParts` with a call to the function `numParts`.\n"
+}

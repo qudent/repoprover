@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777952664-Vo3Fk1iTgOyGUs4wZqBK",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_add_smul_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\\n    (A.updateCol i (fun k => A k i + c • A k j)).det = A.det := by\\n  have h_eq : (A.updateCol i (fun k => A k i + c • A k j)).transpose =\\n      (A.transpose).updateRow i (A.transpose i + c • A.transpose j) := by\\n    ext a b\\n    simp only [Matrix.updateCol_apply, Matrix.transpose_apply, Matrix.updateRow_apply, Matrix.add_apply, smul_apply]\\n    split_ifs <;> rfl\\n  rw [← Matrix.det_transpose, h_eq, det_add_smul_row A.transpose i j hij c, Matrix.det_transpose]\",\n  \"declaration_name\": \"det_add_smul_col\",\n  \"used_context\": [\n    \"Matrix.det_transpose\",\n    \"Matrix.updateCol_apply\",\n    \"Matrix.transpose_apply\",\n    \"Matrix.updateRow_apply\",\n    \"Matrix.add_apply\",\n    \"smul_apply\",\n    \"det_add_smul_row (local theorem)\"\n  ],\n  \"notes\": [\n    \"Proved column operation (f) by reducing to row operation via transpose.\",\n    \"The `simp only` block with `split_ifs` closes the entrywise equality; explicit lemmas ensure no metavariables.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777952664,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 3768,
+    "prompt_tokens": 3934,
+    "total_tokens": 7702,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 3419,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 128,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.004934234,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.004934234,
+      "upstream_inference_prompt_cost": 0.001656074,
+      "upstream_inference_completions_cost": 0.00327816
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := by\n  simp",
+  "declaration_name": "coeff_X_eq",
+  "used_context": [
+    "coeff_X (standard PowerSeries lemma)",
+    "simp"
+  ],
+  "notes": [
+    "Replaced 'rfl' with 'simp' because the equality is not definitional; the standard lemma coeff_X (via simp) closes the goal."
+  ]
+}

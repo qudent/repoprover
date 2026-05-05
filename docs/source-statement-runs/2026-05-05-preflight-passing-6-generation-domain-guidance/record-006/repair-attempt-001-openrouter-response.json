@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777954049-T0FVpvGoDK409wCBg1Dq",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem partsCount_eq_number_of_partitions_with_largestPart (n k : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by\\n  have h_transpose_involutive : Function.Involutive (fun (p : Partition n) => p.transpose) := by\\n    intro p; exact transpose_transpose p\\n  have h_transpose_injective : Function.Injective (fun (p : Partition n) => p.transpose) :=\\n    h_transpose_involutive.injective\\n  set A := (Finset.univ : Finset (Partition n)).filter (fun p => p.numParts = k) with hA\\n  set B := (Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k) with hB\\n  have h_sub1 : A.image (fun p : Partition n => p.transpose) ⊆ B := by\\n    intro p hp\\n    rcases Finset.mem_image.1 hp with ⟨q, hq, rfl⟩\\n    rw [hB, Finset.mem_filter]\\n    refine ⟨Finset.mem_univ _, ?_⟩\\n    rw [hA, Finset.mem_filter] at hq\\n    rcases hq with ⟨_, hq_numParts⟩\\n    rw [transpose_largestPart_eq_length q, hq_numParts]\\n  have h_sub2 : B ⊆ A.image (fun p : Partition n => p.transpose) := by\\n    intro p hp\\n    rw [hB, Finset.mem_filter] at hp\\n    rcases hp with ⟨_, hp_largestPart⟩\\n    have h_num : (p.transpose).numParts = k := by\\n      rw [transpose_length_eq_largestPart p, hp_largestPart]\\n    have hA_mem : p.transpose ∈ A := by\\n      rw [hA, Finset.mem_filter]\\n      refine ⟨Finset.mem_univ _, h_num⟩\\n    refine Finset.mem_image.mpr ⟨p.transpose, hA_mem, ?_⟩\\n    simpa using transpose_transpose p\\n  have h_image_A_eq_B : A.image (fun p : Partition n => p.transpose) = B :=\\n    Finset.Subset.antisymm h_sub1 h_sub2\\n  have hcard : (A.image (fun p : Partition n => p.transpose)).card = A.card :=\\n    Finset.card_image_of_injective A h_transpose_injective\\n  calc\\n    partsCount k n = A.card := by\\n      unfold partsCount\\n      rw [hA]\\n      simp [numParts]\\n    _ = (A.image (fun p : Partition n => p.transpose)).card := by rw [← hcard]\\n    _ = B.card := by rw [h_image_A_eq_B]\\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by rw [hB]\",\n  \"declaration_name\": \"partsCount_eq_number_of_partitions_with_largestPart\",\n  \"used_context\": [\n    \"partsCount\",\n    \"numParts\",\n    \"largestPart\",\n    \"transpose\",\n    \"transpose_transpose\",\n    \"transpose_largestPart_eq_length\",\n    \"transpose_length_eq_largestPart\",\n    \"Finset.card_image_of_injective\",\n    \"Finset.mem_image\",\n    \"Finset.mem_filter\",\n    \"Finset.Subset.antisymm\",\n    \"Function.Involutive.injective\"\n  ],\n  \"notes\": [\n    \"The proof uses the bijection given by transpose. The equality `partsCount k n = A.card` required `simp [numParts]` to close a definitional equality between `Multiset.card p.parts` and `p.numParts`.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777954049,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4077,
+    "prompt_tokens": 13234,
+    "total_tokens": 17311,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 3163,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 1280,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.00875162,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.00875162,
+      "upstream_inference_prompt_cost": 0.00520463,
+      "upstream_inference_completions_cost": 0.00354699
+    }
+  },
+  "provider": "DeepSeek"
+}

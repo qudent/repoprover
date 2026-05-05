@@ -1,0 +1,18 @@
+{
+  "lean_declaration": "theorem partsCount_eq_largestPart_count (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by\n  have hinj : Function.Injective (Nat.Partition.transpose (n := n)) := by\n    intro p q h\n    apply_fun (fun p : Partition n => p.transpose) at h\n    simpa [transpose_transpose] using h\n  have hcard_image : (Finset.image (Nat.Partition.transpose (n := n))\n      (Finset.filter (fun p => numParts p = k) Finset.univ)).card =\n    (Finset.filter (fun p => numParts p = k) Finset.univ).card :=\n    Finset.card_image_of_injective _ hinj\n  have himage_eq : Finset.image (Nat.Partition.transpose (n := n))\n      (Finset.filter (fun p => numParts p = k) Finset.univ) =\n    (Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k) := by\n    ext q\n    constructor\n    · intro h\n      rcases Finset.mem_image.1 h with ⟨p, hp, rfl⟩\n      simp [Finset.mem_filter, hp, transpose_largestPart_eq_length]\n    · intro h\n      rcases Finset.mem_filter.1 h with ⟨hq_univ, hq_larg⟩\n      have hq_trans_num : numParts (q.transpose) = k := by\n        rw [transpose_length_eq_largestPart q, hq_larg]\n      apply Finset.mem_image.mpr\n      exact ⟨q.transpose, by\n        simp [hq_trans_num, Finset.mem_filter, Finset.mem_univ],\n        by rw [transpose_transpose]⟩\n  calc\n    partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => Multiset.card p.parts = k)).card := rfl\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => numParts p = k)).card := by\n      congr; ext p; simp [numParts]\n    _ = (Finset.image (Nat.Partition.transpose (n := n))\n          (Finset.filter (fun p => numParts p = k) Finset.univ)).card := by rw [hcard_image]\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by rw [himage_eq]",
+  "declaration_name": "partsCount_eq_largestPart_count",
+  "used_context": [
+    "partsCount",
+    "numParts",
+    "largestPart",
+    "transpose_transpose",
+    "transpose_length_eq_largestPart",
+    "transpose_largestPart_eq_length",
+    "Finset.card_image_of_injective",
+    "Partition.transpose",
+    "Multiset.card"
+  ],
+  "notes": [
+    "Replaced p.numParts / p.largestPart with explicit function calls to avoid dot notation type inference issues."
+  ]
+}

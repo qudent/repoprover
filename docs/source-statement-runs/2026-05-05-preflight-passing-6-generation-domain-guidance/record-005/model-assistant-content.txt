@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "lemma coeff_X_fps (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 :=\n  coeff_X n",
+  "declaration_name": "coeff_X_fps",
+  "used_context": [
+    "PowerSeries.coeff_X"
+  ],
+  "notes": [
+    "The definition of the formal power series indeterminate x from def.fps.x is exactly PowerSeries.X.",
+    "The lemma is a direct restatement of Mathlib's coeff_X, adapted to the coefficient name coeff from the local context."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777952928-LrG1Fynh3dzMW5tPnTLz",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := by\\n  simp [X, coeff_mk]\",\n  \"declaration_name\": \"coeff_X_eq\",\n  \"used_context\": [\n    \"PowerSeries.coeff_mk\",\n    \"PowerSeries.X\"\n  ],\n  \"notes\": [\n    \"Used the standard Mathlib lemma `coeff_mk` to unfold the coefficient of a power series defined via `mk`, and unfolded `X`.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777952928,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 3381,
+    "prompt_tokens": 3053,
+    "total_tokens": 6434,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 3244,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.003938229,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.003938229,
+      "upstream_inference_prompt_cost": 0.000996759,
+      "upstream_inference_completions_cost": 0.00294147
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777953297-Q2x4dF4R04SYaOuEZpbm",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_add_smul_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\\n    (A.updateCol i (fun k => A k i + c • A k j)).det = A.det := by\\n  calc\\n    (A.updateCol i (fun k => A k i + c • A k j)).det = ((A.updateCol i (fun k => A k i + c • A k j)).transpose).det := by\\n      rw [Matrix.det_transpose]\\n    _ = ((A.transpose).updateRow i (fun k => A k i + c • A k j)).det := by\\n      ext a b; simp [Matrix.updateCol, Matrix.updateRow, Matrix.transpose]\\n    _ = ((A.transpose).updateRow i ((A.transpose) i + c • (A.transpose) j)).det := by\\n      have hf : (fun k => A k i + c • A k j) = (A.transpose) i + c • (A.transpose) j := by\\n        ext k; simp [Matrix.transpose_apply, Pi.add_apply, Pi.smul_apply]\\n      rw [hf]\\n    _ = (A.transpose).det := by rw [det_add_smul_row (A.transpose) i j hij c]\\n    _ = A.det := by rw [Matrix.det_transpose]\",\n  \"declaration_name\": \"det_add_smul_col\",\n  \"used_context\": [\n    \"det_add_smul_row\",\n    \"Matrix.det_transpose\"\n  ],\n  \"notes\": [\n    \"Proved by transposing the matrix and applying the row version 'det_add_smul_row'.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777953297,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5460,
+    "prompt_tokens": 3267,
+    "total_tokens": 8727,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 5052,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.005950481,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.005950481,
+      "upstream_inference_prompt_cost": 0.001200281,
+      "upstream_inference_completions_cost": 0.0047502
+    }
+  },
+  "provider": "DeepSeek"
+}

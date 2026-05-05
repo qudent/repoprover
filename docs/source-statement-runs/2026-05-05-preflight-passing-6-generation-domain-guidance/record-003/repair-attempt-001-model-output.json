@@ -1,0 +1,16 @@
+{
+  "lean_declaration": "theorem det_add_smul_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\n    (A.updateCol i (fun k => A k i + c • A k j)).det = A.det := by\n  have h : (A.updateCol i (fun k => A k i + c • A k j)).transpose = (A.transpose).updateRow i ((A.transpose) i + c • (A.transpose) j) := by\n    ext a b\n    by_cases ha : a = i\n    · simp [ha, Matrix.updateCol, Matrix.updateRow, Matrix.transpose, Pi.add_apply, Pi.smul_apply]\n    · simp [ha, Matrix.updateCol, Matrix.updateRow, Matrix.transpose, Pi.add_apply, Pi.smul_apply]\n  calc\n    (A.updateCol i (fun k => A k i + c • A k j)).det = ((A.updateCol i (fun k => A k i + c • A k j)).transpose).det := by\n      rw [Matrix.det_transpose]\n    _ = ((A.transpose).updateRow i ((A.transpose) i + c • (A.transpose) j)).det := by rw [h]\n    _ = (A.transpose).det := by rw [det_add_smul_row (A.transpose) i j hij c]\n    _ = A.det := by rw [Matrix.det_transpose]",
+  "declaration_name": "det_add_smul_col",
+  "used_context": [
+    "det_add_smul_row (local theorem)",
+    "Matrix.det_transpose",
+    "Matrix.updateCol",
+    "Matrix.updateRow",
+    "Matrix.transpose",
+    "Pi.add_apply",
+    "Pi.smul_apply"
+  ],
+  "notes": [
+    "The original proof attempted to use `ext` on a scalar equality; the repaired proof first establishes a matrix equality via `ext` with case split, then uses `calc` on determinants."
+  ]
+}

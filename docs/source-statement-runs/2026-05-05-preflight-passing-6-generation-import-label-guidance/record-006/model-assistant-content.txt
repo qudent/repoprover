@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem partsCount_eq_largestPart_count (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by\n  have hbij : ((Finset.univ.filter (fun p : Partition n => p.numParts = k)).card = (Finset.univ.filter (fun p : Partition n => p.largestPart = k)).card) := by\n    apply Finset.card_congr (fun p _ => p.transpose) ?_ ?_ ?_\n    · intro p hp\n      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hp\n      have hp_num : p.numParts = k := hp\n      rw [transpose_largestPart_eq_length, hp_num]\n    · intro q hq\n      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hq\n      have hq_largest : q.largestPart = k := hq\n      use q.transpose\n      constructor\n      · rw [transpose_length_eq_largestPart, hq_largest]\n      · rw [transpose_transpose]\n    · intro p1 p2 hp1 hp2 htrans\n      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hp1 hp2\n      apply_fun (fun p : Partition n => p.transpose) at htrans\n      rw [transpose_transpose, transpose_transpose] at htrans\n      exact htrans\n  calc\n    partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => Multiset.card p.parts = k)).card := rfl\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => p.numParts = k)).card := by\n      congr; ext p; simp [numParts]\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := hbij",
+  "declaration_name": "partsCount_eq_largestPart_count",
+  "used_context": [
+    "transpose_largestPart_eq_length",
+    "transpose_length_eq_largestPart",
+    "transpose_transpose",
+    "partsCount",
+    "numParts",
+    "Finset.card_congr"
+  ],
+  "notes": [
+    "Uses the involution property of transpose to establish a bijection between partitions with k parts and partitions with largest part k."
+  ]
+}

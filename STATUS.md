@@ -67,7 +67,11 @@ them separately, moving the cumulative six-record result to 3/6 successes for
 source-facing target doc comments to the prompt fixed the determinant/binomial
 statement-shape misses: a fresh six-record generation+repair probe reached 5/6
 verified successes for `$0.198753983`, with only the FPS limits
-`CoeffStabilizesTo` target still failing.
+`CoeffStabilizesTo` target still failing. Adding prompt-only imported
+source-label API retrieval plus domain-specific statement-shape guidance for FPS
+limits, FPS `X` coefficients, and partition transpose produced the first 6/6
+verified six-record slice: 4/6 first-pass successes plus 2/2 generated-only
+compiler-feedback repairs for `$0.063246158`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -205,18 +209,20 @@ failures plus 1 hidden-grader mismatch; see
   alternate model-output names. Three bounded repair passes moved cumulative
   success to 3/6 for `$0.113014943` total local-API generation+repair spend.
   See `docs/source-statement-local-api-repair-queue-results.md`.
-- [ ] Add a statement-shape/source-focus iteration for the three remaining
-  grader mismatches: limits exact target, determinant single-part target, and
-  generalized `Ring.choose` binomial target.
 - [x] Add a statement-shape/source-focus iteration for the three remaining
   grader mismatches by exposing source-facing target doc comments while still
   withholding the target Lean declaration/name. Result: determinant `(f)` and
   generalized binomial successor-form rows passed on first generation; after
   repair, the six-record slice reached 5/6 verified successes for `$0.198753983`.
   See `docs/source-statement-target-comment-focus-results.md`.
-- [ ] Add domain-specific FPS-limits guidance so source text involving limits
-  and summability maps to local `CoeffStabilizesTo`/`IsSummable`/`tsum'`
-  statement shapes instead of topological `HasSum`.
+- [x] Add prompt-only imported source-label API retrieval plus domain-specific
+  statement-shape guidance so source text maps to local APIs rather than stale
+  generic Lean/mathlib guesses. Result: the six preflight-passing records
+  reached 4/6 on first generation and 6/6 after one repair pass for
+  `$0.063246158`. See `docs/source-statement-domain-guidance-results.md`.
+- [ ] Scale the same generation-only plus verifier queue to a larger
+  preflight-passing slice; keep provider outputs logged before Lean checks and
+  stop if first-pass+repair success drops below a useful diagnostic threshold.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

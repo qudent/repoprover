@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPSDefinition.lean:41:0: error: Not a definitional equality: the left-hand side\n  (coeff n) X\nis not definitionally equal to the right-hand side\n  if n = 1 then 1 else 0\nAlgebraicCombinatorics/FPSDefinition.lean:41:74: error: Type mismatch\n  rfl\nhas type\n  ?m.18 = ?m.18\nbut is expected to have type\n  (coeff n) X = if n = 1 then 1 else 0\n"
+}

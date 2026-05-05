@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem partialSum_coeffStabilizesTo (f : ℕ → PowerSeries K) (hf : IsSummable f) :\n    CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) (tsum' f hf) :=\n  coeffStabilizesTo_partial_sum hf",
+  "declaration_name": "partialSum_coeffStabilizesTo",
+  "used_context": [
+    "coeffStabilizesTo_partial_sum",
+    "IsSummable",
+    "tsum'",
+    "CoeffStabilizesTo",
+    "Finset.range"
+  ],
+  "notes": [
+    "The proof is a direct application of the already-imported lemma `coeffStabilizesTo_partial_sum`."
+  ]
+}

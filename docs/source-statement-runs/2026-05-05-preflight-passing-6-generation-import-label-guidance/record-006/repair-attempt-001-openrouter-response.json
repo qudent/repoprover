@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777952664-i6VviHjQ64BuKEIbyaWT",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem partsCount_eq_largestPart_count (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by\\n  have hinj : Function.Injective (Nat.Partition.transpose (n := n)) := by\\n    intro p q h\\n    apply_fun (fun p : Partition n => p.transpose) at h\\n    simpa [transpose_transpose] using h\\n  have hcard_image : (Finset.image (Nat.Partition.transpose (n := n))\\n      (Finset.filter (fun p => p.numParts = k) Finset.univ)).card =\\n    (Finset.filter (fun p => p.numParts = k) Finset.univ).card :=\\n    Finset.card_image_of_injective _ hinj\\n  have himage_eq : Finset.image (Nat.Partition.transpose (n := n))\\n      (Finset.filter (fun p => p.numParts = k) Finset.univ) =\\n    (Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k) := by\\n    ext q\\n    constructor\\n    · intro h\\n      rcases Finset.mem_image.1 h with ⟨p, hp, rfl⟩\\n      simp [Finset.mem_filter, hp, transpose_largestPart_eq_length]\\n    · intro h\\n      rcases Finset.mem_filter.1 h with ⟨hq_univ, hq_larg⟩\\n      have hq_trans_num : (q.transpose).numParts = k := by\\n        rw [transpose_length_eq_largestPart, hq_larg]\\n      apply Finset.mem_image.mpr\\n      exact ⟨q.transpose, by simp [hq_trans_num, Finset.mem_filter, Finset.mem_univ], by rw [transpose_transpose]⟩\\n  calc\\n    partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => Multiset.card p.parts = k)).card := rfl\\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => p.numParts = k)).card := by\\n      congr; ext p; simp [numParts]\\n    _ = (Finset.image (Nat.Partition.transpose (n := n))\\n          (Finset.filter (fun p => p.numParts = k) Finset.univ)).card := by rw [hcard_image]\\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by rw [himage_eq]\",\n  \"declaration_name\": \"partsCount_eq_largestPart_count\",\n  \"used_context\": [\n    \"partsCount\",\n    \"numParts\",\n    \"largestPart\",\n    \"transpose\",\n    \"transpose_transpose\",\n    \"transpose_largestPart_eq_length\",\n    \"transpose_length_eq_largestPart\",\n    \"Finset.card_image_of_injective\",\n    \"Finset.mem_image\",\n    \"Finset.mem_filter\"\n  ],\n  \"notes\": [\n    \"Replaced the missing `Finset.card_congr` with `Finset.card_image_of_injective` using the injectivity of `transpose`.\",\n    \"Used a direct bijection argument via the involution property to equate the cardinalities.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777952664,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4078,
+    "prompt_tokens": 12653,
+    "total_tokens": 16731,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 3267,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 128,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.008996699,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.008996699,
+      "upstream_inference_prompt_cost": 0.005448839,
+      "upstream_inference_completions_cost": 0.00354786
+    }
+  },
+  "provider": "DeepSeek"
+}

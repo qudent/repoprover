@@ -56,7 +56,7 @@ GENERATED_DECL_RE = re.compile(
 )
 BLOCK_BOUNDARY_RE = re.compile(
     r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
-    r"(?:(?:theorem|lemma|def|abbrev|instance|class|structure|inductive|example)\b|(?:scoped\s+)?notation\b)"
+    r"(?:(?:theorem|lemma|def|abbrev|instance|class|structure|inductive|example)\b|(?:scoped\s+)?notation\b|end\b)"
 )
 LOCAL_EXAMPLE_RE = re.compile(r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*(?:example|theorem|lemma)\b")
 SCOPED_NOTATION_RE = re.compile(r"scoped\s+notation\s+(?P<lhs>.*?)\s*=>\s*(?P<rhs>.*)$")
@@ -401,6 +401,63 @@ def _prior_named_declaration_blocks(project_root: Path, record: SelectedRecord, 
     return blocks
 
 
+def _imported_label_declaration_blocks(project_root: Path, record: SelectedRecord, limit: int = 3) -> list[str]:
+    """Find imported local declarations whose doc comments carry source labels.
+
+    This is intentionally label-driven and skips the target file. It lets prompts
+    see already-imported source-aligned APIs, without reading the withheld target
+    declaration from the file being generated.
+    """
+
+    labels = sorted(
+        {label for label in _source_span_labels(record) + _record_comment_labels(record) if label},
+        key=len,
+        reverse=True,
+    )
+    if not labels:
+        return []
+
+    target_path = Path(record.lean_path)
+    blocks: list[tuple[int, str, str]] = []
+    seen_names: set[tuple[str, str]] = set()
+    for module in record.imports:
+        rel_path = local_import_path(str(module))
+        if rel_path is None or rel_path == target_path:
+            continue
+        path = project_root / rel_path
+        if not path.exists():
+            continue
+        lines = path.read_text(encoding="utf-8").splitlines()
+        for index, line in enumerate(lines, start=1):
+            matched_label = next((label for label in labels if label in line), None)
+            if matched_label is None:
+                continue
+            for candidate_index in range(index, min(len(lines), index + 18) + 1):
+                match = DECL_RE.match(lines[candidate_index - 1])
+                if not match or match.group("kind") not in {"theorem", "lemma", "def", "abbrev"}:
+                    continue
+                name = str(match.group("name") or "")
+                if not name or (str(rel_path), name) in seen_names:
+                    break
+                block = _named_declaration_block(lines, name, after_line=index)
+                if block is None:
+                    break
+                start, end, text = block
+                if len(text.splitlines()) > 90:
+                    text = "\n".join(text.splitlines()[:90]).rstrip() + "\n-- ... declaration truncated ..."
+                blocks.append(
+                    (
+                        start,
+                        name,
+                        f"-- Imported API retrieval by source label `{matched_label}`: {rel_path}:{start}-{end} ({name})\n{text}",
+                    )
+                )
+                seen_names.add((str(rel_path), name))
+                break
+    blocks.sort(key=lambda item: item[0])
+    return [block for _, _, block in blocks[:limit]]
+
+
 def _notation_surface(lhs: str) -> str:
     parts: list[str] = []
     for match in re.finditer(r'"([^"]*)"|([A-Za-z_][A-Za-z0-9_\']*)', lhs):
@@ -506,7 +563,12 @@ def _declaration_names_in_text(text: str) -> set[str]:
     return names
 
 
-def source_statement_context(project_root: Path, record: SelectedRecord) -> tuple[list[str], list[str]]:
+def source_statement_context(
+    project_root: Path,
+    record: SelectedRecord,
+    *,
+    include_imported_label_api: bool = True,
+) -> tuple[list[str], list[str]]:
     context_parts, context_closes = render_ordered_context_and_predecessors(project_root, record)
     expanded: list[str] = []
     seen_declaration_names = {name for part in context_parts for name in _declaration_names_in_text(part)}
@@ -544,6 +606,17 @@ def source_statement_context(project_root: Path, record: SelectedRecord) -> tupl
         expanded.append(block)
         seen_declaration_names.update(block_names)
         seen_context_bodies.add(body)
+    if include_imported_label_api:
+        for block in _imported_label_declaration_blocks(project_root, record):
+            block_names = _declaration_names_in_text(block)
+            if block_names and block_names <= seen_declaration_names:
+                continue
+            body = block.strip()
+            if body in seen_context_bodies:
+                continue
+            expanded.append(block)
+            seen_declaration_names.update(block_names)
+            seen_context_bodies.add(body)
     return expanded, context_closes
 
 
@@ -626,14 +699,107 @@ def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, An
     }
 
 
+def domain_statement_shape_guidance(
+    record: SelectedRecord,
+    *,
+    snippets: list[dict[str, Any]],
+    context_parts: list[str],
+    target_focus: dict[str, Any],
+) -> list[dict[str, Any]]:
+    source_text = "\n".join(str(snippet.get("snippet", "")) for snippet in snippets).lower()
+    labels = " ".join(_source_span_labels(record) + _record_comment_labels(record)).lower()
+    target_comment = target_focus.get("target_declaration_source_comment") or {}
+    target_comment_text = str(target_comment.get("text", "")).lower()
+    imports = " ".join(record.imports)
+    prefix = "\n".join(context_parts)
+    combined = f"{source_text}\n{labels}\n{target_comment_text}\n{imports}\n{record.lean_path}"
+
+    guidance: list[dict[str, Any]] = []
+    fps_limit_signal = (
+        "AlgebraicCombinatorics.FPS.Limits" in imports
+        or "Details/Limits.lean" in record.lean_path
+        or "CoeffStabilizesTo" in prefix
+    )
+    summability_signal = any(term in combined for term in ["summable", "sum-lim", "partial sum", "partial sums"])
+    limit_signal = any(term in combined for term in ["limit", "lim.", "lim-"])
+    if fps_limit_signal and summability_signal and limit_signal:
+        guidance.append(
+            {
+                "domain": "formal power series limits",
+                "trigger": "source/import context discusses summable FPS families, partial sums, and limits",
+                "preferred_statement_family": [
+                    "Use the repository's coefficientwise limit API when it is displayed or imported: `CoeffStabilizesTo`, `IsSummable`, and `tsum'`.",
+                    "Phrase finite partial sums with `Finset.range`; this file uses partial sums indexed by an upper natural bound.",
+                ],
+                "avoid_statement_family": [
+                    "Do not translate this FPS limit prose into Mathlib's topological `HasSum`, `Summable`, or `∑'` API unless that exact API appears in the local context.",
+                    "Do not add topological assumptions such as `TopologicalSpace K⟦X⟧` just because the prose says limit.",
+                ],
+            }
+        )
+
+    fps_indeterminate_signal = (
+        "FPSDefinition.lean" in record.lean_path
+        or "def.fps.x" in labels
+        or "indeterminate" in combined
+    ) and ("x" in combined or "coeff" in combined or "coefficient" in combined)
+    if fps_indeterminate_signal:
+        guidance.append(
+            {
+                "domain": "formal power series indeterminate",
+                "trigger": "source context describes the FPS indeterminate `X` and its coefficients",
+                "preferred_statement_family": [
+                    "Use the current Mathlib/PowerSeries coefficient API for `X`, especially displayed or standard facts such as `coeff_X` and `coeff_one_X`.",
+                    "For coefficient identities about `X`, prove by rewriting/simping with the coefficient API; do not use `rfl` unless Lean has shown the equality is definitional.",
+                ],
+                "avoid_statement_family": [
+                    "Do not unfold `X` into raw `MvPowerSeries` internals unless local examples already do that.",
+                    "Do not assume `coeff n X = if n = 1 then 1 else 0` is definitional.",
+                ],
+            }
+        )
+
+    partition_transpose_signal = (
+        "Partitions/Basics.lean" in record.lean_path
+        or "prop.pars.pkn=dual" in labels
+        or ("transpose" in combined and "largest part" in combined and "number of parts" in combined)
+    )
+    if partition_transpose_signal:
+        guidance.append(
+            {
+                "domain": "partition transpose cardinality",
+                "trigger": "source context uses partition transpose to swap number of parts and largest part",
+                "preferred_statement_family": [
+                    "Use the displayed local API for partitions: `numParts p`, `largestPart p`, `transpose`, `transpose_transpose`, `transpose_length_eq_largestPart`, and `transpose_largestPart_eq_length` when present.",
+                    "Treat `numParts` and `largestPart` as functions unless local context shows field notation.",
+                    "For cardinalities of filtered `Finset.univ`, prefer a current Mathlib bijection/image/cardinality API that actually exists in this Lean version; avoid guessed names.",
+                ],
+                "avoid_statement_family": [
+                    "Do not call non-existent helpers such as `Finset.card_congr`.",
+                    "Do not use `.numParts` or `.largestPart` field notation when Lean reports that the partition type is not inferred.",
+                ],
+            }
+        )
+    return guidance
+
+
 def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
-    context_parts, _ = source_statement_context(project_root, record)
+    context_parts, _ = source_statement_context(project_root, record, include_imported_label_api=True)
+    snippets = source_snippets(project_root, record)
+    focus = source_focus(project_root, record)
     return {
-        "source_statement_or_chunk": source_snippets(project_root, record),
-        "target_source_focus": source_focus(project_root, record),
+        "source_statement_or_chunk": snippets,
+        "target_source_focus": focus,
+        "available_imports": record.imports,
         "lean_prefix_context": "\n".join(context_parts).strip(),
         "lean_environment": lean_environment_context(project_root),
         "local_lean_style": local_lean_style(project_root, record),
+        "domain_statement_shape_guidance": domain_statement_shape_guidance(
+            record,
+            snippets=snippets,
+            context_parts=context_parts,
+            target_focus=focus,
+        ),
         "mathlib_context": record.mathlib_context,
         "benchmark_policy": {
             "target_lean_statement_available_to_model": False,
@@ -884,7 +1050,7 @@ def materialize_candidate_project(
     if lake_cache_from is not None:
         copy_lake_cache(lake_cache_from, output_root)
 
-    context_parts, context_closes = source_statement_context(project_root, record)
+    context_parts, context_closes = source_statement_context(project_root, record, include_imported_label_api=False)
     imports = record.imports if include_record_imports else ["Mathlib"]
     if "Mathlib" not in imports:
         imports = ["Mathlib", *imports]

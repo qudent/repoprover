@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:627:10: error(lean.unknownIdentifier): Unknown constant `Finset.card_congr`\nAlgebraicCombinatorics/Partitions/Basics.lean:628:4: error: No goals to be solved\nAlgebraicCombinatorics/Partitions/Basics.lean:647:13: error: No goals to be solved\n"
+}

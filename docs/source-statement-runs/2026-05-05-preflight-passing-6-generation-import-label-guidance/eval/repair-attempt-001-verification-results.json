@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-05-05T03:48:12.881071+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance",
+  "work_root": "/tmp/repoprover-source-statement-verify-import-label-guidance-repair1-serial",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 1,
+  "success_rate": 0.16666666666666666,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 2,
+    "missing_model_output": 3
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-001/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-002/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_smul_col",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-003",
+      "generated_name": "det_add_smul_col",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:48:87: warning: This simp argument is unused:\n  Matrix.add_apply\n\nHint: Omit it from the simp argument list.\n  simp only [Matrix.updateCol_apply, Matrix.transpose_apply, Matrix.updateRow_apply, M̵a̵t̵r̵i̵x̵.̵a̵d̵d̵_̵a̵p̵p̵l̵y̵,̵ ̵smul_apply]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:48:105: warning: This simp argument is unused:\n  smul_apply\n\nHint: Omit it from the simp argument list.\n  simp only [Matrix.updateCol_apply, Matrix.transpose_apply, Matrix.updateRow_apply,\n  ̲  ̲ ̲ ̲ ̲ ̲Matrix.add_apply,̵ ̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:48:87: warning: This simp argument is unused:\n  Matrix.add_apply\n\nHint: Omit it from the simp argument list.\n  simp only [Matrix.updateCol_apply, Matrix.transpose_apply, Matrix.updateRow_apply, M̵a̵t̵r̵i̵x̵.̵a̵d̵d̵_̵a̵p̵p̵l̵y̵,̵ ̵smul_apply]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:48:105: warning: This simp argument is unused:\n  smul_apply\n\nHint: Omit it from the simp argument list.\n  simp only [Matrix.updateCol_apply, Matrix.transpose_apply, Matrix.updateRow_apply,\n  ̲  ̲ ̲ ̲ ̲ ̲Matrix.add_apply,̵ ̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:59:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:59:4: warning: 'simpa using det_add_smul_col' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:55:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.pascal_identity_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-004",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-004/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_coeff_one",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-005",
+      "generated_name": "coeff_X_eq",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:42:2: error: `simp` made no progress\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_eq_largestPartCount",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-import-label-guidance/record-006",
+      "generated_name": "partsCount_eq_largestPart_count",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:632:29: error(lean.invalidField): Invalid field notation: Type of\n  p\nis not known; cannot resolve field `numParts`\n\nHint: Consider replacing the field projection `.numParts` with a call to the function `numParts`.\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}

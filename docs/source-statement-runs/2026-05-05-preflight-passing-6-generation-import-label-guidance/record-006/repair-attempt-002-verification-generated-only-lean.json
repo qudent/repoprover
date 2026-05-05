@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:639:4: error: unsolved goals\ncase h.mp\nk n : ℕ\nhinj : Function.Injective transpose\nhcard_image : #(image transpose {p | p.numParts = k}) = #{p | p.numParts = k}\np : n.Partition\nhp : p ∈ {p | p.numParts = k}\nh : p.transpose ∈ image transpose {p | p.numParts = k}\n⊢ p.numParts = k\nAlgebraicCombinatorics/Partitions/Basics.lean:653:13: error: No goals to be solved\nAlgebraicCombinatorics/Partitions/Basics.lean:641:31: warning: This simp argument is unused:\n  hp\n\nHint: Omit it from the simp argument list.\n  simp [Finset.mem_filter, h̵p̵,̵ ̵transpose_largestPart_eq_length]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+}

@@ -1,0 +1,19 @@
+{
+  "lean_declaration": "theorem partsCount_eq_number_of_partitions_with_largestPart (n k : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by\n  have h_transpose_involutive : Function.Involutive (fun (p : Partition n) => p.transpose) := by\n    intro p; exact transpose_transpose p\n  have h_transpose_injective : Function.Injective (fun (p : Partition n) => p.transpose) :=\n    h_transpose_involutive.injective\n  set A := (Finset.univ : Finset (Partition n)).filter (fun p => p.numParts = k) with hA\n  set B := (Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k) with hB\n  have h_sub1 : A.image (fun p : Partition n => p.transpose) ⊆ B := by\n    intro p hp\n    rcases Finset.mem_image.1 hp with ⟨q, hq, rfl⟩\n    rw [hB, Finset.mem_filter]\n    refine ⟨Finset.mem_univ _, ?_⟩\n    rw [hA, Finset.mem_filter] at hq\n    rcases hq with ⟨_, hq_numParts⟩\n    rw [transpose_largestPart_eq_length q, hq_numParts]\n  have h_sub2 : B ⊆ A.image (fun p : Partition n => p.transpose) := by\n    intro p hp\n    rw [hB, Finset.mem_filter] at hp\n    rcases hp with ⟨_, hp_largestPart⟩\n    have h_num : (p.transpose).numParts = k := by\n      rw [transpose_length_eq_largestPart p, hp_largestPart]\n    have hA_mem : p.transpose ∈ A := by\n      rw [hA, Finset.mem_filter]\n      refine ⟨Finset.mem_univ _, h_num⟩\n    refine Finset.mem_image.mpr ⟨p.transpose, hA_mem, ?_⟩\n    simpa using transpose_transpose p\n  have h_image_A_eq_B : A.image (fun p : Partition n => p.transpose) = B :=\n    Finset.Subset.antisymm h_sub1 h_sub2\n  have hcard : (A.image (fun p : Partition n => p.transpose)).card = A.card :=\n    Finset.card_image_of_injective A h_transpose_injective\n  calc\n    partsCount k n = A.card := by\n      unfold partsCount\n      rw [hA]\n    _ = (A.image (fun p : Partition n => p.transpose)).card := by rw [← hcard]\n    _ = B.card := by rw [h_image_A_eq_B]\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by rw [hB]",
+  "declaration_name": "partsCount_eq_number_of_partitions_with_largestPart",
+  "used_context": [
+    "partsCount",
+    "numParts",
+    "largestPart",
+    "transpose",
+    "transpose_largestPart_eq_length",
+    "transpose_length_eq_largestPart",
+    "transpose_transpose",
+    "Finset.card_image_of_injective",
+    "Function.Involutive",
+    "Function.Injective"
+  ],
+  "notes": [
+    "The proof uses transpose as an involution to establish a bijection between partitions with k parts and partitions with largest part k."
+  ]
+}

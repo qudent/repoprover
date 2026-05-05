@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPSDefinition.lean:41:74: error: unsolved goals\nR : Type u_1\ninst✝ : CommRing R\nn : ℕ\n⊢ (coeff n) (MvPowerSeries.X ()) = if n = 1 then 1 else 0\nAlgebraicCombinatorics/FPSDefinition.lean:42:11: warning: This simp argument is unused:\n  coeff_mk\n\nHint: Omit it from the simp argument list.\n  simp [̵X̵,̵ ̵c̵o̵e̵f̵f̵_̵m̵k̵]̵[̲ ̲X̲]̲\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+}

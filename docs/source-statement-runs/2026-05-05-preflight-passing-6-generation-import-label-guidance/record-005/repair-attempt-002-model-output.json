@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := by\n  simp [X, coeff_mk]",
+  "declaration_name": "coeff_X_eq",
+  "used_context": [
+    "PowerSeries.coeff_mk",
+    "PowerSeries.X"
+  ],
+  "notes": [
+    "Used the standard Mathlib lemma `coeff_mk` to unfold the coefficient of a power series defined via `mk`, and unfolded `X`."
+  ]
+}

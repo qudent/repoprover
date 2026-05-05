@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:49:6: error: No applicable extensionality theorem found for type\n  K\n\nNote: Extensionality theorems can be registered by marking them with the `[ext]` attribute\n"
+}

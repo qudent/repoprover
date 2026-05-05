@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :\n    (A.submatrix id (Equiv.swap i j)).det = -A.det := by\n  have h_transpose_eq : (A.submatrix id (Equiv.swap i j))ᵀ = Aᵀ.submatrix (Equiv.swap i j) id := by\n    simp [Matrix.transpose_submatrix]\n  calc\n    (A.submatrix id (Equiv.swap i j)).det = ((A.submatrix id (Equiv.swap i j))ᵀ).det := by\n      rw [Matrix.det_transpose]\n    _ = (Aᵀ.submatrix (Equiv.swap i j) id).det := by rw [h_transpose_eq]\n    _ = - (Aᵀ).det := by\n      simpa using det_swap_rows Aᵀ i j hij\n    _ = -A.det := by rw [Matrix.det_transpose]",
+  "declaration_name": "det_swap_cols",
+  "used_context": [
+    "det_swap_rows",
+    "Matrix.det_transpose",
+    "Matrix.transpose_submatrix"
+  ],
+  "notes": [
+    "Rely on standard Mathlib lemma `Matrix.det_transpose` and `Matrix.transpose_submatrix`; the proof follows the given source by applying the row swap theorem to the transpose."
+  ]
+}

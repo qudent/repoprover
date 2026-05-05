@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := rfl",
+  "declaration_name": "coeff_X_eq",
+  "used_context": [
+    "coeff",
+    "X"
+  ],
+  "notes": [
+    "The lemma directly formalizes the definition of the FPS variable X, which is the canonical (0,1,0,0,...) series."
+  ]
+}

@@ -226,6 +226,122 @@ def test_source_statement_context_includes_retrieved_local_api_without_target(tm
     assert "theorem target" not in materialized
 
 
+def test_source_statement_context_retrieves_imported_label_api_without_target(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    imported = project_root / "AlgebraicCombinatorics" / "FPS" / "Limits.lean"
+    imported.parent.mkdir(parents=True)
+    imported.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "",
+                "/-- Imported theorem aligned to the same source part.",
+                "Label: demo.minors.a -/",
+                "theorem imported_label_api : True := by",
+                "  trivial",
+                "",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["minimal_context"]["imports"] = ["Mathlib", "AlgebraicCombinatorics.FPS.Limits"]
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    prefix = user["context"]["lean_prefix_context"]
+
+    assert "Imported API retrieval by source label `demo.minors.a`" in prefix
+    assert "theorem imported_label_api : True := by" in prefix
+    assert "theorem target" not in prefix
+
+    target_path = materialize_candidate_project(
+        project_root=project_root,
+        output_root=tmp_path / "out-imported",
+        record=SelectedRecord(row),
+        lean_declaration="theorem generated : True := imported_label_api",
+        generated_name="generated",
+        lake_cache_from=None,
+        include_record_imports=True,
+        include_grader=False,
+    )
+    materialized = target_path.read_text(encoding="utf-8")
+    assert "import AlgebraicCombinatorics.FPS.Limits" in materialized
+    assert "theorem imported_label_api : True := by" not in materialized
+    assert "theorem target" not in materialized
+
+
+def test_source_statement_prompt_includes_fps_limit_shape_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "If the family is summable, the limit of the partial sums is the infinite sum.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["minimal_context"]["imports"] = ["Mathlib", "AlgebraicCombinatorics.FPS.Limits"]
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance = user["context"]["domain_statement_shape_guidance"]
+    guidance_text = json.dumps(guidance)
+
+    assert user["context"]["available_imports"] == ["Mathlib", "AlgebraicCombinatorics.FPS.Limits"]
+    assert "formal power series limits" in guidance_text
+    assert "CoeffStabilizesTo" in guidance_text
+    assert "IsSummable" in guidance_text
+    assert "tsum'" in guidance_text
+    assert "TopologicalSpace" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_fps_indeterminate_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Definition def.fps.x: the indeterminate x has coefficient 1 at x^1 and 0 elsewhere.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["def.fps.x"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["def.fps.x"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/FPSDefinition.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "formal power series indeterminate" in guidance_text
+    assert "coeff_X" in guidance_text
+    assert "coeff_one_X" in guidance_text
+    assert "rfl" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_partition_transpose_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Proposition prop.pars.pkn=dual: transpose swaps number of parts with largest part.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["prop.pars.pkn=dual"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["prop.pars.pkn=dual"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/Partitions/Basics.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "partition transpose cardinality" in guidance_text
+    assert "transpose_transpose" in guidance_text
+    assert "transpose_length_eq_largestPart" in guidance_text
+    assert "Finset.card_congr" in guidance_text
+    assert ".numParts" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
 def test_source_statement_prompt_includes_source_facing_target_comment(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
 

@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-05-05T04:06:55.940346+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-domain-guidance",
+  "work_root": "/tmp/repoprover-source-statement-verify-domain-guidance-serial",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 4,
+  "success_rate": 0.6666666666666666,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 2
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-domain-guidance/record-001",
+      "generated_name": "partialSum_coeffStabilizesTo",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Details/Limits.lean:90:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Details/Limits.lean:91:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Details/Limits.lean:90:4: warning: 'simpa using partialSum_coeffStabilizesTo' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Details/Limits.lean:91:4: warning: 'simpa using partialSum_coeffStabilizesTo hf' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Details/Limits.lean:85:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-domain-guidance/record-002",
+      "generated_name": "det_swap_cols",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:61:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:61:4: warning: 'simpa using det_swap_cols' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:57:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_smul_col",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-domain-guidance/record-003",
+      "generated_name": "det_add_smul_col",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:49:6: error: No applicable extensionality theorem found for type\n  K\n\nNote: Extensionality theorems can be registered by marking them with the `[ext]` attribute\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.pascal_identity_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-domain-guidance/record-004",
+      "generated_name": "binom_rec",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:48:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/NotationsExamples.lean:49:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/NotationsExamples.lean:48:4: warning: 'simpa using binom_rec R r k' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/NotationsExamples.lean:49:4: warning: 'simpa using binom_rec' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/NotationsExamples.lean:43:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_coeff_one",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-domain-guidance/record-005",
+      "generated_name": "coeff_X_fps",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:49:4: warning: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\nAlgebraicCombinatorics/FPSDefinition.lean:50:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:50:4: warning: 'simpa using coeff_X_fps' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:47:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_eq_largestPartCount",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-domain-guidance/record-006",
+      "generated_name": "partsCount_eq_number_of_partitions_with_largestPart",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:656:31: error: unsolved goals\nn k : ℕ\nh_transpose_involutive : Function.Involutive fun p => p.transpose\nh_transpose_injective : Function.Injective fun p => p.transpose\nA : Finset n.Partition := {p | p.numParts = k}\nhA : A = {p | p.numParts = k}\nB : Finset n.Partition := {p | p.largestPart = k}\nhB : B = {p | p.largestPart = k}\nh_sub1 : image (fun p => p.transpose) A ⊆ B\nh_sub2 : B ⊆ image (fun p => p.transpose) A\nh_image_A_eq_B : image (fun p => p.transpose) A = B\nhcard : #(image (fun p => p.transpose) A) = #A\n⊢ #{p | p.parts.card = k} = #{p | p.numParts = k}\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}

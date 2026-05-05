@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem binom_rec {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R] (r : R) (k : ℕ) :\n    Ring.choose (r + 1) (k + 1) = Ring.choose r k + Ring.choose r (k + 1) :=\n  Ring.choose_succ_succ r k",
+  "declaration_name": "binom_rec",
+  "used_context": [
+    "Ring.choose_succ_succ"
+  ],
+  "notes": [
+    "This is exactly Mathlib's lemma Ring.choose_succ_succ; the theorem name is chosen to match the source label."
+  ]
+}

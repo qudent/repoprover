@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777951921-HC8BTOHFgOoCuj2FCtu8",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) : (A.submatrix id (Equiv.swap i j)).det = -A.det := by\\n  have h_trans : (A.submatrix id (Equiv.swap i j))ᵀ = (Aᵀ).submatrix (Equiv.swap i j) id := by\\n    ext r c\\n    simp [submatrix_apply, transpose_apply]\\n  calc\\n    (A.submatrix id (Equiv.swap i j)).det = ((A.submatrix id (Equiv.swap i j))ᵀ).det := by rw [Matrix.det_transpose]\\n    _ = ((Aᵀ).submatrix (Equiv.swap i j) id).det := by rw [h_trans]\\n    _ = - ((Aᵀ).det) := by\\n      simpa using det_swap_rows (Aᵀ) i j hij\\n    _ = -A.det := by rw [Matrix.det_transpose]\",\n  \"declaration_name\": \"det_swap_cols\",\n  \"used_context\": [\n    \"det_swap_rows\",\n    \"Matrix.det_transpose\",\n    \"submatrix_apply\",\n    \"transpose_apply\"\n  ],\n  \"notes\": [\n    \"Follows the proof sketch: determinant unchanged by transpose, then apply row-swap theorem to the transpose.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777951921,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4706,
+    "prompt_tokens": 3302,
+    "total_tokens": 8008,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4364,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.005199294,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.005199294,
+      "upstream_inference_prompt_cost": 0.001105074,
+      "upstream_inference_completions_cost": 0.00409422
+    }
+  },
+  "provider": "DeepSeek"
+}
