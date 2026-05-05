@@ -179,8 +179,13 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
                 {
                     "unit_key": "unit-001",
                     "status": "generated|cannot_prove_from_visible_context",
-                    "lean_file_body": "complete Lean declarations only; no imports or markdown",
-                    "declaration_names": ["names introduced in lean_file_body"],
+                    "lean_file_body": (
+                        "if status is generated: complete Lean declarations only, no imports or markdown; "
+                        "if status is cannot_prove_from_visible_context: exactly empty string"
+                    ),
+                    "declaration_names": [
+                        "names introduced in lean_file_body; empty list when status is cannot_prove_from_visible_context"
+                    ],
                     "used_context": ["source/project/Mathlib facts actually used"],
                     "notes": ["brief caveats or remaining uncertainty"],
                 }

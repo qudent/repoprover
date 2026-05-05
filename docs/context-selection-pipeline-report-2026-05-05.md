@@ -373,6 +373,38 @@ easy theorem. The local-context fix did not expose the hidden target statement
 or proof; it supplied style/variable context from prior project declarations and
 forced standalone binders in generated output.
 
+Batch-2 v4 smoke:
+
+`docs/latex-statement-context-runs/2026-05-05-batch2-selected-localctx-v4-paid/`
+and
+`docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid/`
+
+- selected source units:
+  `thm.det.detAB` (determinant multiplicativity) and `prop.sf.en=0`
+  (elementary symmetric polynomial vanishing above the number of variables).
+- budget payload size: `41,912` bytes for two units after capping prior
+  declarations.
+- selector: valid JSON, `$0.00164794`, `0` reasoning tokens, prompt/completion
+  tokens `9959` / `906`.
+- hydration: `Matrix.det_mul` checked exactly; `MvPolynomial.esymm_eq_zero_of_lt`
+  was rejected by Lean as an unknown constant.
+- generation: valid JSON, `$0.00200256`, `0` reasoning tokens, prompt/completion
+  tokens `11014` / `1645`.
+- generated-only verification: `1/2`; determinant multiplicativity compiled,
+  while `e_n = 0` failed contract checks because the model returned a `sorry`
+  body despite reporting `cannot_prove_from_visible_context`.
+- semantic coverage: `1/2`; determinant multiplicativity proved aligned gold
+  `AlgebraicCombinatorics.Det.det_mul'`, while the symmetric-polynomial unit is
+  `generated_not_compiled`.
+
+Interpretation: batch size 2 is now schema-stable for DeepSeek V4 Flash, but
+second-round Mathlib lookup/repair is needed. The failed unit looks like a
+Mathlib-name retrieval failure, not a basic mathematical-understanding failure:
+the selector stated the correct theorem shape but guessed a nonexistent API
+name. The generator also needs stricter cannot-prove enforcement; the prompt
+schema now says `lean_file_body` must be exactly empty and `declaration_names`
+empty when status is `cannot_prove_from_visible_context`.
+
 ### Generation and Verification Counts
 
 Honesty caveats:
@@ -843,9 +875,9 @@ You are a Lean 4 autoformalization agent. Generate a small ordered sequence of L
       {
         "unit_key": "unit-001",
         "status": "generated|cannot_prove_from_visible_context",
-        "lean_file_body": "complete Lean declarations only; no imports or markdown",
+        "lean_file_body": "if status is generated: complete Lean declarations only, no imports or markdown; if status is cannot_prove_from_visible_context: exactly empty string",
         "declaration_names": [
-          "names introduced in lean_file_body"
+          "names introduced in lean_file_body; empty list when status is cannot_prove_from_visible_context"
         ],
         "used_context": [
           "source/project/Mathlib facts actually used"

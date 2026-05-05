@@ -1,0 +1,89 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 1,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.DeterminantsBasic",
+        "AlgebraicCombinatorics.SymmetricFunctions.Definitions",
+        "AlgebraicCombinatorics.Permutations.Basics"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic",
+        "AlgebraicCombinatorics.SymmetricFunctions.Definitions",
+        "AlgebraicCombinatorics.Permutations.Basics"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.Det",
+        "open AlgebraicCombinatorics.SymmetricPolynomials"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.Det",
+        "open AlgebraicCombinatorics.SymmetricPolynomials"
+      ],
+      "unit_count": 2,
+      "units": [
+        {
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "det_mul"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "contract_violations": [
+            "cannot_prove_output_must_have_empty_lean_file_body",
+            "generated_lean_contains_placeholder"
+          ],
+          "declaration_names": [
+            "e_eq_zero_of_lt"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [
+            {
+              "column": 8,
+              "data": "declaration uses `sorry`",
+              "kind": "hasSorry",
+              "line": 24,
+              "severity": "warning"
+            }
+          ],
+          "placeholder_tokens": [
+            "sorry"
+          ],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-002"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 1,
+  "generated_at": "2026-05-05T22:58:12.783392+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 2
+}

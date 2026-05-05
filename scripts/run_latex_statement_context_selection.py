@@ -61,22 +61,38 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
             handle.write(json.dumps(row, sort_keys=True, ensure_ascii=False) + "\n")
 
 
-def select_units(rows: list[dict[str, Any]], limit: int, *, offset: int = 0, unit_id: str | None = None) -> list[SelectedUnit]:
+def select_units(
+    rows: list[dict[str, Any]],
+    limit: int,
+    *,
+    offset: int = 0,
+    unit_id: str | None = None,
+    unit_ids: list[str] | None = None,
+) -> list[SelectedUnit]:
     selected: list[SelectedUnit] = []
     skipped = 0
+    requested_ids = list(unit_ids or [])
+    if unit_id:
+        requested_ids.append(unit_id)
+    requested_id_set = set(requested_ids)
     for row in rows:
         if row.get("selection", {}).get("status") != "gold_candidate":
             continue
-        if unit_id and row.get("id") != unit_id:
+        if requested_id_set and row.get("id") not in requested_id_set:
             continue
-        if not unit_id and skipped < offset:
+        if not requested_id_set and skipped < offset:
             skipped += 1
             continue
         selected.append(SelectedUnit(public_key=f"unit-{len(selected) + 1:03d}", row=row))
-        if limit and len(selected) >= limit:
+        if not requested_id_set and limit and len(selected) >= limit:
+            break
+        if requested_id_set and len(selected) >= len(requested_id_set):
             break
     if not selected:
         raise ValueError("no LaTeX statement gold candidates selected")
+    missing_ids = requested_id_set.difference(str(item.row.get("id")) for item in selected)
+    if missing_ids:
+        raise ValueError(f"requested unit ids not found or not gold candidates: {sorted(missing_ids)}")
     return selected
 
 
@@ -147,10 +163,8 @@ def compact_declaration_text(text: str, *, kind: str) -> str:
             if before.rstrip():
                 kept.append(before.rstrip())
             break
-        if ":=" in line:
-            before, _ = line.split(":=", 1)
-            if before.rstrip():
-                kept.append(before.rstrip())
+        if line.strip().endswith(":="):
+            kept.append(line.rsplit(":=", 1)[0].rstrip())
             break
         kept.append(line)
     return "\n".join(kept).rstrip()
@@ -198,6 +212,7 @@ def prior_project_context(
     *,
     project_root: Path | None = None,
     max_previous_same_file: int | None = 2,
+    declarations_per_prior_unit: int = 4,
 ) -> list[dict[str, Any]]:
     contexts: list[dict[str, Any]] = []
 
@@ -210,7 +225,7 @@ def prior_project_context(
         prior = rows_by_id.get(str(unit_id))
         if prior is None:
             continue
-        declarations = project_declarations_for_prior(prior, project_root=project_root)
+        declarations = project_declarations_for_prior(prior, project_root=project_root, limit=declarations_per_prior_unit)
         if declarations:
             contexts.append(
                 {
@@ -307,6 +322,7 @@ def build_messages(
     source_units: list[dict[str, Any]] | None = None,
     project_root: Path | None = None,
     max_previous_same_file: int | None = 2,
+    declarations_per_prior_unit: int = 4,
 ) -> list[dict[str, str]]:
     source_rows_by_id = unit_index(source_units or all_rows)
     system = (
@@ -379,6 +395,7 @@ def build_messages(
             source_rows_by_id,
             project_root=project_root,
             max_previous_same_file=max_previous_same_file,
+            declarations_per_prior_unit=declarations_per_prior_unit,
         )
         payload["units"].append(
             {
@@ -452,13 +469,14 @@ def response_cost_summary(response: Any, model: str) -> dict[str, Any]:
 def run(args: argparse.Namespace) -> dict[str, Any]:
     rows = read_jsonl(args.records)
     source_units = read_jsonl(args.source_units) if args.source_units else rows
-    selected = select_units(rows, args.limit, offset=args.offset, unit_id=args.unit_id)
+    selected = select_units(rows, args.limit, offset=args.offset, unit_ids=args.unit_id)
     messages = build_messages(
         selected,
         rows,
         source_units=source_units,
         project_root=args.project_root,
         max_previous_same_file=args.max_previous_same_file_context,
+        declarations_per_prior_unit=args.prior_project_declarations_per_unit,
     )
     run_dir = args.output
     batch_dir = run_dir / "batch-001"
@@ -524,12 +542,18 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int, default=1)
     parser.add_argument("--offset", type=int, default=0, help="Skip this many gold candidates before selection.")
-    parser.add_argument("--unit-id", help="Select one exact source-unit id.")
+    parser.add_argument("--unit-id", action="append", help="Select exact source-unit id; may be repeated.")
     parser.add_argument(
         "--max-previous-same-file-context",
         type=int,
         default=2,
         help="Include at most this many most-recent same-file predecessor units; explicit references are always kept.",
+    )
+    parser.add_argument(
+        "--prior-project-declarations-per-unit",
+        type=int,
+        default=4,
+        help="Maximum prior project declarations to expose per selected prior source unit.",
     )
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)

@@ -14,6 +14,7 @@ import argparse
 import json
 import re
 import subprocess
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -293,6 +294,7 @@ def compare(args: argparse.Namespace) -> dict[str, Any]:
                 }
             )
 
+    coverage_status_counts = Counter(str(row["coverage_status"]) for row in units)
     return {
         "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -300,11 +302,12 @@ def compare(args: argparse.Namespace) -> dict[str, Any]:
         "generation_run": str(args.generation_run),
         "project_root": str(args.project_root),
         "unit_count": len(units),
-        "all_aligned_gold_proved_units": sum(1 for row in units if row["coverage_status"] == "all_aligned_gold_proved"),
-        "partial_aligned_gold_proved_units": sum(
-            1 for row in units if row["coverage_status"] == "partial_aligned_gold_proved"
-        ),
-        "no_aligned_gold_proved_units": sum(1 for row in units if row["coverage_status"] == "no_aligned_gold_proved"),
+        "coverage_status_counts": dict(sorted(coverage_status_counts.items())),
+        "all_aligned_gold_proved_units": coverage_status_counts["all_aligned_gold_proved"],
+        "partial_aligned_gold_proved_units": coverage_status_counts["partial_aligned_gold_proved"],
+        "no_aligned_gold_proved_units": coverage_status_counts["no_aligned_gold_proved"],
+        "generated_not_compiled_units": coverage_status_counts["generated_not_compiled"],
+        "no_aligned_gold_to_check_units": coverage_status_counts["no_aligned_gold_to_check"],
         "units": units,
         "caveat": (
             "This is post-hoc oracle verification. Gold declarations are read only by the grader, "

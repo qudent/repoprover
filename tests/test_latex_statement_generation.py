@@ -140,6 +140,8 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "selector_unchecked_statement_sketch" in prompt
     assert "do not copy its Lean syntax verbatim" in prompt
     assert "cannot_prove_from_visible_context" in prompt
+    assert "exactly empty string" in prompt
+    assert "empty list when status is cannot_prove_from_visible_context" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt
 

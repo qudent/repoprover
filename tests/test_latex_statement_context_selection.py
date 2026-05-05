@@ -3,7 +3,12 @@
 import json
 from pathlib import Path
 
-from scripts.run_latex_statement_context_selection import SelectedUnit, build_messages, select_units
+from scripts.run_latex_statement_context_selection import (
+    SelectedUnit,
+    build_messages,
+    compact_declaration_text,
+    select_units,
+)
 
 
 def _unit(
@@ -187,6 +192,7 @@ def test_select_units_supports_offset_and_exact_id() -> None:
 
     assert select_units(rows, 1, offset=1)[0].row["id"] == "u2"
     assert select_units(rows, 1, unit_id="u1")[0].row["id"] == "u1"
+    assert [item.row["id"] for item in select_units(rows, 0, unit_ids=["u2", "u1"])] == ["u1", "u2"]
 
 
 def test_context_selection_caps_same_file_predecessors() -> None:
@@ -216,3 +222,14 @@ def test_context_selection_caps_same_file_predecessors() -> None:
     assert [ref["unit_id"] for ref in selected_refs] == ["prior-1", "prior-2"]
     assert "Prior 0" not in messages[1]["content"]
     assert "Prior 1" in messages[1]["content"]
+
+
+def test_compact_statement_keeps_named_arguments() -> None:
+    text = "\n".join(
+        [
+            "theorem e_zero : e (K := K) (N := N) 0 = 1 := by",
+            "  simp",
+        ]
+    )
+
+    assert compact_declaration_text(text, kind="theorem") == "theorem e_zero : e (K := K) (N := N) 0 = 1"

@@ -110,6 +110,16 @@ semantic grader proved the aligned gold theorem
 `AlgebraicCombinatorics.Det.det_transpose'` `1/1`; exact declaration-name
 overlap remained `0/1`.
 
+A first theorem-level batch-size-2 v4 smoke then selected determinant
+multiplicativity and the symmetric-function proposition `e_n = 0` for `n > N`.
+The selector returned valid JSON for `$0.00164794`; hydration checked
+`Matrix.det_mul` but rejected `MvPolynomial.esymm_eq_zero_of_lt` as an unknown
+constant. Generation cost `$0.00200256`; generated-only verification and
+semantic coverage both passed `1/2`. This suggests the next bottleneck is a
+second Mathlib lookup/repair round for selector guesses that hydrate as unknown
+constants, plus stricter enforcement of the `cannot_prove_from_visible_context`
+empty-output contract.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

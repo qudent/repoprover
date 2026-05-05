@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"source ambiguity: none\",\n        \"missing notation: none\",\n        \"broad multi-part theorem: no\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"exact Mathlib API for matrix multiplication determinant multiplicativity\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"det_mul : ∀ (A B : Matrix (Fin n) (Fin n) K), (A * B).det = A.det * B.det\",\n              \"name_or_query\": \"Matrix.det_mul\",\n              \"why_needed\": \"core statement of the theorem\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"AlgebraicCombinatorics.Det.det_swap_cols\",\n              \"why_needed\": \"potential use in proof via column operations\"\n            },\n            {\n              \"name\": \"AlgebraicCombinatorics.Det.det_zero_col\",\n              \"why_needed\": \"potential use in proof via column operations\"\n            },\n            {\n              \"name\": \"AlgebraicCombinatorics.Det.det_eq_cols\",\n              \"why_needed\": \"potential use in proof via column operations\"\n            },\n            {\n              \"name\": \"AlgebraicCombinatorics.Det.det_scale_col\",\n              \"why_needed\": \"potential use in proof via column operations\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"source text: \\\\det\\\\left(  AB\\\\right)  =\\\\det A\\\\cdot\\\\det B.\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For any n×n matrices A, B over a commutative ring K, det(A*B) = det(A) * det(B).\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.95,\n      \"source_focus_summary\": \"Multiplicativity of determinant for square matrices over a commutative ring.\",\n      \"unit_key\": \"unit-001\"\n    },\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"source ambiguity: none\",\n        \"missing notation: none\",\n        \"broad multi-part theorem: no\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"exact Mathlib API for elementary symmetric polynomial vanishing when n > N\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"esymm_eq_zero_of_lt : ∀ (n : ℕ) (h : N < n), esymm (Fin N) K n = 0\",\n              \"name_or_query\": \"MvPolynomial.esymm_eq_zero_of_lt\",\n              \"why_needed\": \"core statement of the proposition\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"AlgebraicCombinatorics.SymmetricPolynomials.e\",\n              \"why_needed\": \"definition of e_n used in the statement\"\n            },\n            {\n              \"name\": \"AlgebraicCombinatorics.SymmetricPolynomials.e_isSymm\",\n              \"why_needed\": \"symmetric property may be used in proof\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"source text: For each integer n > N, we have e_n = 0.\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For any integer n > N, the n-th elementary symmetric polynomial in N variables is zero.\",\n          \"task_id\": \"unit-002-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.95,\n      \"source_focus_summary\": \"Elementary symmetric polynomial e_n vanishes when n exceeds the number of variables N.\",\n      \"unit_key\": \"unit-002\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778021747,
+  "id": "gen-1778021747-SySOX1yF6ZYKPbfarcUE",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 906,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00164794,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00025368,
+      "upstream_inference_cost": 0.00164794,
+      "upstream_inference_prompt_cost": 0.00139426
+    },
+    "is_byok": false,
+    "prompt_tokens": 9959,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 10865
+  }
+}

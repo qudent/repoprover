@@ -1,0 +1,96 @@
+{
+  "exact_identifier_count": 2,
+  "generated_at": "2026-05-05T22:56:19.381627+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det_mul",
+      "expected_signature_or_shape": "det_mul : ∀ (A B : Matrix (Fin n) (Fin n) K), (A * B).det = A.det * B.det",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_mul.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M N : Matrix n n R) :\n  (M * N).det = M.det * N.det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_mul.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M N : Matrix n n R) :\n  (M * N).det = M.det * N.det",
+        "status": "checked"
+      },
+      "query": "Matrix.det_mul",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "core statement of the theorem"
+    },
+    {
+      "exact_identifier": "MvPolynomial.esymm_eq_zero_of_lt",
+      "expected_signature_or_shape": "esymm_eq_zero_of_lt : ∀ (n : ℕ) (h : N < n), esymm (Fin N) K n = 0",
+      "lean_check": {
+        "error": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+        "messages": [
+          {
+            "data": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "MvPolynomial.esymm_eq_zero_of_lt",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "core statement of the proposition"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Matrix.det_mul": {
+        "messages": [
+          {
+            "data": "Matrix.det_mul.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M N : Matrix n n R) :\n  (M * N).det = M.det * N.det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_mul.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M N : Matrix n n R) :\n  (M * N).det = M.det * N.det",
+        "status": "checked"
+      },
+      "MvPolynomial.esymm_eq_zero_of_lt": {
+        "error": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+        "messages": [
+          {
+            "data": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "9c255c7abe9094935811bfcb1583eb0d6a4aab33914f42e6acd09ae48f010951",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 2,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

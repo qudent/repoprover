@@ -1,0 +1,96 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "source ambiguity: none",
+        "missing notation: none",
+        "broad multi-part theorem: no"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "exact Mathlib API for matrix multiplication determinant multiplicativity"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "det_mul : ∀ (A B : Matrix (Fin n) (Fin n) K), (A * B).det = A.det * B.det",
+              "name_or_query": "Matrix.det_mul",
+              "why_needed": "core statement of the theorem"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.Det.det_swap_cols",
+              "why_needed": "potential use in proof via column operations"
+            },
+            {
+              "name": "AlgebraicCombinatorics.Det.det_zero_col",
+              "why_needed": "potential use in proof via column operations"
+            },
+            {
+              "name": "AlgebraicCombinatorics.Det.det_eq_cols",
+              "why_needed": "potential use in proof via column operations"
+            },
+            {
+              "name": "AlgebraicCombinatorics.Det.det_scale_col",
+              "why_needed": "potential use in proof via column operations"
+            }
+          ],
+          "needed_source_context": [
+            "source text: \\det\\left(  AB\\right)  =\\det A\\cdot\\det B."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any n×n matrices A, B over a commutative ring K, det(A*B) = det(A) * det(B).",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Multiplicativity of determinant for square matrices over a commutative ring.",
+      "unit_key": "unit-001"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "source ambiguity: none",
+        "missing notation: none",
+        "broad multi-part theorem: no"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "exact Mathlib API for elementary symmetric polynomial vanishing when n > N"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "esymm_eq_zero_of_lt : ∀ (n : ℕ) (h : N < n), esymm (Fin N) K n = 0",
+              "name_or_query": "MvPolynomial.esymm_eq_zero_of_lt",
+              "why_needed": "core statement of the proposition"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+              "why_needed": "definition of e_n used in the statement"
+            },
+            {
+              "name": "AlgebraicCombinatorics.SymmetricPolynomials.e_isSymm",
+              "why_needed": "symmetric property may be used in proof"
+            }
+          ],
+          "needed_source_context": [
+            "source text: For each integer n > N, we have e_n = 0."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any integer n > N, the n-th elementary symmetric polynomial in N variables is zero.",
+          "task_id": "unit-002-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Elementary symmetric polynomial e_n vanishes when n exceeds the number of variables N.",
+      "unit_key": "unit-002"
+    }
+  ]
+}

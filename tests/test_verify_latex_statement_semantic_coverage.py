@@ -98,3 +98,45 @@ def test_compare_records_semantic_failure(monkeypatch, tmp_path: Path) -> None:
     assert summary["units"][0]["coverage_status"] == "no_aligned_gold_proved"
     assert summary["units"][0]["checks"][0]["coverage_status"] == "semantic_grader_failed"
     assert summary["units"][0]["checks"][0]["failure_class"] == "shape_mismatch_against_oracle"
+
+
+def test_compare_counts_generated_not_compiled(tmp_path: Path) -> None:
+    project = tmp_path / "project"
+    selector = tmp_path / "selector"
+    generation = tmp_path / "generation"
+    project.mkdir()
+    (selector / "eval").mkdir(parents=True)
+    (generation / "batch-001").mkdir(parents=True)
+    (generation / "eval").mkdir()
+    (project / "Demo.lean").write_text(
+        "import Mathlib\nnamespace Demo\ntheorem gold : True := by\n  trivial\n",
+        encoding="utf-8",
+    )
+    (selector / "eval/selected-units.jsonl").write_text(
+        '{"id":"source:demo","posthoc_lean_alignment":{"aligned_lean_declarations":[{"full_name":"Demo.gold","kind":"theorem","path":"Demo.lean","line_range":[3,4]}]}}\n',
+        encoding="utf-8",
+    )
+    (generation / "batch-001/generation-output.json").write_text(
+        '{"units":[{"unit_key":"unit-001","lean_file_body":"theorem generated : True := by\\n  trivial","declaration_names":["generated"]}]}\n',
+        encoding="utf-8",
+    )
+    (generation / "eval/verification-results.json").write_text(
+        '{"batches":[{"units":[{"unit_key":"unit-001","compile_passed":false}]}]}\n',
+        encoding="utf-8",
+    )
+
+    summary = compare(
+        Namespace(
+            selector_run=selector,
+            generation_run=generation,
+            project_root=project,
+            timeout_seconds=1.0,
+            verification_results=None,
+            run_uncompiled=False,
+            output=generation / "eval/semantic-coverage.json",
+        )
+    )
+
+    assert summary["coverage_status_counts"] == {"generated_not_compiled": 1}
+    assert summary["generated_not_compiled_units"] == 1
+    assert summary["no_aligned_gold_proved_units"] == 0

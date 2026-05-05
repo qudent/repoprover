@@ -281,6 +281,30 @@ this source unit. The model did not need the hidden target theorem; it needed
 exact Mathlib hydration plus enough local context to know which variables and
 typeclasses must be explicit.
 
+Batch-2 v4 theorem-level smoke:
+
+- selector:
+  `docs/latex-statement-context-runs/2026-05-05-batch2-selected-localctx-v4-paid/`,
+  source units `thm.det.detAB` and `prop.sf.en=0`, cost `$0.00164794`, valid
+  JSON, `0` reasoning tokens.
+- hydration: `Matrix.det_mul` checked exactly; selector-requested
+  `MvPolynomial.esymm_eq_zero_of_lt` was rejected as an unknown constant.
+- generation:
+  `docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid/`,
+  cost `$0.00200256`, valid JSON.
+- verification: generated-only compile `1/2`; determinant multiplicativity
+  compiled and semantic coverage passed for
+  `AlgebraicCombinatorics.Det.det_mul'`.
+- failure: the symmetric-polynomial unit did not compile. The selector had the
+  right mathematical shape but guessed a nonexistent Mathlib API; the generator
+  then returned a nonempty `sorry` body despite status
+  `cannot_prove_from_visible_context`, which the verifier records as a contract
+  violation.
+
+Interpretation: the current pipeline can batch two theorem-level tasks, but the
+next necessary component is a second Mathlib lookup/repair round when hydration
+rejects a selector guess.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:
