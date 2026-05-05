@@ -70,6 +70,7 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - README scale section now records imported Lean surface: all 52 non-root project modules import root `Mathlib`, exposing roughly 212k scanned Mathlib declarations, while gold-candidate local context is typically hundreds to low-thousands of tokens before selected Mathlib snippets.
 - Static source usage scan now records actual explicit Lean mentions: 1,930 unique qualified Mathlib declarations across the project; per exact TeX label median 5, p90 19, p95 26 qualified Mathlib mentions. Bare names remain ambiguous without elaboration.
 - README now has a headline static-usage table and explains that "ambiguous" means ambiguous to the text scanner, not necessarily to elaborated Lean.
+- Added Lean-tooling dependency scanner scripts. Full `lake build AlgebraicCombinatorics` is running in the background so the scanner can import compiled project declarations and extract resolved constants from elaborated `ConstantInfo` values.
 - Focused tests pass with source-statement, source-context-selection, context graph, and materializer tests.
 
 ## Agent Notes
