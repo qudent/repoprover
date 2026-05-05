@@ -212,6 +212,25 @@ def test_repair_queue_writes_repair_model_artifacts(tmp_path: Path, monkeypatch)
     )
 
 
+def test_repair_queue_uses_estimated_reservations_for_cost_cap(tmp_path: Path, monkeypatch) -> None:
+    run_output = _write_archived_run(tmp_path)
+    called = False
+
+    def fake_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        nonlocal called
+        called = True
+        return _fake_response("{}")
+
+    monkeypatch.setattr("scripts.repair_source_statement_generation.call_openrouter", fake_call_openrouter)
+
+    summary = run_repair_queue(_repair_args(run_output, max_actual_cost_usd=0.000001, concurrency=2))
+
+    assert called is False
+    assert summary["paid_calls_made"] == 0
+    assert summary["failure_classes"] == {"skipped_cost_cap": 1}
+    assert summary["results"][0]["failure_class"] == "skipped_cost_cap"
+
+
 def test_verifier_can_load_repair_model_outputs(tmp_path: Path) -> None:
     run_output = _write_archived_run(tmp_path)
     _write_json(

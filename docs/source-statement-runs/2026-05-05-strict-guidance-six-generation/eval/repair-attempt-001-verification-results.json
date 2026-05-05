@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-05-05T08:05:06.010790+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation",
+  "work_root": "/tmp/repoprover-strict-guidance-six-repair-verify",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 1,
+  "success_rate": 0.16666666666666666,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1,
+    "missing_model_output": 4
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-001",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-001/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DividingFPS.lean:AlgebraicCombinatorics.fps_newtonBinomial_neg",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-002",
+      "generated_name": "fps_newton_binom",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/DividingFPS.lean:129:24: error: Application type mismatch: The argument\n  F\nhas type\n  Type u_2\nof sort `Type (u_2 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  fps_onePlusX_pow_neg' F\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-003/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.parts_eq_zero_of_partition_zero",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-004",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-004/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-005",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-005/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-006",
+      "generated_name": "simpleTransposition_isSwap",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/Permutations/Basics.lean:80:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:81:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:80:4: warning: 'simpa using simpleTransposition_isSwap n i' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:81:4: warning: 'simpa using simpleTransposition_isSwap' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/Permutations/Basics.lean:76:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    }
+  ]
+}

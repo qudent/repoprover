@@ -178,6 +178,28 @@ def repair_task(args: argparse.Namespace, task: dict[str, Any], cost_state: dict
     return row
 
 
+def skipped_cost_cap_row(task: dict[str, Any], args: argparse.Namespace, estimated_cost: float, remaining_budget: float) -> dict[str, Any]:
+    record_dir = Path(task["record_dir"])
+    prefix = f"repair-attempt-{args.attempt:03d}"
+    if "payload" in task:
+        write_json(record_dir / f"{prefix}-openrouter-payload.json", task["payload"])
+    return {
+        "index": task["index"],
+        "record_id": task.get("record_id"),
+        "record_dir": str(record_dir),
+        "attempt": args.attempt,
+        "budget_estimate": task.get("budget_estimate"),
+        "shape_warning_codes": task.get("shape_warning_codes", []),
+        "success": False,
+        "paid_call_made": False,
+        "failure_class": "skipped_cost_cap",
+        "error": (
+            "launch would exceed global cost cap based on reserved estimates "
+            f"(${estimated_cost:.6f} > ${max(0.0, remaining_budget):.6f})"
+        ),
+    }
+
+
 def aggregate_failure_classes(results: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for row in results:
@@ -217,10 +239,66 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     lock = threading.Lock()
     results_by_index: dict[int, dict[str, Any]] = {}
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.concurrency) as executor:
-        futures = [executor.submit(repair_task, args, task, cost_state, lock) for task in tasks]
-        for future in concurrent.futures.as_completed(futures):
+        running: dict[concurrent.futures.Future[dict[str, Any]], tuple[dict[str, Any], float]] = {}
+        next_task = 0
+        reserved_cost = 0.0
+        completed_actual_cost = 0.0
+        cost_cap = float(args.max_actual_cost_usd or 0.0)
+
+        def record_completed(future: concurrent.futures.Future[dict[str, Any]]) -> None:
+            nonlocal reserved_cost, completed_actual_cost
+            _task, estimated_cost = running.pop(future)
+            reserved_cost -= estimated_cost
             row = future.result()
+            cost = (row.get("cost_summary") or {}).get("actual_cost_usd")
+            if cost is not None:
+                completed_actual_cost += float(cost)
             results_by_index[int(row["index"])] = row
+
+        while next_task < len(tasks) or running:
+            launched = False
+            while next_task < len(tasks) and len(running) < args.concurrency:
+                task = tasks[next_task]
+                if "payload" not in task:
+                    results_by_index[int(task["index"])] = repair_task(args, task, cost_state, lock)
+                    next_task += 1
+                    launched = True
+                    continue
+                estimated_cost = float((task.get("budget_estimate") or {}).get("estimated_max_cost_usd") or 0.0)
+                if not args.budget_only and cost_cap and completed_actual_cost >= cost_cap:
+                    row = skipped_cost_cap_row(task, args, estimated_cost, 0.0)
+                    results_by_index[int(row["index"])] = row
+                    next_task += 1
+                    launched = True
+                    continue
+                if (
+                    not args.budget_only
+                    and cost_cap
+                    and completed_actual_cost + reserved_cost + estimated_cost > cost_cap
+                ):
+                    if running:
+                        break
+                    remaining_budget = cost_cap - completed_actual_cost
+                    row = skipped_cost_cap_row(task, args, estimated_cost, remaining_budget)
+                    results_by_index[int(row["index"])] = row
+                    next_task += 1
+                    launched = True
+                    continue
+                future = executor.submit(repair_task, args, task, cost_state, lock)
+                running[future] = (task, estimated_cost)
+                reserved_cost += estimated_cost
+                next_task += 1
+                launched = True
+            if running:
+                done, _ = concurrent.futures.wait(
+                    running,
+                    timeout=0 if launched else None,
+                    return_when=concurrent.futures.FIRST_COMPLETED,
+                )
+                for future in done:
+                    record_completed(future)
+            elif not launched and next_task < len(tasks):
+                continue
 
     results = [results_by_index[index] for index in sorted(results_by_index)]
     repair_successes = [row for row in results if row.get("repair_generation_success")]

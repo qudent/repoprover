@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DividingFPS.lean:129:24: error: Application type mismatch: The argument\n  F\nhas type\n  Type u_2\nof sort `Type (u_2 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  fps_onePlusX_pow_neg' F\n"
+}

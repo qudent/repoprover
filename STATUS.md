@@ -122,7 +122,12 @@ hard six-row slice from 0/6 to 2/6 verified successes: FPS limits and
 partition-zero now pass. The remaining failures are three generated-only compile
 failures (negative binomial, finite `finsum`, `IsSwap`) plus one permutation
 power statement-shape mismatch; see
-`docs/source-statement-strict-guidance-six-generation-report.md`.
+`docs/source-statement-strict-guidance-six-generation-report.md`. A targeted
+repair over the three compile failures recovered row 6, taking the cumulative
+strict-guidance hard slice to 3/6 verified successes, but cost `$0.166295128`
+because the old repair queue launched all three concurrent calls before
+reserved-cost accounting. The repair queue now reserves estimated cost before
+launch; focused tests cover this cap behavior.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -337,8 +342,14 @@ failures plus 1 hidden-grader mismatch; see
   It improved the hard slice to 2/6, so the next action is a targeted
   compiler-feedback repair for the three compile failures plus a separate
   statement-shape-first treatment for the permutation power mismatch.
-- [ ] Run one small generated-only compiler-feedback repair over strict-guidance
-  compile failures rows 2, 3, and 6, then verify serially.
+- [x] Run one small generated-only compiler-feedback repair over
+  strict-guidance compile failures rows 2, 3, and 6, then verify serially. Row 6
+  repaired successfully; rows 2 and 3 remain failed.
+- [x] Fix the repair queue cost-cap bug exposed by the row 2/3/6 repair run:
+  reserve estimated cost before launching concurrent OpenRouter calls.
+- [ ] For remaining row 2, add exact visible application guidance for
+  `fps_onePlusX_pow_neg'` without leaking the target theorem name; the model
+  keeps passing the type argument where Lean expects the natural exponent.
 - [ ] Design a statement-shape-first generation stage for row 5-style semantic
   mismatches before another fresh broad generation pass.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
@@ -390,6 +401,11 @@ failures plus 1 hidden-grader mismatch; see
   raw provider artifacts committed before checking, and serial verification
   found 2/6 successes. See
   `docs/source-statement-strict-guidance-six-generation-report.md`.
+- Ran one targeted compiler-feedback repair over rows 2, 3, and 6. Row 6 now
+  verifies, so the strict-guidance hard slice is 3/6 cumulative; row 3 returned
+  invalid JSON and row 2 still misapplies the negative-binomial helper. Patched
+  the repair queue to enforce estimated cost reservations before concurrent
+  launches; focused tests pass with `61 passed`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`
