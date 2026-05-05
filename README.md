@@ -50,6 +50,85 @@ is roughly 0.05-0.09% of the estimated Mathlib doc-comment token pool for the
 probe, which is the intended operating regime: tight context packs, not broad
 Mathlib dumps.
 
+### Imported Lean surface and likely context needs
+
+The generated Algebraic Combinatorics Lean files are built in a very broad
+environment. In the current snapshot, all 52 non-root project modules import
+root `Mathlib` directly. Those files have 143 direct import statements total:
+52 `Mathlib` imports and 91 project-module imports. The root
+`AlgebraicCombinatorics.lean` file then imports the 52 project modules.
+
+This means "what is imported" is much larger than "what a generator should see
+in prompt context":
+
+| Surface imported or available | Scale |
+|---|---:|
+| Project Lean source modules | 52 |
+| Project named declarations in context graph | 5,684 |
+| Project theorem declarations | 2,402 |
+| Project lemma declarations | 2,070 |
+| Project definition declarations | 1,042 |
+| Project instances / abbrevs / structures / inductives | 74 / 60 / 30 / 6 |
+| Non-root project modules importing root `Mathlib` | 52 / 52 |
+| Mathlib named declarations from a comment-stripped source regex scan | ~211,900 |
+| Mathlib theorem/lemma declarations from that scan | ~165,000 |
+| Mathlib definition declarations from that scan | ~29,500 |
+| Mathlib instance declarations from that scan | ~11,000 |
+
+The Mathlib declaration scan is approximate because it is a fast source scan,
+not an elaborated Lean environment dump. It is still the right order of
+magnitude for context-selection difficulty: a source-only generator should not
+be expected to guess a few exact APIs and signatures out of roughly two hundred
+thousand imported declarations.
+
+Mathlib is also topically broad. The largest local Mathlib directories by
+scanned named declarations are:
+
+| Mathlib area | Scanned declarations |
+|---|---:|
+| `Algebra` | ~33,400 |
+| `Analysis` | ~22,900 |
+| `Data` | ~21,300 |
+| `CategoryTheory` | ~21,000 |
+| `Topology` | ~18,700 |
+| `RingTheory` | ~14,800 |
+| `Order` | ~13,600 |
+| `LinearAlgebra` | ~10,000 |
+| `MeasureTheory` | ~9,900 |
+| `Combinatorics` | ~5,600 |
+
+The declaration-level gold-candidate records suggest that the non-Mathlib
+context actually needed around a target is much smaller, but not zero. For the
+645 mechanically clean gold candidates:
+
+| Candidate-context measure | Median | p90 | p95 | Max |
+|---|---:|---:|---:|---:|
+| Source span lines | 32 | 64 | 77 | 80 |
+| Local predecessor declarations | 1 | 4 | 6 | 10 |
+| Active file-context spans | 4 | 7 | 7 | 9 |
+| Target output declaration lines | 9 | 29 | 36 | 50 |
+| Source + file context + predecessor text, estimated tokens | ~540 | ~1,260 | ~1,720 | ~4,770 |
+
+These estimates exclude selected Mathlib API snippets. The current selector
+probe data suggests that a tight Mathlib addition can often be on the order of
+hundreds of tokens per declaration when the selector picks exact names, but that
+is not yet certified across the full corpus.
+
+Theorem-level units are often multi-declaration units. Among exact
+Lean-comment-to-TeX-label alignments, 415 source labels are represented; 227 of
+those labels map to more than one Lean declaration. Declarations per exact label
+have median 2, p90 6, p95 8, and max 29. This is why the revised pipeline treats
+one LaTeX theorem/environment as a planning unit and Lean declarations as
+inner-loop verification units.
+
+The practical takeaway is that guessing is hard for two separate reasons:
+first, the imported Mathlib search space is enormous and diverse; second, even
+with the right mathematics, the model must choose the same theorem shape,
+supporting project declarations, local notation, namespace/import context, and
+exact Mathlib signatures. Context selection is intended to reduce that problem
+to a small, explicit context pack so remaining failures are closer to genuinely
+wrong math or wrong assumptions.
+
 ## Setup
 
 Requires Python 3.10+. Install in editable mode:
