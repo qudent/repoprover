@@ -1,0 +1,110 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "source_focus_summary": "Formalize the second part of Theorem thm.fps.lim.prod-lim-conv: if the partial products converge, then the infinite product equals the limit.",
+      "selected_source_part": "∏_{n∈ℕ} f_n = lim_{i→∞} ∏_{n=0}^{i} f_n (the equality statement in the theorem)",
+      "source_part_rationale": "The first part (multipliability) is already formalized by isMultipliable_of_coeffStabilizesTo_partial_prod' (same-file) and isMultipliable_of_coeffStabilizesTo_partial_prod (imported). The remaining part is the equality, which is formalized in the imported module as tprod'_eq_of_coeffStabilizesTo_partial_prod but not yet wrapped in the Details file. The target is to provide a wrapper tprod'_eq_of_coeffStabilizesTo_partial_prod' that calls the imported theorem.",
+      "supporting_context_boundary": "The prior same-file declarations (coeffStabilizesTo_partial_prod', isMultipliable_of_coeffStabilizesTo_partial_prod') and imported declarations (coeffStabilizesTo_partial_prod, isMultipliable_of_coeffStabilizesTo_partial_prod, tprod'_eq_of_coeffStabilizesTo_partial_prod) are support only. They should not be restated or bundled into the target theorem.",
+      "formalization_sketch": [
+        "theorem tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+        "    {f : ℕ → PowerSeries K} {lim : PowerSeries K}",
+        "    (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) lim)",
+        "    (hconst : ∀ i, constantCoeff (f i) = 1) :",
+        "    tprod' f (isMultipliable_of_coeffStabilizesTo_partial_prod' h hconst) = lim :=",
+        "  tprod'_eq_of_coeffStabilizesTo_partial_prod h hconst"
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "CoeffStabilizesTo (f : ℕ → PowerSeries K) (lim : PowerSeries K) : Prop",
+          "why_needed": "Used in the hypothesis of the theorem."
+        },
+        {
+          "name_or_snippet": "IsMultipliable (f : ℕ → PowerSeries K) : Prop",
+          "why_needed": "Used in the type of tprod' and in the proof via isMultipliable_of_coeffStabilizesTo_partial_prod'."
+        },
+        {
+          "name_or_snippet": "tprod' (f : ℕ → PowerSeries K) (hf : IsMultipliable f) : PowerSeries K",
+          "why_needed": "The infinite product function used in the conclusion."
+        },
+        {
+          "name_or_snippet": "constantCoeff (f i) = 1",
+          "why_needed": "Hypothesis hconst."
+        },
+        {
+          "name_or_snippet": "Finset.range (i + 1)",
+          "why_needed": "Used to express partial products."
+        }
+      ],
+      "candidate_project_context": [
+        {
+          "name": "tprod'_eq_of_coeffStabilizesTo_partial_prod",
+          "expected_signature_or_shape": "tprod'_eq_of_coeffStabilizesTo_partial_prod {f : ℕ → PowerSeries K} {lim : PowerSeries K} (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) lim) (hconst : ∀ i, constantCoeff (f i) = 1) : tprod' f (isMultipliable_of_coeffStabilizesTo_partial_prod h hconst) = lim",
+          "why_needed": "The imported theorem that directly proves the equality; the target wrapper will call it.",
+          "confidence": 1.0
+        }
+      ],
+      "mathlib_queries": [
+        "PowerSeries.coeff",
+        "PowerSeries.constantCoeff",
+        "Finset.range"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "PowerSeries.coeff",
+          "kind": "def",
+          "expected_signature_or_shape": "coeff (n : ℕ) (f : PowerSeries R) : R",
+          "why_needed": "Used in the definition of CoeffStabilizesTo and in the imported theorem's proof.",
+          "confidence": 1.0
+        },
+        {
+          "name": "PowerSeries.constantCoeff",
+          "kind": "def",
+          "expected_signature_or_shape": "constantCoeff (f : PowerSeries R) : R",
+          "why_needed": "Used in the hypothesis hconst.",
+          "confidence": 1.0
+        }
+      ],
+      "proof_notes": [
+        "The proof is a direct call to the imported theorem tprod'_eq_of_coeffStabilizesTo_partial_prod.",
+        "Ensure that the argument order and implicit arguments match the imported theorem."
+      ],
+      "uncertainties": []
+    },
+    {
+      "record_key": "record-002",
+      "source_focus_summary": "Formalize Theorem thm.commring.inverse-uni: In a commutative ring, inverses are unique.",
+      "selected_source_part": "Let L be a commutative ring. Let a∈L. Then, there is at most one inverse of a.",
+      "source_part_rationale": "This theorem is already formalized in the imported module as inverse_unique, but the local context defines IsInverse. The target likely uses IsInverse to state uniqueness. Since the prior same-file declarations are empty, this is the first formalization of this label in the file.",
+      "supporting_context_boundary": "The imported theorem inverse_unique and the local definitions IsInverse, isInverse_comm, isInverse_symm are support only. They should not be restated.",
+      "formalization_sketch": [
+        "theorem inverse_unique' {a b c : L} (h1 : IsInverse a b) (h2 : IsInverse a c) : b = c :=",
+        "  inverse_unique h1 h2"
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "IsInverse (a b : L) : Prop := a * b = 1",
+          "why_needed": "The local definition of inverse used in the statement."
+        },
+        {
+          "name_or_snippet": "inverse_unique {L : Type*} [CommRing L] {a b c : L} (hb : a * b = 1) (hc : a * c = 1) : b = c",
+          "why_needed": "The imported theorem that proves uniqueness directly; the target theorem will apply it."
+        }
+      ],
+      "candidate_project_context": [
+        {
+          "name": "inverse_unique",
+          "expected_signature_or_shape": "inverse_unique {L : Type*} [CommRing L] {a b c : L} (hb : a * b = 1) (hc : a * c = 1) : b = c",
+          "why_needed": "The imported theorem that directly proves the statement; the target theorem is a wrapper using IsInverse.",
+          "confidence": 1.0
+        }
+      ],
+      "mathlib_queries": [],
+      "candidate_mathlib_context": [],
+      "proof_notes": [
+        "The proof is a direct application of the imported theorem inverse_unique, since IsInverse a b is defined as a*b=1."
+      ],
+      "uncertainties": []
+    }
+  ]
+}

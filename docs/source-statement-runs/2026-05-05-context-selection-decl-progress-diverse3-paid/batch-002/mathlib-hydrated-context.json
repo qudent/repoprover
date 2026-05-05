@@ -1,0 +1,97 @@
+{
+  "mathlib_source_available": true,
+  "mathlib_root": "algebraic-combinatorics/.lake/packages/mathlib",
+  "records": [
+    {
+      "record_key": "record-003",
+      "resolved_mathlib_context": [
+        {
+          "query": "IsUnit",
+          "matches": [
+            {
+              "file": "Mathlib/Topology/Algebra/UniformMulAction.lean",
+              "line": 166,
+              "text": "theorem IsUnit.smul_uniformity [Monoid M] [MulAction M X] [UniformContinuousConstSMul M X] {c : M}",
+              "snippet": "theorem IsUnit.smul_uniformity [Monoid M] [MulAction M X] [UniformContinuousConstSMul M X] {c : M}\n    (hc : IsUnit c) : c • 𝓤 X = 𝓤 X :=\n  let ⟨d, hcd⟩ := hc.exists_right_inv\n  have cU : c • 𝓤 X ≤ 𝓤 X := uniformContinuous_const_smul c\n  have dU : d • 𝓤 X ≤ 𝓤 X := uniformContinuous_const_smul d\n  le_antisymm cU <| by simpa [smul_smul, hcd] using Filter.smul_filter_le_smul_filter (a := c) dU\n\n@[to_additive (attr := simp)]"
+            },
+            {
+              "file": "Mathlib/GroupTheory/OrderOfElement.lean",
+              "line": 376,
+              "text": "lemma IsUnit.orderOf_eq_one [Subsingleton Gˣ] {x : G} (h : IsUnit x) :",
+              "snippet": "lemma IsUnit.orderOf_eq_one [Subsingleton Gˣ] {x : G} (h : IsUnit x) :\n    orderOf x = 1 := by\n  simp [isUnit_iff_eq_one.mp h]\n\n@[to_additive (attr := norm_cast)]"
+            },
+            {
+              "file": "Mathlib/GroupTheory/GroupAction/Pointwise.lean",
+              "line": 93,
+              "text": "theorem IsUnit.preimage_smul_setₛₗ {F G : Type*} [FunLike G M N] [MonoidHomClass G M N]",
+              "snippet": "theorem IsUnit.preimage_smul_setₛₗ {F G : Type*} [FunLike G M N] [MonoidHomClass G M N]\n    (σ : G) [FunLike F α β] [MulActionSemiHomClass F σ α β] (f : F) (hc : IsUnit c) (t : Set β) :\n    f ⁻¹' (σ c • t) = c • f ⁻¹' t :=\n  preimage_smul_setₛₗ_of_isUnit_isUnit _ hc (hc.map _) _\n\n-- TODO: when you remove the next 2 aliases,\n-- please move the group version below out of the `Group` namespace.\n/-- `preimage_smul_setₛₗ` when `c` is a unit and `σ` is a monoid homomorphism. -/\n@[to_additive]"
+            }
+          ]
+        },
+        {
+          "query": "LaurentPolynomial.T",
+          "matches": [
+            {
+              "file": "Mathlib/Tactic/DeriveCountable.lean",
+              "line": 38,
+              "text": "inductive T (α : Type)",
+              "snippet": "inductive T (α : Type)\n  | a (n : α)\n  | b (n m : α) (t : T α)\n```\nthe deriving handler constructs the following three declarations:\n```lean"
+            },
+            {
+              "file": "Mathlib/Tactic/DeriveCountable.lean",
+              "line": 44,
+              "text": "noncomputable def T.toNat (α : Type) [Countable α] : T α → ℕ",
+              "snippet": "noncomputable def T.toNat (α : Type) [Countable α] : T α → ℕ\n  | a n => Nat.pair 0 (Nat.pair (encode n) 0)\n  | b n m t => Nat.pair 1 (Nat.pair (encode n) (Nat.pair (encode m) (Nat.pair t.toNat 0)))"
+            },
+            {
+              "file": "Mathlib/Tactic/DeriveCountable.lean",
+              "line": 48,
+              "text": "theorem T.toNat_injective (α : Type) [Countable α] : Function.Injective (T.toNat α) := fun",
+              "snippet": "theorem T.toNat_injective (α : Type) [Countable α] : Function.Injective (T.toNat α) := fun\n  | a .., a .. => by\n    refine cons_eq_imp_init ?_\n    refine pair_encode_step ?_; rintro ⟨⟩\n    intro; rfl\n  | a .., b .. => by refine cons_eq_imp ?_; rintro ⟨⟩\n  | b .., a .. => by refine cons_eq_imp ?_; rintro ⟨⟩\n  | b .., b .. => by\n    refine cons_eq_imp_init ?_\n    refine pair_encode_step ?_; rintro ⟨⟩\n    refine pair_encode_step ?_; rintro ⟨⟩\n    refine cons_eq_imp ?_; intro h; cases T.toNat_injective α h\n    intro; rfl\n\ninstance (α : Type) [Countable α] : Countable (T α) := ⟨_, T.toNat_injective α⟩\n```\n-/"
+            }
+          ]
+        },
+        {
+          "query": "LaurentPolynomial.T_zero",
+          "matches": [
+            {
+              "file": "Mathlib/RingTheory/Polynomial/Chebyshev.lean",
+              "line": 123,
+              "text": "theorem T_zero : T R 0 = 1 := by simp [T]",
+              "snippet": "theorem T_zero : T R 0 = 1 := by simp [T]\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/Algebra/Polynomial/Laurent.lean",
+              "line": 163,
+              "text": "theorem T_zero : (T 0 : R[T;T⁻¹]) = 1 :=",
+              "snippet": "theorem T_zero : (T 0 : R[T;T⁻¹]) = 1 :=\n  rfl"
+            }
+          ]
+        },
+        {
+          "query": "Algebra.commRing",
+          "matches": [
+            {
+              "file": "Mathlib/Topology/Algebra/UniformRing.lean",
+              "line": 215,
+              "text": "instance commRing : CommRing (Completion R) :=",
+              "snippet": "instance commRing : CommRing (Completion R) :=\n  { Completion.ring with\n    mul_comm a b :=\n      Completion.induction_on₂ a b\n        (isClosed_eq (by fun_prop) (by fun_prop))\n        fun a b => by rw [← coe_mul, ← coe_mul, mul_comm] }\n\n/-- A shortcut instance for the common case -/"
+            },
+            {
+              "file": "Mathlib/Topology/Algebra/UniformRing.lean",
+              "line": 250,
+              "text": "instance commRing [CommRing α] [TopologicalSpace α] [IsTopologicalRing α] :",
+              "snippet": "instance commRing [CommRing α] [TopologicalSpace α] [IsTopologicalRing α] :\n    CommRing (SeparationQuotient α) :=\n  (sepQuotHomeomorphRingQuot _).commRing\n\n/-- Given a topological ring `α` equipped with a uniform structure that makes subtraction uniformly\ncontinuous, get an equivalence between the separated quotient of `α` and the quotient ring\ncorresponding to the closure of zero. -/"
+            },
+            {
+              "file": "Mathlib/Data/ZMod/Defs.lean",
+              "line": 181,
+              "text": "instance commRing (n : ℕ) : CommRing (ZMod n) where",
+              "snippet": "/-- The integers modulo `n : ℕ`. -/\n@[to_additive_dont_translate]\ndef ZMod : ℕ → Type\n  | 0 => ℤ\n  | n + 1 => Fin (n + 1)\n\ninstance ZMod.decidableEq : ∀ n : ℕ, DecidableEq (ZMod n)\n  | 0 => inferInstanceAs (DecidableEq ℤ)\n  | n + 1 => inferInstanceAs (DecidableEq (Fin (n + 1)))\n\ninstance ZMod.repr : ∀ n : ℕ, Repr (ZMod n)\n  | 0 => by dsimp [ZMod]; infer_instance\n  | n + 1 => by dsimp [ZMod]; infer_instance\n\nnamespace ZMod\n\ninstance instUnique : Unique (ZMod 1) := Fin.instUnique\n\ninstance fintype : ∀ (n : ℕ) [NeZero n], Fintype (ZMod n)\n  | 0, h => (h.ne _ rfl).elim\n  | n + 1, _ => Fin.fintype (n + 1)\n\ninstance infinite : Infinite (ZMod 0) :=\n  Int.infinite\n\n@[simp]\ntheorem card (n : ℕ) [Fintype (ZMod n)] : Fintype.card (ZMod n) = n := by\n  cases n with\n  | zero => exact (not_finite (ZMod 0)).elim\n  | succ n => convert Fintype.card_fin (n + 1) using 2\n\nopen Fin.CommRing in\n/- We define each field by cases, to ensure that the eta-expanded `ZMod.commRing` is defeq to the\noriginal, this helps avoid diamonds with instances coming from classes extending `CommRing` such as\nfield. -/\ninstance commRing (n : ℕ) : CommRing (ZMod n) where\n  add := Nat.casesOn n (@Add.add Int _) fun n => @Add.add (Fin n.succ) _\n  add_assoc := Nat.casesOn n (@add_assoc Int _) fun n => @add_assoc (Fin n.succ) _\n  zero := Nat.casesOn n (0 : Int) fun n => (0 : Fin n.succ)\n  zero_add := Nat.casesOn n (@zero_add Int _) fun n => @zero_add (Fin n.succ) _\n  add_zero := Nat.casesOn n (@add_zero Int _) fun n => @add_zero (Fin n.succ) _\n  neg := Nat.casesOn n (@Neg.neg Int _) fun n => @Neg.neg (Fin n.succ) _\n  sub := Nat.casesOn n (@Sub.sub Int _) fun n => @Sub.sub (Fin n.succ) _\n  sub_eq_add_neg := Nat.casesOn n (@sub_eq_add_neg Int _) fun n => @sub_eq_add_neg (Fin n.succ) _\n  zsmul := Nat.casesOn n\n    (inferInstanceAs (CommRing ℤ)).zsmul fun n => (inferInstanceAs (CommRing (Fin n.succ))).zsmul\n  zsmul_zero' := Nat.casesOn n\n    (inferInstanceAs (CommRing ℤ)).zsmul_zero'\n    fun n => (inferInstanceAs (CommRing (Fin n.succ))).zsmul_zero'\n  zsmul_succ' := Nat.casesOn n\n    (inferInstanceAs (CommRing ℤ)).zsmul_succ'\n    fun n => (inferInstanceAs (CommRing (Fin n.succ))).zsmul_succ'\n  zsmul_neg' := Nat.casesOn n\n    (inferInstanceAs (CommRing ℤ)).zsmul_neg'\n    fun n => (inferInstanceAs (CommRing (Fin n.succ))).zsmul_neg'\n  nsmul := Nat.casesOn n\n    (inferInstanceAs (CommRing ℤ)).nsmul fun n => (inferInstanceAs (CommRing (Fin n.succ))).nsmul\n  nsmul_zero := Nat.casesOn n\n    (inferInstanceAs (CommRing ℤ)).nsmul_zero\n    fun n => (inferInstanceAs (CommRing (Fin n.succ))).nsmul_zero\n  nsmul_succ := Nat.casesOn n\n    (inferInstanceAs (CommRing ℤ)).nsmul_succ\n    fun n => (inferInstanceAs (CommRing (Fin n.succ))).nsmul_succ"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

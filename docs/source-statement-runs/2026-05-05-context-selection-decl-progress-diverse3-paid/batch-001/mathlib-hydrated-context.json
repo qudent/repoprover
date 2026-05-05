@@ -1,0 +1,84 @@
+{
+  "mathlib_source_available": true,
+  "mathlib_root": "algebraic-combinatorics/.lake/packages/mathlib",
+  "records": [
+    {
+      "record_key": "record-001",
+      "resolved_mathlib_context": [
+        {
+          "query": "PowerSeries.coeff",
+          "matches": [
+            {
+              "file": "Mathlib/SetTheory/Ordinal/CantorNormalForm.lean",
+              "line": 205,
+              "text": "def coeff (b o : Ordinal) : Ordinal →₀ Ordinal :=",
+              "snippet": "def coeff (b o : Ordinal) : Ordinal →₀ Ordinal :=\n  lookupFinsupp ⟨_, nodupKeys b o⟩"
+            },
+            {
+              "file": "Mathlib/RingTheory/HahnSeries/Addition.lean",
+              "line": 285,
+              "text": "def coeff.addMonoidHom (g : Γ) : R⟦Γ⟧ →+ R where",
+              "snippet": "def coeff.addMonoidHom (g : Γ) : R⟦Γ⟧ →+ R where\n  toFun f := f.coeff g\n  map_zero' := coeff_zero\n  map_add' _ _ := coeff_add\n\nsection Domain\n\nvariable [PartialOrder Γ']"
+            },
+            {
+              "file": "Mathlib/RingTheory/HahnSeries/Addition.lean",
+              "line": 502,
+              "text": "def coeff.linearMap (g : Γ) : V⟦Γ⟧ →ₗ[R] V :=",
+              "snippet": "def coeff.linearMap (g : Γ) : V⟦Γ⟧ →ₗ[R] V :=\n  { coeff.addMonoidHom g with map_smul' := fun _ _ => rfl }\n\n@[simp]"
+            }
+          ]
+        },
+        {
+          "query": "PowerSeries.constantCoeff",
+          "matches": [
+            {
+              "file": "Mathlib/RingTheory/MvPowerSeries/Basic.lean",
+              "line": 423,
+              "text": "def constantCoeff : MvPowerSeries σ R →+* R :=",
+              "snippet": "/-- The constant coefficient of a formal power series. -/\ndef constantCoeff : MvPowerSeries σ R →+* R :=\n  { coeff (0 : σ →₀ ℕ) with\n    toFun := coeff (0 : σ →₀ ℕ)\n    map_one' := coeff_zero_one\n    map_mul' := fun φ ψ => by classical simp [coeff_mul]\n    map_zero' := map_zero _ }\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/RingTheory/PowerSeries/Basic.lean",
+              "line": 197,
+              "text": "def constantCoeff : R⟦X⟧ →+* R :=",
+              "snippet": "/-- The constant coefficient of a formal power series. -/\ndef constantCoeff : R⟦X⟧ →+* R :=\n  MvPowerSeries.constantCoeff\n\n/-- The constant formal power series. -/"
+            },
+            {
+              "file": "Mathlib/RingTheory/WittVector/Basic.lean",
+              "line": 347,
+              "text": "noncomputable def constantCoeff : 𝕎 R →+* R where",
+              "snippet": "noncomputable def constantCoeff : 𝕎 R →+* R where\n  toFun x := x.coeff 0\n  map_zero' := by simp\n  map_one' := by simp\n  map_add' := add_coeff_zero\n  map_mul' := mul_coeff_zero\n\ninstance [Nontrivial R] : Nontrivial (𝕎 R) :=\n  constantCoeff.domain_nontrivial\n\nend WittVector"
+            }
+          ]
+        },
+        {
+          "query": "Finset.range",
+          "matches": [
+            {
+              "file": "Mathlib/AlgebraicTopology/SimplicialSet/Subcomplex.lean",
+              "line": 174,
+              "text": "abbrev range : Y.Subcomplex := Subfunctor.range f",
+              "snippet": "/-- The range of a morphism of simplicial sets, as a subcomplex. -/\nabbrev range : Y.Subcomplex := Subfunctor.range f\n\n/-- The morphism `X ⟶ Subcomplex.range f` induced by `f : X ⟶ Y`. -/"
+            },
+            {
+              "file": "Mathlib/Data/Set/Operations.lean",
+              "line": 158,
+              "text": "def range (f : ι → α) : Set α := {x | ∃ y, f y = x}",
+              "snippet": "/-- Range of a function.\n\nThis function is more flexible than `f '' univ`, as the image requires that the domain is in Type\nand not an arbitrary Sort. -/\ndef range (f : ι → α) : Set α := {x | ∃ y, f y = x}\n\n@[simp, grind =, push] theorem mem_range {x : α} : x ∈ range f ↔ ∃ y, f y = x := Iff.rfl\n\n@[mfld_simps] theorem mem_range_self (i : ι) : f i ∈ range f := ⟨i, rfl⟩\n\n/-- Any map `f : ι → α` factors through a map `rangeFactorization f : ι → range f`. -/"
+            },
+            {
+              "file": "Mathlib/Data/List/Basic.lean",
+              "line": 1233,
+              "text": "lemma range'_0 (a b : ℕ) : range' a b 0 = replicate b a := by",
+              "snippet": "lemma range'_0 (a b : ℕ) : range' a b 0 = replicate b a := by\n  induction b with\n  | zero => simp\n  | succ b ih => simp [range'_succ, ih, replicate_succ]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "resolved_mathlib_context": []
+    }
+  ]
+}
