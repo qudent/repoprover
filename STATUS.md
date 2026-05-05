@@ -5,7 +5,7 @@ Build a cheap, reproducible source-to-Lean autoformalization pipeline for the Al
 -------
 
 ## Current State
-The strict 6-row hard slice reached 6/6, but that used target-comment context and is debugging evidence only. Current validation is source-only with a separate LLM selector for source-part choice, previous project statements, and tight Mathlib/API context before generation.
+The strict 6-row hard slice reached 6/6, but that used target-comment context and is debugging evidence only. Current validation is source-only with a separate LLM selector for source-part choice, previous project statements, and tight Mathlib/API context before generation. Project-context proof generation now has two realistic passes across two domains, but not yet enough diverse coverage to call the pipeline reliable.
 
 ## Active Goals
 - [ ] Keep every paid OpenRouter output recoverable in git before Lean checking.
@@ -29,13 +29,16 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - [x] Add source-part disambiguation before generation to avoid broad `(a)/(b)` conjunction outputs.
 - [x] Add imported previous-project source-label context candidates to selector payloads.
 - [x] Apply the project-context selector output and run generation/verification after committing paid selector artifacts.
-- [ ] Pick the next small diverse records where previous-project or Mathlib context should make a narrow proof possible.
+- [x] Run a small diverse project-context generation/verification probe.
+- [ ] Tighten selector behavior for shared TeX labels where the target is the next declaration-level formalization, not the whole labeled theorem.
 - [ ] Shrink selector schema so 4-record batches complete as valid JSON.
 
 ## Blockers
 - Source-only context still often lacks exact theorem-family cues: target-comment focus terms are absent from visible source spans in `45/64` broader audit rows.
 - The deterministic gold-candidate source spans are usually broad: `62/64` broad, `61/64` multi-environment, `60/64` extra-label rows in the latest audit.
 - `det_minors_diag` still fails: the model invents unavailable Cauchy-Binet helper names and produces malformed proof syntax. Treat it as a harder repair/context case, not evidence that project-context selection failed.
+- Shared TeX labels remain a live failure mode: in the diverse3 run, the selector correctly found useful previous-project facts for `prod-lim-conv`, but told the generator to bundle the prior multipliability result with the target equality theorem, so the hidden grader rejected the generated theorem shape.
+- Broad theorem labels can still hide narrow targets: the Laurent `T_inv` row became an over-broad `laupol_ring` statement and did not compile.
 - A 72-record preflight was too slow with current Lean setup; keep validation slices bounded until verification reuse is improved.
 
 ## Recent Results
@@ -50,8 +53,9 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - Source-progress selector plus generation fixed the semantic over-bundling for `alternant_swap`, but verification stayed `0/2`; a generic `noncomputable section` materialization fix removed the first alternant compiler blocker.
 - New project-context selector run `2026-05-05-context-selection-project-context-paid` cost `$0.002581152`; `alternant_swap` selected part (b) and identified imported `AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson.alternant_swap` as the direct proof route.
 - Project-context generation run `2026-05-05-project-context-selected-generation-paid` cost `$0.022922122`; after grader fixes, verification passed `1/2`, with `alternant_swap_of_ne` proving the withheld `alternant_swap` target.
+- Diverse project-context selector run `2026-05-05-context-selection-project-context-diverse3-paid` cost `$0.004148956`; generation run `2026-05-05-project-context-diverse3-generation-paid` cost `$0.021010413`; verification passed `1/3` with `isInverse_unique` proving via imported `inverse_unique`.
 - Focused tests pass with source-statement, source-context-selection, context graph, and materializer tests.
 
 ## Agent Notes
-- Latest useful proof path: selector found imported previous theorem -> generator wrote `AlgebraicCombinatorics.alternant_swap (R := R) hij` -> verifier/grader passed after named-argument application fixes.
-- Next work should broaden the success beyond this single alternant wrapper before claiming the system works for a diverse set.
+- Useful proof paths so far are previous-project theorem reuse: `alternant_swap` via imported `AlgebraicCombinatorics.alternant_swap`, and `isInverse_unique` via imported `inverse_unique`.
+- Next work should fix shared-label declaration-progress guidance before another paid broad run; selector/generator currently over-bundle source parts that share one TeX theorem label.

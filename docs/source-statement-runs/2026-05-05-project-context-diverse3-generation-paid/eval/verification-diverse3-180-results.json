@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-05T14:43:30.848874+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-project-context-diverse3-generation-paid",
+  "work_root": "/tmp/repoprover-project-context-diverse3-verify",
+  "workers": 1,
+  "records_completed": 3,
+  "successes": 1,
+  "success_rate": 0.3333333333333333,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1,
+    "grader_gold_statement_not_proved": 1
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-project-context-diverse3-generation-paid/record-001",
+      "generated_name": "product_lim_conv",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Details/Limits.lean:136:64: error: Invalid argument name `hmult` for function `product_lim_conv`\n\nHint: Perhaps you meant one of the following parameter names:\n  • `K`: h̵m̵u̵l̵t̵K̲\n  • `hconst`: h̵m̵u̵l̵t̵h̲c̲o̲n̲s̲t̲\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.isInverse_unique",
+      "record_dir": "docs/source-statement-runs/2026-05-05-project-context-diverse3-generation-paid/record-002",
+      "generated_name": "thm_commring_inverse_uni",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:44:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:45:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:44:4: warning: 'simpa using thm_commring_inverse_uni a b c hab hac' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:45:4: warning: 'simpa using thm_commring_inverse_uni (a := a) (b := b) (c := c) (hab := hab) (hac := hac)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPS/CommutativeRings.lean:37:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.T_inv",
+      "record_dir": "docs/source-statement-runs/2026-05-05-project-context-diverse3-generation-paid/record-003",
+      "generated_name": "laupol_ring",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:61:23: error: Function expected at\n  CommAlgebra\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  K\n\nHint: The identifier `CommAlgebra` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}

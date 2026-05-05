@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Details/Limits.lean:136:64: error: Invalid argument name `hmult` for function `product_lim_conv`\n\nHint: Perhaps you meant one of the following parameter names:\n  • `K`: h̵m̵u̵l̵t̵K̲\n  • `hconst`: h̵m̵u̵l̵t̵h̲c̲o̲n̲s̲t̲\n"
+}

@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:61:23: error: Function expected at\n  CommAlgebra\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  K\n\nHint: The identifier `CommAlgebra` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\n"
+}
