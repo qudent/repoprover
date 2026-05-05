@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777967127-9cZmV7yYoYdmBi0fSEsH",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem partition_of_zero_parts_empty (p : Partition 0) : p.parts = 0 :=\\n  partition_zero_parts p\",\n  \"declaration_name\": \"partition_of_zero_parts_empty\",\n  \"used_context\": [\"partition_zero_parts\"],\n  \"notes\": [\"Assumes the existence of lemma `partition_zero_parts` in the current environment; uses the type `Partition 0` (parameterized by sum) and its `parts` field.\"]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777967127,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4525,
+    "prompt_tokens": 2557,
+    "total_tokens": 7082,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4412,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 1024,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.004607317,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.004607317,
+      "upstream_inference_prompt_cost": 0.000670567,
+      "upstream_inference_completions_cost": 0.00393675
+    }
+  },
+  "provider": "DeepSeek"
+}

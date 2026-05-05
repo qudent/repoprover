@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "theorem perm_pow_apply_eq_iterate (α : Equiv.Perm X) (n : ℕ) (x : X) : (α ^ n) x = (α ^[n]) x := by\n  rw [Equiv.Perm.coe_pow]",
+  "declaration_name": "perm_pow_apply_eq_iterate",
+  "used_context": ["Equiv.Perm.coe_pow"],
+  "notes": ["Uses ℕ exponent to formalize the statement for i ≥ 0."]
+}

@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem partition_of_zero_parts_empty (p : Partition 0) : p.parts = 0 :=\n  partition_zero_parts p",
+  "declaration_name": "partition_of_zero_parts_empty",
+  "used_context": [
+    "partition_zero_parts"
+  ],
+  "notes": [
+    "Assumes the existence of lemma `partition_zero_parts` in the current environment; uses the type `Partition 0` (parameterized by sum) and its `parts` field."
+  ]
+}

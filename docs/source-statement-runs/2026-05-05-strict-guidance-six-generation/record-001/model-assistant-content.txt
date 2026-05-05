@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem isSummable_of_partial_sum_coeffStabilizesTo\n    {f : ℕ → PowerSeries K} {lim : PowerSeries K}\n    (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) lim) :\n    IsSummable f :=\n  isSummable_of_coeffStabilizesTo_partial_sum h",
+  "declaration_name": "isSummable_of_partial_sum_coeffStabilizesTo",
+  "used_context": [
+    "isSummable_of_coeffStabilizesTo_partial_sum"
+  ],
+  "notes": [
+    "The source theorem also asserts the limit equality, but per policy only the summability is formalized.",
+    "The proof is immediate from the existing lemma isSummable_of_coeffStabilizesTo_partial_sum, which exactly matches the hypothesis."
+  ]
+}

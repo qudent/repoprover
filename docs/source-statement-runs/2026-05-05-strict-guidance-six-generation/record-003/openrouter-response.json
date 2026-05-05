@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777967097-HywKkSYg1vGXIj4W5LCX",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_comp_coeff_finite (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :\\n    coeff n (PowerSeries.subst g f) = (Finset.range (n+1)).sum (fun d => coeff d f * coeff n (g ^ d)) := by\\n  rw [fps_comp_coeff f g hg n]\\n  apply finsum_eq_sum_of_support_subset\\n  intro d hd\\n  have hzero : coeff n (g ^ d) = 0 := by\\n    have h_lt : n < d := by\\n      simpa [Finset.mem_range] using hd\\n    exact fps_subs_wd_firstCoeffs g hg d n h_lt\\n  simp [hzero]\",\n  \"declaration_name\": \"fps_comp_coeff_finite\",\n  \"used_context\": [\n    \"fps_comp_coeff\",\n    \"fps_subs_wd_firstCoeffs\",\n    \"finsum_eq_sum_of_support_subset\"\n  ],\n  \"notes\": [\n    \"Proves the alternative finite coefficient formula from Definition 7.3.1, using the existing fps_comp_coeff and the vanishing property fps_subs_wd_firstCoeffs.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777967097,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5185,
+    "prompt_tokens": 4039,
+    "total_tokens": 9224,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4875,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.005991835,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.005991835,
+      "upstream_inference_prompt_cost": 0.001480885,
+      "upstream_inference_completions_cost": 0.00451095
+    }
+  },
+  "provider": "DeepSeek"
+}

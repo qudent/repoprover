@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem fps_newton_binom (F : Type*) [Field F] [BinomialRing F] (n : ℤ) :\n    (1 + PowerSeries.X : PowerSeries F) ^ n = PowerSeries.mk fun k => (Ring.choose (n : ℤ) k : F) := by\n  by_cases hn : 0 ≤ n\n  · lift n to ℕ using hn\n    calc\n      (1 + PowerSeries.X : PowerSeries F) ^ (n : ℤ) = (1 + PowerSeries.X : PowerSeries F) ^ (n : ℕ) := by simp\n      _ = PowerSeries.binomialSeries F (n : ℤ) := by rw [← PowerSeries.binomialSeries_nat (R := ℤ) (A := F) n]\n      _ = PowerSeries.mk fun k => (Ring.choose (n : ℤ) k : F) := rfl\n  · have hpos : 0 ≤ -n := by linarith\n    lift -n to ℕ using hpos with m hm\n    have hn_eq : n = -(m : ℤ) := by linarith\n    rw [hn_eq]\n    have hcalc : (1 + PowerSeries.X : PowerSeries F) ^ (-(m : ℤ)) = ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ (m : ℕ) := by\n      simp [zpow_neg, inv_pow]\n    rw [hcalc, fps_onePlusX_pow_neg' F m]",
+  "declaration_name": "fps_newton_binom",
+  "used_context": [
+    "PowerSeries.binomialSeries_nat",
+    "fps_onePlusX_pow_neg'",
+    "zpow_neg",
+    "inv_pow"
+  ],
+  "notes": [
+    "Requires [Field F] [BinomialRing F] for PowerSeries.binomialSeries_nat and fps_onePlusX_pow_neg'.",
+    "Uses integer exponent (zpow) for the negative n case; the negative case reduces to the existing lemma for negative natural exponents."
+  ]
+}

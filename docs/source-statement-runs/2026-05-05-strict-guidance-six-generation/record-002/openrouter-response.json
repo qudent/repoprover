@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777967097-DjFSXmAfg87NuCqKZmtC",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_newton_binom (F : Type*) [Field F] [BinomialRing F] (n : ℤ) :\\n    (1 + PowerSeries.X : PowerSeries F) ^ n = PowerSeries.mk fun k => (Ring.choose (n : ℤ) k : F) := by\\n  by_cases hn : 0 ≤ n\\n  · lift n to ℕ using hn\\n    calc\\n      (1 + PowerSeries.X : PowerSeries F) ^ (n : ℤ) = (1 + PowerSeries.X : PowerSeries F) ^ (n : ℕ) := by simp\\n      _ = PowerSeries.binomialSeries F (n : ℤ) := by rw [← PowerSeries.binomialSeries_nat (R := ℤ) (A := F) n]\\n      _ = PowerSeries.mk fun k => (Ring.choose (n : ℤ) k : F) := rfl\\n  · have hpos : 0 ≤ -n := by linarith\\n    lift -n to ℕ using hpos with m hm\\n    have hn_eq : n = -(m : ℤ) := by linarith\\n    rw [hn_eq]\\n    have hcalc : (1 + PowerSeries.X : PowerSeries F) ^ (-(m : ℤ)) = ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ (m : ℕ) := by\\n      simp [zpow_neg, inv_pow]\\n    rw [hcalc, fps_onePlusX_pow_neg' F m]\",\n  \"declaration_name\": \"fps_newton_binom\",\n  \"used_context\": [\n    \"PowerSeries.binomialSeries_nat\",\n    \"fps_onePlusX_pow_neg'\",\n    \"zpow_neg\",\n    \"inv_pow\"\n  ],\n  \"notes\": [\n    \"Requires [Field F] [BinomialRing F] for PowerSeries.binomialSeries_nat and fps_onePlusX_pow_neg'.\",\n    \"Uses integer exponent (zpow) for the negative n case; the negative case reduces to the existing lemma for negative natural exponents.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777967097,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 10358,
+    "prompt_tokens": 5625,
+    "total_tokens": 15983,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 9876,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 5504,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.009084047,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.009084047,
+      "upstream_inference_prompt_cost": 7.2587e-05,
+      "upstream_inference_completions_cost": 0.00901146
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem fps_comp_coeff_finite (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :\n    coeff n (PowerSeries.subst g f) = (Finset.range (n+1)).sum (fun d => coeff d f * coeff n (g ^ d)) := by\n  rw [fps_comp_coeff f g hg n]\n  apply finsum_eq_sum_of_support_subset\n  intro d hd\n  have hzero : coeff n (g ^ d) = 0 := by\n    have h_lt : n < d := by\n      simpa [Finset.mem_range] using hd\n    exact fps_subs_wd_firstCoeffs g hg d n h_lt\n  simp [hzero]",
+  "declaration_name": "fps_comp_coeff_finite",
+  "used_context": [
+    "fps_comp_coeff",
+    "fps_subs_wd_firstCoeffs",
+    "finsum_eq_sum_of_support_subset"
+  ],
+  "notes": [
+    "Proves the alternative finite coefficient formula from Definition 7.3.1, using the existing fps_comp_coeff and the vanishing property fps_subs_wd_firstCoeffs."
+  ]
+}
