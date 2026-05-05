@@ -53,6 +53,10 @@ def _write_fixture_project(tmp_path: Path) -> tuple[Path, SelectedRecord]:
                 "    ∏ i ∈ P, d i := by",
                 "  sorry",
                 "",
+                "/-- Named local API that should be retrievable before the target. -/",
+                "theorem det_local_api : True := by",
+                "  trivial",
+                "",
                 "/-- Part (a): target declaration withheld in prompts.",
                 "    Label: demo.minors.a -/",
                 "theorem target {n : Nat} (d : Fin n -> R) (P : Finset (Fin n)) : True := by",
@@ -80,7 +84,7 @@ def _write_fixture_project(tmp_path: Path) -> tuple[Path, SelectedRecord]:
         "output": {
             "lean_path": "Demo.lean",
             "declaration_names": ["Demo.target"],
-            "line_range": [24, 26],
+            "line_range": [28, 31],
             "chunk_kind": "theorem",
         },
         "minimal_context": {
@@ -194,6 +198,31 @@ def test_source_statement_context_does_not_duplicate_notation_support(tmp_path: 
     assert prefix.count("noncomputable def submatrixOfFinset") == 1
     assert "Do not redeclare definitions" in "\n".join(user["instructions"])
     assert "apply it to the needed variables" in "\n".join(user["instructions"])
+
+
+def test_source_statement_context_includes_retrieved_local_api_without_target(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+
+    messages = build_messages(project_root, record)
+    user = json.loads(messages[1]["content"])
+    prefix = user["context"]["lean_prefix_context"]
+    target_path = materialize_candidate_project(
+        project_root=project_root,
+        output_root=tmp_path / "out",
+        record=record,
+        lean_declaration="theorem generated : True := by\n  trivial",
+        generated_name="generated",
+        lake_cache_from=None,
+        include_grader=False,
+    )
+    materialized = target_path.read_text(encoding="utf-8")
+
+    assert "-- Local API retrieval: Demo.lean" in prefix
+    assert "theorem det_local_api : True := by" in prefix
+    assert "Part (a): target declaration withheld" not in prefix
+    assert "theorem det_local_api : True := by" in materialized
+    assert "theorem target" not in prefix
+    assert "theorem target" not in materialized
 
 
 def test_generated_application_candidates_try_explicit_then_all_binders() -> None:

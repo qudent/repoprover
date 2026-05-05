@@ -60,8 +60,12 @@ Examples:
 
 ## Decision
 
-Do not spend on another broad generation-only batch until local API retrieval is
-implemented. The next zero-cost implementation should retrieve exact nearby
-local declarations and current API snippets keyed by source labels, source
-terms, and generated unknown identifiers, while still withholding the target
-declaration name and statement.
+Prompt wording/local examples alone were not enough, so the next step was local
+API retrieval. That zero-cost retrieval pass is now documented in
+`docs/source-statement-local-api-retrieval-preflight.md`: it materializes nearby
+source-keyed local declarations while still withholding the target declaration
+name and statement, and the six-record shared-project preflight passes 6/6.
+
+The next paid probe should stay small and generation-only, archive every
+OpenRouter response under `docs/source-statement-runs/...`, and then run the
+separate verifier consumer over those artifacts.

@@ -54,6 +54,11 @@ GENERATED_DECL_RE = re.compile(
     r"(?:theorem|lemma)\s+(?P<name>[^\s:\{\(\[]+)",
     re.MULTILINE,
 )
+BLOCK_BOUNDARY_RE = re.compile(
+    r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
+    r"(?:(?:theorem|lemma|def|abbrev|instance|class|structure|inductive|example)\b|(?:scoped\s+)?notation\b)"
+)
+LOCAL_EXAMPLE_RE = re.compile(r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*(?:example|theorem|lemma)\b")
 SCOPED_NOTATION_RE = re.compile(r"scoped\s+notation\s+(?P<lhs>.*?)\s*=>\s*(?P<rhs>.*)$")
 PART_LABEL_RE = re.compile(r"\.([a-z])$")
 CONTEXT_NOTATION_HEADER_RE = re.compile(r"^-- File context: (?P<path>.*):(?P<start>\d+)-(?P<end>\d+) \(notation\)$")
@@ -232,13 +237,13 @@ def _prior_example_blocks(project_root: Path, record: SelectedRecord, limit: int
 
     starts: list[int] = []
     for index, line in enumerate(lines[: target_start - 1]):
-        if re.match(r"^\s*(?:example|theorem|lemma)\b", line):
+        if LOCAL_EXAMPLE_RE.match(line):
             starts.append(index)
     candidates: list[tuple[tuple[int, int], str]] = []
     for offset, start_index in enumerate(starts):
         end_index = starts[offset + 1] if offset + 1 < len(starts) else target_start - 1
         block_start = _declaration_start(lines, start_index)
-        block_lines = lines[block_start:end_index]
+        block_lines = _trim_trailing_annotation_blocks(lines[block_start:end_index])
         if len(block_lines) > 45:
             continue
         block = "\n".join(block_lines).rstrip()
@@ -248,6 +253,88 @@ def _prior_example_blocks(project_root: Path, record: SelectedRecord, limit: int
         candidates.append(((score, start_index), block))
     candidates.sort(key=lambda item: item[0], reverse=True)
     return [block for _, block in candidates[:limit]]
+
+
+def _source_keywords(project_root: Path, record: SelectedRecord) -> list[str]:
+    source_text = "\n".join(snippet.get("snippet", "") for snippet in source_snippets(project_root, record)).lower()
+    labels = " ".join(_source_span_labels(record) + _record_comment_labels(record)).lower()
+    combined = f"{source_text}\n{labels}"
+    keywords = ["submatrix", "submatrixOfFinset"]
+    if "diagonal" in combined:
+        keywords.append("diagonal")
+    if "minor" in combined or "det" in combined:
+        keywords.extend([".det", "Matrix.det", "det_", "updateRow", "updateCol"])
+    if "column" in combined or "columns" in combined or "colop" in combined:
+        keywords.extend(["det_swap_cols", "det_zero_col", "det_add_col", "det_add_smul_col", "updateCol"])
+    if "row" in combined or "rowop" in combined:
+        keywords.extend(["det_swap_rows", "det_zero_row", "det_add_row", "det_add_smul_row", "updateRow"])
+    if "laurent" in combined or "x^{\\pm" in combined or "x,x^{-1}" in combined:
+        keywords.extend(["LaurentPolynomial", "K[T;T⁻¹]", "T_mul", "T_zero"])
+    if "coefficient" in combined or "\\left[  x^" in combined or "fps" in combined:
+        keywords.extend(["coeff", "PowerSeries.X", "coeff_X", "coeff_one_X"])
+    if "binom" in combined or "choose" in combined or "pascal" in combined or "\\binom" in combined:
+        keywords.extend(["Ring.choose", "Nat.choose", "choose_succ_succ", "pascal_identity"])
+    if "tableau" in combined or "content" in combined or "x_t" in combined:
+        keywords.extend(["Tableau", "contentTableau", "xPow", "monomialTableau"])
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for keyword in keywords:
+        if keyword not in seen:
+            ordered.append(keyword)
+            seen.add(keyword)
+    return ordered
+
+
+def _prior_named_declaration_blocks(project_root: Path, record: SelectedRecord, limit: int = 4) -> list[str]:
+    lean_file = project_root / record.lean_path
+    if not lean_file.exists():
+        return []
+    lines = lean_file.read_text(encoding="utf-8").splitlines()
+    target_start = record.line_range[0]
+    keywords = _source_keywords(project_root, record)
+    prior_blocks: dict[str, tuple[int, int, str]] = {}
+    candidates: list[tuple[tuple[int, int], int, int, str, str]] = []
+    for index, line in enumerate(lines[: target_start - 1], start=1):
+        match = DECL_RE.match(line)
+        if not match or match.group("kind") not in {"theorem", "lemma", "def", "abbrev"}:
+            continue
+        name = str(match.group("name") or "")
+        if not name:
+            continue
+        block = _named_declaration_block(lines, name, before_line=target_start)
+        if block is None:
+            continue
+        start, end, text = block
+        if end >= target_start or len(text.splitlines()) > 40:
+            continue
+        prior_blocks[name] = (start, end, text)
+        score = sum(1 for keyword in keywords if keyword in text or keyword in name)
+        if score == 0:
+            continue
+        candidates.append(((score, start), start, end, name, text))
+    candidates.sort(key=lambda item: item[0], reverse=True)
+    blocks: list[str] = []
+    selected = candidates[:limit]
+    selected_names = {name for _, _, _, name, _ in selected}
+    dependency_names: set[str] = set()
+    for _, start, _, name, text in selected:
+        for dependency_name, (dependency_start, _, _) in prior_blocks.items():
+            if dependency_name == name or dependency_name in selected_names or dependency_start >= start:
+                continue
+            if re.search(rf"(?<![A-Za-z0-9_']){re.escape(dependency_name)}(?![A-Za-z0-9_'])", text):
+                dependency_names.add(dependency_name)
+    ordered_items: list[tuple[int, int, str, str]] = [
+        (*prior_blocks[name][:2], name, prior_blocks[name][2])
+        for name in dependency_names
+    ]
+    ordered_items.extend((start, end, name, text) for _, start, end, name, text in selected)
+    seen: set[str] = set()
+    for start, end, name, text in sorted(ordered_items, key=lambda item: item[0]):
+        if name in seen:
+            continue
+        blocks.append(f"-- Local API retrieval: {record.lean_path}:{start}-{end} ({name})\n{text}")
+        seen.add(name)
+    return blocks
 
 
 def _notation_surface(lhs: str) -> str:
@@ -276,22 +363,45 @@ def _named_declaration_block(lines: list[str], name: str, *, before_line: int | 
         start_index = _declaration_start(lines, index - 1)
         end_index = len(lines)
         for next_index in range(index, len(lines)):
-            if DECL_RE.match(lines[next_index]):
+            if BLOCK_BOUNDARY_RE.match(lines[next_index]):
                 end_index = _declaration_start(lines, next_index)
                 break
         if before_line is not None:
             end_index = min(end_index, before_line - 1)
-        block_lines = lines[start_index:end_index]
-        while block_lines and not block_lines[-1].strip():
-            block_lines.pop()
-        while block_lines and block_lines[-1].lstrip().startswith(("/--", "/-!", "@[", "--")):
-            block_lines.pop()
-            while block_lines and not block_lines[-1].strip():
-                block_lines.pop()
+        block_lines = _trim_trailing_annotation_blocks(lines[start_index:end_index])
         block = "\n".join(block_lines).rstrip()
         end_index = start_index + len(block_lines)
         matches.append((start_index + 1, end_index, block))
     return matches[-1] if matches else None
+
+
+def _trim_trailing_annotation_blocks(lines: list[str]) -> list[str]:
+    block_lines = list(lines)
+    changed = True
+    while changed:
+        changed = False
+        while block_lines and not block_lines[-1].strip():
+            block_lines.pop()
+            changed = True
+        if not block_lines:
+            break
+        tail = block_lines[-1].lstrip()
+        if tail.startswith(("@[", "--")):
+            block_lines.pop()
+            changed = True
+            continue
+        if tail.startswith(("/--", "/-!")):
+            block_lines.pop()
+            changed = True
+            continue
+        if tail == "-/" or tail.startswith("-/") or tail.endswith("-/"):
+            start = len(block_lines) - 1
+            while start >= 0 and not block_lines[start].lstrip().startswith(("/--", "/-!")):
+                start -= 1
+            if start >= 0:
+                del block_lines[start:]
+                changed = True
+    return block_lines
 
 
 def _notation_support_blocks(project_root: Path, rel_path: str, notation_line_number: int, target_line: int) -> list[str]:
@@ -360,6 +470,16 @@ def source_statement_context(project_root: Path, record: SelectedRecord) -> tupl
         expanded.append(part)
         if body:
             seen_context_bodies.add(body)
+    for block in _prior_named_declaration_blocks(project_root, record):
+        block_names = _declaration_names_in_text(block)
+        if block_names and block_names <= seen_declaration_names:
+            continue
+        body = block.strip()
+        if body in seen_context_bodies:
+            continue
+        expanded.append(block)
+        seen_declaration_names.update(block_names)
+        seen_context_bodies.add(body)
     return expanded, context_closes
 
 

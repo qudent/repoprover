@@ -51,7 +51,13 @@ preflight then passed 6/12 with a 73M shared-project output tree; see
 checking so paid DeepSeek results can be written directly into a git-trackable
 run directory without creating project trees. `scripts/verify_source_statement_generation.py`
 is the matching verifier consumer: it reads those generation artifacts and
-checks them with a pool of reusable Lean projects under `/tmp`.
+checks them with a pool of reusable Lean projects under `/tmp`. The source
+runner now also materializes source-keyed prior same-file local API declarations
+and their direct prior same-file dependencies while withholding the target
+statement/name. A six-record API-free budget inspection estimates the next
+small generation probe at about `$0.1808` max, and a serial shared-project
+preflight with the retrieval context passed 6/6 in about 160s with a 21M output
+tree.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -171,8 +177,15 @@ failures plus 1 hidden-grader mismatch; see
   stopped after 5/6 paid responses (`$0.048314638`); verification still found 0
   successes on completed outputs, so prompt wording/local examples alone are not
   enough. See `docs/source-statement-preflight-passing-6-v2-comparison.md`.
-- [ ] Add generated-failure/local-API retrieval without leaking the withheld
-  target declaration name before any further paid source-statement batches.
+- [x] Add local-API retrieval without leaking the withheld target declaration
+  name before any further paid source-statement batches. Result: retrieved
+  prior same-file API declarations and direct same-file dependencies are
+  materialized into the prefix; zero-cost budget inspection estimated `$0.1808`
+  max for the six-record slice; serial shared-project preflight passed 6/6.
+  See `docs/source-statement-local-api-retrieval-preflight.md`.
+- [ ] Run the next small generation-only paid probe over the same six
+  preflight-passing records with local API retrieval, archive every response,
+  then verify the artifacts separately.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
