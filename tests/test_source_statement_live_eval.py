@@ -426,6 +426,8 @@ def test_source_statement_prompt_includes_negative_binomial_guidance(tmp_path: P
     assert "negative binomial formal power series" in guidance_text
     assert "negative-binomial inverse-power theorem" in guidance_text
     assert "fps_onePlusX_pow_neg'" in guidance_text
+    assert "fps_onePlusX_pow_neg' (F := F) n" in guidance_text
+    assert "fps_onePlusX_pow_neg' F n" in guidance_text
     assert "Ring.choose (-(n : ℤ)) k : F" in guidance_text
     assert "BinomialRing F" in guidance_text
     assert "fps_newtonBinomial_neg" not in guidance_text

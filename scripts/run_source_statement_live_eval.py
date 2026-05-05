@@ -858,11 +858,12 @@ def domain_statement_shape_guidance(
                 "preferred_statement_family": [
                     "For the negative-binomial inverse-power theorem, use the exact local binder/typeclass shape `{F : Type*} [Field F] [BinomialRing F] (n : ℕ)`.",
                     "State the right hand side as `PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F)`; keep the negative upper argument in `ℤ` and cast the coefficient to `F`.",
-                    "Prefer the displayed local helper `fps_onePlusX_pow_neg' n` when it appears in context.",
+                    "Prefer the displayed local helper `fps_onePlusX_pow_neg' n` when it appears in context; if Lean needs explicit type arguments, write them by name, e.g. `fps_onePlusX_pow_neg' (F := F) n`.",
                 ],
                 "avoid_statement_family": [
                     "Do not change the upper argument to `-(n : F)` or leave `BinomialRing`/coefficient types to metavariable inference.",
                     "Do not replace the local `Ring.choose` family with `Nat.choose` or an ad hoc binomial coefficient definition.",
+                    "Do not apply the helper as `fps_onePlusX_pow_neg' F n`; the first explicit positional argument is the natural exponent, not the type.",
                 ],
             }
         )

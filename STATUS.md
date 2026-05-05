@@ -347,7 +347,7 @@ failures plus 1 hidden-grader mismatch; see
   repaired successfully; rows 2 and 3 remain failed.
 - [x] Fix the repair queue cost-cap bug exposed by the row 2/3/6 repair run:
   reserve estimated cost before launching concurrent OpenRouter calls.
-- [ ] For remaining row 2, add exact visible application guidance for
+- [x] For remaining row 2, add exact visible application guidance for
   `fps_onePlusX_pow_neg'` without leaking the target theorem name; the model
   keeps passing the type argument where Lean expects the natural exponent.
 - [ ] Design a statement-shape-first generation stage for row 5-style semantic
@@ -406,6 +406,9 @@ failures plus 1 hidden-grader mismatch; see
   invalid JSON and row 2 still misapplies the negative-binomial helper. Patched
   the repair queue to enforce estimated cost reservations before concurrent
   launches; focused tests pass with `61 passed`.
+- Added exact negative-binomial helper application guidance: use
+  `fps_onePlusX_pow_neg' n` or named type arguments, not positional
+  `fps_onePlusX_pow_neg' F n`. Focused tests still pass with `61 passed`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`
