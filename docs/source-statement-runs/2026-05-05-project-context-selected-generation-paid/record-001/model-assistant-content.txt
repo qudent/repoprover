@@ -1,0 +1,24 @@
+{
+  "lean_declaration": "lemma det_minors_diag {n : ℕ} (d : Fin n → R) : (∀ P : Finset (Fin n), det (sub[P,P] (Matrix.diagonal d)) = ∏ i ∈ P, d i) ∧\n    (∀ (P Q : Finset (Fin n)), P ≠ Q → P.card = Q.card → det (sub[P,Q] (Matrix.diagonal d)) = 0) :=\nby\n  have hsubdiag (P : Finset (Fin n)) : sub[P,P] (Matrix.diagonal d) = Matrix.diagonal (fun i : Fin P.card => d (P.orderEmbOfFin rfl i)) := by\n    have hinj : Function.Injective (P.orderEmbOfFin rfl) := (P.orderEmbOfFin rfl).injective\n    ext i j\n    simp [submatrixOfFinset_apply, Matrix.diagonal, hinj.eq_iff]\n  have hprodeq (P : Finset (Fin n)) : (∏ i : Fin P.card, d (P.orderEmbOfFin rfl i)) = ∏ i ∈ P, d i := by\n    calc\n      (∏ i : Fin P.card, d (P.orderEmbOfFin rfl i)) = ∏ i in (Finset.univ : Finset (Fin P.card)), d ((P.orderEmbOfFin rfl) i) := by simp\n      _ = ∏ i in Finset.image (P.orderEmbOfFin rfl) Finset.univ, d i :=\n        (Finset.prod_image (P.orderEmbOfFin rfl).injective).symm\n      _ = ∏ i ∈ P, d i := by\n        rw [Finset.image_eq_map_of_injective (P.orderEmbOfFin rfl).injective, Finset.map_orderEmbOfFin P rfl]\n  have himage (P : Finset (Fin n)) : Finset.image (P.orderEmbOfFin rfl) (Finset.univ : Finset (Fin P.card)) = P := by\n    rw [Finset.image_eq_map_of_injective (P.orderEmbOfFin rfl).injective, Finset.map_orderEmbOfFin P rfl]\n  refine ⟨?_, ?_⟩\n  · intro P\n    rw [hsubdiag P]\n    rw [Matrix.det_diagonal]\n    exact hprodeq P\n  · intro P Q hne hcard\n    have h_nonempty : (P \\ Q).Nonempty := by\n      by_contra h_empty\n      have h_empty' : P \\ Q = ∅ := Finset.not_nonempty_iff_eq_empty.mp h_empty\n      have h_sub : P ⊆ Q := Finset.sdiff_eq_empty_iff_subset.mp h_empty'\n      have h_card_sub : P.card ≤ Q.card := Finset.card_le_card_of_subset h_sub\n      have h_card_eq' : P.card = Q.card := hcard\n      have : P = Q := Finset.eq_of_subset_of_card_le h_sub (by rw [h_card_eq']; exact le_rfl)\n      exact hne this\n    rcases h_nonempty with ⟨i, hi⟩\n    have hi_P : i ∈ P := hi.1\n    have hi_notQ : i ∉ Q := hi.2\n    have hmem : i ∈ Finset.image (P.orderEmbOfFin rfl) (Finset.univ : Finset (Fin P.card)) := by\n      rw [himage P]\n      exact hi_P\n    rcases Finset.mem_image.mp hmem with ⟨k, hk_mem, hk_eq⟩\n    have h_row_zero : ∀ (j : Fin Q.card), sub[P,Q] (Matrix.diagonal d) k j = 0 := by\n      intro j\n      rw [submatrixOfFinset_apply]\n      rw [hk_eq]\n      have h_ne : i ≠ Q.orderEmbOfFin rfl j := by\n        intro h_eq\n        apply hi_notQ\n        rw [h_eq]\n        have : Q.orderEmbOfFin rfl j ∈ Q := by\n          rw [← himage Q]\n          exact Finset.mem_image.mpr ⟨j, Finset.mem_univ _, rfl⟩\n        exact this\n      simp [Matrix.diagonal, h_ne]\n    rw [Matrix.det_eq_zero_of_row_eq_zero _ k h_row_zero]",
+  "declaration_name": "det_minors_diag",
+  "used_context": [
+    "submatrixOfFinset",
+    "submatrixOfFinset_apply",
+    "Matrix.diagonal",
+    "Matrix.det_diagonal",
+    "Matrix.det_eq_zero_of_row_eq_zero",
+    "Finset.prod_image",
+    "Finset.image_eq_map_of_injective",
+    "Finset.map_orderEmbOfFin",
+    "Finset.sdiff_eq_empty_iff_subset",
+    "Finset.card_le_card_of_subset",
+    "Finset.eq_of_subset_of_card_le",
+    "Finset.not_nonempty_iff_eq_empty",
+    "Finset.mem_image"
+  ],
+  "notes": [
+    "The lemma is stated as a conjunction of parts (a) and (b) as given in the source.",
+    "The proof uses the local notation `sub[U,V] A` for the submatrix.",
+    "The `himage` helper uses `Finset.map_orderEmbOfFin` to equate the image of `orderEmbOfFin` to the original finset."
+  ]
+}

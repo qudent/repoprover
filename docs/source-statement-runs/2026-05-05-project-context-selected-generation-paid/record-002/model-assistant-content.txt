@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "/-- Swapping two entries of α negates the alternant. (lem.sf.alternant-0 (b)) -/\ntheorem alternant_swap_of_ne {α : Fin N → ℕ} {i j : Fin N} (hij : i ≠ j) :\n    alternant (R := R) N (α ∘ Equiv.swap i j) = - alternant N α :=\n  AlgebraicCombinatorics.alternant_swap (R := R) hij",
+  "declaration_name": "alternant_swap_of_ne",
+  "used_context": [
+    "AlgebraicCombinatorics.alternant_swap",
+    "alternant abbreviation",
+    "Equiv.swap"
+  ],
+  "notes": [
+    "Uses the imported theorem alternant_swap from LittlewoodRichardson.lean; no reproof needed."
+  ]
+}
