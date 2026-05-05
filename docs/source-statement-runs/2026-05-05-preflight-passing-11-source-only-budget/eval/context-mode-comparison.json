@@ -5,7 +5,7 @@
   "records_with_lost_domains": 0,
   "records_with_target_comment_terms_absent_from_source": 7,
   "records_with_hidden_target_names_in_source_payload": 0,
-  "source_only_estimated_max_cost_usd": 0.332310855,
+  "source_only_estimated_max_cost_usd": 0.332716275,
   "results": [
     {
       "index": 1,
@@ -169,7 +169,7 @@
         "expresses"
       ],
       "hidden_target_names_found_in_source_payload": [],
-      "source_only_estimated_max_cost_usd": 0.030198135
+      "source_only_estimated_max_cost_usd": 0.03026295
     },
     {
       "index": 9,
@@ -207,7 +207,7 @@
       "lost_domains": [],
       "target_comment_terms_absent_from_source": [],
       "hidden_target_names_found_in_source_payload": [],
-      "source_only_estimated_max_cost_usd": 0.029944095
+      "source_only_estimated_max_cost_usd": 0.030065895000000002
     },
     {
       "index": 11,
@@ -227,7 +227,7 @@
         "cycles"
       ],
       "hidden_target_names_found_in_source_payload": [],
-      "source_only_estimated_max_cost_usd": 0.030309495000000002
+      "source_only_estimated_max_cost_usd": 0.0305283
     }
   ]
 }

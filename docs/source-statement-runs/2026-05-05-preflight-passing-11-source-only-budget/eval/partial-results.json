@@ -356,13 +356,13 @@
         "completion_price_per_million": 0.87,
         "context_length": 1048576,
         "chars_per_token_estimate": 4,
-        "payload_chars": 16825,
-        "prompt_chars": 15539,
-        "estimated_prompt_tokens": 3885,
+        "payload_chars": 17431,
+        "prompt_chars": 16133,
+        "estimated_prompt_tokens": 4034,
         "max_completion_tokens": 32768,
-        "estimated_prompt_cost_usd": 0.001689975,
+        "estimated_prompt_cost_usd": 0.00175479,
         "estimated_max_completion_cost_usd": 0.02850816,
-        "estimated_max_cost_usd": 0.030198135
+        "estimated_max_cost_usd": 0.03026295
       },
       "repair_budget_estimate": {
         "model": "deepseek/deepseek-v4-pro",
@@ -371,16 +371,16 @@
         "completion_price_per_million": 0.87,
         "context_length": 1048576,
         "chars_per_token_estimate": 4,
-        "payload_chars": 16825,
-        "prompt_chars": 15539,
-        "estimated_prompt_tokens": 3885,
+        "payload_chars": 17431,
+        "prompt_chars": 16133,
+        "estimated_prompt_tokens": 4034,
         "max_completion_tokens": 32768,
-        "estimated_prompt_cost_usd": 0.001689975,
+        "estimated_prompt_cost_usd": 0.00175479,
         "estimated_max_completion_cost_usd": 0.02850816,
-        "estimated_max_cost_usd": 0.030198135
+        "estimated_max_cost_usd": 0.03026295
       },
       "repair_attempts_configured": 0,
-      "reserved_estimated_max_cost_usd": 0.030198135,
+      "reserved_estimated_max_cost_usd": 0.03026295,
       "paid_call_made": false,
       "status": "budget_only"
     },
@@ -452,13 +452,13 @@
         "completion_price_per_million": 0.87,
         "context_length": 1048576,
         "chars_per_token_estimate": 4,
-        "payload_chars": 14162,
-        "prompt_chars": 13202,
-        "estimated_prompt_tokens": 3301,
+        "payload_chars": 15299,
+        "prompt_chars": 14324,
+        "estimated_prompt_tokens": 3581,
         "max_completion_tokens": 32768,
-        "estimated_prompt_cost_usd": 0.0014359350000000002,
+        "estimated_prompt_cost_usd": 0.001557735,
         "estimated_max_completion_cost_usd": 0.02850816,
-        "estimated_max_cost_usd": 0.029944095
+        "estimated_max_cost_usd": 0.030065895000000002
       },
       "repair_budget_estimate": {
         "model": "deepseek/deepseek-v4-pro",
@@ -467,16 +467,16 @@
         "completion_price_per_million": 0.87,
         "context_length": 1048576,
         "chars_per_token_estimate": 4,
-        "payload_chars": 14162,
-        "prompt_chars": 13202,
-        "estimated_prompt_tokens": 3301,
+        "payload_chars": 15299,
+        "prompt_chars": 14324,
+        "estimated_prompt_tokens": 3581,
         "max_completion_tokens": 32768,
-        "estimated_prompt_cost_usd": 0.0014359350000000002,
+        "estimated_prompt_cost_usd": 0.001557735,
         "estimated_max_completion_cost_usd": 0.02850816,
-        "estimated_max_cost_usd": 0.029944095
+        "estimated_max_cost_usd": 0.030065895000000002
       },
       "repair_attempts_configured": 0,
-      "reserved_estimated_max_cost_usd": 0.029944095,
+      "reserved_estimated_max_cost_usd": 0.030065895000000002,
       "paid_call_made": false,
       "status": "budget_only"
     },
@@ -500,13 +500,13 @@
         "completion_price_per_million": 0.87,
         "context_length": 1048576,
         "chars_per_token_estimate": 4,
-        "payload_chars": 17572,
-        "prompt_chars": 16564,
-        "estimated_prompt_tokens": 4141,
+        "payload_chars": 19614,
+        "prompt_chars": 18573,
+        "estimated_prompt_tokens": 4644,
         "max_completion_tokens": 32768,
-        "estimated_prompt_cost_usd": 0.001801335,
+        "estimated_prompt_cost_usd": 0.00202014,
         "estimated_max_completion_cost_usd": 0.02850816,
-        "estimated_max_cost_usd": 0.030309495000000002
+        "estimated_max_cost_usd": 0.0305283
       },
       "repair_budget_estimate": {
         "model": "deepseek/deepseek-v4-pro",
@@ -515,16 +515,16 @@
         "completion_price_per_million": 0.87,
         "context_length": 1048576,
         "chars_per_token_estimate": 4,
-        "payload_chars": 17572,
-        "prompt_chars": 16564,
-        "estimated_prompt_tokens": 4141,
+        "payload_chars": 19614,
+        "prompt_chars": 18573,
+        "estimated_prompt_tokens": 4644,
         "max_completion_tokens": 32768,
-        "estimated_prompt_cost_usd": 0.001801335,
+        "estimated_prompt_cost_usd": 0.00202014,
         "estimated_max_completion_cost_usd": 0.02850816,
-        "estimated_max_cost_usd": 0.030309495000000002
+        "estimated_max_cost_usd": 0.0305283
       },
       "repair_attempts_configured": 0,
-      "reserved_estimated_max_cost_usd": 0.030309495000000002,
+      "reserved_estimated_max_cost_usd": 0.0305283,
       "paid_call_made": false,
       "status": "budget_only"
     }

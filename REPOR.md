@@ -1,10 +1,40 @@
 # RepoProver Work Report - Last ~9 Hours
 
-Report time: 2026-05-05 10:20 UTC.
+Report time: 2026-05-05 11:15 UTC.
 
 ## Goal Being Advanced
 
 Validate a cheap, iterative autoformalization loop for the Algebraic Combinatorics gold-standard dataset under the remaining OpenRouter research budget. The larger goal is a reproducible system that can autoformalize book-scale material far below a one-shot human/agent price, using mostly cheap model tokens, honest context selection, Lean feedback, and occasional stronger repair.
+
+## Current Pipeline
+
+1. Select gold-standard records and source spans.
+2. Build a model-facing prompt with the target Lean statement/name withheld.
+3. In realistic validation, use `--context-mode source-only`: visible TeX/source focus, Lean prefix context, local style examples, prior same-file local APIs, and generic Lean/mathlib guidance.
+4. Estimate cost and reserve the configured budget before paid calls.
+5. Write every OpenRouter payload/response/raw generated declaration to run artifacts before any Lean checking.
+6. Verify generated declarations in reusable Lean project work roots.
+7. For generated-only compile failures, enqueue repair calls that see only the original prompt, generated declaration, and generated-only compiler error.
+8. Grade only after generation/repair by checking whether the withheld gold statement follows from the generated theorem.
+9. Diagnose failures into context-selection misses, statement-family misses, Lean/API proof failures, provider/format failures, and repairable compiler errors.
+
+This is no longer intended as a serial "call model, immediately check Lean, then call next model" loop. Generation and verification are file-backed stages that can be queued independently.
+
+## Prompt Surfaces
+
+`target-comment` mode was the debugging mode. It withholds the target statement/name, but still uses source-facing target Lean doc comments, target-derived labels, imported same-label APIs, and some guidance triggered from hidden target names. It is useful for developing failure taxonomy, but it is not honest scale evidence.
+
+`source-only` mode is the realistic validation mode. It removes target Lean doc comments, target-derived labels, hidden-name guidance triggers, and imported source-label API retrieval. It keeps visible TeX/source spans, extracted source labels/refs/environments/part markers, Lean prefix context, local notation support, local examples, prior named declarations, generic domain guidance, and now same-file prior declarations whose visible doc comments match source-span labels.
+
+The newest context-selection improvement is generic: row 11 now receives earlier same-file `simpleTransposition_*` helpers because they are prior declarations in the same Lean file with visible source-label comments. This does not inspect the withheld target theorem.
+
+## Overfitting Assessment
+
+Yes: too much of the earlier 8-hour cycle was spent squeezing the same small hard slice. That produced useful infrastructure, but the 6/6 strict result should not be treated as evidence that the book-scale system works, because it used target-comment context.
+
+The transferable/generic improvements are: artifact-first provider logging, decoupled generation/verification, repair queues, cost reservation, source-only mode, TeX-derived focus extraction, TeX environment-balance expansion, same-file source-label API retrieval, generated-only repair prompts, hidden-grader separation, and verifier robustness fixes.
+
+The less transferable pieces are the row/domain-specific repair hints for FPS, partitions, and permutations. They are useful as failure-driven diagnostics, but they should stay secondary until source-only context selection works on broader slices.
 
 ## Main Pipeline Changes
 
@@ -18,6 +48,7 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
 - Added TeX-derived `tex_source_focus` fields from visible source only: labels, refs, theorem-like environments, part markers, keyword cues, excerpts, and broad-span risk flags.
 - Added context-mode comparison artifacts to quantify the gap between target-comment debugging prompts and realistic source-only prompts.
 - Added TeX environment-balance span risks and bounded line-range expansion so source-only prompts can include missing theorem/proposition bodies.
+- Added same-file source-label local API retrieval so realistic prompts can see earlier declarations attached to the same visible source labels.
 
 ## Experiment Timeline
 
@@ -85,6 +116,7 @@ Realistic source-only result so far:
 - `fps_comp_coeff_finite` compiled after repair but still proved summability, not the finite coefficient formula; the source-only span is under-focused for that target.
 - `simpleTransposition_isSwap` exposed a source-span bug: the prompt stopped before a proposition body. The regenerated budget prompt expands that row from lines 256-278 to 255-290.
 - The balanced-span rerun did not improve aggregate pass rate: it still verified 1/11 before repair, and shape-warning repairs did not add a pass.
+- The latest zero-cost budget regeneration keeps hidden target-name hits at 0 and shows row 11 now receives prior same-file `simpleTransposition_*` helpers.
 
 ## Files And Evidence
 
@@ -103,6 +135,7 @@ Realistic source-only result so far:
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`
+- Latest focused test result: `71 passed`.
 
 ## Practical Conclusions
 
@@ -111,3 +144,4 @@ Realistic source-only result so far:
 - The prompt improvements split into two classes: generic infrastructure/guidance that can transfer, and target-comment guidance that is now isolated behind `target-comment` mode for diagnostics only.
 - The next useful work is context selection, not more row-local repair: remaining failures include under-focused source spans and semantic theorem-family misses that compiler-only repair cannot honestly fix.
 - A visible-context shape diagnostic initially flagged the passing `X_mul_eq_shift` row because it read broad prompt guidance as source evidence; that diagnostic has been tightened so warnings are anchored in source/focus text.
+- The next slice should validate better context selection, especially theorem-family selection inside broad source spans, before spending on larger generation.

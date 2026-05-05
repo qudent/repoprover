@@ -764,6 +764,40 @@ def test_source_only_context_mode_disables_imported_label_api_retrieval(tmp_path
     assert "imported_by_label" not in json.dumps(source_only_context)
 
 
+def test_source_only_context_mode_includes_prior_same_file_source_label_api(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "/-- Helper for the same source label. (demo.minors) -/",
+                "theorem same_label_helper : True := by",
+                "  trivial",
+                "/-- Target theorem. -/",
+                "theorem target : True := by",
+                "  trivial",
+                "end Demo",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    row = copy.deepcopy(record.row)
+    row["output"]["line_range"] = [7, 8]
+    row["minimal_context"]["file_context"] = [
+        {"path": "Demo.lean", "kind": "namespace", "line_range": [2, 2], "name": "Demo"}
+    ]
+    row["minimal_context"]["lean_predecessors"] = []
+
+    messages = build_messages(project_root, SelectedRecord(row), context_mode="source-only")
+    user = json.loads(messages[1]["content"])
+    prefix = user["context"]["lean_prefix_context"]
+
+    assert "Same-file source-label API" in prefix
+    assert "same_label_helper" in prefix
+
+
 def test_generated_application_candidates_try_explicit_then_all_binders() -> None:
     head = """theorem __repoprover_source_statement_check {n : ℕ} (d : Fin n → R) (P : Finset (Fin n)) :
     ((Matrix.diagonal d).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det =

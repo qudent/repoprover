@@ -564,6 +564,39 @@ def _prior_named_declaration_blocks(project_root: Path, record: SelectedRecord, 
     return blocks
 
 
+def _same_file_source_label_declaration_blocks(project_root: Path, record: SelectedRecord, limit: int = 5) -> list[str]:
+    lean_file = project_root / record.lean_path
+    if not lean_file.exists():
+        return []
+    labels = sorted({label for label in _source_span_labels(record) if label}, key=len, reverse=True)
+    if not labels:
+        return []
+    lines = lean_file.read_text(encoding="utf-8").splitlines()
+    target_start = record.line_range[0]
+    blocks: list[tuple[int, int, str, str]] = []
+    for index, line in enumerate(lines[: target_start - 1], start=1):
+        match = DECL_RE.match(line)
+        if not match or match.group("kind") not in {"theorem", "lemma", "def", "abbrev"}:
+            continue
+        name = str(match.group("name") or "")
+        if not name:
+            continue
+        block = _named_declaration_block(lines, name, before_line=target_start)
+        if block is None:
+            continue
+        start, end, text = block
+        if end >= target_start or len(text.splitlines()) > 45:
+            continue
+        lower_text = text.lower()
+        if not any(label.lower() in lower_text for label in labels):
+            continue
+        blocks.append((start, end, name, text))
+    return [
+        f"-- Same-file source-label API: {record.lean_path}:{start}-{end} ({name})\n{text}"
+        for start, end, name, text in sorted(blocks, key=lambda item: item[0])[:limit]
+    ]
+
+
 def _imported_label_declaration_blocks(project_root: Path, record: SelectedRecord, limit: int = 3) -> list[str]:
     """Find imported local declarations whose doc comments carry source labels.
 
@@ -760,6 +793,16 @@ def source_statement_context(
         if body:
             seen_context_bodies.add(body)
     for block in _prior_named_declaration_blocks(project_root, record):
+        block_names = _declaration_names_in_text(block)
+        if block_names and block_names <= seen_declaration_names:
+            continue
+        body = block.strip()
+        if body in seen_context_bodies:
+            continue
+        expanded.append(block)
+        seen_declaration_names.update(block_names)
+        seen_context_bodies.add(body)
+    for block in _same_file_source_label_declaration_blocks(project_root, record):
         block_names = _declaration_names_in_text(block)
         if block_names and block_names <= seen_declaration_names:
             continue

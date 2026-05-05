@@ -1,6 +1,6 @@
 # Source-statement live eval results
 
-- Generated at: `2026-05-05T10:22:49.431543+00:00`
+- Generated at: `2026-05-05T11:09:28.114300+00:00`
 - Model: `deepseek/deepseek-v4-pro`
 - Max tokens: `32768`
 - Reasoning effort: `high`

@@ -101,7 +101,7 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/compare_source_state
 - rows with hidden target names in source-only payloads: `0`
 - rows with target-comment terms absent from the source span: `7/11`
 - source-only estimated max cost after TeX environment-balance expansion:
-  `$0.332310855`
+  `$0.332716275`
 
 The same comparison over the strict six-row slice found `0` hidden target-name
 hits and `5/6` rows where target-comment terms are absent from the source span.
@@ -289,6 +289,9 @@ In `source-only` mode:
   target-derived comments;
 - hidden target declaration names are not used for domain-guidance triggers;
 - imported declarations found only by matching source labels are not injected.
+- earlier same-file declarations whose visible doc comments contain source-span
+  labels are injected as `Same-file source-label API` blocks, as long as they
+  appear before the withheld target declaration.
 - `tex_source_focus` is added from the visible TeX/source span, including
   declared labels, referenced labels, theorem-like environments, source-keyword
   cues, part markers that are not merely inline `\ref{...} \textbf{(b)}`
@@ -302,6 +305,18 @@ formula”. As a result, it does not receive the finite-coefficient
 That is the point of this mode: it exposes where realistic context selection
 needs to infer focus from TeX/source segmentation rather than from the target
 Lean artifact.
+
+After adding same-file source-label API retrieval, the regenerated row 11
+source-only budget payload includes:
+
+- `simpleTransposition_eq_transposition`
+- `simpleTransposition_apply_self`
+- `simpleTransposition_apply_succ`
+
+These are prior declarations in the same file with visible source-label
+comments. This is a generic context-selection improvement: it does not inspect
+the withheld target declaration, and it only uses labels already present in the
+selected source span.
 
 ## Tests
 
@@ -324,7 +339,8 @@ After adding TeX environment-balance span risks, the focused test set passes
 with `67 passed`. After adding bounded TeX span expansion, it passes with
 `68 passed`. After adding visible `IsSwap` diagnostics and missing-helper
 repair guidance, it passes with `70 passed`. The final repair-guidance update
-keeps that same focused suite green with `70 passed`.
+keeps that same focused suite green with `70 passed`. After adding same-file
+source-label API retrieval, it passes with `71 passed`.
 
 ## Next Step
 
