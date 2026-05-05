@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "theorem sum_lim_eq_tsum (f : ℕ → PowerSeries K) (h : Summable f) : HasSum f (∑' n, f n) :=\n  hasSum_tsum h",
+  "declaration_name": "sum_lim_eq_tsum",
+  "used_context": ["Summable", "HasSum", "tsum", "hasSum_tsum"],
+  "notes": ["Uses the topological definition of summability for PowerSeries K over a CommRing K."]
+}

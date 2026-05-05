@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-05T03:23:42.038260+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-target-comment",
+  "attempt": 2,
+  "records_completed": 1,
+  "repair_generation_successes": 1,
+  "repair_generation_success_rate": 1.0,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.009889899,
+  "model": "deepseek/deepseek-v4-pro",
+  "max_tokens": 32768,
+  "reasoning_effort": "high",
+  "concurrency": 1,
+  "budget_only": false,
+  "max_actual_cost_usd": 0.06,
+  "failure_classes": {},
+  "results": [
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_eq_largestPartCount",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-target-comment/record-006",
+      "attempt": 2,
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 45363,
+        "prompt_chars": 43954,
+        "estimated_prompt_tokens": 10989,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.004780215,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.033288375
+      },
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 13717,
+        "completion_tokens": 4890,
+        "total_tokens": 18607,
+        "actual_cost_usd": 0.009889899,
+        "estimated_cost_from_usage_usd": 0.010221194999999999,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "success": true,
+      "repair_generation_success": true,
+      "generated_name": "partsCount_eq_card_largestPart_eq"
+    }
+  ]
+}

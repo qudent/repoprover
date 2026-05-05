@@ -226,6 +226,19 @@ def test_source_statement_context_includes_retrieved_local_api_without_target(tm
     assert "theorem target" not in materialized
 
 
+def test_source_statement_prompt_includes_source_facing_target_comment(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+
+    messages = build_messages(project_root, record)
+    user = json.loads(messages[1]["content"])
+    focus = user["context"]["target_source_focus"]
+
+    assert focus["target_declaration_source_comment"]["text"].startswith("Part (a): target declaration withheld")
+    assert focus["target_declaration_source_comment"]["policy"].startswith("source-facing Lean doc comment")
+    assert "target Lean declaration name and statement remain withheld" in focus["target_declaration_source_comment"]["policy"]
+    assert "theorem target" not in json.dumps(focus)
+
+
 def test_generated_application_candidates_try_explicit_then_all_binders() -> None:
     head = """theorem __repoprover_source_statement_check {n : ℕ} (d : Fin n → R) (P : Finset (Fin n)) :
     ((Matrix.diagonal d).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det =

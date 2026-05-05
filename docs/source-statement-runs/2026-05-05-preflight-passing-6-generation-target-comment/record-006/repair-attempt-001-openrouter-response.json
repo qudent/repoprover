@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777950852-Y8LOPrELEBiLD82yg9Q6",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma partsCount_eq_card_largestPart_eq (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by\\n  have hinj : Function.Injective (transpose : Partition n → Partition n) := by\\n    intro p q h\\n    calc\\n      p = p.transpose.transpose := by rw [transpose_transpose]\\n      _ = q.transpose.transpose := by rw [h]\\n      _ = q := by rw [transpose_transpose]\\n  have h_image : (Finset.univ.filter (fun p => Multiset.card p.parts = k)).image transpose = \\n      Finset.univ.filter (fun p => largestPart p = k) := by\\n    ext p\\n    constructor\\n    · intro hp\\n      rcases Finset.mem_image.1 hp with ⟨q, hq, rfl⟩\\n      rw [Finset.mem_filter] at hq\\n      rcases hq with ⟨hq_univ, hq_card⟩\\n      refine Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩\\n      rw [transpose_largestPart_eq_length, numParts, hq_card]\\n    · intro hp\\n      rw [Finset.mem_filter] at hp\\n      rcases hp with ⟨hp_univ, hp_largestPart⟩\\n      have hq : p.transpose ∈ Finset.univ.filter (fun p => Multiset.card p.parts = k) := by\\n        apply Finset.mem_filter.mpr\\n        refine ⟨Finset.mem_univ _, ?_⟩\\n        rw [← numParts, transpose_length_eq_largestPart, hp_largestPart]\\n      refine Finset.mem_image.mpr ⟨p.transpose, hq, ?_⟩\\n      rw [transpose_transpose]\\n  calc\\n    partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => Multiset.card p.parts = k)).card := by rw [partsCount]\\n    _ = ((Finset.univ.filter (fun p => Multiset.card p.parts = k)).image transpose).card := by\\n      rw [Finset.card_image_of_injective _ hinj]\\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by rw [h_image]\",\n  \"declaration_name\": \"partsCount_eq_card_largestPart_eq\",\n  \"used_context\": [\n    \"partsCount\",\n    \"largestPart\",\n    \"numParts\",\n    \"transpose\",\n    \"transpose_transpose\",\n    \"transpose_largestPart_eq_length\",\n    \"transpose_length_eq_largestPart\",\n    \"Finset.card_image_of_injective\",\n    \"Finset.mem_image\",\n    \"Finset.mem_filter\",\n    \"Finset.mem_univ\",\n    \"Function.Injective\"\n  ],\n  \"notes\": [\n    \"Avoided Finset.card_congr because it is not available; used Finset.card_image_of_injective instead.\",\n    \"Used Multiset.card p.parts directly in the filter predicate to avoid unnecessary rewriting of numParts.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777950852,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 7998,
+    "prompt_tokens": 12507,
+    "total_tokens": 20505,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 6219,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.0614559,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.0614559,
+      "upstream_inference_prompt_cost": 0.0262647,
+      "upstream_inference_completions_cost": 0.0351912
+    }
+  },
+  "provider": "Together"
+}

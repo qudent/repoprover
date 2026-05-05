@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then (1 : R) else 0 := by\n  simpa using coeff_X n",
+  "declaration_name": "coeff_X_eq",
+  "used_context": [
+    "coeff_X",
+    "open PowerSeries",
+    "variable {R : Type*} [CommRing R]"
+  ],
+  "notes": [
+    "Replaced `simp` with `simpa using coeff_X n` because `simp` made no progress; `coeff_X` is a standard lemma."
+  ]
+}

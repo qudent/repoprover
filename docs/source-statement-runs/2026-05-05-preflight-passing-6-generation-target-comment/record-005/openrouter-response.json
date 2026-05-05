@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777950512-9pop3mmCfOHnialakDJq",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then (1 : R) else 0 := by\\n  simp\",\n  \"declaration_name\": \"coeff_X_eq\",\n  \"used_context\": [\n    \"coeff_mul_fps\",\n    \"coeff_mul_fps'\",\n    \"coeff_C_fps\",\n    \"coeff_zero_mul_fps\",\n    \"simp (uses mathlib lemma `coeff_X`)\"\n  ],\n  \"notes\": [\n    \"Uses `simp` which relies on Mathlib's `coeff_X`. The source defines `x` as `X`, so the lemma captures the coefficient definition in the snippet.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777950512,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 2901,
+    "prompt_tokens": 2606,
+    "total_tokens": 5507,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 2727,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.003436616,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.003436616,
+      "upstream_inference_prompt_cost": 0.000912746,
+      "upstream_inference_completions_cost": 0.00252387
+    }
+  },
+  "provider": "DeepSeek"
+}

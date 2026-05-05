@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "lemma partsCount_eq_card_largestPart_eq (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by\n  rw [partsCount]\n  apply Finset.card_congr (fun p _ => p.transpose)\n  · intro p hp\n    rw [Finset.mem_filter] at hp\n    rcases hp with ⟨hp_univ, hp_numParts⟩\n    refine ⟨Finset.mem_univ _, ?_⟩\n    rw [transpose_largestPart_eq_length, hp_numParts]\n  · intro p1 hp1 p2 hp2 h_eq\n    calc\n      p1 = p1.transpose.transpose := by rw [transpose_transpose]\n      _ = p2.transpose.transpose := by rw [h_eq]\n      _ = p2 := by rw [transpose_transpose]\n  · intro q hq\n    rw [Finset.mem_filter] at hq\n    rcases hq with ⟨hq_univ, hq_largestPart⟩\n    refine ⟨q.transpose, ?_, ?_⟩\n    · rw [Finset.mem_filter]\n      refine ⟨Finset.mem_univ _, ?_⟩\n      rw [transpose_length_eq_largestPart, hq_largestPart]\n    · rw [transpose_transpose]",
+  "declaration_name": "partsCount_eq_card_largestPart_eq",
+  "used_context": [
+    "partsCount",
+    "largestPart",
+    "transpose",
+    "transpose_transpose",
+    "transpose_length_eq_largestPart",
+    "transpose_largestPart_eq_length",
+    "Finset.card_congr",
+    "Partition.ext"
+  ],
+  "notes": [
+    "The proof uses that transpose is an involution which swaps the number of parts and the largest part of a partition, giving a bijection between the two finite sets whose cardinalities are equated."
+  ]
+}

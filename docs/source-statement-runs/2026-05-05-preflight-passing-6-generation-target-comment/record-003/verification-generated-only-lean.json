@@ -1,0 +1,4 @@
+{
+  "exit_code": 0,
+  "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:49:15: warning: This simp argument is unused:\n  Matrix.updateCol_apply\n\nHint: Omit it from the simp argument list.\n  simp [h, Matrix.updateC̵o̵l̵_̵a̵p̵p̵l̵y̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵u̵p̵d̵a̵t̵e̵Row_apply, Matrix.transpose_apply]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:50:15: warning: This simp argument is unused:\n  Matrix.updateCol_apply\n\nHint: Omit it from the simp argument list.\n  simp [h, Matrix.updateC̵o̵l̵_̵a̵p̵p̵l̵y̵,̵ ̵M̵a̵t̵r̵i̵x̵.̵u̵p̵d̵a̵t̵e̵Row_apply, Matrix.transpose_apply]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+}

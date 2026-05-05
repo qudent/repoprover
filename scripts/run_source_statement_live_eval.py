@@ -162,7 +162,62 @@ def _source_span_labels(record: SelectedRecord) -> list[str]:
     return labels
 
 
-def source_focus(record: SelectedRecord) -> dict[str, Any]:
+def _strip_doc_comment(lines: list[str]) -> str:
+    cleaned: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        stripped = re.sub(r"^/--\s?", "", stripped)
+        stripped = re.sub(r"^/-!\s?", "", stripped)
+        stripped = re.sub(r"\s?-/\s*$", "", stripped)
+        stripped = re.sub(r"^\*\s?", "", stripped)
+        cleaned.append(stripped.rstrip())
+    while cleaned and not cleaned[0]:
+        cleaned.pop(0)
+    while cleaned and not cleaned[-1]:
+        cleaned.pop()
+    return "\n".join(cleaned)
+
+
+def _preceding_doc_comment(project_root: Path, record: SelectedRecord) -> dict[str, Any] | None:
+    lean_file = project_root / record.lean_path
+    if not lean_file.exists():
+        return None
+    lines = lean_file.read_text(encoding="utf-8").splitlines()
+    declaration_index = record.line_range[0] - 1
+    for candidate_index in range(record.line_range[0] - 1, min(record.line_range[1], len(lines))):
+        if DECL_RE.match(lines[candidate_index]):
+            declaration_index = candidate_index
+            break
+    index = declaration_index - 1
+    while index >= 0 and not lines[index].strip():
+        index -= 1
+    if index < 0:
+        return None
+
+    start = index
+    if lines[index].strip().endswith("-/"):
+        while start >= 0 and not lines[start].lstrip().startswith(("/--", "/-!")):
+            start -= 1
+        if start < 0:
+            return None
+    elif lines[index].lstrip().startswith("--"):
+        while start > 0 and lines[start - 1].lstrip().startswith("--"):
+            start -= 1
+    else:
+        return None
+
+    text = _strip_doc_comment(lines[start : index + 1])
+    if not text:
+        return None
+    return {
+        "path": record.lean_path,
+        "line_range": [start + 1, index + 1],
+        "text": text,
+        "policy": "source-facing Lean doc comment only; target Lean declaration name and statement remain withheld",
+    }
+
+
+def source_focus(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
     source_labels = _source_span_labels(record)
     comment_labels = _record_comment_labels(record)
     source_label_set = set(source_labels)
@@ -176,15 +231,24 @@ def source_focus(record: SelectedRecord) -> dict[str, Any]:
         match = PART_LABEL_RE.search(label)
         if match:
             specific_parts.append(match.group(1))
+    target_comment = _preceding_doc_comment(project_root, record)
+    target_comment_labels = []
+    if target_comment is not None:
+        target_comment_labels.extend(re.findall(r"Label:\s*([A-Za-z0-9_.-]+(?:\s*\([a-z]\))?)", target_comment["text"]))
+        target_comment_labels.extend(re.findall(r"\(([a-z])\)", target_comment["text"]))
     return {
         "source_span_labels": source_labels,
         "record_comment_labels": comment_labels,
         "specific_source_labels": specific_labels,
         "specific_labeled_parts": specific_parts,
+        "target_declaration_source_comment": target_comment,
+        "target_comment_labels_or_parts": target_comment_labels,
         "instruction": (
             "If the source snippet contains multiple labeled or numbered parts, formalize only the specific "
-            "part/source span indicated by specific_source_labels or specific_labeled_parts. Do not conjoin "
-            "all parts unless the record labels identify the whole multi-part result."
+            "part/source span indicated by specific_source_labels, specific_labeled_parts, or "
+            "target_declaration_source_comment. Do not conjoin all parts unless the record labels identify "
+            "the whole multi-part result. The target_declaration_source_comment is source-facing prose only; "
+            "it is not the hidden Lean target statement."
         ),
     }
 
@@ -566,7 +630,7 @@ def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str
     context_parts, _ = source_statement_context(project_root, record)
     return {
         "source_statement_or_chunk": source_snippets(project_root, record),
-        "target_source_focus": source_focus(record),
+        "target_source_focus": source_focus(project_root, record),
         "lean_prefix_context": "\n".join(context_parts).strip(),
         "lean_environment": lean_environment_context(project_root),
         "local_lean_style": local_lean_style(project_root, record),

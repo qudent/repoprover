@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777950320-M3c4WzbNY4MWthqJUJmG",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem sum_lim_eq_tsum (f : ℕ → PowerSeries K) (h : Summable f) : HasSum f (∑' n, f n) :=\\n  hasSum_tsum h\",\n  \"declaration_name\": \"sum_lim_eq_tsum\",\n  \"used_context\": [\"Summable\", \"HasSum\", \"tsum\", \"hasSum_tsum\"],\n  \"notes\": [\"Uses the topological definition of summability for PowerSeries K over a CommRing K.\"]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777950320,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 7117,
+    "prompt_tokens": 4052,
+    "total_tokens": 11169,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 6994,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.03181764,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.03181764,
+      "upstream_inference_prompt_cost": 0.00705048,
+      "upstream_inference_completions_cost": 0.02476716
+    }
+  },
+  "provider": "SiliconFlow"
+}

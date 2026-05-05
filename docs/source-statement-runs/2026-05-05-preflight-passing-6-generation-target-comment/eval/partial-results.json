@@ -1,0 +1,480 @@
+{
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.coeffStabilizesTo_partial_sum'",
+      "lean_path": "AlgebraicCombinatorics/Details/Limits.lean",
+      "gold_declaration_names": [
+        "PowerSeries.coeffStabilizesTo_partial_sum'"
+      ],
+      "gold_line_range": [
+        274,
+        305
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13915,
+        "prompt_chars": 13200,
+        "estimated_prompt_tokens": 3300,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0014355000000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02994366
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 13915,
+        "prompt_chars": 13200,
+        "estimated_prompt_tokens": 3300,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0014355000000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02994366
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02994366,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 4052,
+        "completion_tokens": 7117,
+        "total_tokens": 11169,
+        "actual_cost_usd": 0.03181764,
+        "estimated_cost_from_usage_usd": 0.00795441,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem sum_lim_eq_tsum (f : ℕ → PowerSeries K) (h : Summable f) : HasSum f (∑' n, f n) :=\n  hasSum_tsum h",
+        "declaration_name": "sum_lim_eq_tsum",
+        "used_context": [
+          "Summable",
+          "HasSum",
+          "tsum",
+          "hasSum_tsum"
+        ],
+        "notes": [
+          "Uses the topological definition of summability for PowerSeries K over a CommRing K."
+        ]
+      },
+      "generated_name": "sum_lim_eq_tsum",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "lean_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.Det.det_swap_cols"
+      ],
+      "gold_line_range": [
+        542,
+        550
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12293,
+        "prompt_chars": 11619,
+        "estimated_prompt_tokens": 2905,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0012636750000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029771835
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12293,
+        "prompt_chars": 11619,
+        "estimated_prompt_tokens": 2905,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0012636750000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029771835
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029771835,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 3276,
+        "completion_tokens": 4489,
+        "total_tokens": 7765,
+        "actual_cost_usd": 0.005109626,
+        "estimated_cost_from_usage_usd": 0.00533049,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) : (A.submatrix id (Equiv.swap i j)).det = -A.det := by\n  calc\n    (A.submatrix id (Equiv.swap i j)).det = (A.submatrix id (Equiv.swap i j))ᵀ.det := by rw [Matrix.det_transpose]\n    _ = (Aᵀ.submatrix (Equiv.swap i j) id).det := by simp [Matrix.transpose_submatrix]\n    _ = - (Aᵀ).det := by simpa using det_swap_rows (Aᵀ) i j hij\n    _ = -A.det := by rw [Matrix.det_transpose]",
+        "declaration_name": "det_swap_cols",
+        "used_context": [
+          "det_swap_rows",
+          "Matrix.det_transpose",
+          "Matrix.transpose_submatrix"
+        ],
+        "notes": [
+          "Uses the transpose trick to reduce column swap to row swap. Relies on the lemma Matrix.transpose_submatrix to relate transposes of submatrices."
+        ]
+      },
+      "generated_name": "det_swap_cols",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_smul_col",
+      "lean_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.Det.det_add_smul_col"
+      ],
+      "gold_line_range": [
+        587,
+        594
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12269,
+        "prompt_chars": 11607,
+        "estimated_prompt_tokens": 2902,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00126237,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02977053
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 12269,
+        "prompt_chars": 11607,
+        "estimated_prompt_tokens": 2902,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00126237,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02977053
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02977053,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 3221,
+        "completion_tokens": 3669,
+        "total_tokens": 6890,
+        "actual_cost_usd": 0.01837266,
+        "estimated_cost_from_usage_usd": 0.004593165,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem det_add_smul_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\n    (A.updateCol i (fun k => A k i + c • A k j)).det = A.det := by\n  have htrans : (A.updateCol i (fun k => A k i + c • A k j)).transpose =\n      A.transpose.updateRow i ((A.transpose) i + c • (A.transpose) j) := by\n    ext a b\n    by_cases h : a = i\n    · simp [h, Matrix.updateCol_apply, Matrix.updateRow_apply, Matrix.transpose_apply]\n    · simp [h, Matrix.updateCol_apply, Matrix.updateRow_apply, Matrix.transpose_apply]\n  calc\n    (A.updateCol i (fun k => A k i + c • A k j)).det = (A.updateCol i (fun k => A k i + c • A k j)).transpose.det := by\n      rw [Matrix.det_transpose]\n    _ = (A.transpose.updateRow i ((A.transpose) i + c • (A.transpose) j)).det := by rw [htrans]\n    _ = A.transpose.det := by rw [det_add_smul_row (A.transpose) i j hij c]\n    _ = A.det := by rw [Matrix.det_transpose]",
+        "declaration_name": "det_add_smul_col",
+        "used_context": [
+          "det_add_smul_row",
+          "Matrix.det_transpose",
+          "Matrix.updateCol_apply",
+          "Matrix.updateRow_apply",
+          "Matrix.transpose_apply"
+        ],
+        "notes": [
+          "Proved using the transpose trick, applying the existing row operation theorem det_add_smul_row to the transpose."
+        ]
+      },
+      "generated_name": "det_add_smul_col",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.pascal_identity_succ",
+      "lean_path": "AlgebraicCombinatorics/FPS/NotationsExamples.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.pascal_identity_succ"
+      ],
+      "gold_line_range": [
+        322,
+        330
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10872,
+        "prompt_chars": 10243,
+        "estimated_prompt_tokens": 2561,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001114035,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029622195
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10872,
+        "prompt_chars": 10243,
+        "estimated_prompt_tokens": 2561,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001114035,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029622195
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.029622195,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 2829,
+        "completion_tokens": 2205,
+        "total_tokens": 5034,
+        "actual_cost_usd": 0.002928101,
+        "estimated_cost_from_usage_usd": 0.003148965,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem binom_succ_succ {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R] (r : R) (k : ℕ) : Ring.choose (r + 1) (k + 1) = Ring.choose r k + Ring.choose r (k + 1) :=\n  Ring.choose_succ_succ r k",
+        "declaration_name": "binom_succ_succ",
+        "used_context": [
+          "Ring.choose_succ_succ"
+        ],
+        "notes": [
+          "Uses the existing Mathlib lemma `Ring.choose_succ_succ` for generalized binomial coefficients in a `BinomialRing`."
+        ]
+      },
+      "generated_name": "binom_succ_succ",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_coeff_one",
+      "lean_path": "AlgebraicCombinatorics/FPSDefinition.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.X_coeff_one"
+      ],
+      "gold_line_range": [
+        229,
+        231
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10037,
+        "prompt_chars": 9437,
+        "estimated_prompt_tokens": 2360,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0010266000000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02953476
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 10037,
+        "prompt_chars": 9437,
+        "estimated_prompt_tokens": 2360,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0010266000000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02953476
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02953476,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 2606,
+        "completion_tokens": 2901,
+        "total_tokens": 5507,
+        "actual_cost_usd": 0.003436616,
+        "estimated_cost_from_usage_usd": 0.0036574800000000003,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then (1 : R) else 0 := by\n  simp",
+        "declaration_name": "coeff_X_eq",
+        "used_context": [
+          "coeff_mul_fps",
+          "coeff_mul_fps'",
+          "coeff_C_fps",
+          "coeff_zero_mul_fps",
+          "simp (uses mathlib lemma `coeff_X`)"
+        ],
+        "notes": [
+          "Uses `simp` which relies on Mathlib's `coeff_X`. The source defines `x` as `X`, so the lemma captures the coefficient definition in the snippet."
+        ]
+      },
+      "generated_name": "coeff_X_eq",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_eq_largestPartCount",
+      "lean_path": "AlgebraicCombinatorics/Partitions/Basics.lean",
+      "gold_declaration_names": [
+        "Nat.Partition.partsCount_eq_largestPartCount"
+      ],
+      "gold_line_range": [
+        2214,
+        2248
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 38482,
+        "prompt_chars": 37263,
+        "estimated_prompt_tokens": 9316,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00405246,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03256062
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 38482,
+        "prompt_chars": 37263,
+        "estimated_prompt_tokens": 9316,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00405246,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03256062
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03256062,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 11709,
+        "completion_tokens": 3217,
+        "total_tokens": 14926,
+        "actual_cost_usd": 0.007671341,
+        "estimated_cost_from_usage_usd": 0.007892205000000001,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "lemma partsCount_eq_card_largestPart_eq (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => largestPart p = k)).card := by\n  rw [partsCount]\n  apply Finset.card_congr (fun p _ => p.transpose)\n  · intro p hp\n    rw [Finset.mem_filter] at hp\n    rcases hp with ⟨hp_univ, hp_numParts⟩\n    refine ⟨Finset.mem_univ _, ?_⟩\n    rw [transpose_largestPart_eq_length, hp_numParts]\n  · intro p1 hp1 p2 hp2 h_eq\n    calc\n      p1 = p1.transpose.transpose := by rw [transpose_transpose]\n      _ = p2.transpose.transpose := by rw [h_eq]\n      _ = p2 := by rw [transpose_transpose]\n  · intro q hq\n    rw [Finset.mem_filter] at hq\n    rcases hq with ⟨hq_univ, hq_largestPart⟩\n    refine ⟨q.transpose, ?_, ?_⟩\n    · rw [Finset.mem_filter]\n      refine ⟨Finset.mem_univ _, ?_⟩\n      rw [transpose_length_eq_largestPart, hq_largestPart]\n    · rw [transpose_transpose]",
+        "declaration_name": "partsCount_eq_card_largestPart_eq",
+        "used_context": [
+          "partsCount",
+          "largestPart",
+          "transpose",
+          "transpose_transpose",
+          "transpose_length_eq_largestPart",
+          "transpose_largestPart_eq_length",
+          "Finset.card_congr",
+          "Partition.ext"
+        ],
+        "notes": [
+          "The proof uses that transpose is an involution which swaps the number of parts and the largest part of a partition, giving a bijection between the two finite sets whose cardinalities are equated."
+        ]
+      },
+      "generated_name": "partsCount_eq_card_largestPart_eq",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    }
+  ]
+}

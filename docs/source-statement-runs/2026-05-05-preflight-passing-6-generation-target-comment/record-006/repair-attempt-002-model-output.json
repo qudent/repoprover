@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "lemma partsCount_eq_card_largestPart_eq (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun (p : Partition n) => largestPart p = k)).card := by\n  have hinj : Function.Injective (transpose : Partition n → Partition n) := by\n    intro p q h\n    calc\n      p = p.transpose.transpose := by rw [transpose_transpose]\n      _ = q.transpose.transpose := by rw [h]\n      _ = q := by rw [transpose_transpose]\n  have h_image : (Finset.univ.filter (fun (p : Partition n) => Multiset.card p.parts = k)).image (transpose : Partition n → Partition n) = \n      Finset.univ.filter (fun (p : Partition n) => largestPart p = k) := by\n    ext p\n    constructor\n    · intro hp\n      rcases Finset.mem_image.1 hp with ⟨q, hq, rfl⟩\n      rw [Finset.mem_filter] at hq\n      rcases hq with ⟨hq_univ, hq_card⟩\n      refine Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩\n      rw [transpose_largestPart_eq_length, numParts, hq_card]\n    · intro hp\n      rw [Finset.mem_filter] at hp\n      rcases hp with ⟨hp_univ, hp_largestPart⟩\n      have hq : p.transpose ∈ Finset.univ.filter (fun (p : Partition n) => Multiset.card p.parts = k) := by\n        apply Finset.mem_filter.mpr\n        refine ⟨Finset.mem_univ _, ?_⟩\n        rw [← numParts, transpose_length_eq_largestPart, hp_largestPart]\n      refine Finset.mem_image.mpr ⟨p.transpose, hq, ?_⟩\n      rw [transpose_transpose]\n  calc\n    partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun (p : Partition n) => Multiset.card p.parts = k)).card := by rw [partsCount]\n    _ = ((Finset.univ.filter (fun (p : Partition n) => Multiset.card p.parts = k)).image (transpose : Partition n → Partition n)).card := by\n      rw [Finset.card_image_of_injective _ hinj]\n    _ = ((Finset.univ : Finset (Partition n)).filter (fun (p : Partition n) => largestPart p = k)).card := by rw [h_image]",
+  "declaration_name": "partsCount_eq_card_largestPart_eq",
+  "used_context": [
+    "partsCount",
+    "transpose_transpose",
+    "transpose_largestPart_eq_length",
+    "transpose_length_eq_largestPart",
+    "numParts",
+    "largestPart"
+  ],
+  "notes": [
+    "Explicit binder annotations added to resolve typeclass metavariables for the partition size n."
+  ]
+}

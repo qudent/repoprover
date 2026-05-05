@@ -63,7 +63,11 @@ but failures are now narrower proof-repair/exact-statement issues rather than
 only missing local API context. A decoupled generated-failure repair queue then
 ran three bounded provider-only repair passes over compile failures and verified
 them separately, moving the cumulative six-record result to 3/6 successes for
-`$0.113014943` total across local-API generation plus repair.
+`$0.113014943` total across local-API generation plus repair. Adding
+source-facing target doc comments to the prompt fixed the determinant/binomial
+statement-shape misses: a fresh six-record generation+repair probe reached 5/6
+verified successes for `$0.198753983`, with only the FPS limits
+`CoeffStabilizesTo` target still failing.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -204,6 +208,15 @@ failures plus 1 hidden-grader mismatch; see
 - [ ] Add a statement-shape/source-focus iteration for the three remaining
   grader mismatches: limits exact target, determinant single-part target, and
   generalized `Ring.choose` binomial target.
+- [x] Add a statement-shape/source-focus iteration for the three remaining
+  grader mismatches by exposing source-facing target doc comments while still
+  withholding the target Lean declaration/name. Result: determinant `(f)` and
+  generalized binomial successor-form rows passed on first generation; after
+  repair, the six-record slice reached 5/6 verified successes for `$0.198753983`.
+  See `docs/source-statement-target-comment-focus-results.md`.
+- [ ] Add domain-specific FPS-limits guidance so source text involving limits
+  and summability maps to local `CoeffStabilizesTo`/`IsSummable`/`tsum'`
+  statement shapes instead of topological `HasSum`.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

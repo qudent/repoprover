@@ -1,0 +1,4 @@
+{
+  "exit_code": 0,
+  "output": "AlgebraicCombinatorics/FPSDefinition.lean:49:4: warning: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\nAlgebraicCombinatorics/FPSDefinition.lean:50:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:50:4: warning: 'simpa using coeff_X_eq' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/FPSDefinition.lean:47:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+}

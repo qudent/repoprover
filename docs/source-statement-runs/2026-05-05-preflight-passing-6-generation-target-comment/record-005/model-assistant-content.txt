@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "lemma coeff_X_eq (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then (1 : R) else 0 := by\n  simp",
+  "declaration_name": "coeff_X_eq",
+  "used_context": [
+    "coeff_mul_fps",
+    "coeff_mul_fps'",
+    "coeff_C_fps",
+    "coeff_zero_mul_fps",
+    "simp (uses mathlib lemma `coeff_X`)"
+  ],
+  "notes": [
+    "Uses `simp` which relies on Mathlib's `coeff_X`. The source defines `x` as `X`, so the lemma captures the coefficient definition in the snippet."
+  ]
+}

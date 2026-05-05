@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem binom_succ_succ {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R] (r : R) (k : ℕ) : Ring.choose (r + 1) (k + 1) = Ring.choose r k + Ring.choose r (k + 1) :=\n  Ring.choose_succ_succ r k",
+  "declaration_name": "binom_succ_succ",
+  "used_context": [
+    "Ring.choose_succ_succ"
+  ],
+  "notes": [
+    "Uses the existing Mathlib lemma `Ring.choose_succ_succ` for generalized binomial coefficients in a `BinomialRing`."
+  ]
+}

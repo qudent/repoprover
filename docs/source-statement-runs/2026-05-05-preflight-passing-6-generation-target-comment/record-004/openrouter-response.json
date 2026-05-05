@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777950441-NWIYK5Sna9qB4xEZUUga",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem binom_succ_succ {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R] (r : R) (k : ℕ) : Ring.choose (r + 1) (k + 1) = Ring.choose r k + Ring.choose r (k + 1) :=\\n  Ring.choose_succ_succ r k\",\n  \"declaration_name\": \"binom_succ_succ\",\n  \"used_context\": [\n    \"Ring.choose_succ_succ\"\n  ],\n  \"notes\": [\n    \"Uses the existing Mathlib lemma `Ring.choose_succ_succ` for generalized binomial coefficients in a `BinomialRing`.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777950441,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 2205,
+    "prompt_tokens": 2829,
+    "total_tokens": 5034,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 2039,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.002928101,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.002928101,
+      "upstream_inference_prompt_cost": 0.001009751,
+      "upstream_inference_completions_cost": 0.00191835
+    }
+  },
+  "provider": "DeepSeek"
+}
