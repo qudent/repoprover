@@ -142,6 +142,9 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
                     "needed_source_context": task.get("needed_source_context", []),
                     "needed_project_context": task.get("needed_project_context", []),
                     "available_prior_project_context": prompt_unit.get("prior_project_context", []),
+                    "local_file_predecessor_declarations": prompt_unit.get(
+                        "local_file_predecessor_declarations", []
+                    ),
                     "hydrated_mathlib_context": hydrated_for_task(hydration, unit_key=unit_key, task_id=task_id),
                     "missing_or_uncertain_context": task.get("missing_or_uncertain_context", []),
                 }
@@ -201,6 +204,7 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
             "If a selected Mathlib API is field-specific, unit-specific, or otherwise not strong enough for the source statement, say so in notes and generate only declarations justified by the visible context.",
             "Do not invent project helper names that are not shown in available_prior_project_context, needed_project_context, or source context.",
             "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",
+            "When local_file_predecessor_declarations contains same-file helper declarations, you may reuse those exact helper names and statement shapes; do not infer any hidden target declaration from their file position.",
             "Prefer a narrow declaration sequence over a broad bundled conjunction when the source unit decomposes into multiple Lean declarations.",
             "Keep theorem-local assumptions explicit rather than relying on unavailable global variables.",
             "If local_file_context_candidates show useful namespace, open, notation, or variable commands, you may include the needed commands in lean_file_body before the declarations.",

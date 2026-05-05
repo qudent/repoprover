@@ -76,6 +76,14 @@ def _write_selector_run(tmp_path: Path) -> Path:
                                                 "source": "file_context_from_prior_project_declaration",
                                             }
                                         ],
+                                        "local_file_predecessor_declarations": [
+                                            {
+                                                "name": "Demo.prior_helper",
+                                                "kind": "theorem",
+                                                "lean_snippet": "theorem prior_helper (n : Nat) : n + 0 = n",
+                                                "context_source": "same_file_before_selected_unit_line",
+                                            }
+                                        ],
                                         "prior_project_context": [
                                             {
                                                 "source_unit_id": "source:prior",
@@ -133,10 +141,13 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "available_prior_project_context" in prompt
     assert "previous_source_context" in prompt
     assert "local_file_context_candidates" in prompt
+    assert "local_file_predecessor_declarations" in prompt
+    assert "prior_helper" in prompt
     assert "variable {K : Type*} [CommRing K]" in prompt
     assert "Follow the Lean-checked signatures exactly" in prompt
     assert "Every identifier used in a theorem statement must be introduced" in prompt
     assert "you may include the needed commands in lean_file_body" in prompt
+    assert "you may reuse those exact helper names" in prompt
     assert "selector_unchecked_statement_sketch" in prompt
     assert "do not copy its Lean syntax verbatim" in prompt
     assert "cannot_prove_from_visible_context" in prompt

@@ -414,6 +414,23 @@ cardinality proof pattern (`powersetCard`, `card_le_card`, `Fintype.card_fin`,
 schema now says `lean_file_body` must be exactly empty and `declaration_names`
 empty when status is `cannot_prove_from_visible_context`.
 
+Same-file predecessor context follow-up:
+
+`docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-budget/`
+
+- budget-only: no paid model call.
+- payload size: `30,156` bytes for one source unit.
+- new channel: `local_file_predecessor_declarations`, marked as same Lean file
+  declarations before the selected unit placement line, with the selected target
+  declaration omitted.
+- symmetric unit result: the payload now exposes local helpers immediately
+  before `prop.sf.en=0`, including `e_eq_sum_prod_subsets`,
+  `h_eq_sum_prod_sym`, and `p_eq_sum_pow`.
+- honesty caveat: this uses post-hoc file/line placement metadata to choose the
+  local predecessor slice. Production needs an equivalent placement decision
+  before generation; benchmark reports must not count this as target-statement
+  leakage.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

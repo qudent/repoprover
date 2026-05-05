@@ -314,6 +314,21 @@ local predecessor/project context, because the missing symmetric-polynomial
 proof appears to need both the right `MvPolynomial.esymm` definition/theorems
 and the local subset-cardinality proof pattern.
 
+Local predecessor context follow-up:
+
+- budget-only run:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-budget/`
+- paid call: none.
+- payload size: `30,156` bytes for one source unit.
+- result: the selector prompt now contains a separate
+  `local_file_predecessor_declarations` channel with same-file declarations
+  before the selected unit placement line. For `prop.sf.en=0`, this includes
+  `e_eq_sum_prod_subsets`, `h_eq_sum_prod_sym`, and `p_eq_sum_pow`.
+- caveat: this is honest only if treated as placement metadata, not target
+  theorem content. The hidden target declaration itself is omitted, but a
+  production pipeline still needs to decide the destination Lean file/position
+  without oracle access.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

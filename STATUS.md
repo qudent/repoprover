@@ -35,6 +35,8 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
 - [x] Run one theorem-level batch-size-2 v4 selector/generation smoke.
 - [x] Attach source-scan Mathlib fallback candidates when selector guesses
   hydrate as unknown constants.
+- [x] Add same-file local predecessor declaration context with target omitted
+  and explicit benchmark-honesty provenance.
 - [ ] Add LLM/Lean second-round repair using fallback Mathlib candidates plus
   safe local predecessor context.
 
@@ -85,6 +87,10 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   now attaches ranked `MvPolynomial.esymm`-area candidates for the bad selector
   guess, including `MvPolynomial.esymm_eq_sum_subtype` and
   `MvPolynomial.esymm_zero`.
+- Symmetric local-predecessor budget payload:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-budget/`
+  is budget-only/no paid call and exposes same-file prior helpers such as
+  `e_eq_sum_prod_subsets` while omitting the selected target theorem.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.

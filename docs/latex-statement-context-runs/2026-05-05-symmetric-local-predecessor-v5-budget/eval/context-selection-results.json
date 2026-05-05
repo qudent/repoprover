@@ -1,0 +1,13 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-05T23:13:39.057150+00:00",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-budget",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": null,
+  "records_input": 114,
+  "schema_version": "repoprover.latex_statement_context_selection.v1",
+  "units_selected": 1,
+  "valid_json": false
+}

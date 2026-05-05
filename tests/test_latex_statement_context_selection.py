@@ -184,6 +184,46 @@ def test_prior_project_context_uses_compact_statements_and_file_context(tmp_path
     assert payload["units"][0]["local_file_context_candidates"][0]["name"] == "variable {K : Type*} [CommRing K]"
 
 
+def test_local_file_predecessors_omit_hidden_target(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
+    lean_path.parent.mkdir(parents=True)
+    lean_path.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "theorem prior_helper (x : Nat) : x = x := by",
+                "  rfl",
+                "theorem hidden_target (x : Nat) : x = x := by",
+                "  rfl",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    target = _unit(
+        unit_id="target",
+        label="lem.target",
+        source_text="\\begin{lemma}\\label{lem.target}Target.\\end{lemma}",
+        aligned_name="Demo.hidden_target",
+    )
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [5, 6]
+
+    messages = build_messages(
+        [SelectedUnit(public_key="unit-001", row=target)],
+        [target],
+        source_units=[target],
+        project_root=project_root,
+        local_predecessor_declarations=2,
+    )
+    payload = json.loads(messages[1]["content"])
+    predecessors = payload["units"][0]["local_file_predecessor_declarations"]
+
+    assert predecessors[0]["name"] == "prior_helper"
+    assert predecessors[0]["lean_snippet"] == "theorem prior_helper (x : Nat) : x = x"
+    assert "hidden_target" not in messages[1]["content"]
+
+
 def test_select_units_supports_offset_and_exact_id() -> None:
     rows = [
         {**_unit(unit_id="u1", label="l1", source_text="one"), "selection": {"status": "gold_candidate"}},

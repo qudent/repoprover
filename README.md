@@ -124,6 +124,13 @@ that feeds those checked candidates plus local predecessor/proof-pattern context
 back to the selector/generator, along with stricter enforcement of the
 `cannot_prove_from_visible_context` empty-output contract.
 
+A budget-only v5 payload for the symmetric-function unit now adds a separate
+same-file predecessor channel. It exposes local helpers before the selected
+unit, including `e_eq_sum_prod_subsets`, `h_eq_sum_prod_sym`, and
+`p_eq_sum_pow`, and marks the provenance explicitly as same-file declarations
+before the selected unit placement line with the target declaration omitted. The
+payload is 30,156 bytes for one unit and made no paid model call.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -28,6 +29,11 @@ from openai import OpenAI
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
+LEAN_DECL_RE = re.compile(
+    r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
+    r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)\s+"
+    r"(?P<name>[^\s:\{\(\[]+)"
+)
 
 
 @dataclass(frozen=True)
@@ -168,6 +174,74 @@ def compact_declaration_text(text: str, *, kind: str) -> str:
             break
         kept.append(line)
     return "\n".join(kept).rstrip()
+
+
+def local_declaration_spans(lines: list[str]) -> list[dict[str, Any]]:
+    starts: list[tuple[int, str, str]] = []
+    for index, line in enumerate(lines, start=1):
+        match = LEAN_DECL_RE.match(line)
+        if match:
+            starts.append((index, match.group("kind"), match.group("name")))
+
+    spans: list[dict[str, Any]] = []
+    for position, (start, kind, name) in enumerate(starts):
+        next_start = starts[position + 1][0] if position + 1 < len(starts) else len(lines) + 1
+        spans.append({"start": start, "end": next_start - 1, "kind": kind, "name": name})
+    return spans
+
+
+def target_file_predecessor_declarations(
+    row: dict[str, Any],
+    *,
+    project_root: Path | None,
+    limit: int = 4,
+) -> list[dict[str, Any]]:
+    """Collect same-file declarations before the hidden target declaration.
+
+    This uses post-hoc placement metadata only to define a cut line. It must not
+    expose the target declaration itself.
+    """
+
+    if project_root is None or limit <= 0:
+        return []
+    aligned = row.get("posthoc_lean_alignment", {}).get("aligned_lean_declarations", []) or []
+    target_locations: dict[str, int] = {}
+    for declaration in aligned:
+        path = str(declaration.get("path") or "")
+        line_range = declaration.get("line_range") or []
+        if not path or len(line_range) != 2:
+            continue
+        start = int(line_range[0])
+        target_locations[path] = min(start, target_locations.get(path, start))
+
+    predecessors: list[dict[str, Any]] = []
+    for relative_path, target_start in sorted(target_locations.items()):
+        path = project_root / relative_path
+        if not path.exists():
+            continue
+        lines = path.read_text(encoding="utf-8").splitlines()
+        spans = [span for span in local_declaration_spans(lines) if int(span["start"]) < target_start]
+        for span in spans[-limit:]:
+            start = int(span["start"])
+            end = min(int(span["end"]), target_start - 1)
+            declaration_text = "\n".join(lines[start - 1 : min(end, start + 39)]).rstrip()
+            snippet = compact_declaration_text(declaration_text, kind=str(span["kind"]))
+            predecessors.append(
+                {
+                    "name": span["name"],
+                    "kind": span["kind"],
+                    "path": relative_path,
+                    "line_range": [start, end],
+                    "lean_snippet": snippet[:3000],
+                    "snippet_truncated": end - start + 1 > 40 or len(snippet) > 3000,
+                    "context_source": "same_file_before_selected_unit_line",
+                    "benchmark_honesty": (
+                        "Uses post-hoc target file/line placement only to select earlier declarations; "
+                        "the hidden target declaration itself is omitted."
+                    ),
+                }
+            )
+    return predecessors[-limit:]
 
 
 def project_declarations_for_prior(
@@ -323,6 +397,7 @@ def build_messages(
     project_root: Path | None = None,
     max_previous_same_file: int | None = 2,
     declarations_per_prior_unit: int = 4,
+    local_predecessor_declarations: int = 4,
 ) -> list[dict[str, str]]:
     source_rows_by_id = unit_index(source_units or all_rows)
     system = (
@@ -381,6 +456,7 @@ def build_messages(
             "Do not write theorem/lemma Lean code in target_statement_sketch; exact API syntax belongs in needed_mathlib_context and will be hydrated by tools.",
             "Do not bundle all source parts into one conjunction unless the source unit itself requires that shape.",
             "Use previous project declarations only if they are shown under prior_project_context.",
+            "Use local_file_predecessor_declarations only as same-file helper/style context; the selected unit's target declarations are omitted.",
             "Do not treat Mathlib as the only context; enumerate source/project/local/Mathlib context separately.",
             "Prefer exact Mathlib names when known; otherwise give a narrow query plus expected signature shape.",
             "Keep added context tight: prefer a few thousand tokens or less per source unit.",
@@ -419,10 +495,19 @@ def build_messages(
                 ),
                 "prior_project_context": strip_declaration_file_context(prior_contexts),
                 "local_file_context_candidates": local_file_context_candidates(prior_contexts),
+                "local_file_predecessor_declarations": target_file_predecessor_declarations(
+                    row,
+                    project_root=project_root,
+                    limit=local_predecessor_declarations,
+                ),
                 "benchmark_policy": {
                     "target_lean_available_to_selector": False,
                     "posthoc_alignment_hidden": True,
                     "local_file_context_source": "prior_project_declarations_only",
+                    "local_file_predecessor_declaration_source": (
+                        "same Lean file declarations before selected unit placement line; benchmark-only "
+                        "placement metadata, target declaration omitted"
+                    ),
                 },
             }
         )
@@ -477,6 +562,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         project_root=args.project_root,
         max_previous_same_file=args.max_previous_same_file_context,
         declarations_per_prior_unit=args.prior_project_declarations_per_unit,
+        local_predecessor_declarations=args.local_predecessor_declarations,
     )
     run_dir = args.output
     batch_dir = run_dir / "batch-001"
@@ -554,6 +640,15 @@ def main() -> None:
         type=int,
         default=4,
         help="Maximum prior project declarations to expose per selected prior source unit.",
+    )
+    parser.add_argument(
+        "--local-predecessor-declarations",
+        type=int,
+        default=4,
+        help=(
+            "Maximum same-Lean-file declarations before the hidden target line to expose as local "
+            "predecessor context. Uses post-hoc placement metadata but omits the target declaration."
+        ),
     )
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
