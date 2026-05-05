@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "lemma prop_fps_mulvar_comp_y_coeff {f g : ℕ → PowerSeries R} (h : embedUnivInBiv f = embedUnivInBiv g) : ∀ k, f k = g k := by\n  intro k\n  ext n\n  have hcoeff := congrArg (fun φ : BivFPS R => φ (Finsupp.single 0 n + Finsupp.single 1 k)) h\n  simpa [coeff_embedUnivInBiv] using hcoeff",
+  "declaration_name": "prop_fps_mulvar_comp_y_coeff",
+  "used_context": [
+    "embedUnivInBiv",
+    "coeff_embedUnivInBiv",
+    "BivFPS",
+    "Finsupp.single",
+    "PowerSeries.ext"
+  ],
+  "notes": [
+    "Uses `coeff_embedUnivInBiv` from the surrounding file to translate bivariate coefficient equality into univariate coefficient equality.",
+    "`PowerSeries.ext` is assumed available from Mathlib."
+  ]
+}

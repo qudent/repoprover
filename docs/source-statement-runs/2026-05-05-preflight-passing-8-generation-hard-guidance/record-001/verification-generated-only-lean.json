@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:128:44: error: Function expected at\n  Finset.subset_union_left ?m.253\nbut this term has type\n  ?m.252 ∈ ?m.250 ∪ ?m.251\n\nNote: Expected a function because this term is being applied to the argument\n  _\nAlgebraicCombinatorics/Details/InfiniteProducts2.lean:129:45: error: Function expected at\n  Finset.subset_union_right ?m.266\nbut this term has type\n  ?m.265 ∈ ?m.263 ∪ ?m.264\n\nNote: Expected a function because this term is being applied to the argument\n  _\nAlgebraicCombinatorics/Details/InfiniteProducts2.lean:134:73: error: Type mismatch\n  hM_f k M (hM_sub k hk)\nhas type\n  (coeff k) (∏ i ∈ M, f i) = (coeff k) (∏ i ∈ M_f k, f i)\nbut is expected to have type\n  (coeff k) (∏ i ∈ M_f k, f i) = (coeff k) (∏ i ∈ M, f i)\n"
+}

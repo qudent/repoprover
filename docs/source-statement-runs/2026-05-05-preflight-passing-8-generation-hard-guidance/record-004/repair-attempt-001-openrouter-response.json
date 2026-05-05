@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777957930-1QqlCzX3Q39fw64WCaD2",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_subs_X_right (g : K⟦X⟧) : PowerSeries.subst (X : K⟦X⟧) g = g := by\\n  have hX0 : constantCoeff (X : K⟦X⟧) = 0 := by simp\\n  ext n\\n  rw [fps_comp_coeff g (X : K⟦X⟧) hX0 n]\\n  rw [finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n]\\n  · simp\\n  · intro d hd\\n    simp [hd, coeff_X_pow]\",\n  \"declaration_name\": \"fps_subs_X_right\",\n  \"used_context\": [\n    \"PowerSeries.subst\",\n    \"constantCoeff\",\n    \"fps_comp_coeff\",\n    \"finsum_eq_single\",\n    \"coeff_X_pow\"\n  ],\n  \"notes\": [\n    \"Fixed proof by replacing apply with rw for finsum_eq_single, following local pattern from fps_subs_wd_constCoeff.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777957930,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4504,
+    "prompt_tokens": 6659,
+    "total_tokens": 11163,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4247,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.006483849,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.006483849,
+      "upstream_inference_prompt_cost": 0.002565369,
+      "upstream_inference_completions_cost": 0.00391848
+    }
+  },
+  "provider": "DeepSeek"
+}

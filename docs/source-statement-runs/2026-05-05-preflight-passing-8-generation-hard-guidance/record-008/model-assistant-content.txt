@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem irreflexive_lexLt {n : ℕ} (a : Fin n → ℤ) : ¬ lexLt a a := by\n  intro h\n  rcases h with ⟨k, _, hlt⟩\n  exact lt_irrefl (a k) hlt",
+  "declaration_name": "irreflexive_lexLt",
+  "used_context": [
+    "lexLt",
+    "lt_irrefl"
+  ],
+  "notes": [
+    "Proof uses the definition of lexLt and the irreflexivity of < on ℤ."
+  ]
+}

@@ -76,7 +76,11 @@ larger corpus-spread preflight found 8/24 records whose verifier setup passes;
 the paid 8-record generation+repair validation reached only 3/8 cumulative
 verified successes for `$0.102229350`, exposing the next hard examples in FPS
 infinite-products/substitution, multivariate coefficient projection, and exact
-statement-shape matching.
+statement-shape matching. A follow-up hard-guidance rerun over the same
+8-record slice changed failure modes but stayed at 3/8 cumulative verified
+successes for another `$0.076759868`, confirming that the next improvement
+needs a visible-context semantic-shape diagnostic rather than more generic
+prompt wording.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -230,11 +234,19 @@ failures plus 1 hidden-grader mismatch; see
   paid generation+one repair pass over those 8 reached 3/8 cumulative verified
   successes for `$0.102229350`, with all provider outputs logged before Lean
   checks. See `docs/source-statement-larger-slice-results.md`.
-- [ ] Use the failed 8-record hard examples to improve context selection before
-  further paid scale: FPS infinite-products/substitution should avoid
-  topological APIs unless imported context supports them, multivariate FPS needs
-  exact coefficient projection snippets, and generated theorem shapes need a
-  semantic-equivalence guard before repair.
+- [x] Use the failed 8-record hard examples to improve prompt-side context
+  guidance before further paid scale. Result: added hard-example guidance for
+  FPS infinite-product substitution, multivariate coefficient projection,
+  substitution by `X`, right-vs-left multiplication by powers of `X`, and simple
+  transposition statement shape. A capped rerun still reached only 3/8
+  cumulative verified successes, showing that semantic-shape mismatches now need
+  a separate visible-context diagnostic layer. See
+  `docs/source-statement-hard-guidance-results.md`.
+- [ ] Add a no/low-cost semantic-shape diagnostic for source-statement outputs
+  before further paid scale: flag generated theorem shapes that likely do not
+  match visible source focus, such as `∀ k, f k = g k` instead of `f = g`,
+  left-vs-right `X^k` multiplication, and `Fin` object inequalities vs value
+  inequalities.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

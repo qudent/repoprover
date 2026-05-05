@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem parts_sum_eq_n (n : ℕ) (p : Nat.Partition n) : p.parts.sum = n :=\n  p.parts_sum",
+  "declaration_name": "parts_sum_eq_n",
+  "used_context": [
+    "Nat.Partition",
+    "p.parts_sum"
+  ],
+  "notes": [
+    "Uses the parts_sum field from the Nat.Partition structure; n is ℕ not ℤ because Mathlib's partition type uses ℕ.",
+    "This directly formalizes definition (c): a partition of n has its parts summing to n."
+  ]
+}

@@ -319,6 +319,92 @@ def test_source_statement_prompt_includes_fps_indeterminate_guidance(tmp_path: P
     assert "theorem target" not in guidance_text
 
 
+def test_source_statement_prompt_includes_x_power_multiplication_shape_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Lemma lem.fps.xa: f * X^k shifts f by k positions.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["lem.fps.xa"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["lem.fps.xa"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/FPSDefinition.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "formal power series multiplication by powers of X" in guidance_text
+    assert "coeff_mul_X_pow" in guidance_text
+    assert "coeff_X_pow_mul" in guidance_text
+    assert "opposite multiplication order" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_substitution_shape_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text("Proposition prop.fps.subs.rules: g composed with X equals g.\n", encoding="utf-8")
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["prop.fps.subs.rules"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["prop.fps.subs.rules"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/FPS/Substitution.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "formal power series substitution" in guidance_text
+    assert "PowerSeries.subst X g" in guidance_text
+    assert "HasSubst.X'" in guidance_text
+    assert "coeff_subst'" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_multivariate_projection_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Proposition prop.fps.mulvar.comp-y-coeff compares coefficients of y^k in K[[x,y]].\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["prop.fps.mulvar.comp-y-coeff"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["prop.fps.mulvar.comp-y-coeff"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/FPS/Multivariate.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "multivariate FPS coefficient projection" in guidance_text
+    assert "coeff_embedUnivInBiv" in guidance_text
+    assert "Finsupp.single 0 n + Finsupp.single 1 k" in guidance_text
+    assert "PowerSeries.ext" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_infprod_substitution_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Proposition prop.fps.subs.rule-infprod: multipliable products use prod_f and finite approximators M/J.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["prop.fps.subs.rule-infprod"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["prop.fps.subs.rule-infprod"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/Details/InfiniteProducts2.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "formal power series infinite product substitution" in guidance_text
+    assert "prod_f" in guidance_text
+    assert "comp_prod_finite" in guidance_text
+    assert "map_tprod" in guidance_text
+    assert "TopologicalSpace" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
 def test_source_statement_prompt_includes_partition_transpose_guidance(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     (project_root / "Demo.tex").write_text(
@@ -339,6 +425,29 @@ def test_source_statement_prompt_includes_partition_transpose_guidance(tmp_path:
     assert "transpose_length_eq_largestPart" in guidance_text
     assert "Finset.card_congr" in guidance_text
     assert ".numParts" in guidance_text
+    assert "theorem target" not in guidance_text
+
+
+def test_source_statement_prompt_includes_simple_transposition_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    (project_root / "Demo.tex").write_text(
+        "Definition def.perm.si: simple transposition s_i fixes k when k is not i or i+1.\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = ["def.perm.si"]
+    row["minimal_context"]["source_spans"][0]["labels"] = ["def.perm.si"]
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/Permutations/Basics.lean"
+
+    messages = build_messages(project_root, SelectedRecord(row))
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "simple transposition statement shape" in guidance_text
+    assert "Equiv.swap_apply_of_ne_of_ne" in guidance_text
+    assert "k.val" in guidance_text
+    assert "i.val" in guidance_text
+    assert "Fin-object inequalities" in guidance_text
     assert "theorem target" not in guidance_text
 
 

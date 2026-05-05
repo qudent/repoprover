@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "theorem fps_subs_X_right (g : K⟦X⟧) : PowerSeries.subst (X : K⟦X⟧) g = g := by\n  have hX0 : constantCoeff (X : K⟦X⟧) = 0 := by simp\n  ext n\n  rw [fps_comp_coeff g (X : K⟦X⟧) hX0 n]\n  apply finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n ?_ ?_\n  · intro d hd\n    simp [hd, coeff_X_pow]\n  · simp",
+  "declaration_name": "fps_subs_X_right",
+  "used_context": [
+    "fps_comp_coeff",
+    "coeff_X_pow",
+    "finsum_eq_single",
+    "hX0 (constantCoeff X = 0) by simp",
+    "ext",
+    "coeff"
+  ],
+  "notes": [
+    "This proves part (g) of Proposition 7.3.4: g ∘ X = g, where composition is PowerSeries.subst X g.",
+    "The proof uses the coefficient formula fps_comp_coeff, which requires constantCoeff X = 0 (which holds).",
+    "The lemma is dual to the existing fps_subs_X_left (X ∘ g = g)."
+  ]
+}

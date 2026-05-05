@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-05-05T05:23:19.398685+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance",
+  "work_root": "/tmp/repoprover-source-statement-verify-hard-guidance-8-repair1-serial",
+  "workers": 1,
+  "records_completed": 8,
+  "successes": 1,
+  "success_rate": 0.125,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 2,
+    "missing_model_output": 5
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:PowerSeries.comp_prod_infinite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-001",
+      "generated_name": "prop_fps_subs_rule_infprod",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:133:6: error: Type mismatch\n  hMproj (M_f k ∪ M_prod) hsub2\nhas type\n  (coeff k) (∏ i ∈ M_f k ∪ M_prod, f i) = (coeff k) (∏ i ∈ M_prod, f i)\nbut is expected to have type\n  (coeff k) (∏ i ∈ M_prod, f i) = (coeff k) (∏ i ∈ M_f k ∪ M_prod, f i)\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-002",
+      "generated_name": "det_swap_cols",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 0,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:62:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:62:4: warning: 'simpa using det_swap_cols' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\nAlgebraicCombinatorics/DeterminantsBasic.lean:58:8: warning: The declaration '__repoprover_source_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\n"
+      },
+      "success": true
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.eq_of_embedUnivInBiv_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-003/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_subs_X_right",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-004",
+      "generated_name": "fps_subs_X_right",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/Substitution.lean:98:2: error: unsolved goals\ncase h\nK : Type u_1\ninst✝ : CommRing K\ng : K⟦X⟧\nhX0 : constantCoeff X = 0\nn d : ℕ\nhd : d ≠ n\n⊢ n = d → (coeff d) g = 0\nAlgebraicCombinatorics/FPS/Substitution.lean:99:10: warning: This simp argument is unused:\n  hd\n\nHint: Omit it from the simp argument list.\n  simp [h̵d̵,̵ ̵coeff_X_pow]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.coeff_mul_X_pow",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-005",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-005/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.size_eq",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-006",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-006/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_apply_of_ne",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-007",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-007/repair-attempt-001-model-output.json"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/Permutations/Inversions1.lean:AlgebraicCombinatorics.lexLt_irrefl",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-008",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-8-generation-hard-guidance/record-008/repair-attempt-001-model-output.json"
+    }
+  ]
+}

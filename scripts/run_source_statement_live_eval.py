@@ -340,6 +340,14 @@ def _source_keywords(project_root: Path, record: SelectedRecord) -> list[str]:
         keywords.extend(["Ring.choose", "Nat.choose", "choose_succ_succ", "pascal_identity"])
     if "tableau" in combined or "content" in combined or "x_t" in combined:
         keywords.extend(["Tableau", "contentTableau", "xPow", "monomialTableau"])
+    if "substitution" in combined or "subst" in combined or "comp" in combined or "∘" in combined:
+        keywords.extend(["subst", "HasSubst", "coeff_subst", "fps_comp_coeff", "fps_subs", "subst_X"])
+    if "bivar" in combined or "multivar" in combined or "y^" in combined or "embedunivinbiv" in combined:
+        keywords.extend(["embedUnivInBiv", "coeff_embedUnivInBiv", "BivFPS", "Finsupp.single"])
+    if "multipliable" in combined or "infprod" in combined or "infinite product" in combined:
+        keywords.extend(["Multipliable", "comp_prod", "xnEquiv_comp", "comp_prod_finite", "comp_prod_multipliable"])
+    if "simple transposition" in combined or "def.perm.si" in combined or "s_i" in combined:
+        keywords.extend(["simpleTransposition", "Equiv.swap", "swap_apply_of_ne_of_ne", "Fin.ext_iff"])
     seen: set[str] = set()
     ordered: list[str] = []
     for keyword in keywords:
@@ -758,6 +766,78 @@ def domain_statement_shape_guidance(
                 ],
             }
         )
+    if fps_indeterminate_signal and any(term in combined for term in ["x^k", "x ^ k", "lem.fps.xa", "shifts"]):
+        guidance.append(
+            {
+                "domain": "formal power series multiplication by powers of X",
+                "trigger": "source or target comment describes shifting coefficients by multiplying with `X^k`",
+                "preferred_statement_family": [
+                    "Respect the side of multiplication in the source focus: `f * X ^ k` should use/right-match `coeff_mul_X_pow`; `X ^ k * f` should use/right-match `coeff_X_pow_mul`.",
+                    "If the target source comment says `f * X^k shifts f`, do not answer only the left-multiplication theorem `X^k * f` or the special `X * f` equality form.",
+                    "For shifted-coefficient targets, prefer the displayed coefficient theorem shape over an equality to `PowerSeries.mk` unless the source focus explicitly asks for a whole-series equality.",
+                ],
+                "avoid_statement_family": [
+                    "Do not use a nearby predecessor with the opposite multiplication order as the generated statement.",
+                    "Do not collapse the generalized `X^k` source into the special `X` case unless the source focus says `k = 1`.",
+                ],
+            }
+        )
+
+    substitution_signal = "Substitution.lean" in record.lean_path or "prop.fps.subs.rules" in labels
+    if substitution_signal:
+        guidance.append(
+            {
+                "domain": "formal power series substitution",
+                "trigger": "source context is a substitution rule for formal power series",
+                "preferred_statement_family": [
+                    "For the rule `g ∘ X = g`, state `PowerSeries.subst X g = g` and use the local `HasSubst.X'`/`coeff_subst'` style when needed.",
+                    "Keep the argument order from displayed local APIs: `PowerSeries.subst inner outer`, so `PowerSeries.subst X g` means substitute `X` into `g`.",
+                    "If proving by coefficients, the local proof pattern is `ext n`; rewrite with `coeff_subst'`; then use `coeff_X_pow` and `finsum_eq_single`.",
+                ],
+                "avoid_statement_family": [
+                    "Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is available.",
+                    "Do not swap the rule into `PowerSeries.subst g X = g`; that is a different local lemma.",
+                ],
+            }
+        )
+
+    multivariate_signal = "Multivariate.lean" in record.lean_path or "mulvar" in labels or "embedunivinbiv" in combined
+    if multivariate_signal:
+        guidance.append(
+            {
+                "domain": "multivariate FPS coefficient projection",
+                "trigger": "source context compares coefficients in front of `y^k` using `embedUnivInBiv`",
+                "preferred_statement_family": [
+                    "For equality of embedded bivariate series, prove sequence equality by `funext k`; then `ext n`; then apply `congrArg` at `Finsupp.single 0 n + Finsupp.single 1 k`.",
+                    "Use the displayed lemma `coeff_embedUnivInBiv` explicitly on both sides of the congruence before finishing; do not rely on a single `simpa` to discover the coefficient projection.",
+                ],
+                "avoid_statement_family": [
+                    "Do not call `PowerSeries.ext` when the current goal is already a coefficient equality.",
+                    "Do not leave the goal as an equality of raw `embedUnivInBiv` evaluations; rewrite it with `coeff_embedUnivInBiv`.",
+                ],
+            }
+        )
+
+    infprod_substitution_signal = (
+        "InfiniteProducts2.lean" in record.lean_path
+        and ("infprod" in labels or "multipliable" in combined or "prod_f" in combined)
+    )
+    if infprod_substitution_signal:
+        guidance.append(
+            {
+                "domain": "formal power series infinite product substitution",
+                "trigger": "source focus describes substitution through an infinite product via finite coefficient approximators",
+                "preferred_statement_family": [
+                    "Follow the target source comment's approximator API: hypotheses should quantify finite sets `M`/`J` and coefficients of finite products, plus a `prod_f` and `hprod` if the comment mentions them.",
+                    "Use displayed local helpers such as `comp_prod_finite`, `xnEquiv_comp`, `comp_prod_approx_determines`, and `comp_prod_multipliable`.",
+                    "State the result as an existence of a finite approximator for each coefficient when the source comment says the infinite product is represented by `prod_f`.",
+                ],
+                "avoid_statement_family": [
+                    "Do not switch to Mathlib/topological `Multipliable`, `∏'`, `map_tprod`, or continuity APIs unless those exact assumptions are in the source focus and displayed local context.",
+                    "Do not add `TopologicalSpace K⟦X⟧` assumptions to satisfy an invented topological theorem.",
+                ],
+            }
+        )
 
     partition_transpose_signal = (
         "Partitions/Basics.lean" in record.lean_path
@@ -777,6 +857,23 @@ def domain_statement_shape_guidance(
                 "avoid_statement_family": [
                     "Do not call non-existent helpers such as `Finset.card_congr`.",
                     "Do not use `.numParts` or `.largestPart` field notation when Lean reports that the partition type is not inferred.",
+                ],
+            }
+        )
+    permutation_signal = "Permutations/Basics.lean" in record.lean_path or "def.perm.si" in labels
+    if permutation_signal:
+        guidance.append(
+            {
+                "domain": "simple transposition statement shape",
+                "trigger": "source focus describes the simple transposition `s_i` and the fixed-point case",
+                "preferred_statement_family": [
+                    "Use the local `simpleTransposition` definition and `Equiv.swap_apply_of_ne_of_ne` proof shape when proving a fixed point.",
+                    "For the fixed-point theorem, prefer assumptions on values, e.g. `k.val ≠ i.val` and `k.val ≠ i.val + 1`, if the displayed local context uses `Fin` representatives.",
+                    "If the source says `k ≠ i, i+1`, make the generated statement match the local index representation rather than inventing new `Fin` literals.",
+                ],
+                "avoid_statement_family": [
+                    "Do not produce a theorem whose assumptions are stronger/different Fin-object inequalities if the source focus likely expects value inequalities.",
+                    "Do not rely on bare `simp [simpleTransposition, h1, h2]` when `Equiv.swap_apply_of_ne_of_ne` gives the exact proof obligation.",
                 ],
             }
         )

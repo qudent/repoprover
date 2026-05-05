@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777957061-XYTVzyxhA5O0AO6zkUh3",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma prop_fps_mulvar_comp_y_coeff {f g : ℕ → PowerSeries R} (h : embedUnivInBiv f = embedUnivInBiv g) : ∀ k, f k = g k := by\\n  intro k\\n  ext n\\n  have hcoeff := congrArg (fun φ : BivFPS R => φ (Finsupp.single 0 n + Finsupp.single 1 k)) h\\n  simpa [coeff_embedUnivInBiv] using hcoeff\",\n  \"declaration_name\": \"prop_fps_mulvar_comp_y_coeff\",\n  \"used_context\": [\n    \"embedUnivInBiv\",\n    \"coeff_embedUnivInBiv\",\n    \"BivFPS\",\n    \"Finsupp.single\",\n    \"PowerSeries.ext\"\n  ],\n  \"notes\": [\n    \"Uses `coeff_embedUnivInBiv` from the surrounding file to translate bivariate coefficient equality into univariate coefficient equality.\",\n    \"`PowerSeries.ext` is assumed available from Mathlib.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777957061,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 3470,
+    "prompt_tokens": 3782,
+    "total_tokens": 7252,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 3216,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 3456,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.003173238,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.003173238,
+      "upstream_inference_prompt_cost": 0.000154338,
+      "upstream_inference_completions_cost": 0.0030189
+    }
+  },
+  "provider": "DeepSeek"
+}

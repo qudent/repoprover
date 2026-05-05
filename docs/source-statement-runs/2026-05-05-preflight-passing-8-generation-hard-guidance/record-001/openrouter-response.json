@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777957061-XKRxXT2JDYofFeynbtfP",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem prop_fps_subs_rule_infprod {I : Type*} [DecidableEq I] (f : I → PowerSeries K) (g : PowerSeries K)\\n    (hg : constantCoeff g = 0) (hf_mulable : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i))\\n    (prod_f : PowerSeries K) (hprod : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) ∧ coeff n prod_f = coeff n (∏ i ∈ M, f i)) :\\n    ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, (f i).subst g) = coeff n (∏ i ∈ M, (f i).subst g)) ∧ coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\\n  intro n\\n  choose M_f hM_f using hf_mulable\\n  let M := Finset.biUnion (Finset.range (n + 1)) M_f\\n  have hM_sub : ∀ k ≤ n, M_f k ⊆ M := by\\n    intro k hk\\n    apply Finset.subset_biUnion_of_mem\\n    simp [hk]\\n  have hM_approx : ∀ k ≤ n, ∀ J : Finset I, M ⊆ J → coeff k (∏ i ∈ J, f i) = coeff k (∏ i ∈ M, f i) := by\\n    intro k hk J hMJ\\n    have hMkJ : M_f k ⊆ J := (hM_sub k hk).trans hMJ\\n    rw [hM_f k J hMkJ]\\n    rw [hM_f k M (hM_sub k hk)]\\n  have hcoeff_prod_f : ∀ k ≤ n, coeff k prod_f = coeff k (∏ i ∈ M, f i) := by\\n    intro k hk\\n    rcases hprod k with ⟨M_prod, hMproj, hcoeff⟩\\n    have htemp1 : M_f k ⊆ M_f k ∪ M_prod := Finset.subset_union_left _ _\\n    have htemp2 : M_prod ⊆ M_f k ∪ M_prod := Finset.subset_union_right _ _\\n    have htemp5 : coeff k (∏ i ∈ M_f k, f i) = coeff k (∏ i ∈ M_prod, f i) := by\\n      calc\\n        coeff k (∏ i ∈ M_f k, f i) = coeff k (∏ i ∈ M_f k ∪ M_prod, f i) := (hM_f k (M_f k ∪ M_prod) htemp1).symm\\n        _ = coeff k (∏ i ∈ M_prod, f i) := hMproj (M_f k ∪ M_prod) htemp2\\n    have htemp6 : coeff k (∏ i ∈ M_f k, f i) = coeff k (∏ i ∈ M, f i) := hM_f k M (hM_sub k hk)\\n    calc\\n      coeff k prod_f = coeff k (∏ i ∈ M_prod, f i) := hcoeff\\n      _ = coeff k (∏ i ∈ M_f k, f i) := htemp5.symm\\n      _ = coeff k (∏ i ∈ M, f i) := htemp6\\n  have hcomp_approx : ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, (f i).subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\\n    intro J hMJ\\n    apply comp_prod_approx_determines f g hg n M\\n    · intro k hk J' hMJ'\\n      exact hM_approx k hk J' hMJ'\\n    · exact hMJ\\n  have hsecond : coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\\n    have hequiv : coeff n (prod_f.subst g) = coeff n ((∏ i ∈ M, f i).subst g) :=\\n      xnEquiv_comp hcoeff_prod_f hg n (le_refl n)\\n    rw [hequiv]\\n    rw [comp_prod_finite M f g hg]\\n  exact ⟨M, hcomp_approx, hsecond⟩\",\n  \"declaration_name\": \"prop_fps_subs_rule_infprod\",\n  \"used_context\": [\n    \"comp_prod_finite\",\n    \"xnEquiv_comp\",\n    \"comp_prod_approx_determines\",\n    \"hf_mulable, hprod as stated\",\n    \"Finset.biUnion, Finset.subset_biUnion_of_mem\"\n  ],\n  \"notes\": [\n    \"Uses the finite approximator characterization of multipliability; assumes DecidableEq I for Finset operations.\",\n    \"The theorem shows that the composed series prod_f.subst g matches the infinite product of the f_i ∘ g, given by coefficient approximators.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777957061,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 22199,
+    "prompt_tokens": 6160,
+    "total_tokens": 28359,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 20903,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.02171665,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.02171665,
+      "upstream_inference_prompt_cost": 0.00240352,
+      "upstream_inference_completions_cost": 0.01931313
+    }
+  },
+  "provider": "DeepSeek"
+}

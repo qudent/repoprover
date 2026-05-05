@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :\n    (A.submatrix id (Equiv.swap i j)).det = -A.det :=\n  calc\n    (A.submatrix id (Equiv.swap i j)).det = ((A.submatrix id (Equiv.swap i j)).transpose).det := by\n      simpa using (Matrix.det_transpose (A.submatrix id (Equiv.swap i j))).symm\n    _ = (A.transpose.submatrix (Equiv.swap i j) id).det := by\n      have h : (A.submatrix id (Equiv.swap i j)).transpose = A.transpose.submatrix (Equiv.swap i j) id := by\n        ext x y\n        simp [Matrix.submatrix, Matrix.transpose]\n      rw [h]\n    _ = -(A.transpose).det := by simpa using det_swap_rows (A.transpose) i j hij\n    _ = -A.det := by simp [Matrix.det_transpose]",
+  "declaration_name": "det_swap_cols",
+  "used_context": [
+    "det_swap_rows",
+    "Matrix.det_transpose",
+    "Matrix.submatrix",
+    "Matrix.transpose",
+    "Equiv.swap",
+    "calc",
+    "simp",
+    "ext"
+  ],
+  "notes": [
+    "Matrix.submatrix_transpose was not available, so proved the transpose-of-submatrix equality inline with ext/simp."
+  ]
+}

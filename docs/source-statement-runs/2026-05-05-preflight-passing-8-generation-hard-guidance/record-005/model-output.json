@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem lem_fps_xa (a : R⟦X⟧) : X * a = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n - 1) a) := by\n  ext n\n  rw [coeff_X_mul, coeff_mk]",
+  "declaration_name": "lem_fps_xa",
+  "used_context": [
+    "coeff_X_mul",
+    "coeff_mk",
+    "PowerSeries.mk"
+  ],
+  "notes": [
+    "The proof uses the existing lemma coeff_X_mul to avoid the detailed sum expansion."
+  ]
+}

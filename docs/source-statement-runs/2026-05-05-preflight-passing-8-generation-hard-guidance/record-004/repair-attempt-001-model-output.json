@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem fps_subs_X_right (g : K⟦X⟧) : PowerSeries.subst (X : K⟦X⟧) g = g := by\n  have hX0 : constantCoeff (X : K⟦X⟧) = 0 := by simp\n  ext n\n  rw [fps_comp_coeff g (X : K⟦X⟧) hX0 n]\n  rw [finsum_eq_single (fun d => coeff d g * coeff n (X ^ d)) n]\n  · simp\n  · intro d hd\n    simp [hd, coeff_X_pow]",
+  "declaration_name": "fps_subs_X_right",
+  "used_context": [
+    "PowerSeries.subst",
+    "constantCoeff",
+    "fps_comp_coeff",
+    "finsum_eq_single",
+    "coeff_X_pow"
+  ],
+  "notes": [
+    "Fixed proof by replacing apply with rw for finsum_eq_single, following local pattern from fps_subs_wd_constCoeff."
+  ]
+}

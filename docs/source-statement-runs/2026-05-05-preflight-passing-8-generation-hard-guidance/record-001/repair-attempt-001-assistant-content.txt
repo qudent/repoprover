@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "theorem prop_fps_subs_rule_infprod {I : Type*} [DecidableEq I] (f : I → PowerSeries K) (g : PowerSeries K)\n    (hg : constantCoeff g = 0) (hf_mulable : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i))\n    (prod_f : PowerSeries K) (hprod : ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, f i) = coeff n (∏ i ∈ M, f i)) ∧ coeff n prod_f = coeff n (∏ i ∈ M, f i)) :\n    ∀ n, ∃ M : Finset I, (∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, (f i).subst g) = coeff n (∏ i ∈ M, (f i).subst g)) ∧ coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\n  intro n\n  choose M_f hM_f using hf_mulable\n  let M := Finset.biUnion (Finset.range (n + 1)) M_f\n  have hM_sub : ∀ k ≤ n, M_f k ⊆ M := by\n    intro k hk\n    apply Finset.subset_biUnion_of_mem\n    simp [hk]\n  have hM_approx : ∀ k ≤ n, ∀ J : Finset I, M ⊆ J → coeff k (∏ i ∈ J, f i) = coeff k (∏ i ∈ M, f i) := by\n    intro k hk J hMJ\n    have hMkJ : M_f k ⊆ J := (hM_sub k hk).trans hMJ\n    rw [hM_f k J hMkJ]\n    rw [hM_f k M (hM_sub k hk)]\n  have hcoeff_prod_f : ∀ k ≤ n, coeff k prod_f = coeff k (∏ i ∈ M, f i) := by\n    intro k hk\n    rcases hprod k with ⟨M_prod, hMproj, hcoeff⟩\n    have hsub1 : M_f k ⊆ M_f k ∪ M_prod := λ x hx => Finset.mem_union_left M_prod hx\n    have hsub2 : M_prod ⊆ M_f k ∪ M_prod := λ x hx => Finset.mem_union_right (M_f k) hx\n    have h_eq_union1 : coeff k (∏ i ∈ M_f k, f i) = coeff k (∏ i ∈ M_f k ∪ M_prod, f i) :=\n      (hM_f k (M_f k ∪ M_prod) hsub1).symm\n    have h_eq_union2 : coeff k (∏ i ∈ M_prod, f i) = coeff k (∏ i ∈ M_f k ∪ M_prod, f i) :=\n      hMproj (M_f k ∪ M_prod) hsub2\n    have h_eq : coeff k (∏ i ∈ M_f k, f i) = coeff k (∏ i ∈ M_prod, f i) := by\n      calc\n        coeff k (∏ i ∈ M_f k, f i) = coeff k (∏ i ∈ M_f k ∪ M_prod, f i) := h_eq_union1\n        _ = coeff k (∏ i ∈ M_prod, f i) := h_eq_union2.symm\n    have htemp6 : coeff k (∏ i ∈ M_f k, f i) = coeff k (∏ i ∈ M, f i) :=\n      (hM_f k M (hM_sub k hk)).symm\n    calc\n      coeff k prod_f = coeff k (∏ i ∈ M_prod, f i) := hcoeff\n      _ = coeff k (∏ i ∈ M_f k, f i) := h_eq.symm\n      _ = coeff k (∏ i ∈ M, f i) := htemp6\n  have hcomp_approx : ∀ J : Finset I, M ⊆ J → coeff n (∏ i ∈ J, (f i).subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\n    intro J hMJ\n    refine comp_prod_approx_determines f g hg n M ?_ J hMJ\n    intro k hk J' hMJ'\n    exact hM_approx k hk J' hMJ'\n  have hsecond : coeff n (prod_f.subst g) = coeff n (∏ i ∈ M, (f i).subst g) := by\n    have hequiv : coeff n (prod_f.subst g) = coeff n ((∏ i ∈ M, f i).subst g) :=\n      xnEquiv_comp hcoeff_prod_f hg n (le_refl n)\n    rw [hequiv]\n    rw [comp_prod_finite M f g hg]\n  exact ⟨M, hcomp_approx, hsecond⟩",
+  "declaration_name": "prop_fps_subs_rule_infprod",
+  "used_context": [
+    "hf_mulable (∀ n, ∃ M, ...)",
+    "comp_prod_finite",
+    "xnEquiv_comp",
+    "comp_prod_approx_determines",
+    "Finset.subset_biUnion_of_mem",
+    "Finset.mem_union_left",
+    "Finset.mem_union_right"
+  ],
+  "notes": [
+    "Fixed Finset.subset_union_left/right errors by using Finset.mem_union_left/right with explicit lambda.",
+    "Fixed direction of hM_f equality with .symm."
+  ]
+}

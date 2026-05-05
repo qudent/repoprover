@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:47:68: error(lean.unknownIdentifier): Unknown constant `Matrix.submatrix_transpose`\n"
+}

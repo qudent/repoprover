@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem simpleTransposition_apply_of_ne_of_ne {n : ℕ} (i : Fin (n - 1)) (k : Fin n) (h1 : k ≠ ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩) (h2 : k ≠ ⟨i.val + 1, by omega⟩) : simpleTransposition i k = k :=\n  by\n    unfold simpleTransposition\n    exact Equiv.swap_apply_of_ne_of_ne h1 h2",
+  "declaration_name": "simpleTransposition_apply_of_ne_of_ne",
+  "used_context": [
+    "simpleTransposition",
+    "Equiv.swap_apply_of_ne_of_ne"
+  ],
+  "notes": [
+    "The conditions h1 and h2 use the same Fin representatives as in the definition of simpleTransposition; the bounds are taken from there and proved by omega.",
+    "The proof directly unfolds simpleTransposition and applies the Mathlib lemma for a swap fixed point."
+  ]
+}

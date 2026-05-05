@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:98:2: error: unsolved goals\ncase h\nK : Type u_1\ninst✝ : CommRing K\ng : K⟦X⟧\nhX0 : constantCoeff X = 0\nn d : ℕ\nhd : d ≠ n\n⊢ n = d → (coeff d) g = 0\nAlgebraicCombinatorics/FPS/Substitution.lean:99:10: warning: This simp argument is unused:\n  hd\n\nHint: Omit it from the simp argument list.\n  simp [h̵d̵,̵ ̵coeff_X_pow]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n"
+}

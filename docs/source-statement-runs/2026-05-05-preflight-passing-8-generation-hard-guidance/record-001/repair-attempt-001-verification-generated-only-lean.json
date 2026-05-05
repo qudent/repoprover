@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Details/InfiniteProducts2.lean:133:6: error: Type mismatch\n  hMproj (M_f k ∪ M_prod) hsub2\nhas type\n  (coeff k) (∏ i ∈ M_f k ∪ M_prod, f i) = (coeff k) (∏ i ∈ M_prod, f i)\nbut is expected to have type\n  (coeff k) (∏ i ∈ M_prod, f i) = (coeff k) (∏ i ∈ M_f k ∪ M_prod, f i)\n"
+}
