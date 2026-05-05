@@ -1,6 +1,6 @@
 # RepoProver Work Report - Last ~7 Hours
 
-Report time: 2026-05-05 08:35 UTC.
+Report time: 2026-05-05 08:40 UTC.
 
 ## Goal Being Advanced
 
@@ -47,17 +47,16 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
    - Repair attempt 3 for rows 2 and 3 finished with 2/2 parsed outputs, 2 paid calls, and `$0.012440043` actual cost under a `$0.08` cap.
    - Row 2 generated a direct `fps_onePlusX_pow_neg' n` proof shape.
    - Row 3 generated a revised `finsum_eq_sum_of_support_subset` proof that treats `hd` as support membership.
+   - Serial Lean verification passed both attempt-3 repairs.
 
 ## Current Best Result
 
-Best validated strict hard-slice result before Lean-checking attempt 3:
+Best validated strict hard-slice result:
 
-- 4/6 verified.
-- Cost: `$0.203257397` for strict generation plus recorded repairs.
-- Passing rows: 1, 4, 5, 6.
-- Open rows: 2 negative-binomial inverse-power formula, 3 finite substitution coefficient formula.
-
-Attempt 3 has parsed repair outputs for both open rows, but they still need Lean verification before counting them as successes.
+- 6/6 cumulatively verified.
+- Cost: `$0.21569744` for strict generation plus recorded repairs.
+- Passing rows: 1, 4, 5, 6 from earlier generation/repair stages; rows 2 and 3 from repair attempt 3.
+- Remaining issue: this is still only a hard six-row slice, so it is not enough evidence to start trust scoring or assume textbook-scale feed-forward success.
 
 ## Files And Evidence
 
@@ -76,4 +75,4 @@ Attempt 3 has parsed repair outputs for both open rows, but they still need Lean
 
 - The architecture is now good enough for cheap iteration: provider calls, verification, diagnostics, and repairs are decoupled and file-backed.
 - The prompt still does not mostly succeed on larger slices, so dependency-graph trust scoring should still wait.
-- The next useful work is not a larger paid run; it is committing the raw attempt-3 artifacts, verifying them, and, if needed, adding more zero-cost diagnostics for the two remaining exact proof-shape failures.
+- The next useful work is to commit the verification artifacts and then use the recovered 6/6 slice as a seed for a zero-cost preflight on a broader corpus-spread validation.
