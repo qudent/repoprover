@@ -673,10 +673,11 @@ def materialize_candidate_project(
     lake_cache_from: Path | None,
     include_record_imports: bool = False,
     include_grader: bool = True,
+    clean_output: bool = True,
 ) -> Path:
-    if output_root.exists():
+    if clean_output and output_root.exists():
         shutil.rmtree(output_root)
-    output_root.mkdir(parents=True)
+    output_root.mkdir(parents=True, exist_ok=True)
     copy_project_config(project_root, output_root)
     if lake_cache_from is not None:
         copy_lake_cache(lake_cache_from, output_root)
@@ -909,17 +910,19 @@ def lean_check_candidate(
     generated_name: str,
     include_grader: bool,
 ) -> dict[str, Any]:
+    output_root = args.output / "shared-project" if args.reuse_project else record_dir / project_subdir
     target_path = materialize_candidate_project(
         project_root=args.project_root,
-        output_root=record_dir / project_subdir,
+        output_root=output_root,
         record=record,
         lean_declaration=declaration,
         generated_name=generated_name,
         lake_cache_from=args.lake_cache_from,
         include_record_imports=args.include_record_imports,
         include_grader=include_grader,
+        clean_output=not args.reuse_project,
     )
-    return run_lean(record_dir / project_subdir, target_path, args.lean_timeout)
+    return run_lean(output_root, target_path, args.lean_timeout)
 
 
 def run_repair_attempt(
@@ -1007,6 +1010,30 @@ def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[s
     payload: dict[str, Any] = prepared["payload"]
     original_messages: list[dict[str, str]] = prepared["messages"]
     row = dict(prepared["row"])
+
+    if args.preflight_only:
+        row["paid_call_made"] = False
+        row["status"] = "preflight_only"
+        try:
+            preflight_result = lean_check_candidate(
+                args=args,
+                record=record,
+                record_dir=record_dir,
+                project_subdir="preflight-project",
+                declaration="theorem __repoprover_source_statement_preflight : True := by\n  trivial",
+                generated_name="__repoprover_source_statement_preflight",
+                include_grader=False,
+            )
+            write_json(record_dir / "preflight-lean.json", preflight_result)
+            row["preflight_lean_check"] = preflight_result
+            row["success"] = preflight_result["exit_code"] == 0
+            if not row["success"]:
+                row["failure_class"] = "verifier_preflight_failed"
+        except Exception as exc:  # noqa: BLE001 - preflight should produce row-level failures.
+            row["success"] = False
+            row["failure_class"] = "verifier_preflight_error"
+            row["error"] = f"{type(exc).__name__}: {exc}"
+        return row
 
     if args.budget_only:
         row["paid_call_made"] = False
@@ -1164,6 +1191,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("no theorem/lemma source-statement records selected")
     if args.concurrency < 1:
         raise ValueError("--concurrency must be at least 1")
+    if args.preflight_only and args.budget_only:
+        raise ValueError("--preflight-only and --budget-only are mutually exclusive")
+    if args.reuse_project and args.concurrency != 1:
+        raise ValueError("--reuse-project requires --concurrency 1 because generated target files are overwritten in place")
 
     eval_dir = args.output / "eval"
     eval_dir.mkdir(parents=True, exist_ok=True)
@@ -1174,7 +1205,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     if partial_jsonl.exists():
         partial_jsonl.unlink()
     prepared_records = [prepare_record_run(args, item) for item in records]
-    if args.budget_only:
+    if args.budget_only or args.preflight_only:
         results = [run_one_record(args, prepared) for prepared in prepared_records]
         for row in results:
             append_jsonl(partial_jsonl, row)
@@ -1271,6 +1302,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 
     attempted = [row for row in results if row.get("paid_call_made")]
     successes = [row for row in attempted if row.get("success")]
+    preflight_rows = [row for row in results if row.get("status") == "preflight_only"]
+    preflight_successes = [row for row in preflight_rows if row.get("success")]
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "records_selected": len(records),
@@ -1278,6 +1311,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "records_attempted": len(attempted),
         "successes": len(successes),
         "success_rate": (len(successes) / len(attempted)) if attempted else None,
+        "preflight_successes": len(preflight_successes),
+        "preflight_success_rate": (len(preflight_successes) / len(preflight_rows)) if preflight_rows else None,
         "paid_calls_made": paid_calls,
         "actual_cost_usd": total_actual_cost,
         "model": args.model,
@@ -1289,6 +1324,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "repair_attempts": args.repair_attempts,
         "repair_max_tokens": args.repair_max_tokens,
         "repair_reasoning_effort": args.repair_reasoning_effort,
+        "preflight_only": args.preflight_only,
+        "reuse_project": args.reuse_project,
         "failure_classes": aggregate_failure_classes(results),
         "results": results,
     }
@@ -1309,12 +1346,18 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Repair attempts: `{summary['repair_attempts']}`",
         f"- Repair max tokens: `{summary['repair_max_tokens']}`",
         f"- Repair reasoning effort: `{summary['repair_reasoning_effort']}`",
+        f"- Preflight only: `{summary['preflight_only']}`",
+        f"- Reuse project: `{summary['reuse_project']}`",
         f"- Concurrency: `{summary['concurrency']}`",
         f"- Sample mode: `{summary['sample_mode']}`",
         f"- Global cost cap: `${float(summary['max_actual_cost_usd'] or 0.0):.6f}`",
         f"- Records attempted: {summary['records_attempted']} / selected {summary['records_selected']}",
         f"- Successes: {summary['successes']}",
         f"- Success rate: {rate:.1%}" if rate is not None else "- Success rate: n/a",
+        (
+            f"- Preflight successes: {summary['preflight_successes']} / "
+            f"{sum(1 for row in summary['results'] if row.get('status') == 'preflight_only')}"
+        ),
         f"- Actual reported cost: `${summary['actual_cost_usd']:.6f}`",
         f"- Failure classes: `{json.dumps(summary['failure_classes'], sort_keys=True)}`",
         "",
@@ -1375,6 +1418,16 @@ def parse_args() -> argparse.Namespace:
         help="Record selection mode. `stratified-easy` spreads over the easiest candidate pool.",
     )
     parser.add_argument("--budget-only", action="store_true")
+    parser.add_argument(
+        "--preflight-only",
+        action="store_true",
+        help="Materialize and Lean-check selected records with a trivial generated theorem; make no paid calls.",
+    )
+    parser.add_argument(
+        "--reuse-project",
+        action="store_true",
+        help="Reuse one materialized Lean project under the output directory. Requires --concurrency 1.",
+    )
     args = parser.parse_args()
     if args.repair_max_tokens is None:
         args.repair_max_tokens = args.max_tokens

@@ -316,6 +316,28 @@ def test_materialize_candidate_project_can_omit_grader_for_repair_prompts(tmp_pa
     assert "theorem target" not in text
 
 
+def test_materialize_candidate_project_can_reuse_existing_output_root(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    output_root = tmp_path / "out"
+    output_root.mkdir()
+    sentinel = output_root / "sentinel.txt"
+    sentinel.write_text("keep me\n", encoding="utf-8")
+
+    materialize_candidate_project(
+        project_root=project_root,
+        output_root=output_root,
+        record=record,
+        lean_declaration="theorem generated : True := by\n  trivial",
+        generated_name="generated",
+        lake_cache_from=None,
+        include_grader=False,
+        clean_output=False,
+    )
+
+    assert sentinel.exists()
+    assert (output_root / "Demo.lean").exists()
+
+
 def test_classify_lean_failure_separates_missing_mathlib_cache() -> None:
     output = "AlgebraicCombinatorics/CauchyBinet.lean:1:0: error: unknown module prefix 'Mathlib'\nNo directory 'Mathlib' or file 'Mathlib.olean'"
 
@@ -345,6 +367,8 @@ def _run_args(project_root: Path, records: Path, output: Path, **overrides: obje
         "repair_attempts": 0,
         "repair_max_tokens": 128,
         "repair_reasoning_effort": None,
+        "preflight_only": False,
+        "reuse_project": False,
         "lake_cache_from": None,
         "include_record_imports": False,
         "lean_timeout": 1,
@@ -504,6 +528,55 @@ def test_source_statement_live_eval_does_not_repair_grader_failures(tmp_path: Pa
     assert row["repair_attempts_used"] == 0
     assert row["repair_results"] == []
     assert summary["failure_classes"] == {"grader_gold_statement_not_proved": 1}
+
+
+def test_source_statement_live_eval_preflight_makes_no_openrouter_call(tmp_path: Path, monkeypatch) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 2)
+
+    def fail_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        raise AssertionError("preflight must not call OpenRouter")
+
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.call_openrouter", fail_call_openrouter)
+    monkeypatch.setattr(
+        "scripts.run_source_statement_live_eval.run_lean",
+        lambda project_root, target_path, timeout: {"exit_code": 0, "output": ""},
+    )
+
+    summary = run(
+        _run_args(
+            project_root,
+            records_path,
+            tmp_path / "out",
+            limit=2,
+            preflight_only=True,
+            reuse_project=True,
+            concurrency=1,
+        )
+    )
+
+    assert summary["records_attempted"] == 0
+    assert summary["paid_calls_made"] == 0
+    assert summary["successes"] == 0
+    assert summary["preflight_successes"] == 2
+    assert summary["preflight_success_rate"] == 1.0
+    assert [row["status"] for row in summary["results"]] == ["preflight_only", "preflight_only"]
+    assert all(row["success"] for row in summary["results"])
+    assert (tmp_path / "out/shared-project/Demo.lean").exists()
+
+
+def test_source_statement_live_eval_reuse_project_requires_serial_execution(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 1)
+
+    try:
+        run(_run_args(project_root, records_path, tmp_path / "out", reuse_project=True, concurrency=2))
+    except ValueError as exc:
+        assert "--reuse-project requires --concurrency 1" in str(exc)
+    else:
+        raise AssertionError("expected --reuse-project to reject concurrent execution")
 
 
 def test_source_statement_live_eval_persists_raw_assistant_content_before_json_parse(

@@ -38,7 +38,13 @@ starting with a small gated 12-record probe rather than a large final run.
 That first live probe was attempted and then stopped after 5 paid responses
 (`$0.062798456`) because the first completed rows all hit verifier/materializer
 timeouts before repair could run; see
-`docs/source-statement-live-12-repair1-aborted.md`.
+`docs/source-statement-live-12-repair1-aborted.md`. The root issue was not
+large generated Lean outputs; it was per-record `/tmp` Lake project setup
+without `--lake-cache-from`. The runner now has `--preflight-only` and
+`--reuse-project` modes so future checks can reuse one materialized project and
+filter bad verifier candidates before paid calls. A one-record zero-cost smoke
+with `--lake-cache-from algebraic-combinatorics --reuse-project
+--preflight-only` passed and produced a 248K output tree.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -122,9 +128,9 @@ timeouts before repair could run; see
   `--include-record-imports --repair-attempts 1 --max-actual-cost-usd 0.80`.
   Stopped after 5 paid responses because verifier/materializer timeouts made the
   result non-diagnostic for prompt quality.
-- [ ] Next broader research step: add an API-free verifier/cache preflight or
-  warmed-cache strategy so selected records can be checked cheaply before paid
-  source-statement calls.
+- [x] Add API-free verifier preflight and single shared materialized project
+  reuse (`--preflight-only --reuse-project`) so selected records can be checked
+  cheaply before paid source-statement calls.
 - [ ] After verifier throughput is fixed, rerun a smaller live probe over records
   whose generated-only projects pass the preflight, then decide whether context
   selection, API retrieval, or repair shape is the bottleneck before larger spend.

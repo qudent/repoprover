@@ -71,10 +71,27 @@ bash -ic 'UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source
   --limit 12 \
   --sample-mode stratified-easy \
   --include-record-imports \
+  --lake-cache-from algebraic-combinatorics \
+  --reuse-project \
   --repair-attempts 1 \
   --max-tokens 32768 \
   --max-actual-cost-usd 0.80 \
-  --concurrency 3'
+  --concurrency 1'
+```
+
+Before any paid run, use the same selected shape in verifier preflight mode:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --output /tmp/repoprover-source-statement-preflight-12-reuse \
+  --limit 12 \
+  --sample-mode stratified-easy \
+  --include-record-imports \
+  --lake-cache-from algebraic-combinatorics \
+  --reuse-project \
+  --preflight-only \
+  --lean-timeout 90 \
+  --concurrency 1
 ```
 
 ## Missing Pipeline Tasks

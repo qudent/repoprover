@@ -20,6 +20,15 @@ The run was manually stopped after verifier/materialization timeouts dominated
 the first completed rows. Continuing would have spent provider budget without
 measuring prompt quality.
 
+Important follow-up: this command did not pass `--lake-cache-from
+algebraic-combinatorics`, so each materialized `/tmp` project started setting up
+its own Lake dependency tree. Future runs should first use `--preflight-only
+--reuse-project --lake-cache-from algebraic-combinatorics --concurrency 1`, then
+run paid calls only on records whose reusable project checks within timeout. A
+one-record zero-cost smoke of that path succeeded at
+`/tmp/repoprover-source-statement-preflight-reuse-1`; its output tree was about
+`248K`.
+
 ## Result
 
 - Paid OpenRouter responses received: 5
@@ -59,8 +68,8 @@ for these records under fresh `/tmp` projects.
 
 Before another paid source-statement batch:
 
-1. Reuse a warmed Lake cache or prebuild copied record-local imports once per
-   source project instead of per materialized record.
+1. Reuse a warmed Lake cache and the runner's `--reuse-project` mode so each
+   record swaps only the generated target file inside one materialized project.
 2. Add a `verifier_timeout`/`verifier_cache` preflight that runs without paid
    calls on the selected records and marks records whose local imports cannot be
    checked inside the configured timeout.
