@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777974531-o0Cvzbcddofu2j8494zR",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_onePlusX_pow_int {F : Type*} [Field F] [BinomialRing F] (n : ℕ) :\\n    ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ n =\\n      PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F) :=\\n  fps_onePlusX_pow_neg' n\",\n  \"declaration_name\": \"fps_onePlusX_pow_int\",\n  \"used_context\": [\n    \"fps_onePlusX_pow_neg'\"\n  ],\n  \"notes\": [\n    \"Narrowed to negative integer exponent case as supported by context; uses existing helper theorem.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777974531,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-tp8-ep-3e86baa6",
+  "usage": {
+    "completion_tokens": 4540,
+    "prompt_tokens": 7069,
+    "total_tokens": 11609,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4001,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.02809926,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.02809926,
+      "upstream_inference_prompt_cost": 0.01230006,
+      "upstream_inference_completions_cost": 0.0157992
+    }
+  },
+  "provider": "Parasail"
+}

@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "theorem binom_sym (n k : ℕ) (hk : k ≤ n) : (Nat.choose n k : ℝ) = (Nat.choose n (n - k) : ℝ) := by\n  exact_mod_cast (Nat.choose_symm hk).symm",
+  "declaration_name": "binom_sym",
+  "used_context": ["Nat.choose_symm"],
+  "notes": ["The original generated proof used Nat.choose_symm hk directly, but that lemma gives the reversed equality, so we used .symm and then exact_mod_cast."]
+}

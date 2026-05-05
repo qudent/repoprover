@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem coeff_finitely_determined_iff (a : I → PowerSeries R) (n : ℕ) :\n    (PowerSeries.CoeffFinitelyDeterminedInSum a n ↔ ∃ M : Finset I, PowerSeries.DeterminesCoeffInSum a M n) ∧\n    (PowerSeries.CoeffFinitelyDeterminedInProd a n ↔ ∃ M : Finset I, PowerSeries.DeterminesCoeffInProd a M n) :=\nby\n  constructor <;> rfl",
+  "declaration_name": "coeff_finitely_determined_iff",
+  "used_context": [
+    "PowerSeries.CoeffFinitelyDeterminedInSum",
+    "PowerSeries.DeterminesCoeffInSum",
+    "PowerSeries.CoeffFinitelyDeterminedInProd",
+    "PowerSeries.DeterminesCoeffInProd"
+  ],
+  "notes": [
+    "Fully qualified names used to avoid namespace scoping issues that caused 'unknown identifier' error in the original generated code."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "theorem exists_isXnApproximator_of_multipliable {a : I → PowerSeries R} (ha : Multipliable a) (n : ℕ) : ∃ M : Finset I, IsXnApproximator a M n := by\n  classical\n    let M : ℕ → Finset I := fun m => (ha m).choose\n    have hM_spec (m : ℕ) : DeterminesCoeffInProd a (M m) m := (ha m).choose_spec\n    let M_all : Finset I := Finset.biUnion (Finset.range (n + 1)) M\n    refine ⟨M_all, ?_⟩\n    intro m hm\n    have hmem_range : m ∈ Finset.range (n + 1) := Finset.mem_range.2 (Nat.lt_succ_of_le hm)\n    have h_sub : M m ⊆ M_all := Finset.subset_biUnion_of_mem M hmem_range\n    exact determinesCoeffInProd_mono (hM_spec m) h_sub",
+  "declaration_name": "exists_isXnApproximator_of_multipliable",
+  "used_context": [
+    "Multipliable",
+    "DeterminesCoeffInProd",
+    "IsXnApproximator",
+    "determinesCoeffInProd_mono",
+    "CoeffFinitelyDeterminedInProd (from ha)",
+    "Finset.subset_biUnion_of_mem",
+    "Finset.mem_range",
+    "Nat.lt_succ_of_le"
+  ],
+  "notes": [
+    "Fixed Finset.subset_biUnion_of_mem call by providing the function M as an explicit argument before the proof term."
+  ]
+}

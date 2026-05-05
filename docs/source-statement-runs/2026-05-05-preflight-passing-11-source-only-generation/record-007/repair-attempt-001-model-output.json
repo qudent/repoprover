@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem summable_fps_comp (f g : K⟦X⟧) (hg : constantCoeff g = 0) :\n    SummableFPS (fun n : ℕ => coeff n f • (g ^ n)) := by\n  intro d\n  have hzero : ∀ n, d < n → coeff d (coeff n f • (g ^ n)) = 0 := by\n    intro n h\n    rw [coeff_smul, fps_subs_wd_firstCoeffs g hg n d h, smul_zero]\n  have h_fin : Set.Finite {n : ℕ | n ≤ d} := Set.finite_le_nat d\n  have h_subset : {n : ℕ | coeff d (coeff n f • (g ^ n)) ≠ 0} ⊆ {n : ℕ | n ≤ d} := by\n    intro n hn\n    by_contra! h\n    apply hn\n    exact hzero n (Nat.lt_of_not_ge h)\n  exact h_fin.subset h_subset",
+  "declaration_name": "summable_fps_comp",
+  "used_context": [
+    "SummableFPS (from AlgebraicCombinatorics.FPS)",
+    "coeff_smul",
+    "fps_subs_wd_firstCoeffs",
+    "smul_zero",
+    "Set.finite_le_nat",
+    "Set.subset"
+  ],
+  "notes": [
+    "Fixed rewrite from mul_zero to smul_zero because scalar action (•) is used, not ring multiplication."
+  ]
+}

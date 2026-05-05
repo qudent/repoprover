@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem card_perm (X : Type*) [Fintype X] [DecidableEq X] : Fintype.card (Equiv.Perm X) = (Fintype.card X)! :=\n  Fintype.card_perm",
+  "declaration_name": "card_perm",
+  "used_context": [
+    "Fintype.card_perm"
+  ],
+  "notes": [
+    "Added DecidableEq X instance to make Fintype (Perm X) available; using standard Mathlib lemma Fintype.card_perm."
+  ]
+}
