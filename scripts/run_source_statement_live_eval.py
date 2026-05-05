@@ -65,6 +65,9 @@ CONTEXT_NOTATION_HEADER_RE = re.compile(r"^-- File context: (?P<path>.*):(?P<sta
 LOCAL_MODULE_PREFIX = "AlgebraicCombinatorics."
 CONTEXT_MODES = ("target-comment", "source-only")
 TEX_ENV_RE = re.compile(r"\\begin\{(?P<env>theorem|lemma|proposition|definition|corollary|example|equation|align\*?)\}")
+TEX_ENV_BOUNDARY_RE = re.compile(
+    r"\\(?P<kind>begin|end)\{(?P<env>theorem|lemma|proposition|definition|corollary|example|equation|align\*?)\}"
+)
 TEX_LABEL_RE = re.compile(r"\\label\{(?P<label>[^}]+)\}")
 TEX_REF_RE = re.compile(r"\\(?:ref|eqref)\{(?P<label>[^}]+)\}")
 TEX_PART_RE = re.compile(r"\\textbf\{\((?P<part>[a-z])\)\}|\\item\s+(?:\\textbf\{\((?P<item_part>[a-z])\)\})?")
@@ -203,6 +206,27 @@ def _part_excerpts(text: str) -> list[dict[str, str]]:
     return parts[:8]
 
 
+def _tex_environment_balance(text: str) -> dict[str, list[str]]:
+    stack: list[str] = []
+    unmatched_end: list[str] = []
+    for match in TEX_ENV_BOUNDARY_RE.finditer(text):
+        kind = match.group("kind")
+        env = match.group("env")
+        if kind == "begin":
+            stack.append(env)
+            continue
+        if stack and stack[-1] == env:
+            stack.pop()
+        elif env in stack:
+            while stack:
+                popped = stack.pop()
+                if popped == env:
+                    break
+        else:
+            unmatched_end.append(env)
+    return {"unclosed": stack, "unmatched_end": unmatched_end}
+
+
 def tex_source_focus(snippets: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Extract focus cues from TeX/source snippets without using Lean targets."""
 
@@ -232,10 +256,11 @@ def tex_source_focus(snippets: list[dict[str, Any]]) -> list[dict[str, Any]]:
         }
         if line_count >= 25:
             row["span_risks"].append("broad_source_span")
-        if "\\begin{" in text and "\\end{" not in text:
-            row["span_risks"].append("snippet_may_end_inside_environment_or_before_next_statement")
-        if "\\end{" in text and "\\begin{" not in text:
-            row["span_risks"].append("snippet_may_start_inside_environment")
+        env_balance = _tex_environment_balance(text)
+        for env in env_balance["unclosed"]:
+            row["span_risks"].append(f"snippet_ends_with_unclosed_environment:{env}")
+        for env in env_balance["unmatched_end"]:
+            row["span_risks"].append(f"snippet_starts_after_environment_begin:{env}")
         focus_rows.append(row)
     return focus_rows
 

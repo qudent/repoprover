@@ -100,7 +100,8 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/compare_source_state
 
 - rows with hidden target names in source-only payloads: `0`
 - rows with target-comment terms absent from the source span: `7/11`
-- source-only estimated max cost: `$0.330879705`
+- source-only estimated max cost after TeX environment-balance focus updates:
+  `$0.331019775`
 
 The same comparison over the strict six-row slice found `0` hidden target-name
 hits and `5/6` rows where target-comment terms are absent from the source span.
@@ -210,6 +211,22 @@ are not all ordinary proof-repair cases: `det_triangular`,
 `simpleTransposition_sq_eq_one`, and the repaired `summable_fps_comp` are
 statement-family/context-selection misses.
 
+## Source-Span Risk Finding
+
+The row 11 failure exposed a concrete source-selection bug. The source-only
+prompt for `simpleTransposition_isSwap` ended at `\begin{proposition}` before
+the proposition body, so the model saw the definition/example context but not
+the property that the target formalizes. `tex_source_focus` now tracks balanced
+TeX environments and emits span risks such as:
+
+- `snippet_ends_with_unclosed_environment:proposition`
+- `snippet_starts_after_environment_begin:definition`
+
+The regenerated 11-record source-only budget artifact flags row 11 with the
+unclosed proposition risk. This is a generic context-selection signal: future
+sampling should expand or reject snippets that cut off a theorem/proposition
+body before spending model calls.
+
 ## What Changed In The Prompt
 
 In `source-only` mode:
@@ -251,10 +268,13 @@ After tightening the X-shift prompt/diagnostic distinction, the focused test set
 passes with `65 passed`.
 After adding targeted verifier indices for repair artifacts, the focused test
 set passes with `66 passed`.
+After adding TeX environment-balance span risks, the focused test set passes
+with `67 passed`.
 
 ## Next Step
 
 Use `source-only` as the default for realistic validation. The next work should
 not be another hand-tuned six-row repair loop. It should improve TeX/source
-focus selection for rows where the selected source span is too broad or points
-at the wrong theorem family, then rerun a small broader-slice validation.
+focus selection for rows where the selected source span is too broad, begins or
+ends inside theorem-like environments, or points at the wrong theorem family,
+then rerun a small broader-slice validation.

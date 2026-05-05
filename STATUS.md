@@ -18,7 +18,8 @@ Source-statement generation, archived provider-result capture, reusable-project 
 - [x] Commit the raw 11-record paid generation artifacts.
 - [x] Verify the 11 generated files serially in a reusable Lean project and record per-row outcomes.
 - [x] Run and verify a compile-failure repair pass over the broader source-only slice.
-- [ ] Improve source/TeX focus selection for the remaining semantic/context misses.
+- [x] Add TeX environment-balance risk flags for source snippets that cut off theorem/proposition bodies.
+- [ ] Use those span-risk flags to resample or expand source context before the next paid generation slice.
 
 ## Blockers
 - Realistic context selection is still weak: context comparison found target-comment focus terms absent from source-only spans in 7/11 broader rows.
@@ -30,6 +31,7 @@ Source-statement generation, archived provider-result capture, reusable-project 
 - Completed an 11-record source-only generation-only run with DeepSeek V4 Pro: 11/11 generated, `$0.081084638`.
 - Verified the 11 generated files serially: 1/11 passed, 8 failed generated-only compilation, and 2 compiled but did not prove the withheld gold statement.
 - Repair attempt 1 over compile failures generated 7/8 repairs for `$0.058516809`; 3/7 passed hidden-grader verification. Row 1 retry generated for `$0.013631334` but still did not compile.
+- Regenerated the 11-record source-only budget audit with environment-balance span risks; row 11 now flags `snippet_ends_with_unclosed_environment:proposition`.
 
 ## Agent Notes
 - Raw paid outputs are committed before verification: generation `2206e80`, repair attempt 1 `7a5412b`, row-1 retry `932b843`.

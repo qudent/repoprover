@@ -22,6 +22,7 @@ from scripts.run_source_statement_live_eval import (
     materialize_candidate_project,
     run,
     select_source_statement_records,
+    tex_source_focus,
 )
 
 
@@ -157,6 +158,25 @@ def test_source_statement_prompt_includes_tex_derived_focus(tmp_path: Path) -> N
     assert "Demo.target" not in json.dumps(tex_focus)
     assert "theorem target" not in json.dumps(tex_focus)
     assert tex_focus["policy"].startswith("derived only from provided TeX")
+
+
+def test_tex_source_focus_flags_unclosed_environment_after_closed_earlier_environment() -> None:
+    focus = tex_source_focus(
+        [
+            {
+                "path": "Demo.tex",
+                "line_range": [10, 20],
+                "labels": ["def.demo"],
+                "snippet": (
+                    "\\begin{definition}\\label{def.demo}A definition.\\end{definition}\n"
+                    "\\begin{example}An example.\\end{example}\n"
+                    "\\begin{proposition}\n"
+                ),
+            }
+        ]
+    )[0]
+
+    assert "snippet_ends_with_unclosed_environment:proposition" in focus["span_risks"]
 
 
 def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_path: Path) -> None:
