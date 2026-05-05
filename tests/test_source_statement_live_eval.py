@@ -259,6 +259,85 @@ def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_
     assert "Every nonstandard helper theorem or local API" in instructions
 
 
+def test_source_only_prompt_summarizes_imported_source_label_context(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    project_root.mkdir()
+    lean_dir = project_root / "AlgebraicCombinatorics"
+    lean_dir.mkdir()
+    (lean_dir / "Previous.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace AlgebraicCombinatorics",
+                "",
+                "/-- Previous formalization of Lemma \\ref{demo.shared}(b). -/",
+                "theorem previous_shared_result : True := by",
+                "  trivial",
+                "",
+                "end AlgebraicCombinatorics",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (lean_dir / "Target.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "import AlgebraicCombinatorics.Previous",
+                "namespace AlgebraicCombinatorics",
+                "",
+                "theorem target : True := by",
+                "  trivial",
+                "",
+                "end AlgebraicCombinatorics",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (project_root / "Demo.tex").write_text(
+        "\\begin{lemma}\\label{demo.shared} The shared statement.\\end{lemma}\n",
+        encoding="utf-8",
+    )
+    record = SelectedRecord(
+        {
+            "id": "AlgebraicCombinatorics/Target.lean:AlgebraicCombinatorics.target",
+            "alignment": {"comment_labels": ["demo.shared"], "paired_source_path": "Demo.tex"},
+            "output": {
+                "lean_path": "AlgebraicCombinatorics/Target.lean",
+                "declaration_names": ["AlgebraicCombinatorics.target"],
+                "line_range": [5, 6],
+                "chunk_kind": "theorem",
+            },
+            "minimal_context": {
+                "imports": ["Mathlib", "AlgebraicCombinatorics.Previous"],
+                "source_spans": [{"path": "Demo.tex", "line_range": [1, 1], "labels": ["demo.shared"]}],
+                "file_context": [
+                    {
+                        "path": "AlgebraicCombinatorics/Target.lean",
+                        "kind": "namespace",
+                        "line_range": [3, 3],
+                        "name": "AlgebraicCombinatorics",
+                    }
+                ],
+                "lean_predecessors": [],
+            },
+        }
+    )
+
+    messages = build_messages(project_root, record, context_mode="source-only")
+    user = json.loads(messages[1]["content"])
+    imported = user["context"]["source_progress_context"]["imported_source_label_declarations"]
+    instructions = "\n".join(user["instructions"])
+
+    assert imported[0]["declaration"] == "previous_shared_result"
+    assert imported[0]["full_name"] == "AlgebraicCombinatorics.Previous.previous_shared_result"
+    assert imported[0]["matched_source_labels"] == ["demo.shared"]
+    assert "previous formalized project theorems" in instructions
+    assert "theorem target" not in json.dumps(imported)
+
+
 def test_repair_prompt_uses_generated_only_error_without_grader_feedback(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     messages = build_messages(project_root, record)
@@ -763,7 +842,7 @@ def test_source_only_context_mode_does_not_use_hidden_name_guidance(tmp_path: Pa
     assert "simpleTransposition_isSwap" not in guidance_text
 
 
-def test_source_only_context_mode_disables_imported_label_api_retrieval(tmp_path: Path) -> None:
+def test_source_only_context_mode_summarizes_imported_label_api_outside_prefix(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     imported_path = project_root / "AlgebraicCombinatorics/Imported.lean"
     imported_path.parent.mkdir(parents=True, exist_ok=True)
@@ -792,7 +871,10 @@ def test_source_only_context_mode_disables_imported_label_api_retrieval(tmp_path
     source_only_context = json.loads(source_only_messages[1]["content"])["context"]
 
     assert "imported_by_label" in json.dumps(target_comment_context)
-    assert "imported_by_label" not in json.dumps(source_only_context)
+    assert "imported_by_label" not in source_only_context["lean_prefix_context"]
+    imported = source_only_context["source_progress_context"]["imported_source_label_declarations"]
+    assert imported[0]["declaration"] == "imported_by_label"
+    assert imported[0]["policy"].startswith("previous formalized project statement")
 
 
 def test_source_only_context_mode_includes_prior_same_file_source_label_api(tmp_path: Path) -> None:

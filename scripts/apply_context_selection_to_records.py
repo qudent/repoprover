@@ -69,6 +69,28 @@ def selected_candidate_summary(selection: dict[str, Any]) -> list[str]:
     return lines
 
 
+def selected_project_context_summary(selection: dict[str, Any]) -> list[str]:
+    lines: list[str] = []
+    for item in selection.get("candidate_project_context") or []:
+        if not isinstance(item, dict):
+            continue
+        name = str(item.get("name") or "").strip()
+        if not name:
+            continue
+        shape = str(item.get("expected_signature_or_shape") or "").strip()
+        why = str(item.get("why_needed") or "").strip()
+        confidence = item.get("confidence")
+        parts = [f"`{name}`"]
+        if shape:
+            parts.append(f"shape: {shape}")
+        if why:
+            parts.append(f"why: {why}")
+        if confidence is not None:
+            parts.append(f"confidence: {confidence}")
+        lines.append("; ".join(parts))
+    return lines
+
+
 def hydrate_snippet_lines(resolved: list[dict[str, Any]], *, max_chars: int) -> list[str]:
     lines: list[str] = []
     used_chars = 0
@@ -113,6 +135,10 @@ def context_selection_lines(selection: dict[str, Any], hydrated: list[dict[str, 
     if candidates:
         lines.append("Selected candidate Mathlib/API context:")
         lines.extend(f"- {item}" for item in candidates)
+    project_candidates = selected_project_context_summary(selection)
+    if project_candidates:
+        lines.append("Selected candidate previous project context:")
+        lines.extend(f"- {item}" for item in project_candidates)
     proof_notes = [str(item).strip() for item in selection.get("proof_notes") or [] if str(item).strip()]
     if proof_notes:
         lines.append("Proof notes:")

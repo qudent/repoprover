@@ -37,7 +37,7 @@ DECL_RE = re.compile(
 )
 IMPORT_RE = re.compile(r"^\s*import\s+(?P<module>[A-Za-z0-9_'.]+)\s*$")
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
-SECTION_RE = re.compile(r"^\s*section(?:\s+[A-Za-z0-9_'.]+)?\s*$")
+SECTION_RE = re.compile(r"^\s*(?:noncomputable\s+)?section(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
 VARIABLE_RE = re.compile(r"^\s*(?:variable|variables)\b")
 OPEN_RE = re.compile(r"^\s*open(?:\s+scoped)?\b")
@@ -304,8 +304,8 @@ def parse_lean_declarations(project_root: Path, lean_path: Path) -> list[LeanDec
                 }
             )
             continue
-        if SECTION_RE.match(line):
-            section_name = line.strip().removeprefix("section").strip()
+        if match := SECTION_RE.match(line):
+            section_name = str(match.group("name") or "").strip()
             scope_stack.append(
                 {
                     "kind": "section",

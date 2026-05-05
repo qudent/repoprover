@@ -260,6 +260,58 @@ def test_build_target_lean_preserves_file_context_chronology_around_predecessors
     assert lean_text.index("variable {K}") < lean_text.index("theorem target")
 
 
+def test_build_target_lean_recovers_live_noncomputable_section_for_stale_record(tmp_path: Path) -> None:
+    source_root = tmp_path / "source"
+    source_root.mkdir()
+    lean_dir = source_root / "Demo"
+    lean_dir.mkdir()
+    (lean_dir / "Noncomputable.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "noncomputable section",
+                "namespace Demo",
+                "",
+                "def helper : Nat := Classical.choice (show Nonempty Nat from ⟨0⟩)",
+                "",
+                "theorem target : helper = helper := by",
+                "  rfl",
+                "",
+                "end Demo",
+                "end",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    record = SelectedRecord(
+        {
+            "id": "demo:target",
+            "output": {
+                "lean_path": "Demo/Noncomputable.lean",
+                "declaration_names": ["Demo.target"],
+                "line_range": [7, 8],
+                "chunk_kind": "theorem",
+            },
+            "minimal_context": {
+                "file_context": [
+                    {"path": "Demo/Noncomputable.lean", "kind": "namespace", "name": "Demo", "line_range": [3, 3]},
+                ],
+                "lean_predecessors": [
+                    {"path": "Demo/Noncomputable.lean", "declaration": "Demo.helper", "line_range": [5, 5]},
+                ],
+            },
+        }
+    )
+
+    lean_text = build_target_lean(source_root, record)
+
+    assert "noncomputable section" in lean_text
+    assert lean_text.index("noncomputable section") < lean_text.index("namespace Demo")
+    assert lean_text.index("namespace Demo") < lean_text.index("def helper")
+    assert lean_text.rstrip().endswith("end")
+
+
 def test_build_target_lean_adds_transitive_same_file_predecessors(tmp_path: Path) -> None:
     source_root = tmp_path / "source"
     source_root.mkdir()

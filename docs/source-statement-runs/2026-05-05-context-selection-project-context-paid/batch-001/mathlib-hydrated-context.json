@@ -1,0 +1,162 @@
+{
+  "mathlib_source_available": true,
+  "mathlib_root": "algebraic-combinatorics/.lake/packages/mathlib",
+  "records": [
+    {
+      "record_key": "record-001",
+      "resolved_mathlib_context": [
+        {
+          "query": "Matrix.det_diagonal",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+              "line": 76,
+              "text": "theorem det_diagonal {d : n → R} : det (diagonal d) = ∏ i, d i := by",
+              "snippet": "theorem det_diagonal {d : n → R} : det (diagonal d) = ∏ i, d i := by\n  rw [det_apply']\n  refine (Finset.sum_eq_single 1 ?_ ?_).trans ?_\n  · rintro σ - h2\n    obtain ⟨x, h3⟩ := not_forall.1 (mt Equiv.ext h2)\n    convert mul_zero (ε σ)\n    apply Finset.prod_eq_zero (mem_univ x)\n    exact if_neg h3\n  · simp\n  · simp"
+            }
+          ]
+        },
+        {
+          "query": "Matrix.diagonal",
+          "matches": [
+            {
+              "file": "Mathlib/Data/Set/Operations.lean",
+              "line": 242,
+              "text": "def diagonal (α : Type*) : Set (α × α) := {p | p.1 = p.2}",
+              "snippet": "/-- `diagonal α` is the set of `α × α` consisting of all pairs of the form `(a, a)`. -/\ndef diagonal (α : Type*) : Set (α × α) := {p | p.1 = p.2}"
+            },
+            {
+              "file": "Mathlib/Data/Matrix/Diagonal.lean",
+              "line": 50,
+              "text": "def diagonal [Zero α] (d : n → α) : Matrix n n α :=",
+              "snippet": "/-- `diagonal d` is the square matrix such that `(diagonal d) i i = d i` and `(diagonal d) i j = 0`\nif `i ≠ j`.\n\nNote that bundled versions exist as:\n* `Matrix.diagonalAddMonoidHom`\n* `Matrix.diagonalLinearMap`\n* `Matrix.diagonalRingHom`\n* `Matrix.diagonalAlgHom`\n-/\ndef diagonal [Zero α] (d : n → α) : Matrix n n α :=\n  of fun i j => if i = j then d i else 0\n\n-- TODO: set as an equation lemma for `diagonal`, see https://github.com/leanprover-community/mathlib4/pull/3024"
+            }
+          ]
+        },
+        {
+          "query": "det_eq_zero_of_row_eq_zero",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+              "line": 358,
+              "text": "theorem det_eq_zero_of_row_eq_zero {A : Matrix n n R} (i : n) (h : ∀ j, A i j = 0) : det A = 0 :=",
+              "snippet": "theorem det_eq_zero_of_row_eq_zero {A : Matrix n n R} (i : n) (h : ∀ j, A i j = 0) : det A = 0 :=\n  (detRowAlternating : (n → R) [⋀^n]→ₗ[R] R).map_coord_zero i (funext h)"
+            }
+          ]
+        },
+        {
+          "query": "Finset.orderEmbOfFin",
+          "matches": [
+            {
+              "file": "Mathlib/Data/Finset/Sort.lean",
+              "line": 201,
+              "text": "def orderEmbOfFin (s : Finset α) {k : ℕ} (h : s.card = k) : Fin k ↪o α :=",
+              "snippet": "/-- Given a finset `s` of cardinality `k` in a linear order `α`, the map `orderEmbOfFin s h` is\nthe increasing bijection between `Fin k` and `s` as an order embedding into `α`. Here, `h` is a\nproof that the cardinality of `s` is `k`. We use this instead of an embedding `Fin s.card ↪o α` to\navoid casting issues in further uses of this function. -/\ndef orderEmbOfFin (s : Finset α) {k : ℕ} (h : s.card = k) : Fin k ↪o α :=\n  (orderIsoOfFin s h).toOrderEmbedding.trans (OrderEmbedding.subtype _)\n\n@[simp]"
+            }
+          ]
+        },
+        {
+          "query": "Finset.card_compl",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/AffineSpace/Simplex/Centroid.lean",
+              "line": 523,
+              "text": "      rw [Finset.card_compl, Fintype.card_fin, card_singleton, add_tsub_cancel_right]",
+              "snippet": "      rw [Finset.card_compl, Fintype.card_fin, card_singleton, add_tsub_cancel_right]\n    have hcard' : 1 < #s' := by grind\n    rw [Finset.one_lt_card_iff] at hcard'\n    tauto\n  choose i j hij using he\n  have h_ij : Disjoint ({i} : Set {x // x ∈ s'}) {j} := by simp [hij]\n  have h_disjoint : Disjoint (Submodule.span k {u i}) (Submodule.span k {u j}) := by\n    simp_rw [← Set.image_singleton, hi.disjoint_span_image h_ij]\n  exact Submodule.disjoint_def.1 h_disjoint _ (h_span i) (h_span j)\n\nend median\n\n/-- The medial is the simplex formed by centroids on all faces. -/"
+            },
+            {
+              "file": "Mathlib/LinearAlgebra/FreeModule/Int.lean",
+              "line": 117,
+              "text": "  · convert Finset.card_compl {x | ∃ j, f j = x} using 2",
+              "snippet": "  · convert Finset.card_compl {x | ∃ j, f j = x} using 2\n    · exact (Finset.compl_filter _).symm\n    · convert (Finset.card_image_of_injective Finset.univ f.injective).symm <;> simp\n  · rw [Finset.attach_eq_univ]\n    let f' : Fin n → { x // x ∈ Finset.filter (fun x ↦ ∃ j, f j = x) Finset.univ } :=\n      fun i ↦ ⟨f i, by simp⟩\n    have hf' : Function.Injective f' := fun i j hij ↦ by\n      rw [Subtype.ext_iff] at hij\n      exact f.injective hij\n    let f'' : Fin n ↪ { x // x ∈ Finset.filter (fun x ↦ ∃ j, f j = x) Finset.univ } :=\n      ⟨f', hf'⟩\n    have hu : (Finset.univ : Finset { x // x ∈ Finset.filter (fun x ↦ ∃ j, f j = x) Finset.univ }) =\n      Finset.univ.map f'' := by\n      ext x\n      simp only [Finset.univ_eq_attach, Finset.mem_attach, Finset.mem_map, Finset.mem_univ,\n        true_and, true_iff]\n      have hx := x.property\n      simp only [Finset.univ_filter_exists, Finset.mem_image, Finset.mem_univ, true_and] at hx\n      rcases hx with ⟨i, hi⟩\n      refine ⟨i, ?_⟩\n      rw [Subtype.ext_iff]\n      exact hi\n    rw [hu, Finset.prod_map]\n    congr! with i\n    rw [← f.injective.eq_iff]\n    generalize_proofs h\n    rw [h.choose_spec]\n    rfl"
+            }
+          ]
+        },
+        {
+          "query": "Matrix.det_eq_zero_of_row_eq_zero",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+              "line": 358,
+              "text": "theorem det_eq_zero_of_row_eq_zero {A : Matrix n n R} (i : n) (h : ∀ j, A i j = 0) : det A = 0 :=",
+              "snippet": "theorem det_eq_zero_of_row_eq_zero {A : Matrix n n R} (i : n) (h : ∀ j, A i j = 0) : det A = 0 :=\n  (detRowAlternating : (n → R) [⋀^n]→ₗ[R] R).map_coord_zero i (funext h)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "resolved_mathlib_context": [
+        {
+          "query": "Equiv.Perm.sign_swap",
+          "matches": [
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 388,
+              "text": "theorem sign_swap {x y : α} (h : x ≠ y) : sign (swap x y) = -1 :=",
+              "snippet": "theorem sign_swap {x y : α} (h : x ≠ y) : sign (swap x y) = -1 :=\n  (signAux3_mul_and_swap 1 1 _ mem_univ).2 h\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 392,
+              "text": "theorem sign_swap' {x y : α} : sign (swap x y) = if x = y then 1 else -1 :=",
+              "snippet": "theorem sign_swap' {x y : α} : sign (swap x y) = if x = y then 1 else -1 :=\n  if H : x = y then by simp [H, swap_self] else by simp [sign_swap H, H]"
+            }
+          ]
+        },
+        {
+          "query": "Equiv.swap",
+          "matches": [
+            {
+              "file": "Mathlib/Data/TwoPointing.lean",
+              "line": 53,
+              "text": "def swap : TwoPointing α :=",
+              "snippet": "def swap : TwoPointing α :=\n  ⟨(p.snd, p.fst), p.snd_ne_fst⟩"
+            },
+            {
+              "file": "Mathlib/Topology/Algebra/ContinuousMonoidHom.lean",
+              "line": 223,
+              "text": "def swap : (A × B) →ₜ* (B × A) := prod (snd A B) (fst A B)",
+              "snippet": "def swap : (A × B) →ₜ* (B × A) := prod (snd A B) (fst A B)\n\nsection CommMonoid\nvariable [CommMonoid E] [TopologicalSpace E] [ContinuousMul E]\n\n/-- The continuous homomorphism given by multiplication. -/\n@[to_additive (attr := simps!) /-- The continuous homomorphism given by addition. -/]"
+            }
+          ]
+        },
+        {
+          "query": "Finset.sum_congr",
+          "matches": [
+            {
+              "file": "Mathlib/MeasureTheory/Measure/MeasureSpace.lean",
+              "line": 1321,
+              "text": "theorem sum_congr {μ ν : ℕ → Measure α} (h : ∀ n, μ n = ν n) : sum μ = sum ν :=",
+              "snippet": "theorem sum_congr {μ ν : ℕ → Measure α} (h : ∀ n, μ n = ν n) : sum μ = sum ν :=\n  congr_arg sum (funext h)"
+            },
+            {
+              "file": "Mathlib/Algebra/SkewMonoidAlgebra/Basic.lean",
+              "line": 454,
+              "text": "theorem sum_congr {f : SkewMonoidAlgebra k G} {M : Type*} [AddCommMonoid M] {g₁ g₂ : G → k → M}",
+              "snippet": "theorem sum_congr {f : SkewMonoidAlgebra k G} {M : Type*} [AddCommMonoid M] {g₁ g₂ : G → k → M}\n    (h : ∀ x ∈ f.support, g₁ x (f.coeff x) = g₂ x (f.coeff x)) :\n    f.sum g₁ = f.sum g₂ := Finset.sum_congr rfl h\n\n@[elab_as_elim]"
+            }
+          ]
+        },
+        {
+          "query": "Finset.sum_involution",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/Alternating/DomCoprod.lean",
+              "line": 142,
+              "text": "        Finset.sum_involution (fun σ _ => Equiv.swap i j • σ)",
+              "snippet": "        Finset.sum_involution (fun σ _ => Equiv.swap i j • σ)\n          (fun σ _ => domCoprod.summand_add_swap_smul_eq_zero a b σ hv hij)\n          (fun σ _ => mt <| domCoprod.summand_eq_zero_of_smul_invariant a b σ hv hij)\n          (fun σ _ => Finset.mem_univ _) fun σ _ =>\n          Equiv.swap_smul_involutive i j σ }"
+            },
+            {
+              "file": "Mathlib/LinearAlgebra/Alternating/Basic.lean",
+              "line": 814,
+              "text": "    Finset.sum_involution (fun σ _ => swap i j * σ)",
+              "snippet": "    Finset.sum_involution (fun σ _ => swap i j * σ)\n      (fun σ _ => by simp [Perm.sign_swap i_ne_j, apply_swap_eq_self hv])\n      (fun σ _ _ => (not_congr swap_mul_eq_iff).mpr i_ne_j) (fun σ _ => Finset.mem_univ _)\n      fun σ _ => swap_mul_involutive i j σ\n\n/-- Produce an `AlternatingMap` out of a `MultilinearMap`, by summing over all argument\npermutations. -/"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "source_focus_summary": "Formalize Lemma lem.det.minors-diag: for a diagonal matrix D = diag(d₁,…,dₙ), (a) det(sub_P^P D) = ∏_{i∈P} d_i for any subset P of [n]; (b) if P and Q are distinct subsets of [n] with |P| = |Q|, then det(sub_P^Q D) = 0.",
+      "selected_source_part": "The whole lemma (both parts (a) and (b)) as a single multi-part statement.",
+      "source_part_rationale": "The source snippet contains both parts (a) and (b) of Lemma lem.det.minors-diag. No prior same-label declaration exists in the prefix context, so both parts should be formalized together.",
+      "formalization_sketch": [
+        "Statement: theorem det_minors_diag {n : ℕ} (d : Fin n → R) : ... where D is the diagonal matrix with entries d i. Use `Matrix.diagonal` for D. For part (a): `sub[P,P] D` is diagonal with entries d i for i ∈ P, so its determinant is the product of those entries. For part (b): if P ≠ Q and |P| = |Q|, then there exists i ∈ P \\ Q, making the corresponding row of `sub[P,Q] D` zero, hence determinant zero.",
+        "Proof plan: (a) Use `submatrixOfFinset` properties: `sub[P,P] D = Matrix.diagonal (fun (k : Fin P.card) => d ((P.orderEmbOfFin rfl) k))`. Then `det_diagonal` gives the product. (b) Show that `sub[P,Q] D` has a zero row: pick i ∈ P \\ Q, then for all j, `D i (Q.orderEmbOfFin rfl j) = 0` because D is diagonal and i ∉ Q. Then `det_eq_zero_of_row_zero` or `det_zero_of_row_eq_zero`."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "submatrixOfFinset (A : Matrix (Fin n) (Fin m) R) (U : Finset (Fin n)) (V : Finset (Fin m)) : Matrix (Fin U.card) (Fin V.card) R",
+          "why_needed": "This is the local definition of sub_U^V A, used in the statement."
+        },
+        {
+          "name_or_snippet": "scoped notation \"sub[\" U \",\" V \"] \" A => submatrixOfFinset A U V",
+          "why_needed": "The notation used in the source statement."
+        },
+        {
+          "name_or_snippet": "submatrixOfFinset_apply",
+          "why_needed": "To compute entries of the submatrix."
+        },
+        {
+          "name_or_snippet": "Matrix.diagonal (f : n → R) : Matrix n n R",
+          "why_needed": "To construct the diagonal matrix D."
+        },
+        {
+          "name_or_snippet": "Matrix.det_diagonal",
+          "why_needed": "Determinant of a diagonal matrix is product of diagonal entries."
+        },
+        {
+          "name_or_snippet": "Finset.card",
+          "why_needed": "Used in the cardinality condition |P| = |Q|."
+        },
+        {
+          "name_or_snippet": "Finset.orderEmbOfFin",
+          "why_needed": "Used to index rows/columns of the submatrix."
+        }
+      ],
+      "candidate_project_context": [
+        {
+          "name": "submatrixOfFinset",
+          "expected_signature_or_shape": "submatrixOfFinset {n m : ℕ} (A : Matrix (Fin n) (Fin m) R) (U : Finset (Fin n)) (V : Finset (Fin m)) : Matrix (Fin U.card) (Fin V.card) R",
+          "why_needed": "Core definition used in the statement.",
+          "confidence": 1.0
+        },
+        {
+          "name": "submatrixOfFinset_apply",
+          "expected_signature_or_shape": "theorem submatrixOfFinset_apply {n m : ℕ} {R : Type*} (A : Matrix (Fin n) (Fin m) R) (U : Finset (Fin n)) (V : Finset (Fin m)) (i : Fin U.card) (j : Fin V.card) : submatrixOfFinset A U V i j = A (U.orderEmbOfFin rfl i) (V.orderEmbOfFin rfl j)",
+          "why_needed": "To compute entries of the submatrix.",
+          "confidence": 1.0
+        },
+        {
+          "name": "det_add_sum",
+          "expected_signature_or_shape": "theorem det_add_sum {n : ℕ} (A B : Matrix (Fin n) (Fin n) R) : (A + B).det = ∑ P : Finset (Fin n), ∑ Q : Finset (Fin n), if h : Q.card = P.card then ... else 0",
+          "why_needed": "This is the main theorem thm.det.det(A+B) that uses lem.det.minors-diag. The lemma is used to simplify the formula when B is diagonal (thm.det.det(A+D)).",
+          "confidence": 0.9
+        }
+      ],
+      "mathlib_queries": [
+        "Matrix.det_diagonal",
+        "Matrix.diagonal",
+        "det_eq_zero_of_row_eq_zero",
+        "Finset.orderEmbOfFin",
+        "Finset.card_compl"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Matrix.det_diagonal",
+          "kind": "theorem",
+          "expected_signature_or_shape": "det_diagonal {n : Type*} [DecidableEq n] [Fintype n] [CommRing R] (f : n → R) : (Matrix.diagonal f).det = ∏ i, f i",
+          "why_needed": "Determinant of a diagonal matrix.",
+          "confidence": 0.95
+        },
+        {
+          "name": "Matrix.diagonal",
+          "kind": "def",
+          "expected_signature_or_shape": "diagonal {n : Type*} [DecidableEq n] (f : n → R) : Matrix n n R",
+          "why_needed": "To construct the diagonal matrix D.",
+          "confidence": 1.0
+        },
+        {
+          "name": "Matrix.det_eq_zero_of_row_eq_zero",
+          "kind": "theorem",
+          "expected_signature_or_shape": "det_eq_zero_of_row_eq_zero {n : Type*} [DecidableEq n] [Fintype n] [CommRing R] (A : Matrix n n R) (i : n) (h : ∀ j, A i j = 0) : A.det = 0",
+          "why_needed": "To show determinant zero when a row is zero.",
+          "confidence": 0.8
+        }
+      ],
+      "proof_notes": [
+        "Use `Matrix.diagonal` for D: `let D := Matrix.diagonal d`.",
+        "For part (a): `sub[P,P] D` is diagonal with entries `d (P.orderEmbOfFin rfl k)`. Use `det_diagonal`.",
+        "For part (b): pick `i ∈ P \\ Q`. Then for any `j`, `D i (Q.orderEmbOfFin rfl j) = 0` because `i ≠ Q.orderEmbOfFin rfl j` (since `i ∉ Q`). Then `det_eq_zero_of_row_eq_zero` applies."
+      ],
+      "uncertainties": [
+        "Exact name of the lemma that determinant is zero if a row is zero: `det_eq_zero_of_row_eq_zero` or `det_zero_of_row_eq_zero`? Need to check Mathlib.",
+        "Whether `Finset.card_compl` is available or needs `simp` with `Finset.card_compl`."
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "source_focus_summary": "Formalize Lemma lem.sf.alternant-0: (a) If the N-tuple α has two equal entries, then a_α = 0. (b) If β is obtained from α by swapping two entries, then a_β = -a_α.",
+      "selected_source_part": "Part (b) of Lemma lem.sf.alternant-0: swapping two entries of α negates the alternant.",
+      "source_part_rationale": "Part (a) is already formalized as `alternant_zero_of_eq` in the same file (SchurBasics.lean) and as `alternant_eq_zero_of_repeated` in the imported module. The prefix context shows `prior_same_label_declarations` includes `alternant_zero_of_eq` for part (a). Therefore, only part (b) remains to be formalized.",
+      "formalization_sketch": [
+        "Statement: theorem alternant_swap' {α : Fin N → ℕ} {i j : Fin N} (hij : i ≠ j) : alternant (R := R) N (α ∘ Equiv.swap i j) = -alternant N α",
+        "Proof: Use the definition of `alternant` as a sum over permutations. Reindex the sum by multiplying each σ by the transposition (i j). Use the sign change of the permutation and the fact that (α ∘ swap i j) ∘ σ = α ∘ (swap i j * σ).",
+        "Alternatively, use the imported theorem `alternant_swap` from `AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson.alternant_swap` which already proves this for the `AlgebraicCombinatorics.alternant` definition. Since the local `alternant` is an abbreviation for that, we can simply apply the imported theorem."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "noncomputable abbrev alternant (N : ℕ) (α : Fin N → ℕ) : MvPolynomial (Fin N) R := AlgebraicCombinatorics.alternant α",
+          "why_needed": "The local definition of alternant, which is an abbreviation for the imported one."
+        },
+        {
+          "name_or_snippet": "Equiv.swap i j",
+          "why_needed": "The transposition used to swap entries."
+        },
+        {
+          "name_or_snippet": "Equiv.Perm.sign_swap hij",
+          "why_needed": "The sign of a transposition is -1."
+        }
+      ],
+      "candidate_project_context": [
+        {
+          "name": "alternant_swap",
+          "expected_signature_or_shape": "theorem alternant_swap {α : Fin N → ℕ} {i j : Fin N} (hij : i ≠ j) : (AlgebraicCombinatorics.alternant (α ∘ Equiv.swap i j) : MvPolynomial (Fin N) R) = -AlgebraicCombinatorics.alternant α",
+          "why_needed": "This imported theorem directly proves the statement for the underlying `AlgebraicCombinatorics.alternant`. Since the local `alternant` is an abbreviation, we can apply it directly.",
+          "confidence": 1.0
+        },
+        {
+          "name": "alternant_eq_zero_of_repeated",
+          "expected_signature_or_shape": "theorem alternant_eq_zero_of_repeated {α : Fin N → ℕ} (h : ∃ i j : Fin N, i ≠ j ∧ α i = α j) : (AlgebraicCombinatorics.alternant α : MvPolynomial (Fin N) R) = 0",
+          "why_needed": "This is the imported theorem for part (a), confirming that part (a) is already covered.",
+          "confidence": 1.0
+        },
+        {
+          "name": "alternant_zero_of_eq",
+          "expected_signature_or_shape": "theorem alternant_zero_of_eq {R : Type*} [CommRing R] {α : Fin N → ℕ} (i j : Fin N) (hij : i ≠ j) (heq : α i = α j) : alternant (R := R) N α = 0",
+          "why_needed": "This is the local theorem for part (a), confirming that part (a) is already formalized.",
+          "confidence": 1.0
+        }
+      ],
+      "mathlib_queries": [
+        "Equiv.Perm.sign_swap",
+        "Equiv.swap",
+        "Finset.sum_congr",
+        "Finset.sum_involution"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Equiv.Perm.sign_swap",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sign_swap {α : Type*} [DecidableEq α] {x y : α} (h : x ≠ y) : Equiv.Perm.sign (Equiv.swap x y) = -1",
+          "why_needed": "The sign of a transposition is -1, used in the proof.",
+          "confidence": 0.95
+        },
+        {
+          "name": "Equiv.swap",
+          "kind": "def",
+          "expected_signature_or_shape": "swap (a b : α) : Equiv.Perm α",
+          "why_needed": "The transposition used to swap entries.",
+          "confidence": 1.0
+        }
+      ],
+      "proof_notes": [
+        "Since the local `alternant` is an abbreviation for `AlgebraicCombinatorics.alternant`, the imported theorem `alternant_swap` can be used directly: `simpa [alternant] using AlgebraicCombinatorics.alternant_swap hij`.",
+        "Alternatively, provide a self-contained proof using the sum definition and reindexing."
+      ],
+      "uncertainties": [
+        "Whether the local `alternant` abbreviation is exactly `AlgebraicCombinatorics.alternant` or has additional arguments. The prefix context shows `noncomputable abbrev alternant (N : ℕ) (α : Fin N → ℕ) : MvPolynomial (Fin N) R := AlgebraicCombinatorics.alternant α`, so it's a direct abbreviation.",
+        "The exact signature of `alternant_swap` in the imported module: it returns `(alternant (α ∘ Equiv.swap i j) : MvPolynomial (Fin N) R) = -alternant α`. The local `alternant` has an explicit `N` argument, so we may need to adjust."
+      ]
+    }
+  ]
+}

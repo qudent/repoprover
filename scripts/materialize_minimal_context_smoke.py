@@ -15,7 +15,7 @@ from typing import Any
 
 
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
-SECTION_RE = re.compile(r"^\s*section(?:\s+[A-Za-z0-9_'.]+)?\s*$")
+SECTION_RE = re.compile(r"^\s*(?:noncomputable\s+)?section(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
 DECL_RE = re.compile(
     r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
@@ -130,6 +130,100 @@ def active_namespaces_at_line(lean_file: Path, target_line: int) -> list[str]:
             elif stack:
                 stack.pop()
     return stack
+
+
+def _context_span(
+    *,
+    path: str,
+    kind: str,
+    line: int,
+    name: str,
+    reason: str,
+    method: str = "file_scope_context",
+) -> dict[str, Any]:
+    return {
+        "path": path,
+        "kind": kind,
+        "name": name,
+        "line_range": [line, line],
+        "reason": reason,
+        "method": method,
+    }
+
+
+def _pop_active_scope(scopes: list[dict[str, Any]], name: str | None) -> None:
+    if not scopes:
+        return
+    if not name:
+        scopes.pop()
+        return
+    short_name = name.split(".")[-1]
+    for index in range(len(scopes) - 1, -1, -1):
+        scope_name = str(scopes[index].get("name") or "")
+        if scope_name.split(".")[-1] == short_name:
+            del scopes[index:]
+            return
+    scopes.pop()
+
+
+def active_section_context_at_line(project_root: Path, record: SelectedRecord) -> list[dict[str, Any]]:
+    """Return active section-like context from live source for stale records.
+
+    Older minimal-context records predate support for `noncomputable section`.
+    Reconstructing active sections from the source keeps already-logged paid
+    generations verifiable without regenerating every JSONL artifact first.
+    """
+
+    lean_file = project_root / record.lean_path
+    if not lean_file.exists():
+        return []
+    scopes: list[dict[str, Any]] = []
+    for index, line in enumerate(lean_file.read_text(encoding="utf-8").splitlines(), start=1):
+        if index >= record.line_range[0]:
+            break
+        if match := NAMESPACE_RE.match(line):
+            scopes.append({"kind": "namespace", "name": match.group("name").strip()})
+        elif match := SECTION_RE.match(line):
+            section_name = str(match.group("name") or "").strip()
+            scopes.append(
+                {
+                    "kind": "section",
+                    "name": section_name,
+                    "span": _context_span(
+                        path=record.lean_path,
+                        kind="section",
+                        line=index,
+                        name=section_name,
+                        reason="Active Lean section for the declaration.",
+                    ),
+                }
+            )
+        elif match := END_RE.match(line):
+            _pop_active_scope(scopes, match.group("name"))
+    return [scope["span"] for scope in scopes if scope.get("kind") == "section" and scope.get("span")]
+
+
+def effective_file_context(project_root: Path, record: SelectedRecord) -> list[dict[str, Any]]:
+    spans = list(record.file_context)
+    existing = {
+        (str(span.get("path") or ""), str(span.get("kind") or ""), tuple(span.get("line_range") or []))
+        for span in spans
+    }
+    for span in active_section_context_at_line(project_root, record):
+        key = (str(span.get("path") or ""), str(span.get("kind") or ""), tuple(span.get("line_range") or []))
+        if key not in existing:
+            spans.append(span)
+            existing.add(key)
+    return sorted(
+        spans,
+        key=lambda span: (
+            0 if str(span.get("path") or "") == record.lean_path else 1,
+            int((span.get("line_range") or [0])[0]),
+            int((span.get("line_range") or [0, 0])[-1]),
+            str(span.get("kind") or ""),
+            str(span.get("name") or ""),
+        ),
+    )
 
 
 def read_line_range(path: Path, line_range: tuple[int, int]) -> str:
@@ -322,14 +416,15 @@ def write_source_snippets(project_root: Path, output_root: Path, record: Selecte
 
 
 def render_file_context(project_root: Path, record: SelectedRecord) -> tuple[list[str], list[str]]:
-    if record.file_context:
+    file_context = effective_file_context(project_root, record)
+    if file_context:
         parts: list[str] = []
-        for span in record.file_context:
+        for span in file_context:
             path = project_root / str(span["path"])
             start, end = [int(value) for value in span["line_range"]]
             parts.append(f"-- File context: {span['path']}:{start}-{end} ({span.get('kind', 'context')})")
             parts.append(read_line_range(path, (start, end)).rstrip())
-        return parts, context_close_commands(record.file_context)
+        return parts, context_close_commands(file_context)
 
     lean_file = project_root / record.lean_path
     namespaces = active_namespaces_at_line(lean_file, record.line_range[0])
@@ -339,12 +434,13 @@ def render_file_context(project_root: Path, record: SelectedRecord) -> tuple[lis
 
 
 def render_ordered_context_and_predecessors(project_root: Path, record: SelectedRecord) -> tuple[list[str], list[str]]:
-    context_closes = context_close_commands(record.file_context)
+    file_context = effective_file_context(project_root, record)
+    context_closes = context_close_commands(file_context)
     items: list[tuple[tuple[int, int, int], list[str]]] = []
     ordinal = 0
 
-    if record.file_context:
-        for span in record.file_context:
+    if file_context:
+        for span in file_context:
             path = str(span["path"])
             start, end = [int(value) for value in span["line_range"]]
             items.append(

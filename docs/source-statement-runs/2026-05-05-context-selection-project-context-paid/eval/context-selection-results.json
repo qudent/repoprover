@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-05-05T14:01:56.508805+00:00",
+  "records_selected": 2,
+  "batches": 1,
+  "batch_size": 2,
+  "model": "deepseek/deepseek-v4-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.14,
+  "completion_price_per_million": 0.28,
+  "context_length": 1048576,
+  "max_tokens": 8192,
+  "reasoning_effort": "",
+  "round_name": "project-context-selector",
+  "budget_only": false,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.002581152,
+  "max_actual_cost_usd": 0.02,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": [],
+    "allowed_previous_project_context_count": 1,
+    "allowed_previous_project_context": [
+      {
+        "payload": "docs/source-statement-runs/2026-05-05-context-selection-project-context-paid/batch-001/context-selection-payload.json",
+        "record_key": "record-002",
+        "record_id": "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap",
+        "declaration_name": "alternant_swap",
+        "reason": "matching name appears in imported previous project context"
+      }
+    ]
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+        "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 55642,
+        "prompt_chars": 52790,
+        "estimated_prompt_tokens": 13198,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.0018477200000000002,
+        "estimated_max_completion_cost_usd": 0.00229376,
+        "estimated_max_cost_usd": 0.00414148
+      },
+      "paid_call_made": true,
+      "response_received": true,
+      "finish_reason": "stop",
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash-20260423",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "prompt_tokens": 15936,
+        "completion_tokens": 7548,
+        "total_tokens": 23484,
+        "actual_cost_usd": 0.002581152,
+        "estimated_cost_from_usage_usd": 0.00434448,
+        "has_openrouter_reported_cost": true
+      },
+      "model_output_record_count": 2,
+      "hydrated_mathlib_records": 2,
+      "gold_comparison_records": 2,
+      "success": true
+    }
+  ]
+}

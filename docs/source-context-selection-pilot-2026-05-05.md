@@ -112,6 +112,42 @@ So the current failure is not just Mathlib type-signature recall. It is also a
 source-focus failure: broad LaTeX theorem environments still make the selector
 choose too much unless the pipeline identifies the exact part to formalize.
 
+## Source-Progress and Project-Context Follow-Up
+
+Later runs added two generic context fixes:
+
+- `source_progress_context.prior_same_label_declarations` tells the selector
+  which same-file lettered parts are already formalized before the target.
+- `source_progress_context.imported_source_label_declarations` exposes previous
+  formalized project statements from imported modules when they reference the
+  visible source label.
+
+The source-progress selector run:
+
+`docs/source-statement-runs/2026-05-05-context-selection-source-progress-paid/`
+
+cost `$0.002214212`. It selected only
+`lem.sf.alternant-0 part (b)` for `alternant_swap`, because part (a) was already
+formalized as `alternant_zero_of_eq`. The follow-up generation run:
+
+`docs/source-statement-runs/2026-05-05-source-progress-context-selected-generation-paid/`
+
+cost `$0.041659341` and generated the right narrow theorem shape for
+`alternant_swap`, but verification still passed `0/2`. A generic materializer
+fix now restores active `noncomputable section` commands; this removed the first
+alternant compiler blocker, leaving a generation issue around explicit
+polymorphic arguments.
+
+The project-context selector run:
+
+`docs/source-statement-runs/2026-05-05-context-selection-project-context-paid/`
+
+cost `$0.002581152`. It selected `alternant_swap` part (b), identified imported
+`AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson.alternant_swap`
+as the direct previous-project theorem, and kept unexplained payload target-name
+leaks at `0`. The audit records one allowed previous-project name overlap because
+the imported theorem has the same local name as the wrapper target.
+
 ## Practical Takeaways
 
 - Use no-reasoning mode for cheap selector models. Reasoning mode consumed the
@@ -124,16 +160,17 @@ choose too much unless the pipeline identifies the exact part to formalize.
   no-reasoning probe returned no content after hidden reasoning.
 - Gemini 2.5 Flash returned text but not valid JSON at 4k output; it may need a
   tighter schema or larger output cap.
-- The next improvement should shrink selector output and add a source-part
-  disambiguation round before generation.
+- Source-part disambiguation is now working on the alternant broad-label case;
+  the next proof-generation run should apply previous-project context before
+  trying to reprove long imported facts.
 
 ## Next Steps
 
-1. Split selection into two compact rounds:
-   source-part/formalization target selection first, Mathlib API selection
-   second.
+1. Apply the project-context selector output to records and run a generation-only
+   probe, committing paid artifacts before Lean verification.
 2. Reduce selector schema verbosity so 4-record batches can finish in JSON.
-3. Feed only one selected source part into generation, especially for broad
-   theorem environments with `(a)/(b)` parts.
-4. Retry context-selected generation on a 4-record diverse slice only after the
-   selector can avoid conjunction over-bundling on known broad-source examples.
+3. Split selection into two compact rounds if the combined schema remains too
+   verbose: source-part/project-context selection first, Mathlib API selection
+   second.
+4. Expand beyond the current two-record probe only after the
+   context-selection-to-proof path succeeds on at least one broad-label example.

@@ -131,6 +131,34 @@ def test_parse_lean_declarations_pops_named_sections_without_losing_namespace(tm
     assert [span["kind"] for span in declarations[1].file_context] == ["namespace"]
 
 
+def test_parse_lean_declarations_tracks_noncomputable_section(tmp_path: Path) -> None:
+    project = tmp_path
+    lean_dir = project / "AlgebraicCombinatorics"
+    lean_dir.mkdir()
+    lean_file = lean_dir / "Toy.lean"
+    lean_file.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "noncomputable section",
+                "namespace Demo",
+                "variable {R : Type*} [CommRing R]",
+                "def helper : R := 0",
+                "end Demo",
+                "end",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    declarations = parse_lean_declarations(project, lean_file)
+
+    assert [span["kind"] for span in declarations[0].file_context] == ["section", "namespace", "variable"]
+    assert declarations[0].file_context[0]["name"] == ""
+    assert declarations[0].file_context[0]["line_range"] == [2, 2]
+
+
 def test_find_predecessors_keeps_local_window_optional(tmp_path: Path) -> None:
     project = tmp_path
     lean_dir = project / "AlgebraicCombinatorics"

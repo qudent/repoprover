@@ -214,6 +214,14 @@ def build_context_selection_messages(
                         "why_needed": "role in statement/proof",
                     }
                 ],
+                "candidate_project_context": [
+                    {
+                        "name": "previous imported project declaration name, if useful",
+                        "expected_signature_or_shape": "signature shape if known from the provided context",
+                        "why_needed": "why this previous formalized statement belongs in the later context pack",
+                        "confidence": 0.0,
+                    }
+                ],
                 "mathlib_queries": [
                     "narrow Mathlib search phrase or expected declaration name, e.g. Nat.choose_symm"
                 ],
@@ -249,6 +257,7 @@ def build_context_selection_messages(
             "Do not rely on legacy broad `Mathlib` imports as context; select concrete APIs/signatures/docstrings needed by the later generator.",
             "If a Mathlib name is uncertain, return a narrow search query plus the expected type/signature shape.",
             "Include previous formalized local declarations only if they are displayed in the prefix/local context.",
+            "If `source_progress_context.imported_source_label_declarations` contains a previous imported project theorem matching the selected source part, include it in `candidate_project_context` and prefer it over reproving a long result.",
             "If `source_progress_context.prior_same_label_declarations` shows that an earlier declaration already formalized a lettered source part, do not re-formalize that part or bundle it into a conjunction; select the remaining/next part.",
             "Separate mathematical understanding from Lean API uncertainty in `uncertainties`.",
             "Do not over-select: every requested fact should have a role in statement typing or proof construction.",
@@ -529,23 +538,70 @@ def actual_cost_from_batch(row: dict[str, Any]) -> float:
     return float(cost_summary["actual_cost_usd"])
 
 
+def _allowed_previous_project_names(payload_path: Path) -> dict[str, set[str]]:
+    try:
+        payload = json.loads(payload_path.read_text(encoding="utf-8"))
+        messages = payload.get("messages") or []
+        user_content = str(messages[1].get("content") or "") if len(messages) > 1 else ""
+        user_payload = json.loads(user_content)
+    except Exception:  # noqa: BLE001 - audit should not make runs fail.
+        return {}
+    allowed: dict[str, set[str]] = {}
+    for record_payload in user_payload.get("records") or []:
+        key = str(record_payload.get("record_key") or "")
+        progress = record_payload.get("source_progress_context") or {}
+        names: set[str] = set()
+        for item in progress.get("imported_source_label_declarations") or []:
+            if not isinstance(item, dict):
+                continue
+            for field in ("declaration", "full_name"):
+                value = str(item.get(field) or "").strip()
+                if not value:
+                    continue
+                names.add(value)
+                names.add(value.split(".")[-1])
+        if key and names:
+            allowed[key] = names
+    return allowed
+
+
 def audit_payload_target_name_leaks(output: Path, items: list[BatchItem]) -> dict[str, Any]:
     leaks: list[dict[str, str]] = []
+    allowed_previous_project_context: list[dict[str, str]] = []
     for payload_path in sorted(output.glob("batch-*/context-selection-payload.json")):
         text = payload_path.read_text(encoding="utf-8")
+        allowed_by_key = _allowed_previous_project_names(payload_path)
         for item in items:
             for name in item.record.declaration_names:
                 short_name = name.split(".")[-1]
                 if name in text or short_name in text:
-                    leaks.append(
-                        {
-                            "payload": str(payload_path),
-                            "record_key": item.public_key,
-                            "record_id": item.record.record_id,
-                            "declaration_name": name,
-                        }
-                    )
-    return {"leak_count": len(leaks), "leaks": leaks}
+                    if name in allowed_by_key.get(item.public_key, set()) or short_name in allowed_by_key.get(
+                        item.public_key, set()
+                    ):
+                        allowed_previous_project_context.append(
+                            {
+                                "payload": str(payload_path),
+                                "record_key": item.public_key,
+                                "record_id": item.record.record_id,
+                                "declaration_name": name,
+                                "reason": "matching name appears in imported previous project context",
+                            }
+                        )
+                    else:
+                        leaks.append(
+                            {
+                                "payload": str(payload_path),
+                                "record_key": item.public_key,
+                                "record_id": item.record.record_id,
+                                "declaration_name": name,
+                            }
+                        )
+    return {
+        "leak_count": len(leaks),
+        "leaks": leaks,
+        "allowed_previous_project_context_count": len(allowed_previous_project_context),
+        "allowed_previous_project_context": allowed_previous_project_context,
+    }
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
@@ -654,6 +710,7 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Hydrate Mathlib: `{summary['hydrate_mathlib']}`",
         f"- Compare gold after selection: `{summary['compare_gold']}`",
         f"- Payload target-name leaks: `{summary['payload_target_name_audit']['leak_count']}`",
+        f"- Allowed previous-project name overlaps: `{summary['payload_target_name_audit'].get('allowed_previous_project_context_count', 0)}`",
         "",
         "Selector prompts use source-only context and do not include target Lean declaration names, statements, or proofs. Gold comparison, when enabled, is written only after selector output exists.",
         "",

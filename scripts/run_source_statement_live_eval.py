@@ -772,6 +772,77 @@ def _imported_label_declaration_blocks(project_root: Path, record: SelectedRecor
     return [block for _, _, block in blocks[:limit]]
 
 
+def _module_name_from_local_path(path: Path) -> str:
+    return path.with_suffix("").as_posix().replace("/", ".")
+
+
+def _imported_source_label_declaration_summaries(
+    project_root: Path,
+    record: SelectedRecord,
+    *,
+    limit: int = 6,
+) -> list[dict[str, Any]]:
+    """Summarize imported source-aligned declarations available before generation.
+
+    These are previous formalized statements from imported project modules, not
+    declarations from the withheld target file. Selection is source-label driven
+    and uses only the record's visible TeX/source span labels.
+    """
+
+    labels = sorted({label for label in _source_span_labels(record) if label}, key=len, reverse=True)
+    if not labels:
+        return []
+
+    target_path = Path(record.lean_path)
+    summaries: list[tuple[int, dict[str, Any]]] = []
+    seen_names: set[tuple[str, str]] = set()
+    for module in record.imports:
+        rel_path = local_import_path(str(module))
+        if rel_path is None or rel_path == target_path:
+            continue
+        path = project_root / rel_path
+        if not path.exists():
+            continue
+        lines = path.read_text(encoding="utf-8").splitlines()
+        module_name = _module_name_from_local_path(rel_path)
+        for index, line in enumerate(lines, start=1):
+            matched_label = next((label for label in labels if label in line), None)
+            if matched_label is None:
+                continue
+            for candidate_index in range(index, min(len(lines), index + 18) + 1):
+                match = DECL_RE.match(lines[candidate_index - 1])
+                if not match or match.group("kind") not in {"theorem", "lemma", "def", "abbrev"}:
+                    continue
+                name = str(match.group("name") or "")
+                if not name or (str(rel_path), name) in seen_names:
+                    break
+                block = _named_declaration_block(lines, name, after_line=index)
+                if block is None:
+                    break
+                start, end, text = block
+                doc_text = _strip_doc_comment(text.splitlines())
+                summaries.append(
+                    (
+                        start,
+                        {
+                            "declaration": name,
+                            "full_name": f"{module_name}.{name}",
+                            "path": rel_path.as_posix(),
+                            "line_range": [start, end],
+                            "matched_source_labels": [matched_label],
+                            "doc_excerpt": doc_text[:480],
+                            "declaration_head": _declaration_head(text)[:1000],
+                            "why_candidate": "Imported project declaration references the visible source label.",
+                            "policy": "previous formalized project statement from an imported module; target file is not inspected",
+                        },
+                    )
+                )
+                seen_names.add((str(rel_path), name))
+                break
+    summaries.sort(key=lambda item: item[0])
+    return [summary for _, summary in summaries[:limit]]
+
+
 def _notation_surface(lhs: str) -> str:
     parts: list[str] = []
     for match in re.finditer(r'"([^"]*)"|([A-Za-z_][A-Za-z0-9_\']*)', lhs):
@@ -1446,12 +1517,15 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
         "target_source_focus": focus,
         "source_progress_context": {
             "prior_same_label_declarations": _prior_source_label_declaration_summaries(project_root, record),
+            "imported_source_label_declarations": _imported_source_label_declaration_summaries(project_root, record),
             "instruction": (
                 "When the source span has multiple labeled or lettered parts, use prior_same_label_declarations "
                 "as prefix-progress evidence. If an earlier declaration already formalizes one part, prefer the "
-                "remaining or next source part instead of bundling all parts."
+                "remaining or next source part instead of bundling all parts. Use imported_source_label_declarations "
+                "as previous formalized project statements when they match the selected source part; prefer applying "
+                "an imported theorem over reproving its full internal proof."
             ),
-            "policy": "derived from declarations before the withheld target in the same Lean file",
+            "policy": "same-file entries are before the withheld target; imported entries are from imported modules, never from the target file",
         },
         "context_mode": context_mode,
         "available_imports": record.imports,
@@ -1504,6 +1578,8 @@ def build_messages(project_root: Path, record: SelectedRecord, *, context_mode: 
             "Use current Lean 4/Mathlib syntax and API names; if your memory conflicts with displayed local context, trust the displayed context.",
             "State a single proposition-level theorem/lemma that is likely to match the specified source part; do not bundle typeclass instances or unrelated source parts into conjunctions.",
             "Every nonstandard helper theorem or local API used in the proof should appear explicitly in the Lean prefix context or local examples. If it is not displayed, do not use its name.",
+            "If source_progress_context lists imported_source_label_declarations for the selected source part, prefer applying those previous formalized project theorems over reproving a long imported result.",
+            "When a displayed local/project signature uses named implicit arguments such as `(R := R)`, preserve those named arguments in your theorem statement and proof terms rather than relying on typeclass inference.",
             "If an existing theorem or lemma in the prefix context has binders, apply it to the needed variables rather than using the theorem constant bare.",
             "Prefer the narrowest theorem directly supported by the source sentence; avoid generalizing to a stronger forall/if statement unless that exact shape is in the source or prefix context.",
             "Prefer a short proof if the prefix context already contains the needed fact.",
