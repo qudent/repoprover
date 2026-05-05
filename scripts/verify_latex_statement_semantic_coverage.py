@@ -31,6 +31,8 @@ except ModuleNotFoundError:
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CHECK_NAME = "__repoprover_latex_statement_check"
+NAMESPACE_RE = re.compile(r"^\s*namespace\s+([A-Za-z0-9_'.]+)\s*$")
+END_RE = re.compile(r"^\s*end(?:\s+([A-Za-z0-9_'.]+))?\s*$")
 
 
 def read_json(path: Path) -> Any:
@@ -94,6 +96,77 @@ def target_file_prefix(project_root: Path, aligned: dict[str, Any]) -> str:
     return "\n".join(path.read_text(encoding="utf-8").splitlines()[: start - 1]).rstrip()
 
 
+def active_namespaces(source: str) -> list[str]:
+    stack: list[str] = []
+    for line in source.splitlines():
+        namespace_match = NAMESPACE_RE.match(line)
+        if namespace_match:
+            stack.extend(part for part in namespace_match.group(1).split(".") if part)
+            continue
+        end_match = END_RE.match(line)
+        if end_match and stack:
+            end_name = end_match.group(1)
+            if not end_name or end_name == stack[-1] or end_name.split(".")[-1] == stack[-1]:
+                stack.pop()
+    return stack
+
+
+def strip_duplicate_namespace_wrapper(body: str, *, active: list[str]) -> str:
+    if not active:
+        return body
+    lines = body.splitlines()
+    first_namespace = None
+    for index, line in enumerate(lines):
+        if NAMESPACE_RE.match(line):
+            first_namespace = index
+            break
+        if line.strip() and not line.lstrip().startswith("open "):
+            return body
+    if first_namespace is None:
+        return body
+
+    namespace_indices: list[int] = []
+    namespace_names: list[str] = []
+    index = first_namespace
+    while index < len(lines):
+        if not lines[index].strip():
+            index += 1
+            continue
+        match = NAMESPACE_RE.match(lines[index])
+        if not match:
+            break
+        parts = [part for part in match.group(1).split(".") if part]
+        namespace_indices.append(index)
+        namespace_names.extend(parts)
+        index += 1
+        if namespace_names == active[: len(namespace_names)]:
+            continue
+        return body
+    if not namespace_names or namespace_names != active[: len(namespace_names)]:
+        return body
+
+    stripped = list(lines)
+    for namespace_index in reversed(namespace_indices):
+        stripped.pop(namespace_index)
+    for name in namespace_names:
+        found = False
+        for line_index in range(len(stripped) - 1, -1, -1):
+            line = stripped[line_index]
+            if not line.strip():
+                continue
+            end_match = END_RE.match(line)
+            if end_match and (not end_match.group(1) or end_match.group(1).split(".")[-1] == name):
+                stripped.pop(line_index)
+                found = True
+                break
+            if end_match:
+                continue
+            return body
+        if not found:
+            return body
+    return "\n".join(stripped).strip()
+
+
 def declaration_head_for_name(body: str, name: str) -> str:
     pattern = re.compile(
         r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
@@ -129,11 +202,25 @@ def gold_check_declaration(
                     continue
                 if candidate not in candidates:
                     candidates.append(candidate)
+                simp_hyp = candidate_with_simplified_final_hypothesis(candidate)
+                if simp_hyp and simp_hyp not in candidates:
+                    candidates.append(simp_hyp)
     if not candidates:
         tactic = "  fail"
     else:
-        tactic = "\n".join(["  first", *(f"  | simpa using {candidate}" for candidate in candidates)])
+        branches: list[str] = []
+        for candidate in candidates:
+            branches.append(f"  | simpa using {candidate}")
+            branches.append(f"  | simpa [Fintype.card_fin] using {candidate}")
+        tactic = "\n".join(["  first", *branches])
     return gold_head + " := by\n" + tactic + "\n"
+
+
+def candidate_with_simplified_final_hypothesis(candidate: str) -> str | None:
+    prefix, separator, final_arg = candidate.rpartition(" ")
+    if not separator or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_']*", final_arg):
+        return None
+    return f"{prefix} (by simpa [Fintype.card_fin] using {final_arg})"
 
 
 def build_semantic_check_source(
@@ -144,8 +231,10 @@ def build_semantic_check_source(
     generated_body: str,
 ) -> str:
     _original, gold_head = renamed_gold_head(project_root, aligned)
+    prefix = target_file_prefix(project_root, aligned)
+    generated_body = strip_duplicate_namespace_wrapper(generated_body, active=active_namespaces(prefix))
     parts = [
-        target_file_prefix(project_root, aligned),
+        prefix,
         "",
         "/-! RepoProver post-hoc semantic coverage check.",
         "The aligned gold statement below is grader-only and was not shown to generation. -/",

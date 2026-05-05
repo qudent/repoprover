@@ -36,6 +36,38 @@ def test_build_semantic_check_source_uses_gold_only_in_grader(tmp_path: Path) ->
     assert "theorem gold" not in source
     assert "theorem __repoprover_latex_statement_check" in source
     assert "simpa using generated h" in source
+    assert "simpa [Fintype.card_fin] using generated h" in source
+    assert "generated (by simpa [Fintype.card_fin] using h)" in source
+
+
+def test_build_semantic_check_source_strips_duplicate_namespace_wrapper(tmp_path: Path) -> None:
+    project = tmp_path / "project"
+    lean_file = project / "Demo.lean"
+    lean_file.parent.mkdir(parents=True)
+    lean_file.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "theorem gold {p : Prop} (h : p) : p := by",
+                "  exact h",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    aligned = {"path": "Demo.lean", "line_range": [3, 4], "kind": "theorem"}
+
+    source = build_semantic_check_source(
+        project_root=project,
+        aligned=aligned,
+        generated_names=["generated"],
+        generated_body="namespace Demo\n\ntheorem generated {p : Prop} (h : p) : p := by\n  exact h\n\nend Demo",
+    )
+
+    assert source.count("namespace Demo") == 1
+    assert "simpa using generated h" in source
 
 
 def test_compare_records_semantic_failure(monkeypatch, tmp_path: Path) -> None:

@@ -1,0 +1,219 @@
+#!/usr/bin/env python3
+"""Repair theorem-level LaTeX statement generation failures.
+
+The repair prompt is still source-only: it reuses the selector/generation
+context pack, plus the generated Lean body and Lean verifier errors. Hidden
+aligned target declarations remain withheld.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from openai import OpenAI
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.run_latex_statement_generation import (
+    DEFAULT_BASE_URL,
+    DEFAULT_MODEL,
+    build_generation_messages,
+    extract_message_content,
+    maybe_parse_json,
+    read_json,
+    response_cost_summary,
+    write_json,
+)
+
+
+def load_generation_output(generation_run: Path) -> dict[str, Any]:
+    path = generation_run / "batch-001" / "generation-output.json"
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return read_json(path)
+
+
+def load_verification_results(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return read_json(path)
+
+
+def load_extra_context(paths: list[Path] | None) -> list[Any]:
+    contexts: list[Any] = []
+    for path in paths or []:
+        contexts.append(read_json(path))
+    return contexts
+
+
+def flatten_verification_units(verification: dict[str, Any]) -> list[dict[str, Any]]:
+    units: list[dict[str, Any]] = []
+    for batch in verification.get("batches") or []:
+        for unit in batch.get("units") or []:
+            units.append(unit)
+    return units
+
+
+def build_repair_messages(
+    *,
+    selector_run: Path,
+    generation_run: Path,
+    verification_results: Path,
+    extra_context_paths: list[Path] | None = None,
+) -> list[dict[str, str]]:
+    generation_messages = build_generation_messages(selector_run)
+    generation_user = next(message for message in generation_messages if message["role"] == "user")
+    generation_payload = json.loads(generation_user["content"])
+    failed_output = load_generation_output(generation_run)
+    verification = load_verification_results(verification_results)
+
+    system = (
+        "You are a Lean 4 autoformalization repair agent. Repair failed Lean "
+        "generation for LaTeX theorem-like source units using only the visible "
+        "source/context pack, the generated Lean attempt, and Lean verifier "
+        "errors. Hidden aligned Lean declarations, names, statements, and proofs "
+        "are still withheld. Return exactly one JSON object."
+    )
+    user = {
+        "task": (
+            "Repair the failed generated Lean file bodies. Prefer a complete "
+            "Lean-compiling repair when the visible context is enough. If the "
+            "visible context is not enough, report cannot_prove_from_visible_context "
+            "with exactly empty lean_file_body and empty declaration_names."
+        ),
+        "required_json_schema": generation_payload["required_json_schema"],
+        "repair_instructions": [
+            "Do not use sorry, admit, placeholders, or comments standing in for proof.",
+            "Do not include imports or markdown fences in lean_file_body.",
+            "Do not ask for or infer the hidden aligned Lean declaration names/statements/proofs.",
+            "Do not use any identifier that Lean already reported as Unknown constant or unknown identifier.",
+            "Do not use a hydrated Mathlib exact_identifier whose lean_check.status is not `checked`.",
+            "Fallback Mathlib candidates are search hints only; use them only when the shown declaration line is sufficient.",
+            "Use local_file_predecessor_declarations and available_prior_project_context exactly as visible helper context.",
+            "If additional_checked_repair_context contains checked_signatures or a proof_strategy_note, attempt that checked route before declaring cannot_prove_from_visible_context.",
+            "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context.",
+            "If status is cannot_prove_from_visible_context, lean_file_body must be exactly empty and declaration_names must be an empty list.",
+            "The repair output must be directly acceptable as a generation-output.json file.",
+        ],
+        "original_generation_task": generation_payload,
+        "failed_generation_output": failed_output,
+        "verification_results": {
+            "compile_passed_units": verification.get("compile_passed_units"),
+            "unit_count": verification.get("unit_count"),
+            "units": flatten_verification_units(verification),
+        },
+        "additional_checked_repair_context": load_extra_context(extra_context_paths),
+        "benchmark_policy": {
+            "target_lean_available_to_repair": False,
+            "posthoc_alignment_hidden": True,
+            "gold_comparison_is_posthoc_only": True,
+        },
+    }
+    return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(user, indent=2, sort_keys=True, ensure_ascii=False)}]
+
+
+def run(args: argparse.Namespace) -> dict[str, Any]:
+    run_dir = args.output
+    batch_dir = run_dir / "batch-001"
+    eval_dir = run_dir / "eval"
+    batch_dir.mkdir(parents=True, exist_ok=True)
+    eval_dir.mkdir(parents=True, exist_ok=True)
+
+    messages = build_repair_messages(
+        selector_run=args.selector_run,
+        generation_run=args.generation_run,
+        verification_results=args.verification_results,
+        extra_context_paths=args.extra_context,
+    )
+    request_payload = {
+        "model": args.model,
+        "messages": messages,
+        "temperature": args.temperature,
+        "max_tokens": args.max_tokens,
+        "response_format": {"type": "json_object"},
+    }
+    if args.reasoning_effort:
+        request_payload["extra_body"] = {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
+    write_json(batch_dir / "generation-payload.json", request_payload)
+    write_json(batch_dir / "repair-payload.json", request_payload)
+
+    summary: dict[str, Any] = {
+        "schema_version": "repoprover.latex_statement_generation_repair.v1",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "selector_run": str(args.selector_run),
+        "generation_run": str(args.generation_run),
+        "verification_results": str(args.verification_results),
+        "output_path": str(run_dir),
+        "model": args.model,
+        "reasoning_effort": args.reasoning_effort,
+        "budget_only": args.budget_only,
+        "paid_call_made": False,
+        "valid_json": False,
+        "parse_error": None,
+    }
+    if args.budget_only:
+        write_json(eval_dir / "repair-results.json", summary)
+        write_json(eval_dir / "generation-results.json", summary)
+        return summary
+
+    if not os.getenv("OPENROUTER_API_KEY"):
+        raise RuntimeError("OPENROUTER_API_KEY is not set")
+    client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url=args.base_url)
+    started = time.monotonic()
+    response = client.chat.completions.create(**request_payload)
+    summary["elapsed_seconds"] = round(time.monotonic() - started, 3)
+    summary["paid_call_made"] = True
+    write_json(batch_dir / "generation-response.json", response.model_dump())
+    write_json(batch_dir / "repair-response.json", response.model_dump())
+    content = extract_message_content(response)
+    (batch_dir / "generation-assistant-content.txt").write_text(content, encoding="utf-8")
+    (batch_dir / "repair-assistant-content.txt").write_text(content, encoding="utf-8")
+    parsed, parse_error = maybe_parse_json(content)
+    summary["parse_error"] = parse_error
+    summary["valid_json"] = parsed is not None
+    summary["cost_summary"] = response_cost_summary(response, args.model)
+    if parsed is not None:
+        write_json(batch_dir / "generation-output.json", parsed)
+        write_json(batch_dir / "repair-output.json", parsed)
+    write_json(eval_dir / "repair-results.json", summary)
+    write_json(eval_dir / "generation-results.json", summary)
+    return summary
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--selector-run", type=Path, required=True)
+    parser.add_argument("--generation-run", type=Path, required=True)
+    parser.add_argument("--verification-results", type=Path, required=True)
+    parser.add_argument(
+        "--extra-context",
+        type=Path,
+        action="append",
+        help="Additional JSON context pack for a repair round; may be repeated.",
+    )
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
+    parser.add_argument("--max-tokens", type=int, default=4096)
+    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument(
+        "--reasoning-effort",
+        default="none",
+        help="OpenRouter reasoning effort override; use 'none' for schema-bound JSON repair.",
+    )
+    parser.add_argument("--budget-only", action="store_true")
+    args = parser.parse_args()
+    print(json.dumps(run(args), indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

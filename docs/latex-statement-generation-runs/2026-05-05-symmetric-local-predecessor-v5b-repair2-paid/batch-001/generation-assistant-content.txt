@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The only available Mathlib lemma that could prove e_n = 0 for n > N is MvPolynomial.esymm_eq_zero_of_lt, but it is not present in the checked Mathlib context. The fallback candidates do not provide a usable theorem. The local helper e_eq_sum_prod_subsets expresses e_n as a sum over subsets of size n, but without a lemma that such subsets are empty when n > N, the proof cannot be completed from visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition: e_n = 0 for n > N",
+        "project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)",
+        "local helper: e_eq_sum_prod_subsets",
+        "Mathlib candidate: MvPolynomial.esymm_eq_zero_of_lt (failed lean_check, not used)"
+      ]
+    }
+  ]
+}

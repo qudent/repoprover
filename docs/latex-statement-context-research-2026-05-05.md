@@ -356,6 +356,31 @@ finite-set cardinality facts. A second repair/planning round must be tool-driven
 and should ask for concrete Lean-checked proof ingredients, not just name
 fallbacks.
 
+Repair-loop follow-up:
+
+- script: `scripts/run_latex_statement_generation_repair.py`
+- repair1:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid/`,
+  cost `$0.00150318`, valid JSON, contract-clean
+  `cannot_prove_from_visible_context`.
+- agent-selected checked context:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair2-agent-context/checked-proof-ingredients.json`
+- repair2 with that context:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair2-paid/`,
+  cost `$0.00160426`, still `cannot_prove`.
+- repair3 after generic prompt tightening to force attempts through checked
+  repair routes:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid/`,
+  cost `$0.00170492`, generated Lean compile `1/1`.
+- semantic coverage after grader namespace/simp fixes: `1/1` for aligned gold
+  `AlgebraicCombinatorics.SymmetricPolynomials.e_eq_zero_of_gt`.
+
+Conclusion for this unit: the cheap model can produce the correct proof when
+the right checked proof ingredients and a short proof note are in context. The
+open problem is upstream context selection: selecting those ingredients must be
+made autonomous and target-blind before this should count as a source-only
+benchmark success.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

@@ -1,0 +1,59 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.Definitions",
+        "AlgebraicCombinatorics.Permutations.Basics"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.Definitions",
+        "AlgebraicCombinatorics.Permutations.Basics"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.SymmetricPolynomials",
+        "open Multiset",
+        "open MvPolynomial"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.SymmetricPolynomials",
+        "open Multiset",
+        "open MvPolynomial"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "generated_at": "2026-05-05T23:24:47.487564+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

@@ -141,6 +141,19 @@ while still emitting Lean code. The verifier now flags both invalid nonempty
 body and nonempty declaration-name contracts for that case. Paid cost for this
 selector plus two generator probes was `$0.00444964`.
 
+A theorem-level repair runner now reuses the source-only generation context,
+the failed Lean output, and verifier errors. Repair1 on the same symmetric unit
+returned a contract-clean `cannot_prove_from_visible_context`. An
+agent-selected, Lean-checked proof-ingredient pack then supplied
+`e_eq_sum_prod_subsets`, `Finset.sum_eq_zero`, `Finset.mem_powersetCard`,
+`Finset.card_le_card`, `Fintype.card_fin`, and `Nat.lt_of_le_of_lt` plus a short
+proof note. With an explicit instruction to attempt such checked repair routes,
+repair3 generated Lean that compiled `1/1`; the semantic grader then proved the
+aligned gold theorem `1/1` after adding namespace-wrapper normalization and a
+generic `Fintype.card_fin` hypothesis-simplification candidate. This is a
+positive feasibility result, but not an autonomous-selector win yet: the checked
+proof-ingredient pack was agent-selected and is labeled as such in the artifact.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

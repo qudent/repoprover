@@ -1,0 +1,25 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "e_eq_zero_of_lt"
+      ],
+      "lean_file_body": "open scoped Polynomial\nopen MvPolynomial Finset\n\nnamespace AlgebraicCombinatorics\nnamespace SymmetricPolynomials\n\nvariable {K : Type*} [CommRing K] {N : ℕ}\n\ntheorem e_eq_zero_of_lt (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\n  rw [e_eq_sum_prod_subsets (K := K) (N := N) n]\n  apply Finset.sum_eq_zero\n  intro s hs\n  have hcard_s : s.card = n := (Finset.mem_powersetCard.mp hs).2\n  have hcard_s_le_N : s.card ≤ Fintype.card (Fin N) := by\n    have : s ⊆ (univ : Finset (Fin N)) := (Finset.mem_powersetCard.mp hs).1\n    exact Finset.card_le_card this\n  have : n ≤ Fintype.card (Fin N) := by\n    linarith\n  have : n < n := Nat.lt_of_le_of_lt this h\n  exact absurd this (Nat.lt_irrefl n)\n\nend SymmetricPolynomials\nend AlgebraicCombinatorics",
+      "notes": [
+        "Uses the same-file helper e_eq_sum_prod_subsets to rewrite e n as a sum over powersetCard n univ. For each s in that sum, mem_powersetCard gives s ⊆ univ and s.card = n. Then card_le_card gives s.card ≤ Fintype.card (Fin N), so n ≤ Fintype.card (Fin N), contradicting h. The contradiction shows each summand is impossible, so the sum is zero by Finset.sum_eq_zero."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition: e_n = 0 for n > N",
+        "project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)",
+        "same-file helper: e_eq_sum_prod_subsets",
+        "Finset.mem_powersetCard",
+        "Finset.card_le_card",
+        "Fintype.card_fin",
+        "Nat.lt_of_le_of_lt",
+        "Finset.sum_eq_zero"
+      ]
+    }
+  ]
+}

@@ -37,8 +37,10 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   hydrate as unknown constants.
 - [x] Add same-file local predecessor declaration context with target omitted
   and explicit benchmark-honesty provenance.
-- [ ] Add LLM/Lean second-round repair using fallback Mathlib candidates plus
-  safe local predecessor context.
+- [x] Add theorem-level LLM/Lean repair runner using failed output, verifier
+  errors, fallback Mathlib candidates, and local predecessor context.
+- [ ] Add autonomous context-repair selection for checked proof ingredients
+  before relying on agent-selected repair packs.
 
 ## Blockers
 - The old declaration-level verifier can reject useful source-theorem progress
@@ -57,6 +59,8 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
 - Paid v5/v5b symmetric probes show the model still over-trusts an unavailable
   Mathlib lemma even when hydration marks it as failed; the verifier now flags
   both nonempty body and nonempty names for invalid `cannot_prove` outputs.
+- Repair succeeds when given an agent-selected, Lean-checked proof-ingredient
+  pack, but that pack is not yet an autonomous selector output.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is needed.
 
@@ -99,6 +103,11 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   cost `$0.00114492`; generation v5 cost `$0.0019204`, v5b cost `$0.00138432`.
   Both generated outputs failed `0/1`; v5 used the unknown Mathlib theorem, and
   v5b marked `cannot_prove_from_visible_context` but still emitted code/names.
+- Symmetric repair rounds:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid/`
+  produced a contract-clean `cannot_prove`. Repair3 with
+  `checked-proof-ingredients.json` cost `$0.00170492`, generated Lean that
+  compiled `1/1`, and semantic coverage proved the aligned gold theorem `1/1`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.

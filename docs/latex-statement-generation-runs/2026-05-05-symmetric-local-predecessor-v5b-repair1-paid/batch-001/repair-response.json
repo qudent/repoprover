@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The required lemma MvPolynomial.esymm_eq_zero_of_lt is not available in the checked Mathlib context. The visible context does not provide any other theorem that would allow proving e_n = 0 for n > N. Therefore the statement cannot be proven from the visible context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source proposition: e_n = 0 for n > N\",\n        \"project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)\",\n        \"Mathlib candidate: MvPolynomial.esymm_eq_zero_of_lt (failed lean_check, not used)\",\n        \"local file context: open scoped Polynomial, open MvPolynomial Finset, namespace AlgebraicCombinatorics, namespace SymmetricPolynomials, variable {K : Type*} [CommRing K] {N : ℕ}\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778023471,
+  "id": "gen-1778023471-yBsXbBOdk9vKeBdwbFYb",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 243,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00150318,
+    "cost_details": {
+      "upstream_inference_completions_cost": 6.804e-05,
+      "upstream_inference_cost": 0.00150318,
+      "upstream_inference_prompt_cost": 0.00143514
+    },
+    "is_byok": false,
+    "prompt_tokens": 10251,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 10494
+  }
+}

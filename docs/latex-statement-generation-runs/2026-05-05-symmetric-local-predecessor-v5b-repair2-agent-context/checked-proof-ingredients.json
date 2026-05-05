@@ -1,0 +1,34 @@
+{
+  "schema_version": "repoprover.agent_selected_checked_repair_context.v1",
+  "generated_at": "2026-05-05T23:25:30Z",
+  "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+  "context_source": "agent_selected_after_failed_hydration_repair_probe",
+  "benchmark_honesty_caveat": "This is not an autonomous selector result. It is a manually selected, Lean-checked proof-ingredient pack used to test whether generation succeeds once the right local and Mathlib facts are present.",
+  "proof_strategy_note": "Use the same-file helper e_eq_sum_prod_subsets to rewrite e_n as a sum over powersetCard n univ. For each summand index s, mem_powersetCard gives s ⊆ univ and #s = n. Finset.card_le_card plus Fintype.card_fin gives #s ≤ N, contradicting N < n. Then Finset.sum_eq_zero closes the sum.",
+  "checked_signatures": [
+    {
+      "name": "AlgebraicCombinatorics.SymmetricPolynomials.e_eq_sum_prod_subsets",
+      "signature": "e_eq_sum_prod_subsets.{u_1} {K : Type u_1} [CommRing K] {N : ℕ} (n : ℕ) : e n = ∑ s ∈ powersetCard n univ, ∏ i ∈ s, X i"
+    },
+    {
+      "name": "Finset.sum_eq_zero",
+      "signature": "Finset.sum_eq_zero.{u_1, u_4} {ι : Type u_1} {M : Type u_4} {s : Finset ι} [AddCommMonoid M] {f : ι → M} (h : ∀ x ∈ s, f x = 0) : ∑ x ∈ s, f x = 0"
+    },
+    {
+      "name": "Finset.mem_powersetCard",
+      "signature": "Finset.mem_powersetCard.{u_1} {α : Type u_1} {n : ℕ} {s t : Finset α} : s ∈ powersetCard n t ↔ s ⊆ t ∧ #s = n"
+    },
+    {
+      "name": "Finset.card_le_card",
+      "signature": "Finset.card_le_card.{u_1} {α : Type u_1} {s t : Finset α} : s ⊆ t → #s ≤ #t"
+    },
+    {
+      "name": "Fintype.card_fin",
+      "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n"
+    },
+    {
+      "name": "Nat.lt_of_le_of_lt",
+      "signature": "Nat.lt_of_le_of_lt {n m k : ℕ} (h₁ : n ≤ m) (h₂ : m < k) : n < k"
+    }
+  ]
+}

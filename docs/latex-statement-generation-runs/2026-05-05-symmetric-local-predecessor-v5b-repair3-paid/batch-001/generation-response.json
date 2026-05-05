@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"e_eq_zero_of_lt\"\n      ],\n      \"lean_file_body\": \"open scoped Polynomial\\nopen MvPolynomial Finset\\n\\nnamespace AlgebraicCombinatorics\\nnamespace SymmetricPolynomials\\n\\nvariable {K : Type*} [CommRing K] {N : ℕ}\\n\\ntheorem e_eq_zero_of_lt (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\\n  rw [e_eq_sum_prod_subsets (K := K) (N := N) n]\\n  apply Finset.sum_eq_zero\\n  intro s hs\\n  have hcard_s : s.card = n := (Finset.mem_powersetCard.mp hs).2\\n  have hcard_s_le_N : s.card ≤ Fintype.card (Fin N) := by\\n    have : s ⊆ (univ : Finset (Fin N)) := (Finset.mem_powersetCard.mp hs).1\\n    exact Finset.card_le_card this\\n  have : n ≤ Fintype.card (Fin N) := by\\n    linarith\\n  have : n < n := Nat.lt_of_le_of_lt this h\\n  exact absurd this (Nat.lt_irrefl n)\\n\\nend SymmetricPolynomials\\nend AlgebraicCombinatorics\",\n      \"notes\": [\n        \"Uses the same-file helper e_eq_sum_prod_subsets to rewrite e n as a sum over powersetCard n univ. For each s in that sum, mem_powersetCard gives s ⊆ univ and s.card = n. Then card_le_card gives s.card ≤ Fintype.card (Fin N), so n ≤ Fintype.card (Fin N), contradicting h. The contradiction shows each summand is impossible, so the sum is zero by Finset.sum_eq_zero.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source proposition: e_n = 0 for n > N\",\n        \"project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)\",\n        \"same-file helper: e_eq_sum_prod_subsets\",\n        \"Finset.mem_powersetCard\",\n        \"Finset.card_le_card\",\n        \"Fintype.card_fin\",\n        \"Nat.lt_of_le_of_lt\",\n        \"Finset.sum_eq_zero\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778023695,
+  "id": "gen-1778023695-p2d5qFLXBkXWVTlsz47C",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 579,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00170492,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00016212,
+      "upstream_inference_cost": 0.00170492,
+      "upstream_inference_prompt_cost": 0.0015428
+    },
+    "is_byok": false,
+    "prompt_tokens": 11020,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 11599
+  }
+}

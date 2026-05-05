@@ -1,0 +1,30 @@
+{
+  "caveat": "This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.",
+  "compile_passed_units": 1,
+  "compiled_name_overlap_units": 0,
+  "compiled_needs_semantic_review_units": 1,
+  "generated_at": "2026-05-05T23:29:13.815235+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid",
+  "schema_version": "repoprover.latex_statement_gold_comparison.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+  "unit_count": 1,
+  "units": [
+    {
+      "compile_passed": true,
+      "coverage_status": "compiled_needs_semantic_review",
+      "full_name_overlap": [],
+      "generated_declaration_names": [
+        "e_eq_zero_of_lt"
+      ],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.SymmetricPolynomials.e_eq_zero_of_gt"
+      ],
+      "gold_aligned_local_names": [
+        "e_eq_zero_of_gt"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+      "unit_key": "unit-001"
+    }
+  ]
+}

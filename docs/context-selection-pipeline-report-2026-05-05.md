@@ -462,6 +462,34 @@ lemmas, or a stronger agentic prover step. Merely showing the local helper
 statement and fallback Mathlib names was not enough for DeepSeek V4 Flash to
 switch away from the hallucinated direct theorem.
 
+Repair loop follow-up:
+
+- runner: `scripts/run_latex_statement_generation_repair.py`
+- repair1:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid/`,
+  cost `$0.00150318`; returned a contract-clean
+  `cannot_prove_from_visible_context` with empty body/names.
+- checked proof-ingredient pack:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair2-agent-context/checked-proof-ingredients.json`
+  lists Lean-checked signatures for `e_eq_sum_prod_subsets`,
+  `Finset.sum_eq_zero`, `Finset.mem_powersetCard`, `Finset.card_le_card`,
+  `Fintype.card_fin`, and `Nat.lt_of_le_of_lt`, plus a proof note. This pack is
+  explicitly labeled agent-selected, not an autonomous selector result.
+- repair2 with that pack still returned `cannot_prove`, cost `$0.00160426`.
+- repair3 after adding a generic instruction to attempt checked repair routes
+  before declaring `cannot_prove`:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid/`,
+  cost `$0.00170492`; generated Lean compiled `1/1`.
+- semantic grader repair: namespace-wrapper normalization plus a generic
+  `Fintype.card_fin` hypothesis-simplification candidate allowed the generated
+  theorem to prove aligned gold `AlgebraicCombinatorics.SymmetricPolynomials.e_eq_zero_of_gt`
+  with semantic coverage `1/1`.
+
+Interpretation: once the right checked proof ingredients are present, the cheap
+model can generate a working proof on this hard unit. The remaining missing
+piece is making selection of those proof ingredients autonomous rather than
+agent-selected.
+
 ### Generation and Verification Counts
 
 Honesty caveats:
