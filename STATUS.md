@@ -30,6 +30,11 @@ and context-materialization bugs, the current honest five-sample first-pass
 result is 2/5 successes. Adding record-local imports plus one generated-only
 compiler-feedback repair prompt raises the same sample to 3/5, so the viable
 recipe is prompt plus repair, not migration-guidance wording alone.
+`scripts/run_source_statement_live_eval.py` now supports that repair loop
+directly via `--repair-attempts`, with separate repair artifacts and cost
+accounting. `docs/cheap-autoformalization-iteration-plan.md` treats the
+remaining `$7` OpenRouter budget as the whole autonomous research envelope,
+starting with a small gated 12-record probe rather than a large final run.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -103,9 +108,18 @@ recipe is prompt plus repair, not migration-guidance wording alone.
 - [x] Test one generated-only DeepSeek compiler-feedback repair round on the
   three hard rows without exposing the hidden grader statement. Result: repaired
   `FPS.X_coeff_one`, taking the five-sample result to 3/5.
-- [ ] Next broader research step: make the repair loop first-class in
-  `scripts/run_source_statement_live_eval.py` and improve the Laurent/tableau
-  hard cases before larger DeepSeek spend.
+- [x] Make the generated-only repair loop first-class in
+  `scripts/run_source_statement_live_eval.py`; repair prompts use generated-only
+  compiler output and still withhold the target Lean statement/name.
+- [x] Add a `$7`-envelope cheap-autoformalization iteration plan with concrete
+  spend gates, API-free 80-record budget evidence, and a trust-scoring boundary
+  that waits until the iterative textbook pipeline mostly succeeds.
+- [ ] Next broader research step: run the gated 12-record stratified-easy live
+  probe with `--include-record-imports --repair-attempts 1 --max-actual-cost-usd
+  0.80`, then decide whether context selection, API retrieval, or repair shape
+  is the bottleneck before any larger spend.
+- [ ] Improve the Laurent/tableau hard cases before using them as evidence for
+  larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
   the failed generated Lean evidence available from
   `docs/source-statement-live-eval-report.md`, the grader-only gold statement,

@@ -184,10 +184,12 @@ def source_focus(record: SelectedRecord) -> dict[str, Any]:
     }
 
 
-def _read_context_window(path: Path, line: int, *, before: int = 10, after: int = 24) -> str:
+def _read_context_window(path: Path, line: int, *, before: int = 10, after: int = 24, before_line: int | None = None) -> str:
     lines = path.read_text(encoding="utf-8").splitlines()
     start = max(1, line - before)
     end = min(len(lines), line + after)
+    if before_line is not None:
+        end = min(end, before_line - 1)
     return "\n".join(lines[start - 1 : end]).rstrip()
 
 
@@ -406,7 +408,7 @@ def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, An
                     "source_line": f"{span['path']}:{start}",
                 }
             )
-        window = _read_context_window(path, start)
+        window = _read_context_window(path, start, before_line=record.line_range[0])
         if window and window not in seen_examples:
             examples.append(window)
             seen_examples.add(window)
@@ -484,6 +486,46 @@ def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str,
             "Prefer a short proof if the prefix context already contains the needed fact.",
         ],
         "context": build_prompt_context(project_root, record),
+    }
+    return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(user, indent=2, ensure_ascii=False)}]
+
+
+def build_repair_messages(
+    *,
+    original_messages: list[dict[str, str]],
+    failed_declaration: str,
+    generated_only_lean_result: dict[str, Any],
+) -> list[dict[str, str]]:
+    system = (
+        "You are a Lean 4 repair agent. Repair exactly one generated theorem/lemma so it compiles "
+        "in the displayed current Lean/mathlib project. The original target Lean statement and target "
+        "declaration name are still withheld. Do not ask for or infer hidden grader text. Use only the "
+        "source chunk, prefix context, imports, local examples, the failed generated declaration, and "
+        "compiler errors. Return exactly one JSON object."
+    )
+    original_user_payload = json.loads(original_messages[1]["content"])
+    schema = {
+        "lean_declaration": "one complete corrected Lean theorem or lemma including proof/body",
+        "declaration_name": "the local name of the corrected theorem/lemma",
+        "used_context": ["short list of source/context/compiler facts used"],
+        "notes": ["brief caveats, if any"],
+    }
+    user = {
+        "task": "Repair the failed generated Lean declaration. Return one complete theorem or lemma including proof; no imports and no markdown.",
+        "required_json_schema": schema,
+        "repair_rules": [
+            "Do not use sorry, admit, placeholders, or comments as proof.",
+            "Do not return a conjunction or broad bundled theorem when the source focus is a narrow identity.",
+            "If the previous declaration over-generalized, narrow it to the single source sentence most directly supported by the context.",
+            "Use explicit type annotations for polymorphic terms when Lean could leave typeclass metavariables stuck.",
+            "For PowerSeries coefficients use argument order `coeff n f`.",
+            "For Laurent polynomials use `LaurentPolynomial.T n`, not bare `X` or bare `T` unless the prefix context defines it.",
+            "Do not redeclare context definitions; reference them directly.",
+        ],
+        "original_prompt_user_payload": original_user_payload,
+        "failed_generated_declaration": failed_declaration,
+        "generated_only_lean_exit_code": generated_only_lean_result.get("exit_code"),
+        "generated_only_lean_output": generated_only_lean_result.get("output", ""),
     }
     return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(user, indent=2, ensure_ascii=False)}]
 
@@ -734,6 +776,16 @@ def write_generated_model_artifacts(record_dir: Path, *, assistant_content: str,
     write_text_artifact(record_dir / "generated-lean-declaration.lean", declaration)
 
 
+def write_repair_model_artifacts(record_dir: Path, attempt: int, *, assistant_content: str, model_json: dict[str, Any]) -> None:
+    prefix = f"repair-attempt-{attempt:03d}"
+    write_text_artifact(record_dir / f"{prefix}-assistant-content.txt", assistant_content)
+    write_json(record_dir / f"{prefix}-model-output.json", model_json)
+    declaration = str(model_json.get("lean_declaration") or "")
+    if declaration and not declaration.endswith("\n"):
+        declaration += "\n"
+    write_text_artifact(record_dir / f"{prefix}-lean-declaration.lean", declaration)
+
+
 def response_finish_reason(response: dict[str, Any]) -> str | None:
     choices = response.get("choices") or []
     if not choices:
@@ -772,6 +824,24 @@ def classify_error(stage: str, exc: Exception, *, finish_reason: str | None = No
     return "eval_error"
 
 
+def actual_cost_from_row(row: dict[str, Any]) -> float:
+    total = 0.0
+    cost_summary = row.get("cost_summary", {})
+    if cost_summary.get("actual_cost_usd") is not None:
+        total += float(cost_summary["actual_cost_usd"])
+    for repair in row.get("repair_results", []):
+        repair_cost = repair.get("cost_summary", {})
+        if repair_cost.get("actual_cost_usd") is not None:
+            total += float(repair_cost["actual_cost_usd"])
+    return total
+
+
+def paid_call_count_from_row(row: dict[str, Any]) -> int:
+    total = 1 if row.get("response_received") else 0
+    total += sum(1 for repair in row.get("repair_results", []) if repair.get("response_received"))
+    return total
+
+
 def aggregate_failure_classes(results: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for row in results:
@@ -784,14 +854,27 @@ def aggregate_failure_classes(results: list[dict[str, Any]]) -> dict[str, int]:
 def prepare_record_run(args: argparse.Namespace, item: SourceEvalRecord) -> dict[str, Any]:
     record = item.selected
     record_dir = args.output / f"record-{item.index:03d}"
+    messages = build_messages(args.project_root, record)
     payload = build_payload(
         model=args.model,
-        messages=build_messages(args.project_root, record),
+        messages=messages,
         max_tokens=args.max_tokens,
         temperature=args.temperature,
         reasoning_effort=args.reasoning_effort,
     )
     estimate = estimate_payload_cost(payload)
+    estimated_max_cost = float(estimate.get("estimated_max_cost_usd") or 0.0)
+    repair_attempts = max(0, int(getattr(args, "repair_attempts", 0) or 0))
+    repair_payload = build_payload(
+        model=args.model,
+        messages=messages,
+        max_tokens=args.repair_max_tokens,
+        temperature=args.temperature,
+        reasoning_effort=args.repair_reasoning_effort,
+    )
+    repair_estimate = estimate_payload_cost(repair_payload)
+    repair_estimated_max_cost = float(repair_estimate.get("estimated_max_cost_usd") or 0.0)
+    reserved_estimated_cost = estimated_max_cost + repair_attempts * repair_estimated_max_cost
     row: dict[str, Any] = {
         "index": item.index,
         "record_id": record.record_id,
@@ -800,22 +883,129 @@ def prepare_record_run(args: argparse.Namespace, item: SourceEvalRecord) -> dict
         "gold_line_range": list(record.line_range),
         "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
         "budget_estimate": estimate,
+        "repair_budget_estimate": repair_estimate,
+        "repair_attempts_configured": repair_attempts,
+        "reserved_estimated_max_cost_usd": reserved_estimated_cost,
     }
     write_json(record_dir / "openrouter-payload.json", payload)
     return {
         "item": item,
         "record": record,
         "record_dir": record_dir,
+        "messages": messages,
         "payload": payload,
-        "estimated_max_cost_usd": float(estimate.get("estimated_max_cost_usd") or 0.0),
+        "estimated_max_cost_usd": reserved_estimated_cost,
         "row": row,
     }
+
+
+def lean_check_candidate(
+    *,
+    args: argparse.Namespace,
+    record: SelectedRecord,
+    record_dir: Path,
+    project_subdir: str,
+    declaration: str,
+    generated_name: str,
+    include_grader: bool,
+) -> dict[str, Any]:
+    target_path = materialize_candidate_project(
+        project_root=args.project_root,
+        output_root=record_dir / project_subdir,
+        record=record,
+        lean_declaration=declaration,
+        generated_name=generated_name,
+        lake_cache_from=args.lake_cache_from,
+        include_record_imports=args.include_record_imports,
+        include_grader=include_grader,
+    )
+    return run_lean(record_dir / project_subdir, target_path, args.lean_timeout)
+
+
+def run_repair_attempt(
+    args: argparse.Namespace,
+    *,
+    record: SelectedRecord,
+    record_dir: Path,
+    original_messages: list[dict[str, str]],
+    failed_declaration: str,
+    generated_only_lean_result: dict[str, Any],
+    attempt: int,
+) -> dict[str, Any]:
+    messages = build_repair_messages(
+        original_messages=original_messages,
+        failed_declaration=failed_declaration,
+        generated_only_lean_result=generated_only_lean_result,
+    )
+    payload = build_payload(
+        model=args.model,
+        messages=messages,
+        max_tokens=args.repair_max_tokens,
+        temperature=args.temperature,
+        reasoning_effort=args.repair_reasoning_effort,
+    )
+    prefix = f"repair-attempt-{attempt:03d}"
+    write_json(record_dir / f"{prefix}-openrouter-payload.json", payload)
+    row: dict[str, Any] = {
+        "attempt": attempt,
+        "budget_estimate": estimate_payload_cost(payload),
+    }
+
+    try:
+        response = call_openrouter(payload, args.base_url, args.openrouter_timeout)
+    except Exception as exc:  # noqa: BLE001
+        row["api_request_attempted"] = True
+        row["response_received"] = False
+        row["success"] = False
+        row["failure_class"] = classify_error("openrouter", exc)
+        row["error"] = f"openrouter_{type(exc).__name__}: {exc}"
+        return row
+
+    row["api_request_attempted"] = True
+    row["response_received"] = True
+    write_json(record_dir / f"{prefix}-openrouter-response.json", response)
+    cost_summary = summarize_openrouter_response_cost(response)
+    write_json(record_dir / f"{prefix}-openrouter-cost-summary.json", cost_summary)
+    row["cost_summary"] = cost_summary
+    row["finish_reason"] = response_finish_reason(response)
+
+    assistant_content = response_message_content(response)
+    try:
+        if not assistant_content.strip():
+            raise ValueError("model returned empty content")
+        model_json = parse_model_json(response)
+        write_repair_model_artifacts(record_dir, attempt, assistant_content=assistant_content, model_json=model_json)
+    except Exception as exc:  # noqa: BLE001
+        row["success"] = False
+        row["failure_class"] = classify_error("model_json", exc, finish_reason=row["finish_reason"])
+        row["error"] = f"{type(exc).__name__}: {exc}"
+        return row
+
+    try:
+        declaration = str(model_json.get("lean_declaration") or "")
+        generated_name = extract_generated_name(declaration, model_json.get("declaration_name"))
+        row["model_json"] = model_json
+        row["generated_name"] = generated_name
+        row["forbidden_placeholder"] = contains_forbidden_placeholder(declaration)
+        if not declaration.strip() or not generated_name:
+            raise ValueError("missing lean_declaration or declaration_name")
+        if row["forbidden_placeholder"]:
+            raise ValueError("model output contains forbidden placeholder")
+    except Exception as exc:  # noqa: BLE001
+        row["success"] = False
+        row["failure_class"] = classify_error("model_contract", exc)
+        row["error"] = f"{type(exc).__name__}: {exc}"
+        return row
+
+    row["success"] = True
+    return row
 
 
 def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[str, Any]:
     record: SelectedRecord = prepared["record"]
     record_dir: Path = prepared["record_dir"]
     payload: dict[str, Any] = prepared["payload"]
+    original_messages: list[dict[str, str]] = prepared["messages"]
     row = dict(prepared["row"])
 
     if args.budget_only:
@@ -874,25 +1064,84 @@ def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[s
         row["paid_call_made"] = True
         return row
 
-    try:
-        target_path = materialize_candidate_project(
-            project_root=args.project_root,
-            output_root=record_dir / "project",
-            record=record,
-            lean_declaration=declaration,
-            generated_name=str(generated_name),
-            lake_cache_from=args.lake_cache_from,
-            include_record_imports=args.include_record_imports,
-        )
-        lean_result = run_lean(record_dir / "project", target_path, args.lean_timeout)
-        row["lean_check"] = lean_result
-        row["success"] = lean_result["exit_code"] == 0
-        if not row["success"]:
-            row["failure_class"] = classify_lean_failure(str(lean_result.get("output") or ""))
-    except Exception as exc:  # noqa: BLE001 - per-record eval should continue.
-        row["success"] = False
-        row["failure_class"] = "materialization_or_lean_error"
-        row["error"] = f"{type(exc).__name__}: {exc}"
+    row["repair_results"] = []
+    row["repair_attempts_used"] = 0
+
+    current_declaration = declaration
+    current_generated_name = str(generated_name)
+    for attempt in range(0, max(0, int(getattr(args, "repair_attempts", 0) or 0)) + 1):
+        project_subdir = "project" if attempt == 0 else f"repair-attempt-{attempt:03d}-generated-only-project"
+        try:
+            generated_only_lean = lean_check_candidate(
+                args=args,
+                record=record,
+                record_dir=record_dir,
+                project_subdir=project_subdir,
+                declaration=current_declaration,
+                generated_name=current_generated_name,
+                include_grader=False,
+            )
+            artifact_name = "generated-only-lean.json" if attempt == 0 else f"repair-attempt-{attempt:03d}-generated-only-lean.json"
+            write_json(record_dir / artifact_name, generated_only_lean)
+            if attempt == 0:
+                row["generated_only_lean_check"] = generated_only_lean
+            else:
+                row["repair_results"][-1]["generated_only_lean_check"] = generated_only_lean
+            if generated_only_lean["exit_code"] != 0:
+                row["success"] = False
+                row["failure_class"] = "generated_lean_does_not_compile"
+                row["lean_check"] = generated_only_lean
+                if attempt >= int(getattr(args, "repair_attempts", 0) or 0):
+                    break
+                repair_row = run_repair_attempt(
+                    args,
+                    record=record,
+                    record_dir=record_dir,
+                    original_messages=original_messages,
+                    failed_declaration=current_declaration,
+                    generated_only_lean_result=generated_only_lean,
+                    attempt=attempt + 1,
+                )
+                row["repair_results"].append(repair_row)
+                if not repair_row.get("success"):
+                    row["success"] = False
+                    row["failure_class"] = repair_row.get("failure_class")
+                    row["error"] = repair_row.get("error")
+                    break
+                if not repair_row.get("model_json"):
+                    break
+                current_declaration = str(repair_row["model_json"].get("lean_declaration") or "")
+                current_generated_name = str(repair_row.get("generated_name") or "")
+                row["repair_attempts_used"] = attempt + 1
+                continue
+
+            graded_lean = lean_check_candidate(
+                args=args,
+                record=record,
+                record_dir=record_dir,
+                project_subdir="project" if attempt == 0 else f"repair-attempt-{attempt:03d}-graded-project",
+                declaration=current_declaration,
+                generated_name=current_generated_name,
+                include_grader=True,
+            )
+            if attempt == 0:
+                row["lean_check"] = graded_lean
+            else:
+                row["repair_results"][-1]["graded_lean_check"] = graded_lean
+                row["lean_check"] = graded_lean
+            row["success"] = graded_lean["exit_code"] == 0
+            if row["success"]:
+                row["failure_class"] = None
+                row["generated_name"] = current_generated_name
+                row["final_declaration_source"] = "initial" if attempt == 0 else f"repair-attempt-{attempt:03d}"
+            else:
+                row["failure_class"] = classify_lean_failure(str(graded_lean.get("output") or ""))
+            break
+        except Exception as exc:  # noqa: BLE001 - per-record eval should continue.
+            row["success"] = False
+            row["failure_class"] = "materialization_or_lean_error"
+            row["error"] = f"{type(exc).__name__}: {exc}"
+            break
 
     row["paid_call_made"] = True
     return row
@@ -951,9 +1200,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 row["failure_class"] = "worker_error"
                 row["error"] = f"{type(exc).__name__}: {exc}"
                 row["index"] = item.index
-            cost = row.get("cost_summary", {}).get("actual_cost_usd")
-            if cost is not None:
-                completed_actual_cost += float(cost)
+            completed_actual_cost += actual_cost_from_row(row)
             results_by_index[int(row["index"])] = row
             append_jsonl(partial_jsonl, row)
             write_json(eval_dir / "partial-results.json", {"results": sorted_results(results_by_index)})
@@ -1019,11 +1266,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     total_actual_cost = 0.0
     paid_calls = 0
     for row in results:
-        if row.get("response_received"):
-            paid_calls += 1
-        cost_summary = row.get("cost_summary", {})
-        if cost_summary.get("actual_cost_usd") is not None:
-            total_actual_cost += float(cost_summary["actual_cost_usd"])
+        paid_calls += paid_call_count_from_row(row)
+        total_actual_cost += actual_cost_from_row(row)
 
     attempted = [row for row in results if row.get("paid_call_made")]
     successes = [row for row in attempted if row.get("success")]
@@ -1042,6 +1286,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "concurrency": args.concurrency,
         "sample_mode": args.sample_mode,
         "max_actual_cost_usd": args.max_actual_cost_usd,
+        "repair_attempts": args.repair_attempts,
+        "repair_max_tokens": args.repair_max_tokens,
+        "repair_reasoning_effort": args.repair_reasoning_effort,
         "failure_classes": aggregate_failure_classes(results),
         "results": results,
     }
@@ -1059,6 +1306,9 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Model: `{summary['model']}`",
         f"- Max tokens: `{summary['max_tokens']}`",
         f"- Reasoning effort: `{summary['reasoning_effort']}`",
+        f"- Repair attempts: `{summary['repair_attempts']}`",
+        f"- Repair max tokens: `{summary['repair_max_tokens']}`",
+        f"- Repair reasoning effort: `{summary['repair_reasoning_effort']}`",
         f"- Concurrency: `{summary['concurrency']}`",
         f"- Sample mode: `{summary['sample_mode']}`",
         f"- Global cost cap: `${float(summary['max_actual_cost_usd'] or 0.0):.6f}`",
@@ -1068,7 +1318,7 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Actual reported cost: `${summary['actual_cost_usd']:.6f}`",
         f"- Failure classes: `{json.dumps(summary['failure_classes'], sort_keys=True)}`",
         "",
-        "Success means: the prompt withheld the target Lean statement/name; the model generated a theorem/lemma; the generated theorem compiled; and a grader-only copy of the gold statement was proved by `simpa using <generated theorem>`. This is still an oracle source-span benchmark, not full feed-forward segmentation.",
+        "Success means: the prompt withheld the target Lean statement/name; the model generated a theorem/lemma; optional repairs used generated-only compiler feedback; and a grader-only copy of the gold statement was proved by `simpa using <generated theorem>`. This is still an oracle source-span benchmark, not full feed-forward segmentation.",
         "",
         "| # | Result | Record | Generated name | Cost | Error / Lean output |",
         "|---:|---|---|---|---:|---|",
@@ -1101,6 +1351,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-tokens", type=int, default=32768)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--reasoning-effort", default="high")
+    parser.add_argument("--repair-attempts", type=int, default=0, help="Generated-only compiler-feedback repair attempts.")
+    parser.add_argument("--repair-max-tokens", type=int, default=None, help="Max tokens for each repair call. Defaults to --max-tokens.")
+    parser.add_argument(
+        "--repair-reasoning-effort",
+        default=None,
+        help="Reasoning effort for repair calls. Defaults to --reasoning-effort.",
+    )
     parser.add_argument("--lake-cache-from", type=Path, default=None)
     parser.add_argument(
         "--include-record-imports",
@@ -1119,6 +1376,10 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--budget-only", action="store_true")
     args = parser.parse_args()
+    if args.repair_max_tokens is None:
+        args.repair_max_tokens = args.max_tokens
+    if args.repair_reasoning_effort is None:
+        args.repair_reasoning_effort = args.reasoning_effort
     return args
 
 

@@ -12,6 +12,7 @@ from pathlib import Path
 from scripts.materialize_minimal_context_smoke import SelectedRecord
 from scripts.run_source_statement_live_eval import (
     build_messages,
+    build_repair_messages,
     classify_lean_failure,
     copy_local_import_closure,
     generated_application_candidates,
@@ -119,6 +120,7 @@ def test_source_statement_prompt_includes_local_style_and_notation_contract(tmp_
     assert "scoped notation" in examples
     assert "noncomputable def submatrixOfFinset" in examples
     assert "((Matrix.diagonal d).submatrix" in examples
+    assert "theorem target" not in examples
 
 
 def test_source_statement_prompt_focuses_specific_part_of_multipart_source(tmp_path: Path) -> None:
@@ -153,6 +155,26 @@ def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_
     assert "typeclass objects" in guidance
     assert "Use current Lean 4/Mathlib syntax" in instructions
     assert "do not bundle typeclass instances" in instructions
+
+
+def test_repair_prompt_uses_generated_only_error_without_grader_feedback(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    messages = build_messages(project_root, record)
+
+    repair_messages = build_repair_messages(
+        original_messages=messages,
+        failed_declaration="theorem bad : True := by\n  exact missingFact",
+        generated_only_lean_result={"exit_code": 1, "output": "unknown identifier 'missingFact'"},
+    )
+    system = repair_messages[0]["content"]
+    user = json.loads(repair_messages[1]["content"])
+    prompt_text = json.dumps(user, ensure_ascii=False)
+
+    assert "target Lean statement and target declaration name are still withheld" in system
+    assert "theorem bad : True" in user["failed_generated_declaration"]
+    assert "unknown identifier 'missingFact'" in user["generated_only_lean_output"]
+    assert "__repoprover_source_statement_check" not in prompt_text
+    assert "theorem target" not in prompt_text
 
 
 def test_source_statement_context_does_not_duplicate_notation_support(tmp_path: Path) -> None:
@@ -320,6 +342,9 @@ def _run_args(project_root: Path, records: Path, output: Path, **overrides: obje
         "max_tokens": 128,
         "temperature": 0.0,
         "reasoning_effort": None,
+        "repair_attempts": 0,
+        "repair_max_tokens": 128,
+        "repair_reasoning_effort": None,
         "lake_cache_from": None,
         "include_record_imports": False,
         "lean_timeout": 1,
@@ -389,6 +414,96 @@ def test_source_statement_live_eval_runs_records_concurrently_and_writes_partial
     assert generated_path.read_text(encoding="utf-8") == "theorem generated : True := by\n  trivial\n"
     parsed_json_path = tmp_path / "out/record-001/model-output.json"
     assert json.loads(parsed_json_path.read_text(encoding="utf-8"))["declaration_name"] == "generated"
+
+
+def test_source_statement_live_eval_repairs_generated_only_compile_failure(
+    tmp_path: Path, monkeypatch
+) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 1)
+    calls: list[dict] = []
+    responses = [
+        {
+            "lean_declaration": "theorem bad : True := by\n  exact missingFact",
+            "declaration_name": "bad",
+            "used_context": [],
+            "notes": [],
+        },
+        {
+            "lean_declaration": "theorem repaired : True := by\n  trivial",
+            "declaration_name": "repaired",
+            "used_context": ["compiler error"],
+            "notes": [],
+        },
+    ]
+
+    def fake_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        calls.append(payload)
+        return _fake_response(json.dumps(responses[len(calls) - 1]), cost=0.0002)
+
+    def fake_run_lean(project_root: Path, target_path: Path, timeout: int) -> dict:
+        text = target_path.read_text(encoding="utf-8")
+        if "missingFact" in text:
+            return {"exit_code": 1, "output": "unknown identifier 'missingFact'"}
+        return {"exit_code": 0, "output": ""}
+
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.call_openrouter", fake_call_openrouter)
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.run_lean", fake_run_lean)
+
+    summary = run(_run_args(project_root, records_path, tmp_path / "out", limit=1, repair_attempts=1))
+    row = summary["results"][0]
+
+    assert len(calls) == 2
+    assert summary["paid_calls_made"] == 2
+    assert summary["actual_cost_usd"] == 0.0004
+    assert summary["successes"] == 1
+    assert row["repair_attempts_used"] == 1
+    assert row["final_declaration_source"] == "repair-attempt-001"
+    assert (tmp_path / "out/record-001/generated-only-lean.json").exists()
+    assert (tmp_path / "out/record-001/repair-attempt-001-openrouter-payload.json").exists()
+    assert (tmp_path / "out/record-001/repair-attempt-001-lean-declaration.lean").read_text(encoding="utf-8") == (
+        "theorem repaired : True := by\n  trivial\n"
+    )
+
+
+def test_source_statement_live_eval_does_not_repair_grader_failures(tmp_path: Path, monkeypatch) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    records_path = tmp_path / "records.jsonl"
+    _write_records(records_path, record.row, 1)
+    calls = 0
+
+    def fake_call_openrouter(payload: dict, base_url: str, timeout: float) -> dict:
+        nonlocal calls
+        calls += 1
+        body = json.dumps(
+            {
+                "lean_declaration": "theorem generated : True := by\n  trivial",
+                "declaration_name": "generated",
+                "used_context": [],
+                "notes": [],
+            }
+        )
+        return _fake_response(body)
+
+    def fake_run_lean(project_root: Path, target_path: Path, timeout: int) -> dict:
+        text = target_path.read_text(encoding="utf-8")
+        if "__repoprover_source_statement_check" in text:
+            return {"exit_code": 1, "output": "error: unsolved goals\n__repoprover_source_statement_check"}
+        return {"exit_code": 0, "output": ""}
+
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.call_openrouter", fake_call_openrouter)
+    monkeypatch.setattr("scripts.run_source_statement_live_eval.run_lean", fake_run_lean)
+
+    summary = run(_run_args(project_root, records_path, tmp_path / "out", limit=1, repair_attempts=1))
+    row = summary["results"][0]
+
+    assert calls == 1
+    assert summary["paid_calls_made"] == 1
+    assert summary["successes"] == 0
+    assert row["repair_attempts_used"] == 0
+    assert row["repair_results"] == []
+    assert summary["failure_classes"] == {"grader_gold_statement_not_proved": 1}
 
 
 def test_source_statement_live_eval_persists_raw_assistant_content_before_json_parse(
