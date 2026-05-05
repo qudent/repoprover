@@ -104,6 +104,29 @@ bare names are not resolved. The scan does not see notation expansion,
 elaboration, typeclass search, `simp` internals, or tactic-generated
 dependencies.
 
+Headline results from this scan:
+
+| Question | Headline answer |
+|---|---:|
+| Scanned Mathlib named declaration surface | ~211,000 |
+| Unique qualified Mathlib declarations explicitly mentioned by project code | 1,930 |
+| Unique qualified + long uniquely-resolved bare Mathlib mentions | 2,313 |
+| Per theorem/lemma declaration, qualified Mathlib mentions | median 2, p90 8, p95 12 |
+| Per exact TeX label, qualified Mathlib mentions | median 5, p90 19, p95 26 |
+| Per exact TeX label, qualified + long uniquely-resolved bare Mathlib mentions | median 6, p90 21, p95 29 |
+| Exact TeX labels represented in the scan | 415 |
+| Declarations per exact TeX label | median 2, p90 6, max 29 |
+
+An "ambiguous" name in this section means ambiguous to the static scanner, not
+necessarily ambiguous to Lean. For example, a bare token may be a local variable,
+a field projection, or one of many declarations with the same short name in
+different namespaces. Lean resolves the checked code using local binders,
+namespace/open state, expected types, notation expansion, coercions, typeclass
+search, and tactic elaboration. A text scan does not have that elaborated
+context, so it counts such bare names separately rather than inventing a
+dependency. Exact dependency extraction would need an elaborated Lean pass over
+the compiled declarations.
+
 Static source usage in the current generated Lean code:
 
 | Explicit usage signal | Scale |
