@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem sum_lim_conv {f : ℕ → PowerSeries K} {L : PowerSeries K}\n    (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) L) :\n    IsSummable f ∧ tsum' f (isSummable_of_coeffStabilizesTo_partial_sum h) = L :=\nby\n  have h_summable : IsSummable f := isSummable_of_coeffStabilizesTo_partial_sum h\n  have h_eq : tsum' f h_summable = L := tsum'_eq_of_coeffStabilizesTo_partial_sum h\n  exact And.intro h_summable h_eq",
+  "declaration_name": "sum_lim_conv",
+  "used_context": [
+    "isSummable_of_coeffStabilizesTo_partial_sum",
+    "tsum'_eq_of_coeffStabilizesTo_partial_sum",
+    "CoeffStabilizesTo",
+    "Finset.range",
+    "tsum'",
+    "IsSummable"
+  ],
+  "notes": [
+    "The theorem is a direct combination of the two imported lemmas, so no additional reasoning is needed."
+  ]
+}

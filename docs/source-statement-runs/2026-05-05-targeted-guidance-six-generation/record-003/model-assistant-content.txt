@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "lemma fps_comp_coeff_finsum_eq_sum (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :\n    finsum (fun d ↦ coeff d f * coeff n (g ^ d)) = ∑ d in Finset.range (n + 1), coeff d f * coeff n (g ^ d) :=\nby\n  apply finsum_eq_sum_of_support_subset\n  intro d hd\n  have hmem : d ∉ Finset.range (n + 1) := hd\n  rw [Finset.mem_range] at hmem\n  have hnd : n < d := by omega\n  have hzero : coeff n (g ^ d) = 0 := fps_subs_wd_firstCoeffs g hg d n hnd\n  simpa",
+  "declaration_name": "fps_comp_coeff_finsum_eq_sum",
+  "used_context": [
+    "fps_subs_wd_firstCoeffs",
+    "finsum_eq_sum_of_support_subset",
+    "Finset.mem_range",
+    "coeff",
+    "omega"
+  ],
+  "notes": [
+    "The proof uses `omega` for arithmetic; it is available in the project context."
+  ]
+}

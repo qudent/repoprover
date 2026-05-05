@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777966041-FZdHuZz62POY0oX81RtZ",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem sum_lim_conv {f : ℕ → PowerSeries K} {L : PowerSeries K}\\n    (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) L) :\\n    IsSummable f ∧ tsum' f (isSummable_of_coeffStabilizesTo_partial_sum h) = L :=\\nby\\n  have h_summable : IsSummable f := isSummable_of_coeffStabilizesTo_partial_sum h\\n  have h_eq : tsum' f h_summable = L := tsum'_eq_of_coeffStabilizesTo_partial_sum h\\n  exact And.intro h_summable h_eq\",\n  \"declaration_name\": \"sum_lim_conv\",\n  \"used_context\": [\n    \"isSummable_of_coeffStabilizesTo_partial_sum\",\n    \"tsum'_eq_of_coeffStabilizesTo_partial_sum\",\n    \"CoeffStabilizesTo\",\n    \"Finset.range\",\n    \"tsum'\",\n    \"IsSummable\"\n  ],\n  \"notes\": [\n    \"The theorem is a direct combination of the two imported lemmas, so no additional reasoning is needed.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777966041,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 1799,
+    "prompt_tokens": 5610,
+    "total_tokens": 7409,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 1511,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.003784616,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.003784616,
+      "upstream_inference_prompt_cost": 0.002219486,
+      "upstream_inference_completions_cost": 0.00156513
+    }
+  },
+  "provider": "DeepSeek"
+}

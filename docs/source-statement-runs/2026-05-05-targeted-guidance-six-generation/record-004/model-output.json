@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem empty_unique (p : Partition 0) : p = empty := by\n  rw [eq_iff_parts_eq]\n  rw [partition_zero_parts p, partition_zero_parts empty]",
+  "declaration_name": "empty_unique",
+  "used_context": [
+    "eq_iff_parts_eq",
+    "partition_zero_parts",
+    "empty"
+  ],
+  "notes": [
+    "assuming that eq_iff_parts_eq and partition_zero_parts are defined in the current namespace; also assuming empty is defined as a Partition 0"
+  ]
+}

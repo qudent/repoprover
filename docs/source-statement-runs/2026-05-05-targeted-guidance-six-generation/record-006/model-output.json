@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem simpleTransposition_isSwap {n : ℕ} (i : Fin (n - 1)) : (simpleTransposition i).IsSwap := by\n  unfold simpleTransposition\n  have hne : (⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩ : Fin n) ≠\n            (⟨i.val + 1, by omega⟩ : Fin n) := by\n    intro h\n    apply_fun (fun x => x.val) at h\n    omega\n  apply Equiv.swap_isSwap\n  exact hne",
+  "declaration_name": "simpleTransposition_isSwap",
+  "used_context": [
+    "simpleTransposition",
+    "Equiv.swap_isSwap",
+    "omega"
+  ],
+  "notes": [
+    "Uses Fin.val inequality and omega to prove distinctness, then Equiv.swap_isSwap."
+  ]
+}

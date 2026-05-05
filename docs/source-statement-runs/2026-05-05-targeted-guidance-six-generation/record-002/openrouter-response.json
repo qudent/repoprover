@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777966041-5SjfjLN0GIoqI01VCn7b",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem newton_binom (F : Type*) [Field F] [BinomialRing F] (n : ℤ) : ((1 : PowerSeries F) + PowerSeries.X) ^ (n : ℤ) = PowerSeries.mk fun k => (Ring.choose n k : F) := by\\n  match n with\\n  | (m : ℕ) =>\\n    have h_binom : PowerSeries.binomialSeries F (m : ℤ) = (1 + PowerSeries.X : PowerSeries F) ^ m :=\\n      PowerSeries.binomialSeries_nat (R := ℤ) (A := F) m\\n    have h_coeff : PowerSeries.binomialSeries F (m : ℤ) = PowerSeries.mk fun k => (Ring.choose (m : ℤ) k : F) := by\\n      ext k\\n      simp [PowerSeries.binomialSeries_coeff, PowerSeries.coeff_mk, zsmul_one]\\n    calc\\n      ((1 : PowerSeries F) + PowerSeries.X) ^ (m : ℤ) = ((1 : PowerSeries F) + PowerSeries.X) ^ m := by simp\\n      _ = PowerSeries.binomialSeries F (m : ℤ) := by rw [h_binom]\\n      _ = PowerSeries.mk fun k => (Ring.choose (m : ℤ) k : F) := h_coeff\\n  | -[n+1] =>\\n    rw [zpow_neg, zpow_coe_nat]\\n    exact fps_onePlusX_pow_neg' (F := F) (n := n+1)\",\n  \"declaration_name\": \"newton_binom\",\n  \"used_context\": [\n    \"fps_onePlusX_pow_neg'\",\n    \"PowerSeries.binomialSeries_nat\",\n    \"zpow_neg\",\n    \"zpow_coe_nat\",\n    \"Ring.choose\",\n    \"PowerSeries.mk\"\n  ],\n  \"notes\": [\n    \"This proves Newton's binomial formula for all integer exponents over a field with a BinomialRing.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777966041,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 13707,
+    "prompt_tokens": 5625,
+    "total_tokens": 19332,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 13241,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.014095885,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.014095885,
+      "upstream_inference_prompt_cost": 0.002170795,
+      "upstream_inference_completions_cost": 0.01192509
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem newton_binom (F : Type*) [Field F] [BinomialRing F] (n : ℤ) : ((1 : PowerSeries F) + PowerSeries.X) ^ (n : ℤ) = PowerSeries.mk fun k => (Ring.choose n k : F) := by\n  match n with\n  | (m : ℕ) =>\n    have h_binom : PowerSeries.binomialSeries F (m : ℤ) = (1 + PowerSeries.X : PowerSeries F) ^ m :=\n      PowerSeries.binomialSeries_nat (R := ℤ) (A := F) m\n    have h_coeff : PowerSeries.binomialSeries F (m : ℤ) = PowerSeries.mk fun k => (Ring.choose (m : ℤ) k : F) := by\n      ext k\n      simp [PowerSeries.binomialSeries_coeff, PowerSeries.coeff_mk, zsmul_one]\n    calc\n      ((1 : PowerSeries F) + PowerSeries.X) ^ (m : ℤ) = ((1 : PowerSeries F) + PowerSeries.X) ^ m := by simp\n      _ = PowerSeries.binomialSeries F (m : ℤ) := by rw [h_binom]\n      _ = PowerSeries.mk fun k => (Ring.choose (m : ℤ) k : F) := h_coeff\n  | -[n+1] =>\n    rw [zpow_neg, zpow_coe_nat]\n    exact fps_onePlusX_pow_neg' (F := F) (n := n+1)",
+  "declaration_name": "newton_binom",
+  "used_context": [
+    "fps_onePlusX_pow_neg'",
+    "PowerSeries.binomialSeries_nat",
+    "zpow_neg",
+    "zpow_coe_nat",
+    "Ring.choose",
+    "PowerSeries.mk"
+  ],
+  "notes": [
+    "This proves Newton's binomial formula for all integer exponents over a field with a BinomialRing."
+  ]
+}

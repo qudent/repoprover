@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "lemma pow_eq_iterate (X : Type*) (α : Equiv.Perm X) (i : ℕ) : (α ^ i : X → X) = α^[i] := by\n  induction i with\n  | zero => ext x; simp\n  | succ n ih =>\n    ext x\n    rw [pow_succ, Equiv.Perm.mul_apply, ih, Function.iterate_succ']",
+  "declaration_name": "pow_eq_iterate",
+  "used_context": [
+    "pow_succ",
+    "Equiv.Perm.mul_apply",
+    "Function.iterate_succ'"
+  ],
+  "notes": []
+}
