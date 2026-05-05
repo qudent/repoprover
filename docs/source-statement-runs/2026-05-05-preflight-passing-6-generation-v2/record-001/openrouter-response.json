@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777945412-O3bxynRqtt6xXbStzQwJ",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"open Filter\\nopen scoped Topology\\n\\ntheorem partial_sums_tendsto_tsum (f : ℕ → PowerSeries K) [TopologicalRing K] (hsum : Summable f) :\\n    Tendsto (fun i : ℕ => ∑ n in range (i+1), f n) atTop (𝓝 (∑' n, f n)) :=\\n  hsum.hasSum.tendsto_sum_nat.comp (tendsto_add_atTop_nat 1)\",\n  \"declaration_name\": \"partial_sums_tendsto_tsum\",\n  \"used_context\": [\n    \"Summable.hasSum\",\n    \"HasSum.tendsto_sum_nat\",\n    \"tendsto_add_atTop_nat\"\n  ],\n  \"notes\": [\n    \"Added [TopologicalRing K] assumption to have a topology for infinite sums.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777945412,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 20083,
+    "prompt_tokens": 2696,
+    "total_tokens": 22779,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 19881,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 384,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.018479322,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.018479322,
+      "upstream_inference_prompt_cost": 0.001007112,
+      "upstream_inference_completions_cost": 0.01747221
+    }
+  },
+  "provider": "DeepSeek"
+}

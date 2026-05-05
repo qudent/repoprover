@@ -1,0 +1,8 @@
+{
+  "lean_declaration": "theorem coeff_X_fps (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := by\n  simp",
+  "declaration_name": "coeff_X_fps",
+  "used_context": ["coeff", "X", "R", "by simp"],
+  "notes": [
+    "The source defines x as the FPS with coefficient 1 at 1 and 0 elsewhere. We formalize this as the coefficient lemma of PowerSeries.X, matching the local style of coeff_C_fps etc."
+  ]
+}

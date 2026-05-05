@@ -167,9 +167,12 @@ failures plus 1 hidden-grader mismatch; see
   redefinitions, require helper APIs to appear in displayed context, add richer
   nearby local examples for determinant/binomial records, and strengthen local
   API-family guidance such as `Ring.choose` vs `Nat.choose`.
+- [x] Rerun a small generation-only v2 probe against the 0/6 baseline. Result:
+  stopped after 5/6 paid responses (`$0.048314638`); verification still found 0
+  successes on completed outputs, so prompt wording/local examples alone are not
+  enough. See `docs/source-statement-preflight-passing-6-v2-comparison.md`.
 - [ ] Add generated-failure/local-API retrieval without leaking the withheld
-  target declaration name, then rerun a small generation-only probe against the
-  0/6 baseline.
+  target declaration name before any further paid source-statement batches.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

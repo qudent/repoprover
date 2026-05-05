@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777945926-S42PdczCAxa8puvbIh6T",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem coeff_X_fps (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := by\\n  simp\",\n  \"declaration_name\": \"coeff_X_fps\",\n  \"used_context\": [\"coeff\", \"X\", \"R\", \"by simp\"],\n  \"notes\": [\n    \"The source defines x as the FPS with coefficient 1 at 1 and 0 elsewhere. We formalize this as the coefficient lemma of PowerSeries.X, matching the local style of coeff_C_fps etc.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777945926,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 1744,
+    "prompt_tokens": 2573,
+    "total_tokens": 4317,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 1602,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.002415671,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.002415671,
+      "upstream_inference_prompt_cost": 0.000898391,
+      "upstream_inference_completions_cost": 0.00151728
+    }
+  },
+  "provider": "DeepSeek"
+}

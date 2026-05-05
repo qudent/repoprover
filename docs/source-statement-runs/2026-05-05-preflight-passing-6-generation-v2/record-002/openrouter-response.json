@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777945412-1ki9K1QELmDhJKVx89FJ",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_colop : \\n    (∀ (A : Matrix (Fin n) (Fin n) K) (i j : Fin n), i ≠ j → det (A.submatrix id (Equiv.swap i j)) = -det A) ∧\\n    (∀ (A : Matrix (Fin n) (Fin n) K) (i : Fin n) (c : K), det (A.updateColumn i (λ k => c * A k i)) = c * det A) ∧\\n    (∀ (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (h : i ≠ j) (c : K), det (A.updateColumn i (λ k => A k i + c * A k j)) = det A) :=\\nby\\n  refine ⟨?hswap, ?hscale, ?hadd⟩\\n  · intro A i j h\\n    calc\\n      det (A.submatrix id (Equiv.swap i j)) = det ((A.submatrix id (Equiv.swap i j))ᵀ) := by rw [Matrix.det_transpose]\\n      _ = det (Matrix.of (Aᵀ ∘ Equiv.swap i j)) := by\\n        ext m n; simp\\n      _ = -det (Aᵀ) := by rw [det_swap_rows (Aᵀ) i j h]\\n      _ = -det A := by rw [Matrix.det_transpose]\\n  · intro A i c\\n    calc\\n      det (A.updateColumn i (λ k => c * A k i)) = det ((A.updateColumn i (λ k => c * A k i))ᵀ) := by rw [Matrix.det_transpose]\\n      _ = det ((Aᵀ).updateRow i (λ j => c * (Aᵀ i j))) := by\\n        ext m n; simp\\n      _ = det ((Aᵀ).updateRow i (c • (Aᵀ i))) := by\\n        ext m n; simp\\n      _ = c * det (Aᵀ) := by rw [det_scale_row (Aᵀ) i c]\\n      _ = c * det A := by rw [Matrix.det_transpose]\\n  · intro A i j h c\\n    calc\\n      det (A.updateColumn i (λ k => A k i + c * A k j)) = det ((A.updateColumn i (λ k => A k i + c * A k j))ᵀ) := by rw [Matrix.det_transpose]\\n      _ = det ((Aᵀ).updateRow i (Aᵀ i + c • Aᵀ j)) := by\\n        ext m n; simp [Pi.add_apply, smul_eq_mul]\\n      _ = det (Aᵀ) := by rw [det_add_smul_row (Aᵀ) i j h c]\\n      _ = det A := by rw [Matrix.det_transpose]\",\n  \"declaration_name\": \"det_colop\",\n  \"used_context\": [\n    \"det_swap_rows\",\n    \"det_scale_row\",\n    \"det_add_smul_row\",\n    \"Matrix.det_transpose\",\n    \"Equiv.swap\",\n    \"Matrix.submatrix\",\n    \"Matrix.updateColumn\",\n    \"Matrix.updateRow\",\n    \"Matrix.of\"\n  ],\n  \"notes\": [\n    \"The row additivity property (det_row_add) is omitted; the statement covers the three column operation analogues (swap, scale, add a multiple) that correspond to the row versions in the local examples.\",\n    \"Proof follows exactly the source: use det_transpose and apply the existing row theorems to the transposed matrices.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777945412,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 14081,
+    "prompt_tokens": 2767,
+    "total_tokens": 16848,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 13238,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 384,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.013288467,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.013288467,
+      "upstream_inference_prompt_cost": 0.001037997,
+      "upstream_inference_completions_cost": 0.01225047
+    }
+  },
+  "provider": "DeepSeek"
+}

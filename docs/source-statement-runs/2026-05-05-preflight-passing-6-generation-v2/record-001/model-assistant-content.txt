@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "open Filter\nopen scoped Topology\n\ntheorem partial_sums_tendsto_tsum (f : ℕ → PowerSeries K) [TopologicalRing K] (hsum : Summable f) :\n    Tendsto (fun i : ℕ => ∑ n in range (i+1), f n) atTop (𝓝 (∑' n, f n)) :=\n  hsum.hasSum.tendsto_sum_nat.comp (tendsto_add_atTop_nat 1)",
+  "declaration_name": "partial_sums_tendsto_tsum",
+  "used_context": [
+    "Summable.hasSum",
+    "HasSum.tendsto_sum_nat",
+    "tendsto_add_atTop_nat"
+  ],
+  "notes": [
+    "Added [TopologicalRing K] assumption to have a topology for infinite sums."
+  ]
+}

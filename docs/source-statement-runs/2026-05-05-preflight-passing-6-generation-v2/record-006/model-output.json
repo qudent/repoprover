@@ -1,0 +1,21 @@
+{
+  "lean_declaration": "lemma partsCount_eq_largestPart_count (k n : ℕ) : partsCount k n =\n    ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by\n  apply Finset.card_congr (fun p _ => p.transpose) ?_ ?_ ?_ ?_\n  · intro p hp\n    rw [Finset.mem_filter, Finset.mem_univ, true_and] at hp ⊢\n    have hp_eq : p.numParts = k := by\n      rw [numParts]\n      exact hp\n    rw [transpose_largestPart_eq_length, hp_eq]\n  · intro p₁ hp₁ p₂ hp₂ htrans_eq\n    calc\n      p₁ = p₁.transpose.transpose := by rw [transpose_transpose]\n      _ = p₂.transpose.transpose := by rw [htrans_eq]\n      _ = p₂ := by rw [transpose_transpose]\n  · intro q hq\n    rw [Finset.mem_filter, Finset.mem_univ, true_and] at hq\n    refine ⟨q.transpose, Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩, ?_⟩\n    · rw [transpose_length_eq_largestPart, hq, numParts]\n    · rw [transpose_transpose]",
+  "declaration_name": "partsCount_eq_largestPart_count",
+  "used_context": [
+    "partsCount",
+    "largestPart",
+    "numParts",
+    "transpose",
+    "transpose_largestPart_eq_length",
+    "transpose_length_eq_largestPart",
+    "transpose_transpose",
+    "Finset.card_congr",
+    "Finset.mem_filter",
+    "Finset.mem_univ",
+    "Finset.univ"
+  ],
+  "notes": [
+    "Uses the transpose involution to establish a bijection between partitions with exactly k parts and partitions with largest part k.",
+    "Relies on existing theorems transpose_largestPart_eq_length and transpose_length_eq_largestPart."
+  ]
+}

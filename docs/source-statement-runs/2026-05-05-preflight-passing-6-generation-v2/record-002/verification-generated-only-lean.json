@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:23:66: error(lean.invalidField): Invalid field `updateColumn`: The environment does not contain `Function.updateColumn`, so it is not possible to project the field `updateColumn` from an expression\n  A\nof type `Fin n → Fin n → K`\nAlgebraicCombinatorics/DeterminantsBasic.lean:24:80: error(lean.invalidField): Invalid field `updateColumn`: The environment does not contain `Function.updateColumn`, so it is not possible to project the field `updateColumn` from an expression\n  A\nof type `Fin n → Fin n → K`\nAlgebraicCombinatorics/DeterminantsBasic.lean:26:9: error: Invalid `⟨...⟩` notation: The expected type of this term could not be determined\n"
+}

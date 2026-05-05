@@ -1,0 +1,19 @@
+{
+  "lean_declaration": "theorem det_colop : \n    (∀ (A : Matrix (Fin n) (Fin n) K) (i j : Fin n), i ≠ j → det (A.submatrix id (Equiv.swap i j)) = -det A) ∧\n    (∀ (A : Matrix (Fin n) (Fin n) K) (i : Fin n) (c : K), det (A.updateColumn i (λ k => c * A k i)) = c * det A) ∧\n    (∀ (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (h : i ≠ j) (c : K), det (A.updateColumn i (λ k => A k i + c * A k j)) = det A) :=\nby\n  refine ⟨?hswap, ?hscale, ?hadd⟩\n  · intro A i j h\n    calc\n      det (A.submatrix id (Equiv.swap i j)) = det ((A.submatrix id (Equiv.swap i j))ᵀ) := by rw [Matrix.det_transpose]\n      _ = det (Matrix.of (Aᵀ ∘ Equiv.swap i j)) := by\n        ext m n; simp\n      _ = -det (Aᵀ) := by rw [det_swap_rows (Aᵀ) i j h]\n      _ = -det A := by rw [Matrix.det_transpose]\n  · intro A i c\n    calc\n      det (A.updateColumn i (λ k => c * A k i)) = det ((A.updateColumn i (λ k => c * A k i))ᵀ) := by rw [Matrix.det_transpose]\n      _ = det ((Aᵀ).updateRow i (λ j => c * (Aᵀ i j))) := by\n        ext m n; simp\n      _ = det ((Aᵀ).updateRow i (c • (Aᵀ i))) := by\n        ext m n; simp\n      _ = c * det (Aᵀ) := by rw [det_scale_row (Aᵀ) i c]\n      _ = c * det A := by rw [Matrix.det_transpose]\n  · intro A i j h c\n    calc\n      det (A.updateColumn i (λ k => A k i + c * A k j)) = det ((A.updateColumn i (λ k => A k i + c * A k j))ᵀ) := by rw [Matrix.det_transpose]\n      _ = det ((Aᵀ).updateRow i (Aᵀ i + c • Aᵀ j)) := by\n        ext m n; simp [Pi.add_apply, smul_eq_mul]\n      _ = det (Aᵀ) := by rw [det_add_smul_row (Aᵀ) i j h c]\n      _ = det A := by rw [Matrix.det_transpose]",
+  "declaration_name": "det_colop",
+  "used_context": [
+    "det_swap_rows",
+    "det_scale_row",
+    "det_add_smul_row",
+    "Matrix.det_transpose",
+    "Equiv.swap",
+    "Matrix.submatrix",
+    "Matrix.updateColumn",
+    "Matrix.updateRow",
+    "Matrix.of"
+  ],
+  "notes": [
+    "The row additivity property (det_row_add) is omitted; the statement covers the three column operation analogues (swap, scale, add a multiple) that correspond to the row versions in the local examples.",
+    "Proof follows exactly the source: use det_transpose and apply the existing row theorems to the transposed matrices."
+  ]
+}

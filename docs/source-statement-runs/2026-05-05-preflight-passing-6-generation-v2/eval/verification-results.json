@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-05-05T02:03:21.356770+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2",
+  "work_root": "/tmp/repoprover-source-statement-verify-preflight-passing-6-v2-serial",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 3,
+    "grader_gold_statement_not_proved": 1,
+    "missing_model_output": 1,
+    "verification_error": 1
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2/record-001",
+      "generated_name": "partial_sums_tendsto_tsum",
+      "success": false,
+      "failure_class": "verification_error",
+      "error": "TimeoutExpired: Command '['uv', 'run', 'lake', 'build', 'AlgebraicCombinatorics.FPS.Limits']' timed out after 90 seconds"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2/record-002",
+      "generated_name": "det_colop",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/DeterminantsBasic.lean:23:66: error(lean.invalidField): Invalid field `updateColumn`: The environment does not contain `Function.updateColumn`, so it is not possible to project the field `updateColumn` from an expression\n  A\nof type `Fin n → Fin n → K`\nAlgebraicCombinatorics/DeterminantsBasic.lean:24:80: error(lean.invalidField): Invalid field `updateColumn`: The environment does not contain `Function.updateColumn`, so it is not possible to project the field `updateColumn` from an expression\n  A\nof type `Fin n → Fin n → K`\nAlgebraicCombinatorics/DeterminantsBasic.lean:26:9: error: Invalid `⟨...⟩` notation: The expected type of this term could not be determined\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_smul_col",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2/record-003/model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.pascal_identity_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2/record-004",
+      "generated_name": "binom_rec",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:33:16: error: typeclass instance problem is stuck\n  NatPowAssoc ?m.41\n\nNote: Lean will not try to resolve this typeclass instance problem because the first, second, and third type arguments to `NatPowAssoc` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass.\n\nHint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_coeff_one",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2/record-005",
+      "generated_name": "coeff_X_fps",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/FPSDefinition.lean:23:2: error: `simp` made no progress\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_eq_largestPartCount",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-v2/record-006",
+      "generated_name": "partsCount_eq_largestPart_count",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:627:8: error(lean.unknownIdentifier): Unknown constant `Finset.card_congr`\nAlgebraicCombinatorics/Partitions/Basics.lean:628:2: error: No goals to be solved\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}
