@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777969423-gFXhZkHkdTMxFV8X3YZy",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_comp_coeff_finite (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :\\n    coeff n (PowerSeries.subst g f) = (Finset.range (n+1)).sum (fun d => coeff d f * coeff n (g ^ d)) := by\\n  rw [fps_comp_coeff f g hg n]\\n  apply finsum_eq_sum_of_support_subset\\n  intro d hd\\n  dsimp [Function.support] at hd\\n  have hcnz : coeff n (g ^ d) ≠ 0 := by\\n    intro hzero\\n    apply hd\\n    simp [hzero]\\n  have h_le : d ≤ n := by\\n    by_contra! h_gt\\n    apply hcnz\\n    exact fps_subs_wd_firstCoeffs g hg d n h_gt\\n  have hd_lt : d < n+1 := Nat.lt_succ_of_le h_le\\n  exact Finset.mem_range.2 hd_lt\",\n  \"declaration_name\": \"fps_comp_coeff_finite\",\n  \"used_context\": [\n    \"fps_comp_coeff\",\n    \"fps_subs_wd_firstCoeffs\",\n    \"finsum_eq_sum_of_support_subset\",\n    \"Function.support\",\n    \"Finset.mem_range\",\n    \"Nat.lt_succ_of_le\"\n  ],\n  \"notes\": [\n    \"Repair by correctly using support membership to derive d ≤ n, then deduce d ∈ range (n+1).\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777969423,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 3250,
+    "prompt_tokens": 5197,
+    "total_tokens": 8447,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 2870,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.004756899,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.004756899,
+      "upstream_inference_prompt_cost": 0.001929399,
+      "upstream_inference_completions_cost": 0.0028275
+    }
+  },
+  "provider": "DeepSeek"
+}

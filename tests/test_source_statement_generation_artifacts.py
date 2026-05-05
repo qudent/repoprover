@@ -8,6 +8,7 @@ from pathlib import Path
 
 from scripts.repair_source_statement_generation import run as run_repair_queue
 from scripts.diagnose_source_statement_shape import diagnose_shape, run as run_shape_diagnostic
+from scripts.run_source_statement_live_eval import build_repair_messages
 from scripts.verify_source_statement_generation import load_tasks
 
 
@@ -231,6 +232,45 @@ def test_repair_queue_uses_estimated_reservations_for_cost_cap(tmp_path: Path, m
     assert summary["results"][0]["failure_class"] == "skipped_cost_cap"
 
 
+def test_repair_prompt_adds_negative_binomial_helper_guidance() -> None:
+    original_user = {"context": {"lean_prefix_context": "theorem fps_onePlusX_pow_neg' {F : Type*} (n : ℕ) : True := by trivial"}}
+    messages = build_repair_messages(
+        original_messages=[{"role": "system", "content": ""}, {"role": "user", "content": json.dumps(original_user)}],
+        failed_declaration="theorem generated (F : Type*) (n : ℕ) : True := by\n  exact fps_onePlusX_pow_neg' F n",
+        generated_only_lean_result={"exit_code": 1, "output": "Application type mismatch: fps_onePlusX_pow_neg' F"},
+    )
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["repair_domain_guidance"], ensure_ascii=False)
+
+    assert "fps_onePlusX_pow_neg' (F := F) n" in guidance_text
+    assert "fps_onePlusX_pow_neg' F n" in guidance_text
+    assert "integer powers" in guidance_text
+
+
+def test_repair_prompt_adds_finite_finsum_support_guidance() -> None:
+    original_user = {"context": {"lean_prefix_context": "theorem fps_subs_wd_firstCoeffs : True := by trivial"}}
+    messages = build_repair_messages(
+        original_messages=[{"role": "system", "content": ""}, {"role": "user", "content": json.dumps(original_user)}],
+        failed_declaration=(
+            "theorem generated : True := by\n"
+            "  apply finsum_eq_sum_of_support_subset\n"
+            "  intro d hd\n"
+            "  exact hd"
+        ),
+        generated_only_lean_result={
+            "exit_code": 1,
+            "output": "hd has type d ∈ Function.support fun i => t i but is expected to have type n < d",
+        },
+    )
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["repair_domain_guidance"], ensure_ascii=False)
+
+    assert "support-subset goal" in guidance_text
+    assert "Function.mem_support" in guidance_text
+    assert "mul_zero" in guidance_text
+    assert "Do not treat `hd`" in guidance_text
+
+
 def test_verifier_can_load_repair_model_outputs(tmp_path: Path) -> None:
     run_output = _write_archived_run(tmp_path)
     _write_json(
@@ -370,6 +410,29 @@ def test_shape_diagnostic_flags_infprod_conclusion_bundling() -> None:
     )
 
     assert [warning["code"] for warning in warnings] == ["infprod_conclusion_bundles_approximator_proof"]
+
+
+def test_shape_diagnostic_allows_finite_finsum_comp_helper() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "domain_statement_shape_guidance": [
+                    {
+                        "preferred_statement_family": [
+                            "For finite coefficient formulas for substitution, derive the infinite coefficient formula from `fps_comp_coeff`, then restrict the finite sum with `finsum_eq_sum_of_support_subset`.",
+                        ],
+                        "avoid_statement_family": [
+                            "Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is available.",
+                        ],
+                    }
+                ],
+                "local_lean_style": {"examples": ["have ha : HasSubst (X : K⟦X⟧) := HasSubst.X'\nrw [coeff_subst' ha g n]"]},
+            }
+        },
+        "theorem generated : True := by\n  rw [fps_comp_coeff f g hg n]\n  apply finsum_eq_sum_of_support_subset",
+    )
+
+    assert warnings == []
 
 
 def test_shape_diagnostic_writes_run_artifacts(tmp_path: Path) -> None:

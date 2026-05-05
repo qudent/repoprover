@@ -1104,6 +1104,11 @@ def build_repair_messages(
         "used_context": ["short list of source/context/compiler facts used"],
         "notes": ["brief caveats, if any"],
     }
+    repair_domain_guidance = repair_domain_guidance_from_failure(
+        original_user_payload=original_user_payload,
+        failed_declaration=failed_declaration,
+        generated_only_lean_result=generated_only_lean_result,
+    )
     user = {
         "task": "Repair the failed generated Lean declaration. Return one complete theorem or lemma including proof; no imports and no markdown.",
         "required_json_schema": schema,
@@ -1124,9 +1129,63 @@ def build_repair_messages(
         "generated_only_lean_exit_code": generated_only_lean_result.get("exit_code"),
         "generated_only_lean_output": generated_only_lean_result.get("output", ""),
     }
+    if repair_domain_guidance:
+        user["repair_domain_guidance"] = repair_domain_guidance
     if shape_diagnostic_warnings:
         user["shape_diagnostic_warnings"] = shape_diagnostic_warnings
     return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(user, indent=2, ensure_ascii=False)}]
+
+
+def repair_domain_guidance_from_failure(
+    *,
+    original_user_payload: dict[str, Any],
+    failed_declaration: str,
+    generated_only_lean_result: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Return visible compiler-context repair hints without using hidden gold."""
+
+    compiler_output = str(generated_only_lean_result.get("output") or "")
+    context_text = json.dumps(original_user_payload.get("context") or {}, ensure_ascii=False)
+    combined = "\n".join([context_text, failed_declaration, compiler_output])
+    combined_lower = combined.lower()
+    guidance: list[dict[str, Any]] = []
+
+    if "fps_oneplusx_pow_neg'" in combined_lower or "hpows (powerseries" in combined_lower:
+        preferred = [
+            "If using the displayed helper `fps_onePlusX_pow_neg'`, apply it as `fps_onePlusX_pow_neg' n` or with named implicit type arguments such as `fps_onePlusX_pow_neg' (F := F) n`.",
+            "For the inverse-power negative-binomial formula, keep the exponent binder natural: `(n : ℕ)` and conclusion `((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ n = PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F)`.",
+        ]
+        avoid = [
+            "Do not call `fps_onePlusX_pow_neg' F n`; the type parameter is implicit and the first explicit positional argument is the natural exponent.",
+            "Do not repair by using integer powers such as `(1 + PowerSeries.X : PowerSeries F) ^ (n : ℤ)` when the compiler reports no `HPow (PowerSeries F) ℤ ...` instance.",
+        ]
+        guidance.append(
+            {
+                "domain": "negative binomial repair",
+                "trigger": "generated declaration or compiler output mentions the local `fps_onePlusX_pow_neg'` helper or integer-power instance failure",
+                "preferred_repair_shape": preferred,
+                "avoid_repair_shape": avoid,
+            }
+        )
+
+    if "finsum_eq_sum_of_support_subset" in failed_declaration and "support" in compiler_output.lower():
+        guidance.append(
+            {
+                "domain": "finite finsum support repair",
+                "trigger": "generated proof misuses `finsum_eq_sum_of_support_subset` support-membership hypothesis",
+                "preferred_repair_shape": [
+                    "After `apply finsum_eq_sum_of_support_subset`, the proof obligation is a support-subset goal: `intro d hd` gives support membership, and the goal is membership in the finite set.",
+                    "For a range `(Finset.range (n + 1))`, prove membership by contradiction: simplify membership in the range, assume the negation, derive `n < d`, use the displayed vanishing helper such as `fps_subs_wd_firstCoeffs g hg d n`, rewrite `Function.mem_support` at `hd`, and close from the resulting contradiction.",
+                    "Use `rw [hz, mul_zero] at hd` for a product term that vanishes because the coefficient factor is zero.",
+                ],
+                "avoid_repair_shape": [
+                    "Do not treat `hd` as a proof of `d ∉ Finset.range (n + 1)` or as a proof of `n < d`; it is support membership.",
+                    "Do not try to prove vanishing directly as the final goal after `intro d hd`; first prove that every supported index lies in the finite range.",
+                ],
+            }
+        )
+
+    return guidance
 
 
 def build_payload(*, model: str, messages: list[dict[str, str]], max_tokens: int, temperature: float, reasoning_effort: str | None) -> dict[str, Any]:

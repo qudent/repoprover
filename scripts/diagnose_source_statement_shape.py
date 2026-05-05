@@ -231,10 +231,17 @@ def diagnose_shape(user_payload: dict[str, Any], declaration: str) -> list[Warni
             )
         )
 
+    finite_substitution_context = (
+        "finite coefficient" in context_lower
+        or "fps_comp_coeff_finite" in context_lower
+        or "support-subset" in context_lower
+        or "finsum_eq_sum_of_support_subset" in context_lower
+    )
     if (
         "hassubst.x'" in context_lower
         and "coeff_subst'" in context_lower
         and "fps_comp_coeff" in declaration
+        and not finite_substitution_context
     ):
         warnings.append(
             _warning(
