@@ -1,0 +1,64 @@
+{
+  "exact_identifier_count": 1,
+  "generated_at": "2026-05-05T22:48:29.681099+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det_transpose",
+      "expected_signature_or_shape": "det (Aᵀ) = det A",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+        "status": "checked"
+      },
+      "query": "Matrix.det_transpose",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "theorem statement"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Matrix.det_transpose": {
+        "messages": [
+          {
+            "data": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "4ac2ca55535148d54568dce225df21d2387faf6606fe8e200b46eef420c011ac",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 1,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

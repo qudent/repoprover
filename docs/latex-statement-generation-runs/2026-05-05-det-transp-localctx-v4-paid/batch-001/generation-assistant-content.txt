@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "det_transpose"
+      ],
+      "lean_file_body": "open Matrix\n\ntheorem det_transpose {n : Type*} [DecidableEq n] [Fintype n] {K : Type*} [CommRing K] (A : Matrix n n K) :\n    Aᵀ.det = A.det :=\n  Matrix.det_transpose A",
+      "notes": [
+        "The theorem is exactly the existing Mathlib lemma Matrix.det_transpose, so we provide a wrapper with the same name and signature as the source expects."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source_text: thm.det.transp",
+        "hydrated_mathlib_context: Matrix.det_transpose"
+      ]
+    }
+  ]
+}

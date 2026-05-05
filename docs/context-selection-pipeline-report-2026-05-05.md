@@ -342,6 +342,37 @@ namespace/variable/import context as part of the generation environment, or
 force standalone declarations and reject outputs that depend on hidden file
 variables.
 
+V4 local-context rerun:
+
+`docs/latex-statement-context-runs/2026-05-05-det-transp-localctx-v4-paid/`
+and
+`docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid/`
+
+- generic prompt/payload changes: prior theorem snippets are compact
+  statement-only snippets; local file-context candidates from safe prior
+  project declarations are included once per source unit; same-file predecessor
+  context is capped to the two most recent units by default.
+- budget-only payload size for this source unit: `19,984` bytes, down from the
+  v3 paid payload's `26,956` bytes.
+- selector: valid JSON, `$0.00071918`, `0` reasoning tokens, prompt/completion
+  tokens `4507` / `315`.
+- selected Mathlib context: still only `Matrix.det_transpose`; hydration checked
+  the exact signature successfully.
+- generation: valid JSON, `$0.00076272`, `0` reasoning tokens, prompt/completion
+  tokens `5050` / `199`.
+- generated theorem: explicit standalone binders
+  `{n : Type*} [DecidableEq n] [Fintype n] {K : Type*} [CommRing K]`.
+- generated-only compile: `1/1`.
+- exact name overlap: `0/1`, because the generated theorem is `det_transpose`
+  while the aligned gold theorem is `AlgebraicCombinatorics.Det.det_transpose'`.
+- semantic theorem coverage: `1/1`; the post-hoc grader proves the aligned gold
+  statement from the generated theorem without bypassing the compile gate.
+
+Interpretation: this is now a clean source-only/context-selected pass for this
+easy theorem. The local-context fix did not expose the hidden target statement
+or proof; it supplied style/variable context from prior project declarations and
+forced standalone binders in generated output.
+
 ### Generation and Verification Counts
 
 Honesty caveats:
@@ -703,6 +734,10 @@ the run artifacts. Representative current payloads:
 
 - theorem-level selector smoke:
   `docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid/batch-001/context-selection-payload.json`
+- theorem-level selector current v4:
+  `docs/latex-statement-context-runs/2026-05-05-det-transp-localctx-v4-paid/batch-001/context-selection-payload.json`
+- theorem-level generator current v4:
+  `docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid/batch-001/generation-payload.json`
 - selector batch 1:
   `docs/source-statement-runs/2026-05-05-context-selection-decl-progress-diverse3-paid/batch-001/context-selection-payload.json`
 - selector batch 2:
@@ -740,7 +775,7 @@ You are a Lean 4/Mathlib context-planning agent. Prepare a compact context pack 
             "task_id": "unit-001-task-1",
             "kind": "def|theorem|lemma|instance|notation|unknown",
             "source_part": "whole unit or part marker",
-            "target_statement_sketch": "mathematical Lean-shape sketch, not exact hidden Lean",
+            "target_statement_sketch": "prose mathematical target sketch; do not write exact Lean syntax, declaration names, or guessed API argument order",
             "needed_source_context": [
               "source labels/statements"
             ],
@@ -769,13 +804,81 @@ You are a Lean 4/Mathlib context-planning agent. Prepare a compact context pack 
   },
   "rules": [
     "Do not infer or reveal hidden target Lean declaration names for the selected unit.",
+    "Do not write theorem/lemma Lean code in target_statement_sketch; exact API syntax belongs in needed_mathlib_context and will be hydrated by tools.",
     "Do not bundle all source parts into one conjunction unless the source unit itself requires that shape.",
     "Use previous project declarations only if they are shown under prior_project_context.",
     "Do not treat Mathlib as the only context; enumerate source/project/local/Mathlib context separately.",
     "Prefer exact Mathlib names when known; otherwise give a narrow query plus expected signature shape.",
     "Keep added context tight: prefer a few thousand tokens or less per source unit."
   ],
-  "units": "<one or more source units with target alignments hidden>"
+  "units": [
+    {
+      "source_unit": "<public LaTeX source unit>",
+      "previous_source_context": "<explicit referenced source units plus capped same-file predecessors>",
+      "prior_project_context": "<compact prior declaration statements/bodies, no target alignments>",
+      "local_file_context_candidates": "<open/namespace/variable/notation context observed around safe prior project declarations>",
+      "benchmark_policy": {
+        "target_lean_available_to_selector": false,
+        "posthoc_alignment_hidden": true,
+        "local_file_context_source": "prior_project_declarations_only"
+      }
+    }
+  ]
+}
+```
+
+### Theorem-Level Generator System Prompt
+
+```text
+You are a Lean 4 autoformalization agent. Generate a small ordered sequence of Lean declarations for the provided LaTeX theorem-like unit. Use only the source text, selector plan, previous-project context if shown, and Lean-checked Mathlib signatures in the prompt. The original aligned Lean declarations, names, statements, and proofs are withheld. Return exactly one JSON object.
+```
+
+### Theorem-Level Generator User Prompt Skeleton
+
+```json
+{
+  "task": "Produce Lean declarations for each planned declaration task. The output should be a small Lean file body, without imports, containing the ordered declarations needed for this one source unit.",
+  "required_json_schema": {
+    "units": [
+      {
+        "unit_key": "unit-001",
+        "status": "generated|cannot_prove_from_visible_context",
+        "lean_file_body": "complete Lean declarations only; no imports or markdown",
+        "declaration_names": [
+          "names introduced in lean_file_body"
+        ],
+        "used_context": [
+          "source/project/Mathlib facts actually used"
+        ],
+        "notes": [
+          "brief caveats or remaining uncertainty"
+        ]
+      }
+    ]
+  },
+  "instructions": [
+    "Do not use sorry, admit, placeholders, or comments standing in for proof.",
+    "Do not include import statements or markdown fences.",
+    "Do not ask for or infer the hidden aligned Lean declaration names/statements/proofs.",
+    "Treat selector_unchecked_statement_sketch as non-authoritative mathematical intent only; do not copy its Lean syntax verbatim.",
+    "Follow the Lean-checked signatures exactly when they differ from the selector's expected shape.",
+    "Use the actual Lean-checked argument order from hydrated_mathlib_context. If the selector expected shape conflicts with the checked signature, the checked signature wins.",
+    "Do not invent project helper names that are not shown in available_prior_project_context, needed_project_context, or source context.",
+    "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",
+    "Prefer a narrow declaration sequence over a broad bundled conjunction when the source unit decomposes into multiple Lean declarations.",
+    "Keep theorem-local assumptions explicit rather than relying on unavailable global variables.",
+    "If local_file_context_candidates show useful namespace, open, notation, or variable commands, you may include the needed commands in lean_file_body before the declarations.",
+    "If you use a variable command instead of explicit binders, the command itself must appear in lean_file_body. Do not depend on file-scope variables that are not emitted in your output.",
+    "Every identifier used in a theorem statement must be introduced by an explicit binder, local declaration, or imported/opened declaration. In particular, source parameters such as coefficient types, matrix sizes, rings, variables, and typeclass assumptions must be bound in the generated theorem, e.g. `{K : Type*} [CommRing K] {n : ℕ}` when the source quantifies over a commutative ring and a natural number.",
+    "If you cannot produce a complete proof from visible context, set status to cannot_prove_from_visible_context and leave lean_file_body empty. Never output Lean containing sorry/admit/placeholders."
+  ],
+  "lean_environment": "<imports, opens, toolchain, hydrated context>",
+  "benchmark_policy": {
+    "target_lean_available_to_generator": false,
+    "posthoc_alignment_hidden": true,
+    "gold_comparison_is_posthoc_only": true
+  },
+  "units": "<source unit, previous source context, local file context candidates, planned declarations, hydrated Mathlib context>"
 }
 ```
 

@@ -1,0 +1,55 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 1,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.Det"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.Det"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "det_transpose"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 1,
+  "generated_at": "2026-05-05T22:49:23.995777+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

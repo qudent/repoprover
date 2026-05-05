@@ -255,6 +255,32 @@ generator produced the right theorem shape, but only under the original target
 file's local context. This should be counted as a local-context-policy finding,
 not a standalone benchmark pass.
 
+Determinant transpose v4 local-context rerun:
+
+- prompt/payload change: prior theorem snippets are statement-only, local
+  file-context candidates from safe prior project declarations are carried once
+  at unit level, and same-file predecessor context is capped to the two most
+  recent units by default.
+- budget-only payload size: `19,984` bytes, down from the v3 paid payload's
+  `26,956` bytes.
+- selector:
+  `docs/latex-statement-context-runs/2026-05-05-det-transp-localctx-v4-paid/`,
+  cost `$0.00071918`, valid JSON, `0` reasoning tokens, selected
+  `Matrix.det_transpose`.
+- hydration: checked `1/1` exact Mathlib identifier.
+- generation:
+  `docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid/`,
+  cost `$0.00076272`, valid JSON, generated an explicitly bound standalone
+  theorem using `Matrix.det_transpose`.
+- verification: generated-only compile `1/1`; exact-name overlap `0/1`;
+  semantic coverage `1/1` for
+  `AlgebraicCombinatorics.Det.det_transpose'`.
+
+Interpretation: this fixes the earlier ambient-variable failure generically for
+this source unit. The model did not need the hidden target theorem; it needed
+exact Mathlib hydration plus enough local context to know which variables and
+typeclasses must be explicit.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

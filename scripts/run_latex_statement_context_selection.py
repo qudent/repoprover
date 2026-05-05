@@ -108,11 +108,13 @@ def declaration_snippet(decl: dict[str, Any], project_root: Path | None) -> dict
         return {}
     start, end = int(line_range[0]), int(line_range[1])
     lines = path.read_text(encoding="utf-8").splitlines()
-    snippet_lines = lines[start - 1 : min(end, start + 39)]
-    snippet = "\n".join(snippet_lines).rstrip()
+    declaration_lines = lines[start - 1 : min(end, start + 39)]
+    declaration_text = "\n".join(declaration_lines).rstrip()
+    snippet = compact_declaration_text(declaration_text, kind=str(decl.get("kind") or ""))
     return {
         "lean_snippet": snippet[:3000],
         "snippet_truncated": end - start + 1 > 40 or len(snippet) > 3000,
+        "snippet_policy": "statement_or_definition_body_only",
     }
 
 
@@ -126,10 +128,32 @@ def declaration_stub(decl: dict[str, Any], *, project_root: Path | None = None, 
         "imports": decl.get("imports", []),
         "declared_source_labels": decl.get("declared_source_labels", []),
         "referenced_source_labels": decl.get("referenced_source_labels", []),
+        "file_context": decl.get("file_context", []),
         "context_source": source,
     }
     row.update(declaration_snippet(decl, project_root))
     return row
+
+
+def compact_declaration_text(text: str, *, kind: str) -> str:
+    """Keep project context compact by removing theorem proofs from snippets."""
+
+    if kind not in {"theorem", "lemma"}:
+        return text
+    kept: list[str] = []
+    for line in text.splitlines():
+        if ":= by" in line:
+            before, _ = line.split(":= by", 1)
+            if before.rstrip():
+                kept.append(before.rstrip())
+            break
+        if ":=" in line:
+            before, _ = line.split(":=", 1)
+            if before.rstrip():
+                kept.append(before.rstrip())
+            break
+        kept.append(line)
+    return "\n".join(kept).rstrip()
 
 
 def project_declarations_for_prior(
@@ -157,19 +181,27 @@ def project_declarations_for_prior(
     return declarations
 
 
+def candidate_context_refs(row: dict[str, Any], *, max_previous_same_file: int | None) -> list[dict[str, Any]]:
+    candidates = row.get("context_candidates", {})
+    refs: list[dict[str, Any]] = []
+    refs.extend(candidates.get("referenced_source_units", []))
+    previous_same_file = list(candidates.get("previous_same_file_source_units", []))
+    if max_previous_same_file is not None and max_previous_same_file >= 0:
+        previous_same_file = previous_same_file[-max_previous_same_file:] if max_previous_same_file else []
+    refs.extend(previous_same_file)
+    return refs
+
+
 def prior_project_context(
     row: dict[str, Any],
     rows_by_id: dict[str, dict[str, Any]],
     *,
     project_root: Path | None = None,
+    max_previous_same_file: int | None = 2,
 ) -> list[dict[str, Any]]:
     contexts: list[dict[str, Any]] = []
 
-    candidate_refs = []
-    candidate_refs.extend(row.get("context_candidates", {}).get("referenced_source_units", []))
-    candidate_refs.extend(row.get("context_candidates", {}).get("previous_same_file_source_units", []))
-
-    for ref in candidate_refs:
+    for ref in candidate_context_refs(row, max_previous_same_file=max_previous_same_file):
         unit_id = ref.get("unit_id")
         if not unit_id:
             continue
@@ -194,14 +226,64 @@ def prior_project_context(
     return contexts
 
 
-def previous_source_context(row: dict[str, Any], rows_by_id: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+def local_file_context_candidates(prior_contexts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Collect compact local Lean context from safe prior project declarations."""
+
+    seen: set[tuple[str, str, str, tuple[int, ...]]] = set()
+    candidates: list[dict[str, Any]] = []
+    for context in prior_contexts:
+        for decl in context.get("project_declarations") or []:
+            for span in decl.get("file_context") or []:
+                line_range = tuple(int(value) for value in span.get("line_range") or [])
+                key = (
+                    str(span.get("path") or ""),
+                    str(span.get("kind") or ""),
+                    str(span.get("name") or ""),
+                    line_range,
+                )
+                if key in seen:
+                    continue
+                seen.add(key)
+                candidates.append(
+                    {
+                        "path": span.get("path"),
+                        "kind": span.get("kind"),
+                        "name": span.get("name"),
+                        "line_range": span.get("line_range"),
+                        "source": "file_context_from_prior_project_declaration",
+                        "reason": (
+                            "Local Lean context observed around safe prior project declarations. "
+                            "Use as placement/style guidance; do not assume hidden target declarations."
+                        ),
+                    }
+                )
+    return candidates
+
+
+def strip_declaration_file_context(prior_contexts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    stripped_contexts: list[dict[str, Any]] = []
+    for context in prior_contexts:
+        stripped_context = dict(context)
+        stripped_declarations = []
+        for declaration in context.get("project_declarations") or []:
+            stripped = dict(declaration)
+            stripped.pop("file_context", None)
+            stripped_declarations.append(stripped)
+        stripped_context["project_declarations"] = stripped_declarations
+        stripped_contexts.append(stripped_context)
+    return stripped_contexts
+
+
+def previous_source_context(
+    row: dict[str, Any],
+    rows_by_id: dict[str, dict[str, Any]],
+    *,
+    max_previous_same_file: int | None = 2,
+) -> list[dict[str, Any]]:
     contexts: list[dict[str, Any]] = []
     seen: set[str] = set()
-    candidate_refs = []
-    candidate_refs.extend(row.get("context_candidates", {}).get("referenced_source_units", []))
-    candidate_refs.extend(row.get("context_candidates", {}).get("previous_same_file_source_units", []))
 
-    for ref in candidate_refs:
+    for ref in candidate_context_refs(row, max_previous_same_file=max_previous_same_file):
         unit_id = str(ref.get("unit_id") or "")
         if not unit_id or unit_id in seen:
             continue
@@ -224,6 +306,7 @@ def build_messages(
     *,
     source_units: list[dict[str, Any]] | None = None,
     project_root: Path | None = None,
+    max_previous_same_file: int | None = 2,
 ) -> list[dict[str, str]]:
     source_rows_by_id = unit_index(source_units or all_rows)
     system = (
@@ -291,20 +374,38 @@ def build_messages(
 
     for item in selected:
         row = item.row
+        prior_contexts = prior_project_context(
+            row,
+            source_rows_by_id,
+            project_root=project_root,
+            max_previous_same_file=max_previous_same_file,
+        )
         payload["units"].append(
             {
                 "unit_key": item.public_key,
                 "source_unit": public_source_unit(row),
-                "source_context_candidates": row.get("context_candidates", {}),
-                "previous_source_context": previous_source_context(row, source_rows_by_id),
-                "prior_project_context": prior_project_context(
+                "source_context_candidates": {
+                    "selected_context_refs": candidate_context_refs(
+                        row,
+                        max_previous_same_file=max_previous_same_file,
+                    ),
+                    "selection_policy": (
+                        "All explicit referenced source units plus the most recent same-file predecessor "
+                        "units up to max_previous_same_file_context."
+                    ),
+                    "max_previous_same_file_context": max_previous_same_file,
+                },
+                "previous_source_context": previous_source_context(
                     row,
                     source_rows_by_id,
-                    project_root=project_root,
+                    max_previous_same_file=max_previous_same_file,
                 ),
+                "prior_project_context": strip_declaration_file_context(prior_contexts),
+                "local_file_context_candidates": local_file_context_candidates(prior_contexts),
                 "benchmark_policy": {
                     "target_lean_available_to_selector": False,
                     "posthoc_alignment_hidden": True,
+                    "local_file_context_source": "prior_project_declarations_only",
                 },
             }
         )
@@ -352,7 +453,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     rows = read_jsonl(args.records)
     source_units = read_jsonl(args.source_units) if args.source_units else rows
     selected = select_units(rows, args.limit, offset=args.offset, unit_id=args.unit_id)
-    messages = build_messages(selected, rows, source_units=source_units, project_root=args.project_root)
+    messages = build_messages(
+        selected,
+        rows,
+        source_units=source_units,
+        project_root=args.project_root,
+        max_previous_same_file=args.max_previous_same_file_context,
+    )
     run_dir = args.output
     batch_dir = run_dir / "batch-001"
     eval_dir = run_dir / "eval"
@@ -418,6 +525,12 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=1)
     parser.add_argument("--offset", type=int, default=0, help="Skip this many gold candidates before selection.")
     parser.add_argument("--unit-id", help="Select one exact source-unit id.")
+    parser.add_argument(
+        "--max-previous-same-file-context",
+        type=int,
+        default=2,
+        help="Include at most this many most-recent same-file predecessor units; explicit references are always kept.",
+    )
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--max-tokens", type=int, default=4096)

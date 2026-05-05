@@ -97,17 +97,18 @@ declaration-name overlap remained `0/1`.
 
 The next theorem-level probe used determinant transposition,
 `AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp`.
-The selector cost `$0.00104314`, returned valid JSON with no reasoning tokens,
-and selected the exact Mathlib theorem `Matrix.det_transpose`; Lean hydration
-checked its signature successfully. Generation cost `$0.00104314` on the first
-attempt and `$0.00104678` after a generic binder-instruction prompt tweak. Both
-generated attempts still failed standalone checking because the output referred
-to file-local variables `K` and `n` without explicit binders or typeclass
-instances. The post-hoc semantic grader, run under the original target file
-prefix, proved the aligned gold theorem `AlgebraicCombinatorics.Det.det_transpose'`
-`1/1`. This is useful evidence that the selected Mathlib context was correct,
-but it is not a standalone source-only compile pass: the remaining issue is
-local file context versus explicit standalone binder generation.
+The first v3 selector found the exact Mathlib theorem `Matrix.det_transpose`,
+but generation failed standalone checking because the output depended on
+ambient file variables `K` and `n`. The v4 prompt now supplies compact
+prior-declaration statements, local file-context candidates from safe prior
+project declarations, and an instruction that any used local `variable` command
+must be emitted in `lean_file_body`. It also caps same-file predecessor context
+to the two most recent units by default. This reduced the determinant selector
+payload from 26,956 to 19,984 bytes. The paid v4 rerun cost `$0.00071918` for
+selection and `$0.00076272` for generation, compiled standalone `1/1`, and the
+semantic grader proved the aligned gold theorem
+`AlgebraicCombinatorics.Det.det_transpose'` `1/1`; exact declaration-name
+overlap remained `0/1`.
 
 ### Imported Lean surface and likely context needs
 

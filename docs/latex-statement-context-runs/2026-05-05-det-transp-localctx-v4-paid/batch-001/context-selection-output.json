@@ -1,0 +1,31 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "det (Aᵀ) = det A",
+              "name_or_query": "Matrix.det_transpose",
+              "why_needed": "theorem statement"
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "source_text: \\begin{theorem}[Transposes preserve determinants]\\label{thm.det.transp}Let $n\\in\\mathbb{N}$. If $A\\in K^{n\\times n}$ is any $n\\times n$-matrix, then $\\det\\left( A^{T}\\right) =\\det A$."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any square matrix A over a commutative ring K, the determinant of the transpose equals the determinant of A.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 1.0,
+      "source_focus_summary": "Theorem: det(A^T) = det A",
+      "unit_key": "unit-001"
+    }
+  ]
+}
