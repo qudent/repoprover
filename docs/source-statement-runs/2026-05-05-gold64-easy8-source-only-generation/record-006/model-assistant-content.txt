@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "lemma coeffFinitelyDeterminedInSum_iff (a : I → PowerSeries R) (n : ℕ) :\n    CoeffFinitelyDeterminedInSum a n ↔ ∃ (M : Finset I), DeterminesCoeffInSum a M n :=\n  ⟨fun h => h, fun h => h⟩",
+  "declaration_name": "coeffFinitelyDeterminedInSum_iff",
+  "used_context": [
+    "CoeffFinitelyDeterminedInSum",
+    "DeterminesCoeffInSum"
+  ],
+  "notes": [
+    "This lemma restates the definition of `CoeffFinitelyDeterminedInSum` as an `iff`; the proof is trivial."
+  ]
+}

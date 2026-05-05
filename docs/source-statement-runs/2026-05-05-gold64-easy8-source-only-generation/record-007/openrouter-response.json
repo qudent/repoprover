@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777981071-Py0BNcQ8HnY3nWB0JqG1",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma inverse_unique {a b c : L} (hab : a * b = 1) (hac : a * c = 1) : b = c :=\\n  calc\\n    b = 1 * b := by simp\\n    _ = (a * c) * b := by rw [← hac, mul_comm]\\n    _ = (c * a) * b := by rw [mul_comm a c]\\n    _ = c * (a * b) := by simp [mul_assoc]\\n    _ = c * 1 := by rw [hab]\\n    _ = c := by simp\",\n  \"declaration_name\": \"inverse_unique\",\n  \"used_context\": [\n    \"variable {L : Type*} [CommRing L]\",\n    \"mul_comm\",\n    \"mul_assoc\",\n    \"simp\"\n  ],\n  \"notes\": [\n    \"This lemma formalizes the unambiguity of the inverse, which is mentioned in part (a) of the definition `def.commring.fracs`. It corresponds to the referenced theorem `thm.commring.inverse-uni`.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777981071,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 6456,
+    "prompt_tokens": 3858,
+    "total_tokens": 10314,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 6198,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.00701887,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.00701887,
+      "upstream_inference_prompt_cost": 0.00140215,
+      "upstream_inference_completions_cost": 0.00561672
+    }
+  },
+  "provider": "DeepSeek"
+}

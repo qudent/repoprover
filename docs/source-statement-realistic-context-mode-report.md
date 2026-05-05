@@ -377,6 +377,32 @@ choose a small subset where `labeled_environment_focus` is clean enough to test
 generation, while continuing to use high-risk rows to improve source-span
 selection.
 
+## Easy-8 Paid Generation
+
+An easier 8-record source-only subset was selected from the 64-row audit output
+and run in generation-only mode. The raw provider outputs were intentionally
+recorded before any Lean verification:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --records docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/selected-records.jsonl \
+  --output docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-generation \
+  --limit 8 --sample-mode easy --include-record-imports \
+  --lake-cache-from algebraic-combinatorics --generation-only \
+  --context-mode source-only --max-actual-cost-usd 0.30 --concurrency 2 \
+  --max-tokens 32768 --reasoning-effort high
+```
+
+Result:
+
+- paid calls: `8/8`
+- parsed generated declarations: `8/8`
+- actual reported cost: `$0.071505155`
+- Lean verification: not run yet
+
+This is the first paid slice selected after the larger context audit rather
+than from the old six-row hard loop.
+
 ## Tests
 
 Focused tests passed:

@@ -1,0 +1,20 @@
+{
+  "lean_declaration": "theorem xneq_multiple_iff (R : Type*) [CommRing R] (n : ℕ) (f g : R⟦X⟧) : (f ≡[x^n] g) ↔ ∃ q : R⟦X⟧, f - g = q * X ^ (n+1) := by\n  constructor\n  · intro h\n    have hcoeff (m : ℕ) (hm : m ≤ n) : coeff m f = coeff m g := h m hm\n    have hzero (m : ℕ) (hm : m ≤ n) : coeff m (f - g) = 0 := by\n      rw [coeff_sub, hcoeff m hm, sub_self]\n    let q : R⟦X⟧ := PowerSeries.mk λ k => coeff (k + n + 1) (f - g)\n    have hq_coeff (k : ℕ) : coeff k q = coeff (k + n + 1) (f - g) := by\n      simp [q, PowerSeries.coeff_mk]\n    refine ⟨q, ?_⟩\n    ext m\n    have hcoeff_prod : coeff m (q * X ^ (n+1)) = (if n+1 ≤ m then coeff (m - (n+1)) q else 0) := by\n      by_cases hm : n+1 ≤ m\n      · have hsum : coeff m (q * X ^ (n+1)) = coeff (m - (n+1)) q := by\n          rw [coeff_mul, coeff_X_pow]\n          have hfilter : Finset.filter (λ (x : ℕ × ℕ) => x.2 = n+1) (Finset.antidiagonal m) = {(m - (n+1), n+1)} := by\n            ext ⟨i, j⟩\n            constructor\n            · intro h\n              rcases Finset.mem_filter.1 h with ⟨hij, hj⟩\n              rw [Finset.mem_antidiagonal] at hij\n              have hi : i = m - (n+1) := by omega\n              subst hi; subst hj; simp\n            · intro h\n              rcases Finset.mem_singleton.1 h with ⟨hi, hj⟩\n              subst hi; subst hj\n              apply Finset.mem_filter.mpr\n              constructor\n              · apply Finset.mem_antidiagonal.mpr; omega\n              · rfl\n          rw [hfilter, Finset.sum_singleton]\n        rw [hsum, if_pos hm]\n      · have hm' : m < n+1 := by omega\n        have hzero' : coeff m (q * X ^ (n+1)) = 0 := by\n          rw [coeff_mul, coeff_X_pow, Finset.sum_eq_zero]\n          intro p hp\n          rcases Finset.mem_antidiagonal.1 hp with ⟨hp1, hp2⟩\n          have : p.2 ≠ n+1 := by\n            intro h\n            have : m = p.1 + (n+1) := by omega\n            omega\n          simp [this]\n        rw [hzero', if_neg (by omega : ¬ n+1 ≤ m)]\n    rw [hcoeff_prod, coeff_sub]\n    by_cases hm : n+1 ≤ m\n    · rw [if_pos hm, hq_coeff (m - (n+1)), Nat.sub_add_cancel hm]\n    · have hm' : m ≤ n := by omega\n      rw [if_neg (by omega : ¬ n+1 ≤ m), hzero m hm']\n  · intro h\n    rcases h with ⟨q, hq⟩\n    intro m hm\n    have hcoeff_sub : ∀ m, coeff m (f - g) = coeff m (q * X ^ (n+1)) := by\n      intro m; rw [hq]\n    have hcoeff_prod_zero (hm : m ≤ n) : coeff m (q * X ^ (n+1)) = 0 := by\n      rw [coeff_mul, coeff_X_pow, Finset.sum_eq_zero]\n      intro p hp\n      rcases Finset.mem_antidiagonal.1 hp with ⟨hp1, hp2⟩\n      have : p.2 ≠ n+1 := by\n        intro h\n        have : m = p.1 + (n+1) := by omega\n        omega\n      simp [this]\n    have hzero' : coeff m (f - g) = 0 := by\n      rw [hcoeff_sub m, hcoeff_prod_zero hm]\n    rw [coeff_sub] at hzero'\n    exact sub_eq_zero.mp hzero'",
+  "declaration_name": "xneq_multiple_iff",
+  "used_context": [
+    "XnEquiv (definition and notation)",
+    "coeff_zero_eq_constantCoeff_apply (though not used directly, part of coeff API)",
+    "coeff_sub",
+    "coeff_mul",
+    "coeff_X_pow",
+    "PowerSeries.mk and coeff_mk",
+    "Finset.antidiagonal and basic Finset operations",
+    "omega for arithmetic"
+  ],
+  "notes": [
+    "The statement uses subtraction, so we assume R is a CommRing instead of the section's CommSemiring.",
+    "The proof constructs an explicit q using the truncated series and uses coefficient manipulations.",
+    "The equivalence relies on the fact that the coefficient of the product with X^(n+1) is zero for indices up to n.",
+    "No additional lemmas beyond the displayed context are assumed; all reasoning is done with basic coefficient sums."
+  ]
+}

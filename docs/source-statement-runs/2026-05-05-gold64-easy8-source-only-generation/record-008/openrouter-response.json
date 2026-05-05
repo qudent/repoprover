@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777981081-3KKlQMfwNOebI7y2WGYi",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem qBinomial_eq_zero_of_gt {R : Type*} [Semiring R] (n k : ℕ) (q : R) (h : k > n) : qBinomial n k q = 0 := by\\n  have hle : ¬ k ≤ n := by omega\\n  simp [qBinomial, hle]\",\n  \"declaration_name\": \"qBinomial_eq_zero_of_gt\",\n  \"used_context\": [\n    \"qBinomial definition from QBinomialBasic (if k ≤ n then sum else 0)\",\n    \"omega tactic\",\n    \"Nat arithmetic\"\n  ],\n  \"notes\": []\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777981082,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4161,
+    "prompt_tokens": 3911,
+    "total_tokens": 8072,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4019,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.005045275,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.005045275,
+      "upstream_inference_prompt_cost": 0.001425205,
+      "upstream_inference_completions_cost": 0.00362007
+    }
+  },
+  "provider": "DeepSeek"
+}

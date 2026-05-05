@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem laurentPolynomial_T_isUnit_one : IsUnit ((LaurentPolynomial.T 1 : K[T;T⁻¹]) : K[T;T⁻¹]) :=\n  laurentPolynomial_T_isUnit' K 1",
+  "declaration_name": "laurentPolynomial_T_isUnit_one",
+  "used_context": [
+    "laurentPolynomial_T_isUnit'"
+  ],
+  "notes": [
+    "This lemma is a direct specialization of the existing laurentPolynomial_T_isUnit' to the indeterminate x (represented by LaurentPolynomial.T 1).",
+    "The statement matches the source's claim that the element x is invertible in the K-algebra K[x±]."
+  ]
+}

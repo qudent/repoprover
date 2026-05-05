@@ -1,0 +1,388 @@
+{
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/FPS/Multivariate.lean:AlgebraicCombinatorics.sum_choose_pow_eq",
+      "lean_path": "AlgebraicCombinatorics/FPS/Multivariate.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.sum_choose_pow_eq"
+      ],
+      "gold_line_range": [
+        283,
+        302
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18811,
+        "prompt_chars": 17727,
+        "estimated_prompt_tokens": 4432,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00192792,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03043608
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18811,
+        "prompt_chars": 17727,
+        "estimated_prompt_tokens": 4432,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00192792,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03043608
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03043608,
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/LaurentSeries.lean:AlgebraicCombinatorics.laurentPolynomial_T_neg_mul_T",
+      "lean_path": "AlgebraicCombinatorics/LaurentSeries.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.laurentPolynomial_T_neg_mul_T"
+      ],
+      "gold_line_range": [
+        1073,
+        1078
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 14095,
+        "prompt_chars": 13192,
+        "estimated_prompt_tokens": 3298,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00143463,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02994279
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 14095,
+        "prompt_chars": 13192,
+        "estimated_prompt_tokens": 3298,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00143463,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.02994279
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.02994279,
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/Permutations/Signs.lean:Equiv.Perm.sign_coe_eq_neg_one_pow_invCount",
+      "lean_path": "AlgebraicCombinatorics/Permutations/Signs.lean",
+      "gold_declaration_names": [
+        "Equiv.Perm.sign_coe_eq_neg_one_pow_invCount"
+      ],
+      "gold_line_range": [
+        149,
+        154
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 19291,
+        "prompt_chars": 17923,
+        "estimated_prompt_tokens": 4481,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0019492350000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030457395
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 19291,
+        "prompt_chars": 17923,
+        "estimated_prompt_tokens": 4481,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0019492350000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030457395
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030457395,
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_col",
+      "lean_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.Det.det_add_col"
+      ],
+      "gold_line_range": [
+        581,
+        585
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15361,
+        "prompt_chars": 14407,
+        "estimated_prompt_tokens": 3602,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015668700000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030075030000000003
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15361,
+        "prompt_chars": 14407,
+        "estimated_prompt_tokens": 3602,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015668700000000002,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030075030000000003
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030075030000000003,
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPS/XnEquivalence.lean:PowerSeries.xnEquiv_iff_dvd",
+      "lean_path": "AlgebraicCombinatorics/FPS/XnEquivalence.lean",
+      "gold_declaration_names": [
+        "PowerSeries.xnEquiv_iff_dvd"
+      ],
+      "gold_line_range": [
+        280,
+        300
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 21066,
+        "prompt_chars": 19997,
+        "estimated_prompt_tokens": 5000,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0021750000000000003,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03068316
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 21066,
+        "prompt_chars": 19997,
+        "estimated_prompt_tokens": 5000,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0021750000000000003,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03068316
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03068316,
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:PowerSeries.coeffFinitelyDeterminedInSum_value_unique",
+      "lean_path": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean",
+      "gold_declaration_names": [
+        "PowerSeries.coeffFinitelyDeterminedInSum_value_unique"
+      ],
+      "gold_line_range": [
+        229,
+        239
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 22424,
+        "prompt_chars": 21239,
+        "estimated_prompt_tokens": 5310,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00230985,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03081801
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 22424,
+        "prompt_chars": 21239,
+        "estimated_prompt_tokens": 5310,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00230985,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03081801
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03081801,
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.fraction_unit_one",
+      "lean_path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.fraction_unit_one"
+      ],
+      "gold_line_range": [
+        676,
+        690
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15484,
+        "prompt_chars": 14263,
+        "estimated_prompt_tokens": 3566,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015512100000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030059370000000002
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15484,
+        "prompt_chars": 14263,
+        "estimated_prompt_tokens": 3566,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0015512100000000001,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030059370000000002
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030059370000000002,
+      "paid_call_made": false,
+      "status": "budget_only"
+    },
+    {
+      "index": 8,
+      "record_id": "AlgebraicCombinatorics/Partitions/QBinomialFormulas.lean:AlgebraicCombinatorics.QBinomialRec.qBinomial_eq_zero_of_lt",
+      "lean_path": "AlgebraicCombinatorics/Partitions/QBinomialFormulas.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.QBinomialRec.qBinomial_eq_zero_of_lt"
+      ],
+      "gold_line_range": [
+        256,
+        259
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15062,
+        "prompt_chars": 14148,
+        "estimated_prompt_tokens": 3537,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001538595,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030046755
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 15062,
+        "prompt_chars": 14148,
+        "estimated_prompt_tokens": 3537,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.001538595,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.030046755
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.030046755,
+      "paid_call_made": false,
+      "status": "budget_only"
+    }
+  ]
+}

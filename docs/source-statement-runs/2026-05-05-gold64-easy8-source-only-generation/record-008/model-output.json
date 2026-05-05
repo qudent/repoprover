@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem qBinomial_eq_zero_of_gt {R : Type*} [Semiring R] (n k : ℕ) (q : R) (h : k > n) : qBinomial n k q = 0 := by\n  have hle : ¬ k ≤ n := by omega\n  simp [qBinomial, hle]",
+  "declaration_name": "qBinomial_eq_zero_of_gt",
+  "used_context": [
+    "qBinomial definition from QBinomialBasic (if k ≤ n then sum else 0)",
+    "omega tactic",
+    "Nat arithmetic"
+  ],
+  "notes": []
+}

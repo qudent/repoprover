@@ -141,6 +141,15 @@ Larger source-only audit:
 - Focused labeled environments extracted: `65` across `64/64` rows.
 - Hidden-name context blocks removed: `4`.
 
+Easy-8 paid source-only generation from the 64-row audit:
+
+- Selection: `--records docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/selected-records.jsonl --limit 8 --sample-mode easy`.
+- Generation-only, no Lean verification yet.
+- Paid calls: `8/8`.
+- Parsed generated declarations: `8/8`.
+- Actual cost: `$0.071505155`.
+- Generated names: `eq_fps_mulvar_exa1_res1`, `laurentPolynomial_T_isUnit_one`, `sgn`, `det_colop`, `xneq_multiple_iff`, `coeffFinitelyDeterminedInSum_iff`, `inverse_unique`, `qBinomial_eq_zero_of_gt`.
+
 ## Files And Evidence
 
 - Main run: `docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/`
@@ -158,6 +167,8 @@ Larger source-only audit:
 - Gold64 source-only budget audit: `docs/source-statement-runs/2026-05-05-gold64-source-only-budget/`
 - Gold64 target-comment budget audit: `docs/source-statement-runs/2026-05-05-gold64-target-comment-budget/`
 - Gold64 context audit report: `docs/source-statement-runs/2026-05-05-gold64-source-only-budget/eval/context-budget-audit.md`
+- Gold64 easy-8 source-only budget: `docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-budget/`
+- Gold64 easy-8 paid generation: `docs/source-statement-runs/2026-05-05-gold64-easy8-source-only-generation/`
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`

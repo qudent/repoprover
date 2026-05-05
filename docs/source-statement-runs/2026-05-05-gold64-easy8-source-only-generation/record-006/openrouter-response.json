@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777980786-f9Zn6EkbN0FYp3pxMHfc",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"lemma coeffFinitelyDeterminedInSum_iff (a : I → PowerSeries R) (n : ℕ) :\\n    CoeffFinitelyDeterminedInSum a n ↔ ∃ (M : Finset I), DeterminesCoeffInSum a M n :=\\n  ⟨fun h => h, fun h => h⟩\",\n  \"declaration_name\": \"coeffFinitelyDeterminedInSum_iff\",\n  \"used_context\": [\n    \"CoeffFinitelyDeterminedInSum\",\n    \"DeterminesCoeffInSum\"\n  ],\n  \"notes\": [\n    \"This lemma restates the definition of `CoeffFinitelyDeterminedInSum` as an `iff`; the proof is trivial.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777980786,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 10687,
+    "prompt_tokens": 6446,
+    "total_tokens": 17133,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 10518,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.01182562,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.01182562,
+      "upstream_inference_prompt_cost": 0.00252793,
+      "upstream_inference_completions_cost": 0.00929769
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "def sgn (σ : Perm (Fin n)) : ℤ := (-1 : ℤ) ^ AlgebraicCombinatorics.Perm.invCount σ",
+  "declaration_name": "sgn",
+  "used_context": ["AlgebraicCombinatorics.Perm.invCount", "(-1 : ℤ)", "Fin n"],
+  "notes": ["Defines the integer sign of a permutation as (-1)^ℓ(σ), matching the textbook definition; avoids shadowing Equiv.Perm.sign"]
+}

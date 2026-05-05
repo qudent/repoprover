@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777980457-5OmIoha1NlxTkRC4AaiT",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_colop (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\\n    (A.submatrix id (Equiv.swap i j)).det = -A.det ∧\\n    (A.updateCol i (fun r => A r i + A r j)).det = A.det ∧\\n    (A.updateCol i (fun r => A r i + c • (A r j))).det = A.det :=\\nby\\n  have h_swap : (A.submatrix id (Equiv.swap i j)).det = -A.det := det_swap_cols A i j hij\\n  have h_add : (A.updateCol i (fun r => A r i + A r j)).det = A.det := by\\n    have h : (A.transpose.updateRow i (A.transpose i + A.transpose j)).transpose = A.updateCol i (fun r => A r i + A r j) := by\\n      ext r s; simp [Matrix.updateRow, Matrix.updateCol, Matrix.transpose, Pi.add_apply]\\n    calc\\n      (A.updateCol i (fun r => A r i + A r j)).det = ((A.transpose.updateRow i (A.transpose i + A.transpose j)).transpose).det := by rw [h]\\n      _ = (A.transpose.updateRow i (A.transpose i + A.transpose j)).det := by rw [Matrix.det_transpose]\\n      _ = A.transpose.det := by rw [det_add_row (A.transpose) i j hij]\\n      _ = A.det := by rw [Matrix.det_transpose]\\n  have h_add_smul : (A.updateCol i (fun r => A r i + c • (A r j))).det = A.det := by\\n    have h : (A.transpose.updateRow i (A.transpose i + c • (A.transpose j))).transpose = A.updateCol i (fun r => A r i + c • (A r j)) := by\\n      ext r s; simp [Matrix.updateRow, Matrix.updateCol, Matrix.transpose, Pi.add_apply, smul_eq_mul]\\n    calc\\n      (A.updateCol i (fun r => A r i + c • (A r j))).det = ((A.transpose.updateRow i (A.transpose i + c • (A.transpose j))).transpose).det := by rw [h]\\n      _ = (A.transpose.updateRow i (A.transpose i + c • (A.transpose j))).det := by rw [Matrix.det_transpose]\\n      _ = A.transpose.det := by rw [det_add_smul_row (A.transpose) i j hij c]\\n      _ = A.det := by rw [Matrix.det_transpose]\\n  exact ⟨h_swap, h_add, h_add_smul⟩\",\n  \"declaration_name\": \"det_colop\",\n  \"used_context\": [\n    \"det_swap_cols\",\n    \"det_add_row\",\n    \"det_add_smul_row\",\n    \"Matrix.det_transpose\"\n  ],\n  \"notes\": [\n    \"Column operation analogues of row operations are combined into a single conjunction theorem, as the source theorem says the row properties hold when replacing 'row' by 'column' throughout.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777980457,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 12583,
+    "prompt_tokens": 4031,
+    "total_tokens": 16614,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 11811,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.012424615,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.012424615,
+      "upstream_inference_prompt_cost": 0.001477405,
+      "upstream_inference_completions_cost": 0.01094721
+    }
+  },
+  "provider": "DeepSeek"
+}

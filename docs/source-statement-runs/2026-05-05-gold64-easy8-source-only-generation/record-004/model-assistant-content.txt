@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem det_colop (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\n    (A.submatrix id (Equiv.swap i j)).det = -A.det ∧\n    (A.updateCol i (fun r => A r i + A r j)).det = A.det ∧\n    (A.updateCol i (fun r => A r i + c • (A r j))).det = A.det :=\nby\n  have h_swap : (A.submatrix id (Equiv.swap i j)).det = -A.det := det_swap_cols A i j hij\n  have h_add : (A.updateCol i (fun r => A r i + A r j)).det = A.det := by\n    have h : (A.transpose.updateRow i (A.transpose i + A.transpose j)).transpose = A.updateCol i (fun r => A r i + A r j) := by\n      ext r s; simp [Matrix.updateRow, Matrix.updateCol, Matrix.transpose, Pi.add_apply]\n    calc\n      (A.updateCol i (fun r => A r i + A r j)).det = ((A.transpose.updateRow i (A.transpose i + A.transpose j)).transpose).det := by rw [h]\n      _ = (A.transpose.updateRow i (A.transpose i + A.transpose j)).det := by rw [Matrix.det_transpose]\n      _ = A.transpose.det := by rw [det_add_row (A.transpose) i j hij]\n      _ = A.det := by rw [Matrix.det_transpose]\n  have h_add_smul : (A.updateCol i (fun r => A r i + c • (A r j))).det = A.det := by\n    have h : (A.transpose.updateRow i (A.transpose i + c • (A.transpose j))).transpose = A.updateCol i (fun r => A r i + c • (A r j)) := by\n      ext r s; simp [Matrix.updateRow, Matrix.updateCol, Matrix.transpose, Pi.add_apply, smul_eq_mul]\n    calc\n      (A.updateCol i (fun r => A r i + c • (A r j))).det = ((A.transpose.updateRow i (A.transpose i + c • (A.transpose j))).transpose).det := by rw [h]\n      _ = (A.transpose.updateRow i (A.transpose i + c • (A.transpose j))).det := by rw [Matrix.det_transpose]\n      _ = A.transpose.det := by rw [det_add_smul_row (A.transpose) i j hij c]\n      _ = A.det := by rw [Matrix.det_transpose]\n  exact ⟨h_swap, h_add, h_add_smul⟩",
+  "declaration_name": "det_colop",
+  "used_context": [
+    "det_swap_cols",
+    "det_add_row",
+    "det_add_smul_row",
+    "Matrix.det_transpose"
+  ],
+  "notes": [
+    "Column operation analogues of row operations are combined into a single conjunction theorem, as the source theorem says the row properties hold when replacing 'row' by 'column' throughout."
+  ]
+}

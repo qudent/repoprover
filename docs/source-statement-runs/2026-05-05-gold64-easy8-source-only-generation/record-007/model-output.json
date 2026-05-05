@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "lemma inverse_unique {a b c : L} (hab : a * b = 1) (hac : a * c = 1) : b = c :=\n  calc\n    b = 1 * b := by simp\n    _ = (a * c) * b := by rw [← hac, mul_comm]\n    _ = (c * a) * b := by rw [mul_comm a c]\n    _ = c * (a * b) := by simp [mul_assoc]\n    _ = c * 1 := by rw [hab]\n    _ = c := by simp",
+  "declaration_name": "inverse_unique",
+  "used_context": [
+    "variable {L : Type*} [CommRing L]",
+    "mul_comm",
+    "mul_assoc",
+    "simp"
+  ],
+  "notes": [
+    "This lemma formalizes the unambiguity of the inverse, which is mentioned in part (a) of the definition `def.commring.fracs`. It corresponds to the referenced theorem `thm.commring.inverse-uni`."
+  ]
+}
