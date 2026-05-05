@@ -183,12 +183,17 @@ Second theorem-level easier-unit probe:
 - post-hoc gold comparison:
   `eval/gold-comparison.json` reports exact gold-name overlap `0/1` and
   classifies the row as `compiled_needs_semantic_review`.
+- post-hoc semantic coverage:
+  `eval/semantic-coverage.json` reports semantic grader coverage `0/1` with
+  failure class `shape_mismatch_against_oracle`.
 
 Interpretation: this is the first theorem-level source-unit compile success
 under selected context. It should not be counted as oracle benchmark coverage
 yet, because the generated theorem uses explicit inverse hypotheses and local
 name `inverse_unique`, while the aligned existing theorem is
-`AlgebraicCombinatorics.FPS.isInverse_unique`.
+`AlgebraicCombinatorics.FPS.isInverse_unique`. The semantic grader makes this
+concrete: the generated theorem requires a `b * a = 1`-style symmetric
+hypothesis that the gold `IsInverse` statement does not provide directly.
 
 ## Lean Dependency Accounting
 

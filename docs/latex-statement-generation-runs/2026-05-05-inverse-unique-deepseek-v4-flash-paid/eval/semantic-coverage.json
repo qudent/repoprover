@@ -1,0 +1,81 @@
+{
+  "all_aligned_gold_proved_units": 0,
+  "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
+  "generated_at": "2026-05-05T22:17:06.119033+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid",
+  "no_aligned_gold_proved_units": 1,
+  "partial_aligned_gold_proved_units": 0,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-05-inverse-unique-source-context-v2-paid",
+  "unit_count": 1,
+  "units": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_failed",
+          "failure_class": "shape_mismatch_against_oracle",
+          "generated_declaration_names": [
+            "inverse_unique"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.FPS.isInverse_unique",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            484,
+            500
+          ],
+          "gold_path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean",
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "lean_source_path": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/eval/semantic-coverage/unit-001/gold-001.lean",
+          "messages": [
+            {
+              "column": 20,
+              "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+              "kind": "linter.unnecessarySimpa",
+              "line": 491,
+              "severity": "warning"
+            },
+            {
+              "column": 16,
+              "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+              "kind": "linter.unnecessarySimpa",
+              "line": 495,
+              "severity": "warning"
+            },
+            {
+              "column": 62,
+              "data": "unused variable `h1`\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`",
+              "kind": "linter.unusedVariables",
+              "line": 488,
+              "severity": "warning"
+            },
+            {
+              "column": 113,
+              "data": "unused variable `h4`\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`",
+              "kind": "linter.unusedVariables",
+              "line": 488,
+              "severity": "warning"
+            },
+            {
+              "column": 41,
+              "data": "Application type mismatch: The argument\n  hac\nhas type\n  IsInverse a c\nbut is expected to have type\n  b * a = 1\nin the application\n  inverse_unique a b c hab hac",
+              "kind": "[anonymous]",
+              "line": 506,
+              "severity": "error"
+            }
+          ],
+          "semantic_check_passed": false,
+          "stderr": ""
+        }
+      ],
+      "compile_passed": true,
+      "coverage_status": "no_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+      "unit_key": "unit-001"
+    }
+  ]
+}

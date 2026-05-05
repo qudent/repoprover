@@ -251,6 +251,8 @@ and
   compile pass.
 - post-hoc exact gold-name comparison: `0/1`; status
   `compiled_needs_semantic_review`.
+- post-hoc semantic coverage: `0/1`; status `no_aligned_gold_proved`, failure
+  class `shape_mismatch_against_oracle`.
 
 This is a useful positive signal for context selection: on a small theorem, the
 model understood the math once the previous source definition and exact Mathlib
@@ -258,7 +260,10 @@ facts were in the context pack. It is not yet a benchmark pass, because the
 generated theorem is an alternate explicit-hypothesis statement named
 `inverse_unique`, while the aligned existing theorem is
 `AlgebraicCombinatorics.FPS.isInverse_unique`. The next verifier needs a
-semantic theorem-coverage check, not just declaration-name overlap.
+semantic theorem-coverage check, not just declaration-name overlap. The first
+version of that verifier now exists and confirms this probe is still an oracle
+shape mismatch, because the generated theorem asks for symmetric multiplication
+hypotheses rather than using the project `IsInverse` predicate shape.
 
 ### Generation and Verification Counts
 
@@ -596,7 +601,11 @@ failures.
      `scripts/verify_latex_statement_generation.py` checks generated-only Lean
      compilation, and `scripts/compare_latex_statement_generation_to_gold.py`
      records post-hoc exact-name overlap as a weak coverage proxy. Semantic
-     theorem coverage remains open.
+     theorem coverage is now checked by
+     `scripts/verify_latex_statement_semantic_coverage.py`, which materializes
+     grader-only aligned-gold statements after generation and tries to prove
+     them with `simpa using` generated declarations. It is still a theorem
+     coverage verifier, not source-level human certification.
 
 7. Reclassify failures.
    - `compile_failure`

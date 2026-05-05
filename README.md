@@ -79,7 +79,10 @@ valid JSON for `$0.00081564`; hydration checked `4/4` requested Mathlib
 identifiers; generation cost `$0.00036708` and compiled `1/1`. Post-hoc exact
 gold-name comparison was `0/1`, so this is currently classified as
 `compiled_needs_semantic_review`: useful source-level progress, not confirmed
-oracle coverage.
+oracle coverage. A stricter post-hoc semantic grader now tries to prove the
+aligned gold statement from the generated theorem using `simpa using`; it also
+reports `0/1` for this probe and classifies the failure as
+`shape_mismatch_against_oracle`.
 
 ### Imported Lean surface and likely context needs
 

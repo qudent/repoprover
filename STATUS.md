@@ -34,6 +34,8 @@ retired from `main`; historical run logs remain. The current dataset is
   contract, then retry generation on an easier source unit.
 - [x] Add a post-hoc theorem-level gold-name comparison that distinguishes
   compile success from oracle coverage.
+- [x] Add a post-hoc theorem-level semantic coverage check using grader-only
+  gold statements and the existing `simpa using` criterion.
 - [ ] Reclassify old strict-grader mismatches into `compile_failure`,
   `missing_context`, `wrong_math`, `shape_mismatch_against_oracle`, or
   `useful_alternative_formalization`.
@@ -55,7 +57,11 @@ retired from `main`; historical run logs remain. The current dataset is
   declaration is an alternate explicit-hypothesis theorem named
   `inverse_unique`; exact post-hoc gold-name overlap with
   `AlgebraicCombinatorics.FPS.isInverse_unique` is `0/1`. This is source-level
-  progress requiring semantic review, not gold coverage.
+  progress requiring semantic review, not gold coverage. The new semantic
+  grader also reports `0/1` and classifies the failure as
+  `shape_mismatch_against_oracle`: the generated theorem requires symmetric
+  multiplication hypotheses that the gold `IsInverse` statement does not have
+  directly.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` instead of rerunning Lean
   unless needed.
@@ -88,7 +94,11 @@ retired from `main`; historical run logs remain. The current dataset is
   selected prior source context plus `CommRing`, `mul_assoc`, `one_mul`, and
   `mul_one`; hydration checked `4/4` exact identifiers. Generation in
   `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/`
-  compiled `1/1`, with post-hoc exact gold-name comparison `0/1`.
+  compiled `1/1`, with post-hoc exact gold-name comparison `0/1` and semantic
+  grader coverage `0/1`.
+- New script `scripts/verify_latex_statement_semantic_coverage.py` materializes
+  grader-only aligned-gold checks after generation. The inverse artifact is
+  `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/eval/semantic-coverage.json`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
