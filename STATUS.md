@@ -97,6 +97,10 @@ The paid 11-record generation+repair run reached 5/11 cumulative verified
 successes for `$0.187203497`; this confirms the queue scales operationally but
 quality is still not high enough for feed-forward textbook formalization. See
 `docs/source-statement-preflight-passing-11-results.md`.
+The six remaining failures are classified in
+`docs/source-statement-preflight-passing-11-failure-diagnosis.md`; do not spend
+more on generic compiler-feedback repair for rows 7, 9, or 10 without new local
+API/statement-shape context.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -293,9 +297,14 @@ failures plus 1 hidden-grader mismatch; see
   added 2 more successes for `$0.122672784`, bringing the cumulative slice to
   5/11 for `$0.187203497`. See
   `docs/source-statement-preflight-passing-11-results.md`.
-- [ ] Classify the six remaining 11-record failures by visible statement-shape
+- [x] Classify the six remaining 11-record failures by visible statement-shape
   diagnostics and local API family before spending more on retries; rows 7, 9,
-  and 10 did not improve after a second compiler-feedback pass.
+  and 10 did not improve after a second compiler-feedback pass. See
+  `docs/source-statement-preflight-passing-11-failure-diagnosis.md`.
+- [ ] Add targeted visible-context retrieval/guidance for the 11-record failure
+  buckets: FPS limits statement narrowing, binomial/FPS typeclass specificity,
+  `finsum` finite-support APIs, partition constructors/projections, permutation
+  powers/function coercions, and `Perm.IsSwap` statement shape.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
