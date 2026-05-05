@@ -1118,9 +1118,8 @@ def lean_environment_context(project_root: Path) -> dict[str, Any]:
         "current_version_guidance": [
             "Generated code is checked with the repository lean-toolchain and current Mathlib, not Lean 3 or an older Lean 4 snapshot.",
             "Prefer Lean 4 syntax: `fun x => ...`, `by` tactic blocks, namespaces/dot notation as shown in the prompt, and current Mathlib names from displayed context.",
-            "Do not invent old/deprecated identifiers such as guessed `*_apply`, `det_swap_rows`, `CommAlgebra`, or `LaurentPolynomial.X` unless they are explicitly present in context; use displayed local APIs or prove by unfolding/simping.",
-            "For power-series coefficients, follow the local examples' argument order such as `coeff n (X : R⟦X⟧)`, not `coeff (X : R⟦X⟧) n`.",
-            "For Laurent polynomial samples, prefer displayed current APIs such as `LaurentPolynomial.T n` and local notation `K[T;T⁻¹]`; do not use bare polynomial `X` for Laurent polynomials.",
+            "Do not invent old/deprecated identifiers or guessed helper names unless they are explicitly present in context; use displayed local APIs, hydrated Mathlib signatures, or prove by unfolding/simping.",
+            "For domain-specific notation and argument order, trust the selected context snippets and local examples instead of model memory.",
             "Do not make typeclass objects (`CommRing α`, `Algebra R A`, etc.) components of an `∧`; those are types/classes, not propositions. Put them as assumptions/instances or use theorem statements about terms instead.",
             "If the source theorem is a narrow identity, formalize that identity directly rather than a broad bundled theorem whose components will not match the grader's withheld statement.",
         ],
@@ -1569,7 +1568,9 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
         "lean_prefix_context": "\n".join(context_parts).strip(),
         "lean_environment": lean_environment_context(project_root),
         "local_lean_style": style,
-        "domain_statement_shape_guidance": domain_statement_shape_guidance(
+        "domain_statement_shape_guidance": []
+        if context_mode == "source-only"
+        else domain_statement_shape_guidance(
             record,
             snippets=snippets,
             context_parts=context_parts,
@@ -1662,9 +1663,8 @@ def build_repair_messages(
             "Do not use sorry, admit, placeholders, or comments as proof.",
             "Do not return a conjunction or broad bundled theorem when the source focus is a narrow identity.",
             "If the previous declaration over-generalized, narrow it to the single source sentence most directly supported by the context.",
-            "Use explicit type annotations for polymorphic terms when Lean could leave typeclass metavariables stuck.",
-            "For PowerSeries coefficients use argument order `coeff n f`.",
-            "For Laurent polynomials use `LaurentPolynomial.T n`, not bare `X` or bare `T` unless the prefix context defines it.",
+            "When Lean reports ambiguity or typeclass metavariables, add only type annotations justified by the displayed context or compiler output.",
+            "For domain-specific notation, argument order, and namespace choices, follow the displayed local examples and hydrated Mathlib signatures instead of hardcoded model memory.",
             "Do not redeclare context definitions; reference them directly.",
             "Do not add theorem-local `where` definitions or redefine project concepts; repair using the displayed APIs instead.",
             "Do not introduce helper theorem names that were not displayed in the original context or compiler output.",

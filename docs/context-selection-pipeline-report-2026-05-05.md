@@ -26,6 +26,12 @@ The current benchmark mostly uses one row per existing Lean declaration, aligned
 back to TeX labels. That is useful for controlled evaluation, but it creates a
 source-unit mismatch: several benchmark rows may share one LaTeX theorem label.
 
+Correction after review: some earlier generation/repair prompts included
+domain-specific guardrails for observed FPS/Laurent/Cauchy-style failures. Those
+were debugging scaffolds, not a generic context-selection method. The honest
+source-only path should get such information from selected local/project/Mathlib
+context, not from hardcoded benchmark-specific prompt rules.
+
 ## Current Pipeline
 
 ### Data and Record Unit
@@ -256,6 +262,22 @@ shape:
 
 This is currently a larger source of failure than raw Mathlib name lookup.
 
+This creates two different failure classes that the current verifier does not
+separate well:
+
+- **False rejection for book-level progress**: the generated declaration is a
+  mathematically reasonable formalization of part of the source theorem, but it
+  does not prove the one hidden Lean declaration selected as the benchmark row.
+  The Laurent bundled theorem is in this category: it is useful source-theorem
+  progress but mismatched to the `T_inv` row.
+- **True failure**: the generated declaration does not compile, invents missing
+  APIs, proves the wrong statement even at source level, or depends on invalid
+  assumptions.
+
+The current declaration-level grader is intentionally strict, but theorem-level
+production needs a separate assessment layer so useful alternate
+formalizations are not counted as total failures.
+
 ### 4. Mathlib Context Retrieval
 
 Mathlib context collection is implemented and useful, but still shallow:
@@ -278,6 +300,20 @@ The next improvement should split:
 - `selected_project_context`;
 - `selector_statement_plan`;
 - `proof_notes`.
+
+Mathlib is not the only needed context. It is the largest reusable library, but
+the current verified successes came mostly from previous-project theorem
+context. A realistic context pack needs all of:
+
+- source theorem text and neighboring source definitions/notation;
+- previous book/source statements, by label;
+- previous project declarations, definitions, notations, and instances;
+- local file style, namespaces, variables, and imports;
+- selected Mathlib declarations, signatures, docstrings, and short source
+  snippets.
+
+So the selector should explicitly select Mathlib context, but it should not
+assume Mathlib is the whole context problem.
 
 ### 5. Previous-Project Context
 
@@ -337,13 +373,16 @@ Parse each LaTeX theorem/environment into a source work item:
 
 Prompt a cheap selector to produce:
 
-- mathematical claim decomposition;
-- likely Lean declarations needed;
+- mathematical claim decomposition for one LaTeX theorem/environment;
+- likely Lean declarations needed, in dependency order;
+- for each declaration task, whether it is a definition, instance, lemma, or
+  final theorem;
 - prior source labels/theorems needed;
+- project declarations to reuse;
 - Mathlib areas and exact APIs to hydrate;
-- uncertainty list.
+- uncertainty list and review questions.
 
-Output should be a list of declaration tasks, not one theorem.
+Output should be a list of declaration tasks, not one theorem-shaped string.
 
 ### Stage C: Context Hydration
 
@@ -356,7 +395,7 @@ Resolve requested context with tools:
 
 ### Stage D: Second-Round Context Critic
 
-Only when useful, ask a cheap model:
+Only when useful, ask a cheap <- i think this should be expensive? this is hard? model:
 
 - Is the selected context enough for each declaration task?
 - Are there overloaded/wrong Mathlib names?
@@ -382,6 +421,56 @@ Verify:
 Repair should use compiler errors and visible context only. For hard cases, a
 coding agent can inspect the generated project and fix a small fraction of
 failures.
+
+## Implementation Plan for Theorem-Level Splitting
+
+1. Add a TeX theorem-unit extractor.
+   - Input: `algebraic-combinatorics/AlgebraicCombinatorics/tex/**/*.tex`.
+   - Output: one JSONL row per theorem-like environment with path, line range,
+     labels, environment kind, part markers, references, and excerpt.
+   - Initial theorem-like environments: `theorem`, `lemma`, `proposition`,
+     `corollary`, `definition`, `conjecture`, `statement`, `example`.
+
+2. Build a source-label to existing-Lean-declaration index.
+   - Group the current declaration-level records by TeX label.
+   - For each source theorem unit, list the existing Lean declarations aligned
+     to it. This gives an oracle evaluation map without exposing target Lean to
+     the selector.
+
+3. Add a theorem-planning selector prompt.
+   - Input: one LaTeX theorem unit, local source context, previously formalized
+     source labels, and available project imports.
+   - Output: an ordered list of Lean declaration tasks plus selected
+     project/Mathlib context needs per task.
+   - Explicitly ask for Mathlib context and project context as separate fields.
+
+4. Hydrate context with tools, not prompt memory.
+   - Resolve project declarations by source label/import closure.
+   - Resolve Mathlib names by local search and `#check`/environment lookup.
+   - Store exact signatures/docstrings/snippets in separate fields.
+
+5. Generate a small Lean file per theorem unit.
+   - Prefer one file containing the ordered declarations for the source theorem.
+   - Permit multi-declaration output when the theorem naturally decomposes.
+
+6. Verify at two levels.
+   - Inner loop: each generated declaration compiles.
+   - Oracle benchmark: generated declarations cover/prove the existing aligned
+     Lean declarations when possible.
+   - Outer loop: theorem unit is considered complete when the planned final
+     statement(s) compile and all required supporting declarations are present.
+
+7. Reclassify failures.
+   - `compile_failure`
+   - `missing_context`
+   - `wrong_math`
+   - `shape_mismatch_against_oracle`
+   - `useful_alternative_formalization`
+
+8. Remove static benchmark-specific prompt guardrails from source-only mode.
+   - Domain-specific API guidance should come from selected context snippets,
+     local examples, or verifier feedback, not hardcoded FPS/Laurent/Cauchy
+     strings in the generic prompt.
 
 ## Full Current Prompt Contracts
 
@@ -549,9 +638,8 @@ You are a Lean 4 repair agent. Repair exactly one generated theorem/lemma so it 
     "Do not use sorry, admit, placeholders, or comments as proof.",
     "Do not return a conjunction or broad bundled theorem when the source focus is a narrow identity.",
     "If the previous declaration over-generalized, narrow it to the single source sentence most directly supported by the context.",
-    "Use explicit type annotations for polymorphic terms when Lean could leave typeclass metavariables stuck.",
-    "For PowerSeries coefficients use argument order `coeff n f`.",
-    "For Laurent polynomials use `LaurentPolynomial.T n`, not bare `X` or bare `T` unless the prefix context defines it.",
+    "When Lean reports ambiguity or typeclass metavariables, add only type annotations justified by the displayed context or compiler output.",
+    "For domain-specific notation, argument order, and namespace choices, follow the displayed local examples and hydrated Mathlib signatures instead of hardcoded model memory.",
     "Do not redeclare context definitions; reference them directly.",
     "Do not add theorem-local `where` definitions or redefine project concepts; repair using the displayed APIs instead.",
     "Do not introduce helper theorem names that were not displayed in the original context or compiler output.",

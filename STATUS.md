@@ -1,17 +1,17 @@
 # RepoProver - Status
 ## Overall direction
-Build a cheap, reproducible source-to-Lean autoformalization pipeline for the Algebraic Combinatorics dataset: honest source/prefix context, recoverable provider outputs, reusable Lean verification, and failure-driven context/repair iteration. Trust scoring is deferred until realistic source-only slices mostly succeed.
+Build a cheap, reproducible source-to-Lean autoformalization pipeline for the Algebraic Combinatorics dataset. The revised target unit is one LaTeX theorem/environment as a planning work item, decomposed into Lean declaration tasks with honest source/project/Mathlib context, recoverable provider outputs, reusable Lean verification, and failure-driven repair.
 
 -------
 
 ## Current State
-The strict 6-row hard slice reached 6/6, but that used target-comment context and is debugging evidence only. Current validation is source-only with a separate LLM selector for source-part choice, previous project statements, and tight Mathlib/API context before generation. Project-context proof generation now has two realistic passes across two domains, but not yet enough diverse coverage to call the pipeline reliable.
+The strict 6-row hard slice reached 6/6, but that used target-comment context and is debugging evidence only. Current validation is pivoting from one hidden Lean declaration per row toward theorem-level planning: extract a LaTeX theorem unit, let a selector decompose it into Lean declaration tasks, hydrate project/Mathlib context, then verify both declarations and theorem-level coverage. Existing declaration-level runs remain useful diagnostics, not the final production unit.
 
 ## Active Goals
 - [ ] Keep every paid OpenRouter output recoverable in git before Lean checking.
-- [ ] Improve realistic context selection, especially source-part disambiguation and Mathlib API selection, before larger generation runs.
-- [ ] Expand selector-selected previous project context plus Mathlib context from the current 1-pass proof to a small diverse slice.
-- [ ] Use broader source-only slices as the main evidence, not the old six-row loop.
+- [ ] Implement theorem-level LaTeX unit extraction and planning/decomposition before larger generation runs.
+- [ ] Hydrate context as separate source/project/Mathlib packs rather than treating Mathlib as the only needed context.
+- [ ] Use source-only theorem-level slices as the main evidence, not target-comment or single-declaration overfit loops.
 
 ## TODO Plan
 - [x] Add source-only prompt mode and TeX-derived focus.
@@ -33,6 +33,9 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - [x] Tighten selector behavior for shared TeX labels where the target is the next declaration-level formalization, not the whole labeled theorem.
 - [x] Re-run a small paid selector/generation probe after the declaration-progress prompt fix.
 - [x] Document pipeline neuralgic points, prompt contracts, and corpus/Mathlib scale.
+- [x] Remove static FPS/Laurent-specific repair rules from the generic source-only prompt contract.
+- [ ] Implement TeX theorem-unit extractor and source-label-to-Lean-declaration grouping.
+- [ ] Add theorem-planning selector prompt that emits ordered declaration tasks plus separate project/Mathlib context requests.
 - [ ] Verify the latest declaration-progress generation outputs in Lean.
 - [ ] Shrink selector schema so 4-record batches complete as valid JSON.
 
@@ -42,6 +45,8 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - `det_minors_diag` still fails: the model invents unavailable Cauchy-Binet helper names and produces malformed proof syntax. Treat it as a harder repair/context case, not evidence that project-context selection failed.
 - Shared TeX labels remain a live failure mode: in the diverse3 run, the selector correctly found useful previous-project facts for `prod-lim-conv`, but told the generator to bundle the prior multipliability result with the target equality theorem, so the hidden grader rejected the generated theorem shape.
 - Broad theorem labels can still hide narrow targets: the Laurent `T_inv` row became an over-broad `laupol_ring` statement and did not compile.
+- The declaration-level verifier can false-reject useful theorem-level progress when the model chooses a different but reasonable Lean decomposition. Those cases need a separate `useful_alternative_formalization`/coverage classification, not just pass/fail against one hidden declaration.
+- Prior prompts had benchmark-specific repair hints for observed FPS/Laurent failures; those are now treated as debugging scaffolds, not generic pipeline evidence.
 - A 72-record preflight was too slow with current Lean setup; keep validation slices bounded until verification reuse is improved.
 
 ## Recent Results
@@ -59,7 +64,7 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - Diverse project-context selector run `2026-05-05-context-selection-project-context-diverse3-paid` cost `$0.004148956`; generation run `2026-05-05-project-context-diverse3-generation-paid` cost `$0.021010413`; verification passed `1/3` with `isInverse_unique` proving via imported `inverse_unique`.
 - Declaration-progress prompt fix adds `same_label_progress_summary` and `supporting_context_boundary`; zero-cost diverse3 audit `2026-05-05-context-selection-decl-progress-diverse3-budget` made `0` paid calls and kept target-name leaks at `0`.
 - Paid declaration-progress selector `2026-05-05-context-selection-decl-progress-diverse3-paid` cost `$0.00558124`; it selected the narrow equality for `prod-lim-conv` and marked multipliability as support-only. Follow-up generation-only `2026-05-05-decl-progress-diverse3-generation-paid` returned `3/3` outputs for `$0.019770489`; not Lean-verified yet.
-- Report `docs/context-selection-pipeline-report-2026-05-05.md` explains why one LaTeX theorem should be the planning unit, while Lean declarations remain inner-loop verification units. `README.md` now records corpus and Mathlib scale estimates.
+- Report `docs/context-selection-pipeline-report-2026-05-05.md` now states the revised pipeline: one LaTeX theorem as planning unit, Lean declarations as inner-loop verification units, Mathlib plus project/source context as separate packs. `README.md` records corpus and Mathlib scale estimates.
 - Focused tests pass with source-statement, source-context-selection, context graph, and materializer tests.
 
 ## Agent Notes

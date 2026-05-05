@@ -251,7 +251,8 @@ def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_
     assert "current Mathlib-only project" in system
     assert environment["toolchain"] == "leanprover/lean4:v4.28.0"
     assert "Lean 3" in guidance
-    assert "LaurentPolynomial.X" in guidance
+    assert "hydrated Mathlib signatures" in guidance
+    assert "model memory" in guidance
     assert "typeclass objects" in guidance
     assert "Use current Lean 4/Mathlib syntax" in instructions
     assert "do not bundle typeclass instances" in instructions
@@ -880,6 +881,7 @@ def test_source_only_context_mode_does_not_use_hidden_name_guidance(tmp_path: Pa
     user = json.loads(messages[1]["content"])
     guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
 
+    assert user["context"]["domain_statement_shape_guidance"] == []
     assert "(simpleTransposition i).IsSwap" not in guidance_text
     assert "constructor-style proof shape" not in guidance_text
     assert "simpleTransposition_isSwap" not in guidance_text
