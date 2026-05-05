@@ -68,6 +68,7 @@ The strict 6-row hard slice reached 6/6, but that used target-comment context an
 - Selector prompt/schema now explicitly inventories source theorem text, previous book/source statements, previous project declarations, local file/import/style context, selected Mathlib APIs, and missing context.
 - The context/dependency tree is usable as an index/retrieval substrate: 5,684 declaration records, 64,311 edges, 1,062 exact Lean-comment label alignments, and 645 mechanically clean gold candidates. It is not an exact proof-dependency oracle.
 - README scale section now records imported Lean surface: all 52 non-root project modules import root `Mathlib`, exposing roughly 212k scanned Mathlib declarations, while gold-candidate local context is typically hundreds to low-thousands of tokens before selected Mathlib snippets.
+- Static source usage scan now records actual explicit Lean mentions: 1,930 unique qualified Mathlib declarations across the project; per exact TeX label median 5, p90 19, p95 26 qualified Mathlib mentions. Bare names remain ambiguous without elaboration.
 - Focused tests pass with source-statement, source-context-selection, context graph, and materializer tests.
 
 ## Agent Notes

@@ -77,9 +77,7 @@ in prompt context":
 
 The Mathlib declaration scan is approximate because it is a fast source scan,
 not an elaborated Lean environment dump. It is still the right order of
-magnitude for context-selection difficulty: a source-only generator should not
-be expected to guess a few exact APIs and signatures out of roughly two hundred
-thousand imported declarations.
+magnitude for context-selection difficulty.
 
 Mathlib is also topically broad. The largest local Mathlib directories by
 scanned named declarations are:
@@ -96,6 +94,60 @@ scanned named declarations are:
 | `LinearAlgebra` | ~10,000 |
 | `MeasureTheory` | ~9,900 |
 | `Combinatorics` | ~5,600 |
+
+The more relevant question is what the generated Lean source actually mentions.
+`scripts/analyze_lean_usage_static.py` scans comment/string-stripped project
+declaration chunks against scanned Mathlib and project declarations. This is
+still static source analysis: qualified exact names are high precision; long
+bare names that uniquely match one declaration are medium precision; ambiguous
+bare names are not resolved. The scan does not see notation expansion,
+elaboration, typeclass search, `simp` internals, or tactic-generated
+dependencies.
+
+Static source usage in the current generated Lean code:
+
+| Explicit usage signal | Scale |
+|---|---:|
+| Scanned Mathlib named declarations | ~211,000 |
+| Unique qualified Mathlib declarations explicitly mentioned | 1,930 |
+| Unique qualified + long uniquely-resolved bare Mathlib mentions | 2,313 |
+| Ambiguous long bare Mathlib name forms, not resolved | 647 |
+| Unique qualified project declarations explicitly mentioned | 276 |
+| Unique qualified + long uniquely-resolved bare project mentions | 3,507 |
+
+Per generated Lean declaration, explicit usage is much smaller:
+
+| Static usage per Lean declaration | Median | p90 | p95 | Max |
+|---|---:|---:|---:|---:|
+| Qualified Mathlib declarations | 2 | 8 | 11 | 79 |
+| Qualified + long uniquely-resolved bare Mathlib mentions | 2 | 9 | 12 | 90 |
+| Qualified project declarations | 0 | 1 | 2 | 17 |
+| Qualified + long uniquely-resolved bare project mentions | 2 | 5 | 8 | 34 |
+| Ambiguous long bare Mathlib forms | 1 | 4 | 6 | 42 |
+
+Restricted to theorem/lemma declarations only, the same scan sees median 2,
+p90 8, p95 12, and max 79 qualified Mathlib declarations per declaration.
+Including long uniquely-resolved bare Mathlib mentions gives median 2, p90 10,
+p95 13, and max 90.
+
+Grouped by exact TeX label, which is closer to a LaTeX theorem/unit than a
+single Lean declaration:
+
+| Static usage per exact TeX label | Median | p90 | p95 | Max |
+|---|---:|---:|---:|---:|
+| Lean declarations per label | 2 | 6 | 8 | 29 |
+| Qualified Mathlib declarations | 5 | 19 | 26 | 85 |
+| Qualified + long uniquely-resolved bare Mathlib mentions | 6 | 21 | 29 | 109 |
+| Qualified project declarations | 0 | 1 | 2 | 15 |
+| Qualified + long uniquely-resolved bare project mentions | 2 | 11 | 14 | 38 |
+| Ambiguous long bare Mathlib forms | 2 | 10 | 15 | 48 |
+
+The most common qualified Mathlib namespaces in the scan include `Finset`,
+`Multiset`, `Nat`, `PowerSeries`, `Set`, `Matrix`, `Polynomial`, `Equiv`,
+`MvPolynomial`, `List`, `Fin`, `Int`, `Finsupp`, and `Fintype`. So the project
+uses a few thousand explicit Mathlib names out of the roughly 211k scanned
+declaration surface, but an individual source theorem typically needs tens of
+explicit APIs at most, not thousands.
 
 The declaration-level gold-candidate records suggest that the non-Mathlib
 context actually needed around a target is much smaller, but not zero. For the
@@ -121,13 +173,15 @@ have median 2, p90 6, p95 8, and max 29. This is why the revised pipeline treats
 one LaTeX theorem/environment as a planning unit and Lean declarations as
 inner-loop verification units.
 
-The practical takeaway is that guessing is hard for two separate reasons:
-first, the imported Mathlib search space is enormous and diverse; second, even
-with the right mathematics, the model must choose the same theorem shape,
-supporting project declarations, local notation, namespace/import context, and
-exact Mathlib signatures. Context selection is intended to reduce that problem
-to a small, explicit context pack so remaining failures are closer to genuinely
-wrong math or wrong assumptions.
+The practical takeaway is that guessing is hard for two separate reasons. First,
+the imported Mathlib search space is enormous and diverse even though each
+source theorem appears to need only a small slice of it. Second, source scanning
+does not by itself recover all dependencies because Lean notation, elaboration,
+typeclass search, simplification, and tactics can use declarations not written
+as explicit names. Context selection should therefore retrieve a small explicit
+pack of source/project/Mathlib signatures, while exact dependency accounting
+would require elaborating the Lean code and extracting constants from the
+resulting environment, not just scanning text.
 
 ## Setup
 
