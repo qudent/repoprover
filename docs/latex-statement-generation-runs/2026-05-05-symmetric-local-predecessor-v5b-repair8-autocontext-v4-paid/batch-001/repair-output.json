@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "e_eq_zero_of_lt"
+      ],
+      "lean_file_body": "open scoped Polynomial\nopen MvPolynomial Finset\n\nnamespace AlgebraicCombinatorics\nnamespace SymmetricPolynomials\n\nvariable {K : Type*} [CommRing K] {N : ℕ}\n\ntheorem e_eq_zero_of_lt (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\n  rw [e_eq_sum_prod_subsets]\n  have hcard : (univ : Finset (Fin N)).card < n := by\n    simpa [Finset.card_univ] using h\n  have hcard' : (powersetCard n (univ : Finset (Fin N))).card = 0 := by\n    rw [Finset.card_powersetCard, Nat.choose_eq_zero_of_lt hcard]\n  have h_empty : powersetCard n (univ : Finset (Fin N)) = ∅ := by\n    apply Finset.card_eq_zero.mp hcard'\n  rw [h_empty, Finset.sum_empty]\n\nend SymmetricPolynomials\nend AlgebraicCombinatorics",
+      "notes": [
+        "Replaced Finset.card_fintype with Finset.card_univ. The rest of the proof is unchanged and compiles."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition: e_n = 0 for n > N",
+        "project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)",
+        "local file predecessor: e_eq_sum_prod_subsets",
+        "Mathlib: Finset.card_powersetCard, Nat.choose_eq_zero_of_lt, Finset.card_eq_zero, Finset.sum_empty, Finset.card_univ"
+      ]
+    }
+  ]
+}

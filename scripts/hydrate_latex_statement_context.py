@@ -299,12 +299,32 @@ def hydrate_output(
         timeout_seconds=timeout_seconds,
     )
     checked = check.get("checked", {})
+    request_fallbacks: dict[int, list[dict[str, Any]]] = {}
+    fallback_names: list[str] = []
+    for request in requests:
+        check_result = checked.get(request.exact_identifier or "", {})
+        if (not request.exact_identifier) or check_result.get("status") != "checked":
+            fallback_candidates = fallback_mathlib_candidates(request.query, project_root=project_root)
+            request_fallbacks[id(request)] = fallback_candidates
+            fallback_names.extend(str(candidate["name"]) for candidate in fallback_candidates if candidate.get("name"))
+
+    fallback_check = lean_check_names(
+        fallback_names,
+        project_root=project_root,
+        imports=imports,
+        opens=opens,
+        timeout_seconds=timeout_seconds,
+    )
+    fallback_checked = fallback_check.get("checked", {})
+
     hydrated_requests: list[dict[str, Any]] = []
     for request in requests:
         check_result = checked.get(request.exact_identifier or "", {})
         fallback_candidates = []
-        if (not request.exact_identifier) or check_result.get("status") != "checked":
-            fallback_candidates = fallback_mathlib_candidates(request.query, project_root=project_root)
+        for candidate in request_fallbacks.get(id(request), []):
+            row = dict(candidate)
+            row["lean_check"] = fallback_checked.get(str(row.get("name") or ""), {"status": "missing_message"})
+            fallback_candidates.append(row)
         hydrated_requests.append(
             {
                 "unit_key": request.unit_key,
@@ -329,6 +349,9 @@ def hydrate_output(
         "exact_identifier_count": len(set(name for name in exact_names if name)),
         "lean_check_status": check.get("status"),
         "lean_check": check,
+        "fallback_exact_identifier_count": len(set(fallback_names)),
+        "fallback_lean_check_status": fallback_check.get("status"),
+        "fallback_lean_check": fallback_check,
         "hydrated_mathlib_context": hydrated_requests,
     }
 
@@ -361,6 +384,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "request_count": hydrated["request_count"],
                 "exact_identifier_count": hydrated["exact_identifier_count"],
                 "lean_check_status": hydrated["lean_check_status"],
+                "fallback_exact_identifier_count": hydrated["fallback_exact_identifier_count"],
+                "fallback_lean_check_status": hydrated["fallback_lean_check_status"],
             }
         )
     summary = {

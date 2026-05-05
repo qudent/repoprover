@@ -1,0 +1,16 @@
+{
+  "batches": [
+    {
+      "exact_identifier_count": 1,
+      "fallback_exact_identifier_count": 0,
+      "fallback_lean_check_status": "no_exact_identifiers",
+      "hydrated_path": "docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v4-paid/batch-001/mathlib-lean-hydrated-context.json",
+      "lean_check_status": "ok",
+      "output_path": "docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v4-paid/batch-001/context-selection-output.json",
+      "request_count": 1
+    }
+  ],
+  "generated_at": "2026-05-05T23:56:15.105171+00:00",
+  "run": "docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v4-paid",
+  "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+}

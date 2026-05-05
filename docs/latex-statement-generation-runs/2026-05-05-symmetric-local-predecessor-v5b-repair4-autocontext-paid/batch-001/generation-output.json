@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The failed generation used MvPolynomial.esymm_eq_zero_of_lt, which is not available. The checked repair context provides Finset.powersetCard_eq_empty and Finset.powersetCard_nonempty, but the local file predecessor e_eq_sum_prod_subsets expresses e n as a sum over powersetCard n (univ : Finset (Fin N)). To prove e n = 0 when n > N, we need to show that powersetCard n (univ : Finset (Fin N)) is empty. The checked signature Finset.powersetCard_eq_empty requires s.card < n, but we have n > N, and Finset.card (univ : Finset (Fin N)) = Fintype.card (Fin N) = N. However, the condition n > N is given as an integer inequality, not as a ℕ inequality. The source says 'for each integer n > N', but e is defined on ℕ. The visible context does not provide a lemma that Finset.card (univ : Finset (Fin N)) = N, nor does it provide a way to convert n > N (as ℕ) to Finset.card (univ : Finset (Fin N)) < n. The checked signatures Finset.powersetCard_nonempty and Finset.powersetCard_eq_empty are not sufficient without the cardinality lemma. Therefore, the visible context is insufficient to produce a complete proof."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition: e_n = 0 for n > N",
+        "project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)",
+        "local file predecessor: e_eq_sum_prod_subsets",
+        "checked signatures: Finset.powersetCard_eq_empty, Finset.powersetCard_nonempty"
+      ]
+    }
+  ]
+}

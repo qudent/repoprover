@@ -1,0 +1,186 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "declaration_line": "lemma powersetCard_eq_empty : powersetCard n s = ∅ ↔ s.card < n := by",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "Finset.powersetCard_eq_empty",
+      "signature": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    },
+    {
+      "declaration_line": "theorem powersetCard_eq_empty {α : Type*} (n : ℕ) {s : Multiset α} (h : card s < n) :",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "Multiset.powersetCard_eq_empty",
+      "signature": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    },
+    {
+      "declaration_line": "lemma powersetCard_empty_subsingleton (n : ℕ) :",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "Finset.powersetCard_empty_subsingleton",
+      "signature": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    },
+    {
+      "declaration_line": "lemma powersetCard_nonempty : (powersetCard n s).Nonempty ↔ n ≤ s.card := by",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "Finset.powersetCard_nonempty",
+      "signature": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    },
+    {
+      "declaration_line": "theorem eq_empty_iff [Finite α] :",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "Set.powersetCard.eq_empty_iff",
+      "signature": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    },
+    {
+      "declaration_line": "theorem card_eq (s : Set.powersetCard α n) : (s : Finset α).card = n := s.prop",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "Set.powersetCard.card_eq",
+      "signature": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    },
+    {
+      "declaration_line": "theorem coe_nonempty_iff {s : Set.powersetCard α n} :",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "Set.powersetCard.coe_nonempty_iff",
+      "signature": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    },
+    {
+      "declaration_line": "lemma norm_prod_eq_sup'_of_pairwise_ne {s : Finset ι} {f : ι → M} (hs' : s.Nonempty)",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_of_lt",
+      "name": "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne",
+      "signature": "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne.{u_1, u_2} {M : Type u_1} {ι : Type u_2} [SeminormedCommGroup M]\n  [IsUltrametricDist M] {s : Finset ι} {f : ι → M} (hs' : s.Nonempty) (hs : (↑s).Pairwise fun i j => ‖f i‖ ≠ ‖f j‖) :\n  ‖∏ i ∈ s, f i‖ = s.sup' hs' fun i => ‖f i‖",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_of_lt: To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    }
+  ],
+  "do_not_use_identifiers": [
+    "MvPolynomial.esymm_eq_zero_of_lt"
+  ],
+  "failed_or_unchecked_context_requests": [
+    {
+      "exact_identifier": "Finset.powersetCard_eq_empty_of_lt",
+      "expected_signature_or_shape": "theorem Finset.powersetCard_eq_empty_of_lt {α : Type*} (s : Finset α) (n : ℕ) (h : Finset.card s < n) : Finset.powersetCard n s = ∅",
+      "lean_check": {
+        "error": "Unknown constant `Finset.powersetCard_eq_empty_of_lt`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.powersetCard_eq_empty_of_lt`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Finset.powersetCard_eq_empty_of_lt",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    }
+  ],
+  "generated_at": "2026-05-05T23:47:13.086640+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "A Mathlib lemma that `Finset.powersetCard n s` is empty when `n > card s` (or `n > Finset.card s`). The expected signature: `Finset.powersetCard_eq_empty_of_lt (h : Finset.card s < n) : Finset.powersetCard n s = ∅`. Alternatively, a lemma about `Finset.card` of `powersetCard` being zero. This is needed to conclude that the sum over `powersetCard n (univ : Finset (Fin N))` is zero.",
+      "unit_key": "unit-001"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The generated Lean code attempted to use `MvPolynomial.esymm_eq_zero_of_lt`, which does not exist in the checked Mathlib context. The proof cannot proceed without a lemma that `esymm` vanishes when the degree exceeds the number of variables. The visible context provides the definition of `e` as an abbrev for `esymm`, and the source proposition states `e_n = 0` for `n > N`. The local file predecessors include `e_eq_sum_prod_subsets`, which expresses `e` as a sum over subsets of size `n` of `Fin N`. This can be used to prove the statement directly, without relying on the missing lemma.",
+      "proof_strategy_note": "Use the visible local file predecessor `e_eq_sum_prod_subsets` to rewrite `e n` as a sum over subsets of size `n` of `Fin N`. Since `n > N`, the set `powersetCard n (univ : Finset (Fin N))` is empty (because there are no subsets of size `n` of a set of cardinality `N`). The sum over an empty set is zero. This requires the lemma `Finset.powersetCard_eq_empty_of_lt` (or a similar cardinality argument) from Mathlib. The proof will use `Finset.card_fin` or `Fintype.card_fin` to relate `N` to `Fintype.card (Fin N)`. The condition `Fintype.card (Fin N) < n` is equivalent to `N < n` (since `Fintype.card (Fin N) = N`).",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [
+          "MvPolynomial.esymm_eq_zero_of_lt"
+        ],
+        "failure_analysis": "The generated Lean code attempted to use `MvPolynomial.esymm_eq_zero_of_lt`, which does not exist in the checked Mathlib context. The proof cannot proceed without a lemma that `esymm` vanishes when the degree exceeds the number of variables. The visible context provides the definition of `e` as an abbrev for `esymm`, and the source proposition states `e_n = 0` for `n > N`. The local file predecessors include `e_eq_sum_prod_subsets`, which expresses `e` as a sum over subsets of size `n` of `Fin N`. This can be used to prove the statement directly, without relying on the missing lemma.",
+        "missing_or_uncertain_context": [
+          "A Mathlib lemma that `Finset.powersetCard n s` is empty when `n > card s` (or `n > Finset.card s`). The expected signature: `Finset.powersetCard_eq_empty_of_lt (h : Finset.card s < n) : Finset.powersetCard n s = ∅`. Alternatively, a lemma about `Finset.card` of `powersetCard` being zero. This is needed to conclude that the sum over `powersetCard n (univ : Finset (Fin N))` is zero."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "theorem Finset.powersetCard_eq_empty_of_lt {α : Type*} (s : Finset α) (n : ℕ) (h : Finset.card s < n) : Finset.powersetCard n s = ∅",
+            "name_or_query": "Finset.powersetCard_eq_empty_of_lt",
+            "why_needed": "To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+          }
+        ],
+        "repair_strategy_note": "Use the visible local file predecessor `e_eq_sum_prod_subsets` to rewrite `e n` as a sum over subsets of size `n` of `Fin N`. Since `n > N`, the set `powersetCard n (univ : Finset (Fin N))` is empty (because there are no subsets of size `n` of a set of cardinality `N`). The sum over an empty set is zero. This requires the lemma `Finset.powersetCard_eq_empty_of_lt` (or a similar cardinality argument) from Mathlib. The proof will use `Finset.card_fin` or `Fintype.card_fin` to relate `N` to `Fintype.card (Fin N)`. The condition `Fintype.card (Fin N) < n` is equivalent to `N < n` (since `Fintype.card (Fin N) = N`).",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.en=0",
+            "why_needed": "Provides the mathematical statement to prove: e_n = 0 for n > N."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+            "why_needed": "Defines `e` as an abbrev for `esymm`, so the theorem is about `e`."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "e_eq_sum_prod_subsets",
+            "why_needed": "Expresses `e n` as a sum over subsets of size `n` of `Fin N`. This is the key identity to prove the statement without the missing Mathlib lemma."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v1-paid",
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.en=0",
+      "unit_key": "unit-001",
+      "why_needed": "Provides the mathematical statement to prove: e_n = 0 for n > N."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+      "unit_key": "unit-001",
+      "why_needed": "Defines `e` as an abbrev for `esymm`, so the theorem is about `e`."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "e_eq_sum_prod_subsets",
+      "unit_key": "unit-001",
+      "why_needed": "Expresses `e n` as a sum over subsets of size `n` of `Fin N`. This is the key identity to prove the statement without the missing Mathlib lemma."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "e_eq_zero_of_lt"
+      ],
+      "lean_file_body": "open scoped Polynomial\nopen MvPolynomial Finset\n\nnamespace AlgebraicCombinatorics\nnamespace SymmetricPolynomials\n\nvariable {K : Type*} [CommRing K] {N : ℕ}\n\ntheorem e_eq_zero_of_lt (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\n  rw [e_eq_sum_prod_subsets]\n  have hcard : Fintype.card (Fin N) < n := h\n  have h_empty : powersetCard n (univ : Finset (Fin N)) = ∅ := by\n    apply Finset.eq_empty_of_not_nonempty\n    intro hne\n    have hcard' : (powersetCard n (univ : Finset (Fin N))).card = 0 := by\n      apply Finset.card_eq_zero_of_not_nonempty\n      exact hne\n    have hcard_nonzero : (powersetCard n (univ : Finset (Fin N))).card ≠ 0 := by\n      have hpos : 0 < (powersetCard n (univ : Finset (Fin N))).card := by\n        apply Finset.card_pos.mpr\n        exact hne\n      linarith\n    exact hcard_nonzero hcard'\n  rw [h_empty, Finset.sum_empty]\n\nend SymmetricPolynomials\nend AlgebraicCombinatorics",
+      "notes": [
+        "Uses e_eq_sum_prod_subsets from local_file_predecessor_declarations to rewrite e as a sum over powersetCard n (univ : Finset (Fin N)). Then uses Finset.eq_empty_of_not_nonempty and Finset.card_eq_zero_of_not_nonempty (which is not available as a checked lemma, but we use a direct argument via Finset.card_pos.mpr and linarith to derive a contradiction). The proof avoids the unavailable MvPolynomial.esymm_eq_zero_of_lt."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition: e_n = 0 for n > N",
+        "project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)",
+        "local file predecessor: e_eq_sum_prod_subsets",
+        "Mathlib: Finset.eq_empty_of_not_nonempty, Finset.card_pos.mpr, Finset.sum_empty"
+      ]
+    }
+  ]
+}

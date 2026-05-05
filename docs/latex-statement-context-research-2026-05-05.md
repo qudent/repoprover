@@ -381,6 +381,32 @@ open problem is upstream context selection: selecting those ingredients must be
 made autonomous and target-blind before this should count as a source-only
 benchmark success.
 
+Autonomous repair-context result:
+
+- second-round selector:
+  `scripts/run_latex_statement_repair_context_selection.py`
+- checked-pack builder:
+  `scripts/build_latex_statement_repair_context_pack.py`
+- hydration upgrade: fallback Mathlib candidates are now Lean-checked, not just
+  shown as source lines.
+- repair-context v1 selected the visible local route through
+  `e_eq_sum_prod_subsets` and guessed `Finset.powersetCard_eq_empty_of_lt`;
+  fallback hydration found checked `Finset.powersetCard_eq_empty`.
+- later context rounds learned from verifier errors and selected
+  `Finset.card_powersetCard`, `Nat.choose_eq_zero_of_lt`, and finally
+  `Finset.card_univ`.
+- repair8:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid/`
+  compiled `1/1`; semantic coverage proved aligned gold
+  `AlgebraicCombinatorics.SymmetricPolynomials.e_eq_zero_of_gt` `1/1`.
+- added autonomous loop cost after the manual-pack probe: `$0.02180284`.
+
+Updated conclusion: this is now a target-blind autonomous context-selection win
+for the symmetric hard unit, but it required four context-selection rounds and
+several repair calls. The main research question shifts from "can selected
+context make it pass?" to "how quickly can the selector find bridge lemmas and
+avoid noisy fallback candidates across a larger batch?"
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

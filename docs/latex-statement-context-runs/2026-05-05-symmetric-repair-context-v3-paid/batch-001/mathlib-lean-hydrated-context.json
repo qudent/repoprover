@@ -1,0 +1,431 @@
+{
+  "exact_identifier_count": 3,
+  "fallback_exact_identifier_count": 8,
+  "fallback_lean_check": {
+    "checked": {
+      "Finset.powersetCard_empty_subsingleton": {
+        "messages": [
+          {
+            "data": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+        "status": "checked"
+      },
+      "Finset.powersetCard_eq_empty": {
+        "messages": [
+          {
+            "data": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+        "status": "checked"
+      },
+      "Finset.powersetCard_nonempty": {
+        "messages": [
+          {
+            "data": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+        "status": "checked"
+      },
+      "List.Ico.eq_empty_iff": {
+        "messages": [
+          {
+            "data": "List.Ico.eq_empty_iff {n m : ℕ} : List.Ico n m = [] ↔ m ≤ n",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Ico.eq_empty_iff {n m : ℕ} : List.Ico n m = [] ↔ m ≤ n",
+        "status": "checked"
+      },
+      "Multiset.powersetCard_eq_empty": {
+        "messages": [
+          {
+            "data": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+        "status": "checked"
+      },
+      "Set.powersetCard.card_eq": {
+        "messages": [
+          {
+            "data": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+        "status": "checked"
+      },
+      "Set.powersetCard.coe_nonempty_iff": {
+        "messages": [
+          {
+            "data": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+        "status": "checked"
+      },
+      "Set.powersetCard.eq_empty_iff": {
+        "messages": [
+          {
+            "data": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "5cfdf59f64795db3dc2960fd3eb8effeaf7aa645885558664792c7f898aeda07",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-05T23:52:47.321873+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Finset.powersetCard_eq_empty_iff",
+      "expected_signature_or_shape": "Finset.powersetCard_eq_empty_iff {α : Type*} [DecidableEq α] (s : Finset α) (n : ℕ) : powersetCard n s = ∅ ↔ s.card < n",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "lemma powersetCard_eq_empty : powersetCard n s = ∅ ↔ s.card < n := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+            "status": "checked"
+          },
+          "line_number": 222,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "eq",
+            "empty"
+          ],
+          "name": "Finset.powersetCard_eq_empty",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Powerset.lean",
+          "score": 12
+        },
+        {
+          "declaration_line": "theorem eq_empty_iff [Finite α] :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+            "status": "checked"
+          },
+          "line_number": 251,
+          "matched_tokens": [
+            "powersetcard",
+            "eq",
+            "empty",
+            "iff"
+          ],
+          "name": "Set.powersetCard.eq_empty_iff",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Set/PowersetCard.lean",
+          "score": 12
+        },
+        {
+          "declaration_line": "theorem powersetCard_eq_empty {α : Type*} (n : ℕ) {s : Multiset α} (h : card s < n) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+            "status": "checked"
+          },
+          "line_number": 252,
+          "matched_tokens": [
+            "powersetcard",
+            "eq",
+            "empty"
+          ],
+          "name": "Multiset.powersetCard_eq_empty",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Powerset.lean",
+          "score": 11
+        },
+        {
+          "declaration_line": "lemma powersetCard_empty_subsingleton (n : ℕ) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+            "status": "checked"
+          },
+          "line_number": 208,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "empty"
+          ],
+          "name": "Finset.powersetCard_empty_subsingleton",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Powerset.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "lemma powersetCard_nonempty : (powersetCard n s).Nonempty ↔ n ≤ s.card := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+            "status": "checked"
+          },
+          "line_number": 242,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "empty"
+          ],
+          "name": "Finset.powersetCard_nonempty",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Powerset.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem coe_nonempty_iff {s : Set.powersetCard α n} :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+            "status": "checked"
+          },
+          "line_number": 62,
+          "matched_tokens": [
+            "powersetcard",
+            "empty",
+            "iff"
+          ],
+          "name": "Set.powersetCard.coe_nonempty_iff",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Set/PowersetCard.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem eq_empty_iff {n m : ℕ} : Ico n m = [] ↔ m ≤ n :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.Ico.eq_empty_iff {n m : ℕ} : List.Ico n m = [] ↔ m ≤ n",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.Ico.eq_empty_iff {n m : ℕ} : List.Ico n m = [] ↔ m ≤ n",
+            "status": "checked"
+          },
+          "line_number": 80,
+          "matched_tokens": [
+            "eq",
+            "empty",
+            "iff"
+          ],
+          "name": "List.Ico.eq_empty_iff",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Intervals.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "theorem card_eq (s : Set.powersetCard α n) : (s : Finset α).card = n := s.prop",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+            "status": "checked"
+          },
+          "line_number": 56,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "eq"
+          ],
+          "name": "Set.powersetCard.card_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Set/PowersetCard.lean",
+          "score": 8
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Finset.powersetCard_eq_empty_iff`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.powersetCard_eq_empty_iff`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Finset.powersetCard_eq_empty_iff",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+    },
+    {
+      "exact_identifier": "Finset.card_powersetCard",
+      "expected_signature_or_shape": "Finset.card_powersetCard {α : Type*} [DecidableEq α] (s : Finset α) (n : ℕ) : (powersetCard n s).card = Nat.choose (s.card) n",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.card_powersetCard.{u_1} {α : Type u_1} (n : ℕ) (s : Finset α) : #(powersetCard n s) = (#s).choose n",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_powersetCard.{u_1} {α : Type u_1} (n : ℕ) (s : Finset α) : #(powersetCard n s) = (#s).choose n",
+        "status": "checked"
+      },
+      "query": "Finset.card_powersetCard",
+      "request_index": 2,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Alternative: use cardinality argument to show that when n > s.card, Nat.choose (s.card) n = 0, so the set is empty."
+    },
+    {
+      "exact_identifier": "Nat.choose_eq_zero_of_lt",
+      "expected_signature_or_shape": "Nat.choose_eq_zero_of_lt {n k : ℕ} (h : n < k) : Nat.choose n k = 0",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.choose_eq_zero_of_lt {n k : ℕ} : n < k → n.choose k = 0",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_eq_zero_of_lt {n k : ℕ} : n < k → n.choose k = 0",
+        "status": "checked"
+      },
+      "query": "Nat.choose_eq_zero_of_lt",
+      "request_index": 3,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the binomial coefficient is zero when n > s.card, used with card_powersetCard."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.card_powersetCard": {
+        "messages": [
+          {
+            "data": "Finset.card_powersetCard.{u_1} {α : Type u_1} (n : ℕ) (s : Finset α) : #(powersetCard n s) = (#s).choose n",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_powersetCard.{u_1} {α : Type u_1} (n : ℕ) (s : Finset α) : #(powersetCard n s) = (#s).choose n",
+        "status": "checked"
+      },
+      "Finset.powersetCard_eq_empty_iff": {
+        "error": "Unknown constant `Finset.powersetCard_eq_empty_iff`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.powersetCard_eq_empty_iff`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.choose_eq_zero_of_lt": {
+        "messages": [
+          {
+            "data": "Nat.choose_eq_zero_of_lt {n k : ℕ} : n < k → n.choose k = 0",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_eq_zero_of_lt {n k : ℕ} : n < k → n.choose k = 0",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "fa0a77d49323bc91586ca25287bade14b12a1e4d34c10faa6da12b3f16d74fd2",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 3,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

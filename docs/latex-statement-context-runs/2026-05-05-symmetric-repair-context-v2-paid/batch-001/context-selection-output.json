@@ -1,0 +1,41 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "MvPolynomial.esymm_eq_sum_subtype (σ : Type*) [Fintype σ] (R : Type*) [CommRing R] (n : ℕ) : esymm σ R n = ∑ t : {s : Finset σ // s.card = n}, ∏ i in t.val, X i",
+              "name_or_query": "MvPolynomial.esymm_eq_sum_subtype",
+              "why_needed": "To rewrite esymm as a sum over subsets of size n. Then we can argue that when n > Fintype.card σ, the set of subsets of size n is empty, so the sum is 0."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card_eq_zero_of_not_nonempty {α : Type*} {s : Finset α} (h : ¬ Nonempty s) : s.card = 0",
+              "name_or_query": "Finset.card_eq_zero_of_not_nonempty",
+              "why_needed": "To show that the Finset of subsets of size n is empty when n > card σ, so its sum is 0."
+            },
+            {
+              "expected_signature_or_shape": "Finset.sum_empty {α : Type*} {β : Type*} [AddCommMonoid β] (f : α → β) : (∅ : Finset α).sum f = 0",
+              "name_or_query": "Finset.sum_empty",
+              "why_needed": "To compute the sum over an empty Finset as 0."
+            },
+            {
+              "expected_signature_or_shape": "Finset.filter_eq_empty_iff {α : Type*} [DecidableEq α] (p : α → Prop) [DecidablePred p] (s : Finset α) : s.filter p = ∅ ↔ ∀ x ∈ s, ¬ p x",
+              "name_or_query": "Finset.filter_eq_empty_iff",
+              "why_needed": "To show that the set of subsets of size n is empty when n > card σ, because no subset of a set of size card σ can have size n > card σ."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card_lt_card_of_subset {α : Type*} {s t : Finset α} (hst : s ⊆ t) (hne : s ≠ t) : s.card < t.card",
+              "name_or_query": "Finset.card_lt_card_of_subset",
+              "why_needed": "To argue that if a subset of Finset.univ has size n > card σ, then it cannot be a subset of Finset.univ, leading to a contradiction."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

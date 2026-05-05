@@ -16,6 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_IMPORTS = ["Mathlib"]
 DEFAULT_OPENS = ["open scoped Polynomial BigOperators", "open PowerSeries Finset"]
 PLACEHOLDER_RE = re.compile(r"\b(sorry|admit|aesop\?)\b")
+LEAN_COMMENT_RE = re.compile(r"(^|\n)\s*(--|/-)")
 LEAN_DOTTED_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)+$")
 
 
@@ -177,6 +178,8 @@ def verify_generation_output(
             contract_violations.append("generated_output_must_have_nonempty_lean_file_body")
         if placeholders:
             contract_violations.append("generated_lean_contains_placeholder")
+        if status == "generated" and LEAN_COMMENT_RE.search(body):
+            contract_violations.append("generated_lean_must_not_include_comments")
 
         if status == "cannot_prove_from_visible_context" and not body.strip():
             lean_result = {"returncode": None, "messages": [], "stderr": "", "skipped_reason": status}

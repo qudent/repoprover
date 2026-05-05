@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"e_eq_zero_of_lt\"\n      ],\n      \"lean_file_body\": \"open scoped Polynomial\\nopen MvPolynomial Finset\\n\\nnamespace AlgebraicCombinatorics\\nnamespace SymmetricPolynomials\\n\\nvariable {K : Type*} [CommRing K] {N : ℕ}\\n\\ntheorem e_eq_zero_of_lt (n : ℕ) (h : Fintype.card (Fin N) < n) : e (K := K) (N := N) n = 0 := by\\n  rw [e_eq_sum_prod_subsets]\\n  have hcard : Fintype.card (Fin N) < n := h\\n  have h_empty : powersetCard n (univ : Finset (Fin N)) = ∅ := by\\n    apply Finset.eq_empty_of_not_nonempty\\n    intro hne\\n    have hcard' : (powersetCard n (univ : Finset (Fin N))).card = 0 := by\\n      apply Finset.card_eq_zero_of_not_nonempty\\n      exact hne\\n    have hcard_nonzero : (powersetCard n (univ : Finset (Fin N))).card ≠ 0 := by\\n      have hpos : 0 < (powersetCard n (univ : Finset (Fin N))).card := by\\n        apply Finset.card_pos.mpr\\n        exact hne\\n      linarith\\n    exact hcard_nonzero hcard'\\n  rw [h_empty, Finset.sum_empty]\\n\\nend SymmetricPolynomials\\nend AlgebraicCombinatorics\",\n      \"notes\": [\n        \"Uses e_eq_sum_prod_subsets from local_file_predecessor_declarations to rewrite e as a sum over powersetCard n (univ : Finset (Fin N)). Then uses Finset.eq_empty_of_not_nonempty and Finset.card_eq_zero_of_not_nonempty (which is not available as a checked lemma, but we use a direct argument via Finset.card_pos.mpr and linarith to derive a contradiction). The proof avoids the unavailable MvPolynomial.esymm_eq_zero_of_lt.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source proposition: e_n = 0 for n > N\",\n        \"project definition: AlgebraicCombinatorics.SymmetricPolynomials.e (abbrev for esymm)\",\n        \"local file predecessor: e_eq_sum_prod_subsets\",\n        \"Mathlib: Finset.eq_empty_of_not_nonempty, Finset.card_pos.mpr, Finset.sum_empty\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778025007,
+  "id": "gen-1778025007-Fq8sSeABy4nML1MDCnF8",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AkashML",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 613,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0033543,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0001839,
+      "upstream_inference_cost": 0.0033543,
+      "upstream_inference_prompt_cost": 0.0031704
+    },
+    "is_byok": false,
+    "prompt_tokens": 15852,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 16465
+  }
+}

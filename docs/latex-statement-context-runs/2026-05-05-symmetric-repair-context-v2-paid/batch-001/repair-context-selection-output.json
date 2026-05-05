@@ -1,0 +1,60 @@
+{
+  "units": [
+    {
+      "do_not_use_identifiers": [
+        "MvPolynomial.esymm_eq_zero_of_lt"
+      ],
+      "failure_analysis": "The attempted proof used MvPolynomial.esymm_eq_zero_of_lt, which does not exist in Mathlib. The fallback candidates do not provide a direct theorem for esymm = 0 when n > Fintype.card σ. The proof must be constructed from the definition of esymm as a sum over subsets of size n, which is empty when n > card σ.",
+      "missing_or_uncertain_context": [
+        "A lemma that MvPolynomial.esymm σ R n = 0 when n > Fintype.card σ, or a way to prove it from the sum-over-subsets definition."
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "MvPolynomial.esymm_eq_sum_subtype (σ : Type*) [Fintype σ] (R : Type*) [CommRing R] (n : ℕ) : esymm σ R n = ∑ t : {s : Finset σ // s.card = n}, ∏ i in t.val, X i",
+          "name_or_query": "MvPolynomial.esymm_eq_sum_subtype",
+          "why_needed": "To rewrite esymm as a sum over subsets of size n. Then we can argue that when n > Fintype.card σ, the set of subsets of size n is empty, so the sum is 0."
+        },
+        {
+          "expected_signature_or_shape": "Finset.card_eq_zero_of_not_nonempty {α : Type*} {s : Finset α} (h : ¬ Nonempty s) : s.card = 0",
+          "name_or_query": "Finset.card_eq_zero_of_not_nonempty",
+          "why_needed": "To show that the Finset of subsets of size n is empty when n > card σ, so its sum is 0."
+        },
+        {
+          "expected_signature_or_shape": "Finset.sum_empty {α : Type*} {β : Type*} [AddCommMonoid β] (f : α → β) : (∅ : Finset α).sum f = 0",
+          "name_or_query": "Finset.sum_empty",
+          "why_needed": "To compute the sum over an empty Finset as 0."
+        },
+        {
+          "expected_signature_or_shape": "Finset.filter_eq_empty_iff {α : Type*} [DecidableEq α] (p : α → Prop) [DecidablePred p] (s : Finset α) : s.filter p = ∅ ↔ ∀ x ∈ s, ¬ p x",
+          "name_or_query": "Finset.filter_eq_empty_iff",
+          "why_needed": "To show that the set of subsets of size n is empty when n > card σ, because no subset of a set of size card σ can have size n > card σ."
+        },
+        {
+          "expected_signature_or_shape": "Finset.card_lt_card_of_subset {α : Type*} {s t : Finset α} (hst : s ⊆ t) (hne : s ≠ t) : s.card < t.card",
+          "name_or_query": "Finset.card_lt_card_of_subset",
+          "why_needed": "To argue that if a subset of Finset.univ has size n > card σ, then it cannot be a subset of Finset.univ, leading to a contradiction."
+        }
+      ],
+      "repair_strategy_note": "Use the local predecessor theorem e_eq_sum_prod_subsets to rewrite e n as a sum over subsets of size n of Finset.univ (Fin N). Then note that when n > N = Fintype.card (Fin N), the set of subsets of size n is empty, so the sum is 0. This avoids the need for MvPolynomial.esymm_eq_zero_of_lt. The proof will use Finset.card_eq_zero_of_not_nonempty or a direct argument that powersetCard n (univ : Finset (Fin N)) is empty when n > card (univ).",
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "prop.sf.en=0",
+          "why_needed": "The source proposition to prove: e_n = 0 for n > N."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+          "why_needed": "The definition of e as an abbrev for MvPolynomial.esymm (Fin N) K n."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "e_eq_sum_prod_subsets",
+          "why_needed": "Provides an explicit sum-over-subsets expression for e, which can be used to prove the result directly without relying on a missing Mathlib lemma."
+        }
+      ],
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    }
+  ]
+}

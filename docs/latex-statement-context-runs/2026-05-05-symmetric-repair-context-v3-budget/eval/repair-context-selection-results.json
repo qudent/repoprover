@@ -1,0 +1,14 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-05T23:51:44.459530+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v3-budget",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+  "valid_json": false,
+  "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid/eval/verification-results.json"
+}

@@ -490,6 +490,43 @@ model can generate a working proof on this hard unit. The remaining missing
 piece is making selection of those proof ingredients autonomous rather than
 agent-selected.
 
+Autonomous repair-context follow-up:
+
+- new selector:
+  `scripts/run_latex_statement_repair_context_selection.py`
+- checked-pack builder:
+  `scripts/build_latex_statement_repair_context_pack.py`
+- hydration change: fallback Mathlib source-scan candidates are now also
+  Lean-checked, so a wrong exact request such as
+  `Finset.powersetCard_eq_empty_of_lt` can promote checked fallback
+  `Finset.powersetCard_eq_empty` into the repair context.
+- v1 context selector:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v1-paid/`,
+  cost `$0.0023476`; it selected the correct local proof route through
+  `e_eq_sum_prod_subsets` and guessed a wrong empty-powerset lemma name. Checked
+  fallback hydration found `Finset.powersetCard_eq_empty`. Repair4 returned a
+  contract-clean `cannot_prove` because the cardinality bridge was still
+  missing.
+- v2/v3 context selectors and repair5-7 learned from verifier errors: they
+  banned invented names, found `Finset.card_powersetCard` and
+  `Nat.choose_eq_zero_of_lt`, and reduced the generated proof to one remaining
+  unknown identifier, `Finset.card_fintype`.
+- v4 context selector:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v4-paid/`,
+  cost `$0.00215824`; it selected and hydrated `Finset.card_univ`.
+- repair8:
+  `docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid/`,
+  cost `$0.00231994`; generated Lean compiled `1/1`, and semantic coverage
+  proved aligned gold `AlgebraicCombinatorics.SymmetricPolynomials.e_eq_zero_of_gt`
+  `1/1`.
+- total added autonomous loop cost after the earlier manual-pack probe:
+  `$0.02180284`.
+
+Interpretation: the approach works on this hard unit without hidden target
+declarations, but not yet cheaply enough. The model did not get all bridge
+lemmas in the first autonomous selector round; Lean errors and checked fallback
+hydration were needed to make wrongness decrease over rounds.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

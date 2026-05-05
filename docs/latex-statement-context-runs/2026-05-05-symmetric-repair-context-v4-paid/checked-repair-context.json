@@ -1,0 +1,100 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "Finset.card_univ",
+      "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To rewrite `(univ : Finset (Fin N)).card` to `Fintype.card (Fin N)` in the proof, replacing the incorrect `Finset.card_fintype`."
+    }
+  ],
+  "do_not_use_identifiers": [
+    "MvPolynomial.esymm_eq_zero_of_lt",
+    "Finset.eq_empty_of_not_nonempty",
+    "Finset.card_eq_zero_of_not_nonempty",
+    "Finset.card_fintype"
+  ],
+  "failed_or_unchecked_context_requests": [],
+  "generated_at": "2026-05-05T23:56:23.806110+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "The exact lemma name for `Finset.card_univ` is needed to replace the incorrect `Finset.card_fintype`. The lemma `Finset.card_univ` is standard and should be available.",
+      "unit_key": "unit-001"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The generated proof used `Finset.card_fintype` which is not a lemma in Mathlib. The proof attempted to rewrite `(univ : Finset (Fin N)).card` to `Fintype.card (Fin N)` using `simpa [Finset.card_fintype]`, but the correct lemma is `Finset.card_fintype` does not exist; the standard lemma is `Finset.card_fintype` is not available; instead `Finset.card_univ` gives `(univ : Finset α).card = Fintype.card α`. Additionally, the proof used `Finset.card_eq_zero.mp` on `hcard'` to deduce emptiness, but `Finset.card_eq_zero` is a lemma about `Finset.card s = 0 ↔ s = ∅` only when `s` is a `Finset`; this is correct. However, the error is only about `Finset.card_fintype`. The proof strategy is otherwise sound: use `e_eq_sum_prod_subsets` to rewrite, then show `powersetCard n (univ : Finset (Fin N))` is empty because `Fintype.card (Fin N) < n`, then `Finset.sum_empty`.",
+      "proof_strategy_note": "Replace `simpa [Finset.card_fintype]` with `simpa [Finset.card_univ]`. The rest of the proof (using `Finset.card_powersetCard`, `Nat.choose_eq_zero_of_lt`, `Finset.card_eq_zero.mp`, and `Finset.sum_empty`) is correct and does not need additional context. The proof will then compile.",
+      "selector_confidence": 0.95,
+      "unit_key": "unit-001"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [
+          "MvPolynomial.esymm_eq_zero_of_lt",
+          "Finset.eq_empty_of_not_nonempty",
+          "Finset.card_eq_zero_of_not_nonempty",
+          "Finset.card_fintype"
+        ],
+        "failure_analysis": "The generated proof used `Finset.card_fintype` which is not a lemma in Mathlib. The proof attempted to rewrite `(univ : Finset (Fin N)).card` to `Fintype.card (Fin N)` using `simpa [Finset.card_fintype]`, but the correct lemma is `Finset.card_fintype` does not exist; the standard lemma is `Finset.card_fintype` is not available; instead `Finset.card_univ` gives `(univ : Finset α).card = Fintype.card α`. Additionally, the proof used `Finset.card_eq_zero.mp` on `hcard'` to deduce emptiness, but `Finset.card_eq_zero` is a lemma about `Finset.card s = 0 ↔ s = ∅` only when `s` is a `Finset`; this is correct. However, the error is only about `Finset.card_fintype`. The proof strategy is otherwise sound: use `e_eq_sum_prod_subsets` to rewrite, then show `powersetCard n (univ : Finset (Fin N))` is empty because `Fintype.card (Fin N) < n`, then `Finset.sum_empty`.",
+        "missing_or_uncertain_context": [
+          "The exact lemma name for `Finset.card_univ` is needed to replace the incorrect `Finset.card_fintype`. The lemma `Finset.card_univ` is standard and should be available."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] : (univ : Finset α).card = Fintype.card α",
+            "name_or_query": "Finset.card_univ",
+            "why_needed": "To rewrite `(univ : Finset (Fin N)).card` to `Fintype.card (Fin N)` in the proof, replacing the incorrect `Finset.card_fintype`."
+          }
+        ],
+        "repair_strategy_note": "Replace `simpa [Finset.card_fintype]` with `simpa [Finset.card_univ]`. The rest of the proof (using `Finset.card_powersetCard`, `Nat.choose_eq_zero_of_lt`, `Finset.card_eq_zero.mp`, and `Finset.sum_empty`) is correct and does not need additional context. The proof will then compile.",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.en=0",
+            "why_needed": "The source proposition to prove: e_n = 0 for n > N."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+            "why_needed": "The definition of e as an abbrev for MvPolynomial.esymm (Fin N) K n."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "e_eq_sum_prod_subsets",
+            "why_needed": "Provides an explicit sum-over-subsets expression for e, which can be used to prove the result directly."
+          }
+        ],
+        "selector_confidence": 0.95,
+        "unit_key": "unit-001"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v4-paid",
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.en=0",
+      "unit_key": "unit-001",
+      "why_needed": "The source proposition to prove: e_n = 0 for n > N."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+      "unit_key": "unit-001",
+      "why_needed": "The definition of e as an abbrev for MvPolynomial.esymm (Fin N) K n."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "e_eq_sum_prod_subsets",
+      "unit_key": "unit-001",
+      "why_needed": "Provides an explicit sum-over-subsets expression for e, which can be used to prove the result directly."
+    }
+  ]
+}

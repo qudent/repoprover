@@ -1,0 +1,31 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Finset.powersetCard_eq_empty_iff {α : Type*} [DecidableEq α] (s : Finset α) (n : ℕ) : powersetCard n s = ∅ ↔ s.card < n",
+              "name_or_query": "Finset.powersetCard_eq_empty_iff",
+              "why_needed": "To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card_powersetCard {α : Type*} [DecidableEq α] (s : Finset α) (n : ℕ) : (powersetCard n s).card = Nat.choose (s.card) n",
+              "name_or_query": "Finset.card_powersetCard",
+              "why_needed": "Alternative: use cardinality argument to show that when n > s.card, Nat.choose (s.card) n = 0, so the set is empty."
+            },
+            {
+              "expected_signature_or_shape": "Nat.choose_eq_zero_of_lt {n k : ℕ} (h : n < k) : Nat.choose n k = 0",
+              "name_or_query": "Nat.choose_eq_zero_of_lt",
+              "why_needed": "To show that the binomial coefficient is zero when n > s.card, used with card_powersetCard."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

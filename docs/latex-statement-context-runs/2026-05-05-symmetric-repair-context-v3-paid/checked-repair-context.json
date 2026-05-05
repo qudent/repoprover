@@ -1,0 +1,176 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "declaration_line": "lemma powersetCard_eq_empty : powersetCard n s = ∅ ↔ s.card < n := by",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_iff",
+      "name": "Finset.powersetCard_eq_empty",
+      "signature": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_iff: To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+    },
+    {
+      "declaration_line": "theorem eq_empty_iff [Finite α] :",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_iff",
+      "name": "Set.powersetCard.eq_empty_iff",
+      "signature": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_iff: To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+    },
+    {
+      "declaration_line": "theorem powersetCard_eq_empty {α : Type*} (n : ℕ) {s : Multiset α} (h : card s < n) :",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_iff",
+      "name": "Multiset.powersetCard_eq_empty",
+      "signature": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_iff: To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+    },
+    {
+      "declaration_line": "lemma powersetCard_empty_subsingleton (n : ℕ) :",
+      "fallback_for_query": "Finset.powersetCard_eq_empty_iff",
+      "name": "Finset.powersetCard_empty_subsingleton",
+      "signature": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.powersetCard_eq_empty_iff: To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+    },
+    {
+      "name": "Finset.card_powersetCard",
+      "signature": "Finset.card_powersetCard.{u_1} {α : Type u_1} (n : ℕ) (s : Finset α) : #(powersetCard n s) = (#s).choose n",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Alternative: use cardinality argument to show that when n > s.card, Nat.choose (s.card) n = 0, so the set is empty."
+    },
+    {
+      "name": "Nat.choose_eq_zero_of_lt",
+      "signature": "Nat.choose_eq_zero_of_lt {n k : ℕ} : n < k → n.choose k = 0",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the binomial coefficient is zero when n > s.card, used with card_powersetCard."
+    }
+  ],
+  "do_not_use_identifiers": [
+    "MvPolynomial.esymm_eq_zero_of_lt",
+    "Finset.eq_empty_of_not_nonempty",
+    "Finset.card_eq_zero_of_not_nonempty"
+  ],
+  "failed_or_unchecked_context_requests": [
+    {
+      "exact_identifier": "Finset.powersetCard_eq_empty_iff",
+      "expected_signature_or_shape": "Finset.powersetCard_eq_empty_iff {α : Type*} [DecidableEq α] (s : Finset α) (n : ℕ) : powersetCard n s = ∅ ↔ s.card < n",
+      "lean_check": {
+        "error": "Unknown constant `Finset.powersetCard_eq_empty_iff`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.powersetCard_eq_empty_iff`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Finset.powersetCard_eq_empty_iff",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+    }
+  ],
+  "generated_at": "2026-05-05T23:52:59.332821+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "A lemma that powersetCard n s is empty when n > s.card, or a way to prove that no subset of s has cardinality n > s.card.",
+      "unit_key": "unit-001"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The generated proof used Finset.eq_empty_of_not_nonempty, which does not exist in Mathlib. The proof also had a logic error: after rewriting h_empty, the goal was already solved, causing 'No goals to be solved' error. The proof strategy should directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N), then use Finset.sum_empty.",
+      "proof_strategy_note": "Use the local predecessor e_eq_sum_prod_subsets to rewrite e n as a sum over powersetCard n (univ : Finset (Fin N)). Then use a lemma that powersetCard n s is empty when n > s.card (e.g., Finset.powersetCard_eq_empty_iff or a combination of card_powersetCard and Nat.choose_eq_zero_of_lt). Then apply Finset.sum_empty. This avoids the missing Finset.eq_empty_of_not_nonempty.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [
+          "MvPolynomial.esymm_eq_zero_of_lt",
+          "Finset.eq_empty_of_not_nonempty",
+          "Finset.card_eq_zero_of_not_nonempty"
+        ],
+        "failure_analysis": "The generated proof used Finset.eq_empty_of_not_nonempty, which does not exist in Mathlib. The proof also had a logic error: after rewriting h_empty, the goal was already solved, causing 'No goals to be solved' error. The proof strategy should directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N), then use Finset.sum_empty.",
+        "missing_or_uncertain_context": [
+          "A lemma that powersetCard n s is empty when n > s.card, or a way to prove that no subset of s has cardinality n > s.card."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Finset.powersetCard_eq_empty_iff {α : Type*} [DecidableEq α] (s : Finset α) (n : ℕ) : powersetCard n s = ∅ ↔ s.card < n",
+            "name_or_query": "Finset.powersetCard_eq_empty_iff",
+            "why_needed": "To directly show that powersetCard n (univ : Finset (Fin N)) is empty when n > Fintype.card (Fin N)."
+          },
+          {
+            "expected_signature_or_shape": "Finset.card_powersetCard {α : Type*} [DecidableEq α] (s : Finset α) (n : ℕ) : (powersetCard n s).card = Nat.choose (s.card) n",
+            "name_or_query": "Finset.card_powersetCard",
+            "why_needed": "Alternative: use cardinality argument to show that when n > s.card, Nat.choose (s.card) n = 0, so the set is empty."
+          },
+          {
+            "expected_signature_or_shape": "Nat.choose_eq_zero_of_lt {n k : ℕ} (h : n < k) : Nat.choose n k = 0",
+            "name_or_query": "Nat.choose_eq_zero_of_lt",
+            "why_needed": "To show that the binomial coefficient is zero when n > s.card, used with card_powersetCard."
+          }
+        ],
+        "repair_strategy_note": "Use the local predecessor e_eq_sum_prod_subsets to rewrite e n as a sum over powersetCard n (univ : Finset (Fin N)). Then use a lemma that powersetCard n s is empty when n > s.card (e.g., Finset.powersetCard_eq_empty_iff or a combination of card_powersetCard and Nat.choose_eq_zero_of_lt). Then apply Finset.sum_empty. This avoids the missing Finset.eq_empty_of_not_nonempty.",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.en=0",
+            "why_needed": "The source proposition to prove: e_n = 0 for n > N."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+            "why_needed": "The definition of e as an abbrev for MvPolynomial.esymm (Fin N) K n."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "e_eq_sum_prod_subsets",
+            "why_needed": "Provides an explicit sum-over-subsets expression for e, which can be used to prove the result directly."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v3-paid",
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.en=0",
+      "unit_key": "unit-001",
+      "why_needed": "The source proposition to prove: e_n = 0 for n > N."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+      "unit_key": "unit-001",
+      "why_needed": "The definition of e as an abbrev for MvPolynomial.esymm (Fin N) K n."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "e_eq_sum_prod_subsets",
+      "unit_key": "unit-001",
+      "why_needed": "Provides an explicit sum-over-subsets expression for e, which can be used to prove the result directly."
+    }
+  ]
+}

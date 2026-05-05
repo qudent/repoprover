@@ -1,0 +1,365 @@
+{
+  "exact_identifier_count": 1,
+  "fallback_exact_identifier_count": 8,
+  "fallback_lean_check": {
+    "checked": {
+      "Finset.powersetCard_empty_subsingleton": {
+        "messages": [
+          {
+            "data": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+        "status": "checked"
+      },
+      "Finset.powersetCard_eq_empty": {
+        "messages": [
+          {
+            "data": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+        "status": "checked"
+      },
+      "Finset.powersetCard_nonempty": {
+        "messages": [
+          {
+            "data": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+        "status": "checked"
+      },
+      "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne": {
+        "messages": [
+          {
+            "data": "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne.{u_1, u_2} {M : Type u_1} {ι : Type u_2} [SeminormedCommGroup M]\n  [IsUltrametricDist M] {s : Finset ι} {f : ι → M} (hs' : s.Nonempty) (hs : (↑s).Pairwise fun i j => ‖f i‖ ≠ ‖f j‖) :\n  ‖∏ i ∈ s, f i‖ = s.sup' hs' fun i => ‖f i‖",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne.{u_1, u_2} {M : Type u_1} {ι : Type u_2} [SeminormedCommGroup M]\n  [IsUltrametricDist M] {s : Finset ι} {f : ι → M} (hs' : s.Nonempty) (hs : (↑s).Pairwise fun i j => ‖f i‖ ≠ ‖f j‖) :\n  ‖∏ i ∈ s, f i‖ = s.sup' hs' fun i => ‖f i‖",
+        "status": "checked"
+      },
+      "Multiset.powersetCard_eq_empty": {
+        "messages": [
+          {
+            "data": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+        "status": "checked"
+      },
+      "Set.powersetCard.card_eq": {
+        "messages": [
+          {
+            "data": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+        "status": "checked"
+      },
+      "Set.powersetCard.coe_nonempty_iff": {
+        "messages": [
+          {
+            "data": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+        "status": "checked"
+      },
+      "Set.powersetCard.eq_empty_iff": {
+        "messages": [
+          {
+            "data": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "171044f029cabec4b9aab9366bcd62ea9612bb405bd809489ccf7e3263667f03",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-05T23:46:57.754673+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Finset.powersetCard_eq_empty_of_lt",
+      "expected_signature_or_shape": "theorem Finset.powersetCard_eq_empty_of_lt {α : Type*} (s : Finset α) (n : ℕ) (h : Finset.card s < n) : Finset.powersetCard n s = ∅",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "lemma powersetCard_eq_empty : powersetCard n s = ∅ ↔ s.card < n := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.powersetCard_eq_empty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : powersetCard n s = ∅ ↔ #s < n",
+            "status": "checked"
+          },
+          "line_number": 222,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "eq",
+            "empty"
+          ],
+          "name": "Finset.powersetCard_eq_empty",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Powerset.lean",
+          "score": 12
+        },
+        {
+          "declaration_line": "theorem powersetCard_eq_empty {α : Type*} (n : ℕ) {s : Multiset α} (h : card s < n) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.powersetCard_eq_empty.{u_2} {α : Type u_2} (n : ℕ) {s : Multiset α} (h : s.card < n) :\n  Multiset.powersetCard n s = 0",
+            "status": "checked"
+          },
+          "line_number": 252,
+          "matched_tokens": [
+            "powersetcard",
+            "eq",
+            "empty",
+            "lt"
+          ],
+          "name": "Multiset.powersetCard_eq_empty",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Powerset.lean",
+          "score": 12
+        },
+        {
+          "declaration_line": "lemma powersetCard_empty_subsingleton (n : ℕ) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.powersetCard_empty_subsingleton.{u_1} {α : Type u_1} (n : ℕ) : (↑(powersetCard n ∅)).Subsingleton",
+            "status": "checked"
+          },
+          "line_number": 208,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "empty"
+          ],
+          "name": "Finset.powersetCard_empty_subsingleton",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Powerset.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "lemma powersetCard_nonempty : (powersetCard n s).Nonempty ↔ n ≤ s.card := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.powersetCard_nonempty.{u_1} {α : Type u_1} {n : ℕ} {s : Finset α} : (powersetCard n s).Nonempty ↔ n ≤ #s",
+            "status": "checked"
+          },
+          "line_number": 242,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "empty"
+          ],
+          "name": "Finset.powersetCard_nonempty",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Powerset.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem eq_empty_iff [Finite α] :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Set.powersetCard.eq_empty_iff.{u_1} {α : Type u_1} {n : ℕ} [Finite α] : Set.powersetCard α n = ∅ ↔ Nat.card α < n",
+            "status": "checked"
+          },
+          "line_number": 251,
+          "matched_tokens": [
+            "powersetcard",
+            "eq",
+            "empty"
+          ],
+          "name": "Set.powersetCard.eq_empty_iff",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Set/PowersetCard.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem card_eq (s : Set.powersetCard α n) : (s : Finset α).card = n := s.prop",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Set.powersetCard.card_eq.{u_1} {α : Type u_1} {n : ℕ} (s : ↑(Set.powersetCard α n)) : #↑s = n",
+            "status": "checked"
+          },
+          "line_number": 56,
+          "matched_tokens": [
+            "finset",
+            "powersetcard",
+            "eq"
+          ],
+          "name": "Set.powersetCard.card_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Set/PowersetCard.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "theorem coe_nonempty_iff {s : Set.powersetCard α n} :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Set.powersetCard.coe_nonempty_iff.{u_1} {α : Type u_1} {n : ℕ} {s : ↑(Set.powersetCard α n)} : (↑s).Nonempty ↔ 1 ≤ n",
+            "status": "checked"
+          },
+          "line_number": 62,
+          "matched_tokens": [
+            "powersetcard",
+            "empty"
+          ],
+          "name": "Set.powersetCard.coe_nonempty_iff",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Set/PowersetCard.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "lemma norm_prod_eq_sup'_of_pairwise_ne {s : Finset ι} {f : ι → M} (hs' : s.Nonempty)",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne.{u_1, u_2} {M : Type u_1} {ι : Type u_2} [SeminormedCommGroup M]\n  [IsUltrametricDist M] {s : Finset ι} {f : ι → M} (hs' : s.Nonempty) (hs : (↑s).Pairwise fun i j => ‖f i‖ ≠ ‖f j‖) :\n  ‖∏ i ∈ s, f i‖ = s.sup' hs' fun i => ‖f i‖",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne.{u_1, u_2} {M : Type u_1} {ι : Type u_2} [SeminormedCommGroup M]\n  [IsUltrametricDist M] {s : Finset ι} {f : ι → M} (hs' : s.Nonempty) (hs : (↑s).Pairwise fun i j => ‖f i‖ ≠ ‖f j‖) :\n  ‖∏ i ∈ s, f i‖ = s.sup' hs' fun i => ‖f i‖",
+            "status": "checked"
+          },
+          "line_number": 364,
+          "matched_tokens": [
+            "finset",
+            "eq",
+            "empty",
+            "lt"
+          ],
+          "name": "IsUltrametricDist.norm_prod_eq_sup'_of_pairwise_ne",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Normed/Group/Ultra.lean",
+          "score": 7
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Finset.powersetCard_eq_empty_of_lt`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.powersetCard_eq_empty_of_lt`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Finset.powersetCard_eq_empty_of_lt",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.powersetCard_eq_empty_of_lt": {
+        "error": "Unknown constant `Finset.powersetCard_eq_empty_of_lt`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.powersetCard_eq_empty_of_lt`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "322c19b0c8ece9acbfc63f4ffc9e4e43a69b9eacdefc8a6bea99dc3e8409db2f",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 1,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

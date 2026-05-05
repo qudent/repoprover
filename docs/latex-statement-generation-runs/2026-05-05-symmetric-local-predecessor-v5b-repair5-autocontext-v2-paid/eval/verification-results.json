@@ -1,0 +1,88 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.Definitions",
+        "AlgebraicCombinatorics.Permutations.Basics"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.Definitions",
+        "AlgebraicCombinatorics.Permutations.Basics"
+      ],
+      "inferred_opens": [
+        "open MvPolynomial",
+        "open Nat",
+        "open Finset.Nonempty",
+        "open Field.Emb.Cardinal",
+        "open SzemerediRegularity",
+        "open Finset",
+        "open Submodule",
+        "open AlgebraicCombinatorics.SymmetricPolynomials",
+        "open Multiset"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open MvPolynomial",
+        "open Nat",
+        "open Finset.Nonempty",
+        "open Field.Emb.Cardinal",
+        "open SzemerediRegularity",
+        "open Finset",
+        "open Submodule",
+        "open AlgebraicCombinatorics.SymmetricPolynomials",
+        "open Multiset"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [
+            "e_eq_zero_of_lt"
+          ],
+          "lean_error_count": 2,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 10,
+              "data": "Unknown constant `Finset.eq_empty_of_not_nonempty`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 27,
+              "severity": "error"
+            },
+            {
+              "column": 10,
+              "data": "No goals to be solved",
+              "kind": "[anonymous]",
+              "line": 28,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "generated_at": "2026-05-05T23:51:02.309827+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

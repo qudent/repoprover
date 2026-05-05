@@ -1,0 +1,789 @@
+{
+  "exact_identifier_count": 5,
+  "fallback_exact_identifier_count": 16,
+  "fallback_lean_check": {
+    "checked": {
+      "Caratheodory.minCardFinsetOfMemConvexHull_subseteq": {
+        "messages": [
+          {
+            "data": "Caratheodory.minCardFinsetOfMemConvexHull_subseteq.{u, u_1} {𝕜 : Type u_1} {E : Type u} [Field 𝕜] [LinearOrder 𝕜]\n  [IsStrictOrderedRing 𝕜] [AddCommGroup E] [Module 𝕜 E] {s : Set E} {x : E} (hx : x ∈ (convexHull 𝕜) s) :\n  ↑(Caratheodory.minCardFinsetOfMemConvexHull hx) ⊆ s",
+            "line": 18,
+            "severity": "information"
+          }
+        ],
+        "signature": "Caratheodory.minCardFinsetOfMemConvexHull_subseteq.{u, u_1} {𝕜 : Type u_1} {E : Type u} [Field 𝕜] [LinearOrder 𝕜]\n  [IsStrictOrderedRing 𝕜] [AddCommGroup E] [Module 𝕜 E] {s : Set E} {x : E} (hx : x ∈ (convexHull 𝕜) s) :\n  ↑(Caratheodory.minCardFinsetOfMemConvexHull hx) ⊆ s",
+        "status": "checked"
+      },
+      "Field.Emb.Cardinal.eq_bot_of_not_nonempty": {
+        "messages": [
+          {
+            "data": "Field.Emb.Cardinal.eq_bot_of_not_nonempty.{u, v} {F : Type u} {E : Type v} [Field F] [Field E] [Algebra F E]\n  [rank_inf : Fact (Cardinal.aleph0 ≤ Module.rank F E)] [Algebra.IsAlgebraic F E]\n  {i : WithTop (Module.rank F E).ord.ToType} (hi : Order.IsSuccPrelimit i) :\n  ¬Nonempty ↑(Set.Iio i) → Field.Emb.Cardinal.filtration i = ⊥",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Field.Emb.Cardinal.eq_bot_of_not_nonempty.{u, v} {F : Type u} {E : Type v} [Field F] [Field E] [Algebra F E]\n  [rank_inf : Fact (Cardinal.aleph0 ≤ Module.rank F E)] [Algebra.IsAlgebraic F E]\n  {i : WithTop (Module.rank F E).ord.ToType} (hi : Order.IsSuccPrelimit i) :\n  ¬Nonempty ↑(Set.Iio i) → Field.Emb.Cardinal.filtration i = ⊥",
+        "status": "checked"
+      },
+      "Finite.card_eq": {
+        "messages": [
+          {
+            "data": "Finite.card_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2} [Finite α] [Finite β] :\n  Nat.card α = Nat.card β ↔ Nonempty (α ≃ β)",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finite.card_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2} [Finite α] [Finite β] :\n  Nat.card α = Nat.card β ↔ Nonempty (α ≃ β)",
+        "status": "checked"
+      },
+      "Finset.Nonempty.card_pow_mono": {
+        "messages": [
+          {
+            "data": "Finset.Nonempty.card_pow_mono.{u_2} {α : Type u_2} [DecidableEq α] [CancelMonoid α] {s : Finset α} (hs : s.Nonempty) :\n  Monotone fun n => #(s ^ n)",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.Nonempty.card_pow_mono.{u_2} {α : Type u_2} [DecidableEq α] [CancelMonoid α] {s : Finset α} (hs : s.Nonempty) :\n  Monotone fun n => #(s ^ n)",
+        "status": "checked"
+      },
+      "Finset.card_add_card_subsetSum_lt_card_subsetSum_insert_max": {
+        "messages": [
+          {
+            "data": "Finset.card_add_card_subsetSum_lt_card_subsetSum_insert_max.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} {a : M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (hA : ∀ x ∈ A, 0 < x) (hAa : ∀ x ∈ A, x < a)\n  (ha : 0 < a) : #A + #A.subsetSum < #(insert a A).subsetSum",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_add_card_subsetSum_lt_card_subsetSum_insert_max.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} {a : M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (hA : ∀ x ∈ A, 0 < x) (hAa : ∀ x ∈ A, x < a)\n  (ha : 0 < a) : #A + #A.subsetSum < #(insert a A).subsetSum",
+        "status": "checked"
+      },
+      "Finset.card_choose_two_lt_card_subsetSum_of_nonneg": {
+        "messages": [
+          {
+            "data": "Finset.card_choose_two_lt_card_subsetSum_of_nonneg.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M] {A : Finset M}\n  [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 ≤ x) : (#A).choose 2 < #A.subsetSum",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_choose_two_lt_card_subsetSum_of_nonneg.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M] {A : Finset M}\n  [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 ≤ x) : (#A).choose 2 < #A.subsetSum",
+        "status": "checked"
+      },
+      "Finset.card_ne_zero": {
+        "messages": [
+          {
+            "data": "Finset.card_ne_zero.{u_1} {α : Type u_1} {s : Finset α} : #s ≠ 0 ↔ s.Nonempty",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_ne_zero.{u_1} {α : Type u_1} {s : Finset α} : #s ≠ 0 ↔ s.Nonempty",
+        "status": "checked"
+      },
+      "Finset.card_succ_choose_two_lt_card_subsetSum_of_pos": {
+        "messages": [
+          {
+            "data": "Finset.card_succ_choose_two_lt_card_subsetSum_of_pos.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 < x) :\n  (#A + 1).choose 2 < #A.subsetSum",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_succ_choose_two_lt_card_subsetSum_of_pos.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 < x) :\n  (#A + 1).choose 2 < #A.subsetSum",
+        "status": "checked"
+      },
+      "Finset.dens_ne_zero": {
+        "messages": [
+          {
+            "data": "Finset.dens_ne_zero.{u_2} {α : Type u_2} [Fintype α] {s : Finset α} : s.dens ≠ 0 ↔ s.Nonempty",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.dens_ne_zero.{u_2} {α : Type u_2} [Fintype α] {s : Finset α} : s.dens ≠ 0 ↔ s.Nonempty",
+        "status": "checked"
+      },
+      "Finset.exists_subset_mulSpan_card_le_of_forall_mulDissociated": {
+        "messages": [
+          {
+            "data": "Finset.exists_subset_mulSpan_card_le_of_forall_mulDissociated.{u_1} {α : Type u_1} [CommGroup α] [DecidableEq α]\n  [Fintype α] {s : Finset α} {d : ℕ} (hs : ∀ s' ⊆ s, MulDissociated ↑s' → #s' ≤ d) : ∃ s' ⊆ s, #s' ≤ d ∧ s ⊆ s'.mulSpan",
+            "line": 19,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.exists_subset_mulSpan_card_le_of_forall_mulDissociated.{u_1} {α : Type u_1} [CommGroup α] [DecidableEq α]\n  [Fintype α] {s : Finset α} {d : ℕ} (hs : ∀ s' ⊆ s, MulDissociated ↑s' → #s' ≤ d) : ∃ s' ⊆ s, #s' ≤ d ∧ s ⊆ s'.mulSpan",
+        "status": "checked"
+      },
+      "Finset.exists_subset_or_subset_of_two_mul_lt_card": {
+        "messages": [
+          {
+            "data": "Finset.exists_subset_or_subset_of_two_mul_lt_card.{u_1} {α : Type u_1} [DecidableEq α] {X Y : Finset α} {n : ℕ}\n  (hXY : 2 * n < #(X ∪ Y)) : ∃ C, n < #C ∧ (C ⊆ X ∨ C ⊆ Y)",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.exists_subset_or_subset_of_two_mul_lt_card.{u_1} {α : Type u_1} [DecidableEq α] {X Y : Finset α} {n : ℕ}\n  (hXY : 2 * n < #(X ∪ Y)) : ∃ C, n < #C ∧ (C ⊆ X ∨ C ⊆ Y)",
+        "status": "checked"
+      },
+      "IsPGroup.nonempty_fixed_point_of_prime_not_dvd_card": {
+        "messages": [
+          {
+            "data": "IsPGroup.nonempty_fixed_point_of_prime_not_dvd_card.{u_1, u_3} {p : ℕ} {G : Type u_1} [Group G] (hG : IsPGroup p G)\n  [hp : Fact (Nat.Prime p)] (α : Type u_3) [MulAction G α] (hpα : ¬p ∣ Nat.card α) :\n  (MulAction.fixedPoints G α).Nonempty",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "IsPGroup.nonempty_fixed_point_of_prime_not_dvd_card.{u_1, u_3} {p : ℕ} {G : Type u_1} [Group G] (hG : IsPGroup p G)\n  [hp : Fact (Nat.Prime p)] (α : Type u_3) [MulAction G α] (hpα : ¬p ∣ Nat.card α) :\n  (MulAction.fixedPoints G α).Nonempty",
+        "status": "checked"
+      },
+      "Nat.card_ne_zero": {
+        "messages": [
+          {
+            "data": "Nat.card_ne_zero.{u_1} {α : Type u_1} : Nat.card α ≠ 0 ↔ Nonempty α ∧ Finite α",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.card_ne_zero.{u_1} {α : Type u_1} : Nat.card α ≠ 0 ↔ Nonempty α ∧ Finite α",
+        "status": "checked"
+      },
+      "Polynomial.card_le_degree_of_subset_roots": {
+        "messages": [
+          {
+            "data": "Polynomial.card_le_degree_of_subset_roots.{u} {R : Type u} [CommRing R] [IsDomain R] {p : R[X]} {Z : Finset R}\n  (h : Z.val ⊆ p.roots) : #Z ≤ p.natDegree",
+            "line": 17,
+            "severity": "information"
+          }
+        ],
+        "signature": "Polynomial.card_le_degree_of_subset_roots.{u} {R : Type u} [CommRing R] [IsDomain R] {p : R[X]} {Z : Finset R}\n  (h : Z.val ⊆ p.roots) : #Z ≤ p.natDegree",
+        "status": "checked"
+      },
+      "Submodule.iUnion_ssubset_of_forall_ne_top_of_card_lt": {
+        "messages": [
+          {
+            "data": "Submodule.iUnion_ssubset_of_forall_ne_top_of_card_lt.{u_1, u_2, u_3} {ι : Type u_1} {K : Type u_2} {M : Type u_3}\n  [Field K] [AddCommGroup M] [Module K M] (s : Finset ι) (p : ι → Submodule K M) (h₁ : ∀ (i : ι), p i ≠ ⊤)\n  (h₂ : ↑(#s) < ENat.card K) : ⋃ i ∈ s, ↑(p i) ⊂ Set.univ",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "Submodule.iUnion_ssubset_of_forall_ne_top_of_card_lt.{u_1, u_2, u_3} {ι : Type u_1} {K : Type u_2} {M : Type u_3}\n  [Field K] [AddCommGroup M] [Module K M] (s : Finset ι) (p : ι → Submodule K M) (h₁ : ∀ (i : ι), p i ≠ ⊤)\n  (h₂ : ↑(#s) < ENat.card K) : ⋃ i ∈ s, ↑(p i) ⊂ Set.univ",
+        "status": "checked"
+      },
+      "SzemerediRegularity.edgeDensity_chunk_not_uniform": {
+        "messages": [
+          {
+            "data": "SzemerediRegularity.edgeDensity_chunk_not_uniform.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α]\n  {P : Finpartition univ} {hP : P.IsEquipartition} {G : SimpleGraph α} [DecidableRel G.Adj] {ε : ℝ} {U V : Finset α}\n  [Nonempty α] (hPα : #P.parts * 16 ^ #P.parts ≤ Fintype.card α) (hPε : 100 ≤ 4 ^ #P.parts * ε ^ 5) (hε₁ : ε ≤ 1)\n  {hU : U ∈ P.parts} {hV : V ∈ P.parts} (hUVne : U ≠ V) (hUV : ¬G.IsUniform ε U V) :\n  ↑(G.edgeDensity U V) ^ 2 - ε ^ 5 / 25 + ε ^ 4 / 3 ≤\n    (∑ ab ∈ (SzemerediRegularity.chunk hP G ε hU).parts.product (SzemerediRegularity.chunk hP G ε hV).parts,\n        ↑(G.edgeDensity ab.1 ab.2) ^ 2) /\n      16 ^ #P.parts",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "SzemerediRegularity.edgeDensity_chunk_not_uniform.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α]\n  {P : Finpartition univ} {hP : P.IsEquipartition} {G : SimpleGraph α} [DecidableRel G.Adj] {ε : ℝ} {U V : Finset α}\n  [Nonempty α] (hPα : #P.parts * 16 ^ #P.parts ≤ Fintype.card α) (hPε : 100 ≤ 4 ^ #P.parts * ε ^ 5) (hε₁ : ε ≤ 1)\n  {hU : U ∈ P.parts} {hV : V ∈ P.parts} (hUVne : U ≠ V) (hUV : ¬G.IsUniform ε U V) :\n  ↑(G.edgeDensity U V) ^ 2 - ε ^ 5 / 25 + ε ^ 4 / 3 ≤\n    (∑ ab ∈ (SzemerediRegularity.chunk hP G ε hU).parts.product (SzemerediRegularity.chunk hP G ε hV).parts,\n        ↑(G.edgeDensity ab.1 ab.2) ^ 2) /\n      16 ^ #P.parts",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "cd3b57a09aa59f815eb6237f38a18e4bfe668238d3b28d2e2db58b26e075d826",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-05T23:49:48.341648+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "MvPolynomial.esymm_eq_sum_subtype",
+      "expected_signature_or_shape": "MvPolynomial.esymm_eq_sum_subtype (σ : Type*) [Fintype σ] (R : Type*) [CommRing R] (n : ℕ) : esymm σ R n = ∑ t : {s : Finset σ // s.card = n}, ∏ i in t.val, X i",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+        "status": "checked"
+      },
+      "query": "MvPolynomial.esymm_eq_sum_subtype",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To rewrite esymm as a sum over subsets of size n. Then we can argue that when n > Fintype.card σ, the set of subsets of size n is empty, so the sum is 0."
+    },
+    {
+      "exact_identifier": "Finset.card_eq_zero_of_not_nonempty",
+      "expected_signature_or_shape": "Finset.card_eq_zero_of_not_nonempty {α : Type*} {s : Finset α} (h : ¬ Nonempty s) : s.card = 0",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "lemma card_ne_zero : Nat.card α ≠ 0 ↔ Nonempty α ∧ Finite α := by simp [card_eq_zero, not_or]",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.card_ne_zero.{u_1} {α : Type u_1} : Nat.card α ≠ 0 ↔ Nonempty α ∧ Finite α",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.card_ne_zero.{u_1} {α : Type u_1} : Nat.card α ≠ 0 ↔ Nonempty α ∧ Finite α",
+            "status": "checked"
+          },
+          "line_number": 80,
+          "matched_tokens": [
+            "card",
+            "eq",
+            "zero",
+            "not",
+            "nonempty"
+          ],
+          "name": "Nat.card_ne_zero",
+          "path": ".lake/packages/mathlib/Mathlib/SetTheory/Cardinal/Finite.lean",
+          "score": 14
+        },
+        {
+          "declaration_line": "protected lemma Nonempty.card_pow_mono (hs : s.Nonempty) : Monotone fun n : ℕ ↦ #(s ^ n) :=",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.Nonempty.card_pow_mono.{u_2} {α : Type u_2} [DecidableEq α] [CancelMonoid α] {s : Finset α} (hs : s.Nonempty) :\n  Monotone fun n => #(s ^ n)",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.Nonempty.card_pow_mono.{u_2} {α : Type u_2} [DecidableEq α] [CancelMonoid α] {s : Finset α} (hs : s.Nonempty) :\n  Monotone fun n => #(s ^ n)",
+            "status": "checked"
+          },
+          "line_number": 1222,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "not",
+            "nonempty"
+          ],
+          "name": "Finset.Nonempty.card_pow_mono",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Group/Pointwise/Finset/Basic.lean",
+          "score": 13
+        },
+        {
+          "declaration_line": "lemma eq_bot_of_not_nonempty (hi : ¬ Nonempty (Iio i)) : filtration i = ⊥ := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Field.Emb.Cardinal.eq_bot_of_not_nonempty.{u, v} {F : Type u} {E : Type v} [Field F] [Field E] [Algebra F E]\n  [rank_inf : Fact (Cardinal.aleph0 ≤ Module.rank F E)] [Algebra.IsAlgebraic F E]\n  {i : WithTop (Module.rank F E).ord.ToType} (hi : Order.IsSuccPrelimit i) :\n  ¬Nonempty ↑(Set.Iio i) → Field.Emb.Cardinal.filtration i = ⊥",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Field.Emb.Cardinal.eq_bot_of_not_nonempty.{u, v} {F : Type u} {E : Type v} [Field F] [Field E] [Algebra F E]\n  [rank_inf : Fact (Cardinal.aleph0 ≤ Module.rank F E)] [Algebra.IsAlgebraic F E]\n  {i : WithTop (Module.rank F E).ord.ToType} (hi : Order.IsSuccPrelimit i) :\n  ¬Nonempty ↑(Set.Iio i) → Field.Emb.Cardinal.filtration i = ⊥",
+            "status": "checked"
+          },
+          "line_number": 275,
+          "matched_tokens": [
+            "card",
+            "eq",
+            "not",
+            "nonempty"
+          ],
+          "name": "Field.Emb.Cardinal.eq_bot_of_not_nonempty",
+          "path": ".lake/packages/mathlib/Mathlib/FieldTheory/CardinalEmb.lean",
+          "score": 13
+        },
+        {
+          "declaration_line": "theorem edgeDensity_chunk_not_uniform [Nonempty α] (hPα : #P.parts * 16 ^ #P.parts ≤ card α)",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "SzemerediRegularity.edgeDensity_chunk_not_uniform.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α]\n  {P : Finpartition univ} {hP : P.IsEquipartition} {G : SimpleGraph α} [DecidableRel G.Adj] {ε : ℝ} {U V : Finset α}\n  [Nonempty α] (hPα : #P.parts * 16 ^ #P.parts ≤ Fintype.card α) (hPε : 100 ≤ 4 ^ #P.parts * ε ^ 5) (hε₁ : ε ≤ 1)\n  {hU : U ∈ P.parts} {hV : V ∈ P.parts} (hUVne : U ≠ V) (hUV : ¬G.IsUniform ε U V) :\n  ↑(G.edgeDensity U V) ^ 2 - ε ^ 5 / 25 + ε ^ 4 / 3 ≤\n    (∑ ab ∈ (SzemerediRegularity.chunk hP G ε hU).parts.product (SzemerediRegularity.chunk hP G ε hV).parts,\n        ↑(G.edgeDensity ab.1 ab.2) ^ 2) /\n      16 ^ #P.parts",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "SzemerediRegularity.edgeDensity_chunk_not_uniform.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α]\n  {P : Finpartition univ} {hP : P.IsEquipartition} {G : SimpleGraph α} [DecidableRel G.Adj] {ε : ℝ} {U V : Finset α}\n  [Nonempty α] (hPα : #P.parts * 16 ^ #P.parts ≤ Fintype.card α) (hPε : 100 ≤ 4 ^ #P.parts * ε ^ 5) (hε₁ : ε ≤ 1)\n  {hU : U ∈ P.parts} {hV : V ∈ P.parts} (hUVne : U ≠ V) (hUV : ¬G.IsUniform ε U V) :\n  ↑(G.edgeDensity U V) ^ 2 - ε ^ 5 / 25 + ε ^ 4 / 3 ≤\n    (∑ ab ∈ (SzemerediRegularity.chunk hP G ε hU).parts.product (SzemerediRegularity.chunk hP G ε hV).parts,\n        ↑(G.edgeDensity ab.1 ab.2) ^ 2) /\n      16 ^ #P.parts",
+            "status": "checked"
+          },
+          "line_number": 458,
+          "matched_tokens": [
+            "card",
+            "not",
+            "nonempty"
+          ],
+          "name": "SzemerediRegularity.edgeDensity_chunk_not_uniform",
+          "path": ".lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Regularity/Chunk.lean",
+          "score": 12
+        },
+        {
+          "declaration_line": "theorem nonempty_fixed_point_of_prime_not_dvd_card (α) [MulAction G α] (hpα : ¬p ∣ Nat.card α) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "IsPGroup.nonempty_fixed_point_of_prime_not_dvd_card.{u_1, u_3} {p : ℕ} {G : Type u_1} [Group G] (hG : IsPGroup p G)\n  [hp : Fact (Nat.Prime p)] (α : Type u_3) [MulAction G α] (hpα : ¬p ∣ Nat.card α) :\n  (MulAction.fixedPoints G α).Nonempty",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "IsPGroup.nonempty_fixed_point_of_prime_not_dvd_card.{u_1, u_3} {p : ℕ} {G : Type u_1} [Group G] (hG : IsPGroup p G)\n  [hp : Fact (Nat.Prime p)] (α : Type u_3) [MulAction G α] (hpα : ¬p ∣ Nat.card α) :\n  (MulAction.fixedPoints G α).Nonempty",
+            "status": "checked"
+          },
+          "line_number": 193,
+          "matched_tokens": [
+            "card",
+            "not",
+            "nonempty"
+          ],
+          "name": "IsPGroup.nonempty_fixed_point_of_prime_not_dvd_card",
+          "path": ".lake/packages/mathlib/Mathlib/GroupTheory/PGroup.lean",
+          "score": 12
+        },
+        {
+          "declaration_line": "theorem card_eq [Finite α] [Finite β] : Nat.card α = Nat.card β ↔ Nonempty (α ≃ β) := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finite.card_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2} [Finite α] [Finite β] :\n  Nat.card α = Nat.card β ↔ Nonempty (α ≃ β)",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finite.card_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2} [Finite α] [Finite β] :\n  Nat.card α = Nat.card β ↔ Nonempty (α ≃ β)",
+            "status": "checked"
+          },
+          "line_number": 65,
+          "matched_tokens": [
+            "card",
+            "eq",
+            "nonempty"
+          ],
+          "name": "Finite.card_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finite/Card.lean",
+          "score": 11
+        },
+        {
+          "declaration_line": "lemma card_ne_zero : #s ≠ 0 ↔ s.Nonempty := card_eq_zero.ne.trans nonempty_iff_ne_empty.symm",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.card_ne_zero.{u_1} {α : Type u_1} {s : Finset α} : #s ≠ 0 ↔ s.Nonempty",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.card_ne_zero.{u_1} {α : Type u_1} {s : Finset α} : #s ≠ 0 ↔ s.Nonempty",
+            "status": "checked"
+          },
+          "line_number": 77,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "eq",
+            "zero",
+            "nonempty"
+          ],
+          "name": "Finset.card_ne_zero",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Card.lean",
+          "score": 11
+        },
+        {
+          "declaration_line": "lemma dens_ne_zero : dens s ≠ 0 ↔ s.Nonempty := dens_eq_zero.not.trans nonempty_iff_ne_empty.symm",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.dens_ne_zero.{u_2} {α : Type u_2} [Fintype α] {s : Finset α} : s.dens ≠ 0 ↔ s.Nonempty",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.dens_ne_zero.{u_2} {α : Type u_2} [Fintype α] {s : Finset α} : s.dens ≠ 0 ↔ s.Nonempty",
+            "status": "checked"
+          },
+          "line_number": 83,
+          "matched_tokens": [
+            "finset",
+            "eq",
+            "zero",
+            "not",
+            "nonempty"
+          ],
+          "name": "Finset.dens_ne_zero",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Density.lean",
+          "score": 11
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Finset.card_eq_zero_of_not_nonempty`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.card_eq_zero_of_not_nonempty`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Finset.card_eq_zero_of_not_nonempty",
+      "request_index": 2,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the Finset of subsets of size n is empty when n > card σ, so its sum is 0."
+    },
+    {
+      "exact_identifier": "Finset.sum_empty",
+      "expected_signature_or_shape": "Finset.sum_empty {α : Type*} {β : Type*} [AddCommMonoid β] (f : α → β) : (∅ : Finset α).sum f = 0",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sum_empty.{u_1, u_3} {ι : Type u_1} {M : Type u_3} {f : ι → M} [AddCommMonoid M] : ∑ x ∈ ∅, f x = 0",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_empty.{u_1, u_3} {ι : Type u_1} {M : Type u_3} {f : ι → M} [AddCommMonoid M] : ∑ x ∈ ∅, f x = 0",
+        "status": "checked"
+      },
+      "query": "Finset.sum_empty",
+      "request_index": 3,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To compute the sum over an empty Finset as 0."
+    },
+    {
+      "exact_identifier": "Finset.filter_eq_empty_iff",
+      "expected_signature_or_shape": "Finset.filter_eq_empty_iff {α : Type*} [DecidableEq α] (p : α → Prop) [DecidablePred p] (s : Finset α) : s.filter p = ∅ ↔ ∀ x ∈ s, ¬ p x",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.filter_eq_empty_iff.{u_1} {α : Type u_1} {p : α → Prop} [DecidablePred p] {s : Finset α} :\n  filter p s = ∅ ↔ ∀ ⦃x : α⦄, x ∈ s → ¬p x",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.filter_eq_empty_iff.{u_1} {α : Type u_1} {p : α → Prop} [DecidablePred p] {s : Finset α} :\n  filter p s = ∅ ↔ ∀ ⦃x : α⦄, x ∈ s → ¬p x",
+        "status": "checked"
+      },
+      "query": "Finset.filter_eq_empty_iff",
+      "request_index": 4,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the set of subsets of size n is empty when n > card σ, because no subset of a set of size card σ can have size n > card σ."
+    },
+    {
+      "exact_identifier": "Finset.card_lt_card_of_subset",
+      "expected_signature_or_shape": "Finset.card_lt_card_of_subset {α : Type*} {s t : Finset α} (hst : s ⊆ t) (hne : s ≠ t) : s.card < t.card",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "lemma Submodule.iUnion_ssubset_of_forall_ne_top_of_card_lt (s : Finset ι) (p : ι → Submodule K M)",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Submodule.iUnion_ssubset_of_forall_ne_top_of_card_lt.{u_1, u_2, u_3} {ι : Type u_1} {K : Type u_2} {M : Type u_3}\n  [Field K] [AddCommGroup M] [Module K M] (s : Finset ι) (p : ι → Submodule K M) (h₁ : ∀ (i : ι), p i ≠ ⊤)\n  (h₂ : ↑(#s) < ENat.card K) : ⋃ i ∈ s, ↑(p i) ⊂ Set.univ",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "Submodule.iUnion_ssubset_of_forall_ne_top_of_card_lt.{u_1, u_2, u_3} {ι : Type u_1} {K : Type u_2} {M : Type u_3}\n  [Field K] [AddCommGroup M] [Module K M] (s : Finset ι) (p : ι → Submodule K M) (h₁ : ∀ (i : ι), p i ≠ ⊤)\n  (h₂ : ↑(#s) < ENat.card K) : ⋃ i ∈ s, ↑(p i) ⊂ Set.univ",
+            "status": "checked"
+          },
+          "line_number": 33,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "lt",
+            "subset"
+          ],
+          "name": "Submodule.iUnion_ssubset_of_forall_ne_top_of_card_lt",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Module/Submodule/Union.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "lemma card_add_card_subsetSum_lt_card_subsetSum_insert_max (hA : ∀ x ∈ A, 0 < x)",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.card_add_card_subsetSum_lt_card_subsetSum_insert_max.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} {a : M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (hA : ∀ x ∈ A, 0 < x) (hAa : ∀ x ∈ A, x < a)\n  (ha : 0 < a) : #A + #A.subsetSum < #(insert a A).subsetSum",
+                "line": 13,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.card_add_card_subsetSum_lt_card_subsetSum_insert_max.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} {a : M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (hA : ∀ x ∈ A, 0 < x) (hAa : ∀ x ∈ A, x < a)\n  (ha : 0 < a) : #A + #A.subsetSum < #(insert a A).subsetSum",
+            "status": "checked"
+          },
+          "line_number": 70,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "lt",
+            "subset"
+          ],
+          "name": "Finset.card_add_card_subsetSum_lt_card_subsetSum_insert_max",
+          "path": ".lake/packages/mathlib/Mathlib/Combinatorics/Additive/SubsetSum.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "theorem card_succ_choose_two_lt_card_subsetSum_of_pos (A_pos : ∀ x ∈ A, 0 < x) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.card_succ_choose_two_lt_card_subsetSum_of_pos.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 < x) :\n  (#A + 1).choose 2 < #A.subsetSum",
+                "line": 14,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.card_succ_choose_two_lt_card_subsetSum_of_pos.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M]\n  {A : Finset M} [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 < x) :\n  (#A + 1).choose 2 < #A.subsetSum",
+            "status": "checked"
+          },
+          "line_number": 95,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "lt",
+            "subset"
+          ],
+          "name": "Finset.card_succ_choose_two_lt_card_subsetSum_of_pos",
+          "path": ".lake/packages/mathlib/Mathlib/Combinatorics/Additive/SubsetSum.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "theorem card_choose_two_lt_card_subsetSum_of_nonneg (A_pos : ∀ x ∈ A, 0 ≤ x) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.card_choose_two_lt_card_subsetSum_of_nonneg.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M] {A : Finset M}\n  [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 ≤ x) : (#A).choose 2 < #A.subsetSum",
+                "line": 15,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.card_choose_two_lt_card_subsetSum_of_nonneg.{u_1} {M : Type u_1} [DecidableEq M] [AddCommMonoid M] {A : Finset M}\n  [LinearOrder M] [IsOrderedCancelAddMonoid M] (A_pos : ∀ x ∈ A, 0 ≤ x) : (#A).choose 2 < #A.subsetSum",
+            "status": "checked"
+          },
+          "line_number": 106,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "lt",
+            "subset"
+          ],
+          "name": "Finset.card_choose_two_lt_card_subsetSum_of_nonneg",
+          "path": ".lake/packages/mathlib/Mathlib/Combinatorics/Additive/SubsetSum.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "theorem exists_subset_or_subset_of_two_mul_lt_card [DecidableEq α] {X Y : Finset α} {n : ℕ}",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.exists_subset_or_subset_of_two_mul_lt_card.{u_1} {α : Type u_1} [DecidableEq α] {X Y : Finset α} {n : ℕ}\n  (hXY : 2 * n < #(X ∪ Y)) : ∃ C, n < #C ∧ (C ⊆ X ∨ C ⊆ Y)",
+                "line": 16,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.exists_subset_or_subset_of_two_mul_lt_card.{u_1} {α : Type u_1} [DecidableEq α] {X Y : Finset α} {n : ℕ}\n  (hXY : 2 * n < #(X ∪ Y)) : ∃ C, n < #C ∧ (C ⊆ X ∨ C ⊆ Y)",
+            "status": "checked"
+          },
+          "line_number": 657,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "lt",
+            "subset"
+          ],
+          "name": "Finset.exists_subset_or_subset_of_two_mul_lt_card",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Card.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "theorem card_le_degree_of_subset_roots {p : R[X]} {Z : Finset R} (h : Z.val ⊆ p.roots) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Polynomial.card_le_degree_of_subset_roots.{u} {R : Type u} [CommRing R] [IsDomain R] {p : R[X]} {Z : Finset R}\n  (h : Z.val ⊆ p.roots) : #Z ≤ p.natDegree",
+                "line": 17,
+                "severity": "information"
+              }
+            ],
+            "signature": "Polynomial.card_le_degree_of_subset_roots.{u} {R : Type u} [CommRing R] [IsDomain R] {p : R[X]} {Z : Finset R}\n  (h : Z.val ⊆ p.roots) : #Z ≤ p.natDegree",
+            "status": "checked"
+          },
+          "line_number": 136,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "subset"
+          ],
+          "name": "Polynomial.card_le_degree_of_subset_roots",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem minCardFinsetOfMemConvexHull_subseteq : ↑(minCardFinsetOfMemConvexHull hx) ⊆ s :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Caratheodory.minCardFinsetOfMemConvexHull_subseteq.{u, u_1} {𝕜 : Type u_1} {E : Type u} [Field 𝕜] [LinearOrder 𝕜]\n  [IsStrictOrderedRing 𝕜] [AddCommGroup E] [Module 𝕜 E] {s : Set E} {x : E} (hx : x ∈ (convexHull 𝕜) s) :\n  ↑(Caratheodory.minCardFinsetOfMemConvexHull hx) ⊆ s",
+                "line": 18,
+                "severity": "information"
+              }
+            ],
+            "signature": "Caratheodory.minCardFinsetOfMemConvexHull_subseteq.{u, u_1} {𝕜 : Type u_1} {E : Type u} [Field 𝕜] [LinearOrder 𝕜]\n  [IsStrictOrderedRing 𝕜] [AddCommGroup E] [Module 𝕜 E] {s : Set E} {x : E} (hx : x ∈ (convexHull 𝕜) s) :\n  ↑(Caratheodory.minCardFinsetOfMemConvexHull hx) ⊆ s",
+            "status": "checked"
+          },
+          "line_number": 113,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "subset"
+          ],
+          "name": "Caratheodory.minCardFinsetOfMemConvexHull_subseteq",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Convex/Caratheodory.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "lemma exists_subset_mulSpan_card_le_of_forall_mulDissociated",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.exists_subset_mulSpan_card_le_of_forall_mulDissociated.{u_1} {α : Type u_1} [CommGroup α] [DecidableEq α]\n  [Fintype α] {s : Finset α} {d : ℕ} (hs : ∀ s' ⊆ s, MulDissociated ↑s' → #s' ≤ d) : ∃ s' ⊆ s, #s' ≤ d ∧ s ⊆ s'.mulSpan",
+                "line": 19,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.exists_subset_mulSpan_card_le_of_forall_mulDissociated.{u_1} {α : Type u_1} [CommGroup α] [DecidableEq α]\n  [Fintype α] {s : Finset α} {d : ℕ} (hs : ∀ s' ⊆ s, MulDissociated ↑s' → #s' ≤ d) : ∃ s' ⊆ s, #s' ≤ d ∧ s ⊆ s'.mulSpan",
+            "status": "checked"
+          },
+          "line_number": 135,
+          "matched_tokens": [
+            "finset",
+            "card",
+            "subset"
+          ],
+          "name": "Finset.exists_subset_mulSpan_card_le_of_forall_mulDissociated",
+          "path": ".lake/packages/mathlib/Mathlib/Combinatorics/Additive/Dissociation.lean",
+          "score": 9
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Finset.card_lt_card_of_subset`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.card_lt_card_of_subset`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Finset.card_lt_card_of_subset",
+      "request_index": 5,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To argue that if a subset of Finset.univ has size n > card σ, then it cannot be a subset of Finset.univ, leading to a contradiction."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.card_eq_zero_of_not_nonempty": {
+        "error": "Unknown constant `Finset.card_eq_zero_of_not_nonempty`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.card_eq_zero_of_not_nonempty`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Finset.card_lt_card_of_subset": {
+        "error": "Unknown constant `Finset.card_lt_card_of_subset`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.card_lt_card_of_subset`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Finset.filter_eq_empty_iff": {
+        "messages": [
+          {
+            "data": "Finset.filter_eq_empty_iff.{u_1} {α : Type u_1} {p : α → Prop} [DecidablePred p] {s : Finset α} :\n  filter p s = ∅ ↔ ∀ ⦃x : α⦄, x ∈ s → ¬p x",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.filter_eq_empty_iff.{u_1} {α : Type u_1} {p : α → Prop} [DecidablePred p] {s : Finset α} :\n  filter p s = ∅ ↔ ∀ ⦃x : α⦄, x ∈ s → ¬p x",
+        "status": "checked"
+      },
+      "Finset.sum_empty": {
+        "messages": [
+          {
+            "data": "Finset.sum_empty.{u_1, u_3} {ι : Type u_1} {M : Type u_3} {f : ι → M} [AddCommMonoid M] : ∑ x ∈ ∅, f x = 0",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_empty.{u_1, u_3} {ι : Type u_1} {M : Type u_3} {f : ι → M} [AddCommMonoid M] : ∑ x ∈ ∅, f x = 0",
+        "status": "checked"
+      },
+      "MvPolynomial.esymm_eq_sum_subtype": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "ed90c9c5550f2b52022b1fe01a9b9e72343fb320c60112400604457af8bf4fcc",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 5,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

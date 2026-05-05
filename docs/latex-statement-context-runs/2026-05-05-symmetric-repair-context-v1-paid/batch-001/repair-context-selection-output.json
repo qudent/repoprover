@@ -1,0 +1,40 @@
+{
+  "units": [
+    {
+      "do_not_use_identifiers": [
+        "MvPolynomial.esymm_eq_zero_of_lt"
+      ],
+      "failure_analysis": "The generated Lean code attempted to use `MvPolynomial.esymm_eq_zero_of_lt`, which does not exist in the checked Mathlib context. The proof cannot proceed without a lemma that `esymm` vanishes when the degree exceeds the number of variables. The visible context provides the definition of `e` as an abbrev for `esymm`, and the source proposition states `e_n = 0` for `n > N`. The local file predecessors include `e_eq_sum_prod_subsets`, which expresses `e` as a sum over subsets of size `n` of `Fin N`. This can be used to prove the statement directly, without relying on the missing lemma.",
+      "missing_or_uncertain_context": [
+        "A Mathlib lemma that `Finset.powersetCard n s` is empty when `n > card s` (or `n > Finset.card s`). The expected signature: `Finset.powersetCard_eq_empty_of_lt (h : Finset.card s < n) : Finset.powersetCard n s = ∅`. Alternatively, a lemma about `Finset.card` of `powersetCard` being zero. This is needed to conclude that the sum over `powersetCard n (univ : Finset (Fin N))` is zero."
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "theorem Finset.powersetCard_eq_empty_of_lt {α : Type*} (s : Finset α) (n : ℕ) (h : Finset.card s < n) : Finset.powersetCard n s = ∅",
+          "name_or_query": "Finset.powersetCard_eq_empty_of_lt",
+          "why_needed": "To show that the set of subsets of size `n` of `Fin N` is empty when `n > N`, making the sum in `e_eq_sum_prod_subsets` equal to zero."
+        }
+      ],
+      "repair_strategy_note": "Use the visible local file predecessor `e_eq_sum_prod_subsets` to rewrite `e n` as a sum over subsets of size `n` of `Fin N`. Since `n > N`, the set `powersetCard n (univ : Finset (Fin N))` is empty (because there are no subsets of size `n` of a set of cardinality `N`). The sum over an empty set is zero. This requires the lemma `Finset.powersetCard_eq_empty_of_lt` (or a similar cardinality argument) from Mathlib. The proof will use `Finset.card_fin` or `Fintype.card_fin` to relate `N` to `Fintype.card (Fin N)`. The condition `Fintype.card (Fin N) < n` is equivalent to `N < n` (since `Fintype.card (Fin N) = N`).",
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "prop.sf.en=0",
+          "why_needed": "Provides the mathematical statement to prove: e_n = 0 for n > N."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SymmetricPolynomials.e",
+          "why_needed": "Defines `e` as an abbrev for `esymm`, so the theorem is about `e`."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "e_eq_sum_prod_subsets",
+          "why_needed": "Expresses `e n` as a sum over subsets of size `n` of `Fin N`. This is the key identity to prove the statement without the missing Mathlib lemma."
+        }
+      ],
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    }
+  ]
+}

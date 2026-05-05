@@ -39,8 +39,10 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   and explicit benchmark-honesty provenance.
 - [x] Add theorem-level LLM/Lean repair runner using failed output, verifier
   errors, fallback Mathlib candidates, and local predecessor context.
-- [ ] Add autonomous context-repair selection for checked proof ingredients
+- [x] Add autonomous context-repair selection for checked proof ingredients
   before relying on agent-selected repair packs.
+- [ ] Generalize the autonomous repair-context loop beyond one symmetric unit
+  and reduce noisy fallback-context candidates.
 
 ## Blockers
 - The old declaration-level verifier can reject useful source-theorem progress
@@ -59,8 +61,10 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
 - Paid v5/v5b symmetric probes show the model still over-trusts an unavailable
   Mathlib lemma even when hydration marks it as failed; the verifier now flags
   both nonempty body and nonempty names for invalid `cannot_prove` outputs.
-- Repair succeeds when given an agent-selected, Lean-checked proof-ingredient
-  pack, but that pack is not yet an autonomous selector output.
+- Autonomous repair-context selection now reaches `1/1` compile and `1/1`
+  semantic coverage on the symmetric `e_n = 0` unit, but it needed four
+  context-selection rounds and several repair calls. The next blocker is making
+  that loop cheaper, less noisy, and reliable across a broader theorem batch.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is needed.
 
@@ -108,6 +112,15 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   produced a contract-clean `cannot_prove`. Repair3 with
   `checked-proof-ingredients.json` cost `$0.00170492`, generated Lean that
   compiled `1/1`, and semantic coverage proved the aligned gold theorem `1/1`.
+- Autonomous symmetric repair-context loop:
+  `docs/latex-statement-context-runs/2026-05-05-symmetric-repair-context-v1-paid/`
+  through `v4-paid/` selected target-hidden context, Lean-hydrated exact and
+  fallback Mathlib signatures, and drove repair4-8. Repair8 compiled `1/1` and
+  semantic coverage proved the aligned gold theorem `1/1`; additional loop
+  cost was `$0.02180284`. Key selected ingredients were
+  `e_eq_sum_prod_subsets`, `Finset.powersetCard_eq_empty` via checked fallback,
+  `Finset.card_powersetCard`, `Nat.choose_eq_zero_of_lt`, and
+  `Finset.card_univ`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.

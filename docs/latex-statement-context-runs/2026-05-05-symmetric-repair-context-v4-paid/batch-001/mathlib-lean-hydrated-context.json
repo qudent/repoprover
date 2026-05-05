@@ -1,0 +1,72 @@
+{
+  "exact_identifier_count": 1,
+  "fallback_exact_identifier_count": 0,
+  "fallback_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "fallback_lean_check_status": "no_exact_identifiers",
+  "generated_at": "2026-05-05T23:56:15.104519+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Finset.card_univ",
+      "expected_signature_or_shape": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] : (univ : Finset α).card = Fintype.card α",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+        "status": "checked"
+      },
+      "query": "Finset.card_univ",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To rewrite `(univ : Finset (Fin N)).card` to `Fintype.card (Fin N)` in the proof, replacing the incorrect `Finset.card_fintype`."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.card_univ": {
+        "messages": [
+          {
+            "data": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "f44477299badb5b66397428fff89dd5d81167ac1ac717a45c8b22df802870656",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 1,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

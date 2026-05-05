@@ -1,0 +1,21 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] : (univ : Finset α).card = Fintype.card α",
+              "name_or_query": "Finset.card_univ",
+              "why_needed": "To rewrite `(univ : Finset (Fin N)).card` to `Fintype.card (Fin N)` in the proof, replacing the incorrect `Finset.card_fintype`."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

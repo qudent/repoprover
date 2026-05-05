@@ -168,6 +168,7 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "Unknown constant `Demo.bad_guess`" in prompt
     assert "Do not use any identifier that Lean already reported as Unknown constant" in prompt
     assert "attempt that checked route before declaring cannot_prove_from_visible_context" in prompt
+    assert "implement that proof in lean_file_body" in prompt
     assert "prior_helper" in prompt
     assert "Nat.add_zero" in prompt
     assert "theorem bad" in prompt

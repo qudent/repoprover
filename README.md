@@ -154,6 +154,21 @@ generic `Fintype.card_fin` hypothesis-simplification candidate. This is a
 positive feasibility result, but not an autonomous-selector win yet: the checked
 proof-ingredient pack was agent-selected and is labeled as such in the artifact.
 
+The follow-up autonomous repair-context loop made that same symmetric unit a
+source-only selector win. `scripts/run_latex_statement_repair_context_selection.py`
+selected target-hidden repair context from failed Lean output and verifier
+errors; `scripts/hydrate_latex_statement_context.py` now Lean-checks fallback
+Mathlib candidates as well as requested exact names; and
+`scripts/build_latex_statement_repair_context_pack.py` turns checked signatures
+into repair context packs. Across repair-context v1-v4 and repair4-repair8, the
+loop selected `e_eq_sum_prod_subsets`, checked fallback
+`Finset.powersetCard_eq_empty`, `Finset.card_powersetCard`,
+`Nat.choose_eq_zero_of_lt`, and finally `Finset.card_univ`. Repair8 compiled
+`1/1` and semantic coverage proved the aligned gold theorem `1/1`. The caveat is
+cost/latency rather than benchmark leakage: this one hard unit needed four
+autonomous context-selection rounds and several repair calls, costing
+`$0.02180284` beyond the earlier manual-pack probe.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

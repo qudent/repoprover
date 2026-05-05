@@ -1,0 +1,73 @@
+{
+  "all_aligned_gold_proved_units": 1,
+  "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
+  "coverage_status_counts": {
+    "all_aligned_gold_proved": 1
+  },
+  "generated_at": "2026-05-05T23:57:29.335544+00:00",
+  "generated_not_compiled_units": 0,
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid",
+  "no_aligned_gold_proved_units": 0,
+  "no_aligned_gold_to_check_units": 0,
+  "partial_aligned_gold_proved_units": 0,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+  "unit_count": 1,
+  "units": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "e_eq_zero_of_lt"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.SymmetricPolynomials.e_eq_zero_of_gt",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            991,
+            1009
+          ],
+          "gold_path": "AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid/eval/semantic-coverage/unit-001/gold-001.lean",
+          "messages": [
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 1029,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using e_eq_zero_of_lt n (by simpa [Fintype.card_fin] using hn)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 1029,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`",
+              "kind": "linter.style.nameCheck",
+              "line": 1014,
+              "severity": "warning"
+            }
+          ],
+          "semantic_check_passed": true,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "all_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 1,
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+      "unit_key": "unit-001"
+    }
+  ]
+}

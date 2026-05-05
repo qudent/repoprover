@@ -94,6 +94,64 @@ def test_hydrate_output_marks_non_exact_queries(monkeypatch, tmp_path) -> None:
     assert hydrated["hydrated_mathlib_context"][1]["lean_check"]["status"] == "not_exact_identifier"
 
 
+def test_hydrate_output_lean_checks_fallback_candidates(monkeypatch, tmp_path) -> None:
+    def fake_check_names(names, *, project_root, imports, opens, timeout_seconds):
+        checked = {}
+        for name in names:
+            if name == "Finset.powersetCard_eq_empty":
+                checked[name] = {
+                    "status": "checked",
+                    "signature": "Finset.powersetCard_eq_empty : powersetCard n s = ∅ ↔ s.card < n",
+                }
+            else:
+                checked[name] = {"status": "error", "error": f"Unknown constant `{name}`"}
+        return {"status": "ok", "checked": checked}
+
+    def fake_fallback(query, *, project_root, limit=8):
+        return [
+            {
+                "name": "Finset.powersetCard_eq_empty",
+                "kind": "lemma",
+                "path": "Mathlib/Data/Finset/Powerset.lean",
+                "line_number": 222,
+                "declaration_line": "lemma powersetCard_eq_empty : powersetCard n s = ∅ ↔ s.card < n := by",
+                "matched_tokens": ["powersetCard"],
+                "score": 10,
+            }
+        ]
+
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.lean_check_names", fake_check_names)
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.fallback_mathlib_candidates", fake_fallback)
+
+    hydrated = hydrate_output(
+        {
+            "units": [
+                {
+                    "unit_key": "unit-001",
+                    "planned_declarations": [
+                        {
+                            "task_id": "unit-001-task-1",
+                            "source_part": "repair",
+                            "needed_mathlib_context": [
+                                {"name_or_query": "Finset.powersetCard_eq_empty_of_lt"}
+                            ],
+                        }
+                    ],
+                }
+            ]
+        },
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        opens=[],
+        timeout_seconds=1,
+    )
+
+    fallback = hydrated["hydrated_mathlib_context"][0]["fallback_mathlib_candidates"][0]
+    assert fallback["name"] == "Finset.powersetCard_eq_empty"
+    assert fallback["lean_check"]["status"] == "checked"
+    assert hydrated["fallback_exact_identifier_count"] == 1
+
+
 def test_fallback_mathlib_candidates_scores_local_mathlib_declarations(tmp_path) -> None:
     mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/Symmetric.lean"
     mathlib_file.parent.mkdir(parents=True)
