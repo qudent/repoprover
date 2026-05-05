@@ -1,0 +1,20 @@
+{
+  "index": 11,
+  "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation/record-011",
+  "warnings": [
+    {
+      "code": "simple_transposition_equality_instead_of_isswap",
+      "severity": "warning",
+      "message": "Visible source context describes the simple transposition as a swap, but the generated statement does not state `Perm.IsSwap`.",
+      "visible_cue": "_{i}:=t_{i,i+1}\\\\in S_{n}.\\n\\\\]\\n\\n\\\\end{definition}\\n\\nThus, a simple transposition is a transposition that swaps two consecutive\\nintegers. Again, the notation $s_{i}$ suppresses $n$, but this won't usu",
+      "generated_cue": "/-- Simple transposition `s_i` equals the transposition `t_{i,i+1}`. (def.perm.si) -/ theorem simpleTransposition_",
+      "recommendation": "State `(simpleTransposition i).IsSwap` directly, or prove that property from displayed simple-transposition/transposition facts instead of only proving equality or order-two facts."
+    }
+  ],
+  "generated_name": "simpleTransposition_eq_transposition",
+  "warning_count": 1,
+  "warning_codes": [
+    "simple_transposition_equality_instead_of_isswap"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:15:30: error(lean.unknownIdentifier): Unknown constant `Nat.partitions`\n"
+}

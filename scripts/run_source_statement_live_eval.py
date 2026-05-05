@@ -1149,6 +1149,7 @@ def domain_statement_shape_guidance(
             "is a swap" in combined
             or "are swaps" in combined
             or "2-cycles" in combined
+            or "transposition that swaps" in combined
             or "isswap" in hidden_target_names
         )
         preferred_permutation = [

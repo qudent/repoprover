@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:61:4: error: Type mismatch: After simplification, term\n  CoeffFinitelyDeterminedInSum a n\n has type\n  Prop\nof sort `Type` but is expected to have type\n  CoeffFinitelyDeterminedInProd a n\nof sort `Prop`\n"
+}

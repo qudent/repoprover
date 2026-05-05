@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "/-- Simple transposition `s_i` is a swap. (def.perm.si) -/\ntheorem simpleTransposition_isSwap {n : ℕ} (i : Fin (n - 1)) : (simpleTransposition i).IsSwap := by\n  unfold simpleTransposition; exact Equiv.swap_isSwap _ _",
+  "declaration_name": "simpleTransposition_isSwap",
+  "used_context": [
+    "simpleTransposition definition",
+    "Equiv.swap_isSwap"
+  ],
+  "notes": [
+    "The shape diagnostic recommended stating `IsSwap` directly rather than an equality; this proves the simple transposition is a swap as defined."
+  ]
+}

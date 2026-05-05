@@ -659,7 +659,7 @@ def test_source_statement_prompt_includes_permutation_power_guidance(tmp_path: P
 def test_source_statement_prompt_includes_simple_transposition_isswap_guidance(tmp_path: Path) -> None:
     project_root, record = _write_fixture_project(tmp_path)
     (project_root / "Demo.tex").write_text(
-        "The simple transposition s_i is a swap.\n",
+        "A simple transposition is a transposition that swaps two consecutive integers.\n",
         encoding="utf-8",
     )
     row = copy.deepcopy(record.row)

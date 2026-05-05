@@ -1,0 +1,20 @@
+{
+  "index": 7,
+  "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+  "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation/record-007",
+  "warnings": [
+    {
+      "code": "substitution_proof_uses_avoided_finite_composition_helper",
+      "severity": "info",
+      "message": "Visible guidance suggests the direct `HasSubst.X'`/`coeff_subst'` proof shape, but the generated proof uses the avoided finite-composition helper.",
+      "visible_cue": "}\\\\right) =f_{0}$.\\n\\\\end{proposition}\\n\"}] [{\"avoid_statement_family\": [\"Do not use the finite-composition helper with a separately inferred `constantCoeff X = 0` when a direct `HasSubst.X'` proof is ava",
+      "generated_cue": "< n := by omega simp [coeff_smul, fps_subs_wd_firstCoeffs g hg n k hk] ext n rw [fps_comp_coeff f g hg n, coeff_tsum hsum] have hzero : ∀ d, d ∉ Finset.range (n + 1) → coeff d f * coe",
+      "recommendation": "Prefer `have ha : HasSubst (X : K⟦X⟧) := HasSubst.X'`; `ext n`; `rw [coeff_subst' ha g n]`; `simp only [coeff_X_pow, smul_eq_mul]`; then `rw [finsum_eq_single _ n (fun d hd => by simp [hd.symm])]`; `simp`."
+    }
+  ],
+  "generated_name": "fps_subst_eq_tsum",
+  "warning_count": 1,
+  "warning_codes": [
+    "substitution_proof_uses_avoided_finite_composition_helper"
+  ]
+}

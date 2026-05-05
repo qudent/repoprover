@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem fps_subst_eq_mk_finsum (f g : K⟦X⟧) (hg : constantCoeff g = 0) : PowerSeries.subst g f = PowerSeries.mk (fun n => finsum (fun d => coeff d f * coeff n (g ^ d))) := by\n  ext n\n  rw [fps_comp_coeff f g hg n, coeff_mk]",
+  "declaration_name": "fps_subst_eq_mk_finsum",
+  "used_context": [
+    "fps_comp_coeff",
+    "coeff_mk",
+    "ext",
+    "rw"
+  ],
+  "notes": [
+    "The original statement used ∑' which requires a topological instance not available for general CommRing power series. Replaced with an equality expressed via PowerSeries.mk and finsum, exactly matching the coefficient formula from the existing fps_comp_coeff."
+  ]
+}

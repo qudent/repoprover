@@ -1,0 +1,106 @@
+{
+  "generated_at": "2026-05-05T10:51:51.795909+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation",
+  "attempt": 1,
+  "records_completed": 2,
+  "repair_generation_successes": 2,
+  "repair_generation_success_rate": 1.0,
+  "paid_calls_made": 2,
+  "actual_cost_usd": 0.010895358,
+  "model": "deepseek/deepseek-v4-pro",
+  "max_tokens": 32768,
+  "reasoning_effort": "high",
+  "concurrency": 2,
+  "budget_only": false,
+  "shape_diagnostic_results": "shape-diagnostic-results.json",
+  "include_shape_warnings": true,
+  "shape_warnings_only": true,
+  "max_actual_cost_usd": 0.1,
+  "failure_classes": {},
+  "results": [
+    {
+      "index": 7,
+      "record_id": "AlgebraicCombinatorics/FPS/Substitution.lean:AlgebraicCombinatorics.fps_comp_coeff_finite",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation/record-007",
+      "attempt": 1,
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 21798,
+        "prompt_chars": 20581,
+        "estimated_prompt_tokens": 5146,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00223851,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03074667
+      },
+      "shape_warning_codes": [
+        "substitution_proof_uses_avoided_finite_composition_helper"
+      ],
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 6050,
+        "completion_tokens": 5624,
+        "total_tokens": 11674,
+        "actual_cost_usd": 0.007193334,
+        "estimated_cost_from_usage_usd": 0.007524630000000001,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "success": true,
+      "repair_generation_success": true,
+      "generated_name": "fps_subst_eq_mk_finsum"
+    },
+    {
+      "index": 11,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.simpleTransposition_isSwap",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-balanced-generation/record-011",
+      "attempt": 1,
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 20945,
+        "prompt_chars": 19789,
+        "estimated_prompt_tokens": 4948,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00215238,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03066054
+      },
+      "shape_warning_codes": [
+        "simple_transposition_equality_instead_of_isswap"
+      ],
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 5386,
+        "completion_tokens": 1943,
+        "total_tokens": 7329,
+        "actual_cost_usd": 0.003702024,
+        "estimated_cost_from_usage_usd": 0.00403332,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "success": true,
+      "repair_generation_success": true,
+      "generated_name": "simpleTransposition_isSwap"
+    }
+  ]
+}

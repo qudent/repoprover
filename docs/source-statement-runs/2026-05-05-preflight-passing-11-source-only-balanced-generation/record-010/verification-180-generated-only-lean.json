@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:12:104: error: unexpected token '!'; expected ':=', 'where' or '|'\n"
+}

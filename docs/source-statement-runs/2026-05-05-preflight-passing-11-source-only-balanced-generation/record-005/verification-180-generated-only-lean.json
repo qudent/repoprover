@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:103:11: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  DecidableEq I\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/FPS/InfiniteProducts.lean:106:27: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  DecidableEq I\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\n"
+}

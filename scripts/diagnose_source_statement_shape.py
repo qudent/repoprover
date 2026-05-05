@@ -163,6 +163,25 @@ def diagnose_shape(user_payload: dict[str, Any], declaration: str) -> list[Warni
         )
 
     if (
+        "simple transposition" in context_lower
+        and (
+            "is a transposition that swaps" in context_lower
+            or "is a swap" in context_lower
+            or "are swaps" in context_lower
+        )
+        and "isswap" not in declaration.lower()
+    ):
+        warnings.append(
+            _warning(
+                "simple_transposition_equality_instead_of_isswap",
+                "Visible source context describes the simple transposition as a swap, but the generated statement does not state `Perm.IsSwap`.",
+                visible_cue=_excerpt(context_text, r"transposition that swaps|is a swap|are swaps"),
+                generated_cue=_excerpt(declaration, r"simpleTransposition|transposition|Equiv\.swap|="),
+                recommendation="State `(simpleTransposition i).IsSwap` directly, or prove that property from displayed simple-transposition/transposition facts instead of only proving equality or order-two facts.",
+            )
+        )
+
+    if (
         (
             "group-power law" in context_lower
             or "α ^ (n + 1) = α ^ n * α" in context_text

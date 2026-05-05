@@ -433,6 +433,24 @@ def test_shape_diagnostic_flags_fin_object_inequalities() -> None:
     assert [warning["code"] for warning in warnings] == ["fin_object_inequality_instead_of_value_inequality"]
 
 
+def test_shape_diagnostic_flags_simple_transposition_equality_instead_of_isswap() -> None:
+    warnings = diagnose_shape(
+        {
+            "context": {
+                "source_statement_or_chunk": [
+                    {
+                        "snippet": "A simple transposition is a transposition that swaps two consecutive integers."
+                    }
+                ],
+                "domain_statement_shape_guidance": [{"domain": "simple transposition statement shape"}],
+            }
+        },
+        "theorem simpleTransposition_eq_transposition (i : Fin (n - 1)) : simpleTransposition i = transposition i := by\n  rfl",
+    )
+
+    assert [warning["code"] for warning in warnings] == ["simple_transposition_equality_instead_of_isswap"]
+
+
 def test_shape_diagnostic_flags_pointwise_permutation_power() -> None:
     warnings = diagnose_shape(
         {

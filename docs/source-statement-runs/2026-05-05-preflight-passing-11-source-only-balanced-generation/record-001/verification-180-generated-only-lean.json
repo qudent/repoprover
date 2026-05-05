@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Details/Limits.lean:66:181: error: Invalid `⟨...⟩` notation: The expected type\n  ∀ (n : ℕ), {i | (coeff n) (f i) ≠ 0}.Finite\nis not an inductive type\n\nNote: This notation can only be used when the expected type is an inductive type with a single constructor\nAlgebraicCombinatorics/Details/Limits.lean:68:30: error: Invalid `⟨...⟩` notation: The expected type\n  ∀ (n : ℕ), {i | (coeff n) (f i) ≠ 0}.Finite\nis not an inductive type\n\nNote: This notation can only be used when the expected type is an inductive type with a single constructor\nAlgebraicCombinatorics/Details/Limits.lean:74:12: error(lean.unknownIdentifier): Unknown identifier `coeff_inj`\nAlgebraicCombinatorics/Details/Limits.lean:75:12: error: No goals to be solved\n"
+}
