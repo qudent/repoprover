@@ -115,11 +115,14 @@ def test_source_statement_prompt_includes_local_style_and_notation_contract(tmp_
     project_root, record = _write_fixture_project(tmp_path)
 
     messages = build_messages(project_root, record)
+    prompt_text = messages[1]["content"]
     user = json.loads(messages[1]["content"])
     context = user["context"]
     local_style = context["local_lean_style"]
     guide = "\n".join(local_style["guidance"])
     examples = "\n".join(local_style["examples"])
+    syntax_examples = "\n".join(local_style["syntax_examples"])
+    instructions = "\n".join(user["instructions"])
 
     assert "sub[U,V] A" in guide
     assert "submatrixOfFinset A U V" in guide
@@ -129,6 +132,12 @@ def test_source_statement_prompt_includes_local_style_and_notation_contract(tmp_
     assert "noncomputable def submatrixOfFinset" in examples
     assert "((Matrix.diagonal d).submatrix" in examples
     assert "theorem target" not in examples
+    assert "∏ i ∈ P, d i" in syntax_examples
+    assert "∏ y ∈ s.image f, g y" in syntax_examples
+    assert "do not write `∏ i in S" in guide
+    assert "not `∏ i in S" in instructions
+    assert "theorem target" not in prompt_text
+    assert "Demo.target" not in prompt_text
 
 
 def test_source_statement_prompt_focuses_specific_part_of_multipart_source(tmp_path: Path) -> None:
@@ -1222,6 +1231,12 @@ def test_classify_lean_failure_separates_missing_mathlib_cache() -> None:
     output = "AlgebraicCombinatorics/CauchyBinet.lean:1:0: error: unknown module prefix 'Mathlib'\nNo directory 'Mathlib' or file 'Mathlib.olean'"
 
     assert classify_lean_failure(output) == "lean_environment_missing_mathlib_cache"
+
+
+def test_classify_lean_failure_separates_generated_parse_errors() -> None:
+    output = "AlgebraicCombinatorics/CauchyBinet.lean:17:11: error: unexpected token 'in'; expected ','"
+
+    assert classify_lean_failure(output) == "generated_declaration_parse_error"
 
 
 def _write_records(path: Path, row: dict, count: int) -> None:

@@ -36,22 +36,20 @@ context, not from hardcoded benchmark-specific prompt rules.
 
 ### Data and Record Unit
 
-The durable candidate records come from the existing Lean formalization:
+The old durable candidate records came from the existing Lean formalization and
+used one row per Lean declaration. They are preserved at the checkpoint
+`checkpoint/before-per-latex-statement-dataset`, but the canonical full-record,
+gold-row, graph, and split JSON artifacts are retired from `main`.
 
-- `docs/minimal-context-full-records.jsonl`
-- `docs/minimal-context-gold-candidates.jsonl`
+Current theorem-level records are:
 
-Each row is one Lean declaration:
+- `docs/latex-statement-units.jsonl`
+- `docs/latex-statement-gold-candidates.jsonl`
 
-- `output.lean_path`
-- `output.declaration_names`
-- `output.line_range`
-- `minimal_context.source_spans`
-- `alignment.comment_labels`
-
-The TeX label/source span is context metadata. It is not currently the atomic
-target. This is why the term "gold standard dataset" is potentially misleading:
-it is a declaration-level gold/eval set, not a book-theorem-level gold set.
+Each row is one theorem-like LaTeX environment with source text, labels, source
+references, and post-hoc evaluation metadata listing aligned Lean declarations.
+The aligned Lean declarations are oracle/evaluation metadata; they are hidden
+from source-only selector/generator prompts.
 
 ### Context/Dependency Tree Status
 
@@ -59,7 +57,7 @@ The original context/dependency tree works as a deterministic index and
 retrieval substrate. It should not be treated as an exact proof-dependency
 oracle.
 
-Current checked-in graph summary from `docs/minimal-context-graph.json`:
+Checkpointed graph summary from the retired `docs/minimal-context-graph.json`:
 
 ```json
 {
@@ -83,9 +81,9 @@ Accuracy boundaries:
 
 - Source alignment is strong for the `lean_comment_label` subset: the Lean
   doc/comment explicitly references a TeX label found in the source tree.
-- The 645 `docs/minimal-context-gold-candidates.jsonl` rows are the bounded,
-  mechanically clean subset of those exact-label alignments. They are useful
-  benchmark candidates, not human-certified semantic gold.
+- The 645 retired `docs/minimal-context-gold-candidates.jsonl` rows were the
+  bounded, mechanically clean subset of those exact-label alignments. They are
+  useful historical benchmark candidates, not human-certified semantic gold.
 - The 4,400 `manifest_position_fallback` rows and 222 `unmapped` rows are useful
   for recall and hard-case discovery, but too low-trust for accuracy claims.
 - Lean predecessor edges are static heuristics based on file order, lexical
@@ -132,6 +130,14 @@ so far) to return:
 The selector output is written before any gold comparison. Mathlib hydration
 then searches local Mathlib source for requested names/queries and adds snippets
 to the generation context pack.
+
+Lean-tooling dependency accounting now also exists for theorem-level rows. The
+raw elaborated scan produced 16,485 unique project constant rows. Summarized
+against the 114 LaTeX statement gold-candidate units, each source unit has
+median 2 aligned Lean declarations, median 44 direct Mathlib constants, and
+median 5 direct project constants in the elaborated checked terms. Those counts
+include proof internals and generated helper constants, so they are an audit
+surface rather than a direct prompt-size target.
 
 ### Generation Round
 
@@ -188,6 +194,26 @@ The latest paid declaration-progress selector run:
 
 It improved the key `prod-lim-conv` failure: the selector selected only the
 equality statement and marked the prior multipliability theorem as support-only.
+
+First theorem-level selector smoke:
+
+`docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid/`
+
+- source unit: one LaTeX lemma from
+  `docs/latex-statement-gold-candidates.jsonl`
+- model: `deepseek/deepseek-v4-flash`
+- valid JSON: yes
+- elapsed time: `31.28s`
+- OpenRouter-reported cost: `$0.00073584`
+- prompt/completion tokens: `1120` / `2068`, with `1412` reported reasoning
+  tokens
+- output: one ordered theorem task with separate source/project/Mathlib context
+  buckets
+- selector success: it understood the FPS coefficient-congruence division
+  statement and asked for plausible PowerSeries/IsUnit context
+- selector caveat: several requested API shapes are still model guesses, so the
+  next context-hydration step must validate exact names and signatures with
+  Mathlib search and Lean `#check` or environment lookup
 
 ### Generation and Verification Counts
 
@@ -470,25 +496,33 @@ failures.
 
 ## Implementation Plan for Theorem-Level Splitting
 
-1. Add a TeX theorem-unit extractor.
+1. Add a TeX theorem-unit extractor. Done in
+   `scripts/generate_latex_statement_dataset.py`.
    - Input: `algebraic-combinatorics/AlgebraicCombinatorics/tex/**/*.tex`.
-   - Output: one JSONL row per theorem-like environment with path, line range,
-     labels, environment kind, part markers, references, and excerpt.
+   - Output: `docs/latex-statement-units.jsonl`, one JSONL row per
+     theorem-like environment with path, line range, labels, environment kind,
+     part markers, references, and full source text.
    - Initial theorem-like environments: `theorem`, `lemma`, `proposition`,
      `corollary`, `definition`, `conjecture`, `statement`, `example`.
+   - Current snapshot: 462 units, 361 labeled.
 
-2. Build a source-label to existing-Lean-declaration index.
-   - Group the current declaration-level records by TeX label.
+2. Build a source-label to existing-Lean-declaration index. Done for explicit
+   `Label:` comments in `docs/latex-statement-gold-candidates.jsonl`.
    - For each source theorem unit, list the existing Lean declarations aligned
-     to it. This gives an oracle evaluation map without exposing target Lean to
-     the selector.
+     by declared source label. This gives an oracle evaluation map without
+     exposing target Lean to the selector.
+   - Current snapshot: 114 theorem-level gold-candidate rows, 414 aligned Lean
+     declarations, median 2 aligned declarations per gold unit.
 
-3. Add a theorem-planning selector prompt.
+3. Add a theorem-planning selector prompt. Done in
+   `scripts/run_latex_statement_context_selection.py`.
    - Input: one LaTeX theorem unit, local source context, previously formalized
      source labels, and available project imports.
    - Output: an ordered list of Lean declaration tasks plus selected
      project/Mathlib context needs per task.
-   - Explicitly ask for Mathlib context and project context as separate fields.
+   - Explicitly asks for Mathlib context and project context as separate fields.
+   - First paid run:
+     `docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid/`.
 
 4. Hydrate context with tools, not prompt memory.
    - Resolve project declarations by source label/import closure.
@@ -523,6 +557,8 @@ failures.
 The exact instantiated prompts, including full dynamic context, are logged in
 the run artifacts. Representative current payloads:
 
+- theorem-level selector smoke:
+  `docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid/batch-001/context-selection-payload.json`
 - selector batch 1:
   `docs/source-statement-runs/2026-05-05-context-selection-decl-progress-diverse3-paid/batch-001/context-selection-payload.json`
 - selector batch 2:
@@ -535,6 +571,69 @@ the run artifacts. Representative current payloads:
   `docs/source-statement-runs/2026-05-05-decl-progress-diverse3-generation-paid/record-003/openrouter-payload.json`
 
 Below are the full static prompt contracts from the current code path.
+
+### Theorem-Level Context Selector System Prompt
+
+```text
+You are a Lean 4/Mathlib context-planning agent. Prepare a compact context pack for formalizing a LaTeX theorem-like source unit. The target Lean declarations aligned to the selected source unit are withheld. Return exactly one JSON object.
+```
+
+### Theorem-Level Context Selector User Prompt Skeleton
+
+```json
+{
+  "task": "For each LaTeX source unit, decompose the source into ordered Lean declaration tasks and select tight context for each task. The context inventory must be separate: source text, previous book/source statements, previous project declarations, local file/import/style context, and selected Mathlib APIs.",
+  "schema": {
+    "units": [
+      {
+        "unit_key": "unit-001",
+        "source_focus_summary": "short summary",
+        "formalization_risks": [
+          "source ambiguity, missing notation, broad multi-part theorem"
+        ],
+        "planned_declarations": [
+          {
+            "task_id": "unit-001-task-1",
+            "kind": "def|theorem|lemma|instance|notation|unknown",
+            "source_part": "whole unit or part marker",
+            "target_statement_sketch": "mathematical Lean-shape sketch, not exact hidden Lean",
+            "needed_source_context": [
+              "source labels/statements"
+            ],
+            "needed_project_context": [
+              {
+                "name": "previous project declaration if provided or likely needed",
+                "why_needed": "supporting theorem/definition/notation"
+              }
+            ],
+            "needed_mathlib_context": [
+              {
+                "name_or_query": "exact Mathlib name or narrow search query",
+                "expected_signature_or_shape": "expected type/signature/docstring",
+                "why_needed": "definition/proof/tactic support"
+              }
+            ],
+            "missing_or_uncertain_context": [
+              "what a second lookup round should resolve"
+            ]
+          }
+        ],
+        "context_pack_size_risk": "low|medium|high",
+        "selector_confidence": 0.0
+      }
+    ]
+  },
+  "rules": [
+    "Do not infer or reveal hidden target Lean declaration names for the selected unit.",
+    "Do not bundle all source parts into one conjunction unless the source unit itself requires that shape.",
+    "Use previous project declarations only if they are shown under prior_project_context.",
+    "Do not treat Mathlib as the only context; enumerate source/project/local/Mathlib context separately.",
+    "Prefer exact Mathlib names when known; otherwise give a narrow query plus expected signature shape.",
+    "Keep added context tight: prefer a few thousand tokens or less per source unit."
+  ],
+  "units": "<one or more source units with target alignments hidden>"
+}
+```
 
 ### Context Selector System Prompt
 

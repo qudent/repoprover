@@ -1164,6 +1164,9 @@ def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, An
         "Match the local Lean style shown in local_lean_style.examples when it applies; prefer exact APIs and argument order already used in this file.",
         "Use only identifiers that appear in the Lean prefix context/local examples or are standard Mathlib identifiers; do not cite or invent raw helper names from guessed notation expansions.",
         "If the local examples use a domain-specific API such as `Ring.choose`, `updateCol`, or a local theorem name, keep that exact API family instead of falling back to a more familiar but different API such as `Nat.choose` or `Matrix.updateColumn`.",
+        "The lean_declaration must parse and typecheck as its own theorem/lemma before the grader-only withheld statement check is appended.",
+        "For Finset products, prefer Lean's membership-binder syntax `∏ i ∈ P, d i`; do not write `∏ i in S, ...`.",
+        "For products over images, use parseable Lean syntax such as `∏ y ∈ s.image f, g y`, or keep the product over the original finite type and rewrite with a displayed theorem.",
     ]
     for contract in notation_contracts:
         guidance.append(
@@ -1177,6 +1180,15 @@ def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, An
         "guidance": guidance,
         "notation_contracts": notation_contracts,
         "examples": examples[:5],
+        "syntax_examples": [
+            "example {n : Nat} {M : Type*} [CommMonoid M] (d : Fin n -> M) (P : Finset (Fin n)) :\n"
+            "    (∏ i ∈ P, d i) = (∏ i ∈ P, d i) := by\n"
+            "  rfl",
+            "example {α β M : Type*} [CommMonoid M] [DecidableEq β]\n"
+            "    (s : Finset α) (f : α -> β) (g : β -> M) :\n"
+            "    (∏ y ∈ s.image f, g y) = (∏ y ∈ s.image f, g y) := by\n"
+            "  rfl",
+        ],
     }
 
 
@@ -1609,6 +1621,8 @@ def build_messages(project_root: Path, record: SelectedRecord, *, context_mode: 
             "Do not use sorry, admit, aesop? placeholders, or comments standing in for proof.",
             "Do not include import statements; the generated file already imports Mathlib.",
             "Do not assume access to the withheld target Lean statement or name.",
+            "Return a declaration that Lean can parse and typecheck by itself; syntax or type errors in the generated declaration are scored before the private withheld-statement check.",
+            "Use `∏ i ∈ S, f i` for Finset products, not `∏ i in S, f i`; for image products, prefer `∏ y ∈ s.image f, g y` or a product over the original index type.",
             "For multi-part TeX chunks, formalize only the specified labeled part/source span. Do not conjoin all parts unless the record explicitly asks for the whole multi-part result.",
             "This benchmark row expects one declaration-level theorem/lemma, not a restatement of every source claim sharing the same TeX label.",
             "Do not cite or invent raw helper names that are not present in the Lean prefix context/local examples; prefer displayed local style and standard Mathlib APIs.",
@@ -2069,6 +2083,8 @@ def classify_lean_failure(output: str) -> str:
         return "lean_environment_missing_mathlib_cache"
     if "__repoprover_source_statement_check" in output:
         return "grader_gold_statement_not_proved"
+    if "unexpected token" in output or "expected" in output:
+        return "generated_declaration_parse_error"
     return "generated_lean_does_not_compile"
 
 

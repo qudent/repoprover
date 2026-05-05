@@ -1,0 +1,87 @@
+{
+  "caveat": "Lean-derived direct constants are extracted from elaborated ConstantInfo type/value expressions. They resolve notation, overloads, typeclass arguments, tactic-produced terms, and proof terms stored in the environment. They do not include the transitive closure of every referenced constant unless requested by a separate closure pass.",
+  "global_unique": {
+    "mathlib_direct_constants": 3886,
+    "other_direct_constants": 967,
+    "project_direct_constants": 8395
+  },
+  "missing_record_declarations": 1539,
+  "per_exact_tex_label": {
+    "declarations_per_label": {
+      "max": 29,
+      "median": 2,
+      "p90": 6,
+      "p95": 8
+    },
+    "labels": 415,
+    "mathlib_direct_constants": {
+      "max": 444,
+      "median": 39,
+      "p90": 144,
+      "p95": 169
+    },
+    "other_direct_constants": {
+      "max": 161,
+      "median": 27,
+      "p90": 68,
+      "p95": 86
+    },
+    "project_direct_constants": {
+      "max": 122,
+      "median": 5,
+      "p90": 20,
+      "p95": 28
+    }
+  },
+  "per_record_all": {
+    "mathlib_direct_constants": {
+      "max": 485,
+      "median": 4,
+      "p90": 49,
+      "p95": 82
+    },
+    "other_direct_constants": {
+      "max": 165,
+      "median": 8,
+      "p90": 39,
+      "p95": 52
+    },
+    "project_direct_constants": {
+      "max": 299,
+      "median": 1,
+      "p90": 10,
+      "p95": 14
+    }
+  },
+  "per_record_theorem_lemma_only": {
+    "mathlib_direct_constants": {
+      "max": 485,
+      "median": 7,
+      "p90": 59,
+      "p95": 92
+    },
+    "other_direct_constants": {
+      "max": 165,
+      "median": 11,
+      "p90": 44,
+      "p95": 56
+    },
+    "project_direct_constants": {
+      "max": 299,
+      "median": 1,
+      "p90": 11,
+      "p95": 16
+    },
+    "records": 4472
+  },
+  "raw_project_declaration_rows": {
+    "mathlib_direct_constants": {
+      "max": 485,
+      "median": 4,
+      "p90": 28,
+      "p95": 51
+    }
+  },
+  "record_count": 5684,
+  "scan_rows": 16485
+}

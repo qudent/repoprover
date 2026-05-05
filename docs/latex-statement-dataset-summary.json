@@ -1,0 +1,32 @@
+{
+  "aligned_declarations_per_gold_unit": {
+    "max": 29,
+    "median": 2.0,
+    "p90": 8,
+    "p95": 12
+  },
+  "aligned_source_units": 114,
+  "elapsed_seconds": 1.141,
+  "environment_counts": {
+    "conjecture": 1,
+    "corollary": 21,
+    "definition": 100,
+    "example": 74,
+    "lemma": 45,
+    "proposition": 97,
+    "statement": 38,
+    "theorem": 86
+  },
+  "generated_at": "2026-05-05T18:18:54.922379+00:00",
+  "generator_version": "latex-statement-dataset-v1",
+  "gold_candidate_units": 114,
+  "labeled_source_units": 361,
+  "manifest_target_units": 342,
+  "model_cost_usd": 0.0,
+  "multi_declaration_gold_units": 65,
+  "schema_version": "repoprover.latex_statement_dataset_report.v1",
+  "source_units": 462,
+  "source_units_with_parts": 111,
+  "total_aligned_lean_declarations": 414,
+  "unlabeled_source_units": 101
+}

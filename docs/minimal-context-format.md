@@ -1,5 +1,13 @@
 # Minimal Context Data Format
 
+Status: legacy declaration-level format. The canonical generated JSON artifacts
+(`docs/minimal-context-full-records.jsonl`,
+`docs/minimal-context-gold-candidates.jsonl`,
+`docs/minimal-context-graph.json`, and `docs/minimal-context-splits/`) were
+retired from `main` after the LaTeX-statement dataset pivot. They are preserved
+at `checkpoint/before-per-latex-statement-dataset` and
+`checkpoint-before-per-latex-statement-dataset`.
+
 This is the durable data contract for the whole-corpus minimal-context artifacts.
 
 ## Artifacts

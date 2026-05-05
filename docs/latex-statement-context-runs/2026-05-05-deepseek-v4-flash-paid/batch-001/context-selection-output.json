@@ -1,0 +1,54 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Need to handle invertible series and division by units",
+        "Assumptions about the base ring K (likely a commutative ring)",
+        "Definition of coefficient extraction for FPS"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact type of K: should be a CommRing or at least a CommSemiring with units",
+            "How to express 'invertible' in Mathlib: via IsUnit or via explicit unit structure",
+            "Division notation a/c: is it defined as a * c⁻¹ where c⁻¹ is the inverse of a unit?"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "coeff (n : ℕ) (f : PowerSeries R) : R",
+              "name_or_query": "PowerSeries.coeff",
+              "why_needed": "To extract coefficients of power series"
+            },
+            {
+              "expected_signature_or_shape": "IsUnit (f : PowerSeries R) : Prop",
+              "name_or_query": "IsUnit",
+              "why_needed": "To state that c and d are invertible"
+            },
+            {
+              "expected_signature_or_shape": "inv (f : PowerSeries R) : PowerSeries R (only defined when f is a unit)",
+              "name_or_query": "PowerSeries.inv",
+              "why_needed": "To define division as a * inv c"
+            },
+            {
+              "expected_signature_or_shape": "coeff_mul : coeff R n (f * g) = ∑ i in Finset.range (n+1), coeff R i f * coeff R (n-i) g",
+              "name_or_query": "PowerSeries.coeff_mul",
+              "why_needed": "To reason about coefficients of products in the proof"
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "Full lemma statement as provided"
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "theorem coeff_congr_div (a b c d : PowerSeries K) (hc : IsUnit c) (hd : IsUnit d) (hcd : ∀ m ≤ n, coeff K m c = coeff K m d) (hab : ∀ m ≤ n, coeff K m a = coeff K m b) : ∀ m ≤ n, coeff K m (a / c) = coeff K m (b / d) :=",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Lemma about equality of coefficients up to n for ratios of formal power series.",
+      "unit_key": "unit-001"
+    }
+  ]
+}

@@ -214,3 +214,9 @@ The JSON summary now aggregates these and related classes under
 `missing_declaration`, `generated_lean_does_not_compile`,
 `grader_gold_statement_not_proved`, `materialization_or_lean_error`, and
 `skipped_cost_cap`.
+
+The prompt now also includes syntax-only Finset product examples and explicit
+guidance to use Lean membership-binder syntax such as `∏ i ∈ P, d i` and
+`∏ y ∈ s.image f, g y`, not `∏ i in S, ...`. Generated declarations are checked
+before the private withheld-gold check, and parser failures are reported as
+`generated_declaration_parse_error` when Lean emits syntax diagnostics.

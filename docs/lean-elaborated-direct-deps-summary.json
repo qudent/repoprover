@@ -1,0 +1,100 @@
+{
+  "caveat": "Lean-derived direct constants are extracted from elaborated ConstantInfo type/value expressions. They resolve notation, overloads, typeclass arguments, tactic-produced terms, and proof terms stored in the environment. They do not include the transitive closure of every referenced constant unless requested by a separate closure pass.",
+  "declarations_per_record": {
+    "max": 29,
+    "median": 2,
+    "p90": 8,
+    "p95": 12
+  },
+  "global_unique": {
+    "mathlib_direct_constants": 1456,
+    "other_direct_constants": 315,
+    "project_direct_constants": 852
+  },
+  "missing_record_declarations": 10,
+  "per_exact_tex_label": {
+    "declarations_per_label": {
+      "max": 29,
+      "median": 2,
+      "p90": 7,
+      "p95": 12
+    },
+    "labels": 146,
+    "mathlib_direct_constants": {
+      "max": 444,
+      "median": 50,
+      "p90": 154,
+      "p95": 213
+    },
+    "other_direct_constants": {
+      "max": 113,
+      "median": 26,
+      "p90": 77,
+      "p95": 95
+    },
+    "project_direct_constants": {
+      "max": 85,
+      "median": 5,
+      "p90": 26,
+      "p95": 36
+    },
+    "records_per_label": {
+      "max": 1,
+      "median": 1,
+      "p90": 1,
+      "p95": 1
+    }
+  },
+  "per_record_all": {
+    "mathlib_direct_constants": {
+      "max": 444,
+      "median": 44,
+      "p90": 152,
+      "p95": 169
+    },
+    "other_direct_constants": {
+      "max": 113,
+      "median": 27,
+      "p90": 74,
+      "p95": 86
+    },
+    "project_direct_constants": {
+      "max": 85,
+      "median": 5,
+      "p90": 26,
+      "p95": 34
+    }
+  },
+  "per_record_theorem_lemma_only": {
+    "mathlib_direct_constants": {
+      "max": 444,
+      "median": 50,
+      "p90": 149,
+      "p95": 251
+    },
+    "other_direct_constants": {
+      "max": 113,
+      "median": 27,
+      "p90": 61,
+      "p95": 93
+    },
+    "project_direct_constants": {
+      "max": 37,
+      "median": 5,
+      "p90": 16,
+      "p95": 34
+    },
+    "records": 49
+  },
+  "raw_project_declaration_rows": {
+    "mathlib_direct_constants": {
+      "max": 485,
+      "median": 4,
+      "p90": 28,
+      "p95": 51
+    }
+  },
+  "record_count": 114,
+  "record_schema": "repoprover.latex_statement_unit.v1",
+  "scan_rows": 16485
+}
