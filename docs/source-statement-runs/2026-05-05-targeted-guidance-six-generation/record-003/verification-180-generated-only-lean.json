@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:57:54: error: unexpected token 'in'; expected ','\n"
+}

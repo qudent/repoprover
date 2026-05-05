@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:16:6: error(lean.unknownIdentifier): Unknown identifier `eq_iff_parts_eq`\nAlgebraicCombinatorics/Partitions/Basics.lean:15:54: error: unsolved goals\nempty p : Partition 0\n⊢ p = empty\n"
+}

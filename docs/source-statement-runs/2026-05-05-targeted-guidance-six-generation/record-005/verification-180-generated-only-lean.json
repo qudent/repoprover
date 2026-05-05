@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:12:63: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HPow (X → X) ℕ ?m.4\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nAlgebraicCombinatorics/Permutations/Basics.lean:14:9: error: unsolved goals\ncase zero.h\nX : Type u_1\nα : Perm X\nx : X\n⊢ sorry () x = x\n"
+}

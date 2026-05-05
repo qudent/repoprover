@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Permutations/Basics.lean:72:4: error: omega could not prove the goal:\na possible counterexample may satisfy the constraints\n  b ≥ 0\n  a ≥ 0\n  a - b ≤ -1\nwhere\n a := ↑↑⟨↑i + 1, ⋯⟩\n b := ↑n\nAlgebraicCombinatorics/Permutations/Basics.lean:73:8: error(lean.unknownIdentifier): Unknown constant `Equiv.swap_isSwap`\nAlgebraicCombinatorics/Permutations/Basics.lean:74:2: error: No goals to be solved\n"
+}

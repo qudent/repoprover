@@ -104,7 +104,13 @@ API/statement-shape context. Targeted guidance for those six buckets is now
 implemented and zero-cost prompt-checked; the six-row budget-only run completed
 with 0 paid calls and all expected row-specific cues present, while keeping
 hidden target declaration names out of emitted payloads. See
-`docs/source-statement-targeted-guidance-six-budget-report.md`.
+`docs/source-statement-targeted-guidance-six-budget-report.md`. A capped paid
+retry over the same six rows produced 6/6 parsed DeepSeek responses for
+`$0.03896991`, but serial reusable-project verification found 0/6 successes
+(`generated_lean_does_not_compile=5`, `grader_gold_statement_not_proved=1`).
+This confirms serial Lean verification is not the bottleneck at this scale; the
+next issue is stronger visible API examples or stricter statement-shape
+contracts. See `docs/source-statement-targeted-guidance-six-generation-report.md`.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -309,9 +315,12 @@ failures plus 1 hidden-grader mismatch; see
   buckets: FPS limits statement narrowing, binomial/FPS typeclass specificity,
   `finsum` finite-support APIs, partition constructors/projections, permutation
   powers/function coercions, and `Perm.IsSwap` statement shape.
-- [ ] Run one small paid generation-only retry over the same six targeted
+- [x] Run one small paid generation-only retry over the same six targeted
   failure rows, then verify serially with reusable Lean projects and archive
   every provider output before checking.
+- [ ] Replace broad row guidance with exact visible API/example retrieval or a
+  statement-shape-first contract for the six hard rows; another generic paid
+  repair pass is not justified by the 0/6 targeted-guidance retry.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records
@@ -350,6 +359,10 @@ failures plus 1 hidden-grader mismatch; see
   payloads with a `$0.00` six-row budget-only run. Focused tests passed with
   `59 passed`; see
   `docs/source-statement-targeted-guidance-six-budget-report.md`.
+- Ran the capped paid six-row targeted-guidance retry. Provider generation cost
+  was `$0.03896991` and all outputs were committed before Lean checking; serial
+  verification with one reusable work root found 0/6 successes. See
+  `docs/source-statement-targeted-guidance-six-generation-report.md`.
 - `scripts/materialize_minimal_context_smoke.py` now defaults to
   `docs/minimal-context-gold-candidates.jsonl`, imports `Mathlib` only unless
   `--include-record-imports` is set, and materializes recorded `file_context`
