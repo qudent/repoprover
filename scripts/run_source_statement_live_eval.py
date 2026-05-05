@@ -1382,11 +1382,13 @@ def repair_domain_guidance_from_failure(
                 "preferred_repair_shape": [
                     "Do not use `Equiv.swap_isSwap`; it is not available in this Lean environment.",
                     "Prove `(simpleTransposition i).IsSwap` using the `Perm.IsSwap` constructor-style proof shape displayed in the prompt guidance: provide the two swapped points, prove they are distinct, and identify the permutation with the swap.",
+                    "For `i : Fin (n - 1)`, prefer direct witness introduction instead of `let` bindings: `use ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩`; then `use ⟨i.val + 1, by omega⟩`; then prove distinctness with `intro h; rw [Fin.ext_iff] at h; simp at h`; then close the swap equality by `rfl`.",
                     "If unfolding `simpleTransposition` reveals an existing swap/transposition expression, finish by constructing `IsSwap` directly rather than citing an unavailable helper theorem.",
                 ],
                 "avoid_repair_shape": [
                     "Do not replace the target with an equality-to-transposition theorem or an order-two theorem; keep the conclusion as `(simpleTransposition i).IsSwap`.",
                     "Do not invent helper names such as `Equiv.swap_isSwap`.",
+                    "Avoid `let b : Fin n := ⟨i.val + 1, by omega⟩` when Lean fails to prove the bound; introduce the witness directly with `use` as shown above.",
                 ],
             }
         )
