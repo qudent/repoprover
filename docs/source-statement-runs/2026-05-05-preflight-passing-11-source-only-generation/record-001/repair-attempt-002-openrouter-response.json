@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777975358-fDjef5s0b8R1uuzS7QAk",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem sum_lim_conv {f : ℕ → PowerSeries K} {L : PowerSeries K}\\n    (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) L) :\\n    ∃ (hsum : IsSummable f), tsum' f hsum = L :=\\nby\\n  have hsum : IsSummable f := by\\n    intro n\\n    rcases h n with ⟨N, hN⟩\\n    have hzero : ∀ i, N ≤ i → coeff n (f (i+1)) = 0 := by\\n      intro i hi\\n      have hsum_i1 : coeff n (∑ j ∈ Finset.range (i+1+1), f j) = coeff n L := hN (i+1) (by omega)\\n      have hsum_i : coeff n (∑ j ∈ Finset.range (i+1), f j) = coeff n L := hN i hi\\n      have hsum_eq : coeff n (∑ j ∈ Finset.range (i+1+1), f j) = coeff n (∑ j ∈ Finset.range (i+1), f j) + coeff n (f (i+1)) := by\\n        calc\\n          coeff n (∑ j ∈ Finset.range (i+1+1), f j) = ∑ j ∈ Finset.range (i+1+1), coeff n (f j) := coeff_sum _ _ _\\n          _ = (∑ j ∈ Finset.range (i+1), coeff n (f j)) + coeff n (f (i+1)) := by simp [Finset.sum_range_succ]\\n          _ = coeff n (∑ j ∈ Finset.range (i+1), f j) + coeff n (f (i+1)) := by simp [coeff_sum]\\n      rw [hsum_i1, hsum_i] at hsum_eq\\n      linarith\\n    have hsubset : {i | coeff n (f i) ≠ 0} ⊆ Finset.range (N+1) := by\\n      intro i hi\\n      simp at hi\\n      have hi_le_N : i ≤ N := by\\n        by_contra! hgt\\n        apply hi\\n        rcases Nat.exists_eq_succ_of_ne_zero (by omega : i ≠ 0) with ⟨j, hj⟩\\n        have hj_ge_N : N ≤ j := by omega\\n        rw [hj]\\n        exact hzero j hj_ge_N\\n      exact Finset.mem_range.mpr hi_le_N\\n    exact Set.Finite.subset (Finset.finite_toSet (Finset.range (N+1))) hsubset\\n  have htsum_eq : tsum' f hsum = L := by\\n    have hpart : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i+1), f j) (tsum' f hsum) :=\\n      coeffStabilizesTo_partial_sum' hsum\\n    apply PowerSeries.ext\\n    intro n\\n    rcases hpart n with ⟨N1, hN1⟩\\n    rcases h n with ⟨N2, hN2⟩\\n    let N := max N1 N2\\n    have hcoeff_eq : coeff n (tsum' f hsum) = coeff n L := by\\n      calc\\n        coeff n (tsum' f hsum) = coeff n ((fun i => ∑ j ∈ Finset.range (i+1), f j) N) := by\\n          symm; apply hN1 N (le_max_left _ _)\\n        _ = coeff n L := hN2 N (le_max_right _ _)\\n    exact hcoeff_eq\\n  exact ⟨hsum, htsum_eq⟩\",\n  \"declaration_name\": \"sum_lim_conv\",\n  \"used_context\": [\n    \"CoeffStabilizesTo\",\n    \"IsSummable\",\n    \"tsum'\",\n    \"coeffStabilizesTo_partial_sum'\",\n    \"PowerSeries.ext\",\n    \"coeff_sum\",\n    \"Finset.sum_range_succ\",\n    \"Finset.finite_toSet\",\n    \"Set.Finite.subset\",\n    \"linarith\",\n    \"omega\"\n  ],\n  \"notes\": [\n    \"Repaired by returning an existential `∃ (hsum : IsSummable f), tsum' f hsum = L` to avoid type mismatch with `tsum'` requiring a proof argument that cannot be provided in the conjunction directly.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777975358,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 13531,
+    "prompt_tokens": 5036,
+    "total_tokens": 18567,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 12466,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.013631334,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.013631334,
+      "upstream_inference_prompt_cost": 0.001859364,
+      "upstream_inference_completions_cost": 0.01177197
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/InfiniteProducts.lean:48:5: error(lean.unknownIdentifier): Unknown constant `PowerSeries.CoeffFinitelyDeterminedInSum`\n"
+}

@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:15:120: error: Function expected at\n  p.parts\nbut this term has type\n  Multiset ℕ\n\nNote: Expected a function because this term is being applied to the argument\n  i\nAlgebraicCombinatorics/Partitions/Basics.lean:15:84: error: Application type mismatch: The argument\n  p.parts\nhas type\n  Multiset ℕ\nbut is expected to have type\n  ?m.1 → ?m.2\nin the application\n  Antitone p.parts\n"
+}

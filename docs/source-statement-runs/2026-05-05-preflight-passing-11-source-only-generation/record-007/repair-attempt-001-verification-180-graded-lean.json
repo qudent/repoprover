@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/FPS/Substitution.lean:79:4: error: Type mismatch: After simplification, term\n  summable_fps_comp f g hg n\n has type\n  {i | ¬(coeff i) f * (coeff n) (g ^ i) = 0}.Finite\nbut is expected to have type\n  (coeff n) (subst g f) = ∑ d ∈ Finset.range (n + 1), (coeff d) f * (coeff n) (g ^ d)\n"
+}

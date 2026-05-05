@@ -1,0 +1,20 @@
+{
+  "lean_declaration": "theorem sum_lim_conv {f : ℕ → PowerSeries K} {L : PowerSeries K}\n    (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) L) :\n    ∃ (hsum : IsSummable f), tsum' f hsum = L :=\nby\n  have hsum : IsSummable f := by\n    intro n\n    rcases h n with ⟨N, hN⟩\n    have hzero : ∀ i, N ≤ i → coeff n (f (i+1)) = 0 := by\n      intro i hi\n      have hsum_i1 : coeff n (∑ j ∈ Finset.range (i+1+1), f j) = coeff n L := hN (i+1) (by omega)\n      have hsum_i : coeff n (∑ j ∈ Finset.range (i+1), f j) = coeff n L := hN i hi\n      have hsum_eq : coeff n (∑ j ∈ Finset.range (i+1+1), f j) = coeff n (∑ j ∈ Finset.range (i+1), f j) + coeff n (f (i+1)) := by\n        calc\n          coeff n (∑ j ∈ Finset.range (i+1+1), f j) = ∑ j ∈ Finset.range (i+1+1), coeff n (f j) := coeff_sum _ _ _\n          _ = (∑ j ∈ Finset.range (i+1), coeff n (f j)) + coeff n (f (i+1)) := by simp [Finset.sum_range_succ]\n          _ = coeff n (∑ j ∈ Finset.range (i+1), f j) + coeff n (f (i+1)) := by simp [coeff_sum]\n      rw [hsum_i1, hsum_i] at hsum_eq\n      linarith\n    have hsubset : {i | coeff n (f i) ≠ 0} ⊆ Finset.range (N+1) := by\n      intro i hi\n      simp at hi\n      have hi_le_N : i ≤ N := by\n        by_contra! hgt\n        apply hi\n        rcases Nat.exists_eq_succ_of_ne_zero (by omega : i ≠ 0) with ⟨j, hj⟩\n        have hj_ge_N : N ≤ j := by omega\n        rw [hj]\n        exact hzero j hj_ge_N\n      exact Finset.mem_range.mpr hi_le_N\n    exact Set.Finite.subset (Finset.finite_toSet (Finset.range (N+1))) hsubset\n  have htsum_eq : tsum' f hsum = L := by\n    have hpart : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i+1), f j) (tsum' f hsum) :=\n      coeffStabilizesTo_partial_sum' hsum\n    apply PowerSeries.ext\n    intro n\n    rcases hpart n with ⟨N1, hN1⟩\n    rcases h n with ⟨N2, hN2⟩\n    let N := max N1 N2\n    have hcoeff_eq : coeff n (tsum' f hsum) = coeff n L := by\n      calc\n        coeff n (tsum' f hsum) = coeff n ((fun i => ∑ j ∈ Finset.range (i+1), f j) N) := by\n          symm; apply hN1 N (le_max_left _ _)\n        _ = coeff n L := hN2 N (le_max_right _ _)\n    exact hcoeff_eq\n  exact ⟨hsum, htsum_eq⟩",
+  "declaration_name": "sum_lim_conv",
+  "used_context": [
+    "CoeffStabilizesTo",
+    "IsSummable",
+    "tsum'",
+    "coeffStabilizesTo_partial_sum'",
+    "PowerSeries.ext",
+    "coeff_sum",
+    "Finset.sum_range_succ",
+    "Finset.finite_toSet",
+    "Set.Finite.subset",
+    "linarith",
+    "omega"
+  ],
+  "notes": [
+    "Repaired by returning an existential `∃ (hsum : IsSummable f), tsum' f hsum = L` to avoid type mismatch with `tsum'` requiring a proof argument that cannot be provided in the conjunction directly."
+  ]
+}
