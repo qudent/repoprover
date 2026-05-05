@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem sum_lim (f : ℕ → PowerSeries K) [TopologicalSpace (PowerSeries K)] [ContinuousAdd (PowerSeries K)] (h : Summable f) : HasSum f (∑' n, f n) :=\n  h.hasSum",
+  "declaration_name": "sum_lim",
+  "used_context": [
+    "Summable.hasSum (from Mathlib)"
+  ],
+  "notes": [
+    "Replaced the invalid binder annotation [TopologicalAddCommMonoid (PowerSeries K)] with the explicit class arguments [TopologicalSpace (PowerSeries K)] and [ContinuousAdd (PowerSeries K)] required by Summable/HasSum.",
+    "Assumes these instances are available; no additional topology is defined in the given context."
+  ]
+}

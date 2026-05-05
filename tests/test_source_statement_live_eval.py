@@ -16,6 +16,7 @@ from scripts.run_source_statement_live_eval import (
     classify_lean_failure,
     copy_local_import_closure,
     generated_application_candidates,
+    gold_check_declaration,
     import_modules_from_lean,
     local_import_path,
     materialize_candidate_project,
@@ -246,6 +247,39 @@ def test_generated_application_candidates_ignore_parenthesized_terms_in_statemen
     (monomialTableau T : MvPolynomial (Fin N) R) = xPow (contentTableau T)"""
 
     assert generated_application_candidates("generated", head) == ["generated T", "generated lam mu T", "generated"]
+
+
+def test_gold_check_tries_generated_binder_order_before_gold_order(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    project_root.mkdir()
+    (project_root / "Demo.lean").write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "theorem target (n k : ℕ) : n + k = n + k := by",
+                "  rfl",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    record = SelectedRecord(
+        {
+            "id": "Demo.lean:Demo.target",
+            "alignment": {},
+            "output": {"lean_path": "Demo.lean", "declaration_names": ["Demo.target"], "line_range": [3, 4]},
+            "minimal_context": {"source_spans": [], "lean_predecessors": [], "file_context": []},
+        }
+    )
+    generated = "theorem generated (k n : ℕ) : n + k = n + k := by\n  rfl"
+
+    check = gold_check_declaration(project_root, record, "generated", generated)
+
+    assert "simpa using generated k n" in check
+    assert "simpa using generated n k" in check
+    assert check.index("generated k n") < check.index("generated n k")
 
 
 def test_copy_local_import_closure_copies_recursive_local_imports(tmp_path: Path) -> None:

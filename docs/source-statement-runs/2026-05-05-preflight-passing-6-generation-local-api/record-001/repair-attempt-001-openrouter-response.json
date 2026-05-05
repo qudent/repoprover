@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777948763-STj0Y0lVVD8TuJm88zDb",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem sum_lim (f : ℕ → PowerSeries K) [TopologicalAddCommMonoid (PowerSeries K)] (h : Summable f) : HasSum f (∑' n, f n) :=\\n  h.hasSum\",\n  \"declaration_name\": \"sum_lim\",\n  \"used_context\": [\n    \"TopologicalAddCommMonoid (PowerSeries K)\",\n    \"Summable f\",\n    \"h.hasSum\"\n  ],\n  \"notes\": [\n    \"Added the missing topological instance as a typeclass argument to resolve the TopologicalSpace synthesis error. The original file may eventually define a topology on PowerSeries K; this version makes the theorem compile generically.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777948763,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5645,
+    "prompt_tokens": 4291,
+    "total_tokens": 9936,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 5486,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.02711094,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.02711094,
+      "upstream_inference_prompt_cost": 0.00746634,
+      "upstream_inference_completions_cost": 0.0196446
+    }
+  },
+  "provider": "SiliconFlow"
+}

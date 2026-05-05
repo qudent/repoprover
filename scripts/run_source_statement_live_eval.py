@@ -771,7 +771,12 @@ def copy_local_import_closure(
                 stack.append(imported)
 
 
-def gold_check_declaration(project_root: Path, record: SelectedRecord, generated_name: str) -> str:
+def _declaration_head(declaration: str) -> str:
+    marker = declaration.find(":=")
+    return declaration[:marker].rstrip() if marker != -1 else declaration.rstrip()
+
+
+def gold_check_declaration(project_root: Path, record: SelectedRecord, generated_name: str, generated_declaration: str) -> str:
     original = read_line_range(project_root / record.lean_path, record.line_range)
     marker = original.find(":=")
     if marker == -1:
@@ -783,7 +788,11 @@ def gold_check_declaration(project_root: Path, record: SelectedRecord, generated
         head,
         count=1,
     )
-    candidates = generated_application_candidates(generated_name, head)
+    candidates: list[str] = []
+    for candidate_head in (_declaration_head(generated_declaration), head):
+        for candidate in generated_application_candidates(generated_name, candidate_head):
+            if candidate not in candidates:
+                candidates.append(candidate)
     tactic_lines = ["  first", *(f"  | simpa using {candidate}" for candidate in candidates)]
     return head + " := by\n" + "\n".join(tactic_lines) + "\n"
 
@@ -828,7 +837,7 @@ def materialize_candidate_project(
     if include_grader:
         parts.append("")
         parts.append("-- Grader-only check: original target statement, proved from the model theorem.")
-        parts.append(gold_check_declaration(project_root, record, generated_name).rstrip())
+        parts.append(gold_check_declaration(project_root, record, generated_name, lean_declaration).rstrip())
     parts.append("")
     parts.extend(context_closes)
 

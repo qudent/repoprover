@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:639:29: error: Invalid rewrite argument: Expected an equality or iff proof or definition name, but `mem_univ ?x` is a proof of\n  ?x ∈ univ\nAlgebraicCombinatorics/Partitions/Basics.lean:648:12: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  p.transpose.numParts\nin the target expression\n  p.transpose.parts.card = k\n\ncase h.mpr.refine_1\nk n : ℕ\nA : Finset n.Partition := {p | p.parts.card = k}\nB : Finset n.Partition := {p | p.largestPart = k}\nhA : partsCount k n = #A\nh_inj : Function.Injective transpose\np : n.Partition\nh : p ∈ univ ∧ p.largestPart = k\nhp_largest : p.largestPart = k\n⊢ p.transpose.parts.card = k\nAlgebraicCombinatorics/Partitions/Basics.lean:649:8: error: Type mismatch\n  Eq.symm (transpose_transpose p)\nhas type\n  p = p.transpose.transpose\nbut is expected to have type\n  p.transpose.transpose = p\n"
+}

@@ -1,0 +1,20 @@
+{
+  "lean_declaration": "theorem partsCount_eq_card_largestPart (k n : ℕ) : partsCount k n = ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card :=\nby\n  let A := (Finset.univ : Finset (Partition n)).filter (fun p => Multiset.card p.parts = k)\n  let B := (Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)\n  have hA : partsCount k n = A.card := rfl\n  have h_inj : Function.Injective (transpose : Partition n → Partition n) := by\n    intro p q h\n    apply_fun transpose at h\n    simpa [transpose_transpose] using h\n  have h_image_eq : Finset.image transpose A = B := by\n    ext p\n    constructor\n    · intro h\n      rcases Finset.mem_image.mp h with ⟨q, hq, rfl⟩\n      rw [Finset.mem_filter, Finset.mem_univ, true_and]\n      rw [Finset.mem_filter] at hq\n      rw [transpose_largestPart_eq_length q]\n      exact hq.2\n    · intro h\n      rw [Finset.mem_filter] at h\n      have hp_largest : p.largestPart = k := h.2\n      apply Finset.mem_image.mpr\n      refine ⟨p.transpose, Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩, ?_⟩\n      · rw [transpose_length_eq_largestPart p, hp_largest]\n      · exact (transpose_transpose p).symm\n  calc\n    partsCount k n = A.card := hA\n    _ = (Finset.image transpose A).card := by rw [Finset.card_image_of_injective _ h_inj]\n    _ = B.card := by rw [h_image_eq]",
+  "declaration_name": "partsCount_eq_card_largestPart",
+  "used_context": [
+    "transpose_largestPart_eq_length",
+    "transpose_length_eq_largestPart",
+    "transpose_transpose",
+    "partsCount",
+    "Multiset.card",
+    "Finset.card_image_of_injective",
+    "Finset.image",
+    "Finset.univ",
+    "Finset.mem_image",
+    "Finset.mem_filter",
+    "Function.Injective"
+  ],
+  "notes": [
+    "Uses `Finset.card_image_of_injective` instead of the missing `Finset.card_congr`. Shows that `transpose` is injective and maps the set of partitions with exactly `k` parts onto the set of partitions with largest part `k`."
+  ]
+}

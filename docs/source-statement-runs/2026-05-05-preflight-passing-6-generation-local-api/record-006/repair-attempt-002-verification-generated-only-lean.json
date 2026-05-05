@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "output": "AlgebraicCombinatorics/Partitions/Basics.lean:642:6: error: 'calc' expression has type\n  q.transpose.largestPart = k\nbut is expected to have type\n  q.transpose ∈ univ ∧ q.transpose.largestPart = k\n"
+}

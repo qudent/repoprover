@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem sum_lim (f : ℕ → PowerSeries K) [TopologicalAddCommMonoid (PowerSeries K)] (h : Summable f) : HasSum f (∑' n, f n) :=\n  h.hasSum",
+  "declaration_name": "sum_lim",
+  "used_context": [
+    "TopologicalAddCommMonoid (PowerSeries K)",
+    "Summable f",
+    "h.hasSum"
+  ],
+  "notes": [
+    "Added the missing topological instance as a typeclass argument to resolve the TopologicalSpace synthesis error. The original file may eventually define a topology on PowerSeries K; this version makes the theorem compile generically."
+  ]
+}

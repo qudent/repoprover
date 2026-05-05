@@ -60,7 +60,10 @@ preflight with the retrieval context passed 6/6 in about 160s with a 21M output
 tree. The follow-up local-API generation-only probe completed 6/6 paid
 responses for `$0.041165848`; serial verification still found 0/6 successes,
 but failures are now narrower proof-repair/exact-statement issues rather than
-only missing local API context.
+only missing local API context. A decoupled generated-failure repair queue then
+ran three bounded provider-only repair passes over compile failures and verified
+them separately, moving the cumulative six-record result to 3/6 successes for
+`$0.113014943` total across local-API generation plus repair.
 
 ## Active Goals
 - [x] Generate a complete whole-corpus context graph and minimal-context
@@ -191,9 +194,16 @@ failures plus 1 hidden-grader mismatch; see
   parsed for `$0.041165848`; serial reusable-project verification remained 0/6
   with 5 compile failures and 1 grader mismatch. See
   `docs/source-statement-preflight-passing-6-local-api-comparison.md`.
-- [ ] Build a generated-failure repair queue over the five compile failures
+- [x] Build a generated-failure repair queue over the five compile failures
   from the local-API run, using generated-only compiler output plus the same
-  retrieved local API context.
+  retrieved local API context. Result: `scripts/repair_source_statement_generation.py`
+  generates repair artifacts without Lean checks; the verifier can consume
+  alternate model-output names. Three bounded repair passes moved cumulative
+  success to 3/6 for `$0.113014943` total local-API generation+repair spend.
+  See `docs/source-statement-local-api-repair-queue-results.md`.
+- [ ] Add a statement-shape/source-focus iteration for the three remaining
+  grader mismatches: limits exact target, determinant single-part target, and
+  generalized `Ring.choose` binomial target.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

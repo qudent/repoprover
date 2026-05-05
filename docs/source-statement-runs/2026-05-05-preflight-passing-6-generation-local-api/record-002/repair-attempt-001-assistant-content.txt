@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :\n    (A.submatrix id (Equiv.swap i j)).det = -A.det := by\n  calc\n    (A.submatrix id (Equiv.swap i j)).det = ((A.submatrix id (Equiv.swap i j))ᵀ).det := by rw [det_transpose]\n    _ = (Aᵀ.submatrix (Equiv.swap i j) id).det := by rw [Matrix.transpose_submatrix]\n    _ = (Matrix.of (Aᵀ ∘ Equiv.swap i j)).det := rfl\n    _ = -((Aᵀ).det) := by rw [det_swap_rows (Aᵀ) i j hij]\n    _ = -A.det := by rw [det_transpose]",
+  "declaration_name": "det_swap_cols",
+  "used_context": [
+    "det_transpose",
+    "Matrix.transpose_submatrix",
+    "rfl",
+    "det_swap_rows"
+  ],
+  "notes": [
+    "Added a rfl step to rewrite submatrix to the Matrix.of form required by det_swap_rows."
+  ]
+}

@@ -27,13 +27,13 @@ from scripts.run_source_statement_live_eval import (  # noqa: E402
 )
 
 
-def load_tasks(run_output: Path) -> list[dict[str, Any]]:
+def load_tasks(run_output: Path, *, model_output_name: str = "model-output.json") -> list[dict[str, Any]]:
     selected_path = run_output / "eval" / "selected-records.jsonl"
     rows = load_jsonl(selected_path)
     tasks: list[dict[str, Any]] = []
     for index, row in enumerate(rows, start=1):
         record_dir = run_output / f"record-{index:03d}"
-        model_output_path = record_dir / "model-output.json"
+        model_output_path = record_dir / model_output_name
         if not model_output_path.exists():
             tasks.append(
                 {
@@ -97,7 +97,7 @@ def verify_task(args: argparse.Namespace, task: dict[str, Any], project_pool: qu
                 clean_output=False,
             )
             generated_only = run_lean(project_dir, generated_target, args.lean_timeout)
-            write_json(record_dir / "verification-generated-only-lean.json", generated_only)
+            write_json(record_dir / f"{args.output_prefix}-generated-only-lean.json", generated_only)
             row["generated_only_lean_check"] = generated_only
             if generated_only["exit_code"] != 0:
                 row["success"] = False
@@ -116,7 +116,7 @@ def verify_task(args: argparse.Namespace, task: dict[str, Any], project_pool: qu
                 clean_output=False,
             )
             graded = run_lean(project_dir, graded_target, args.lean_timeout)
-            write_json(record_dir / "verification-graded-lean.json", graded)
+            write_json(record_dir / f"{args.output_prefix}-graded-lean.json", graded)
             row["lean_check"] = graded
             row["success"] = graded["exit_code"] == 0
             if not row["success"]:
@@ -175,7 +175,7 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
 def run(args: argparse.Namespace) -> dict[str, Any]:
     if args.workers < 1:
         raise ValueError("--workers must be at least 1")
-    tasks = load_tasks(args.run_output)
+    tasks = load_tasks(args.run_output, model_output_name=args.model_output_name)
     if args.work_root.exists():
         shutil.rmtree(args.work_root)
     args.work_root.mkdir(parents=True)
@@ -204,9 +204,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "results": results,
     }
     eval_dir = args.run_output / "eval"
-    write_json(eval_dir / "verification-results.json", summary)
-    write_jsonl(eval_dir / "verification-results.jsonl", results)
-    render_markdown(eval_dir / "verification-results.md", summary)
+    write_json(eval_dir / f"{args.output_prefix}-results.json", summary)
+    write_jsonl(eval_dir / f"{args.output_prefix}-results.jsonl", results)
+    render_markdown(eval_dir / f"{args.output_prefix}-results.md", summary)
     return summary
 
 
@@ -219,6 +219,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--include-record-imports", action="store_true")
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--lean-timeout", type=int, default=90)
+    parser.add_argument(
+        "--model-output-name",
+        default="model-output.json",
+        help="Per-record JSON artifact to verify, e.g. repair-attempt-001-model-output.json.",
+    )
+    parser.add_argument(
+        "--output-prefix",
+        default="verification",
+        help="Prefix for verification artifacts written into record dirs and eval/.",
+    )
     return parser.parse_args()
 
 

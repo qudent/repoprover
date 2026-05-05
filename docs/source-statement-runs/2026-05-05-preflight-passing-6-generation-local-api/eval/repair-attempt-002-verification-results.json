@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-05-05T02:55:27.227374+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api",
+  "work_root": "/tmp/repoprover-source-statement-verify-local-api-repair2-serial",
+  "workers": 1,
+  "records_completed": 6,
+  "successes": 0,
+  "success_rate": 0.0,
+  "failure_classes": {
+    "generated_lean_does_not_compile": 1,
+    "grader_gold_statement_not_proved": 1,
+    "missing_model_output": 4
+  },
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.coeffStabilizesTo_partial_sum'",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-001",
+      "generated_name": "sum_lim",
+      "generated_only_lean_check": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Details/Limits.lean:90:16: error: typeclass instance problem is stuck\n  CommRing ?m.21\n\nNote: Lean will not try to resolve this typeclass instance problem because the type argument to `CommRing` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass.\n\nHint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.\n"
+      },
+      "success": false,
+      "failure_class": "grader_gold_statement_not_proved"
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_swap_cols",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-002",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-002/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/DeterminantsBasic.lean:AlgebraicCombinatorics.Det.det_add_smul_col",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-003",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-003/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 4,
+      "record_id": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:AlgebraicCombinatorics.FPS.pascal_identity_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-004",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-004/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/FPSDefinition.lean:AlgebraicCombinatorics.FPS.X_coeff_one",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-005",
+      "success": false,
+      "failure_class": "missing_model_output",
+      "error": "missing docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-005/repair-attempt-002-model-output.json"
+    },
+    {
+      "index": 6,
+      "record_id": "AlgebraicCombinatorics/Partitions/Basics.lean:Nat.Partition.partsCount_eq_largestPartCount",
+      "record_dir": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation-local-api/record-006",
+      "generated_name": "partsCount_eq_card_largestPart",
+      "generated_only_lean_check": {
+        "exit_code": 1,
+        "output": "AlgebraicCombinatorics/Partitions/Basics.lean:642:6: error: 'calc' expression has type\n  q.transpose.largestPart = k\nbut is expected to have type\n  q.transpose ∈ univ ∧ q.transpose.largestPart = k\n"
+      },
+      "success": false,
+      "failure_class": "generated_lean_does_not_compile"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem coeff_X_fps (n : ℕ) : coeff n (X : R⟦X⟧) = if n = 1 then 1 else 0 := by\n  rw [coeff_X]",
+  "declaration_name": "coeff_X_fps",
+  "used_context": [
+    "coeff_X (standard Mathlib lemma for PowerSeries)"
+  ],
+  "notes": [
+    "simp did not work, but coeff_X is a @[simp] lemma; using rw [coeff_X] instead."
+  ]
+}

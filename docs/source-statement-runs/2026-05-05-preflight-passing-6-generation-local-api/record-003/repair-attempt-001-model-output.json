@@ -1,0 +1,16 @@
+{
+  "lean_declaration": "theorem det_colop (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :\n    (A.submatrix id (Equiv.swap i j)).det = -A.det ∧\n    (A.updateCol i (fun k => A k i + c • A k j)).det = A.det :=\nby\n  have hswap : (A.submatrix id (Equiv.swap i j)).det = -A.det := det_swap_cols A i j hij\n  have hadd : (A.updateCol i (fun k => A k i + c • A k j)).det = A.det := by\n    have h_eq : (A.updateCol i (fun k => A k i + c • A k j)).transpose =\n        A.transpose.updateRow i (A.transpose i + c • A.transpose j) := by\n      ext k l\n      simp [Matrix.transpose_apply, Matrix.updateCol_apply, Matrix.updateRow_apply, smul_eq_mul]\n    calc\n      (A.updateCol i (fun k => A k i + c • A k j)).det = \n          (A.updateCol i (fun k => A k i + c • A k j)).transpose.det := by rw [Matrix.det_transpose]\n      _ = (A.transpose.updateRow i (A.transpose i + c • A.transpose j)).det := by rw [h_eq]\n      _ = A.transpose.det := by rw [det_add_smul_row (A.transpose) i j hij c]\n      _ = A.det := by rw [Matrix.det_transpose]\n  exact And.intro hswap hadd",
+  "declaration_name": "det_colop",
+  "used_context": [
+    "det_swap_cols",
+    "det_add_smul_row",
+    "Matrix.det_transpose",
+    "Matrix.transpose_apply",
+    "Matrix.updateCol_apply",
+    "Matrix.updateRow_apply",
+    "smul_eq_mul"
+  ],
+  "notes": [
+    "Fixed the proof of the transpose equality by using explicit application lemmas instead of a bare simp call."
+  ]
+}
