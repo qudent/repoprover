@@ -115,10 +115,14 @@ multiplicativity and the symmetric-function proposition `e_n = 0` for `n > N`.
 The selector returned valid JSON for `$0.00164794`; hydration checked
 `Matrix.det_mul` but rejected `MvPolynomial.esymm_eq_zero_of_lt` as an unknown
 constant. Generation cost `$0.00200256`; generated-only verification and
-semantic coverage both passed `1/2`. This suggests the next bottleneck is a
-second Mathlib lookup/repair round for selector guesses that hydrate as unknown
-constants, plus stricter enforcement of the `cannot_prove_from_visible_context`
-empty-output contract.
+semantic coverage both passed `1/2`. A follow-up hydration fallback now scans
+local Mathlib declarations when an exact selector guess is unknown; for this
+unit it found the relevant `MvPolynomial.esymm` area, including
+`MvPolynomial.esymm_eq_sum_subtype` and `MvPolynomial.esymm_zero`, but no direct
+vanishing lemma. This suggests the next bottleneck is a second repair round
+that feeds those checked candidates plus local predecessor/proof-pattern context
+back to the selector/generator, along with stricter enforcement of the
+`cannot_prove_from_visible_context` empty-output contract.
 
 ### Imported Lean surface and likely context needs
 

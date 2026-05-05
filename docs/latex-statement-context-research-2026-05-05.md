@@ -289,6 +289,12 @@ Batch-2 v4 theorem-level smoke:
   JSON, `0` reasoning tokens.
 - hydration: `Matrix.det_mul` checked exactly; selector-requested
   `MvPolynomial.esymm_eq_zero_of_lt` was rejected as an unknown constant.
+- hydration fallback: the updated hydrator now attaches ranked local-Mathlib
+  alternatives for unknown exact requests. For this selector guess it found
+  `MvPolynomial.esymm`-area declarations such as
+  `MvPolynomial.esymm_eq_sum_subtype`, `MvPolynomial.esymm_eq_sum_monomial`, and
+  `MvPolynomial.esymm_zero`; it did not find a direct `esymm = 0 when n > N`
+  theorem.
 - generation:
   `docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid/`,
   cost `$0.00200256`, valid JSON.
@@ -302,8 +308,11 @@ Batch-2 v4 theorem-level smoke:
   violation.
 
 Interpretation: the current pipeline can batch two theorem-level tasks, but the
-next necessary component is a second Mathlib lookup/repair round when hydration
-rejects a selector guess.
+next necessary component is a repair round when hydration rejects a selector
+guess. The repair prompt should receive the fallback Mathlib candidates and safe
+local predecessor/project context, because the missing symmetric-polynomial
+proof appears to need both the right `MvPolynomial.esymm` definition/theorems
+and the local subset-cardinality proof pattern.
 
 ## Lean Dependency Accounting
 

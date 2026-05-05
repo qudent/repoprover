@@ -18,6 +18,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_IMPORTS = ["Mathlib"]
 DEFAULT_OPENS = ["open scoped Polynomial BigOperators", "open PowerSeries Finset"]
 LEAN_IDENTIFIER_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*")
+DECL_RE = re.compile(
+    r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
+    r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)\s+"
+    r"(?P<name>[^\s:\{\(\[]+)"
+)
+NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
+END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
 
 
 @dataclass(frozen=True)
@@ -51,6 +58,87 @@ def clean_identifier(value: str) -> str | None:
 def split_exact_identifier_list(value: str) -> list[str]:
     parts = [part.strip().strip("`") for part in re.split(r"[,;]", value)]
     return [part for part in parts if LEAN_IDENTIFIER_RE.fullmatch(part)]
+
+
+def identifier_tokens(value: str) -> list[str]:
+    raw_parts = re.split(r"[^A-Za-z0-9']+", value.replace(".", "_"))
+    ignored = {"theorem", "lemma", "def", "of", "the", "a", "an"}
+    tokens = []
+    for part in raw_parts:
+        cleaned = part.strip("_").lower()
+        if len(cleaned) >= 2 and cleaned not in ignored:
+            tokens.append(cleaned)
+    return list(dict.fromkeys(tokens))
+
+
+def important_identifier_tokens(tokens: list[str]) -> list[str]:
+    common_shape_tokens = {"eq", "zero", "one", "lt", "gt", "le", "ge", "iff", "mpr", "mp"}
+    namespace_tokens = {"mathlib", "mvpolynomial", "matrix", "finset", "nat", "int"}
+    return [token for token in tokens if token not in common_shape_tokens and token not in namespace_tokens]
+
+
+def namespace_prefix(stack: list[str]) -> str:
+    parts: list[str] = []
+    for item in stack:
+        parts.extend(part for part in item.split(".") if part)
+    return ".".join(parts)
+
+
+def namespace_end_matches(stack: list[str], end_name: str | None) -> bool:
+    if not stack or not end_name:
+        return False
+    top = stack[-1]
+    return end_name == top or end_name == top.split(".")[-1]
+
+
+def fallback_mathlib_candidates(query: str, *, project_root: Path, limit: int = 8) -> list[dict[str, Any]]:
+    tokens = identifier_tokens(query)
+    if not tokens:
+        return []
+    important_tokens = important_identifier_tokens(tokens)
+    mathlib_root = project_root / ".lake" / "packages" / "mathlib" / "Mathlib"
+    if not mathlib_root.exists():
+        return []
+    candidates: list[dict[str, Any]] = []
+    for path in sorted(mathlib_root.rglob("*.lean")):
+        namespace_stack: list[str] = []
+        rel = path.relative_to(project_root).as_posix()
+        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+            namespace_match = NAMESPACE_RE.match(line)
+            if namespace_match:
+                namespace_stack.append(namespace_match.group("name"))
+                continue
+            end_match = END_RE.match(line)
+            if end_match and namespace_end_matches(namespace_stack, end_match.group("name")):
+                namespace_stack.pop()
+                continue
+            decl_match = DECL_RE.match(line)
+            if not decl_match:
+                continue
+            name = decl_match.group("name")
+            haystack = f"{namespace_prefix(namespace_stack)}.{name} {line}".lower()
+            matched = [token for token in tokens if token in haystack]
+            if not matched:
+                continue
+            important_matched = [token for token in important_tokens if token in haystack]
+            if important_tokens and not important_matched:
+                continue
+            score = len(matched) + (3 * len(important_matched))
+            if name.lower() in query.lower():
+                score += 2
+            candidates.append(
+                {
+                    "name": ".".join(part for part in [namespace_prefix(namespace_stack), name] if part),
+                    "kind": decl_match.group("kind"),
+                    "path": rel,
+                    "line_number": line_number,
+                    "declaration_line": line.strip(),
+                    "matched_tokens": matched,
+                    "score": score,
+                }
+            )
+    candidates.sort(key=lambda item: (-int(item["score"]), str(item["path"]), int(item["line_number"])))
+    return candidates[:limit]
 
 
 def request_from_item(
@@ -214,6 +302,9 @@ def hydrate_output(
     hydrated_requests: list[dict[str, Any]] = []
     for request in requests:
         check_result = checked.get(request.exact_identifier or "", {})
+        fallback_candidates = []
+        if (not request.exact_identifier) or check_result.get("status") != "checked":
+            fallback_candidates = fallback_mathlib_candidates(request.query, project_root=project_root)
         hydrated_requests.append(
             {
                 "unit_key": request.unit_key,
@@ -225,6 +316,7 @@ def hydrate_output(
                 "why_needed": request.why_needed,
                 "exact_identifier": request.exact_identifier,
                 "lean_check": check_result if request.exact_identifier else {"status": "not_exact_identifier"},
+                "fallback_mathlib_candidates": fallback_candidates,
             }
         )
     return {

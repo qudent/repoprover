@@ -1,10 +1,11 @@
 {
   "exact_identifier_count": 2,
-  "generated_at": "2026-05-05T22:56:19.381627+00:00",
+  "generated_at": "2026-05-05T23:07:49.178162+00:00",
   "hydrated_mathlib_context": [
     {
       "exact_identifier": "Matrix.det_mul",
       "expected_signature_or_shape": "det_mul : ∀ (A B : Matrix (Fin n) (Fin n) K), (A * B).det = A.det * B.det",
+      "fallback_mathlib_candidates": [],
       "lean_check": {
         "messages": [
           {
@@ -26,6 +27,113 @@
     {
       "exact_identifier": "MvPolynomial.esymm_eq_zero_of_lt",
       "expected_signature_or_shape": "esymm_eq_zero_of_lt : ∀ (n : ℕ) (h : N < n), esymm (Fin N) K n = 0",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "def esymm (s : Multiset R) (n : ℕ) : R :=",
+          "kind": "def",
+          "line_number": 70,
+          "matched_tokens": [
+            "esymm",
+            "lt"
+          ],
+          "name": "Multiset.esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "def esymm (n : ℕ) : MvPolynomial σ R :=",
+          "kind": "def",
+          "line_number": 194,
+          "matched_tokens": [
+            "mvpolynomial",
+            "esymm"
+          ],
+          "name": "MvPolynomial.esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem esymm_eq_multiset_esymm : esymm σ R = (univ.val.map X).esymm := by",
+          "kind": "theorem",
+          "line_number": 205,
+          "matched_tokens": [
+            "mvpolynomial",
+            "esymm",
+            "eq",
+            "lt"
+          ],
+          "name": "MvPolynomial.esymm_eq_multiset_esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem aeval_esymm_eq_multiset_esymm [Algebra R S] (n : ℕ) (f : σ → S) :",
+          "kind": "theorem",
+          "line_number": 208,
+          "matched_tokens": [
+            "mvpolynomial",
+            "esymm",
+            "eq",
+            "lt"
+          ],
+          "name": "MvPolynomial.aeval_esymm_eq_multiset_esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem sum_antidiagonal_card_esymm_psum_eq_zero :",
+          "kind": "theorem",
+          "line_number": 236,
+          "matched_tokens": [
+            "mvpolynomial",
+            "esymm",
+            "eq",
+            "zero"
+          ],
+          "name": "MvPolynomial.sum_antidiagonal_card_esymm_psum_eq_zero",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/NewtonIdentities.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem esymm_eq_sum_subtype (n : ℕ) :",
+          "kind": "theorem",
+          "line_number": 213,
+          "matched_tokens": [
+            "mvpolynomial",
+            "esymm",
+            "eq"
+          ],
+          "name": "MvPolynomial.esymm_eq_sum_subtype",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 6
+        },
+        {
+          "declaration_line": "theorem esymm_eq_sum_monomial (n : ℕ) :",
+          "kind": "theorem",
+          "line_number": 218,
+          "matched_tokens": [
+            "mvpolynomial",
+            "esymm",
+            "eq"
+          ],
+          "name": "MvPolynomial.esymm_eq_sum_monomial",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 6
+        },
+        {
+          "declaration_line": "theorem esymm_zero : esymm σ R 0 = 1 := by",
+          "kind": "theorem",
+          "line_number": 223,
+          "matched_tokens": [
+            "mvpolynomial",
+            "esymm",
+            "zero"
+          ],
+          "name": "MvPolynomial.esymm_zero",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 6
+        }
+      ],
       "lean_check": {
         "error": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
         "messages": [

@@ -2,6 +2,7 @@
 
 from scripts.hydrate_latex_statement_context import (
     build_check_source,
+    fallback_mathlib_candidates,
     hydrate_output,
     iter_mathlib_requests,
     split_exact_identifier_list,
@@ -91,3 +92,26 @@ def test_hydrate_output_marks_non_exact_queries(monkeypatch, tmp_path) -> None:
     assert hydrated["exact_identifier_count"] == 1
     assert hydrated["hydrated_mathlib_context"][0]["lean_check"]["status"] == "checked"
     assert hydrated["hydrated_mathlib_context"][1]["lean_check"]["status"] == "not_exact_identifier"
+
+
+def test_fallback_mathlib_candidates_scores_local_mathlib_declarations(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/Symmetric.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace MvPolynomial",
+                "section CommSemiring",
+                "end CommSemiring",
+                "theorem esymm_eq_sum_subtype (n : Nat) : True := by trivial",
+                "theorem unrelated : True := by trivial",
+                "end MvPolynomial",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates("MvPolynomial.esymm_eq_zero_of_lt", project_root=tmp_path)
+
+    assert candidates[0]["name"] == "MvPolynomial.esymm_eq_sum_subtype"
+    assert "esymm" in candidates[0]["matched_tokens"]

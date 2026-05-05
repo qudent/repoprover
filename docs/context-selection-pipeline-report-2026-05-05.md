@@ -388,6 +388,12 @@ and
   tokens `9959` / `906`.
 - hydration: `Matrix.det_mul` checked exactly; `MvPolynomial.esymm_eq_zero_of_lt`
   was rejected by Lean as an unknown constant.
+- hydration fallback: when an exact request is unknown, the hydrator now scans
+  local Mathlib declarations and attaches ranked alternatives. For the bad
+  `MvPolynomial.esymm_eq_zero_of_lt` guess, the fallback found the relevant
+  `MvPolynomial.esymm` area, including `MvPolynomial.esymm`,
+  `MvPolynomial.esymm_eq_sum_subtype`, `MvPolynomial.esymm_eq_sum_monomial`,
+  and `MvPolynomial.esymm_zero`, but it did not find a direct vanishing theorem.
 - generation: valid JSON, `$0.00200256`, `0` reasoning tokens, prompt/completion
   tokens `11014` / `1645`.
 - generated-only verification: `1/2`; determinant multiplicativity compiled,
@@ -397,11 +403,14 @@ and
   `AlgebraicCombinatorics.Det.det_mul'`, while the symmetric-polynomial unit is
   `generated_not_compiled`.
 
-Interpretation: batch size 2 is now schema-stable for DeepSeek V4 Flash, but
-second-round Mathlib lookup/repair is needed. The failed unit looks like a
-Mathlib-name retrieval failure, not a basic mathematical-understanding failure:
-the selector stated the correct theorem shape but guessed a nonexistent API
-name. The generator also needs stricter cannot-prove enforcement; the prompt
+Interpretation: batch size 2 is now schema-stable for DeepSeek V4 Flash. The
+failed unit looks like a Mathlib-name retrieval failure plus missing local proof
+context, not a basic mathematical-understanding failure: the selector stated the
+correct theorem shape but guessed a nonexistent API name. The fallback makes the
+next repair input much more concrete, but the actual proof likely also needs
+local file/project context around the existing `e` definition and the subset
+cardinality proof pattern (`powersetCard`, `card_le_card`, `Fintype.card_fin`,
+`omega`). The generator also needs stricter cannot-prove enforcement; the prompt
 schema now says `lean_file_body` must be exactly empty and `declaration_names`
 empty when status is `cannot_prove_from_visible_context`.
 

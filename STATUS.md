@@ -33,8 +33,10 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   `missing_context`, `wrong_math`, `shape_mismatch_against_oracle`, or
   `useful_alternative_formalization`.
 - [x] Run one theorem-level batch-size-2 v4 selector/generation smoke.
-- [ ] Add second-round Mathlib lookup/repair for selector guesses that hydrate
-  as unknown constants.
+- [x] Attach source-scan Mathlib fallback candidates when selector guesses
+  hydrate as unknown constants.
+- [ ] Add LLM/Lean second-round repair using fallback Mathlib candidates plus
+  safe local predecessor context.
 
 ## Blockers
 - The old declaration-level verifier can reject useful source-theorem progress
@@ -47,6 +49,9 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
 - Batch-2 v4 exposed the next blocker: selector can understand the math but
   misremember a Mathlib lemma name (`MvPolynomial.esymm_eq_zero_of_lt`), and the
   generator may still violate the `cannot_prove` empty-output contract.
+- The new fallback search finds the relevant `MvPolynomial.esymm` declarations
+  for that unknown-name guess, but not a direct vanishing theorem; the symmetric
+  unit likely needs local proof-pattern context as well.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is needed.
 
@@ -75,6 +80,11 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   Generation cost `$0.00200256`; verification compiled `1/2`; semantic coverage
   was `1/2` with `coverage_status_counts = {all_aligned_gold_proved: 1,
   generated_not_compiled: 1}`.
+- Hydration fallback rerun:
+  `docs/latex-statement-context-runs/2026-05-05-batch2-selected-localctx-v4-paid/batch-001/mathlib-lean-hydrated-context.json`
+  now attaches ranked `MvPolynomial.esymm`-area candidates for the bad selector
+  guess, including `MvPolynomial.esymm_eq_sum_subtype` and
+  `MvPolynomial.esymm_zero`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
