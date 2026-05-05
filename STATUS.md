@@ -36,6 +36,8 @@ retired from `main`; historical run logs remain. The current dataset is
   compile success from oracle coverage.
 - [x] Add a post-hoc theorem-level semantic coverage check using grader-only
   gold statements and the existing `simpa using` criterion.
+- [x] Infer generated-only verification imports/opens from selected prior
+  project context in `generation-payload.json`.
 - [ ] Reclassify old strict-grader mismatches into `compile_failure`,
   `missing_context`, `wrong_math`, `shape_mismatch_against_oracle`, or
   `useful_alternative_formalization`.
@@ -66,9 +68,8 @@ retired from `main`; historical run logs remain. The current dataset is
   multiplication hypotheses that the gold `IsInverse` statement does not have
   directly.
 - A v3 rerun with prior project context fixes that specific shape issue and
-  reaches semantic coverage `1/1`, but generated-only verification currently
-  needs explicit project imports/opens to see names such as `IsInverse`.
-  Automating that verification context is still open.
+  reaches semantic coverage `1/1`. Generated-only verification now infers the
+  needed project import/open context from the generation payload.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` instead of rerunning Lean
   unless needed.
@@ -118,8 +119,8 @@ retired from `main`; historical run logs remain. The current dataset is
   `AlgebraicCombinatorics.FPS.IsInverse`; hydration checked `mul_comm` and
   rejected `mul_left_cancel₀` as not an exact identifier. Generation in
   `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/`
-  cost `$0.0004417`, emitted `IsInverse.unique`, compiled `1/1` with project
-  imports/opens, exact name overlap `0/1`, semantic coverage `1/1`.
+  cost `$0.0004417`, emitted `IsInverse.unique`, compiled `1/1` with inferred
+  project imports/opens, exact name overlap `0/1`, semantic coverage `1/1`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.

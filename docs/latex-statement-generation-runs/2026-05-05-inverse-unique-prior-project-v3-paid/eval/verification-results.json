@@ -1,34 +1,43 @@
 {
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
   "batches": [
     {
-      "compile_passed_units": 0,
+      "compile_passed_units": 1,
       "generation_output": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.FPS.CommutativeRings",
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.FPS.CommutativeRings",
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.FPS"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.FPS"
+      ],
       "unit_count": 1,
       "units": [
         {
-          "compile_passed": false,
+          "compile_passed": true,
           "contract_violations": [],
           "declaration_names": [
             "IsInverse.unique"
           ],
-          "lean_error_count": 2,
-          "lean_returncode": 1,
-          "messages": [
-            {
-              "column": 69,
-              "data": "Function expected at\n  IsInverse\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  a\n\nHint: The identifier `IsInverse` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
-              "kind": "[anonymous]",
-              "line": 4,
-              "severity": "error"
-            },
-            {
-              "column": 90,
-              "data": "Function expected at\n  IsInverse\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  a\n\nHint: The identifier `IsInverse` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
-              "kind": "[anonymous]",
-              "line": 4,
-              "severity": "error"
-            }
-          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
           "placeholder_tokens": [],
           "reported_status": "generated",
           "skipped_reason": null,
@@ -38,16 +47,10 @@
       ]
     }
   ],
-  "compile_passed_units": 0,
-  "generated_at": "2026-05-05T22:24:44.488425+00:00",
+  "compile_passed_units": 1,
+  "generated_at": "2026-05-05T22:31:43.416179+00:00",
   "generation_run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid",
-  "imports": [
-    "Mathlib"
-  ],
-  "opens": [
-    "open scoped Polynomial BigOperators",
-    "open PowerSeries Finset"
-  ],
+  "infer_context": true,
   "project_root": "algebraic-combinatorics",
   "schema_version": "repoprover.latex_statement_generation_verification.v1",
   "unit_count": 1

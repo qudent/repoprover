@@ -1,7 +1,7 @@
 {
   "all_aligned_gold_proved_units": 1,
   "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
-  "generated_at": "2026-05-05T22:26:24.780574+00:00",
+  "generated_at": "2026-05-05T22:32:13.892829+00:00",
   "generation_run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid",
   "no_aligned_gold_proved_units": 0,
   "partial_aligned_gold_proved_units": 0,

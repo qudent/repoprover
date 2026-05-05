@@ -3,7 +3,7 @@
   "compile_passed_units": 1,
   "compiled_name_overlap_units": 0,
   "compiled_needs_semantic_review_units": 1,
-  "generated_at": "2026-05-05T22:26:59.570745+00:00",
+  "generated_at": "2026-05-05T22:31:56.490232+00:00",
   "generation_run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid",
   "schema_version": "repoprover.latex_statement_gold_comparison.v1",
   "selector_run": "docs/latex-statement-context-runs/2026-05-05-inverse-unique-prior-project-v3-paid",

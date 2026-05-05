@@ -222,9 +222,9 @@ Paid v3 result:
   cost `$0.0004417`, valid JSON, `0` reasoning tokens.
 - generated theorem: `IsInverse.unique`, using the project `IsInverse` predicate
   rather than raw symmetric multiplication hypotheses.
-- verification: generated-only compile passes `1/1` when the verifier includes
-  the relevant project module and namespace open; exact name overlap remains
-  `0/1`; semantic coverage is `1/1`.
+- verification: generated-only compile passes `1/1` with imports/opens inferred
+  from the generation payload's prior project context; exact name overlap
+  remains `0/1`; semantic coverage is `1/1`.
 
 ## Lean Dependency Accounting
 

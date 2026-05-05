@@ -91,8 +91,9 @@ prior source definition's `AlgebraicCombinatorics.FPS.IsInverse` and
 `IsInvertible` Lean snippets while still hiding the aligned target theorem.
 The paid v3 rerun cost `$0.00038332` for selection and `$0.0004417` for
 generation. It generated `IsInverse.unique`, compiled with the appropriate
-project import/open context, and the semantic grader proved the aligned gold
-statement `1/1` even though exact declaration-name overlap remained `0/1`.
+project import/open context inferred from the generation payload, and the
+semantic grader proved the aligned gold statement `1/1` even though exact
+declaration-name overlap remained `0/1`.
 
 ### Imported Lean surface and likely context needs
 

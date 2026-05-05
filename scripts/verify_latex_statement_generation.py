@@ -16,6 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_IMPORTS = ["Mathlib"]
 DEFAULT_OPENS = ["open scoped Polynomial BigOperators", "open PowerSeries Finset"]
 PLACEHOLDER_RE = re.compile(r"\b(sorry|admit|aesop\?)\b")
+LEAN_DOTTED_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)+$")
 
 
 def read_json(path: Path) -> Any:
@@ -31,6 +32,76 @@ def generation_output_paths(run_dir: Path) -> list[Path]:
     if run_dir.is_file():
         return [run_dir]
     return sorted(run_dir.glob("batch-*/generation-output.json"))
+
+
+def unique_in_order(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for value in values:
+        if value and value not in seen:
+            out.append(value)
+            seen.add(value)
+    return out
+
+
+def maybe_namespace(name: str) -> str | None:
+    if not LEAN_DOTTED_NAME_RE.fullmatch(name):
+        return None
+    parts = name.split(".")
+    if len(parts) < 2:
+        return None
+    namespace = ".".join(parts[:-1])
+    return namespace if namespace not in {"Mathlib"} else None
+
+
+def iter_dicts(value: Any) -> list[dict[str, Any]]:
+    found: list[dict[str, Any]] = []
+    if isinstance(value, dict):
+        found.append(value)
+        for child in value.values():
+            found.extend(iter_dicts(child))
+    elif isinstance(value, list):
+        for child in value:
+            found.extend(iter_dicts(child))
+    return found
+
+
+def payload_context(output_path: Path) -> dict[str, list[str]]:
+    payload_path = output_path.with_name("generation-payload.json")
+    if not payload_path.exists():
+        return {"imports": [], "opens": []}
+    payload = read_json(payload_path)
+    messages = payload.get("messages") or []
+    user_message = next((message for message in messages if message.get("role") == "user"), None)
+    if not user_message:
+        return {"imports": [], "opens": []}
+    try:
+        user_payload = json.loads(str(user_message.get("content") or ""))
+    except json.JSONDecodeError:
+        return {"imports": [], "opens": []}
+
+    imports: list[str] = []
+    namespaces: list[str] = []
+    for item in iter_dicts(user_payload):
+        module = str(item.get("module") or "")
+        if module and LEAN_DOTTED_NAME_RE.fullmatch(module):
+            imports.append(module)
+        for imported in item.get("imports") or []:
+            imported_text = str(imported)
+            if imported_text and LEAN_DOTTED_NAME_RE.fullmatch(imported_text):
+                imports.append(imported_text)
+        if str(item.get("kind") or "") == "namespace":
+            namespace = str(item.get("name") or "")
+            if namespace and LEAN_DOTTED_NAME_RE.fullmatch(namespace):
+                namespaces.append(namespace)
+        name = str(item.get("name") or "")
+        namespace = maybe_namespace(name)
+        if namespace:
+            namespaces.append(namespace)
+    return {
+        "imports": unique_in_order(imports),
+        "opens": [f"open {namespace}" for namespace in unique_in_order(namespaces)],
+    }
 
 
 def build_lean_source(body: str, *, imports: list[str], opens: list[str]) -> str:
@@ -139,16 +210,23 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         raise FileNotFoundError(f"no generation-output.json files found under {args.generation_run}")
     batches: list[dict[str, Any]] = []
     for output_path in output_paths:
+        inferred = payload_context(output_path) if args.infer_context else {"imports": [], "opens": []}
+        imports = unique_in_order([*args.imports, *inferred["imports"]])
+        opens = unique_in_order([*args.opens, *inferred["opens"]])
         units = verify_generation_output(
             read_json(output_path),
             project_root=args.project_root,
-            imports=args.imports,
-            opens=args.opens,
+            imports=imports,
+            opens=opens,
             timeout_seconds=args.timeout_seconds,
         )
         batches.append(
             {
                 "generation_output": str(output_path),
+                "imports": imports,
+                "opens": opens,
+                "inferred_imports": inferred["imports"],
+                "inferred_opens": inferred["opens"],
                 "units": units,
                 "compile_passed_units": sum(1 for unit in units if unit["compile_passed"]),
                 "unit_count": len(units),
@@ -159,8 +237,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "generation_run": str(args.generation_run),
         "project_root": str(args.project_root),
-        "imports": args.imports,
-        "opens": args.opens,
+        "base_imports": args.imports,
+        "base_opens": args.opens,
+        "infer_context": args.infer_context,
         "batches": batches,
         "compile_passed_units": sum(batch["compile_passed_units"] for batch in batches),
         "unit_count": sum(batch["unit_count"] for batch in batches),
@@ -175,6 +254,13 @@ def main() -> None:
     parser.add_argument("--project-root", type=Path, default=REPO_ROOT / "algebraic-combinatorics")
     parser.add_argument("--imports", nargs="+", default=DEFAULT_IMPORTS)
     parser.add_argument("--opens", nargs="*", default=DEFAULT_OPENS)
+    parser.add_argument(
+        "--no-infer-context",
+        dest="infer_context",
+        action="store_false",
+        help="Disable imports/opens inferred from generation-payload project context.",
+    )
+    parser.set_defaults(infer_context=True)
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()

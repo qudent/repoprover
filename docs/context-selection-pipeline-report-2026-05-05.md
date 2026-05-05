@@ -296,8 +296,9 @@ and
   Lean identifier.
 - generation emitted `IsInverse.unique`, a theorem in the project predicate
   shape.
-- generated-only compile: `1/1` when checked with the needed project
-  import/open context.
+- generated-only compile: `1/1`; `scripts/verify_latex_statement_generation.py`
+  now infers the needed project import/open context from
+  `generation-payload.json`.
 - exact name overlap: `0/1`.
 - semantic theorem coverage: `1/1`; the grader-only aligned gold statement
   `AlgebraicCombinatorics.FPS.isInverse_unique` is proved from the generated
@@ -305,9 +306,7 @@ and
 
 This is a small but important benchmark-honesty result: exact textual/name
 matching still says failure, while the semantic verifier says the generated
-statement covers the theorem. It also exposes the next automation gap: verifier
-contexts need to be derived from selected project declarations rather than
-manually supplied imports/opens.
+statement covers the theorem.
 
 ### Generation and Verification Counts
 
