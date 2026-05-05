@@ -1,6 +1,11 @@
 """Tests for theorem-level Mathlib context hydration."""
 
-from scripts.hydrate_latex_statement_context import build_check_source, hydrate_output, iter_mathlib_requests
+from scripts.hydrate_latex_statement_context import (
+    build_check_source,
+    hydrate_output,
+    iter_mathlib_requests,
+    split_exact_identifier_list,
+)
 
 
 def _selector_output() -> dict:
@@ -49,6 +54,15 @@ def test_build_check_source_maps_check_lines() -> None:
 
     assert "#check Nat.add_comm" in source
     assert line_to_name == {3: "Nat.add_comm", 4: "IsUnit"}
+
+
+def test_split_exact_identifier_list() -> None:
+    assert split_exact_identifier_list("mul_assoc, one_mul, mul_one") == [
+        "mul_assoc",
+        "one_mul",
+        "mul_one",
+    ]
+    assert split_exact_identifier_list("PowerSeries coefficient theorem") == []
 
 
 def test_hydrate_output_marks_non_exact_queries(monkeypatch, tmp_path) -> None:

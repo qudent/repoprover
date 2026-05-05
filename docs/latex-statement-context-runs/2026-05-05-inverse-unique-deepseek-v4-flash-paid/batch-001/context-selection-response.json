@@ -1,0 +1,60 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"definition of inverse from previous unit not yet seen\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"lemma\",\n          \"missing_or_uncertain_context\": [\n            \"exact signature/name of the definition `inverse` from `def.commring.inverse`\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"mul_comm : ∀ {α : Type u} [inst : CommSemiring α] (a b : α), a * b = b * a\",\n              \"name_or_query\": \"mul_comm\",\n              \"why_needed\": \"commutativity used in proof\"\n            },\n            {\n              \"expected_signature_or_shape\": \"mul_assoc : ∀ {α : Type u} [inst : Semigroup α] (a b c : α), (a * b) * c = a * (b * c)\",\n              \"name_or_query\": \"mul_assoc\",\n              \"why_needed\": \"associativity used in proof\"\n            },\n            {\n              \"expected_signature_or_shape\": \"one_mul : ∀ {α : Type u} [inst : Monoid α] (a : α), 1 * a = a\",\n              \"name_or_query\": \"one_mul\",\n              \"why_needed\": \"property of 1\"\n            },\n            {\n              \"expected_signature_or_shape\": \"mul_one : ∀ {α : Type u} [inst : Monoid α] (a : α), a * 1 = a\",\n              \"name_or_query\": \"mul_one\",\n              \"why_needed\": \"property of 1\"\n            },\n            {\n              \"expected_signature_or_shape\": \"CommRing L : Type u\",\n              \"name_or_query\": \"CommRing\",\n              \"why_needed\": \"the underlying type class for L\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"def.commring.inverse\",\n              \"why_needed\": \"definition of inverse; needed to state the theorem\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"The theorem states: Let L be a commutative ring. Let a∈L. Then there is at most one inverse of a.\"\n          ],\n          \"source_part\": \"full\",\n          \"target_statement_sketch\": \"In a commutative ring L, for any a:L, there is at most one element b such that b is an inverse of a (i.e., a*b = 1 and b*a = 1). Concretely, if b and c are both inverses of a, then b = c.\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 1.0,\n      \"source_focus_summary\": \"Uniqueness of inverse in a commutative ring\",\n      \"unit_key\": \"unit-001\"\n    }\n  ]\n}",
+        "function_call": null,
+        "reasoning": "We need to parse the source unit: it's a theorem stating that in a commutative ring L, for any element a, there is at most one inverse. This is a standard lemma. The target Lean declaration is likely a lemma about uniqueness of inverses in a commutative ring. The context: previous definition (def.commring.inverse) likely defines what an inverse is. So we need to plan a task for this theorem. The theorem is straightforward: it says \"at most one inverse\", i.e., if b and c are both inverses of a, then b = c. We need to write a Lean lemma.\n\nFormalization risks: low. Needed Mathlib context: CommRing, definition of inverse (maybe from previous definition). Since previous def.commring.inverse is given, we expect that defines `inverse` as a property or function. The theorem uses \"inverse\" as a noun, so likely the definition is something like `is_inverse a b := a * b = 1` or similar. We'll assume the definition is available.\n\nWe need to fill the JSON. The task: one planned_declaration. Target statement sketch: \"In a commutative ring L, for any a:L, there is at most one element b such that b is an inverse of a (i.e., a*b = 1 = b*a, but commutativity makes them same).\" So the lemma: `theorem inverse_unique (a : L) (h : a * b = 1) (h' : b * a = 1) (h2 : a * c = 1) (h2' : c * a = 1) : b = c := ...` But we don't write exact syntax. Sketch: \"If b and c are both inverses of a, then b = c.\"\n\nNeeded mathlib context: we need the definition of inverse from previous unit. So we reference that. Also CommRing is in Mathlib. We might need `mul_comm` or `mul_assoc`. Since it's a commutative ring, we have commutativity. The proof: b = b*1 = b*(a*c) = (b*a)*c = 1*c = c.\n\nSo we need `mul_comm`, `mul_assoc`, `one_mul`, `mul_one`. These are basic. Also the definition of inverse from previous unit: we need its signature. Since it's not provided, we assume it's a proposition `IsInverse a b := a*b = 1 ∧ b*a = 1` or a function `inv a`? The theorem says \"inverse of a\", so likely a predicate. We'll query for that.\n\nWe set `missing_or_uncertain_context` to \"the exact shape of the definition `inverse` from previous unit, whether it's a predicate or a function, and its name.\"\n\nWe'll set `planned_declarations` with one task.\n\nWe also need to consider that the source unit is a theorem, so the target is a lemma. We'll choose `lemma` kind.\n\nThe `task_id` should be unique: `unit-001-task-1`.\n\nNow construct the JSON.\n\nWe also have `source_context_candidates` which provides a previous unit about `def.commring.inverse`. We should note that as needed_project_context.\n\nFormalization_risks: maybe missing definition of inverse, but low.\n\nContext_pack_size_risk: low.\n\nSelector_confidence: 1.0 (since it's clear).\n\nSource_focus_summary: \"Uniqueness of inverse in a commutative ring.\"\n\nNow output.",
+        "reasoning_details": [
+          {
+            "format": "unknown",
+            "index": 0,
+            "text": "We need to parse the source unit: it's a theorem stating that in a commutative ring L, for any element a, there is at most one inverse. This is a standard lemma. The target Lean declaration is likely a lemma about uniqueness of inverses in a commutative ring. The context: previous definition (def.commring.inverse) likely defines what an inverse is. So we need to plan a task for this theorem. The theorem is straightforward: it says \"at most one inverse\", i.e., if b and c are both inverses of a, then b = c. We need to write a Lean lemma.\n\nFormalization risks: low. Needed Mathlib context: CommRing, definition of inverse (maybe from previous definition). Since previous def.commring.inverse is given, we expect that defines `inverse` as a property or function. The theorem uses \"inverse\" as a noun, so likely the definition is something like `is_inverse a b := a * b = 1` or similar. We'll assume the definition is available.\n\nWe need to fill the JSON. The task: one planned_declaration. Target statement sketch: \"In a commutative ring L, for any a:L, there is at most one element b such that b is an inverse of a (i.e., a*b = 1 = b*a, but commutativity makes them same).\" So the lemma: `theorem inverse_unique (a : L) (h : a * b = 1) (h' : b * a = 1) (h2 : a * c = 1) (h2' : c * a = 1) : b = c := ...` But we don't write exact syntax. Sketch: \"If b and c are both inverses of a, then b = c.\"\n\nNeeded mathlib context: we need the definition of inverse from previous unit. So we reference that. Also CommRing is in Mathlib. We might need `mul_comm` or `mul_assoc`. Since it's a commutative ring, we have commutativity. The proof: b = b*1 = b*(a*c) = (b*a)*c = 1*c = c.\n\nSo we need `mul_comm`, `mul_assoc`, `one_mul`, `mul_one`. These are basic. Also the definition of inverse from previous unit: we need its signature. Since it's not provided, we assume it's a proposition `IsInverse a b := a*b = 1 ∧ b*a = 1` or a function `inv a`? The theorem says \"inverse of a\", so likely a predicate. We'll query for that.\n\nWe set `missing_or_uncertain_context` to \"the exact shape of the definition `inverse` from previous unit, whether it's a predicate or a function, and its name.\"\n\nWe'll set `planned_declarations` with one task.\n\nWe also need to consider that the source unit is a theorem, so the target is a lemma. We'll choose `lemma` kind.\n\nThe `task_id` should be unique: `unit-001-task-1`.\n\nNow construct the JSON.\n\nWe also have `source_context_candidates` which provides a previous unit about `def.commring.inverse`. We should note that as needed_project_context.\n\nFormalization_risks: maybe missing definition of inverse, but low.\n\nContext_pack_size_risk: low.\n\nSelector_confidence: 1.0 (since it's clear).\n\nSource_focus_summary: \"Uniqueness of inverse in a commutative ring.\"\n\nNow output.",
+            "type": "reasoning.text"
+          }
+        ],
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778018350,
+  "id": "gen-1778018350-BMHPxnZR2BUzRjEtcMXC",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 1408,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 753,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00053158,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00039424,
+      "upstream_inference_cost": 0.00053158,
+      "upstream_inference_prompt_cost": 0.00013734
+    },
+    "is_byok": false,
+    "prompt_tokens": 981,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 2389
+  }
+}

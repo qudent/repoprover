@@ -30,8 +30,10 @@ retired from `main`; historical run logs remain. The current dataset is
   (`#check`/environment lookup before generation).
 - [x] Generate and verify one small theorem-level attempt from a planned LaTeX
   source unit.
-- [ ] Rerun theorem-level selection after the new "prose sketch only" selector
+- [x] Rerun theorem-level selection after the new "prose sketch only" selector
   contract, then retry generation on an easier source unit.
+- [x] Add a post-hoc theorem-level gold-name comparison that distinguishes
+  compile success from oracle coverage.
 - [ ] Reclassify old strict-grader mismatches into `compile_failure`,
   `missing_context`, `wrong_math`, `shape_mismatch_against_oracle`, or
   `useful_alternative_formalization`.
@@ -49,6 +51,11 @@ retired from `main`; historical run logs remain. The current dataset is
   but it must not leak exact target declarations.
 - The old declaration-level verifier can reject useful source-theorem progress
   when the generated declaration sequence does not match one hidden Lean row.
+- The inverse-uniqueness theorem-level attempt now compiles, but the generated
+  declaration is an alternate explicit-hypothesis theorem named
+  `inverse_unique`; exact post-hoc gold-name overlap with
+  `AlgebraicCombinatorics.FPS.isInverse_unique` is `0/1`. This is source-level
+  progress requiring semantic review, not gold coverage.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` instead of rerunning Lean
   unless needed.
@@ -76,11 +83,19 @@ retired from `main`; historical run logs remain. The current dataset is
 - README and `docs/context-selection-pipeline-report-2026-05-05.md` now record
   the scale numbers, prompt contracts, theorem-level plan, and benchmark
   honesty caveats.
+- Second theorem-level context/generation probe:
+  `docs/latex-statement-context-runs/2026-05-05-inverse-unique-source-context-v2-paid/`
+  selected prior source context plus `CommRing`, `mul_assoc`, `one_mul`, and
+  `mul_one`; hydration checked `4/4` exact identifiers. Generation in
+  `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/`
+  compiled `1/1`, with post-hoc exact gold-name comparison `0/1`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - No Lean scan is currently running. Reuse the checked-in scan JSONL for new
   summaries.
+- Do not kill existing Lean/lake checks. If one is running, monitor it
+  passively and let it finish.
 - Focused Python tests should cover the dataset generator, theorem selector
   payload hiding, context hydration, theorem generation payloads, verifier
   classification, context graph generation, and elaborated dependency summary.

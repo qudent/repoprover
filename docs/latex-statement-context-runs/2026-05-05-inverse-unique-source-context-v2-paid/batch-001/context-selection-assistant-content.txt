@@ -1,0 +1,39 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "exact Lean name of the definition of inverse from def.commring.inverse (part (a))"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "CommRing L",
+              "name_or_query": "CommRing",
+              "why_needed": "typeclass for commutative ring"
+            },
+            {
+              "expected_signature_or_shape": "mul_assoc, one_mul, mul_one",
+              "name_or_query": "mul_assoc, one_mul, mul_one",
+              "why_needed": "associativity and identity properties used in uniqueness proof"
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "source text of thm.commring.inverse-uni",
+            "source text of def.commring.inverse (part (a))"
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any commutative ring L and element a in L, there exists at most one element b such that a*b = 1 and b*a = 1.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 1.0,
+      "source_focus_summary": "Uniqueness of inverses in a commutative ring",
+      "unit_key": "unit-001"
+    }
+  ]
+}

@@ -48,6 +48,11 @@ def clean_identifier(value: str) -> str | None:
     return None
 
 
+def split_exact_identifier_list(value: str) -> list[str]:
+    parts = [part.strip().strip("`") for part in re.split(r"[,;]", value)]
+    return [part for part in parts if LEAN_IDENTIFIER_RE.fullmatch(part)]
+
+
 def request_from_item(
     *,
     unit_key: str,
@@ -91,7 +96,22 @@ def iter_mathlib_requests(model_json: dict[str, Any]) -> list[ContextRequest]:
                     request_index=index,
                     item=item,
                 )
-                if request.query:
+                split_identifiers = split_exact_identifier_list(request.query) if request.exact_identifier is None else []
+                if split_identifiers and len(split_identifiers) > 1:
+                    for split_index, identifier in enumerate(split_identifiers, start=1):
+                        requests.append(
+                            ContextRequest(
+                                unit_key=request.unit_key,
+                                task_id=request.task_id,
+                                source_part=request.source_part,
+                                request_index=(request.request_index * 100) + split_index,
+                                query=identifier,
+                                expected_signature_or_shape=request.expected_signature_or_shape,
+                                why_needed=request.why_needed,
+                                exact_identifier=identifier,
+                            )
+                        )
+                elif request.query:
                     requests.append(request)
     return requests
 

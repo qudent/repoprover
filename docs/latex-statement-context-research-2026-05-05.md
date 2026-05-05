@@ -165,6 +165,31 @@ Prompt implication: selector sketches should not contain Lean-like theorem
 syntax. They should stay as prose/math intent, while exact Lean signatures and
 argument order come only from hydrated `#check` output.
 
+Second theorem-level easier-unit probe:
+
+- selector run:
+  `docs/latex-statement-context-runs/2026-05-05-inverse-unique-source-context-v2-paid/`
+- source unit:
+  `AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni`
+- selector result: valid JSON, cost `$0.00081564`; it selected the previous
+  source definition of inverse plus tight Mathlib context for `CommRing`,
+  associativity, and identity lemmas.
+- hydration result: checked `4/4` exact Mathlib identifiers after splitting the
+  comma-separated selector request `mul_assoc, one_mul, mul_one`.
+- generation run:
+  `docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/`
+- generation result: valid JSON, cost `$0.00036708`, `1/1` generated-only Lean
+  compile pass.
+- post-hoc gold comparison:
+  `eval/gold-comparison.json` reports exact gold-name overlap `0/1` and
+  classifies the row as `compiled_needs_semantic_review`.
+
+Interpretation: this is the first theorem-level source-unit compile success
+under selected context. It should not be counted as oracle benchmark coverage
+yet, because the generated theorem uses explicit inverse hypotheses and local
+name `inverse_unique`, while the aligned existing theorem is
+`AlgebraicCombinatorics.FPS.isInverse_unique`.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

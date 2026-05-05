@@ -1,0 +1,23 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "inverse_unique"
+      ],
+      "lean_file_body": "theorem inverse_unique {L : Type _} [CommRing L] (a b c : L) (h1 : a * b = 1) (h2 : b * a = 1) (h3 : a * c = 1) (h4 : c * a = 1) : b = c :=\nby\n  calc\n    b = b * 1 := by simpa using (mul_one b).symm\n    _ = b * (a * c) := by rw [h3]\n    _ = (b * a) * c := by rw [mul_assoc]\n    _ = 1 * c := by rw [h2]\n    _ = c := by simpa using one_mul c",
+      "notes": [
+        "The theorem states at most one inverse; the proof shows that any two inverses are equal.",
+        "The statement uses explicit hypotheses for two potential inverses b and c.",
+        "The proof uses only ring axioms (mul_assoc, one_mul, mul_one) available from CommRing."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "CommRing L",
+        "mul_assoc",
+        "one_mul",
+        "mul_one"
+      ]
+    }
+  ]
+}

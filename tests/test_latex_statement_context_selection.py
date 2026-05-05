@@ -1,6 +1,6 @@
 """Tests for theorem-level context-selection payloads."""
 
-from scripts.run_latex_statement_context_selection import SelectedUnit, build_messages
+from scripts.run_latex_statement_context_selection import SelectedUnit, build_messages, select_units
 
 
 def _unit(
@@ -60,13 +60,25 @@ def test_theorem_level_selector_hides_target_alignment_but_keeps_prior_context()
         refs=[{"unit_id": "prior", "label": "lem.prior", "resolved": True}],
     )
 
-    messages = build_messages([SelectedUnit(public_key="unit-001", row=target)], [prior, target])
+    messages = build_messages([SelectedUnit(public_key="unit-001", row=target)], [prior, target], source_units=[prior, target])
     prompt = messages[1]["content"]
 
     assert "Target uses" in prompt
+    assert "Prior." in prompt
     assert "Demo.prior_theorem" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt
     assert "needed_mathlib_context" in prompt
     assert "prior_project_context" in prompt
+    assert "previous_source_context" in prompt
     assert "Do not write theorem/lemma Lean code in target_statement_sketch" in prompt
+
+
+def test_select_units_supports_offset_and_exact_id() -> None:
+    rows = [
+        {**_unit(unit_id="u1", label="l1", source_text="one"), "selection": {"status": "gold_candidate"}},
+        {**_unit(unit_id="u2", label="l2", source_text="two"), "selection": {"status": "gold_candidate"}},
+    ]
+
+    assert select_units(rows, 1, offset=1)[0].row["id"] == "u2"
+    assert select_units(rows, 1, unit_id="u1")[0].row["id"] == "u1"

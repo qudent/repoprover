@@ -1,0 +1,68 @@
+{
+  "batches": [
+    {
+      "compile_passed_units": 1,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/batch-001/generation-output.json",
+      "unit_count": 1,
+      "units": [
+        {
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "inverse_unique"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [
+            {
+              "column": 20,
+              "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+              "kind": "linter.unnecessarySimpa",
+              "line": 7,
+              "severity": "warning"
+            },
+            {
+              "column": 16,
+              "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+              "kind": "linter.unnecessarySimpa",
+              "line": 11,
+              "severity": "warning"
+            },
+            {
+              "column": 62,
+              "data": "unused variable `h1`\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`",
+              "kind": "linter.unusedVariables",
+              "line": 4,
+              "severity": "warning"
+            },
+            {
+              "column": 113,
+              "data": "unused variable `h4`\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`",
+              "kind": "linter.unusedVariables",
+              "line": 4,
+              "severity": "warning"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 1,
+  "generated_at": "2026-05-05T22:04:06.194289+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid",
+  "imports": [
+    "Mathlib"
+  ],
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

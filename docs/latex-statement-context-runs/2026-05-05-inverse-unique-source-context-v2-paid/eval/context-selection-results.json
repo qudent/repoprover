@@ -1,0 +1,42 @@
+{
+  "budget_only": false,
+  "cost_summary": {
+    "model": "deepseek/deepseek-v4-flash",
+    "openrouter_reported_cost": 0.00081564,
+    "usage": {
+      "completion_tokens": 2239,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "reasoning_tokens": 2061,
+        "rejected_prediction_tokens": null
+      },
+      "cost": 0.00081564,
+      "cost_details": {
+        "upstream_inference_completions_cost": 0.00062692,
+        "upstream_inference_cost": 0.00081564,
+        "upstream_inference_prompt_cost": 0.00018872
+      },
+      "is_byok": false,
+      "prompt_tokens": 1348,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "video_tokens": 0
+      },
+      "total_tokens": 3587
+    }
+  },
+  "elapsed_seconds": 76.933,
+  "generated_at": "2026-05-05T22:00:32.734261+00:00",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-context-runs/2026-05-05-inverse-unique-source-context-v2-paid",
+  "paid_call_made": true,
+  "parse_error": null,
+  "records_input": 114,
+  "schema_version": "repoprover.latex_statement_context_selection.v1",
+  "units_selected": 1,
+  "valid_json": true
+}

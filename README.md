@@ -73,6 +73,14 @@ source claim as coefficient congruence for ratios of formal power series, but it
 also exposed the next context-hydration requirement: selected Mathlib API shapes
 still need Lean-tooling checks such as `#check`, not just model memory.
 
+The next theorem-level probe used the inverse-uniqueness source unit
+`thm.commring.inverse-uni`. The selector with previous source context returned
+valid JSON for `$0.00081564`; hydration checked `4/4` requested Mathlib
+identifiers; generation cost `$0.00036708` and compiled `1/1`. Post-hoc exact
+gold-name comparison was `0/1`, so this is currently classified as
+`compiled_needs_semantic_review`: useful source-level progress, not confirmed
+oracle coverage.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

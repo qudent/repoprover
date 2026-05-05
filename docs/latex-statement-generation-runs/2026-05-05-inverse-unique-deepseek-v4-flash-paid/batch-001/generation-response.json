@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"inverse_unique\"\n      ],\n      \"lean_file_body\": \"theorem inverse_unique {L : Type _} [CommRing L] (a b c : L) (h1 : a * b = 1) (h2 : b * a = 1) (h3 : a * c = 1) (h4 : c * a = 1) : b = c :=\\nby\\n  calc\\n    b = b * 1 := by simpa using (mul_one b).symm\\n    _ = b * (a * c) := by rw [h3]\\n    _ = (b * a) * c := by rw [mul_assoc]\\n    _ = 1 * c := by rw [h2]\\n    _ = c := by simpa using one_mul c\",\n      \"notes\": [\n        \"The theorem states at most one inverse; the proof shows that any two inverses are equal.\",\n        \"The statement uses explicit hypotheses for two potential inverses b and c.\",\n        \"The proof uses only ring axioms (mul_assoc, one_mul, mul_one) available from CommRing.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"CommRing L\",\n        \"mul_assoc\",\n        \"one_mul\",\n        \"mul_one\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778018608,
+  "id": "gen-1778018608-5g1EwxeCgme8ZuDXBJq0",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 321,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00036708,
+    "cost_details": {
+      "upstream_inference_completions_cost": 8.988e-05,
+      "upstream_inference_cost": 0.00036708,
+      "upstream_inference_prompt_cost": 0.0002772
+    },
+    "is_byok": false,
+    "prompt_tokens": 1980,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 2301
+  }
+}

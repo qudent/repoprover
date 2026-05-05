@@ -1,0 +1,160 @@
+{
+  "exact_identifier_count": 4,
+  "generated_at": "2026-05-05T22:03:12.409462+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "CommRing",
+      "expected_signature_or_shape": "CommRing L",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "CommRing.{u} (α : Type u) : Type u",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "CommRing.{u} (α : Type u) : Type u",
+        "status": "checked"
+      },
+      "query": "CommRing",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "typeclass for commutative ring"
+    },
+    {
+      "exact_identifier": "mul_assoc",
+      "expected_signature_or_shape": "mul_assoc, one_mul, mul_one",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "mul_assoc.{u_1} {G : Type u_1} [Semigroup G] (a b c : G) : a * b * c = a * (b * c)",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "mul_assoc.{u_1} {G : Type u_1} [Semigroup G] (a b c : G) : a * b * c = a * (b * c)",
+        "status": "checked"
+      },
+      "query": "mul_assoc",
+      "request_index": 201,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "associativity and identity properties used in uniqueness proof"
+    },
+    {
+      "exact_identifier": "one_mul",
+      "expected_signature_or_shape": "mul_assoc, one_mul, mul_one",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "one_mul.{u} {M : Type u} [MulOneClass M] (a : M) : 1 * a = a",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "one_mul.{u} {M : Type u} [MulOneClass M] (a : M) : 1 * a = a",
+        "status": "checked"
+      },
+      "query": "one_mul",
+      "request_index": 202,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "associativity and identity properties used in uniqueness proof"
+    },
+    {
+      "exact_identifier": "mul_one",
+      "expected_signature_or_shape": "mul_assoc, one_mul, mul_one",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "mul_one.{u} {M : Type u} [MulOneClass M] (a : M) : a * 1 = a",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "mul_one.{u} {M : Type u} [MulOneClass M] (a : M) : a * 1 = a",
+        "status": "checked"
+      },
+      "query": "mul_one",
+      "request_index": 203,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "associativity and identity properties used in uniqueness proof"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "CommRing": {
+        "messages": [
+          {
+            "data": "CommRing.{u} (α : Type u) : Type u",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "CommRing.{u} (α : Type u) : Type u",
+        "status": "checked"
+      },
+      "mul_assoc": {
+        "messages": [
+          {
+            "data": "mul_assoc.{u_1} {G : Type u_1} [Semigroup G] (a b c : G) : a * b * c = a * (b * c)",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "mul_assoc.{u_1} {G : Type u_1} [Semigroup G] (a b c : G) : a * b * c = a * (b * c)",
+        "status": "checked"
+      },
+      "mul_one": {
+        "messages": [
+          {
+            "data": "mul_one.{u} {M : Type u} [MulOneClass M] (a : M) : a * 1 = a",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "mul_one.{u} {M : Type u} [MulOneClass M] (a : M) : a * 1 = a",
+        "status": "checked"
+      },
+      "one_mul": {
+        "messages": [
+          {
+            "data": "one_mul.{u} {M : Type u} [MulOneClass M] (a : M) : 1 * a = a",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "one_mul.{u} {M : Type u} [MulOneClass M] (a : M) : 1 * a = a",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "3116f9388e4dd5d436be35d3258e869065b420eb277b5745bb385aa98921d5c8",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "request_count": 4,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

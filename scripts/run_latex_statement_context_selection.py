@@ -61,10 +61,16 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
             handle.write(json.dumps(row, sort_keys=True, ensure_ascii=False) + "\n")
 
 
-def select_units(rows: list[dict[str, Any]], limit: int) -> list[SelectedUnit]:
+def select_units(rows: list[dict[str, Any]], limit: int, *, offset: int = 0, unit_id: str | None = None) -> list[SelectedUnit]:
     selected: list[SelectedUnit] = []
+    skipped = 0
     for row in rows:
         if row.get("selection", {}).get("status") != "gold_candidate":
+            continue
+        if unit_id and row.get("id") != unit_id:
+            continue
+        if not unit_id and skipped < offset:
+            skipped += 1
             continue
         selected.append(SelectedUnit(public_key=f"unit-{len(selected) + 1:03d}", row=row))
         if limit and len(selected) >= limit:
@@ -138,8 +144,38 @@ def prior_project_context(row: dict[str, Any], rows_by_id: dict[str, dict[str, A
     return contexts
 
 
-def build_messages(selected: list[SelectedUnit], all_rows: list[dict[str, Any]]) -> list[dict[str, str]]:
+def previous_source_context(row: dict[str, Any], rows_by_id: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    contexts: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    candidate_refs = []
+    candidate_refs.extend(row.get("context_candidates", {}).get("referenced_source_units", []))
+    candidate_refs.extend(row.get("context_candidates", {}).get("previous_same_file_source_units", []))
+
+    for ref in candidate_refs:
+        unit_id = str(ref.get("unit_id") or "")
+        if not unit_id or unit_id in seen:
+            continue
+        prior = rows_by_id.get(unit_id)
+        if prior is None:
+            continue
+        contexts.append(
+            {
+                "reason": "Earlier or explicitly referenced source theorem-like unit.",
+                "source_unit": public_source_unit(prior),
+            }
+        )
+        seen.add(unit_id)
+    return contexts
+
+
+def build_messages(
+    selected: list[SelectedUnit],
+    all_rows: list[dict[str, Any]],
+    *,
+    source_units: list[dict[str, Any]] | None = None,
+) -> list[dict[str, str]]:
     rows_by_id = unit_index(all_rows)
+    source_rows_by_id = unit_index(source_units or all_rows)
     system = (
         "You are a Lean 4/Mathlib context-planning agent. Prepare a compact "
         "context pack for formalizing a LaTeX theorem-like source unit. The "
@@ -210,6 +246,7 @@ def build_messages(selected: list[SelectedUnit], all_rows: list[dict[str, Any]])
                 "unit_key": item.public_key,
                 "source_unit": public_source_unit(row),
                 "source_context_candidates": row.get("context_candidates", {}),
+                "previous_source_context": previous_source_context(row, source_rows_by_id),
                 "prior_project_context": prior_project_context(row, rows_by_id),
                 "benchmark_policy": {
                     "target_lean_available_to_selector": False,
@@ -259,8 +296,9 @@ def response_cost_summary(response: Any, model: str) -> dict[str, Any]:
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
     rows = read_jsonl(args.records)
-    selected = select_units(rows, args.limit)
-    messages = build_messages(selected, rows)
+    source_units = read_jsonl(args.source_units) if args.source_units else rows
+    selected = select_units(rows, args.limit, offset=args.offset, unit_id=args.unit_id)
+    messages = build_messages(selected, rows, source_units=source_units)
     run_dir = args.output
     batch_dir = run_dir / "batch-001"
     eval_dir = run_dir / "eval"
@@ -317,8 +355,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--records", type=Path, default=REPO_ROOT / "docs/latex-statement-gold-candidates.jsonl")
+    parser.add_argument("--source-units", type=Path, default=REPO_ROOT / "docs/latex-statement-units.jsonl")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int, default=1)
+    parser.add_argument("--offset", type=int, default=0, help="Skip this many gold candidates before selection.")
+    parser.add_argument("--unit-id", help="Select one exact source-unit id.")
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--max-tokens", type=int, default=4096)

@@ -1,0 +1,60 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "definition of inverse from previous unit not yet seen"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "lemma",
+          "missing_or_uncertain_context": [
+            "exact signature/name of the definition `inverse` from `def.commring.inverse`"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "mul_comm : ∀ {α : Type u} [inst : CommSemiring α] (a b : α), a * b = b * a",
+              "name_or_query": "mul_comm",
+              "why_needed": "commutativity used in proof"
+            },
+            {
+              "expected_signature_or_shape": "mul_assoc : ∀ {α : Type u} [inst : Semigroup α] (a b c : α), (a * b) * c = a * (b * c)",
+              "name_or_query": "mul_assoc",
+              "why_needed": "associativity used in proof"
+            },
+            {
+              "expected_signature_or_shape": "one_mul : ∀ {α : Type u} [inst : Monoid α] (a : α), 1 * a = a",
+              "name_or_query": "one_mul",
+              "why_needed": "property of 1"
+            },
+            {
+              "expected_signature_or_shape": "mul_one : ∀ {α : Type u} [inst : Monoid α] (a : α), a * 1 = a",
+              "name_or_query": "mul_one",
+              "why_needed": "property of 1"
+            },
+            {
+              "expected_signature_or_shape": "CommRing L : Type u",
+              "name_or_query": "CommRing",
+              "why_needed": "the underlying type class for L"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "def.commring.inverse",
+              "why_needed": "definition of inverse; needed to state the theorem"
+            }
+          ],
+          "needed_source_context": [
+            "The theorem states: Let L be a commutative ring. Let a∈L. Then there is at most one inverse of a."
+          ],
+          "source_part": "full",
+          "target_statement_sketch": "In a commutative ring L, for any a:L, there is at most one element b such that b is an inverse of a (i.e., a*b = 1 and b*a = 1). Concretely, if b and c are both inverses of a, then b = c.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 1.0,
+      "source_focus_summary": "Uniqueness of inverse in a commutative ring",
+      "unit_key": "unit-001"
+    }
+  ]
+}

@@ -234,6 +234,32 @@ prose/math intent only, not Lean-like theorem syntax. The generator should treat
 hydrated `#check` signatures as the only authoritative source for Lean API
 argument order.
 
+Second theorem-level source-unit probe:
+
+`docs/latex-statement-context-runs/2026-05-05-inverse-unique-source-context-v2-paid/`
+and
+`docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/`
+
+- source unit:
+  `AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni`
+- selector: valid JSON, `$0.00081564`, no observed target leak.
+- selected context: previous source definition of inverse, plus `CommRing`,
+  `mul_assoc`, `one_mul`, and `mul_one`.
+- hydration: checked `4/4` exact Mathlib identifiers with Lean after splitting
+  a comma-separated selector request.
+- generation: valid JSON, `$0.00036708`, generated-only verification `1/1`
+  compile pass.
+- post-hoc exact gold-name comparison: `0/1`; status
+  `compiled_needs_semantic_review`.
+
+This is a useful positive signal for context selection: on a small theorem, the
+model understood the math once the previous source definition and exact Mathlib
+facts were in the context pack. It is not yet a benchmark pass, because the
+generated theorem is an alternate explicit-hypothesis statement named
+`inverse_unique`, while the aligned existing theorem is
+`AlgebraicCombinatorics.FPS.isInverse_unique`. The next verifier needs a
+semantic theorem-coverage check, not just declaration-name overlap.
+
 ### Generation and Verification Counts
 
 Honesty caveats:
@@ -486,7 +512,8 @@ Resolve requested context with tools:
 
 ### Stage D: Second-Round Context Critic
 
-Only when useful, ask a cheap <- i think this should be expensive? this is hard? model:
+Only when useful, ask either a cheap critic for routine checks or a stronger
+model for hard shape/context questions:
 
 - Is the selected context enough for each declaration task?
 - Are there overloaded/wrong Mathlib names?
@@ -547,10 +574,17 @@ failures.
    - Resolve project declarations by source label/import closure.
    - Resolve Mathlib names by local search and `#check`/environment lookup.
    - Store exact signatures/docstrings/snippets in separate fields.
+   - Current implementation:
+     `scripts/hydrate_latex_statement_context.py` checks selector-requested
+     exact names with Lean and records hydrated artifacts under the selector run.
 
 5. Generate a small Lean file per theorem unit.
    - Prefer one file containing the ordered declarations for the source theorem.
    - Permit multi-declaration output when the theorem naturally decomposes.
+   - Current implementation:
+     `scripts/run_latex_statement_generation.py` emits one declaration per
+     planned task for the initial smoke path; multi-declaration theorem files
+     are still pending.
 
 6. Verify at two levels.
    - Inner loop: each generated declaration compiles.
@@ -558,6 +592,11 @@ failures.
      Lean declarations when possible.
    - Outer loop: theorem unit is considered complete when the planned final
      statement(s) compile and all required supporting declarations are present.
+   - Current implementation:
+     `scripts/verify_latex_statement_generation.py` checks generated-only Lean
+     compilation, and `scripts/compare_latex_statement_generation_to_gold.py`
+     records post-hoc exact-name overlap as a weak coverage proxy. Semantic
+     theorem coverage remains open.
 
 7. Reclassify failures.
    - `compile_failure`
