@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777972858-GZg9cgEojn4hO9fSSh4U",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem det_triangular (A : Matrix (Fin n) (Fin n) K) (h : (∀ i j, j < i → A i j = 0) ∨ (∀ i j, i < j → A i j = 0)) : A.det = ∏ i, A i i := by\\n  rcases h with (hU | hL)\\n  · exact det_upperTriangular A hU\\n  · have hU' : (∀ i j, j < i → (A.transpose) i j = 0) := by\\n      intro i j hij\\n      simpa using hL j i hij\\n    calc\\n      A.det = det (A.transpose) := by rw [← Matrix.det_transpose A]\\n      _ = ∏ i, (A.transpose) i i := det_upperTriangular (A.transpose) hU'\\n      _ = ∏ i, A i i := by simp\",\n  \"declaration_name\": \"det_triangular\",\n  \"used_context\": [\n    \"det_upperTriangular\",\n    \"Matrix.det_transpose\"\n  ],\n  \"notes\": [\n    \"Covers both upper and lower triangular matrices using existing lemma and transposition\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777972858,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4658,
+    "prompt_tokens": 2924,
+    "total_tokens": 7582,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4374,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.00504832,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.00504832,
+      "upstream_inference_prompt_cost": 0.00099586,
+      "upstream_inference_completions_cost": 0.00405246
+    }
+  },
+  "provider": "DeepSeek"
+}

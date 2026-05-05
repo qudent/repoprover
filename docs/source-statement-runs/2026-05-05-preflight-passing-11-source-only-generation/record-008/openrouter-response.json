@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777973282-w3NfEiSb4ARMZK3Q0KEi",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem X_mul_eq_shift (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n-1) f) := by\\n  ext n\\n  simp [coeff_X_mul, coeff_mk]\",\n  \"declaration_name\": \"X_mul_eq_shift\",\n  \"used_context\": [\"coeff_X_mul\"],\n  \"notes\": [\"Direct translation of the series equality using the existing coeff lemma.\"]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777973282,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5064,
+    "prompt_tokens": 4458,
+    "total_tokens": 9522,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4937,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.00606883,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.00606883,
+      "upstream_inference_prompt_cost": 0.00166315,
+      "upstream_inference_completions_cost": 0.00440568
+    }
+  },
+  "provider": "DeepSeek"
+}

@@ -1,10 +1,10 @@
-# RepoProver Work Report - Last ~7 Hours
+# RepoProver Work Report - Last ~8 Hours
 
-Report time: 2026-05-05 08:40 UTC.
+Report time: 2026-05-05 09:40 UTC.
 
 ## Goal Being Advanced
 
-Validate a cheap, iterative autoformalization loop for the Algebraic Combinatorics gold-standard dataset under the remaining OpenRouter research budget. The current honest task is target-statement-withheld source-to-Lean generation: prompts may use source text, prefix Lean context, local examples, and generated-only compiler errors, but not the hidden target Lean statement or declaration name.
+Validate a cheap, iterative autoformalization loop for the Algebraic Combinatorics gold-standard dataset under the remaining OpenRouter research budget. The larger goal is a reproducible system that can autoformalize book-scale material far below a one-shot human/agent price, using mostly cheap model tokens, honest context selection, Lean feedback, and occasional stronger repair.
 
 ## Main Pipeline Changes
 
@@ -14,6 +14,9 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
 - Added shape diagnostics that inspect only visible prompt context plus generated Lean, so statement-shape mistakes can be targeted without exposing gold statements.
 - Added repair-queue cost reservation before request launch, fixing the earlier overspend mode where concurrent calls could exceed the cap before actual cost was known.
 - Improved generated-application candidate parsing for nested binders and Unicode Lean identifiers, which fixed hidden-grader verification for a valid permutation repair.
+- Added `--context-mode source-only` to remove target Lean doc comments, target-derived labels, hidden-name guidance triggers, and imported source-label API retrieval from model-facing prompts.
+- Added TeX-derived `tex_source_focus` fields from visible source only: labels, refs, theorem-like environments, part markers, keyword cues, excerpts, and broad-span risk flags.
+- Added context-mode comparison artifacts to quantify the gap between target-comment debugging prompts and realistic source-only prompts.
 
 ## Experiment Timeline
 
@@ -38,7 +41,7 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
    - Fixed verifier binder parsing; row 5 then passed generated-only and hidden-grader checks.
    - Cumulative strict hard slice reached 4/6 for `$0.203257397`.
 
-5. Current row 2/3 follow-up:
+5. Row 2/3 follow-up:
    - Added repair-domain guidance for:
      - `fps_onePlusX_pow_neg'` implicit type-argument misuse and integer-power instance failures.
      - finite `finsum_eq_sum_of_support_subset` support-subset proof shape.
@@ -49,14 +52,29 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
    - Row 3 generated a revised `finsum_eq_sum_of_support_subset` proof that treats `hd` as support membership.
    - Serial Lean verification passed both attempt-3 repairs.
 
-## Current Best Result
+6. Realistic-context pivot:
+   - Added source-only prompt mode because the 6/6 strict result still used target-comment/oracle-ish context.
+   - Generated zero-cost source-only budget checkpoints for the strict 6 and broader 11 slices.
+   - Context comparison found 0 hidden target-name hits, but target-comment focus terms were absent from source-only spans in 5/6 strict rows and 7/11 broader rows.
+   - Added TeX-derived focus extraction to recover generic source cues without reading target Lean comments or names.
+   - Ran an 11-record source-only generation-only validation with DeepSeek V4 Pro: 11/11 generated for `$0.081084638`; Lean verification is still pending.
 
-Best validated strict hard-slice result:
+## Current Best Results
+
+Validated strict hard-slice result:
 
 - 6/6 cumulatively verified.
 - Cost: `$0.21569744` for strict generation plus recorded repairs.
 - Passing rows: 1, 4, 5, 6 from earlier generation/repair stages; rows 2 and 3 from repair attempt 3.
-- Remaining issue: this is still only a hard six-row slice, so it is not enough evidence to start trust scoring or assume textbook-scale feed-forward success.
+- Limitation: this used target-comment context, so it is debugging evidence, not realistic feed-forward evidence.
+
+Realistic source-only result so far:
+
+- 11/11 generated under source-only context.
+- Cost: `$0.081084638`.
+- Hidden target names absent from prompt payloads.
+- Lean verification not run yet.
+- Early generated names suggest statement-shape drift on several rows, which is useful evidence for improving context/focus selection.
 
 ## Files And Evidence
 
@@ -67,6 +85,8 @@ Best validated strict hard-slice result:
 - Shape diagnostic script: `scripts/diagnose_source_statement_shape.py`
 - Repair queue: `scripts/repair_source_statement_generation.py`
 - Source prompt/repair builder: `scripts/run_source_statement_live_eval.py`
+- Realistic context report: `docs/source-statement-realistic-context-mode-report.md`
+- Source-only 11-record generation run: `docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation/`
 - Focused test files:
   - `tests/test_source_statement_generation_artifacts.py`
   - `tests/test_source_statement_live_eval.py`
@@ -74,5 +94,6 @@ Best validated strict hard-slice result:
 ## Practical Conclusions
 
 - The architecture is now good enough for cheap iteration: provider calls, verification, diagnostics, and repairs are decoupled and file-backed.
-- The prompt still does not mostly succeed on larger slices, so dependency-graph trust scoring should still wait.
-- The next useful work is to commit the verification artifacts and then use the recovered 6/6 slice as a seed for a zero-cost preflight on a broader corpus-spread validation.
+- The earlier 6-row loop did spend too much attention on one small hard slice; it produced useful infrastructure and failure taxonomy, but it should not be treated as scale evidence.
+- The prompt improvements split into two classes: generic infrastructure/guidance that can transfer, and target-comment guidance that is now isolated behind `target-comment` mode for diagnostics only.
+- The next useful work is to commit the source-only paid generation artifacts, run serial Lean verification, and use those failures to improve source/TeX context selection rather than keep repairing the same six examples.

@@ -1,0 +1,11 @@
+{
+  "lean_declaration": "theorem det_triangular (A : Matrix (Fin n) (Fin n) K) (h : (∀ i j, j < i → A i j = 0) ∨ (∀ i j, i < j → A i j = 0)) : A.det = ∏ i, A i i := by\n  rcases h with (hU | hL)\n  · exact det_upperTriangular A hU\n  · have hU' : (∀ i j, j < i → (A.transpose) i j = 0) := by\n      intro i j hij\n      simpa using hL j i hij\n    calc\n      A.det = det (A.transpose) := by rw [← Matrix.det_transpose A]\n      _ = ∏ i, (A.transpose) i i := det_upperTriangular (A.transpose) hU'\n      _ = ∏ i, A i i := by simp",
+  "declaration_name": "det_triangular",
+  "used_context": [
+    "det_upperTriangular",
+    "Matrix.det_transpose"
+  ],
+  "notes": [
+    "Covers both upper and lower triangular matrices using existing lemma and transposition"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777973140-vV0nsFW40ntRTxdHTxnV",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem exists_isXnApproximator_of_multipliable {a : I → PowerSeries R} (ha : Multipliable a) (n : ℕ) : ∃ M : Finset I, IsXnApproximator a M n := by\\n  classical\\n    let M : ℕ → Finset I := fun m => (ha m).choose\\n    have hM_spec (m : ℕ) : DeterminesCoeffInProd a (M m) m := (ha m).choose_spec\\n    let M_all : Finset I := Finset.biUnion (Finset.range (n + 1)) M\\n    refine ⟨M_all, ?_⟩\\n    intro m hm\\n    have hmem_range : m ∈ Finset.range (n + 1) := Finset.mem_range.2 (Nat.lt_succ_of_le hm)\\n    have h_sub : M m ⊆ M_all := Finset.subset_biUnion_of_mem hmem_range\\n    exact determinesCoeffInProd_mono (hM_spec m) h_sub\",\n  \"declaration_name\": \"exists_isXnApproximator_of_multipliable\",\n  \"used_context\": [\n    \"Multipliable\",\n    \"CoeffFinitelyDeterminedInProd\",\n    \"IsXnApproximator\",\n    \"DeterminesCoeffInProd\",\n    \"determinesCoeffInProd_mono\",\n    \"Finset.biUnion\",\n    \"Finset.range\",\n    \"Nat.lt_succ_of_le\"\n  ],\n  \"notes\": [\n    \"Uses classical choice to pick a finite set for each coefficient from the multipliable condition.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777973140,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 4696,
+    "prompt_tokens": 5596,
+    "total_tokens": 10292,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 4317,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.0062437,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.0062437,
+      "upstream_inference_prompt_cost": 0.00215818,
+      "upstream_inference_completions_cost": 0.00408552
+    }
+  },
+  "provider": "DeepSeek"
+}

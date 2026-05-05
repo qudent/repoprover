@@ -1,0 +1,6 @@
+{
+  "lean_declaration": "theorem X_mul_eq_shift (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n-1) f) := by\n  ext n\n  simp [coeff_X_mul, coeff_mk]",
+  "declaration_name": "X_mul_eq_shift",
+  "used_context": ["coeff_X_mul"],
+  "notes": ["Direct translation of the series equality using the existing coeff lemma."]
+}

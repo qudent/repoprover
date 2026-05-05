@@ -1,38 +1,31 @@
 # RepoProver - Status
 ## Overall direction
-Build a cheap, reproducible autoformalization pipeline for the Algebraic Combinatorics gold-standard dataset: select honest source/prefix context, generate Lean statements/proofs without exposing withheld targets, preserve all provider outputs, verify in reusable Lean projects, and iterate from concrete failures. Trust scoring in the dependency graph is deferred until the iterative proof-generation pipeline mostly succeeds.
+Build a cheap, reproducible autoformalization pipeline for the Algebraic Combinatorics gold-standard dataset: choose honest source/prefix context, generate Lean without exposing withheld targets, preserve provider outputs, verify in reusable Lean projects, and iterate from concrete failures. Trust scoring is deferred until larger realistic-context slices mostly succeed.
 
 -------
 
 ## Current State
-The repo has working source-statement generation, archived provider-result capture, serial reusable-project Lean verification, shape diagnostics, and compiler-feedback repair queues. The strict hard six-row slice is cumulatively 6/6 verified for `$0.21569744`, but that result used target-comment/oracle-ish context surfaces. A new `--context-mode source-only` removes target Lean doc comments, target-derived comment labels, hidden-name guidance triggers, and imported source-label API retrieval for more realistic validation.
-
-Key run directory: `docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/`.
-Main reports: `docs/source-statement-strict-guidance-six-generation-report.md` and `docs/source-statement-realistic-context-mode-report.md`.
+Source-statement generation, archived provider-result capture, reusable-project verification, shape diagnostics, and repair queues are implemented. The strict six-row hard slice reached 6/6, but it used target-comment context and is not strong evidence for full-book scaling. The current validation path is `--context-mode source-only`, which removes target Lean doc comments, target-derived labels, hidden-name guidance triggers, and imported source-label API retrieval.
 
 ## Active Goals
-- [x] Push the strict hard six-row slice from 4/6 to 6/6 with cheap targeted repairs.
-- [x] Add a realistic source-only prompt mode to separate context-selection work from target-comment debugging.
-- [ ] Keep all paid OpenRouter results recoverable in git artifacts before Lean checking.
-- [ ] Keep `STATUS.md` compact; use reports and git history for durable audit details.
+- [ ] Keep all paid OpenRouter outputs recoverable in git artifacts before Lean checking.
+- [ ] Validate source-only context on broader slices before adding trust scoring.
+- [ ] Improve source/TeX focus selection rather than hand-tuning the six hard rows.
 
 ## TODO Plan
-- [x] Build a TeX-derived focus selector so `source-only` prompts can recover useful subtask cues without target Lean comments/names.
-- [ ] Run future paid validation in `source-only` mode first; keep `target-comment` only as a diagnostic comparison.
-- [ ] Keep trust scoring deferred until larger slices mostly succeed.
+- [x] Add TeX-derived `tex_source_focus` to source-only prompts.
+- [x] Run an 11-record source-only generation pass.
+- [ ] Commit the raw 11-record paid generation artifacts.
+- [ ] Verify the 11 generated files serially in a reusable Lean project and record per-row outcomes.
 
 ## Blockers
-- The overall textbook-scale pipeline is not ready for trust scoring; larger slices still fail too often, and realistic context selection is not yet strong enough.
+- Realistic context selection is still weak: context comparison found target-comment focus terms absent from source-only spans in 7/11 broader rows.
+- Larger Lean preflights are too slow with current module/build reuse; a 72-record preflight was stopped after about 30 minutes without final row results.
 
 ## Recent Results
-- Targeted guidance over the six remaining 11-row failures produced 0/6; strict guidance improved that to 2/6 first pass.
-- Compiler/shape repairs recovered rows 6 and 5, bringing the strict hard slice to 4/6.
-- Added repair-domain guidance for negative-binomial helper application and finite `finsum` support-subset failures; focused tests pass (`58 passed` for source-statement artifact/prompt tests).
-- Regenerated shape diagnostics so row 3 no longer gets a false finite-composition warning; only the already-repaired row 5 group-power warning remains.
-- Repair attempt 3 for rows 2 and 3 completed with 2/2 parsed outputs, 2 paid calls, `$0.012440043` actual cost, and both rows verified.
-- `source-only` budget checkpoints were generated for the strict 6-row and broader 11-row slices at `$0.00`; estimated max generation costs are `$0.18052935` and `$0.330879705`.
-- Context-mode comparison shows no hidden target-name hits in source-only payloads, but target-comment focus terms are absent from source-only spans in 5/6 strict rows and 7/11 broader rows.
-- Source-only prompts now include `tex_source_focus` derived only from source snippets: labels, refs, theorem-like environments, part markers, keyword cues, excerpts, and broad-span risk flags.
+- Added `source-only` prompt mode and context-mode comparison artifacts; hidden target-name hits are 0 on the strict 6 and broader 11 prompt sets.
+- Added TeX-derived focus cues from visible source only: labels, refs, theorem-like environments, part markers, keyword cues, excerpts, and broad-span risk flags.
+- Completed an 11-record source-only generation-only run with DeepSeek V4 Pro: 11/11 generated, `$0.081084638`, no Lean verification yet.
 
 ## Agent Notes
-- A 72-record local preflight was stopped because it spent about 30 minutes compiling heavy modules without final row results. Treat long preflight runtime as a scaling issue; do not run larger Lean preflights without better module/build reuse.
+- Do not run Lean verification against the source-only generation run until its raw provider artifacts are committed.

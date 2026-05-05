@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem sum_lim_conv {f : ℕ → PowerSeries K} {L : PowerSeries K} (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) L) : IsSummable f ∧ tsum' f (⟨L, h⟩ : IsSummable f) = L :=\nby\n  have hsum : IsSummable f := ⟨L, h⟩\n  refine ⟨hsum, ?_⟩\n  rfl",
+  "declaration_name": "sum_lim_conv",
+  "used_context": [
+    "CoeffStabilizesTo",
+    "IsSummable",
+    "tsum'",
+    "Finset.range"
+  ],
+  "notes": [
+    "The proof assumes that IsSummable is defined as ∃ L, CoeffStabilizesTo ... L and tsum' returns the L directly, so equality is definitional."
+  ]
+}

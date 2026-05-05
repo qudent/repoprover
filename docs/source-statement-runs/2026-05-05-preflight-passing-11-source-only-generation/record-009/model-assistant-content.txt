@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem partition_weakly_decreasing_finite (p : Nat.Partition) : Antitone p.parts ∧ (∀ᶠ i in Filter.cofinite, p.parts i = 0) := by\n  exact ⟨p.parts_anti, p.parts_finite⟩",
+  "declaration_name": "partition_weakly_decreasing_finite",
+  "used_context": [
+    "Nat.Partition.parts_anti",
+    "Nat.Partition.parts_finite"
+  ],
+  "notes": [
+    "Formalizes the definition that a partition is a weakly decreasing finite tuple of positive integers, allowing trailing zeros. The statement uses the existing Mathlib structure fields directly.",
+    "Positivity of entries (strictly positive for the non-zero parts) is not explicitly stated here, but the original structure also has `parts_nonneg`; the theorem captures the decreasing and finite-support aspects."
+  ]
+}

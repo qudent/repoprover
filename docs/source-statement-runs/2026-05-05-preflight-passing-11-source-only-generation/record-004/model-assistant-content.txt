@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem coeff_finitely_determined_iff (a : I → PowerSeries R) (n : ℕ) :\n  (CoeffFinitelyDeterminedInSum a n ↔ ∃ M : Finset I, DeterminesCoeffInSum a M n) ∧\n  (CoeffFinitelyDeterminedInProd a n ↔ ∃ M : Finset I, DeterminesCoeffInProd a M n) :=\nby\n  constructor <;> rfl",
+  "declaration_name": "coeff_finitely_determined_iff",
+  "used_context": [
+    "CoeffFinitelyDeterminedInSum",
+    "CoeffFinitelyDeterminedInProd",
+    "DeterminesCoeffInSum",
+    "DeterminesCoeffInProd",
+    "Finset I"
+  ],
+  "notes": [
+    "Both parts (a) and (b) of the definition are captured as a single conjunction of trivial equivalences; the definitions are already present in the context, so the proof is by definitional reflection."
+  ]
+}

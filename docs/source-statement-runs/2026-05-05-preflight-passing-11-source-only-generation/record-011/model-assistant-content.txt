@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem simpleTransposition_sq_eq_one {n : ℕ} (i : Fin (n - 1)) : simpleTransposition i * simpleTransposition i = 1 := by\n  simp [simpleTransposition, Equiv.swap_mul_self]",
+  "declaration_name": "simpleTransposition_sq_eq_one",
+  "used_context": [
+    "simpleTransposition",
+    "Equiv.swap_mul_self"
+  ],
+  "notes": [
+    "Proof uses the involution property of transpositions (Equiv.swap_mul_self).",
+    "The theorem states that a simple transposition is its own inverse."
+  ]
+}

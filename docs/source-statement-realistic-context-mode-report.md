@@ -107,6 +107,36 @@ hits and `5/6` rows where target-comment terms are absent from the source span.
 That is the concrete context-selection gap: source-only prompts are cleaner, but
 they often do not know which part of the TeX/source span the target formalizes.
 
+## First Paid Source-Only Generation
+
+The first paid realistic-context validation used the broader 11-record
+preflight-passing slice:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/run_source_statement_live_eval.py \
+  --records docs/source-statement-runs/2026-05-05-preflight-passing-11-generation/eval/selected-records.jsonl \
+  --output docs/source-statement-runs/2026-05-05-preflight-passing-11-source-only-generation \
+  --limit 11 --sample-mode corpus-spread --include-record-imports \
+  --lake-cache-from algebraic-combinatorics --generation-only \
+  --context-mode source-only \
+  --max-actual-cost-usd 0.40 --concurrency 3 \
+  --max-tokens 32768 --reasoning-effort high
+```
+
+Result:
+
+- records generated: `11/11`
+- paid calls: `11`
+- actual cost: `$0.081084638`
+- model: `deepseek/deepseek-v4-pro`
+- Lean verification: not run in this generation checkpoint
+
+Several generated declaration names already show statement-shape drift, for
+example `det_triangular` for the lower-triangular determinant row and
+`card_perm` for the permutation-power row. That is expected useful evidence:
+source-only prompts are honest, but the current context selector still often
+does not focus the exact intended theorem.
+
 ## What Changed In The Prompt
 
 In `source-only` mode:
@@ -148,6 +178,7 @@ with `63 passed`.
 ## Next Step
 
 Use `source-only` as the default for realistic validation. The next work should
-not be another hand-tuned six-row repair loop. It should build a TeX-derived
-focus selector that can recover useful subtask cues, such as “finite coefficient
-formula” or “part (a) only”, without reading target Lean comments or names.
+not be another hand-tuned six-row repair loop. It should verify the 11-record
+source-only generation artifacts, classify the failures, and improve TeX/source
+focus selection from those failures without reading target Lean comments or
+names.

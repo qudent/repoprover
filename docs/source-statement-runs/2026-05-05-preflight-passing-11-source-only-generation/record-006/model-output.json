@@ -1,0 +1,13 @@
+{
+  "lean_declaration": "theorem binom_sym (n k : ℕ) (hk : k ≤ n) : (Nat.choose n k : ℝ) = (Nat.choose n (n - k) : ℝ) := by\n  exact_mod_cast Nat.choose_symm hk",
+  "declaration_name": "binom_sym",
+  "used_context": [
+    "Nat.choose_symm",
+    "Nat.choose",
+    "ℝ",
+    "Nat.sub"
+  ],
+  "notes": [
+    "The source says k ∈ ℝ, but the binomial coefficient expects ℕ, so we cast the result to ℝ. The condition k ≤ n is necessary for equality."
+  ]
+}

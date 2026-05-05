@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777973202-5fXiECHkXJjZVVlpg5Vz",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem binom_sym (n k : ℕ) (hk : k ≤ n) : (Nat.choose n k : ℝ) = (Nat.choose n (n - k) : ℝ) := by\\n  exact_mod_cast Nat.choose_symm hk\",\n  \"declaration_name\": \"binom_sym\",\n  \"used_context\": [\n    \"Nat.choose_symm\",\n    \"Nat.choose\",\n    \"ℝ\",\n    \"Nat.sub\"\n  ],\n  \"notes\": [\n    \"The source says k ∈ ℝ, but the binomial coefficient expects ℕ, so we cast the result to ℝ. The condition k ≤ n is necessary for equality.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777973202,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 7344,
+    "prompt_tokens": 3337,
+    "total_tokens": 10681,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 7188,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.007620011,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.007620011,
+      "upstream_inference_prompt_cost": 0.001230731,
+      "upstream_inference_completions_cost": 0.00638928
+    }
+  },
+  "provider": "DeepSeek"
+}

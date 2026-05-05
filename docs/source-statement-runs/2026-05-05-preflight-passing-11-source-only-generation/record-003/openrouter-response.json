@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777972858-Ii53MP0DckZYBK9kE4ve",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem fps_onePlusX_pow_int {F : Type*} [Field F] [BinomialRing F] (n : ℤ) :\\n    (1 + PowerSeries.X : PowerSeries F) ^ n =\\n      PowerSeries.mk fun k => (Ring.choose n k : F) := by\\n  by_cases h : 0 ≤ n\\n  · lift n to ℕ using h\\n    simpa [zpow_coe_nat] using PowerSeries.binomialSeries_nat (R := ℤ) (A := F) n\\n  · have h_nonpos : n ≤ 0 := by linarith\\n    have hn_eq : n = - (Int.natAbs n : ℤ) := by\\n      simpa [Int.natAbs_of_nonpos h_nonpos]\\n    rw [hn_eq, zpow_neg, zpow_coe_nat, fps_onePlusX_pow_neg' F (Int.natAbs n)]\",\n  \"declaration_name\": \"fps_onePlusX_pow_int\",\n  \"used_context\": [\n    \"fps_onePlusX_pow_neg'\",\n    \"PowerSeries.binomialSeries_nat\",\n    \"zpow_coe_nat\",\n    \"zpow_neg\",\n    \"Int.natAbs_of_nonpos\"\n  ],\n  \"notes\": [\n    \"The proof case-splits on the sign of n. For nonnegative n we rewrite via zpow_coe_nat and binomialSeries_nat; for negative n we use n = -|n| and combine zpow_neg, zpow_coe_nat, and the existing negative-exponent lemma fps_onePlusX_pow_neg'.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777972858,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 11836,
+    "prompt_tokens": 5975,
+    "total_tokens": 17811,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 11458,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.012620365,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.012620365,
+      "upstream_inference_prompt_cost": 0.002323045,
+      "upstream_inference_completions_cost": 0.01029732
+    }
+  },
+  "provider": "DeepSeek"
+}
