@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777968654-xOFQy5kwfvOZCqQumemM",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem perm_pow_succ (α : Equiv.Perm X) (n : ℕ) : α ^ (n + 1) = α ^ n * α := by\\n  exact pow_succ α n\",\n  \"declaration_name\": \"perm_pow_succ\",\n  \"used_context\": [\n    \"pow_succ (from Algebra/GroupPower)\"\n  ],\n  \"notes\": [\n    \"Changed pointwise equality to group equality per shape diagnostic warning\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777968654,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5738,
+    "prompt_tokens": 3363,
+    "total_tokens": 9101,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 5625,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.006123669,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.006123669,
+      "upstream_inference_prompt_cost": 0.001131609,
+      "upstream_inference_completions_cost": 0.00499206
+    }
+  },
+  "provider": "DeepSeek"
+}

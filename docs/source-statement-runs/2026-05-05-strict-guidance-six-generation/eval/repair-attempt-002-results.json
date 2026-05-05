@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-05-05T08:13:50.554563+00:00",
+  "run_output": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation",
+  "attempt": 2,
+  "records_completed": 1,
+  "repair_generation_successes": 1,
+  "repair_generation_success_rate": 1.0,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.006123669,
+  "model": "deepseek/deepseek-v4-pro",
+  "max_tokens": 32768,
+  "reasoning_effort": "high",
+  "concurrency": 1,
+  "budget_only": false,
+  "shape_diagnostic_results": "shape-diagnostic-results.json",
+  "include_shape_warnings": true,
+  "shape_warnings_only": true,
+  "max_actual_cost_usd": 0.04,
+  "failure_classes": {},
+  "results": [
+    {
+      "index": 5,
+      "record_id": "AlgebraicCombinatorics/Permutations/Basics.lean:AlgebraicCombinatorics.perm_pow_succ",
+      "record_dir": "docs/source-statement-runs/2026-05-05-strict-guidance-six-generation/record-005",
+      "attempt": 2,
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 14568,
+        "prompt_chars": 13677,
+        "estimated_prompt_tokens": 3420,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0014877,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.029995860000000003
+      },
+      "shape_warning_codes": [
+        "pointwise_iteration_instead_of_group_power_statement"
+      ],
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 3363,
+        "completion_tokens": 5738,
+        "total_tokens": 9101,
+        "actual_cost_usd": 0.006123669,
+        "estimated_cost_from_usage_usd": 0.006454965,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "success": true,
+      "repair_generation_success": true,
+      "generated_name": "perm_pow_succ"
+    }
+  ]
+}
