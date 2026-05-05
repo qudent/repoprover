@@ -138,6 +138,33 @@ First theorem-level selector smoke:
   expected signatures are guessed. The next hydration step must validate exact
   Lean names and types with local Mathlib search plus Lean tooling.
 
+Hydration and generation follow-up:
+
+- hydrator: `scripts/hydrate_latex_statement_context.py`
+- hydrated artifact:
+  `docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid/batch-001/mathlib-lean-hydrated-context.json`
+- Lean-checked exact Mathlib identifiers: `4/4`
+- important correction from `#check`: `PowerSeries.coeff` has argument order
+  `(n : ℕ) : R⟦X⟧ →ₗ[R] R`, and `PowerSeries.inv` is field-based in the checked
+  signature. The selector's expected shapes were not reliable enough to pass
+  straight to generation.
+- first theorem-generation runner:
+  `scripts/run_latex_statement_generation.py`
+- verifier: `scripts/verify_latex_statement_generation.py`
+- no-reasoning paid generation v1:
+  `docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid/`,
+  cost `$0.0005976`, valid JSON, `0/1` compile pass, contained `sorry` and
+  copied the bad `coeff K m` shape.
+- no-reasoning paid generation v2:
+  `docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-v2-paid/`,
+  cost `$0.00045612`, valid JSON, `0/1` compile pass. It reported
+  `cannot_prove_from_visible_context` but still emitted a nonempty incomplete
+  theorem body, which the verifier now flags as a contract violation.
+
+Prompt implication: selector sketches should not contain Lean-like theorem
+syntax. They should stay as prose/math intent, while exact Lean signatures and
+argument order come only from hydrated `#check` output.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

@@ -1,0 +1,12 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-05T21:51:07.572865+00:00",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-budget",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_generation.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid",
+  "valid_json": false
+}

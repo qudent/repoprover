@@ -26,10 +26,12 @@ retired from `main`; historical run logs remain. The current dataset is
   inner-loop Lean declaration checks.
 
 ## TODO Plan
-- [ ] Add Lean-tooling context hydration for selector-requested Mathlib names
+- [x] Add Lean-tooling context hydration for selector-requested Mathlib names
   (`#check`/environment lookup before generation).
-- [ ] Generate and verify a small theorem-level Lean file from one planned
-  LaTeX source unit.
+- [x] Generate and verify one small theorem-level attempt from a planned LaTeX
+  source unit.
+- [ ] Rerun theorem-level selection after the new "prose sketch only" selector
+  contract, then retry generation on an easier source unit.
 - [ ] Reclassify old strict-grader mismatches into `compile_failure`,
   `missing_context`, `wrong_math`, `shape_mismatch_against_oracle`, or
   `useful_alternative_formalization`.
@@ -37,8 +39,12 @@ retired from `main`; historical run logs remain. The current dataset is
 
 ## Blockers
 - The first theorem-level selector smoke understood the FPS division-congruence
-  lemma but guessed some PowerSeries API shapes; exact Mathlib signatures still
-  need tool validation.
+  lemma, but its unchecked Lean-like statement sketch used wrong API argument
+  order. Future selector sketches must stay prose/math-intent only.
+- The first theorem-level generation attempts reached valid JSON but `0/1`
+  compile pass. V1 burned tokens on hidden reasoning until `reasoning_effort`
+  was forced to `none`; v2 still copied `coeff K m` and emitted an incomplete
+  theorem body despite reporting `cannot_prove_from_visible_context`.
 - Previous-project context has been more useful than pure Mathlib lookup so far,
   but it must not leak exact target declarations.
 - The old declaration-level verifier can reject useful source-theorem progress
@@ -57,6 +63,13 @@ retired from `main`; historical run logs remain. The current dataset is
   `docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid/`;
   valid JSON, 1 unit, `$0.00073584`, one planned declaration task with separate
   source/project/Mathlib context buckets.
+- Lean-signature hydration for that selector output checked 4/4 exact Mathlib
+  identifiers with `lake env lean --stdin --json`; artifacts are in
+  `batch-001/mathlib-lean-hydrated-context.json`.
+- Theorem-level generation runner and verifier now exist. No-reasoning DeepSeek
+  generation cost `$0.0005976` for v1 and `$0.00045612` for v2; both verified
+  `0/1` compile pass. The verifier records placeholders, contract violations,
+  and Lean errors under each generation run's `eval/verification-results.json`.
 - Lean-tooling dependency scan finished without being killed: 16,485 unique raw
   project constant rows. The theorem-level summary over 114 units sees median
   44 direct Mathlib constants and median 5 direct project constants per unit.
@@ -69,4 +82,5 @@ retired from `main`; historical run logs remain. The current dataset is
 - No Lean scan is currently running. Reuse the checked-in scan JSONL for new
   summaries.
 - Focused Python tests should cover the dataset generator, theorem selector
-  payload hiding, context graph generation, and elaborated dependency summary.
+  payload hiding, context hydration, theorem generation payloads, verifier
+  classification, context graph generation, and elaborated dependency summary.

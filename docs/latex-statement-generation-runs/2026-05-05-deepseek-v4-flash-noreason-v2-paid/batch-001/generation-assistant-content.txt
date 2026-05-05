@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "coeff_congr_div"
+      ],
+      "lean_file_body": "theorem coeff_congr_div {K : Type*} [CommRing K] (a b c d : PowerSeries K) (hc : IsUnit c) (hd : IsUnit d) (hcd : ∀ m, m ≤ n → coeff K m c = coeff K m d) (hab : ∀ m, m ≤ n → coeff K m a = coeff K m b) : ∀ m, m ≤ n → coeff K m (a * (c⁻¹ : PowerSeries K)) = coeff K m (b * (d⁻¹ : PowerSeries K)) :=",
+      "notes": [
+        "Division a/c is expressed as a * (c⁻¹) because PowerSeries.inv is only defined over a field; we use the general unit inverse via IsUnit.",
+        "The proof would require using the recurrence for coefficients of a product with an inverse, which is not fully provided by the visible context; the statement is given as a theorem with no proof body.",
+        "The type of K is assumed to be a CommRing to allow units; the exact signature of PowerSeries.inv over a field is not used."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "PowerSeries.coeff",
+        "IsUnit",
+        "PowerSeries.coeff_mul"
+      ]
+    }
+  ]
+}

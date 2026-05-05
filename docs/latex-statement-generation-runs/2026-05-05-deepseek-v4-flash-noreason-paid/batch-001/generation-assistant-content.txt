@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "coeff_congr_div"
+      ],
+      "lean_file_body": "theorem coeff_congr_div (K : Type*) [CommRing K] (a b c d : PowerSeries K) (hc : IsUnit c) (hd : IsUnit d) (hcd : ∀ m, m ≤ n → coeff K m c = coeff K m d) (hab : ∀ m, m ≤ n → coeff K m a = coeff K m b) : ∀ m, m ≤ n → coeff K m (a / c) = coeff K m (b / d) := by\n  intro m hm\n  have hc' : IsUnit (coeff K 0 c) := by\n    apply hc.isUnit_coeff_zero\n  sorry",
+      "notes": [
+        "The proof is incomplete; the lemma requires a lemma `IsUnit.isUnit_coeff_zero` for power series over a commutative ring, which is not available in the current context. The statement is correctly formalized assuming `a / c` is defined as `a * c⁻¹` where `c⁻¹` is the inverse of the unit `c`. The `IsUnit` condition is used to ensure invertibility. The `coeff` function is linear and the multiplication formula uses `antidiagonal`. The proof would proceed by induction on `m` using the recurrence for coefficients of a product and the given equalities."
+      ],
+      "unit_key": "unit-001",
+      "used_context": [
+        "PowerSeries.coeff",
+        "IsUnit",
+        "PowerSeries.inv",
+        "PowerSeries.coeff_mul"
+      ]
+    }
+  ]
+}

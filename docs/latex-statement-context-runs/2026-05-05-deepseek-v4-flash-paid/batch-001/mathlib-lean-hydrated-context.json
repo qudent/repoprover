@@ -1,0 +1,160 @@
+{
+  "exact_identifier_count": 4,
+  "generated_at": "2026-05-05T21:46:57.493084+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "PowerSeries.coeff",
+      "expected_signature_or_shape": "coeff (n : ℕ) (f : PowerSeries R) : R",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) : R⟦X⟧ →ₗ[R] R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) : R⟦X⟧ →ₗ[R] R",
+        "status": "checked"
+      },
+      "query": "PowerSeries.coeff",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "To extract coefficients of power series"
+    },
+    {
+      "exact_identifier": "IsUnit",
+      "expected_signature_or_shape": "IsUnit (f : PowerSeries R) : Prop",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "IsUnit.{u_1} {M : Type u_1} [Monoid M] (a : M) : Prop",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "IsUnit.{u_1} {M : Type u_1} [Monoid M] (a : M) : Prop",
+        "status": "checked"
+      },
+      "query": "IsUnit",
+      "request_index": 2,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "To state that c and d are invertible"
+    },
+    {
+      "exact_identifier": "PowerSeries.inv",
+      "expected_signature_or_shape": "inv (f : PowerSeries R) : PowerSeries R (only defined when f is a unit)",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.inv.{u_2} {k : Type u_2} [Field k] : k⟦X⟧ → k⟦X⟧",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.inv.{u_2} {k : Type u_2} [Field k] : k⟦X⟧ → k⟦X⟧",
+        "status": "checked"
+      },
+      "query": "PowerSeries.inv",
+      "request_index": 3,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "To define division as a * inv c"
+    },
+    {
+      "exact_identifier": "PowerSeries.coeff_mul",
+      "expected_signature_or_shape": "coeff_mul : coeff R n (f * g) = ∑ i in Finset.range (n+1), coeff R i f * coeff R (n-i) g",
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+        "status": "checked"
+      },
+      "query": "PowerSeries.coeff_mul",
+      "request_index": 4,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "To reason about coefficients of products in the proof"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "IsUnit": {
+        "messages": [
+          {
+            "data": "IsUnit.{u_1} {M : Type u_1} [Monoid M] (a : M) : Prop",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "IsUnit.{u_1} {M : Type u_1} [Monoid M] (a : M) : Prop",
+        "status": "checked"
+      },
+      "PowerSeries.coeff": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) : R⟦X⟧ →ₗ[R] R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) : R⟦X⟧ →ₗ[R] R",
+        "status": "checked"
+      },
+      "PowerSeries.coeff_mul": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+        "status": "checked"
+      },
+      "PowerSeries.inv": {
+        "messages": [
+          {
+            "data": "PowerSeries.inv.{u_2} {k : Type u_2} [Field k] : k⟦X⟧ → k⟦X⟧",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.inv.{u_2} {k : Type u_2} [Field k] : k⟦X⟧ → k⟦X⟧",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "3fc8e92b5a7e2311dd240c22b88504207af05fefb1118b5cd267dc6aca0e73fb",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "request_count": 4,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

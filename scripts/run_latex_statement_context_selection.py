@@ -165,7 +165,10 @@ def build_messages(selected: list[SelectedUnit], all_rows: list[dict[str, Any]])
                             "task_id": "unit-001-task-1",
                             "kind": "def|theorem|lemma|instance|notation|unknown",
                             "source_part": "whole unit or part marker",
-                            "target_statement_sketch": "mathematical Lean-shape sketch, not exact hidden Lean",
+                            "target_statement_sketch": (
+                                "prose mathematical target sketch; do not write exact Lean syntax, "
+                                "declaration names, or guessed API argument order"
+                            ),
                             "needed_source_context": ["source labels/statements"],
                             "needed_project_context": [
                                 {
@@ -190,6 +193,7 @@ def build_messages(selected: list[SelectedUnit], all_rows: list[dict[str, Any]])
         },
         "rules": [
             "Do not infer or reveal hidden target Lean declaration names for the selected unit.",
+            "Do not write theorem/lemma Lean code in target_statement_sketch; exact API syntax belongs in needed_mathlib_context and will be hydrated by tools.",
             "Do not bundle all source parts into one conjunction unless the source unit itself requires that shape.",
             "Use previous project declarations only if they are shown under prior_project_context.",
             "Do not treat Mathlib as the only context; enumerate source/project/local/Mathlib context separately.",

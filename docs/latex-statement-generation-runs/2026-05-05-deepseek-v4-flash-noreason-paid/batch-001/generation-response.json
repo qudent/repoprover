@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"coeff_congr_div\"\n      ],\n      \"lean_file_body\": \"theorem coeff_congr_div (K : Type*) [CommRing K] (a b c d : PowerSeries K) (hc : IsUnit c) (hd : IsUnit d) (hcd : ∀ m, m ≤ n → coeff K m c = coeff K m d) (hab : ∀ m, m ≤ n → coeff K m a = coeff K m b) : ∀ m, m ≤ n → coeff K m (a / c) = coeff K m (b / d) := by\\n  intro m hm\\n  have hc' : IsUnit (coeff K 0 c) := by\\n    apply hc.isUnit_coeff_zero\\n  sorry\",\n      \"notes\": [\n        \"The proof is incomplete; the lemma requires a lemma `IsUnit.isUnit_coeff_zero` for power series over a commutative ring, which is not available in the current context. The statement is correctly formalized assuming `a / c` is defined as `a * c⁻¹` where `c⁻¹` is the inverse of the unit `c`. The `IsUnit` condition is used to ensure invertibility. The `coeff` function is linear and the multiplication formula uses `antidiagonal`. The proof would proceed by induction on `m` using the recurrence for coefficients of a product and the given equalities.\"\n      ],\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"PowerSeries.coeff\",\n        \"IsUnit\",\n        \"PowerSeries.inv\",\n        \"PowerSeries.coeff_mul\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778017880,
+  "id": "gen-1778017880-8n8q19fN39XThz4oD293",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AkashML",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 376,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0005976,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0001128,
+      "upstream_inference_cost": 0.0005976,
+      "upstream_inference_prompt_cost": 0.0004848
+    },
+    "is_byok": false,
+    "prompt_tokens": 2424,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 2800
+  }
+}

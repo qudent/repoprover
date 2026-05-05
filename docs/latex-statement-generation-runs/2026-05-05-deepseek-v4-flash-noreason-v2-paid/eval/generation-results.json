@@ -1,0 +1,42 @@
+{
+  "budget_only": false,
+  "cost_summary": {
+    "model": "deepseek/deepseek-v4-flash",
+    "openrouter_reported_cost": 0.00045612,
+    "usage": {
+      "completion_tokens": 338,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      },
+      "cost": 0.00045612,
+      "cost_details": {
+        "upstream_inference_completions_cost": 9.464e-05,
+        "upstream_inference_cost": 0.00045612,
+        "upstream_inference_prompt_cost": 0.00036148
+      },
+      "is_byok": false,
+      "prompt_tokens": 2582,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "video_tokens": 0
+      },
+      "total_tokens": 2920
+    }
+  },
+  "elapsed_seconds": 8.614,
+  "generated_at": "2026-05-05T21:54:40.280832+00:00",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-v2-paid",
+  "paid_call_made": true,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_generation.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-05-deepseek-v4-flash-paid",
+  "valid_json": true
+}

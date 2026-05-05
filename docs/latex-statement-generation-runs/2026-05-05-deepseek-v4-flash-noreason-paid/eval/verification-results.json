@@ -1,0 +1,116 @@
+{
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid/batch-001/generation-output.json",
+      "unit_count": 1,
+      "units": [
+        {
+          "compile_passed": false,
+          "declaration_names": [
+            "coeff_congr_div"
+          ],
+          "lean_error_count": 11,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 133,
+              "data": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+              "kind": "[anonymous]",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 147,
+              "data": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+              "kind": "[anonymous]",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 166,
+              "data": "failed to synthesize instance of type class\n  LE ?m.14⟦X⟧\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 180,
+              "data": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+              "kind": "[anonymous]",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 194,
+              "data": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+              "kind": "[anonymous]",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 208,
+              "data": "failed to synthesize instance of type class\n  LE ?m.14⟦X⟧\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 222,
+              "data": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+              "kind": "[anonymous]",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 242,
+              "data": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+              "kind": "[anonymous]",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 119,
+              "data": "failed to synthesize instance of type class\n  LE ?m.14⟦X⟧\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 4,
+              "severity": "error"
+            },
+            {
+              "column": 27,
+              "data": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+              "kind": "[anonymous]",
+              "line": 6,
+              "severity": "error"
+            },
+            {
+              "column": 257,
+              "data": "unsolved goals\nR✝ : Type u_2\nn : R✝⟦X⟧\nK : Type u_1\ninst✝ : CommRing K\na b c d : K⟦X⟧\nhc : IsUnit c\nhd : IsUnit d\nhcd : ∀ m ≤ n, sorry = sorry\nhab : ∀ (m : R✝⟦X⟧) (a_1 : sorry), sorry = sorry\nm : R✝⟦X⟧\nhm : sorry\n⊢ sorry = sorry",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 4,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [
+            "sorry"
+          ],
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "generated_at": "2026-05-05T21:53:38.598830+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid",
+  "imports": [
+    "Mathlib"
+  ],
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

@@ -69,3 +69,4 @@ def test_theorem_level_selector_hides_target_alignment_but_keeps_prior_context()
     assert "posthoc_lean_alignment" not in prompt
     assert "needed_mathlib_context" in prompt
     assert "prior_project_context" in prompt
+    assert "Do not write theorem/lemma Lean code in target_statement_sketch" in prompt

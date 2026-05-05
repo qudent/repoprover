@@ -215,6 +215,25 @@ First theorem-level selector smoke:
   next context-hydration step must validate exact names and signatures with
   Mathlib search and Lean `#check` or environment lookup
 
+The first theorem-level hydration/generation loop confirms that caveat:
+
+- `scripts/hydrate_latex_statement_context.py` checked `4/4` requested exact
+  Mathlib identifiers with Lean.
+- `PowerSeries.coeff` and `PowerSeries.inv` differed materially from the
+  selector's expected shapes.
+- `scripts/run_latex_statement_generation.py` produced valid JSON only after
+  `reasoning_effort=none`; without it, DeepSeek V4 Flash spent all output tokens
+  on hidden reasoning.
+- Generation v1 and v2 both verified `0/1` compile pass. V1 used `sorry`; v2
+  reported `cannot_prove_from_visible_context` but still emitted an incomplete
+  theorem body. The verifier now records both placeholder and contract-violation
+  failures.
+
+Generic prompt change from this loop: theorem-level selector sketches should be
+prose/math intent only, not Lean-like theorem syntax. The generator should treat
+hydrated `#check` signatures as the only authoritative source for Lean API
+argument order.
+
 ### Generation and Verification Counts
 
 Honesty caveats:
