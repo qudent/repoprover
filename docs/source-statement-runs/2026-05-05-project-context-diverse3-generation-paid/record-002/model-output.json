@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "theorem thm_commring_inverse_uni {L : Type*} [CommRing L] {a b c : L} (hb : a * b = 1) (hc : a * c = 1) : b = c :=\n  inverse_unique hb hc",
+  "declaration_name": "thm_commring_inverse_uni",
+  "used_context": [
+    "inverse_unique"
+  ],
+  "notes": [
+    "The theorem directly applies the previously formalized result `inverse_unique` from AlgebraicCombinatorics.DividingFPS."
+  ]
+}

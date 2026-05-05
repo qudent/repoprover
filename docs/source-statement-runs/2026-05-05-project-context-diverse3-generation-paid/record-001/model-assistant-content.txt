@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem product_lim_conv {f : ℕ → PowerSeries K} {lim : PowerSeries K}\n    (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) lim)\n    (hconst : ∀ i, constantCoeff (f i) = 1) :\n    IsMultipliable f ∧ tprod' f (isMultipliable_of_coeffStabilizesTo_partial_prod h hconst) = lim :=\n  ⟨isMultipliable_of_coeffStabilizesTo_partial_prod h hconst,\n    tprod'_eq_of_coeffStabilizesTo_partial_prod h hconst⟩",
+  "declaration_name": "product_lim_conv",
+  "used_context": [
+    "isMultipliable_of_coeffStabilizesTo_partial_prod",
+    "tprod'_eq_of_coeffStabilizesTo_partial_prod",
+    "CoeffStabilizesTo",
+    "IsMultipliable",
+    "tprod'",
+    "constantCoeff"
+  ],
+  "notes": [
+    "Combines the two imported theorems 'isMultipliable_of_coeffStabilizesTo_partial_prod' and 'tprod'_eq_of_coeffStabilizesTo_partial_prod' into a single conjunction, as required by Theorem thm.fps.lim.prod-lim-conv."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777991801-lgrEhZk58jq8oFEc1hqE",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem laupol_ring : (CommAlgebra K K[T;T⁻¹]) ∧ (1 : K[T;T⁻¹]) = T 0 ∧ IsUnit (T 1 : K[T;T⁻¹]) := by\\n  refine ⟨?_, ?_, ?_⟩\\n  · exact inferInstance\\n  · exact (laurentPolynomial_one_eq_T_zero K)\\n  · exact T_isUnit\",\n  \"declaration_name\": \"laupol_ring\",\n  \"used_context\": [\n    \"laurentPolynomial_one_eq_T_zero\",\n    \"T_isUnit\",\n    \"inferInstance for CommAlgebra instance\"\n  ],\n  \"notes\": [\n    \"The first component uses the existing global CommAlgebra instance for LaurentPolynomial, which follows from laurentPolynomial_commRing and laurentPolynomial_algebra.\",\n    \"The second component uses the imported theorem laurentPolynomial_one_eq_T_zero.\",\n    \"The third component uses the local theorem T_isUnit.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777991801,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 6166,
+    "prompt_tokens": 8953,
+    "total_tokens": 15119,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 5942,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.009038111,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.009038111,
+      "upstream_inference_prompt_cost": 0.003673691,
+      "upstream_inference_completions_cost": 0.00536442
+    }
+  },
+  "provider": "DeepSeek"
+}

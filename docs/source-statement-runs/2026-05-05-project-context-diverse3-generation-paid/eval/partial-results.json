@@ -1,0 +1,244 @@
+{
+  "results": [
+    {
+      "index": 1,
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+      "lean_path": "AlgebraicCombinatorics/Details/Limits.lean",
+      "gold_declaration_names": [
+        "PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'"
+      ],
+      "gold_line_range": [
+        442,
+        454
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 52831,
+        "prompt_chars": 50711,
+        "estimated_prompt_tokens": 12678,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00551493,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03402309
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 52831,
+        "prompt_chars": 50711,
+        "estimated_prompt_tokens": 12678,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.00551493,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03402309
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03402309,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 16641,
+        "completion_tokens": 2597,
+        "total_tokens": 19238,
+        "actual_cost_usd": 0.009277361,
+        "estimated_cost_from_usage_usd": 0.009498224999999999,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem product_lim_conv {f : ℕ → PowerSeries K} {lim : PowerSeries K}\n    (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) lim)\n    (hconst : ∀ i, constantCoeff (f i) = 1) :\n    IsMultipliable f ∧ tprod' f (isMultipliable_of_coeffStabilizesTo_partial_prod h hconst) = lim :=\n  ⟨isMultipliable_of_coeffStabilizesTo_partial_prod h hconst,\n    tprod'_eq_of_coeffStabilizesTo_partial_prod h hconst⟩",
+        "declaration_name": "product_lim_conv",
+        "used_context": [
+          "isMultipliable_of_coeffStabilizesTo_partial_prod",
+          "tprod'_eq_of_coeffStabilizesTo_partial_prod",
+          "CoeffStabilizesTo",
+          "IsMultipliable",
+          "tprod'",
+          "constantCoeff"
+        ],
+        "notes": [
+          "Combines the two imported theorems 'isMultipliable_of_coeffStabilizesTo_partial_prod' and 'tprod'_eq_of_coeffStabilizesTo_partial_prod' into a single conjunction, as required by Theorem thm.fps.lim.prod-lim-conv."
+        ]
+      },
+      "generated_name": "product_lim_conv",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    },
+    {
+      "index": 2,
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.isInverse_unique",
+      "lean_path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.isInverse_unique"
+      ],
+      "gold_line_range": [
+        484,
+        500
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18161,
+        "prompt_chars": 17119,
+        "estimated_prompt_tokens": 4280,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0018618,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03036996
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 18161,
+        "prompt_chars": 17119,
+        "estimated_prompt_tokens": 4280,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.0018618,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.03036996
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.03036996,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 4559,
+        "completion_tokens": 1072,
+        "total_tokens": 5631,
+        "actual_cost_usd": 0.002694941,
+        "estimated_cost_from_usage_usd": 0.0029158050000000005,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem thm_commring_inverse_uni {L : Type*} [CommRing L] {a b c : L} (hb : a * b = 1) (hc : a * c = 1) : b = c :=\n  inverse_unique hb hc",
+        "declaration_name": "thm_commring_inverse_uni",
+        "used_context": [
+          "inverse_unique"
+        ],
+        "notes": [
+          "The theorem directly applies the previously formalized result `inverse_unique` from AlgebraicCombinatorics.DividingFPS."
+        ]
+      },
+      "generated_name": "thm_commring_inverse_uni",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    },
+    {
+      "index": 3,
+      "record_id": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.T_inv",
+      "lean_path": "AlgebraicCombinatorics/FPS/LaurentSeries.lean",
+      "gold_declaration_names": [
+        "AlgebraicCombinatorics.FPS.Laurent.T_inv"
+      ],
+      "gold_line_range": [
+        276,
+        281
+      ],
+      "prompt_policy": "target Lean statement/name withheld; target source chunk provided; context_mode=source-only",
+      "context_mode": "source-only",
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 33436,
+        "prompt_chars": 31849,
+        "estimated_prompt_tokens": 7963,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.003463905,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.031972065
+      },
+      "repair_budget_estimate": {
+        "model": "deepseek/deepseek-v4-pro",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 33436,
+        "prompt_chars": 31849,
+        "estimated_prompt_tokens": 7963,
+        "max_completion_tokens": 32768,
+        "estimated_prompt_cost_usd": 0.003463905,
+        "estimated_max_completion_cost_usd": 0.02850816,
+        "estimated_max_cost_usd": 0.031972065
+      },
+      "repair_attempts_configured": 0,
+      "reserved_estimated_max_cost_usd": 0.031972065,
+      "api_request_attempted": true,
+      "response_received": true,
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro-20260423",
+        "price_source": "openrouter-catalog-2026-05-02",
+        "prompt_price_per_million": 0.435,
+        "completion_price_per_million": 0.87,
+        "prompt_tokens": 8953,
+        "completion_tokens": 6166,
+        "total_tokens": 15119,
+        "actual_cost_usd": 0.009038111,
+        "estimated_cost_from_usage_usd": 0.009258975,
+        "has_openrouter_reported_cost": true
+      },
+      "finish_reason": "stop",
+      "model_json": {
+        "lean_declaration": "theorem laupol_ring : (CommAlgebra K K[T;T⁻¹]) ∧ (1 : K[T;T⁻¹]) = T 0 ∧ IsUnit (T 1 : K[T;T⁻¹]) := by\n  refine ⟨?_, ?_, ?_⟩\n  · exact inferInstance\n  · exact (laurentPolynomial_one_eq_T_zero K)\n  · exact T_isUnit",
+        "declaration_name": "laupol_ring",
+        "used_context": [
+          "laurentPolynomial_one_eq_T_zero",
+          "T_isUnit",
+          "inferInstance for CommAlgebra instance"
+        ],
+        "notes": [
+          "The first component uses the existing global CommAlgebra instance for LaurentPolynomial, which follows from laurentPolynomial_commRing and laurentPolynomial_algebra.",
+          "The second component uses the imported theorem laurentPolynomial_one_eq_T_zero.",
+          "The third component uses the local theorem T_isUnit."
+        ]
+      },
+      "generated_name": "laupol_ring",
+      "forbidden_placeholder": false,
+      "paid_call_made": true,
+      "status": "generation_only",
+      "generation_success": true,
+      "success": false
+    }
+  ]
+}

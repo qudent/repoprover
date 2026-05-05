@@ -1,0 +1,14 @@
+{
+  "lean_declaration": "theorem laupol_ring : (CommAlgebra K K[T;T⁻¹]) ∧ (1 : K[T;T⁻¹]) = T 0 ∧ IsUnit (T 1 : K[T;T⁻¹]) := by\n  refine ⟨?_, ?_, ?_⟩\n  · exact inferInstance\n  · exact (laurentPolynomial_one_eq_T_zero K)\n  · exact T_isUnit",
+  "declaration_name": "laupol_ring",
+  "used_context": [
+    "laurentPolynomial_one_eq_T_zero",
+    "T_isUnit",
+    "inferInstance for CommAlgebra instance"
+  ],
+  "notes": [
+    "The first component uses the existing global CommAlgebra instance for LaurentPolynomial, which follows from laurentPolynomial_commRing and laurentPolynomial_algebra.",
+    "The second component uses the imported theorem laurentPolynomial_one_eq_T_zero.",
+    "The third component uses the local theorem T_isUnit."
+  ]
+}
