@@ -47,19 +47,25 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/verify_source_statem
 
 ## Next Prompt/Context Changes
 
-Before spending on another batch:
+Implemented after this diagnosis:
 
 - Forbid theorem-local `where` definitions and local redefinitions of concepts
   already likely present in context.
 - Add a stronger rule that every helper theorem/API used in the proof must
   appear in prefix/local examples or retrieved API snippets, unless it is a
   very standard Mathlib theorem.
-- Add local API retrieval for nearby declarations whose names overlap the target
-  stem or generated unknown identifiers.
 - Make multi-part source focus stricter: if the selected record is one theorem,
   do not bundle sibling determinant operation facts.
 - For local notation and local domain APIs, include examples that show the exact
   namespace/type family, for example `Ring.choose` vs `Nat.choose`.
+
+Still missing:
+
+- Add local API retrieval for nearby declarations whose names overlap generated
+  unknown identifiers or source labels without leaking the withheld target
+  declaration name.
+- Rerun a small generation-only probe after the prompt/context update and
+  compare against this 0/6 baseline.
 
 Trust scoring should still wait. This run did not mostly succeed at independent
 source-statement generation, so generated statements are not yet reliable enough

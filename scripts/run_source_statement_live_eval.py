@@ -207,7 +207,7 @@ def _declaration_start(lines: list[str], index: int) -> int:
     return start
 
 
-def _prior_example_blocks(project_root: Path, record: SelectedRecord, limit: int = 2) -> list[str]:
+def _prior_example_blocks(project_root: Path, record: SelectedRecord, limit: int = 4) -> list[str]:
     lean_file = project_root / record.lean_path
     if not lean_file.exists():
         return []
@@ -218,11 +218,15 @@ def _prior_example_blocks(project_root: Path, record: SelectedRecord, limit: int
     if "diagonal" in source_text:
         keywords.append("diagonal")
     if "minor" in source_text or "det" in source_text:
-        keywords.append(".det")
+        keywords.extend([".det", "Matrix.det", "det_", "updateRow", "updateCol"])
+    if "column" in source_text or "columns" in source_text or "colop" in source_text:
+        keywords.extend(["det_swap_cols", "det_zero_col", "det_add_col", "det_add_smul_col", "updateCol"])
     if "laurent" in source_text or "x^{\\pm" in source_text or "x,x^{-1}" in source_text:
         keywords.extend(["LaurentPolynomial", "K[T;T⁻¹]", "T_mul", "T_zero"])
     if "coefficient" in source_text or "\\left[  x^" in source_text or "fps" in source_text:
         keywords.extend(["coeff", "PowerSeries.X", "coeff_X", "coeff_one_X"])
+    if "binom" in source_text or "choose" in source_text or "pascal" in source_text or "\\binom" in source_text:
+        keywords.extend(["Ring.choose", "Nat.choose", "choose_succ_succ", "pascal_identity"])
     if "tableau" in source_text or "content" in source_text or "x_t" in source_text:
         keywords.extend(["Tableau", "contentTableau", "xPow", "monomialTableau"])
 
@@ -421,6 +425,7 @@ def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, An
     guidance = [
         "Match the local Lean style shown in local_lean_style.examples when it applies; prefer exact APIs and argument order already used in this file.",
         "Use only identifiers that appear in the Lean prefix context/local examples or are standard Mathlib identifiers; do not cite or invent raw helper names from guessed notation expansions.",
+        "If the local examples use a domain-specific API such as `Ring.choose`, `updateCol`, or a local theorem name, keep that exact API family instead of falling back to a more familiar but different API such as `Nat.choose` or `Matrix.updateColumn`.",
     ]
     for contract in notation_contracts:
         guidance.append(
@@ -433,7 +438,7 @@ def local_lean_style(project_root: Path, record: SelectedRecord) -> dict[str, An
     return {
         "guidance": guidance,
         "notation_contracts": notation_contracts,
-        "examples": examples[:3],
+        "examples": examples[:5],
     }
 
 
@@ -479,8 +484,10 @@ def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str,
             "For multi-part TeX chunks, formalize only the specified labeled part/source span. Do not conjoin all parts unless the record explicitly asks for the whole multi-part result.",
             "Do not cite or invent raw helper names that are not present in the Lean prefix context/local examples; prefer displayed local style and standard Mathlib APIs.",
             "Do not redeclare definitions, structures, abbrevs, notation helpers, or instances already present in the Lean prefix context; reference them directly.",
+            "Do not introduce theorem-local `where` definitions or redefine concepts such as summability, limits, binomial coefficients, or matrix operations. If a needed definition is not in context, state a narrower theorem using the displayed APIs.",
             "Use current Lean 4/Mathlib syntax and API names; if your memory conflicts with displayed local context, trust the displayed context.",
             "State a single proposition-level theorem/lemma that is likely to match the specified source part; do not bundle typeclass instances or unrelated source parts into conjunctions.",
+            "Every nonstandard helper theorem or local API used in the proof should appear explicitly in the Lean prefix context or local examples. If it is not displayed, do not use its name.",
             "If an existing theorem or lemma in the prefix context has binders, apply it to the needed variables rather than using the theorem constant bare.",
             "Prefer the narrowest theorem directly supported by the source sentence; avoid generalizing to a stronger forall/if statement unless that exact shape is in the source or prefix context.",
             "Prefer a short proof if the prefix context already contains the needed fact.",
@@ -521,6 +528,8 @@ def build_repair_messages(
             "For PowerSeries coefficients use argument order `coeff n f`.",
             "For Laurent polynomials use `LaurentPolynomial.T n`, not bare `X` or bare `T` unless the prefix context defines it.",
             "Do not redeclare context definitions; reference them directly.",
+            "Do not add theorem-local `where` definitions or redefine project concepts; repair using the displayed APIs instead.",
+            "Do not introduce helper theorem names that were not displayed in the original context or compiler output.",
         ],
         "original_prompt_user_payload": original_user_payload,
         "failed_generated_declaration": failed_declaration,

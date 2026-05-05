@@ -163,9 +163,13 @@ failures plus 1 hidden-grader mismatch; see
   one grader mismatch; main bottlenecks are invented/stale helper APIs,
   theorem-local redefinitions, multi-part bundling, and missing local type/API
   examples.
-- [ ] Implement the next prompt/context iteration: forbid theorem-local
-  redefinitions, require helper APIs to appear in context/retrieval, add
-  target-stem local API retrieval, and strengthen multi-part source focus.
+- [x] Implement the next prompt/context iteration: forbid theorem-local
+  redefinitions, require helper APIs to appear in displayed context, add richer
+  nearby local examples for determinant/binomial records, and strengthen local
+  API-family guidance such as `Ring.choose` vs `Nat.choose`.
+- [ ] Add generated-failure/local-API retrieval without leaking the withheld
+  target declaration name, then rerun a small generation-only probe against the
+  0/6 baseline.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

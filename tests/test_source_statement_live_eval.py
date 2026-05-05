@@ -117,6 +117,7 @@ def test_source_statement_prompt_includes_local_style_and_notation_contract(tmp_
     assert "sub[U,V] A" in guide
     assert "submatrixOfFinset A U V" in guide
     assert "do not cite or invent raw helper names" in guide
+    assert "more familiar but different API" in guide
     assert "scoped notation" in examples
     assert "noncomputable def submatrixOfFinset" in examples
     assert "((Matrix.diagonal d).submatrix" in examples
@@ -155,6 +156,8 @@ def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_
     assert "typeclass objects" in guidance
     assert "Use current Lean 4/Mathlib syntax" in instructions
     assert "do not bundle typeclass instances" in instructions
+    assert "Do not introduce theorem-local `where` definitions" in instructions
+    assert "Every nonstandard helper theorem or local API" in instructions
 
 
 def test_repair_prompt_uses_generated_only_error_without_grader_feedback(tmp_path: Path) -> None:
