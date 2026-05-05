@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "theorem exists_isXnApproximator_of_multipliable (a : I → PowerSeries R) (ha : Multipliable a) (n : ℕ) :\n    ∃ M : Finset I, IsXnApproximator a M n :=\nby\n  let Mfm (m : ℕ) : Finset I := (ha m).choose\n  have hMfm (m : ℕ) : DeterminesCoeffInProd a (Mfm m) m := (ha m).choose_spec\n  let M := Finset.biUnion (Finset.range (n+1)) Mfm\n  refine ⟨M, λ m hm => ?_⟩\n  have hm_mem_range : m ∈ Finset.range (n+1) := Finset.mem_range.mpr (Nat.lt_succ_of_le hm)\n  have hsub : Mfm m ⊆ M := Finset.subset_biUnion_of_mem Mfm hm_mem_range\n  exact determinesCoeffInProd_mono (hMfm m) hsub",
+  "declaration_name": "exists_isXnApproximator_of_multipliable",
+  "used_context": [
+    "Multipliable",
+    "CoeffFinitelyDeterminedInProd",
+    "IsXnApproximator",
+    "DeterminesCoeffInProd",
+    "determinesCoeffInProd_mono"
+  ],
+  "notes": [
+    "Uses the fact that a union of finitely many finite sets is finite via Finset.biUnion.",
+    "The proof is a direct construction from the definition of multipliability: for each m ≤ n, pick a determining set and take their union."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "theorem X_mul_eq (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n - 1) f) := by\n  ext n\n  simp [coeff_X_mul, coeff_mk]",
+  "declaration_name": "X_mul_eq",
+  "used_context": [
+    "coeff_X_mul",
+    "coeff_mk",
+    "PowerSeries.ext"
+  ],
+  "notes": [
+    "The proof only uses the existing coefficient lemma coeff_X_mul and the coefficient of mk."
+  ]
+}

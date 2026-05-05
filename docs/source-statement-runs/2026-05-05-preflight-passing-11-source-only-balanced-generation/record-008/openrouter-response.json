@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777977233-VdcX5f6CprrwFEmaTkBJ",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"theorem X_mul_eq (f : R⟦X⟧) : X * f = PowerSeries.mk (fun n => if n = 0 then 0 else coeff (n - 1) f) := by\\n  ext n\\n  simp [coeff_X_mul, coeff_mk]\",\n  \"declaration_name\": \"X_mul_eq\",\n  \"used_context\": [\"coeff_X_mul\", \"coeff_mk\", \"PowerSeries.ext\"],\n  \"notes\": [\"The proof only uses the existing coefficient lemma coeff_X_mul and the coefficient of mk.\"]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777977233,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 2714,
+    "prompt_tokens": 4571,
+    "total_tokens": 7285,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 2573,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.004073485,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.004073485,
+      "upstream_inference_prompt_cost": 0.001712305,
+      "upstream_inference_completions_cost": 0.00236118
+    }
+  },
+  "provider": "DeepSeek"
+}

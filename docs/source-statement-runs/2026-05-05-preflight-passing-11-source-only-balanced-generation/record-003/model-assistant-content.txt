@@ -1,0 +1,18 @@
+{
+  "lean_declaration": "theorem fps_newton_binom [Field K] [BinomialRing K] (n : ℤ) : (1 + PowerSeries.X : PowerSeries K) ^ n = PowerSeries.mk fun k => (Ring.choose n k : K) := by\n  by_cases hn : 0 ≤ n\n  · have hn_nonneg : ∃ (m : ℕ), (m : ℤ) = n :=\n      ⟨n.toNat, Int.toNat_of_nonneg hn⟩\n    rcases hn_nonneg with ⟨m, hm⟩\n    have h_pow : (1 + PowerSeries.X : PowerSeries K) ^ n = (1 + PowerSeries.X : PowerSeries K) ^ (m : ℕ) := by\n      rw [hm, zpow_natCast]\n    have h_binom : (1 + PowerSeries.X : PowerSeries K) ^ (m : ℕ) = PowerSeries.binomialSeries K (m : ℤ) := by\n      rw [PowerSeries.binomialSeries_nat (R := ℤ) (A := K) m]\n    have h_mk : PowerSeries.binomialSeries K (m : ℤ) = PowerSeries.mk fun k => (Ring.choose (m : ℤ) k : K) := by\n      ext k\n      simp [PowerSeries.binomialSeries_coeff]\n    rw [h_pow, h_binom, h_mk]\n    simp [hm]\n  · have hn_neg : n ≤ 0 := by linarith\n    have hn_pos : 0 ≤ -n := by linarith\n    have hm_ex : ∃ (m : ℕ), (m : ℤ) = -n :=\n      ⟨(-n).toNat, Int.toNat_of_nonneg hn_pos⟩\n    rcases hm_ex with ⟨m, hm⟩\n    have hneg : n = - (m : ℤ) := by linarith\n    have h_pow : (1 + PowerSeries.X : PowerSeries K) ^ n = ((1 + PowerSeries.X : PowerSeries K)⁻¹) ^ (m : ℕ) := by\n      rw [hneg, zpow_neg, inv_zpow, zpow_natCast]\n    have h_inv_pow : ((1 + PowerSeries.X : PowerSeries K)⁻¹) ^ (m : ℕ) = PowerSeries.mk fun k => (Ring.choose (-(m : ℤ)) k : K) := by\n      rw [fps_onePlusX_pow_neg' (F := K) m]\n    rw [h_pow, h_inv_pow]\n    simp [hneg]",
+  "declaration_name": "fps_newton_binom",
+  "used_context": [
+    "fps_onePlusX_pow_neg'",
+    "PowerSeries.binomialSeries_nat",
+    "PowerSeries.binomialSeries_coeff",
+    "Ring.choose",
+    "zpow_natCast",
+    "zpow_neg",
+    "inv_zpow",
+    "Int.toNat_of_nonneg"
+  ],
+  "notes": [
+    "Assumes Field K and BinomialRing K because the available lemma fps_onePlusX_pow_neg' requires it; the theorem holds more generally over any commutative ring.",
+    "Uses Ring.choose in ℤ, coerced to K, to match the source sum of binomial coefficients."
+  ]
+}

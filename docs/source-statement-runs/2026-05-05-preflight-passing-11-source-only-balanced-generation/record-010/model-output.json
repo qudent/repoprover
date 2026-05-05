@@ -1,0 +1,10 @@
+{
+  "lean_declaration": "lemma card_perm (X : Type*) [Fintype X] [DecidableEq X] : Fintype.card (Equiv.Perm X) = (Fintype.card X)! :=\n  Fintype.card_perm",
+  "declaration_name": "card_perm",
+  "used_context": [
+    "Fintype.card_perm"
+  ],
+  "notes": [
+    "The size of the symmetric group is the factorial of the cardinality of X, as stated in part (b) of the definition."
+  ]
+}

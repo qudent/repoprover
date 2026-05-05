@@ -1,0 +1,9 @@
+{
+  "lean_declaration": "theorem det_triang (A : Matrix (Fin n) (Fin n) K) (h : (∀ i j, j < i → A i j = 0) ∨ (∀ i j, i < j → A i j = 0)) : A.det = ∏ i, A i i := by\n  rcases h with h_upper | h_lower\n  · exact det_upperTriangular A h_upper\n  · have h_transpose_upper : ∀ i j, j < i → (Aᵀ) i j = 0 := by\n      intro i j hij\n      have : (Aᵀ) i j = A j i := rfl\n      rw [this]\n      exact h_lower j i hij\n    calc\n      A.det = (Aᵀ).det := by rw [Matrix.det_transpose]\n      _ = ∏ i, (Aᵀ) i i := det_upperTriangular Aᵀ h_transpose_upper\n      _ = ∏ i, A i i := by simp",
+  "declaration_name": "det_triang",
+  "used_context": [
+    "det_upperTriangular",
+    "Matrix.det_transpose"
+  ],
+  "notes": []
+}

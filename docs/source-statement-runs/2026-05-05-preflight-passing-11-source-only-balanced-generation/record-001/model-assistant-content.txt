@@ -1,0 +1,18 @@
+{
+  "lean_declaration": "theorem sum_lim_conv (f : ℕ → PowerSeries K) (L : PowerSeries K) (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i+1), f j) L) : IsSummable f ∧ tsum' f (show IsSummable f from ⟨L, h⟩) = L :=\nby\n  have hsum : IsSummable f := ⟨L, h⟩\n  have h_tsum_eq : tsum' f hsum = L := by\n    have h_tsum_limit : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i+1), f j) (tsum' f hsum) :=\n      coeffStabilizesTo_partial_sum' hsum\n    have h_unique : ∀ (L' : PowerSeries K), CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i+1), f j) L' → L' = L := by\n      intro L' hL'\n      apply coeff_inj\n      intro n\n      obtain ⟨N, hN⟩ := h n\n      obtain ⟨N', hN'⟩ := hL' n\n      let Nmax := max N N'\n      have hNmax : ∀ i ≥ Nmax, xnEquiv n (∑ j ∈ Finset.range (i+1), f j) L := by\n        intro i hi\n        apply hN i (le_of_max_le_left hi)\n      have hNmax' : ∀ i ≥ Nmax, xnEquiv n (∑ j ∈ Finset.range (i+1), f j) L' := by\n        intro i hi\n        apply hN' i (le_of_max_le_right hi)\n      have hxnL := hNmax Nmax (le_refl Nmax)\n      have hxnL' := hNmax' Nmax (le_refl Nmax)\n      have hcoeffL := hxnL n (le_refl n)\n      have hcoeffL' := hxnL' n (le_refl n)\n      rw [← hcoeffL, hcoeffL']\n    exact h_unique (tsum' f hsum) h_tsum_limit\n  exact ⟨hsum, h_tsum_eq⟩",
+  "declaration_name": "sum_lim_conv",
+  "used_context": [
+    "coeffStabilizesTo_partial_sum'",
+    "coeff_inj",
+    "le_of_max_le_left",
+    "le_of_max_le_right",
+    "xnEquiv",
+    "IsSummable",
+    "tsum'",
+    "CoeffStabilizesTo"
+  ],
+  "notes": [
+    "Assumes IsSummable is defined as ∃ L, CoeffStabilizesTo (partial sums) L, which is consistent with the local API.",
+    "Uses coeff_inj to prove uniqueness of the limit, which is not explicitly provided in the prefix context but is a standard PowerSeries lemma."
+  ]
+}

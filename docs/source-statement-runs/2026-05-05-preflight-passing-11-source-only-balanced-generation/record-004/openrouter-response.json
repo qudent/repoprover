@@ -1,0 +1,51 @@
+{
+  "id": "gen-1777976759-zuFpKRo6JyW7mIh8DnU2",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "{\n  \"lean_declaration\": \"/-- The `x^n`-coefficient in the sum of `(a_i)_{i ∈ I}` is finitely determined\\nif there exists a finite subset `M` that determines it.\\n(Label: def.fps.xn-coeff-fin-determined part (a)) -/\\ndef CoeffFinitelyDeterminedInSum (a : I → PowerSeries R) (n : ℕ) : Prop :=\\n  ∃ M : Finset I, DeterminesCoeffInSum a M n\",\n  \"declaration_name\": \"CoeffFinitelyDeterminedInSum\",\n  \"used_context\": [\n    \"DeterminesCoeffInSum\"\n  ],\n  \"notes\": [\n    \"This defines part (a) of def.fps.xn-coeff-fin-determined, which was missing from the Lean prefix context. The companion definition CoeffFinitelyDeterminedInProd is already present.\"\n  ]\n}",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1777976759,
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 6292,
+    "prompt_tokens": 5431,
+    "total_tokens": 11723,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "reasoning_tokens": 6089,
+      "rejected_prediction_tokens": null,
+      "image_tokens": 0
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 640,
+      "cache_write_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost": 0.007560445,
+    "is_byok": false,
+    "cost_details": {
+      "upstream_inference_cost": 0.007560445,
+      "upstream_inference_prompt_cost": 0.002086405,
+      "upstream_inference_completions_cost": 0.00547404
+    }
+  },
+  "provider": "DeepSeek"
+}

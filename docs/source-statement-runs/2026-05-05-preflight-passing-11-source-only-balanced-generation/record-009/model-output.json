@@ -1,0 +1,12 @@
+{
+  "lean_declaration": "lemma card_partitions_of_5 : (Nat.partitions 5).card = 7 := by\n  native_decide",
+  "declaration_name": "card_partitions_of_5",
+  "used_context": [
+    "Nat.partitions",
+    "Finset.card",
+    "Nat"
+  ],
+  "notes": [
+    "The proof relies on native_decide to compute the number of partitions of 5, which is given as an example in the source."
+  ]
+}

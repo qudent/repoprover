@@ -1,0 +1,15 @@
+{
+  "lean_declaration": "/-- Simple transposition `s_i` equals the transposition `t_{i,i+1}`. (def.perm.si) -/\ntheorem simpleTransposition_eq_transposition {n : ℕ} (i : Fin (n - 1)) :\n    simpleTransposition i = transposition\n      ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩\n      ⟨i.val + 1, by omega⟩ := rfl",
+  "declaration_name": "simpleTransposition_eq_transposition",
+  "used_context": [
+    "simpleTransposition",
+    "transposition",
+    "Nat.lt_of_lt_of_le",
+    "Nat.sub_le",
+    "Fin"
+  ],
+  "notes": [
+    "This lemma is already present in the local context; it is provided as the canonical formalization of the definition label def.perm.si.",
+    "The proof is trivial (rfl) because simpleTransposition is defined as the corresponding Equiv.swap."
+  ]
+}
