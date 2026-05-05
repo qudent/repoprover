@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-05T01:35:50.374336+00:00",
+  "generated_at": "2026-05-05T01:40:14.107345+00:00",
   "run_output": "docs/source-statement-runs/2026-05-05-preflight-passing-6-generation",
   "work_root": "/tmp/repoprover-source-statement-verify-preflight-passing-6-serial",
   "workers": 1,
@@ -7,7 +7,8 @@
   "successes": 0,
   "success_rate": 0.0,
   "failure_classes": {
-    "generated_lean_does_not_compile": 6
+    "generated_lean_does_not_compile": 5,
+    "grader_gold_statement_not_proved": 1
   },
   "results": [
     {
@@ -60,7 +61,7 @@
         "output": "AlgebraicCombinatorics/FPS/NotationsExamples.lean:27:4: error: Type mismatch: After simplification, term\n  binom_rec\n has type\n  ∀ (m n : ℕ), (m + 1).choose (n + 1) = m.choose n + m.choose (n + 1)\nbut is expected to have type\n  Ring.choose (r + 1) (k + 1) = Ring.choose r k + Ring.choose r (k + 1)\n"
       },
       "success": false,
-      "failure_class": "generated_lean_does_not_compile"
+      "failure_class": "grader_gold_statement_not_proved"
     },
     {
       "index": 5,

@@ -152,14 +152,20 @@ interrupted generation directory correctly produced 6 `missing_model_output`
 rows without running Lean. The six-record generation probe cost `$0.079889403`
 and produced 6/6 parsed DeepSeek outputs; serial reusable-project verification
 then attempted all six records in `172.92s`, produced individual failure
-signals for all of them, and used about 20M of verifier worktree disk.
+signals for all of them, and used about 20M of verifier worktree disk. After a
+classifier fix and rerun, the accurate breakdown is 5 generated-only compile
+failures plus 1 hidden-grader mismatch; see
+`docs/source-statement-preflight-passing-6-diagnosis.md`.
 - [x] Run a smaller paid generation-only probe over the 6 preflight-passing
   records into `docs/source-statement-runs/...`, commit the raw paid artifacts,
   then verify them with the reusable-project pool.
-- [ ] Diagnose the six generation failures in
-  `docs/source-statement-runs/2026-05-05-preflight-passing-6-generation`; all
-  currently fail at generated-only compile, so the next iteration should improve
-  prompt/API retrieval before spending on repair.
+- [x] Diagnose the six generation failures. Result: five compile failures and
+  one grader mismatch; main bottlenecks are invented/stale helper APIs,
+  theorem-local redefinitions, multi-part bundling, and missing local type/API
+  examples.
+- [ ] Implement the next prompt/context iteration: forbid theorem-local
+  redefinitions, require helper APIs to appear in context/retrieval, add
+  target-stem local API retrieval, and strengthen multi-part source focus.
 - [ ] Improve the Laurent/tableau hard cases before using them as evidence for
   larger DeepSeek spend.
 - [ ] For the active repair handoff, create a small script/report that records

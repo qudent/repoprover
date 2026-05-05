@@ -20,7 +20,6 @@ if str(REPO_ROOT) not in sys.path:
 from scripts.materialize_minimal_context_smoke import SelectedRecord, load_jsonl  # noqa: E402
 from scripts.run_minimal_context_eval import write_json  # noqa: E402
 from scripts.run_source_statement_live_eval import (  # noqa: E402
-    classify_lean_failure,
     contains_forbidden_placeholder,
     extract_generated_name,
     materialize_candidate_project,
@@ -121,7 +120,7 @@ def verify_task(args: argparse.Namespace, task: dict[str, Any], project_pool: qu
             row["lean_check"] = graded
             row["success"] = graded["exit_code"] == 0
             if not row["success"]:
-                row["failure_class"] = classify_lean_failure(str(graded.get("output") or ""))
+                row["failure_class"] = "grader_gold_statement_not_proved"
             return row
         except Exception as exc:  # noqa: BLE001
             row["success"] = False

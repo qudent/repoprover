@@ -133,6 +133,11 @@ generation probe, serial verification took `172.92s` total, about `29s` per
 record, and the reusable verifier work tree was about `20M`. More workers are a
 later throughput optimization, not needed for small probes.
 
+The first six-record generation probe produced 6/6 parseable outputs for
+`$0.079889403`, but serial verification found 0/6 successes: five generated
+declarations did not compile and one compiled but failed the hidden grader. See
+`docs/source-statement-preflight-passing-6-diagnosis.md`.
+
 ## Missing Pipeline Tasks
 
 - Context picking validation: compare the gold minimal context against cheaper

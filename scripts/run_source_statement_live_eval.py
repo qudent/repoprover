@@ -1169,7 +1169,7 @@ def run_one_record(args: argparse.Namespace, prepared: dict[str, Any]) -> dict[s
                 row["generated_name"] = current_generated_name
                 row["final_declaration_source"] = "initial" if attempt == 0 else f"repair-attempt-{attempt:03d}"
             else:
-                row["failure_class"] = classify_lean_failure(str(graded_lean.get("output") or ""))
+                row["failure_class"] = "grader_gold_statement_not_proved"
             break
         except Exception as exc:  # noqa: BLE001 - per-record eval should continue.
             row["success"] = False
