@@ -17,7 +17,7 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
 - Added `--context-mode source-only` to remove target Lean doc comments, target-derived labels, hidden-name guidance triggers, and imported source-label API retrieval from model-facing prompts.
 - Added TeX-derived `tex_source_focus` fields from visible source only: labels, refs, theorem-like environments, part markers, keyword cues, excerpts, and broad-span risk flags.
 - Added context-mode comparison artifacts to quantify the gap between target-comment debugging prompts and realistic source-only prompts.
-- Added TeX environment-balance span risks so source-only prompts can flag snippets that begin/end inside theorem-like environments.
+- Added TeX environment-balance span risks and bounded line-range expansion so source-only prompts can include missing theorem/proposition bodies.
 
 ## Experiment Timeline
 
@@ -61,7 +61,7 @@ Validate a cheap, iterative autoformalization loop for the Algebraic Combinatori
    - Ran an 11-record source-only generation-only validation with DeepSeek V4 Pro: 11/11 generated for `$0.081084638`; initial Lean verification passed 1/11.
    - Ran compile-failure repair attempt 1 over the broader source-only slice: 7/8 repair outputs for `$0.058516809`, with 3/7 passing hidden-grader verification.
    - Retried the row-1 transient provider failure: one output for `$0.013631334`, but it still failed generated-only compilation.
-   - Found row 11’s source-only prompt cut off at `\begin{proposition}` before the proposition body; added environment-balance span-risk flags and regenerated the 11-record budget audit.
+   - Found row 11’s source-only prompt cut off at `\begin{proposition}` before the proposition body; added environment-balance span-risk flags plus bounded TeX span expansion and regenerated the 11-record budget audit.
 
 ## Current Best Results
 
@@ -81,7 +81,7 @@ Realistic source-only result so far:
 - Cumulative after compile-failure repair: 4/11 pass (`X_mul_eq_shift`, `fps_onePlusX_pow_int`, `exists_isXnApproximator_of_multipliable`, `binom_sym`).
 - The two compile-clean semantic misses were `det_triangular` answering a broader disjunction instead of lower-triangular only, and `simpleTransposition_sq_eq_one` answering order-two instead of `Perm.IsSwap`.
 - `fps_comp_coeff_finite` compiled after repair but still proved summability, not the finite coefficient formula; the source-only span is under-focused for that target.
-- `simpleTransposition_isSwap` is now explained as a source-span bug: the prompt stopped before the proposition body and is flagged by `snippet_ends_with_unclosed_environment:proposition`.
+- `simpleTransposition_isSwap` exposed a source-span bug: the prompt stopped before a proposition body. The regenerated budget prompt expands that row from lines 256-278 to 255-290.
 
 ## Files And Evidence
 

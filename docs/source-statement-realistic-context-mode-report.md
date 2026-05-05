@@ -100,8 +100,8 @@ UV_CACHE_DIR=/tmp/uv-cache-repoprover uv run python scripts/compare_source_state
 
 - rows with hidden target names in source-only payloads: `0`
 - rows with target-comment terms absent from the source span: `7/11`
-- source-only estimated max cost after TeX environment-balance focus updates:
-  `$0.331019775`
+- source-only estimated max cost after TeX environment-balance expansion:
+  `$0.332310855`
 
 The same comparison over the strict six-row slice found `0` hidden target-name
 hits and `5/6` rows where target-comment terms are absent from the source span.
@@ -211,21 +211,28 @@ are not all ordinary proof-repair cases: `det_triangular`,
 `simpleTransposition_sq_eq_one`, and the repaired `summable_fps_comp` are
 statement-family/context-selection misses.
 
-## Source-Span Risk Finding
+## Source-Span Balance Fix
 
 The row 11 failure exposed a concrete source-selection bug. The source-only
 prompt for `simpleTransposition_isSwap` ended at `\begin{proposition}` before
 the proposition body, so the model saw the definition/example context but not
-the property that the target formalizes. `tex_source_focus` now tracks balanced
-TeX environments and emits span risks such as:
+the proposition body. `tex_source_focus` now tracks balanced TeX environments
+and emits span risks such as:
 
 - `snippet_ends_with_unclosed_environment:proposition`
 - `snippet_starts_after_environment_begin:definition`
 
-The regenerated 11-record source-only budget artifact flags row 11 with the
-unclosed proposition risk. This is a generic context-selection signal: future
-sampling should expand or reject snippets that cut off a theorem/proposition
-body before spending model calls.
+The source snippet loader now also expands TeX line ranges backward/forward,
+within a bounded window, to include missing environment begins and ends. In the
+regenerated 11-record source-only budget artifact, row 11 expands from
+`256-278` to `255-290` with adjustment reasons:
+
+- `expanded_backward_to_include_environment_begin`
+- `expanded_forward_to_close_environment`
+
+This is still not a guarantee that the source span picks the same theorem
+family as the withheld Lean target, but it removes one concrete failure mode:
+paid prompts should not stop immediately before a proposition body.
 
 ## What Changed In The Prompt
 
@@ -269,7 +276,8 @@ passes with `65 passed`.
 After adding targeted verifier indices for repair artifacts, the focused test
 set passes with `66 passed`.
 After adding TeX environment-balance span risks, the focused test set passes
-with `67 passed`.
+with `67 passed`. After adding bounded TeX span expansion, it passes with
+`68 passed`.
 
 ## Next Step
 
@@ -277,4 +285,4 @@ Use `source-only` as the default for realistic validation. The next work should
 not be another hand-tuned six-row repair loop. It should improve TeX/source
 focus selection for rows where the selected source span is too broad, begins or
 ends inside theorem-like environments, or points at the wrong theorem family,
-then rerun a small broader-slice validation.
+then rerun a small paid broader-slice validation.

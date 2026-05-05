@@ -159,15 +159,49 @@ def source_snippets(project_root: Path, record: SelectedRecord) -> list[dict[str
     snippets: list[dict[str, Any]] = []
     for span in record.source_spans:
         start, end = [int(value) for value in span["line_range"]]
+        tex_path = project_root / str(span["path"])
+        adjusted_start, adjusted_end, adjustment_reasons = balanced_tex_line_range(tex_path, start, end)
         snippets.append(
             {
                 "path": span["path"],
-                "line_range": [start, end],
+                "line_range": [adjusted_start, adjusted_end],
+                "original_line_range": [start, end],
+                "line_range_adjustment_reasons": adjustment_reasons,
                 "labels": span.get("labels", []),
-                "snippet": read_line_range(project_root / str(span["path"]), (start, end)),
+                "snippet": read_line_range(tex_path, (adjusted_start, adjusted_end)),
             }
         )
     return snippets
+
+
+def balanced_tex_line_range(path: Path, start: int, end: int, *, max_extra_lines: int = 80) -> tuple[int, int, list[str]]:
+    if path.suffix != ".tex" or not path.exists():
+        return start, end, []
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines:
+        return start, end, []
+    adjusted_start = max(1, start)
+    adjusted_end = min(len(lines), end)
+    reasons: list[str] = []
+
+    while adjusted_start > 1:
+        text = "\n".join(lines[adjusted_start - 1 : adjusted_end])
+        balance = _tex_environment_balance(text)
+        if not balance["unmatched_end"]:
+            break
+        adjusted_start -= 1
+    if adjusted_start != max(1, start):
+        reasons.append("expanded_backward_to_include_environment_begin")
+
+    while adjusted_end < len(lines) and adjusted_end < end + max_extra_lines:
+        text = "\n".join(lines[adjusted_start - 1 : adjusted_end])
+        balance = _tex_environment_balance(text)
+        if not balance["unclosed"]:
+            break
+        adjusted_end += 1
+    if adjusted_end != min(len(lines), end):
+        reasons.append("expanded_forward_to_close_environment")
+    return adjusted_start, adjusted_end, reasons
 
 
 def _tex_plain_text(text: str) -> str:

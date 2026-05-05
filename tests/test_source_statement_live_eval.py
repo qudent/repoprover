@@ -11,6 +11,7 @@ from pathlib import Path
 
 from scripts.materialize_minimal_context_smoke import SelectedRecord
 from scripts.run_source_statement_live_eval import (
+    balanced_tex_line_range,
     build_messages,
     build_repair_messages,
     classify_lean_failure,
@@ -177,6 +178,32 @@ def test_tex_source_focus_flags_unclosed_environment_after_closed_earlier_enviro
     )[0]
 
     assert "snippet_ends_with_unclosed_environment:proposition" in focus["span_risks"]
+
+
+def test_balanced_tex_line_range_expands_to_close_environment(tmp_path: Path) -> None:
+    tex = tmp_path / "Demo.tex"
+    tex.write_text(
+        "\n".join(
+            [
+                "\\begin{definition}",
+                "\\label{def.demo}A definition.",
+                "\\end{definition}",
+                "\\begin{proposition}",
+                "The useful proposition body.",
+                "\\end{proposition}",
+                "Afterward.",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    start, end, reasons = balanced_tex_line_range(tex, 2, 4)
+
+    assert (start, end) == (1, 6)
+    assert reasons == [
+        "expanded_backward_to_include_environment_begin",
+        "expanded_forward_to_close_environment",
+    ]
 
 
 def test_source_statement_prompt_includes_current_lean_environment_guidance(tmp_path: Path) -> None:
