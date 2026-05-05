@@ -483,6 +483,15 @@ def _read_context_window(path: Path, line: int, *, before: int = 10, after: int 
 
 def _declaration_start(lines: list[str], index: int) -> int:
     start = index
+    previous = start - 1
+    while previous >= 0 and not lines[previous].strip():
+        previous -= 1
+    if previous >= 0 and lines[previous].strip().endswith("-/"):
+        comment_start = previous
+        while comment_start >= 0 and not lines[comment_start].lstrip().startswith(("/--", "/-!")):
+            comment_start -= 1
+        if comment_start >= 0:
+            start = comment_start
     while start > 0:
         previous = lines[start - 1].strip()
         if previous.startswith("/--") or previous.startswith("@[") or previous.startswith("--") or previous.startswith("/-!"):
@@ -659,6 +668,51 @@ def _same_file_source_label_declaration_blocks(project_root: Path, record: Selec
         f"-- Same-file source-label API: {record.lean_path}:{start}-{end} ({name})\n{text}"
         for start, end, name, text in sorted(blocks, key=lambda item: item[0])[:limit]
     ]
+
+
+def _prior_source_label_declaration_summaries(project_root: Path, record: SelectedRecord, limit: int = 8) -> list[dict[str, Any]]:
+    lean_file = project_root / record.lean_path
+    if not lean_file.exists():
+        return []
+    labels = sorted({label for label in _source_span_labels(record) if label}, key=len, reverse=True)
+    if not labels:
+        return []
+    lines = lean_file.read_text(encoding="utf-8").splitlines()
+    target_start = record.line_range[0]
+    summaries: list[dict[str, Any]] = []
+    for index, line in enumerate(lines[: target_start - 1], start=1):
+        match = DECL_RE.match(line)
+        if not match or match.group("kind") not in {"theorem", "lemma", "def", "abbrev"}:
+            continue
+        name = str(match.group("name") or "")
+        if not name:
+            continue
+        block = _named_declaration_block(lines, name, before_line=target_start)
+        if block is None:
+            continue
+        start, end, text = block
+        if end >= target_start or len(text.splitlines()) > 60:
+            continue
+        lower_text = text.lower()
+        matched_labels = [label for label in labels if label.lower() in lower_text]
+        if not matched_labels:
+            continue
+        doc_text = _strip_doc_comment(text.splitlines())
+        referenced_parts = sorted(set(re.findall(r"\(([a-z])\)", doc_text)))
+        head = _declaration_head(text)
+        summaries.append(
+            {
+                "declaration": name,
+                "path": record.lean_path,
+                "line_range": [start, end],
+                "matched_source_labels": matched_labels,
+                "referenced_parts": referenced_parts,
+                "doc_excerpt": doc_text[:360],
+                "declaration_head": head[:600],
+                "policy": "prior same-file declaration only; target declaration is not inspected",
+            }
+        )
+    return summaries[:limit]
 
 
 def _imported_label_declaration_blocks(project_root: Path, record: SelectedRecord, limit: int = 3) -> list[str]:
@@ -1390,6 +1444,15 @@ def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_
         "source_statement_or_chunk": snippets,
         "tex_source_focus": tex_source_focus(snippets),
         "target_source_focus": focus,
+        "source_progress_context": {
+            "prior_same_label_declarations": _prior_source_label_declaration_summaries(project_root, record),
+            "instruction": (
+                "When the source span has multiple labeled or lettered parts, use prior_same_label_declarations "
+                "as prefix-progress evidence. If an earlier declaration already formalizes one part, prefer the "
+                "remaining or next source part instead of bundling all parts."
+            ),
+            "policy": "derived from declarations before the withheld target in the same Lean file",
+        },
         "context_mode": context_mode,
         "available_imports": record.imports,
         "lean_prefix_context": "\n".join(context_parts).strip(),

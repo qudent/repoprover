@@ -171,6 +171,7 @@ def selector_record_payload(project_root: Path, item: BatchItem) -> dict[str, An
         "source_statement_or_chunk": context.get("source_statement_or_chunk"),
         "tex_source_focus": context.get("tex_source_focus"),
         "target_source_focus": context.get("target_source_focus"),
+        "source_progress_context": context.get("source_progress_context"),
         "available_imports": context.get("available_imports"),
         "lean_prefix_context": context.get("lean_prefix_context"),
         "lean_environment": context.get("lean_environment"),
@@ -202,6 +203,8 @@ def build_context_selection_messages(
             {
                 "record_key": "record-001",
                 "source_focus_summary": "what precise source statement or part should be formalized",
+                "selected_source_part": "specific source part/label chosen for formalization, or whole statement if unambiguous",
+                "source_part_rationale": "why this part was chosen, using source labels and prefix progress when available",
                 "formalization_sketch": [
                     "Lean-level sketch of the likely statement shape and proof plan, without inventing hidden target names"
                 ],
@@ -246,6 +249,7 @@ def build_context_selection_messages(
             "Do not rely on legacy broad `Mathlib` imports as context; select concrete APIs/signatures/docstrings needed by the later generator.",
             "If a Mathlib name is uncertain, return a narrow search query plus the expected type/signature shape.",
             "Include previous formalized local declarations only if they are displayed in the prefix/local context.",
+            "If `source_progress_context.prior_same_label_declarations` shows that an earlier declaration already formalized a lettered source part, do not re-formalize that part or bundle it into a conjunction; select the remaining/next part.",
             "Separate mathematical understanding from Lean API uncertainty in `uncertainties`.",
             "Do not over-select: every requested fact should have a role in statement typing or proof construction.",
         ],

@@ -1,0 +1,137 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "source_focus_summary": "Lemma lem.det.minors-diag: For a diagonal n×n matrix D with diagonal entries d_i, (a) det(sub_P^P D) = ∏_{i∈P} d_i for any subset P of [n]; (b) if P and Q are distinct subsets of [n] with |P|=|Q|, then det(sub_P^Q D)=0.",
+      "selected_source_part": "lem.det.minors-diag (both parts (a) and (b))",
+      "source_part_rationale": "The source span is labeled lem.det.minors-diag and contains both parts (a) and (b). No prior same-label declaration exists in the prefix context, so both parts should be formalized together.",
+      "formalization_sketch": [
+        "Statement: theorem det_minors_diag {n : ℕ} (d : Fin n → R) (D : Matrix (Fin n) (Fin n) R) (hD : D = Matrix.diagonal d) : ...",
+        "Part (a): ∀ (P : Finset (Fin n)), (sub[P, P] D).det = ∏ i ∈ P, d i",
+        "Part (b): ∀ (P Q : Finset (Fin n)), P ≠ Q → P.card = Q.card → (sub[P, Q] D).det = 0",
+        "Proof sketch: (a) sub[P,P] D is diagonal with entries d_i for i∈P; use Matrix.det_diagonal. (b) Since P≠Q and |P|=|Q|, there exists i∈P\\Q; the corresponding row of sub[P,Q] D is zero; use det_eq_zero_of_row_zero."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "submatrixOfFinset",
+          "why_needed": "Used to define sub[U,V] A notation; needed to state the lemma."
+        },
+        {
+          "name_or_snippet": "scoped notation \"sub[\" U \",\" V \"] \" A => submatrixOfFinset A U V",
+          "why_needed": "The notation is used in the statement."
+        },
+        {
+          "name_or_snippet": "variable {R : Type*} [CommRing R]",
+          "why_needed": "The matrix entries are in a commutative ring R."
+        },
+        {
+          "name_or_snippet": "Matrix.diagonal",
+          "why_needed": "To express the diagonal matrix D."
+        }
+      ],
+      "mathlib_queries": [
+        "Matrix.det_diagonal",
+        "Matrix.det_eq_zero_of_row_zero",
+        "Finset.card_compl",
+        "Finset.orderEmbOfFin"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Matrix.det_diagonal",
+          "kind": "theorem",
+          "expected_signature_or_shape": "det (diagonal v) = ∏ i, v i",
+          "why_needed": "Used to compute determinant of diagonal submatrix in part (a).",
+          "confidence": 0.9
+        },
+        {
+          "name": "Matrix.det_eq_zero_of_row_zero",
+          "kind": "theorem",
+          "expected_signature_or_shape": "det M = 0 if ∃ i, ∀ j, M i j = 0",
+          "why_needed": "Used to show determinant zero in part (b) when a row is zero.",
+          "confidence": 0.8
+        },
+        {
+          "name": "Finset.card_compl",
+          "kind": "theorem",
+          "expected_signature_or_shape": "card (sᶜ) = card (univ) - card s",
+          "why_needed": "May be needed for cardinality reasoning in part (b).",
+          "confidence": 0.7
+        }
+      ],
+      "proof_notes": [
+        "Part (a): Use `submatrixOfFinset_apply` to see entries; note that `sub[P,P] D` is diagonal with entries `d i` for `i ∈ P` in order; apply `Matrix.det_diagonal`.",
+        "Part (b): Since `P ≠ Q` and `|P| = |Q|`, there exists `i ∈ P \\ Q`. Then for all `j`, `sub[P,Q] D i j = D (orderEmbOfFin P rfl i) (orderEmbOfFin Q rfl j) = 0` because `D` is diagonal and the row index is not equal to any column index (since `i ∉ Q`). Then `det = 0` by `det_eq_zero_of_row_zero`."
+      ],
+      "uncertainties": [
+        "Exact name of `det_eq_zero_of_row_zero` in current Mathlib; may be `det_eq_zero_of_row_eq_zero` or similar.",
+        "Whether `Matrix.diagonal` is the best way to express the diagonal matrix; the source uses `(d_i [i=j])` notation."
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "source_focus_summary": "Lemma lem.sf.alternant-0(b): If β is obtained from α by swapping two entries, then a_β = -a_α.",
+      "selected_source_part": "lem.sf.alternant-0 part (b)",
+      "source_part_rationale": "Part (a) is already formalized as `alternant_zero_of_eq` in the prefix context. The remaining part (b) should be formalized.",
+      "formalization_sketch": [
+        "Statement: theorem alternant_swap {R : Type*} [CommRing R] {α : Fin N → ℕ} (σ : Equiv.Perm (Fin N)) (hσ : σ.IsSwap) : alternant (R := R) N (α ∘ σ) = -alternant N α",
+        "Or more directly: for a transposition swapping i and j, alternant (α ∘ swap i j) = -alternant α",
+        "Proof sketch: Use the definition of alternant as ∑_{τ} sign(τ) · x^(α∘τ). Then substitute τ' = τ∘σ, use sign(τ∘σ) = sign(τ)·sign(σ) and sign(σ) = -1 for a swap."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "noncomputable def alternant (α : Fin N → ℕ) : MvPolynomial (Fin N) R := ∑ σ : Equiv.Perm (Fin N), Equiv.Perm.sign σ • xPow (α ∘ σ)",
+          "why_needed": "The definition of alternant used in the statement."
+        },
+        {
+          "name_or_snippet": "noncomputable abbrev xPow (α : Fin N → ℕ) : MvPolynomial (Fin N) R := AlgebraicCombinatorics.SymmetricFunctions.monomialExp α",
+          "why_needed": "Used in the definition of alternant."
+        },
+        {
+          "name_or_snippet": "variable (N : ℕ) [NeZero N]",
+          "why_needed": "The dimension parameter."
+        },
+        {
+          "name_or_snippet": "variable {R : Type*} [CommRing R]",
+          "why_needed": "Coefficient ring."
+        }
+      ],
+      "mathlib_queries": [
+        "Equiv.Perm.sign_swap",
+        "Equiv.Perm.sign_mul",
+        "Equiv.swap_comp_eq"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "Equiv.Perm.sign_swap",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sign (swap i j) = -1 if i ≠ j",
+          "why_needed": "The sign of a transposition is -1, used to get the negation.",
+          "confidence": 0.95
+        },
+        {
+          "name": "Equiv.Perm.sign_mul",
+          "kind": "theorem",
+          "expected_signature_or_shape": "sign (σ * τ) = sign σ * sign τ",
+          "why_needed": "To factor sign(τ∘σ) = sign(τ)·sign(σ) in the proof.",
+          "confidence": 0.95
+        },
+        {
+          "name": "Equiv.swap_comp_eq",
+          "kind": "theorem",
+          "expected_signature_or_shape": "swap i j ∘ σ = ...",
+          "why_needed": "May be needed to rewrite composition with a swap.",
+          "confidence": 0.6
+        }
+      ],
+      "proof_notes": [
+        "Let σ be the transposition swapping the two entries. Then alternant (α ∘ σ) = ∑_τ sign(τ) · x^(α∘σ∘τ) = ∑_τ sign(τ) · x^(α∘(σ∘τ)).",
+        "Reindex by τ' = σ∘τ, so τ = σ∘τ' (since σ is its own inverse). Then sign(τ) = sign(σ)·sign(τ') = -sign(τ').",
+        "Thus alternant (α ∘ σ) = ∑_{τ'} (-sign(τ')) · x^(α∘τ') = -alternant α."
+      ],
+      "uncertainties": [
+        "Whether the alternant definition uses `α ∘ σ` or `σ • α` (permutation action on the tuple). The prefix shows `α ∘ σ` in the definition.",
+        "Whether the lemma should be stated for a general swap or for any permutation that swaps two entries (i.e., a transposition). The source says 'swapping two entries', which suggests a transposition."
+      ]
+    }
+  ]
+}

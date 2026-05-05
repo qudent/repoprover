@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-05-05T13:26:57.628877+00:00",
+  "records_selected": 2,
+  "batches": 1,
+  "batch_size": 2,
+  "model": "deepseek/deepseek-v4-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.14,
+  "completion_price_per_million": 0.28,
+  "context_length": 1048576,
+  "max_tokens": 4096,
+  "reasoning_effort": "",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": true,
+  "paid_calls_made": 0,
+  "actual_cost_usd": 0.0,
+  "max_actual_cost_usd": 0.25,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+        "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 51274,
+        "prompt_chars": 48582,
+        "estimated_prompt_tokens": 12146,
+        "max_completion_tokens": 4096,
+        "estimated_prompt_cost_usd": 0.0017004400000000001,
+        "estimated_max_completion_cost_usd": 0.00114688,
+        "estimated_max_cost_usd": 0.0028473200000000004
+      },
+      "paid_call_made": false,
+      "status": "budget_only"
+    }
+  ]
+}

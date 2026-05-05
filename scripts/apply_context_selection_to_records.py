@@ -99,6 +99,12 @@ def context_selection_lines(selection: dict[str, Any], hydrated: list[dict[str, 
     summary = str(selection.get("source_focus_summary") or "").strip()
     if summary:
         lines.append(f"Source focus: {summary}")
+    selected_part = str(selection.get("selected_source_part") or "").strip()
+    if selected_part:
+        lines.append(f"Selected source part: {selected_part}")
+    part_rationale = str(selection.get("source_part_rationale") or "").strip()
+    if part_rationale:
+        lines.append(f"Source-part rationale: {part_rationale}")
     sketch = [str(item).strip() for item in selection.get("formalization_sketch") or [] if str(item).strip()]
     if sketch:
         lines.append("Formalization sketch:")

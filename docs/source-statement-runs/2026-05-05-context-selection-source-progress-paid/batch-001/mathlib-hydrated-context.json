@@ -1,0 +1,109 @@
+{
+  "mathlib_source_available": true,
+  "mathlib_root": "algebraic-combinatorics/.lake/packages/mathlib",
+  "records": [
+    {
+      "record_key": "record-001",
+      "resolved_mathlib_context": [
+        {
+          "query": "Matrix.det_diagonal",
+          "matches": [
+            {
+              "file": "Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+              "line": 76,
+              "text": "theorem det_diagonal {d : n → R} : det (diagonal d) = ∏ i, d i := by",
+              "snippet": "theorem det_diagonal {d : n → R} : det (diagonal d) = ∏ i, d i := by\n  rw [det_apply']\n  refine (Finset.sum_eq_single 1 ?_ ?_).trans ?_\n  · rintro σ - h2\n    obtain ⟨x, h3⟩ := not_forall.1 (mt Equiv.ext h2)\n    convert mul_zero (ε σ)\n    apply Finset.prod_eq_zero (mem_univ x)\n    exact if_neg h3\n  · simp\n  · simp"
+            }
+          ]
+        },
+        {
+          "query": "Matrix.det_eq_zero_of_row_zero",
+          "matches": []
+        },
+        {
+          "query": "Finset.card_compl",
+          "matches": [
+            {
+              "file": "Mathlib/Data/Set/PowersetCard.lean",
+              "line": 158,
+              "text": "  toFun s := ⟨(sᶜ : Finset α), by simp [Finset.card_compl, mem_iff.mp s.2]; omega⟩",
+              "snippet": "  toFun s := ⟨(sᶜ : Finset α), by simp [Finset.card_compl, mem_iff.mp s.2]; omega⟩\n  invFun t := ⟨(tᶜ : Finset α), by simp [Finset.card_compl, mem_iff.mp t.2]; omega⟩\n  left_inv s := by simp\n  right_inv t := by simp\n\nvariable {hm}\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/Data/Set/PowersetCard.lean",
+              "line": 159,
+              "text": "  invFun t := ⟨(tᶜ : Finset α), by simp [Finset.card_compl, mem_iff.mp t.2]; omega⟩",
+              "snippet": "  invFun t := ⟨(tᶜ : Finset α), by simp [Finset.card_compl, mem_iff.mp t.2]; omega⟩\n  left_inv s := by simp\n  right_inv t := by simp\n\nvariable {hm}\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/Data/Fintype/Card.lean",
+              "line": 126,
+              "text": "theorem Finset.card_compl_lt_iff_nonempty [Fintype α] [DecidableEq α] (s : Finset α) :",
+              "snippet": "theorem Finset.card_compl_lt_iff_nonempty [Fintype α] [DecidableEq α] (s : Finset α) :\n    #sᶜ < Fintype.card α ↔ s.Nonempty :=\n  sᶜ.card_lt_iff_ne_univ.trans s.compl_ne_univ_iff_nonempty"
+            }
+          ]
+        },
+        {
+          "query": "Finset.orderEmbOfFin",
+          "matches": [
+            {
+              "file": "Mathlib/Data/Finset/Sort.lean",
+              "line": 201,
+              "text": "def orderEmbOfFin (s : Finset α) {k : ℕ} (h : s.card = k) : Fin k ↪o α :=",
+              "snippet": "/-- Given a finset `s` of cardinality `k` in a linear order `α`, the map `orderEmbOfFin s h` is\nthe increasing bijection between `Fin k` and `s` as an order embedding into `α`. Here, `h` is a\nproof that the cardinality of `s` is `k`. We use this instead of an embedding `Fin s.card ↪o α` to\navoid casting issues in further uses of this function. -/\ndef orderEmbOfFin (s : Finset α) {k : ℕ} (h : s.card = k) : Fin k ↪o α :=\n  (orderIsoOfFin s h).toOrderEmbedding.trans (OrderEmbedding.subtype _)\n\n@[simp]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "resolved_mathlib_context": [
+        {
+          "query": "Equiv.Perm.sign_swap",
+          "matches": [
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 388,
+              "text": "theorem sign_swap {x y : α} (h : x ≠ y) : sign (swap x y) = -1 :=",
+              "snippet": "theorem sign_swap {x y : α} (h : x ≠ y) : sign (swap x y) = -1 :=\n  (signAux3_mul_and_swap 1 1 _ mem_univ).2 h\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 392,
+              "text": "theorem sign_swap' {x y : α} : sign (swap x y) = if x = y then 1 else -1 :=",
+              "snippet": "theorem sign_swap' {x y : α} : sign (swap x y) = if x = y then 1 else -1 :=\n  if H : x = y then by simp [H, swap_self] else by simp [sign_swap H, H]"
+            }
+          ]
+        },
+        {
+          "query": "Equiv.Perm.sign_mul",
+          "matches": [
+            {
+              "file": "Mathlib/Data/EReal/Inv.lean",
+              "line": 103,
+              "text": "theorem sign_mul (x y : EReal) : sign (x * y) = sign x * sign y := by",
+              "snippet": "theorem sign_mul (x y : EReal) : sign (x * y) = sign x * sign y := by\n  induction x, y using induction₂_symm_neg with\n  | top_zero => simp only [mul_zero, sign_zero]\n  | top_top => rfl\n  | symm h => rwa [mul_comm, EReal.mul_comm]\n  | coe_coe => simp only [← coe_mul, sign_coe, _root_.sign_mul]\n  | top_pos _ h =>\n    rw [top_mul_coe_of_pos h, sign_top, one_mul, sign_pos (EReal.coe_pos.2 h)]\n  | neg_left h => rw [neg_mul, sign_neg, sign_neg, h, neg_mul]\n\n@[simp] protected theorem sign_mul_abs : ∀ x : EReal, (sign x * x.abs : EReal) = x\n  | ⊥ => by simp\n  | ⊤ => by simp\n  | (x : ℝ) => by rw [sign_coe, coe_abs, ← coe_coe_sign, ← coe_mul, sign_mul_abs]\n\n@[simp] protected theorem abs_mul_sign (x : EReal) : (x.abs * sign x : EReal) = x := by\n  rw [EReal.mul_comm, EReal.sign_mul_abs]"
+            },
+            {
+              "file": "Mathlib/Data/Sign/Basic.lean",
+              "line": 100,
+              "text": "theorem sign_mul (x y : α) : sign (x * y) = sign x * sign y := by",
+              "snippet": "theorem sign_mul (x y : α) : sign (x * y) = sign x * sign y := by\n  rcases lt_trichotomy x 0 with (hx | hx | hx) <;> rcases lt_trichotomy y 0 with (hy | hy | hy) <;>\n    simp [hx, hy, mul_pos_of_neg_of_neg, mul_neg_of_neg_of_pos, mul_neg_of_pos_of_neg]\n\n@[simp] theorem sign_mul_abs (x : α) : (sign x * |x| : α) = x := by\n  rcases lt_trichotomy x 0 with hx | rfl | hx <;> simp [*, abs_of_pos, abs_of_neg]\n\n@[simp] theorem abs_mul_sign (x : α) : (|x| * sign x : α) = x := by\n  rcases lt_trichotomy x 0 with hx | rfl | hx <;> simp [*, abs_of_pos, abs_of_neg]\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/GroupTheory/Perm/Sign.lean",
+              "line": 365,
+              "text": "theorem sign_mul (f g : Perm α) : sign (f * g) = sign f * sign g :=",
+              "snippet": "theorem sign_mul (f g : Perm α) : sign (f * g) = sign f * sign g :=\n  map_mul sign f g\n\n@[simp]"
+            }
+          ]
+        },
+        {
+          "query": "Equiv.swap_comp_eq",
+          "matches": []
+        }
+      ]
+    }
+  ]
+}

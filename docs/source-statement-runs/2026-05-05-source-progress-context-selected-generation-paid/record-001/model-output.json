@@ -1,0 +1,20 @@
+{
+  "lean_declaration": "lemma det_minors_diag {n : ℕ} (d : Fin n → R) (D : Matrix (Fin n) (Fin n) R) (hD : D = Matrix.diagonal d) :\n    (∀ (P : Finset (Fin n)), (sub[P, P] D).det = ∏ i ∈ P, d i) ∧\n    (∀ (P Q : Finset (Fin n)), P ≠ Q → (hcard : P.card = Q.card) → submatrixDet D P Q hcard = 0) :=\nby\n  constructor\n  · intro P\n    calc\n      (sub[P, P] D).det = (sub[P, P] (Matrix.diagonal d)).det := by rw [hD]\n      _ = (Matrix.diagonal (fun i : Fin P.card => d (P.orderEmbOfFin rfl i))).det := by\n        have hsub_eq : sub[P, P] (Matrix.diagonal d) = Matrix.diagonal (fun i : Fin P.card => d (P.orderEmbOfFin rfl i)) := by\n          ext i j\n          simp [submatrixOfFinset_apply, Matrix.diagonal, (P.orderEmbOfFin rfl).injective.eq_iff]\n        rw [hsub_eq]\n      _ = ∏ i : Fin P.card, d (P.orderEmbOfFin rfl i) := Matrix.det_diagonal _\n      _ = ∏ i ∈ P, d i := by\n        apply Finset.prod_bij (fun i hi => P.orderEmbOfFin rfl i) ?_ ?_ ?_ ?_\n        · intro i hi\n          exact (P.orderEmbOfFin rfl i).2\n        · intro i hi; rfl\n        · intro i j hi hj h\n          exact (P.orderEmbOfFin rfl).injective h\n        · intro b hb\n          have hbP : b ∈ P := hb\n          let iso := Finset.orderIsoOfFin P rfl\n          refine ⟨iso.symm ⟨b, hbP⟩, Finset.mem_univ _, ?_⟩\n          dsimp [Finset.orderEmbOfFin, iso]\n          simp\n  · intro P Q hne hcard\n    have h_exists : ∃ x ∈ P, x ∉ Q := by\n      by_contra! h_all\n      have hsub : P ⊆ Q := h_all\n      have hcard_le : Q.card ≤ P.card := hcard.symm ▸ le_rfl\n      have h_eq : P = Q := Finset.eq_of_subset_of_card_le hsub hcard_le\n      exact hne h_eq\n    rcases h_exists with ⟨x, hxP, hxQ⟩\n    let isoP := Finset.orderIsoOfFin P rfl\n    have hxP' : x ∈ (P : Finset (Fin n)) := hxP\n    let ix := isoP.symm ⟨x, hxP'⟩\n    have hx_val : P.orderEmbOfFin rfl ix = x := by\n      dsimp [Finset.orderEmbOfFin, isoP]\n      simp\n    have hzero : (D.submatrix (P.orderEmbOfFin rfl) (Q.orderEmbOfFin (hcard ▸ rfl))).det = 0 := by\n      apply Matrix.det_eq_zero_of_row_eq_zero ix\n      intro j\n      calc\n        (D.submatrix (P.orderEmbOfFin rfl) (Q.orderEmbOfFin (hcard ▸ rfl))) ix j\n            = D (P.orderEmbOfFin rfl ix) (Q.orderEmbOfFin (hcard ▸ rfl) j) := rfl\n        _ = (Matrix.diagonal d) (P.orderEmbOfFin rfl ix) (Q.orderEmbOfFin (hcard ▸ rfl) j) := by rw [hD]\n        _ = d (P.orderEmbOfFin rfl ix) * (if P.orderEmbOfFin rfl ix = Q.orderEmbOfFin (hcard ▸ rfl) j then 1 else 0) :=\n          by rw [Matrix.diagonal_apply]\n        _ = 0 := by\n          have hneq : P.orderEmbOfFin rfl ix ≠ Q.orderEmbOfFin (hcard ▸ rfl) j := by\n            intro heq\n            apply hxQ\n            have memQ : (Q.orderEmbOfFin (hcard ▸ rfl) j) ∈ Q := (Q.orderEmbOfFin (hcard ▸ rfl) j).2\n            rw [← heq, hx_val] at memQ\n            exact memQ\n          simp [hneq]\n    dsimp [submatrixDet]\n    exact hzero",
+  "declaration_name": "det_minors_diag",
+  "used_context": [
+    "submatrixOfFinset",
+    "submatrixOfFinset_apply",
+    "Matrix.det_diagonal",
+    "Matrix.diagonal_apply",
+    "Matrix.det_eq_zero_of_row_eq_zero",
+    "Finset.orderIsoOfFin",
+    "Finset.orderEmbOfFin",
+    "submatrixDet",
+    "Finset.prod_bij"
+  ],
+  "notes": [
+    "Part (b) uses `submatrixDet` with the cardinality proof because `sub[P,Q] D` is not square without coercing the column index type; the source statement assumes equal cardinalities, so `submatrixDet` is the appropriate formalization.",
+    "The proof uses `Finset.orderIsoOfFin` to retrieve a `Fin P.card` index corresponding to an element of `P`; this is slightly heavy but follows the local style.",
+    "The lemma `Matrix.det_eq_zero_of_row_eq_zero` is used without explicit import, already available from Mathlib."
+  ]
+}

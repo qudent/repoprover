@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-05-05T13:28:33.281742+00:00",
+  "records_selected": 2,
+  "batches": 1,
+  "batch_size": 2,
+  "model": "deepseek/deepseek-v4-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.14,
+  "completion_price_per_million": 0.28,
+  "context_length": 1048576,
+  "max_tokens": 4096,
+  "reasoning_effort": "",
+  "round_name": "round1-formalization-sketch-and-context-needs",
+  "budget_only": false,
+  "paid_calls_made": 1,
+  "actual_cost_usd": 0.002214212,
+  "max_actual_cost_usd": 0.01,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/CauchyBinet.lean:AlgebraicCombinatorics.CauchyBinet.det_diagonal_submatrix_eq",
+        "AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean:alternant_swap"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 51274,
+        "prompt_chars": 48582,
+        "estimated_prompt_tokens": 12146,
+        "max_completion_tokens": 4096,
+        "estimated_prompt_cost_usd": 0.0017004400000000001,
+        "estimated_max_completion_cost_usd": 0.00114688,
+        "estimated_max_cost_usd": 0.0028473200000000004
+      },
+      "paid_call_made": true,
+      "response_received": true,
+      "finish_reason": "stop",
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash-20260423",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "prompt_tokens": 14783,
+        "completion_tokens": 6302,
+        "total_tokens": 21085,
+        "actual_cost_usd": 0.002214212,
+        "estimated_cost_from_usage_usd": 0.0038341800000000004,
+        "has_openrouter_reported_cost": true
+      },
+      "model_output_record_count": 2,
+      "hydrated_mathlib_records": 2,
+      "gold_comparison_records": 2,
+      "success": true
+    }
+  ]
+}

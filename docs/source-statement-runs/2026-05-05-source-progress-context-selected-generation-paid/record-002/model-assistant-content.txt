@@ -1,0 +1,17 @@
+{
+  "lean_declaration": "theorem alternant_swap (α : Fin N → ℕ) (i j : Fin N) (hij : i ≠ j) : alternant N (α ∘ Equiv.swap i j) = - alternant N α := by\n  set s := Equiv.swap i j with hs\n  have h_sign : Equiv.Perm.sign s = -1 := Equiv.Perm.sign_swap hij\n  unfold alternant\n  simp only [Function.comp_assoc, hs]\n  calc\n    (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign τ • xPow (α ∘ (s ∘ τ))) = \n        (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign (s * τ) • xPow (α ∘ τ)) := by\n      apply Finset.sum_bij (fun τ _ => s * τ) (by simp) (by\n        intro τ₁ τ₂ _ _ h\n        apply mul_left_cancel s\n        exact h\n      ) (by\n        intro τ _\n        simp [s, Function.comp, Equiv.Perm.sign_mul, Equiv.swap_mul_self, mul_assoc]\n      ) (by\n        intro τ _\n        refine ⟨s * τ, by simp, ?_⟩\n        simp [s]\n      )\n    _ = (∑ τ : Equiv.Perm (Fin N), (Equiv.Perm.sign s * Equiv.Perm.sign τ) • xPow (α ∘ τ)) := by\n      simp [Equiv.Perm.sign_mul]\n    _ = Equiv.Perm.sign s • (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign τ • xPow (α ∘ τ)) := by\n      simp [Finset.smul_sum, smul_smul]\n    _ = (-1) • (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign τ • xPow (α ∘ τ)) := by rw [h_sign]\n    _ = - (∑ τ : Equiv.Perm (Fin N), Equiv.Perm.sign τ • xPow (α ∘ τ)) := by simp",
+  "declaration_name": "alternant_swap",
+  "used_context": [
+    "Equiv.Perm.sign_swap",
+    "Equiv.Perm.sign_mul",
+    "Finset.sum_bij",
+    "Finset.smul_sum",
+    "Equiv.swap_mul_self",
+    "mul_left_cancel",
+    "smul_smul"
+  ],
+  "notes": [
+    "The proof reindexes the sum over permutations by left-multiplying with the transposition, using that multiplication by a fixed element is a bijection.",
+    "Assumption NeZero N is present in the context but not needed for this result."
+  ]
+}

@@ -48,6 +48,10 @@ def _write_selector_fixture(tmp_path: Path) -> tuple[Path, SelectedRecord]:
                 "theorem visible_helper : True := by",
                 "  trivial",
                 "",
+                "/-- Part (a) of Lemma \\ref{demo.binom} in the source. -/",
+                "theorem prior_part : True := by",
+                "  trivial",
+                "",
                 "/-- Target declaration comment must not be exposed.",
                 "    Label: demo.binom.hidden -/",
                 "theorem hiddenTarget (h : k ≤ n) : True := by",
@@ -73,7 +77,7 @@ def _write_selector_fixture(tmp_path: Path) -> tuple[Path, SelectedRecord]:
         "output": {
             "lean_path": "Demo.lean",
             "declaration_names": ["Demo.hiddenTarget"],
-            "line_range": [11, 14],
+            "line_range": [15, 18],
             "chunk_kind": "theorem",
         },
         "minimal_context": {
@@ -102,6 +106,8 @@ def test_context_selection_prompt_excludes_target_name_and_placeholder_mathlib(t
 
     prompt_text = json.dumps(messages, ensure_ascii=False)
     assert "record-001" in prompt_text
+    assert "prior_part" in prompt_text
+    assert "source_progress_context" in prompt_text
     assert "hiddenTarget" not in prompt_text
     assert "Target declaration comment must not be exposed" not in prompt_text
     assert "exact proof-level facts not statically certified" not in prompt_text
