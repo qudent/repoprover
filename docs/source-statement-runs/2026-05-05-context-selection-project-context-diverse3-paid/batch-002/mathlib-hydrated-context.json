@@ -1,0 +1,56 @@
+{
+  "mathlib_source_available": true,
+  "mathlib_root": "algebraic-combinatorics/.lake/packages/mathlib",
+  "records": [
+    {
+      "record_key": "record-003",
+      "resolved_mathlib_context": [
+        {
+          "query": "LaurentPolynomial.T",
+          "matches": [
+            {
+              "file": "Mathlib/Tactic/DeriveCountable.lean",
+              "line": 38,
+              "text": "inductive T (α : Type)",
+              "snippet": "inductive T (α : Type)\n  | a (n : α)\n  | b (n m : α) (t : T α)\n```\nthe deriving handler constructs the following three declarations:\n```lean"
+            },
+            {
+              "file": "Mathlib/Tactic/DeriveCountable.lean",
+              "line": 44,
+              "text": "noncomputable def T.toNat (α : Type) [Countable α] : T α → ℕ",
+              "snippet": "noncomputable def T.toNat (α : Type) [Countable α] : T α → ℕ\n  | a n => Nat.pair 0 (Nat.pair (encode n) 0)\n  | b n m t => Nat.pair 1 (Nat.pair (encode n) (Nat.pair (encode m) (Nat.pair t.toNat 0)))"
+            }
+          ]
+        },
+        {
+          "query": "LaurentPolynomial.isUnit_T",
+          "matches": [
+            {
+              "file": "Mathlib/Algebra/Polynomial/Laurent.lean",
+              "line": 230,
+              "text": "theorem isUnit_T (n : ℤ) : IsUnit (T n : R[T;T⁻¹]) :=",
+              "snippet": "theorem isUnit_T (n : ℤ) : IsUnit (T n : R[T;T⁻¹]) :=\n  isUnit_of_invertible _\n\n@[elab_as_elim]"
+            }
+          ]
+        },
+        {
+          "query": "LaurentPolynomial.algebra",
+          "matches": [
+            {
+              "file": "Mathlib/Topology/Algebra/UniformRing.lean",
+              "line": 197,
+              "text": "instance algebra : Algebra R (Completion A) where",
+              "snippet": "instance algebra : Algebra R (Completion A) where\n  algebraMap := (UniformSpace.Completion.coeRingHom : A →+* Completion A).comp (algebraMap R A)\n  commutes' := fun r x =>\n    Completion.induction_on x (isClosed_eq (continuous_mul_left _) (continuous_mul_right _))\n      fun a => by\n      simpa only [coe_mul] using congr_arg ((↑) : A → Completion A) (Algebra.commutes r a)\n  smul_def' := fun r x => congr_fun (map_smul_eq_mul_coe A R r) x"
+            },
+            {
+              "file": "Mathlib/Topology/Algebra/UniformRing.lean",
+              "line": 223,
+              "text": "instance algebra' : Algebra R (Completion R) := by infer_instance",
+              "snippet": "/-- A shortcut instance for the common case -/\ninstance algebra' : Algebra R (Completion R) := by infer_instance\n\nend CommRing\n\nend UniformSpace.Completion\n\nnamespace UniformSpace\n\nvariable {α : Type*}\n\n-- TODO: move (some of) these results to the file about topological rings"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

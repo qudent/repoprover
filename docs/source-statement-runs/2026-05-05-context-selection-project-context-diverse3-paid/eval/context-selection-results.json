@@ -1,0 +1,117 @@
+{
+  "generated_at": "2026-05-05T14:35:50.172569+00:00",
+  "records_selected": 3,
+  "batches": 2,
+  "batch_size": 2,
+  "model": "deepseek/deepseek-v4-flash",
+  "price_source": "openrouter-catalog-live",
+  "prompt_price_per_million": 0.14,
+  "completion_price_per_million": 0.28,
+  "context_length": 1048576,
+  "max_tokens": 8192,
+  "reasoning_effort": "",
+  "round_name": "project-context-diverse3-selector",
+  "budget_only": false,
+  "paid_calls_made": 2,
+  "actual_cost_usd": 0.0041489560000000005,
+  "max_actual_cost_usd": 0.03,
+  "hydrate_mathlib": true,
+  "compare_gold": true,
+  "sample_mode": "corpus-spread",
+  "payload_target_name_audit": {
+    "leak_count": 0,
+    "leaks": [],
+    "allowed_previous_project_context_count": 0,
+    "allowed_previous_project_context": []
+  },
+  "results": [
+    {
+      "batch_index": 1,
+      "record_keys": [
+        "record-001",
+        "record-002"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+        "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.isInverse_unique"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 63225,
+        "prompt_chars": 60264,
+        "estimated_prompt_tokens": 15066,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.00210924,
+        "estimated_max_completion_cost_usd": 0.00229376,
+        "estimated_max_cost_usd": 0.004403000000000001
+      },
+      "paid_call_made": true,
+      "response_received": true,
+      "finish_reason": "stop",
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash-20260423",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "prompt_tokens": 18640,
+        "completion_tokens": 6429,
+        "total_tokens": 25069,
+        "actual_cost_usd": 0.002359672,
+        "estimated_cost_from_usage_usd": 0.004409720000000001,
+        "has_openrouter_reported_cost": true
+      },
+      "model_output_record_count": 2,
+      "hydrated_mathlib_records": 2,
+      "gold_comparison_records": 2,
+      "success": true
+    },
+    {
+      "batch_index": 2,
+      "record_keys": [
+        "record-003"
+      ],
+      "record_ids": [
+        "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.T_inv"
+      ],
+      "budget_estimate": {
+        "model": "deepseek/deepseek-v4-flash",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "context_length": 1048576,
+        "chars_per_token_estimate": 4,
+        "payload_chars": 31604,
+        "prompt_chars": 29776,
+        "estimated_prompt_tokens": 7444,
+        "max_completion_tokens": 8192,
+        "estimated_prompt_cost_usd": 0.00104216,
+        "estimated_max_completion_cost_usd": 0.00229376,
+        "estimated_max_cost_usd": 0.00333592
+      },
+      "paid_call_made": true,
+      "response_received": true,
+      "finish_reason": "stop",
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash-20260423",
+        "price_source": "openrouter-catalog-live",
+        "prompt_price_per_million": 0.14,
+        "completion_price_per_million": 0.28,
+        "prompt_tokens": 8119,
+        "completion_tokens": 5454,
+        "total_tokens": 13573,
+        "actual_cost_usd": 0.001789284,
+        "estimated_cost_from_usage_usd": 0.00266378,
+        "has_openrouter_reported_cost": true
+      },
+      "model_output_record_count": 1,
+      "hydrated_mathlib_records": 1,
+      "gold_comparison_records": 1,
+      "success": true
+    }
+  ]
+}

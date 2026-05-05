@@ -1,0 +1,108 @@
+{
+  "records": [
+    {
+      "record_key": "record-003",
+      "source_focus_summary": "Formalize the theorem that the K-module K[x^±] with the defined multiplication is a commutative K-algebra, its unity is (δ_{i,0})_{i∈ℤ}, and the element x is invertible.",
+      "selected_source_part": "thm.fps.laure.laupol-ring",
+      "source_part_rationale": "The source span contains two labeled environments: a theorem and a proposition. The prior same-file declarations already formalize parts of the theorem (commutative ring, T_isUnit, unity equals T 0). The remaining part to formalize is the full bundled statement that K[x^±] is a commutative K-algebra with unity (δ_{i,0}) and x invertible. However, since the prior declarations already cover the components, the target likely bundles them into a single theorem or uses the existing `laurentPolynomial_commRing` and `T_isUnit` and `laurentPolynomial_one_eq_T_zero` from imports. The selected part is the theorem label itself, which is already partially formalized; the remaining work is to produce a concise statement that matches the source theorem's three claims.",
+      "formalization_sketch": [
+        "The statement is: `K[T;T⁻¹]` with the usual multiplication is a commutative `K`-algebra, its unity is `T 0` (which equals `(δ_{i,0})`), and `T 1` is invertible.",
+        "Proof sketch: Use `inferInstance` for the `CommRing` and `Algebra` instances (already defined as `laurentPolynomial_commRing` and `laurentPolynomial_algebra`). The unity claim is `laurentPolynomial_one_eq_T_zero` (imported). The invertibility of `x` is `laurentPolynomial_T_isUnit` (imported). So the theorem can be a `theorem` that bundles these three facts, e.g., `theorem laurentPolynomial_isCommAlgebra : ...`.",
+        "Alternatively, the target might be a single `theorem` with three separate conclusions using `∧` or a `structure`; but given the prior declarations, a simple `theorem` that returns a tuple or uses `by` with `refine ⟨?_, ?_, ?_⟩` is likely.",
+        "The exact shape is withheld, so the sketch should be generic: use the existing `laurentPolynomial_commRing`, `laurentPolynomial_algebra`, `laurentPolynomial_one_eq_T_zero`, and `laurentPolynomial_T_isUnit` to produce the three claims."
+      ],
+      "needed_local_context": [
+        {
+          "name_or_snippet": "K[T;T⁻¹]",
+          "why_needed": "The type of Laurent polynomials, used in the statement."
+        },
+        {
+          "name_or_snippet": "LaurentPolynomial.T n",
+          "why_needed": "The notation for the monomial x^n, used to state unity and invertibility."
+        },
+        {
+          "name_or_snippet": "laurentPolynomial_commRing : CommRing K[T;T⁻¹]",
+          "why_needed": "Provides the CommRing instance, part of the first claim."
+        },
+        {
+          "name_or_snippet": "laurentPolynomial_algebra : Algebra K K[T;T⁻¹]",
+          "why_needed": "Provides the Algebra instance, part of the first claim."
+        },
+        {
+          "name_or_snippet": "laurentPolynomial_one_eq_T_zero : (1 : K[T;T⁻¹]) = LaurentPolynomial.T 0",
+          "why_needed": "States that unity equals T 0, which is the second claim."
+        },
+        {
+          "name_or_snippet": "laurentPolynomial_T_isUnit : IsUnit (LaurentPolynomial.T 1 : K[T;T⁻¹])",
+          "why_needed": "States that x = T 1 is invertible, the third claim."
+        }
+      ],
+      "candidate_project_context": [
+        {
+          "name": "laurentPolynomial_commRing",
+          "expected_signature_or_shape": "def laurentPolynomial_commRing : CommRing K[T;T⁻¹] := inferInstance",
+          "why_needed": "Provides the CommRing instance for the first claim.",
+          "confidence": 1.0
+        },
+        {
+          "name": "laurentPolynomial_algebra",
+          "expected_signature_or_shape": "def laurentPolynomial_algebra : Algebra K K[T;T⁻¹] := inferInstance",
+          "why_needed": "Provides the Algebra instance for the first claim.",
+          "confidence": 1.0
+        },
+        {
+          "name": "laurentPolynomial_one_eq_T_zero",
+          "expected_signature_or_shape": "theorem laurentPolynomial_one_eq_T_zero : (1 : K[T;T⁻¹]) = LaurentPolynomial.T 0 := rfl",
+          "why_needed": "States the unity equals T 0, the second claim.",
+          "confidence": 1.0
+        },
+        {
+          "name": "laurentPolynomial_T_isUnit",
+          "expected_signature_or_shape": "theorem laurentPolynomial_T_isUnit : IsUnit (LaurentPolynomial.T 1 : K[T;T⁻¹]) := ...",
+          "why_needed": "States that T 1 is invertible, the third claim.",
+          "confidence": 1.0
+        }
+      ],
+      "mathlib_queries": [
+        "LaurentPolynomial.T",
+        "LaurentPolynomial.isUnit_T",
+        "LaurentPolynomial.algebra"
+      ],
+      "candidate_mathlib_context": [
+        {
+          "name": "LaurentPolynomial.T",
+          "kind": "def",
+          "expected_signature_or_shape": "def T (n : ℤ) : LaurentPolynomial R := ...",
+          "why_needed": "The monomial basis for Laurent polynomials, used in the statement.",
+          "confidence": 1.0
+        },
+        {
+          "name": "LaurentPolynomial.isUnit_T",
+          "kind": "theorem",
+          "expected_signature_or_shape": "theorem isUnit_T (n : ℤ) : IsUnit (T n : LaurentPolynomial R) := ...",
+          "why_needed": "General invertibility of T n, used to prove the third claim.",
+          "confidence": 0.9
+        },
+        {
+          "name": "LaurentPolynomial.algebra",
+          "kind": "instance",
+          "expected_signature_or_shape": "instance algebra : Algebra R (LaurentPolynomial R) := ...",
+          "why_needed": "The Algebra instance, part of the first claim.",
+          "confidence": 1.0
+        }
+      ],
+      "proof_notes": [
+        "The three claims can be bundled using `refine ⟨?_, ?_, ?_⟩` with the existing declarations.",
+        "The unity claim is already a `rfl` theorem, so it can be used directly.",
+        "The invertibility claim uses `laurentPolynomial_T_isUnit` which is already proven.",
+        "The commutative K-algebra claim is just `inferInstance` via the existing definitions."
+      ],
+      "uncertainties": [
+        "Whether the target expects a single theorem with three separate conclusions or a `structure`/`class` instance.",
+        "Whether the target uses `K[T;T⁻¹]` notation or `LaurentPolynomial K`.",
+        "Whether the target expects the unity to be stated as `(1 : K[T;T⁻¹]) = T 0` or as `(1 : K[T;T⁻¹]) n = if n = 0 then 1 else 0`.",
+        "Whether the target expects the invertibility to be stated as `IsUnit (T 1)` or as `∃ u, T 1 * u = 1`."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "records": [
+    {
+      "record_key": "record-001",
+      "record_id": "AlgebraicCombinatorics/Details/Limits.lean:PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'",
+      "selected_mathlib_names": [
+        "PowerSeries.coeff",
+        "PowerSeries.constantCoeff",
+        "Finset.prod_range_succ"
+      ],
+      "gold_identifier_sample": [
+        "thm.fps.lim.prod",
+        "Finset.range",
+        "Theorem",
+        "Once",
+        "Since",
+        "PowerSeries",
+        "CoeffStabilizesTo",
+        "Finset",
+        "IsMultipliable"
+      ],
+      "selected_name_gold_overlap": [],
+      "selected_name_count": 3,
+      "gold_identifier_count": 9,
+      "policy": "Gold text is used only after model selection output is written; it is never included in selector prompts."
+    },
+    {
+      "record_key": "record-002",
+      "record_id": "AlgebraicCombinatorics/FPS/CommutativeRings.lean:AlgebraicCombinatorics.FPS.isInverse_unique",
+      "selected_mathlib_names": [
+        "left_inv_eq_right_inv"
+      ],
+      "gold_identifier_sample": [
+        "thm.commring.inverse",
+        "def.commring.inverse",
+        "Label",
+        "IsInverse",
+        "ring",
+        "Definition",
+        "Invertible"
+      ],
+      "selected_name_gold_overlap": [],
+      "selected_name_count": 1,
+      "gold_identifier_count": 7,
+      "policy": "Gold text is used only after model selection output is written; it is never included in selector prompts."
+    }
+  ]
+}

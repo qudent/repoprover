@@ -1,0 +1,27 @@
+{
+  "records": [
+    {
+      "record_key": "record-003",
+      "record_id": "AlgebraicCombinatorics/FPS/LaurentSeries.lean:AlgebraicCombinatorics.FPS.Laurent.T_inv",
+      "selected_mathlib_names": [
+        "LaurentPolynomial.T",
+        "LaurentPolynomial.isUnit_T",
+        "LaurentPolynomial.algebra"
+      ],
+      "gold_identifier_sample": [
+        "thm.fps.laure.laupol",
+        "h.symm",
+        "The",
+        "Part",
+        "Theorem",
+        "ring",
+        "T_inv",
+        "T_add"
+      ],
+      "selected_name_gold_overlap": [],
+      "selected_name_count": 3,
+      "gold_identifier_count": 8,
+      "policy": "Gold text is used only after model selection output is written; it is never included in selector prompts."
+    }
+  ]
+}

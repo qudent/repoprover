@@ -1,0 +1,84 @@
+{
+  "mathlib_source_available": true,
+  "mathlib_root": "algebraic-combinatorics/.lake/packages/mathlib",
+  "records": [
+    {
+      "record_key": "record-001",
+      "resolved_mathlib_context": [
+        {
+          "query": "PowerSeries.coeff",
+          "matches": [
+            {
+              "file": "Mathlib/Geometry/Manifold/VectorBundle/LocalFrame.lean",
+              "line": 181,
+              "text": "def coeff (hs : IsLocalFrameOn I F n s u) (i : ι) : (Π x : M, V x) →ₗ[𝕜] M → 𝕜 where",
+              "snippet": "/-- Coefficients of a section `s` of `V` w.r.t. a local frame `{s i}` on `u`.\nOutside of `u`, this returns the junk value 0. -/\ndef coeff (hs : IsLocalFrameOn I F n s u) (i : ι) : (Π x : M, V x) →ₗ[𝕜] M → 𝕜 where\n  toFun s x := if hx : x ∈ u then (hs.toBasisAt hx).repr (s x) i else 0\n  map_add' s s' := by\n    ext x\n    by_cases hx : x ∈ u <;> simp [hx]\n  map_smul' c s := by\n    ext x\n    by_cases hx : x ∈ u <;> simp [hx]\n\nvariable {x : M}\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/Analysis/Calculus/FormalMultilinearSeries.lean",
+              "line": 302,
+              "text": "def coeff (p : FormalMultilinearSeries 𝕜 𝕜 E) (n : ℕ) : E :=",
+              "snippet": "/-- The `n`th coefficient of `p` when seen as a power series. -/\ndef coeff (p : FormalMultilinearSeries 𝕜 𝕜 E) (n : ℕ) : E :=\n  p n 1"
+            }
+          ]
+        },
+        {
+          "query": "PowerSeries.constantCoeff",
+          "matches": [
+            {
+              "file": "Mathlib/RingTheory/MvPowerSeries/Basic.lean",
+              "line": 423,
+              "text": "def constantCoeff : MvPowerSeries σ R →+* R :=",
+              "snippet": "/-- The constant coefficient of a formal power series. -/\ndef constantCoeff : MvPowerSeries σ R →+* R :=\n  { coeff (0 : σ →₀ ℕ) with\n    toFun := coeff (0 : σ →₀ ℕ)\n    map_one' := coeff_zero_one\n    map_mul' := fun φ ψ => by classical simp [coeff_mul]\n    map_zero' := map_zero _ }\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/RingTheory/PowerSeries/Basic.lean",
+              "line": 197,
+              "text": "def constantCoeff : R⟦X⟧ →+* R :=",
+              "snippet": "/-- The constant coefficient of a formal power series. -/\ndef constantCoeff : R⟦X⟧ →+* R :=\n  MvPowerSeries.constantCoeff\n\n/-- The constant formal power series. -/"
+            }
+          ]
+        },
+        {
+          "query": "Finset.prod_range_succ",
+          "matches": [
+            {
+              "file": "Mathlib/Algebra/BigOperators/Group/List/Basic.lean",
+              "line": 156,
+              "text": "lemma prod_range_succ' (f : ℕ → M) (n : ℕ) :",
+              "snippet": "lemma prod_range_succ' (f : ℕ → M) (n : ℕ) :\n    ((range n.succ).map f).prod = f 0 * ((range n).map fun i ↦ f i.succ).prod := by\n  rw [range_succ_eq_map]\n  simp [Function.comp_def]\n\n@[to_additive] lemma prod_eq_one (hl : ∀ x ∈ l, x = 1) : l.prod = 1 := by\n  induction l with\n  | nil => rfl\n  | cons i l hil =>\n    rw [List.prod_cons, hil fun x hx ↦ hl _ (mem_cons_of_mem i hx),\n      hl _ mem_cons_self, one_mul]\n\n@[to_additive] lemma exists_mem_ne_one_of_prod_ne_one (h : l.prod ≠ 1) :\n    ∃ x ∈ l, x ≠ (1 : M) := by simpa only [not_forall, exists_prop] using mt prod_eq_one h\n\n@[to_additive]"
+            },
+            {
+              "file": "Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+              "line": 529,
+              "text": "theorem prod_range_succ (f : ℕ → M) (n : ℕ) :",
+              "snippet": "theorem prod_range_succ (f : ℕ → M) (n : ℕ) :\n    (∏ x ∈ range (n + 1), f x) = (∏ x ∈ range n, f x) * f n := by\n  simp only [mul_comm, prod_range_succ_comm]\n\n@[to_additive]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "record_key": "record-002",
+      "resolved_mathlib_context": [
+        {
+          "query": "left_inv_eq_right_inv",
+          "matches": [
+            {
+              "file": "Mathlib/Data/ZMod/Basic.lean",
+              "line": 846,
+              "text": "  left_inv_eq_right_inv (inv_mul_of_unit a ⟨⟨a, b, h, mul_comm a b ▸ h⟩, rfl⟩) h",
+              "snippet": "  left_inv_eq_right_inv (inv_mul_of_unit a ⟨⟨a, b, h, mul_comm a b ▸ h⟩, rfl⟩) h\n\n@[simp]"
+            },
+            {
+              "file": "Mathlib/Analysis/CStarAlgebra/Spectrum.lean",
+              "line": 227,
+              "text": "    exact ⟨⟨a, ha₁.unit⁻¹ * star a, left_inv_eq_right_inv h₁ h₂ ▸ h₂, h₁⟩, rfl⟩",
+              "snippet": "    exact ⟨⟨a, ha₁.unit⁻¹ * star a, left_inv_eq_right_inv h₁ h₂ ▸ h₂, h₁⟩, rfl⟩\n  · exact IsSelfAdjoint.mul_star_self a\n  · exact IsSelfAdjoint.star_mul_self a"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
