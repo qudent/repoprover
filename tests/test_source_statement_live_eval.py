@@ -609,6 +609,77 @@ def test_source_statement_prompt_includes_source_facing_target_comment(tmp_path:
     assert "theorem target" not in json.dumps(focus)
 
 
+def test_source_only_context_mode_excludes_target_comment_and_target_labels(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+
+    messages = build_messages(project_root, record, context_mode="source-only")
+    user = json.loads(messages[1]["content"])
+    context = user["context"]
+    focus = context["target_source_focus"]
+    serialized = json.dumps(context, ensure_ascii=False)
+
+    assert context["context_mode"] == "source-only"
+    assert focus["context_mode"] == "source-only"
+    assert focus["target_declaration_source_comment"] is None
+    assert focus["record_comment_labels"] == []
+    assert focus["specific_source_labels"] == []
+    assert "Part (a): target declaration withheld" not in serialized
+    assert "demo.minors.a" not in serialized
+    assert "Demo.target" not in serialized
+    assert "theorem target" not in serialized
+
+
+def test_source_only_context_mode_does_not_use_hidden_name_guidance(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    row = copy.deepcopy(record.row)
+    row["alignment"]["comment_labels"] = []
+    row["minimal_context"]["source_spans"][0]["labels"] = ["def.perm.si"]
+    row["minimal_context"]["source_spans"][0]["path"] = "Demo.tex"
+    row["output"]["lean_path"] = "AlgebraicCombinatorics/Permutations/Basics.lean"
+    row["output"]["declaration_names"] = ["AlgebraicCombinatorics.simpleTransposition_isSwap"]
+    (project_root / "Demo.tex").write_text("The simple transposition s_i swaps i and i+1.\n", encoding="utf-8")
+
+    messages = build_messages(project_root, SelectedRecord(row), context_mode="source-only")
+    user = json.loads(messages[1]["content"])
+    guidance_text = json.dumps(user["context"]["domain_statement_shape_guidance"])
+
+    assert "(simpleTransposition i).IsSwap" not in guidance_text
+    assert "constructor-style proof shape" not in guidance_text
+    assert "simpleTransposition_isSwap" not in guidance_text
+
+
+def test_source_only_context_mode_disables_imported_label_api_retrieval(tmp_path: Path) -> None:
+    project_root, record = _write_fixture_project(tmp_path)
+    imported_path = project_root / "AlgebraicCombinatorics/Imported.lean"
+    imported_path.parent.mkdir(parents=True, exist_ok=True)
+    imported_path.write_text(
+        "\n".join(
+            [
+                "namespace Demo",
+                "",
+                "/-- A tempting imported theorem.",
+                "Label: demo.minors -/",
+                "theorem imported_by_label : True := by",
+                "  trivial",
+                "",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    row = copy.deepcopy(record.row)
+    row["minimal_context"]["imports"] = ["Mathlib", "AlgebraicCombinatorics.Imported"]
+
+    target_comment_messages = build_messages(project_root, SelectedRecord(row), context_mode="target-comment")
+    target_comment_context = json.loads(target_comment_messages[1]["content"])["context"]
+    source_only_messages = build_messages(project_root, SelectedRecord(row), context_mode="source-only")
+    source_only_context = json.loads(source_only_messages[1]["content"])["context"]
+
+    assert "imported_by_label" in json.dumps(target_comment_context)
+    assert "imported_by_label" not in json.dumps(source_only_context)
+
+
 def test_generated_application_candidates_try_explicit_then_all_binders() -> None:
     head = """theorem __repoprover_source_statement_check {n : ℕ} (d : Fin n → R) (P : Finset (Fin n)) :
     ((Matrix.diagonal d).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det =

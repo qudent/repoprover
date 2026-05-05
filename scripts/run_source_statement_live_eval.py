@@ -63,6 +63,7 @@ SCOPED_NOTATION_RE = re.compile(r"scoped\s+notation\s+(?P<lhs>.*?)\s*=>\s*(?P<rh
 PART_LABEL_RE = re.compile(r"\.([a-z])$")
 CONTEXT_NOTATION_HEADER_RE = re.compile(r"^-- File context: (?P<path>.*):(?P<start>\d+)-(?P<end>\d+) \(notation\)$")
 LOCAL_MODULE_PREFIX = "AlgebraicCombinatorics."
+CONTEXT_MODES = ("target-comment", "source-only")
 
 
 @dataclass(frozen=True)
@@ -217,9 +218,11 @@ def _preceding_doc_comment(project_root: Path, record: SelectedRecord) -> dict[s
     }
 
 
-def source_focus(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
+def source_focus(project_root: Path, record: SelectedRecord, *, context_mode: str = "target-comment") -> dict[str, Any]:
+    if context_mode not in CONTEXT_MODES:
+        raise ValueError(f"unknown context mode: {context_mode}")
     source_labels = _source_span_labels(record)
-    comment_labels = _record_comment_labels(record)
+    comment_labels = [] if context_mode == "source-only" else _record_comment_labels(record)
     source_label_set = set(source_labels)
     specific_labels = [
         label
@@ -231,7 +234,7 @@ def source_focus(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
         match = PART_LABEL_RE.search(label)
         if match:
             specific_parts.append(match.group(1))
-    target_comment = _preceding_doc_comment(project_root, record)
+    target_comment = None if context_mode == "source-only" else _preceding_doc_comment(project_root, record)
     target_comment_labels = []
     if target_comment is not None:
         target_comment_labels.extend(re.findall(r"Label:\s*([A-Za-z0-9_.-]+(?:\s*\([a-z]\))?)", target_comment["text"]))
@@ -243,8 +246,13 @@ def source_focus(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
         "specific_labeled_parts": specific_parts,
         "target_declaration_source_comment": target_comment,
         "target_comment_labels_or_parts": target_comment_labels,
+        "context_mode": context_mode,
         "instruction": (
             "If the source snippet contains multiple labeled or numbered parts, formalize only the specific "
+            "part/source span indicated by visible source labels or explicit focus metadata. Do not conjoin "
+            "all parts unless the record labels identify the whole multi-part result."
+            if context_mode == "source-only"
+            else "If the source snippet contains multiple labeled or numbered parts, formalize only the specific "
             "part/source span indicated by specific_source_labels, specific_labeled_parts, or "
             "target_declaration_source_comment. Do not conjoin all parts unless the record labels identify "
             "the whole multi-part result. The target_declaration_source_comment is source-facing prose only; "
@@ -713,15 +721,21 @@ def domain_statement_shape_guidance(
     snippets: list[dict[str, Any]],
     context_parts: list[str],
     target_focus: dict[str, Any],
+    context_mode: str = "target-comment",
 ) -> list[dict[str, Any]]:
+    if context_mode not in CONTEXT_MODES:
+        raise ValueError(f"unknown context mode: {context_mode}")
     source_text = "\n".join(str(snippet.get("snippet", "")) for snippet in snippets).lower()
-    labels = " ".join(_source_span_labels(record) + _record_comment_labels(record)).lower()
+    visible_labels = _source_span_labels(record)
+    if context_mode != "source-only":
+        visible_labels += _record_comment_labels(record)
+    labels = " ".join(visible_labels).lower()
     target_comment = target_focus.get("target_declaration_source_comment") or {}
     target_comment_text = str(target_comment.get("text", "")).lower()
     imports = " ".join(record.imports)
     prefix = "\n".join(context_parts)
     combined = f"{source_text}\n{labels}\n{target_comment_text}\n{imports}\n{record.lean_path}"
-    hidden_target_names = " ".join(record.declaration_names).lower()
+    hidden_target_names = "" if context_mode == "source-only" else " ".join(record.declaration_names).lower()
 
     guidance: list[dict[str, Any]] = []
     fps_limit_signal = (
@@ -735,14 +749,17 @@ def domain_statement_shape_guidance(
         limit_preferred = [
             "Use the repository's coefficientwise limit API when it is displayed or imported: `CoeffStabilizesTo`, `IsSummable`, and `tsum'`.",
             "Phrase finite partial sums with `Finset.range`; this file uses partial sums indexed by an upper natural bound.",
-            "For a theorem/comment named like `isSummable_of_coeffStabilizesTo_partial_sum'`, prefer the narrow conclusion `IsSummable f`; for a theorem/comment named like `tsum'_eq...`, prefer only the `tsum'` equality.",
         ]
+        if context_mode != "source-only":
+            limit_preferred.append(
+                "For a theorem/comment named like `isSummable_of_coeffStabilizesTo_partial_sum'`, prefer the narrow conclusion `IsSummable f`; for a theorem/comment named like `tsum'_eq...`, prefer only the `tsum'` equality."
+            )
         limit_avoid = [
             "Do not translate this FPS limit prose into Mathlib's topological `HasSum`, `Summable`, or `∑'` API unless that exact API appears in the local context.",
             "Do not add topological assumptions such as `TopologicalSpace K⟦X⟧` just because the prose says limit.",
             "Do not bundle `IsSummable f` and `tsum' f ... = L` into a conjunction unless the source focus asks for the combined theorem.",
         ]
-        if "family is summable" in target_comment_text and "limit equals" not in target_comment_text:
+        if context_mode != "source-only" and "family is summable" in target_comment_text and "limit equals" not in target_comment_text:
             limit_preferred.append(
                 "For this source focus, the statement shape should conclude only `IsSummable f` from the partial-sum stabilization hypothesis."
             )
@@ -1018,13 +1035,20 @@ def domain_statement_shape_guidance(
     return guidance
 
 
-def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str, Any]:
-    context_parts, _ = source_statement_context(project_root, record, include_imported_label_api=True)
+def build_prompt_context(project_root: Path, record: SelectedRecord, *, context_mode: str = "target-comment") -> dict[str, Any]:
+    if context_mode not in CONTEXT_MODES:
+        raise ValueError(f"unknown context mode: {context_mode}")
+    context_parts, _ = source_statement_context(
+        project_root,
+        record,
+        include_imported_label_api=context_mode != "source-only",
+    )
     snippets = source_snippets(project_root, record)
-    focus = source_focus(project_root, record)
+    focus = source_focus(project_root, record, context_mode=context_mode)
     return {
         "source_statement_or_chunk": snippets,
         "target_source_focus": focus,
+        "context_mode": context_mode,
         "available_imports": record.imports,
         "lean_prefix_context": "\n".join(context_parts).strip(),
         "lean_environment": lean_environment_context(project_root),
@@ -1034,6 +1058,7 @@ def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str
             snippets=snippets,
             context_parts=context_parts,
             target_focus=focus,
+            context_mode=context_mode,
         ),
         "mathlib_context": record.mathlib_context,
         "benchmark_policy": {
@@ -1044,7 +1069,7 @@ def build_prompt_context(project_root: Path, record: SelectedRecord) -> dict[str
     }
 
 
-def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str, str]]:
+def build_messages(project_root: Path, record: SelectedRecord, *, context_mode: str = "target-comment") -> list[dict[str, str]]:
     system = (
         "You are a Lean 4 autoformalization agent working in a current Mathlib-only project. "
         "You must formalize the provided TeX/math source chunk into one Lean theorem or lemma, "
@@ -1077,7 +1102,7 @@ def build_messages(project_root: Path, record: SelectedRecord) -> list[dict[str,
             "Prefer the narrowest theorem directly supported by the source sentence; avoid generalizing to a stronger forall/if statement unless that exact shape is in the source or prefix context.",
             "Prefer a short proof if the prefix context already contains the needed fact.",
         ],
-        "context": build_prompt_context(project_root, record),
+        "context": build_prompt_context(project_root, record, context_mode=context_mode),
     }
     return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(user, indent=2, ensure_ascii=False)}]
 
@@ -1551,7 +1576,7 @@ def aggregate_failure_classes(results: list[dict[str, Any]]) -> dict[str, int]:
 def prepare_record_run(args: argparse.Namespace, item: SourceEvalRecord) -> dict[str, Any]:
     record = item.selected
     record_dir = args.output / f"record-{item.index:03d}"
-    messages = build_messages(args.project_root, record)
+    messages = build_messages(args.project_root, record, context_mode=args.context_mode)
     payload = build_payload(
         model=args.model,
         messages=messages,
@@ -1578,7 +1603,11 @@ def prepare_record_run(args: argparse.Namespace, item: SourceEvalRecord) -> dict
         "lean_path": record.lean_path,
         "gold_declaration_names": record.declaration_names,
         "gold_line_range": list(record.line_range),
-        "prompt_policy": "target Lean statement/name withheld; target source chunk provided",
+        "prompt_policy": (
+            "target Lean statement/name withheld; target source chunk provided; "
+            f"context_mode={args.context_mode}"
+        ),
+        "context_mode": args.context_mode,
         "budget_estimate": estimate,
         "repair_budget_estimate": repair_estimate,
         "repair_attempts_configured": repair_attempts,
@@ -1888,6 +1917,10 @@ def sorted_results(results_by_index: dict[int, dict[str, Any]]) -> list[dict[str
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
+    if not hasattr(args, "context_mode"):
+        args.context_mode = "target-comment"
+    if args.context_mode not in CONTEXT_MODES:
+        raise ValueError(f"unknown context mode: {args.context_mode}")
     rows = load_jsonl(args.records)
     records = select_source_statement_records(rows, args.limit, args.sample_mode)
     if not records:
@@ -2033,6 +2066,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "repair_attempts": args.repair_attempts,
         "repair_max_tokens": args.repair_max_tokens,
         "repair_reasoning_effort": args.repair_reasoning_effort,
+        "context_mode": args.context_mode,
         "preflight_only": args.preflight_only,
         "generation_only": args.generation_only,
         "reuse_project": args.reuse_project,
@@ -2056,6 +2090,7 @@ def render_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Repair attempts: `{summary['repair_attempts']}`",
         f"- Repair max tokens: `{summary['repair_max_tokens']}`",
         f"- Repair reasoning effort: `{summary['repair_reasoning_effort']}`",
+        f"- Context mode: `{summary['context_mode']}`",
         f"- Preflight only: `{summary['preflight_only']}`",
         f"- Generation only: `{summary['generation_only']}`",
         f"- Reuse project: `{summary['reuse_project']}`",
@@ -2147,6 +2182,16 @@ def parse_args() -> argparse.Namespace:
         "--reuse-project",
         action="store_true",
         help="Reuse one materialized Lean project under the output directory. Requires --concurrency 1.",
+    )
+    parser.add_argument(
+        "--context-mode",
+        choices=CONTEXT_MODES,
+        default="target-comment",
+        help=(
+            "`target-comment` keeps source-facing target Lean doc comments and alignment comment labels in prompts. "
+            "`source-only` removes target doc comments, target-derived comment labels, and hidden declaration-name "
+            "guidance triggers for a more realistic TeX/source-context prompt."
+        ),
     )
     args = parser.parse_args()
     if args.repair_max_tokens is None:
