@@ -9,6 +9,7 @@ from scripts.verify_latex_statement_generation import (
     run,
     run_lean_source,
     verify_generation_output,
+    visible_support_candidates_by_unit,
     visible_support_candidates_for_unit,
 )
 
@@ -738,3 +739,46 @@ def test_run_can_materialize_visible_support_snippets(monkeypatch, tmp_path) -> 
     assert support["candidate_count"] == 2
     assert support["accepted_count"] == 2
     assert support["rejected_count"] == 0
+
+
+def test_visible_support_candidates_read_proof_lane_tasks(tmp_path) -> None:
+    batch = tmp_path / "run/batch-001"
+    batch.mkdir(parents=True)
+    raw_output = batch / "raw-generation-output.json"
+    raw_output.write_text('{"units":[]}\n', encoding="utf-8")
+    (batch / "generation-payload.json").write_text(
+        json.dumps(
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": json.dumps(
+                            {
+                                "proof_lane_tasks": [
+                                    {
+                                        "unit_key": "unit-007",
+                                        "decline_context_pack": {
+                                            "selected_project_context": [
+                                                {
+                                                    "kind": "def",
+                                                    "name": "Demo.helper",
+                                                    "lean_snippet": "def helper : Nat := 0",
+                                                }
+                                            ]
+                                        },
+                                    }
+                                ]
+                            }
+                        ),
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = visible_support_candidates_by_unit(raw_output)
+
+    assert list(candidates) == ["unit-007"]
+    assert candidates["unit-007"][0]["name"] == "Demo.helper"
+    assert candidates["unit-007"][0]["text"] == "def helper : Nat := 0"

@@ -1,0 +1,426 @@
+{
+  "diagnosed_unit_count": 1,
+  "diagnostic_class_counts": {
+    "lean_errors_before_or_at_placeholder": 1
+  },
+  "generated_at": "2026-05-06T12:17:32.683671+00:00",
+  "generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1"
+  ],
+  "raw_file_count": 1,
+  "raw_files": [
+    {
+      "accepted_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "accepted_inferred_opens": [
+        "open Finset BigOperators Matrix",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "diagnosed_unit_count": 1,
+      "filtered_source_module_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+      ],
+      "filtered_source_module_opens": [],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_opens": [
+        "open Finset BigOperators Matrix",
+        "open LGV",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators Matrix",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "raw_output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1/batch-001/raw-generation-output.json",
+      "raw_unit_count": 1,
+      "rejected_invalid_inferred_opens": [
+        {
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `LGV`",
+              "kind": "[anonymous]",
+              "line": 8,
+              "severity": "error"
+            }
+          ],
+          "open_statement": "open LGV",
+          "stderr": ""
+        }
+      ],
+      "withheld_source_modules": [
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ]
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_partial_proof_diagnostics.v1",
+  "units": [
+    {
+      "body_char_count": 1140,
+      "contract_violations": [
+        "cannot_prove_output_must_have_empty_lean_file_body",
+        "cannot_prove_output_must_have_empty_declaration_names",
+        "generated_lean_contains_placeholder"
+      ],
+      "declaration_names": [
+        "catalan_hankel_det_one"
+      ],
+      "diagnostic_class": "lean_errors_before_or_at_placeholder",
+      "first_messages": [
+        {
+          "column": 4,
+          "data": "Unknown identifier `pathWeightMatrix`",
+          "kind": "lean.unknownIdentifier._namedError",
+          "line": 18,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Unknown identifier `catalanHankelMatrix_eq_pathWeightMatrix`",
+          "kind": "lean.unknownIdentifier._namedError",
+          "line": 21,
+          "severity": "error"
+        },
+        {
+          "column": 13,
+          "data": "Unknown identifier `xDecreasing`",
+          "kind": "lean.unknownIdentifier._namedError",
+          "line": 23,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nk : ℕ\nh_eq : catalanHankelMatrix k = sorry\n⊢ sorry",
+          "kind": "[anonymous]",
+          "line": 24,
+          "severity": "error"
+        },
+        {
+          "column": 13,
+          "data": "Unknown identifier `yIncreasing`",
+          "kind": "lean.unknownIdentifier._namedError",
+          "line": 28,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nk : ℕ\nh_eq : catalanHankelMatrix k = sorry\nhxA : sorry\n⊢ sorry",
+          "kind": "[anonymous]",
+          "line": 29,
+          "severity": "error"
+        },
+        {
+          "column": 13,
+          "data": "Unknown identifier `xDecreasing`",
+          "kind": "lean.unknownIdentifier._namedError",
+          "line": 31,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nk : ℕ\nh_eq : catalanHankelMatrix k = sorry\nhxA : sorry\nhyA : sorry\n⊢ sorry",
+          "kind": "[anonymous]",
+          "line": 32,
+          "severity": "error"
+        }
+      ],
+      "lean_error_count": 12,
+      "lean_returncode": 1,
+      "notes": [
+        "The proof uses the LGV nonpermutable lemma to reduce the determinant to a sum over non-intersecting path tuples. The equality of the Catalan Hankel matrix to the path weight matrix is given by catalanHankelMatrix_eq_pathWeightMatrix. The sorting conditions for the source and target vertices are verified. The final simplification of the nipat weight sum to 1 requires additional lemmas about the structure of non-intersecting path tuples in the Dyck digraph with unit arc weights, which are not yet available in the visible context. The proof is incomplete at the last step."
+      ],
+      "placeholder_tokens": [
+        "sorry"
+      ],
+      "raw_output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1/batch-001/raw-generation-output.json",
+      "source_path": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix",
+        "pathWeightMatrix",
+        "dyckDigraph_pathFinite",
+        "dyckUnitArcWeight",
+        "xDecreasing",
+        "yIncreasing",
+        "lgv_nonpermutable",
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "nipatWeightSum",
+        "nipatFinset",
+        "pathTupleWeight"
+      ],
+      "visible_support_context": {
+        "accepted": [
+          {
+            "kind": "def",
+            "name": "LGV.catalanHankelMatrix",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          }
+        ],
+        "accepted_count": 1,
+        "candidate_count": 15,
+        "rejected": [
+          {
+            "kind": "def",
+            "lean_error_count": 5,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 68,
+                "data": "Function expected at\n  SimpleDigraph\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  V\n\nHint: The identifier `SimpleDigraph` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 12,
+                "severity": "error"
+              },
+              {
+                "column": 32,
+                "data": "Function expected at\n  ArcWeight\nbut this term has type\n  ?m.2\n\nNote: Expected a function because this term is being applied to the argument\n  D\n\nHint: The identifier `ArcWeight` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 13,
+                "severity": "error"
+              },
+              {
+                "column": 11,
+                "data": "Function expected at\n  kVertex\nbut this term has type\n  ?m.3\n\nNote: Expected a function because this term is being applied to the argument\n  V\n\nHint: The identifier `kVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 14,
+                "severity": "error"
+              },
+              {
+                "column": 11,
+                "data": "Function expected at\n  kVertex\nbut this term has type\n  ?m.3\n\nNote: Expected a function because this term is being applied to the argument\n  V\n\nHint: The identifier `kVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 14,
+                "severity": "error"
+              },
+              {
+                "column": 23,
+                "data": "Unknown identifier `pathWeightSum`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 15,
+                "severity": "error"
+              }
+            ],
+            "name": "LGV.pathWeightMatrix",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          },
+          {
+            "kind": "theorem",
+            "lean_error_count": 2,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 0,
+                "data": "unexpected end of input",
+                "kind": "[anonymous]",
+                "line": 44,
+                "severity": "error"
+              },
+              {
+                "column": 33,
+                "data": "Unknown identifier `dyckDigraph.IsPathFinite`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 12,
+                "severity": "error"
+              }
+            ],
+            "name": "LGV.dyckDigraph_pathFinite",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          },
+          {
+            "kind": "def",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 38,
+                "data": "Function expected at\n  ArcWeight\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  dyckDigraph\n\nHint: The identifier `ArcWeight` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 12,
+                "severity": "error"
+              }
+            ],
+            "name": "LGV.dyckUnitArcWeight",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          },
+          {
+            "kind": "def",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 29,
+                "data": "Function expected at\n  kVertex\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  (ℤ × ℤ)\n\nHint: The identifier `kVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 12,
+                "severity": "error"
+              },
+              {
+                "column": 25,
+                "data": "Unknown identifier `xCoord`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 13,
+                "severity": "error"
+              },
+              {
+                "column": 40,
+                "data": "Unknown identifier `xCoord`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 13,
+                "severity": "error"
+              }
+            ],
+            "name": "LGV.xDecreasing",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          },
+          {
+            "kind": "def",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 29,
+                "data": "Function expected at\n  kVertex\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  (ℤ × ℤ)\n\nHint: The identifier `kVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 12,
+                "severity": "error"
+              },
+              {
+                "column": 25,
+                "data": "Unknown identifier `yCoord`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 13,
+                "severity": "error"
+              },
+              {
+                "column": 40,
+                "data": "Unknown identifier `yCoord`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 13,
+                "severity": "error"
+              }
+            ],
+            "name": "LGV.yIncreasing",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          },
+          {
+            "kind": "def",
+            "lean_error_count": 7,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 66,
+                "data": "Function expected at\n  SimpleDigraph\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  V\n\nHint: The identifier `SimpleDigraph` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 12,
+                "severity": "error"
+              },
+              {
+                "column": 32,
+                "data": "Function expected at\n  ArcWeight\nbut this term has type\n  ?m.2\n\nNote: Expected a function because this term is being applied to the argument\n  D\n\nHint: The identifier `ArcWeight` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 13,
+                "severity": "error"
+              },
+              {
+                "column": 11,
+                "data": "Function expected at\n  kVertex\nbut this term has type\n  ?m.3\n\nNote: Expected a function because this term is being applied to the argument\n  V\n\nHint: The identifier `kVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 14,
+                "severity": "error"
+              },
+              {
+                "column": 11,
+                "data": "Function expected at\n  kVertex\nbut this term has type\n  ?m.3\n\nNote: Expected a function because this term is being applied to the argument\n  V\n\nHint: The identifier `kVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                "kind": "[anonymous]",
+                "line": 14,
+                "severity": "error"
+              },
+              {
+                "column": 9,
+                "data": "Unknown identifier `nipatFinset`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 15,
+                "severity": "error"
+              }
+            ],
+            "name": "LGV.nipatWeightSum",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          },
+          {
+            "kind": "structure",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 10,
+                "data": "`Path` has already been declared",
+                "kind": "[anonymous]",
+                "line": 12,
+                "severity": "error"
+              }
+            ],
+            "name": "LGV.SimpleDigraph.Path",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          },
+          {
+            "kind": "def",
+            "lean_error_count": 2,
+            "lean_returncode": 1,
+            "messages": [
+              {
+                "column": 31,
+                "data": "Unknown identifier `SimpleDigraph.Path`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 15,
+                "severity": "error"
+              },
+              {
+                "column": 4,
+                "data": "Unknown identifier `SimpleDigraph.Path`",
+                "kind": "lean.unknownIdentifier._namedError",
+                "line": 16,
+                "severity": "error"
+              }
+            ],
+            "name": "translatePath",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "stderr": ""
+          }
+        ],
+        "rejected_count": 14
+      }
+    }
+  ]
+}

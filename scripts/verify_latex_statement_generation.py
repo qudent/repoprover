@@ -375,6 +375,9 @@ def generation_prompt_units(user_payload: dict[str, Any]) -> list[dict[str, Any]
     units = user_payload.get("units")
     if isinstance(units, list):
         return [unit for unit in units if isinstance(unit, dict)]
+    proof_lane_tasks = user_payload.get("proof_lane_tasks")
+    if isinstance(proof_lane_tasks, list):
+        return [unit for unit in proof_lane_tasks if isinstance(unit, dict)]
     original_task = user_payload.get("original_generation_task")
     if isinstance(original_task, dict) and isinstance(original_task.get("units"), list):
         return [unit for unit in original_task["units"] if isinstance(unit, dict)]

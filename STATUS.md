@@ -34,6 +34,8 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - [x] Turn decline-context mining into prompt-safe context acquisition packs.
 - [x] Run the packed fresh-slice proof-lane payload as a paid/checked experiment
   after the target-clean gate passed.
+- [x] Add a no-provider partial-proof diagnostic for raw contract-violating
+  proof-lane outputs.
 - [ ] Validate the next generic context/proof-lane change on a fresh slice, not
   only on NPartition or one already-debugged theorem.
 
@@ -85,6 +87,12 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   violated the contract by returning `cannot_prove_from_visible_context` with a
   nonempty Lean body and `sorry`; contract enforcement normalized it to a clean
   decline.
+- Partial-proof diagnostic:
+  `docs/latex-statement-partial-proof-diagnostics/2026-05-06-fresh-unit001-stricter-prompt/`
+  filters source-module imports transitively, materializes visible support, and
+  checks the raw Catalan body locally. Result: `lean_errors_before_or_at_placeholder`,
+  `1/15` support snippets accepted, 12 Lean errors before the final `sorry`;
+  blocker is context dependency closure plus proof synthesis.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -95,6 +103,6 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: build a partial-proof diagnostic/repair lane or use a
-  stronger proof-synthesis agent for the raw Catalan sketch; do not keep
-  spending ordinary proof-lane calls on the same prompt shape.
+- Next useful work: make context packs dependency-closed and Lean-checkable, then
+  route remaining partial raw bodies to a stronger proof-synthesis/repair lane;
+  do not keep spending ordinary proof-lane calls on the same prompt shape.

@@ -815,6 +815,20 @@ induces a partial proof, the proof lane needs either a dedicated partial-proof
 diagnostic channel or a stronger proof-synthesis agent, not another ordinary
 JSON generation retry.
 
+That diagnostic channel now exists in
+`scripts/diagnose_latex_statement_partial_proofs.py`. It reads saved raw
+contract-violating outputs, filters source-module imports transitively so the
+withheld target file is not imported, materializes visible support snippets, and
+checks the raw body with Lean. On the stricter Catalan probe, the target-hidden
+diagnostic artifact at
+`docs/latex-statement-partial-proof-diagnostics/2026-05-06-fresh-unit001-stricter-prompt/`
+classified the raw proof as `lean_errors_before_or_at_placeholder`, not a pure
+missing-final-proof case: only `1/15` visible support snippets materialized, and
+the raw body still had 12 Lean errors including unknown `pathWeightMatrix`,
+`catalanHankelMatrix_eq_pathWeightMatrix`, `xDecreasing`, and `yIncreasing`.
+So the immediate blocker is still context packaging/import dependency closure,
+not only proof synthesis.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad
