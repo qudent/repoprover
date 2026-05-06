@@ -1,0 +1,60 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "contract_violations": [
+          "generated_lean_contains_placeholder",
+          "generated_lean_must_not_include_comments"
+        ],
+        "raw_declaration_names": [
+          "fromPartition",
+          "size_fromPartition",
+          "toPartition_length",
+          "fromPartition_toPartition",
+          "toPartition_fromPartition",
+          "partition_NPartition_equiv"
+        ],
+        "raw_lean_file_body_characters": 5767,
+        "reason": "generated_output_contains_incomplete_or_forbidden_lean",
+        "unit_key": "unit-001"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The fromPartition definition and size_fromPartition lemma are complete. The toPartition_length lemma is complete. The inverse lemmas fromPartition_toPartition and toPartition_fromPartition contain sorry placeholders because proving that sorting/filtering commutes appropriately with the padding/truncation requires additional lemmas about the exact correspondence between positions in the sorted list and the original NPartition parts, which are not directly available in the checked signatures. The main Equiv is defined but its inverse proofs rely on the sorry lemmas. A complete proof would need to establish that (1) for fromPartition_toPartition: the sorted nonzero parts of μ in decreasing order, when padded with zeros, recover μ.parts at each index, which requires injectivity of the sorting on the multiset of nonzero values and position-matching; (2) for toPartition_fromPartition: filtering zeros from the padded sorted list recovers the sorted list, which as a multiset equals p.parts."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure",
+        "NPartition.size",
+        "NPartition.toPartition",
+        "NPartition.ext",
+        "NPartition.ext'",
+        "filter_ne_zero_sum",
+        "Nat.Partition",
+        "Nat.Partition.parts",
+        "Nat.Partition.parts_pos",
+        "Nat.Partition.parts_sum",
+        "Nat.Partition.ext",
+        "Multiset.sort_sorted",
+        "Multiset.length_sort",
+        "Multiset.sort_eq",
+        "Multiset.sum_coe",
+        "List.Pairwise.rel_get_of_le",
+        "List.sum_ofFn",
+        "Multiset.filter_le",
+        "Multiset.card_le_card",
+        "Multiset.card_map",
+        "Finset.card_univ",
+        "Fintype.card_fin"
+      ]
+    }
+  ]
+}

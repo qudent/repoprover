@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 51
-verification-result files and 72 unit checks, it reports 16 compiled units, 21
-contract violations, 10 compile failures, and 25 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 52
+verification-result files and 73 unit checks, it reports 16 compiled units, 21
+contract violations, 10 compile failures, and 26 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -526,6 +526,17 @@ to the zero-padding repair skeleton, it writes
 The raw 4,380-character helper skeleton is preserved as raw output, while the
 consumer-facing generation verifies as a clean `declined_cannot_prove` and
 post-hoc gold comparison is `not_generated_cannot_prove`.
+
+A Kimi K2.6 comparison probe used the current OpenRouter model id
+`moonshotai/kimi-k2.6` from the provider model list. The repair retry at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-kimi-k2.6-v1-paid/`
+cost `$0.030156`. It produced a larger 5,767-character helper skeleton, but
+again relied on placeholder inverse lemmas. The stricter normalizer preserved
+the raw skeleton and emitted a clean `cannot_prove_from_visible_context`; Lean
+verification is `declined_cannot_prove` and gold comparison is
+`not_generated_cannot_prove`. This confirms that the remaining NPartition
+blocker is not just DeepSeek Flash underperformance; Kimi also fails the hard
+same-unit inverse proof under the honest no-placeholder contract.
 
 ### Imported Lean surface and likely context needs
 

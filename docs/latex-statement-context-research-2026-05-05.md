@@ -747,6 +747,17 @@ Broader diverse4 negative probe:
   preserves the raw 4,380-character helper skeleton but verifies the
   consumer-facing output as a clean `declined_cannot_prove` with gold
   comparison `not_generated_cannot_prove`.
+- Kimi K2.6 comparison:
+  the current OpenRouter model list exposes Kimi K2.6 as
+  `moonshotai/kimi-k2.6`. The repair retry at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-kimi-k2.6-v1-paid/`
+  cost `$0.030156`. Kimi generated a larger 5,767-character helper skeleton,
+  but the inverse lemmas still contained placeholders/comments. The stricter
+  normalizer preserved raw output and wrote an empty
+  `cannot_prove_from_visible_context` consumer artifact, verified as
+  `declined_cannot_prove` with gold comparison `not_generated_cannot_prove`.
+  This is useful negative evidence: another stronger open model also fails the
+  same hard same-unit inverse proof honestly.
 
 ## Lean Dependency Accounting
 

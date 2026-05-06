@@ -68,8 +68,8 @@ same-unit helper planning, Mathlib hydration, and clean
 - Proven positives: inverse uniqueness, determinant transpose, triangular
   determinant, mixed determinant batch, and symmetric `e_n = 0` can reach
   semantic coverage with target-blind context plus repair loops.
-- Failure summary across 51 verification files / 72 unit checks: 16 compiled,
-  21 old/new contract violations, 10 compile failures, and 25 clean cannot-prove
+- Failure summary across 52 verification files / 73 unit checks: 16 compiled,
+  21 old/new contract violations, 10 compile failures, and 26 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -97,6 +97,10 @@ same-unit helper planning, Mathlib hydration, and clean
 - No-cost normalizer applied to the zero-padding skeleton preserves the raw
   4,380-character helper body but verifies the consumer-facing copy as clean
   `declined_cannot_prove` with gold comparison `not_generated_cannot_prove`.
+- Kimi K2.6 (`moonshotai/kimi-k2.6`, looked up from OpenRouter) retry cost
+  `$0.030156`. It produced a larger 5,767-character helper skeleton but still
+  used placeholders for inverse lemmas; the normalizer converted the
+  consumer-facing result to clean `declined_cannot_prove`.
 - Current NPartition blocker: generation discipline/proof synthesis. The model
   can now sketch the right helper structure, but cannot complete the hard
   same-unit proofs honestly under the no-placeholder benchmark contract.
