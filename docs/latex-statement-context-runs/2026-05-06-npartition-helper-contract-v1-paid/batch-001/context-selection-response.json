@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Need to define bijection between partitions of length ≤ N and N-partitions\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"depends_on_task_ids\": [],\n          \"kind\": \"def\",\n          \"missing_or_uncertain_context\": [],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition: ℕ → Type\",\n              \"name_or_query\": \"Nat.Partition\",\n              \"why_needed\": \"type of partitions\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition.length: Nat.Partition n → ℕ\",\n              \"name_or_query\": \"Nat.Partition.length\",\n              \"why_needed\": \"length of a partition\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"NPartition\",\n              \"why_needed\": \"target type of bijection\"\n            },\n            {\n              \"name\": \"NPartition.size\",\n              \"why_needed\": \"size of N-partition\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"prop.sf.Npar-as-par source text\"\n          ],\n          \"role\": \"same_unit_helper\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"Define a function from partitions of length ≤ N to N-partitions by padding with zeros.\",\n          \"task_id\": \"unit-001-task-1\"\n        },\n        {\n          \"depends_on_task_ids\": [\n            \"unit-001-task-1\"\n          ],\n          \"kind\": \"def\",\n          \"missing_or_uncertain_context\": [],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition: ℕ → Type\",\n              \"name_or_query\": \"Nat.Partition\",\n              \"why_needed\": \"type of partitions\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition.length: Nat.Partition n → ℕ\",\n              \"name_or_query\": \"Nat.Partition.length\",\n              \"why_needed\": \"length of a partition\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"NPartition\",\n              \"why_needed\": \"source type of bijection\"\n            },\n            {\n              \"name\": \"NPartition.toPartition\",\n              \"why_needed\": \"existing conversion from NPartition to Nat.Partition\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"prop.sf.Npar-as-par source text\"\n          ],\n          \"role\": \"same_unit_helper\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"Define the inverse function from N-partitions to partitions of length ≤ N by dropping trailing zeros.\",\n          \"task_id\": \"unit-001-task-2\"\n        },\n        {\n          \"depends_on_task_ids\": [\n            \"unit-001-task-1\",\n            \"unit-001-task-2\"\n          ],\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition.length: Nat.Partition n → ℕ\",\n              \"name_or_query\": \"Nat.Partition.length\",\n              \"why_needed\": \"length condition\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition.ext: (∀ i, parts i = parts' i) → p = p'\",\n              \"name_or_query\": \"Nat.Partition.ext\",\n              \"why_needed\": \"extensionality for partitions\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"NPartition.ext\",\n              \"why_needed\": \"extensionality for NPartition\"\n            },\n            {\n              \"name\": \"NPartition.toPartition\",\n              \"why_needed\": \"existing conversion\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"prop.sf.Npar-as-par source text\"\n          ],\n          \"role\": \"main_claim\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"Prove that the two functions are inverse bijections, establishing a bijection between partitions of length ≤ N and N-partitions.\",\n          \"task_id\": \"unit-001-task-3\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Bijection between partitions of length ≤ N and N-partitions by padding/truncating zeros.\",\n      \"unit_key\": \"unit-001\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778036780,
+  "id": "gen-1778036780-pFUB4Y5PVhFCsF9m40D7",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "SiliconFlow",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 1037,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00097524,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00029036,
+      "upstream_inference_cost": 0.00097524,
+      "upstream_inference_prompt_cost": 0.00068488
+    },
+    "is_byok": false,
+    "prompt_tokens": 4892,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 5929
+  }
+}

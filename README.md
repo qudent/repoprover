@@ -330,6 +330,20 @@ NPartition payload at
 `docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-budget/`
 records that contract.
 
+The paid NPartition helper-contract v1 retry cost `$0.00360500` total:
+`$0.00097524` for selection and `$0.00262976` for generation. The selector did
+follow the generic helper schema, producing two `same_unit_helper` definition
+tasks and one dependent `main_claim`, so theorem-level splitting is the right
+surface. Hydration still rejected the guessed `Nat.Partition.length` API, and
+generation returned `cannot_prove_from_visible_context` while raw-emitting
+helper-shaped Lean (`NPartition.ofPartition`,
+`NPartition.toPartitionOfLength`, and `NPartition.bijection`). The runner
+therefore normalized the consumer-facing artifact to an empty body/names,
+verification classified it as `declined_cannot_prove`, and exact-name
+comparison classified it as `not_generated_cannot_prove`. This is evidence that
+same-unit helper planning helps task decomposition but does not yet supply the
+missing Mathlib/project proof API needed to construct the bijection honestly.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

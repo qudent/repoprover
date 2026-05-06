@@ -1,0 +1,122 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Need to define bijection between partitions of length ≤ N and N-partitions"
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "def",
+          "missing_or_uncertain_context": [],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition: ℕ → Type",
+              "name_or_query": "Nat.Partition",
+              "why_needed": "type of partitions"
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.length: Nat.Partition n → ℕ",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "length of a partition"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "target type of bijection"
+            },
+            {
+              "name": "NPartition.size",
+              "why_needed": "size of N-partition"
+            }
+          ],
+          "needed_source_context": [
+            "prop.sf.Npar-as-par source text"
+          ],
+          "role": "same_unit_helper",
+          "source_part": "whole unit",
+          "target_statement_sketch": "Define a function from partitions of length ≤ N to N-partitions by padding with zeros.",
+          "task_id": "unit-001-task-1"
+        },
+        {
+          "depends_on_task_ids": [
+            "unit-001-task-1"
+          ],
+          "kind": "def",
+          "missing_or_uncertain_context": [],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition: ℕ → Type",
+              "name_or_query": "Nat.Partition",
+              "why_needed": "type of partitions"
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.length: Nat.Partition n → ℕ",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "length of a partition"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "source type of bijection"
+            },
+            {
+              "name": "NPartition.toPartition",
+              "why_needed": "existing conversion from NPartition to Nat.Partition"
+            }
+          ],
+          "needed_source_context": [
+            "prop.sf.Npar-as-par source text"
+          ],
+          "role": "same_unit_helper",
+          "source_part": "whole unit",
+          "target_statement_sketch": "Define the inverse function from N-partitions to partitions of length ≤ N by dropping trailing zeros.",
+          "task_id": "unit-001-task-2"
+        },
+        {
+          "depends_on_task_ids": [
+            "unit-001-task-1",
+            "unit-001-task-2"
+          ],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition.length: Nat.Partition n → ℕ",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "length condition"
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.ext: (∀ i, parts i = parts' i) → p = p'",
+              "name_or_query": "Nat.Partition.ext",
+              "why_needed": "extensionality for partitions"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition.ext",
+              "why_needed": "extensionality for NPartition"
+            },
+            {
+              "name": "NPartition.toPartition",
+              "why_needed": "existing conversion"
+            }
+          ],
+          "needed_source_context": [
+            "prop.sf.Npar-as-par source text"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "Prove that the two functions are inverse bijections, establishing a bijection between partitions of length ≤ N and N-partitions.",
+          "task_id": "unit-001-task-3"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Bijection between partitions of length ≤ N and N-partitions by padding/truncating zeros.",
+      "unit_key": "unit-001"
+    }
+  ]
+}

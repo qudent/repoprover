@@ -1,0 +1,36 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "NPartition.ofPartition",
+          "NPartition.toPartitionOfLength",
+          "NPartition.bijection"
+        ],
+        "raw_lean_file_body_characters": 1144,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-001"
+      }
+    ],
+    "policy": "Runner normalized cannot_prove_from_visible_context units to the declared empty-output contract. See raw-generation-output.json or raw-repair-output.json for original model text."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof of `bijection` is incomplete; the `ext` lemma for `Nat.Partition` is available but the details of `parts` equality require more work with `Multiset` and `Finset` manipulations. The `parts_antitone` field of `Nat.Partition` is assumed but not verified in the checked signature; the `antitone` proof in `ofPartition` is sketched but may need adjustment. The `length` field of `Nat.Partition` is not available as a checked identifier; the proof uses `λ.length` as a placeholder. The `toPartitionOfLength` is essentially `toPartition` from the local file, but the `size` equality is not fully proven."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure from local file",
+        "NPartition.size from local file",
+        "NPartition.toPartition from local file",
+        "Nat.Partition from Mathlib (checked)",
+        "Nat.Partition.ext from Mathlib (checked)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"NPartition.ofPartition\",\n        \"NPartition.toPartitionOfLength\",\n        \"NPartition.bijection\"\n      ],\n      \"lean_file_body\": \"open Finset\\nopen Multiset\\n\\nnamespace NPartition\\n\\nvariable {N : ℕ}\\n\\n/-- Given a partition `λ` of some integer `n` whose length is at most `N`, produce an `N`-partition\\nby padding with zeros. -/\\ndef ofPartition (λ : Nat.Partition n) (h : λ.length ≤ N) : NPartition N where\\n  parts i := \\n    if hi : (i : ℕ) < λ.length then λ.parts.get ⟨i, hi⟩ else 0\\n  antitone := by\\n    intro i j h\\n    dsimp\\n    by_cases hi : (i : ℕ) < λ.length\\n    · by_cases hj : (j : ℕ) < λ.length\\n      · have := λ.parts_antitone (Fin.mk (i : ℕ) hi) (Fin.mk (j : ℕ) hj) (by exact_mod_cast h)\\n        simpa using this\\n      · simp [hi, hj]\\n    · simp [hi]\\n\\n/-- Given an `N`-partition, produce a `Nat.Partition` of its size by dropping trailing zeros.\\nThis is the inverse of `ofPartition`. -/\\ndef toPartitionOfLength (μ : NPartition N) : Nat.Partition μ.size := μ.toPartition\\n\\n/-- The bijection between partitions of length ≤ N and N-partitions. -/\\ntheorem bijection (λ : Nat.Partition n) (h : λ.length ≤ N) :\\n    toPartitionOfLength (ofPartition λ h) = λ := by\\n  ext i\\n  simp [toPartitionOfLength, ofPartition, NPartition.toPartition, NPartition.size]\\n  sorry\\n\\nend NPartition\",\n      \"notes\": [\n        \"The proof of `bijection` is incomplete; the `ext` lemma for `Nat.Partition` is available but the details of `parts` equality require more work with `Multiset` and `Finset` manipulations. The `parts_antitone` field of `Nat.Partition` is assumed but not verified in the checked signature; the `antitone` proof in `ofPartition` is sketched but may need adjustment. The `length` field of `Nat.Partition` is not available as a checked identifier; the proof uses `λ.length` as a placeholder. The `toPartitionOfLength` is essentially `toPartition` from the local file, but the `size` equality is not fully proven.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure from local file\",\n        \"NPartition.size from local file\",\n        \"NPartition.toPartition from local file\",\n        \"Nat.Partition from Mathlib (checked)\",\n        \"Nat.Partition.ext from Mathlib (checked)\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778036879,
+  "id": "gen-1778036878-HwcTTyUxeVF95LlYSL9L",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 714,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00262976,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00019992,
+      "upstream_inference_cost": 0.00262976,
+      "upstream_inference_prompt_cost": 0.00242984
+    },
+    "is_byok": false,
+    "prompt_tokens": 17356,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 18070
+  }
+}
