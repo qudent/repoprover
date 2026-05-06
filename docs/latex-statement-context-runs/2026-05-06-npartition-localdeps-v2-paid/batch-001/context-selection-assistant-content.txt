@@ -1,0 +1,53 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "The bijection is stated informally; need to define the set of partitions of length ≤ N and the mapping explicitly."
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib definition of Nat.Partition and its length; the mapping from a partition to an NPartition by padding zeros."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition n is a structure with parts : Multiset ℕ and parts_pos, parts_sum fields; length is defined as Multiset.card (parts.filter (· ≠ 0))",
+              "name_or_query": "Nat.Partition",
+              "why_needed": "The source refers to partitions of length ≤ N; Nat.Partition is the standard Mathlib type for integer partitions."
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.length : Nat.Partition n → ℕ",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "To express the condition 'length ≤ N'."
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "The target type of the bijection is NPartition N, defined in the project."
+            },
+            {
+              "name": "NPartition.ofPartition",
+              "why_needed": "Likely used to construct an NPartition from a Nat.Partition with a proof that its length ≤ N."
+            },
+            {
+              "name": "NPartition.toPartition",
+              "why_needed": "Likely used to map an NPartition back to a Nat.Partition."
+            }
+          ],
+          "needed_source_context": [
+            "The source text of prop.sf.Npar-as-par: the bijection mapping a partition (λ1,...,λℓ) to (λ1,...,λℓ,0,...,0) with N-ℓ zeros."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "There is a bijection between the set of partitions of length ≤ N and the set of N-partitions, given by padding with zeros.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Proposition stating a bijection between partitions of length ≤ N and N-partitions via zero-padding.",
+      "unit_key": "unit-001"
+    }
+  ]
+}

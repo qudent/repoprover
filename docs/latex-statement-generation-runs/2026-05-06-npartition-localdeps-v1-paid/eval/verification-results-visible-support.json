@@ -1,0 +1,186 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v1-paid/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "hidden_target_namespaces": [
+        "NPartition"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "bijection_length_le_N_and_NPartition"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "cannot_prove_output_must_have_empty_lean_file_body",
+            "cannot_prove_output_must_have_empty_declaration_names",
+            "generated_lean_contains_placeholder"
+          ],
+          "declaration_names": [
+            "bijection_length_le_N_and_NPartition"
+          ],
+          "lean_error_count": 3,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 46,
+              "data": "Invalid field `length`: The environment does not contain `Nat.Partition.length`, so it is not possible to project the field `length` from an expression\n  p\nof type `(∑ i, 0).Partition`",
+              "kind": "lean.invalidField._namedError",
+              "line": 44,
+              "severity": "error"
+            },
+            {
+              "column": 5,
+              "data": "Unknown constant `NPartition.toPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 55,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "No applicable extensionality theorem found for type\n  NPartition N\n\nNote: Extensionality theorems can be registered by marking them with the `[ext]` attribute",
+              "kind": "[anonymous]",
+              "line": 66,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [
+            "sorry"
+          ],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "variable"
+              },
+              {
+                "kind": "variable"
+              },
+              {
+                "kind": "structure",
+                "name": "NPartition"
+              },
+              {
+                "kind": "def",
+                "name": "size"
+              },
+              {
+                "kind": "def",
+                "name": "length"
+              },
+              {
+                "kind": "def",
+                "name": "part"
+              },
+              {
+                "kind": "theorem",
+                "name": "part_eq_parts"
+              },
+              {
+                "kind": "def",
+                "name": "ofPartition"
+              }
+            ],
+            "accepted_count": 8,
+            "candidate_count": 10,
+            "rejected": [
+              {
+                "kind": "abbrev",
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 29,
+                    "data": "Unknown identifier `_root_.NPartition`",
+                    "kind": "lean.unknownIdentifier._namedError",
+                    "line": 9,
+                    "severity": "error"
+                  }
+                ],
+                "name": "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                "stderr": ""
+              },
+              {
+                "kind": "def",
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 10,
+                    "data": "Unknown identifier `filter_ne_zero_sum`",
+                    "kind": "lean.unknownIdentifier._namedError",
+                    "line": 52,
+                    "severity": "error"
+                  }
+                ],
+                "name": "toPartition",
+                "stderr": ""
+              }
+            ],
+            "rejected_count": 2
+          }
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T02:00:41.720142+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v1-paid",
+  "infer_context": true,
+  "materialize_visible_support": true,
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

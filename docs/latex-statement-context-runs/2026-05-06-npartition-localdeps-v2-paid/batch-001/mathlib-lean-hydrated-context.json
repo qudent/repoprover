@@ -1,0 +1,388 @@
+{
+  "exact_identifier_count": 2,
+  "fallback_exact_identifier_count": 8,
+  "fallback_lean_check": {
+    "checked": {
+      "Nat.lt_base_pow_length_digits": {
+        "messages": [
+          {
+            "data": "Nat.lt_base_pow_length_digits {b m : ℕ} (hb : 1 < b) : m < b ^ (b.digits m).length",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.lt_base_pow_length_digits {b m : ℕ} (hb : 1 < b) : m < b ^ (b.digits m).length",
+        "status": "checked"
+      },
+      "Nat.lt_base_pow_length_digits'": {
+        "messages": [
+          {
+            "data": "Nat.lt_base_pow_length_digits' {b m : ℕ} : m < (b + 2) ^ ((b + 2).digits m).length",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.lt_base_pow_length_digits' {b m : ℕ} : m < (b + 2) ^ ((b + 2).digits m).length",
+        "status": "checked"
+      },
+      "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq": {
+        "messages": [
+          {
+            "data": "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq {b : ℕ} {l1 l2 : List ℕ} (h : l1.length = l2.length) :\n  Nat.ofDigits b l1 + Nat.ofDigits b l2 = Nat.ofDigits b (List.zipWith (fun x1 x2 => x1 + x2) l1 l2)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq {b : ℕ} {l1 l2 : List ℕ} (h : l1.length = l2.length) :\n  Nat.ofDigits b l1 + Nat.ofDigits b l2 = Nat.ofDigits b (List.zipWith (fun x1 x2 => x1 + x2) l1 l2)",
+        "status": "checked"
+      },
+      "Nat.ofDigits_lt_base_pow_length": {
+        "messages": [
+          {
+            "data": "Nat.ofDigits_lt_base_pow_length {b : ℕ} {l : List ℕ} (hb : 1 < b) (hl : ∀ x ∈ l, x < b) :\n  Nat.ofDigits b l < b ^ l.length",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.ofDigits_lt_base_pow_length {b : ℕ} {l : List ℕ} (hb : 1 < b) (hl : ∀ x ∈ l, x < b) :\n  Nat.ofDigits b l < b ^ l.length",
+        "status": "checked"
+      },
+      "Nat.ofDigits_lt_base_pow_length'": {
+        "messages": [
+          {
+            "data": "Nat.ofDigits_lt_base_pow_length' {b : ℕ} {l : List ℕ} (hl : ∀ x ∈ l, x < b + 2) :\n  Nat.ofDigits (b + 2) l < (b + 2) ^ l.length",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.ofDigits_lt_base_pow_length' {b : ℕ} {l : List ℕ} (hl : ∀ x ∈ l, x < b + 2) :\n  Nat.ofDigits (b + 2) l < (b + 2) ^ l.length",
+        "status": "checked"
+      },
+      "Nat.repr_length": {
+        "messages": [
+          {
+            "data": "Nat.repr_length (n e : ℕ) : 0 < e → n < 10 ^ e → n.repr.length ≤ e",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.repr_length (n e : ℕ) : 0 < e → n < 10 ^ e → n.repr.length ≤ e",
+        "status": "checked"
+      },
+      "Nat.toDigitsCore_length": {
+        "messages": [
+          {
+            "data": "Nat.toDigitsCore_length (b f n e : ℕ) (h_e_pos : 0 < e) (hlt : n < b ^ e) : (b.toDigitsCore f n []).length ≤ e",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.toDigitsCore_length (b f n e : ℕ) (h_e_pos : 0 < e) (hlt : n < b ^ e) : (b.toDigitsCore f n []).length ≤ e",
+        "status": "checked"
+      },
+      "Nat.toDigits_length": {
+        "messages": [
+          {
+            "data": "Nat.toDigits_length (b n e : ℕ) : 0 < e → n < b ^ e → (b.toDigits n).length ≤ e",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.toDigits_length (b n e : ℕ) : 0 < e → n < b ^ e → (b.toDigits n).length ≤ e",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "a20b3f28aa6f4cf73e625e5f4723f65945870d92cf08dff999de5d75815aadf1",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T02:04:27.434481+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Nat.Partition",
+      "expected_signature_or_shape": "Nat.Partition n is a structure with parts : Multiset ℕ and parts_pos, parts_sum fields; length is defined as Multiset.card (parts.filter (· ≠ 0))",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.Partition (n : ℕ) : Type",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Partition (n : ℕ) : Type",
+        "status": "checked"
+      },
+      "query": "Nat.Partition",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "The source refers to partitions of length ≤ N; Nat.Partition is the standard Mathlib type for integer partitions."
+    },
+    {
+      "exact_identifier": "Nat.Partition.length",
+      "expected_signature_or_shape": "Nat.Partition.length : Nat.Partition n → ℕ",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq {b : ℕ} {l1 l2 : List ℕ}",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq {b : ℕ} {l1 l2 : List ℕ} (h : l1.length = l2.length) :\n  Nat.ofDigits b l1 + Nat.ofDigits b l2 = Nat.ofDigits b (List.zipWith (fun x1 x2 => x1 + x2) l1 l2)",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq {b : ℕ} {l1 l2 : List ℕ} (h : l1.length = l2.length) :\n  Nat.ofDigits b l1 + Nat.ofDigits b l2 = Nat.ofDigits b (List.zipWith (fun x1 x2 => x1 + x2) l1 l2)",
+            "status": "checked"
+          },
+          "line_number": 333,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem ofDigits_lt_base_pow_length' {b : ℕ} {l : List ℕ} (hl : ∀ x ∈ l, x < b + 2) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.ofDigits_lt_base_pow_length' {b : ℕ} {l : List ℕ} (hl : ∀ x ∈ l, x < b + 2) :\n  Nat.ofDigits (b + 2) l < (b + 2) ^ l.length",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.ofDigits_lt_base_pow_length' {b : ℕ} {l : List ℕ} (hl : ∀ x ∈ l, x < b + 2) :\n  Nat.ofDigits (b + 2) l < (b + 2) ^ l.length",
+            "status": "checked"
+          },
+          "line_number": 370,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.ofDigits_lt_base_pow_length'",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem ofDigits_lt_base_pow_length {b : ℕ} {l : List ℕ} (hb : 1 < b) (hl : ∀ x ∈ l, x < b) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.ofDigits_lt_base_pow_length {b : ℕ} {l : List ℕ} (hb : 1 < b) (hl : ∀ x ∈ l, x < b) :\n  Nat.ofDigits b l < b ^ l.length",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.ofDigits_lt_base_pow_length {b : ℕ} {l : List ℕ} (hb : 1 < b) (hl : ∀ x ∈ l, x < b) :\n  Nat.ofDigits b l < b ^ l.length",
+            "status": "checked"
+          },
+          "line_number": 385,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.ofDigits_lt_base_pow_length",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem lt_base_pow_length_digits' {b m : ℕ} : m < (b + 2) ^ (digits (b + 2) m).length := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.lt_base_pow_length_digits' {b m : ℕ} : m < (b + 2) ^ ((b + 2).digits m).length",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.lt_base_pow_length_digits' {b m : ℕ} : m < (b + 2) ^ ((b + 2).digits m).length",
+            "status": "checked"
+          },
+          "line_number": 391,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.lt_base_pow_length_digits'",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem lt_base_pow_length_digits {b m : ℕ} (hb : 1 < b) : m < b ^ (digits b m).length := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.lt_base_pow_length_digits {b m : ℕ} (hb : 1 < b) : m < b ^ (b.digits m).length",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.lt_base_pow_length_digits {b m : ℕ} (hb : 1 < b) : m < b ^ (b.digits m).length",
+            "status": "checked"
+          },
+          "line_number": 398,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.lt_base_pow_length_digits",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "lemma toDigitsCore_length (b f n e : Nat) (h_e_pos : 0 < e) (hlt : n < b ^ e) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.toDigitsCore_length (b f n e : ℕ) (h_e_pos : 0 < e) (hlt : n < b ^ e) : (b.toDigitsCore f n []).length ≤ e",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.toDigitsCore_length (b f n e : ℕ) (h_e_pos : 0 < e) (hlt : n < b ^ e) : (b.toDigitsCore f n []).length ≤ e",
+            "status": "checked"
+          },
+          "line_number": 529,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.toDigitsCore_length",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "lemma toDigits_length (b n e : Nat) : 0 < e → n < b ^ e → (Nat.toDigits b n).length ≤ e :=",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.toDigits_length (b n e : ℕ) : 0 < e → n < b ^ e → (b.toDigits n).length ≤ e",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.toDigits_length (b n e : ℕ) : 0 < e → n < b ^ e → (b.toDigits n).length ≤ e",
+            "status": "checked"
+          },
+          "line_number": 552,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.toDigits_length",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "lemma repr_length (n e : Nat) : 0 < e → n < 10 ^ e → (Nat.repr n).length ≤ e := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.repr_length (n e : ℕ) : 0 < e → n < 10 ^ e → n.repr.length ≤ e",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.repr_length (n e : ℕ) : 0 < e → n < 10 ^ e → n.repr.length ≤ e",
+            "status": "checked"
+          },
+          "line_number": 558,
+          "matched_tokens": [
+            "nat",
+            "length"
+          ],
+          "name": "Nat.repr_length",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Digits/Defs.lean",
+          "score": 5
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Nat.Partition.length`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.Partition.length`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.Partition.length",
+      "request_index": 2,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express the condition 'length ≤ N'."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Nat.Partition": {
+        "messages": [
+          {
+            "data": "Nat.Partition (n : ℕ) : Type",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Partition (n : ℕ) : Type",
+        "status": "checked"
+      },
+      "Nat.Partition.length": {
+        "error": "Unknown constant `Nat.Partition.length`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.Partition.length`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "00076d8c97ff44f53aee874ecf28116a72563f1a6cf6cdcf1b2c73fdb94f7b83",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "request_count": 2,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

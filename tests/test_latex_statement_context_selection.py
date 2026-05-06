@@ -193,6 +193,7 @@ def test_local_file_predecessors_omit_hidden_target(tmp_path: Path) -> None:
             [
                 "import Mathlib",
                 "namespace Demo",
+                "/-- This comment mentions hidden_target and must not be copied. -/",
                 "theorem prior_helper (x : Nat) : x = x := by",
                 "  rfl",
                 "theorem hidden_target (x : Nat) : x = x := by",
@@ -207,7 +208,7 @@ def test_local_file_predecessors_omit_hidden_target(tmp_path: Path) -> None:
         source_text="\\begin{lemma}\\label{lem.target}Target.\\end{lemma}",
         aligned_name="Demo.hidden_target",
     )
-    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [5, 6]
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [6, 7]
 
     messages = build_messages(
         [SelectedUnit(public_key="unit-001", row=target)],
@@ -220,7 +221,7 @@ def test_local_file_predecessors_omit_hidden_target(tmp_path: Path) -> None:
     predecessors = payload["units"][0]["local_file_predecessor_declarations"]
 
     assert predecessors[0]["name"] == "prior_helper"
-    assert predecessors[0]["lean_snippet"] == "theorem prior_helper (x : Nat) : x = x"
+    assert predecessors[0]["lean_snippet"] == "theorem prior_helper (x : Nat) : x = x := by\n  rfl"
     assert "hidden_target" not in messages[1]["content"]
 
 
@@ -235,6 +236,7 @@ def test_local_file_predecessors_include_shallow_same_file_dependencies(tmp_path
                 "namespace Demo",
                 "theorem zero_le : 0 ≤ (0 : Nat) := Nat.zero_le 0",
                 "def support : Nat := 1",
+                "@[simp]",
                 "def unrelated : Nat := 2",
                 "def nearby : 0 ≤ support := Nat.zero_le support",
                 "theorem hidden_target : support = support := by",
@@ -249,7 +251,7 @@ def test_local_file_predecessors_include_shallow_same_file_dependencies(tmp_path
         source_text="\\begin{lemma}\\label{lem.target}Target.\\end{lemma}",
         aligned_name="Demo.hidden_target",
     )
-    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [7, 8]
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [8, 9]
 
     messages = build_messages(
         [SelectedUnit(public_key="unit-001", row=target)],
@@ -264,6 +266,7 @@ def test_local_file_predecessors_include_shallow_same_file_dependencies(tmp_path
 
     assert [row["name"] for row in predecessors] == ["support", "nearby"]
     assert predecessors[0]["context_source"] == "same_file_dependency_of_local_predecessor"
+    assert "@[simp]" not in predecessors[0]["lean_snippet"]
     assert "zero_le" not in [row["name"] for row in predecessors]
     assert "unrelated" not in messages[1]["content"]
     assert "hidden_target" not in messages[1]["content"]

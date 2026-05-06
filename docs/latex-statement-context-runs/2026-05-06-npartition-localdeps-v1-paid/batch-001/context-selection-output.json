@@ -1,0 +1,53 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "bijection construction may require explicit inverse and proof of injectivity/surjectivity"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "exact Mathlib name for Nat.Partition and its length"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition n is a structure with parts : Multiset ℕ and parts_pos, parts_sum",
+              "name_or_query": "Nat.Partition",
+              "why_needed": "target type for the bijection"
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.length : Nat.Partition n → ℕ",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "to express the condition 'length ≤ N'"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "target type for the bijection"
+            },
+            {
+              "name": "NPartition.ofPartition",
+              "why_needed": "one direction of the bijection"
+            },
+            {
+              "name": "NPartition.toPartition",
+              "why_needed": "the other direction of the bijection"
+            }
+          ],
+          "needed_source_context": [
+            "prop.sf.Npar-as-par: bijection between partitions of length ≤ N and N-partitions, mapping (λ1,...,λℓ) to (λ1,...,λℓ,0,...,0)"
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "There is a bijection between the set of partitions of length ≤ N and the set of N-partitions, given by appending N−ℓ zeros.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Bijection between partitions of length ≤ N and N-partitions",
+      "unit_key": "unit-001"
+    }
+  ]
+}

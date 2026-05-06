@@ -273,7 +273,7 @@ def strip_lean_comments(source: str) -> str:
     previous_blank = False
     for line in lines:
         stripped = line.strip()
-        if stripped.startswith("namespace ") or stripped == "end" or stripped.startswith("end "):
+        if stripped.startswith("@["):
             continue
         blank = not stripped
         if blank and previous_blank:
@@ -281,6 +281,27 @@ def strip_lean_comments(source: str) -> str:
         compact.append(line)
         previous_blank = blank
     return "\n".join(compact).strip()
+
+
+def support_namespace_closers(support_context: list[str]) -> list[str]:
+    stack: list[str] = []
+    for item in support_context:
+        for line in item.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("namespace "):
+                name = stripped.removeprefix("namespace ").strip()
+                if name:
+                    stack.append(name)
+            elif stripped == "end" or stripped.startswith("end "):
+                name = stripped.removeprefix("end").strip()
+                if name and name in stack:
+                    while stack:
+                        popped = stack.pop()
+                        if popped == name:
+                            break
+                elif stack:
+                    stack.pop()
+    return [f"end {name}" for name in reversed(stack)]
 
 
 def support_snippet_is_complete(snippet: str) -> bool:
@@ -387,6 +408,7 @@ def build_lean_source(
     lines.extend(opens)
     if support_context:
         lines.extend(item.rstrip() for item in support_context if item.strip())
+        lines.extend(support_namespace_closers(support_context))
     lines.append(body.rstrip())
     return "\n".join(lines) + "\n"
 

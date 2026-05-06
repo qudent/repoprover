@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "NPartitionEquivPartitionsLengthLE"
+      ],
+      "lean_file_body": "open Finset\n\nnoncomputable def NPartitionEquivPartitionsLengthLE (N : ℕ) :\n    {p : Nat.Partition (∑ i : Fin N, 0) // (Nat.Partition.length p ≤ N)} ≃ NPartition N where\n  toFun := λ ⟨p, h⟩ =>\n    NPartition.ofPartition p (by\n      -- need to show Multiset.card p.parts ≤ N\n      -- from h: Nat.Partition.length p ≤ N\n      -- Nat.Partition.length is defined as Multiset.card (p.parts.filter (· ≠ 0))\n      -- but we need Multiset.card p.parts ≤ N\n      -- Actually, Multiset.card p.parts = Multiset.card (p.parts.filter (· ≠ 0)) + Multiset.card (p.parts.filter (· = 0))\n      -- So Multiset.card p.parts ≥ Nat.Partition.length p, so we cannot directly get ≤ N.\n      -- The source says partitions of length ≤ N, but Nat.Partition.length counts nonzero parts.\n      -- The mapping pads zeros, so we need to embed a partition of length ≤ N into NPartition N.\n      -- However, the condition for ofPartition is Multiset.card p.parts ≤ N, which is stronger than length ≤ N.\n      -- This is a problem: the source bijection is between partitions of length ≤ N and N-partitions,\n      -- but the project's ofPartition requires Multiset.card p.parts ≤ N.\n      -- We cannot prove this from length ≤ N alone.\n      -- Therefore, we cannot produce a valid bijection using the given definitions.\n      -- We will state the theorem with the stronger condition.\n      sorry\n    )\n  invFun := λ μ =>\n    let p := NPartition.toPartition μ\n    ⟨p, by\n      -- need to show Nat.Partition.length p ≤ N\n      -- Nat.Partition.length p = Multiset.card (p.parts.filter (· ≠ 0))\n      -- But p.parts = (Finset.univ.val.map μ.parts).filter (· ≠ 0)\n      -- So length = Multiset.card ((Finset.univ.val.map μ.parts).filter (· ≠ 0).filter (· ≠ 0)) = Multiset.card ((Finset.univ.val.map μ.parts).filter (· ≠ 0))\n      -- which is ≤ Multiset.card (Finset.univ.val.map μ.parts) = N\n      -- This part is provable.\n      sorry\n    ⟩\n  left_inv := by\n    intro ⟨p, h⟩\n    ext\n    -- need to show equality of Nat.Partitions\n    sorry\n  right_inv := by\n    intro μ\n    ext i\n    -- need to show equality of NPartitions\n    sorry",
+      "notes": [
+        "The source bijection is between partitions of length ≤ N and N-partitions, but the project's ofPartition requires Multiset.card p.parts ≤ N, which is stronger. The proof cannot be completed with the given definitions; a different construction or additional lemma is needed. The generated code is incomplete (contains sorry) and thus cannot be accepted."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source: prop.sf.Npar-as-par",
+        "project: NPartition, NPartition.ofPartition, NPartition.toPartition",
+        "Mathlib: Nat.Partition"
+      ]
+    }
+  ]
+}

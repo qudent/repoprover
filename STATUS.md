@@ -11,7 +11,9 @@ and Mathlib context, then checked by Lean plus post-hoc semantic coverage.
 The repo has pivoted from declaration-level rows to theorem-level LaTeX
 statement rows. Current datasets are `docs/latex-statement-units.jsonl` and
 `docs/latex-statement-gold-candidates.jsonl`; old declaration-level artifacts
-are preserved at `checkpoint/before-per-latex-statement-dataset`.
+are preserved at `checkpoint/before-per-latex-statement-dataset`. Latest work
+is testing target-blind context selection plus visible-support materialization
+on broader theorem units.
 
 ## Active Goals
 - [ ] Use LaTeX statement units as the main planning and benchmark surface.
@@ -35,8 +37,8 @@ are preserved at `checkpoint/before-per-latex-statement-dataset`.
 - [ ] Reclassify old strict-grader mismatches into `compile_failure`,
   `missing_context`, `wrong_math`, `shape_mismatch_against_oracle`, or
   `useful_alternative_formalization`.
-- [ ] Scale the mixed-batch loop beyond the current determinant/symmetric
-  probes and reduce noisy fallback-context candidates.
+- [ ] Scale beyond determinant/symmetric probes and reduce noisy fallback
+  context candidates.
 - [x] Run a paid diverse4 theorem-level probe outside the recent
   determinant/symmetric examples: Vandermonde, LGV binomial unimodality,
   Boolean Möbius inversion, and partition bijection.
@@ -61,9 +63,6 @@ are preserved at `checkpoint/before-per-latex-statement-dataset`.
   must be documented separately from source-only generation success.
 - Full Lean dependency extraction is feasible but heavy on this 8 GB machine;
   reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is necessary.
-- Current paid probe target:
-  `docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid/` with
-  matching generation/repair artifacts if the initial run is informative.
 - Diverse4 shows the next real blocker: selector-level context is too weak for
   broad nontrivial units. Transport is better after filtering/splitting, but
   Lean coverage stayed `0/4`.
@@ -97,9 +96,16 @@ are preserved at `checkpoint/before-per-latex-statement-dataset`.
 - Visible-support diagnostic on diverse4 remained compile `0/4`, but identified
   missing same-file local API for the partition unit. The no-cost
   `2026-05-06-diverse4-localdeps-budget` payload now adds `NPartition`,
-  `size`, `length`, and `part` before `part_eq_parts`/`ofPartition`/
-  `toPartition`.
-- Focused theorem-level suite passed: 64 pytest tests plus `py_compile` over
+  `size`, `length`, `part`, and proof-bearing `filter_ne_zero_sum` before
+  `part_eq_parts`/`ofPartition`/`toPartition`.
+- One-unit paid partition v2 cost `$0.00214390`; selector/generator JSON was
+  valid and target-blind. Visible-support verification accepted `10/11`
+  prompt-visible support snippets, including `filter_ne_zero_sum`,
+  `ofPartition`, and `toPartition`. Compile remained `0/1` because the model
+  emitted `sorry` despite `cannot_prove_from_visible_context`, guessed
+  nonexistent `Nat.Partition.length`, and lacked an `NPartition` extensionality
+  proof path.
+- Focused theorem-level suite passed: 65 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes

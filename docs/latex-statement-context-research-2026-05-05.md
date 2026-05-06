@@ -506,6 +506,14 @@ Broader diverse4 negative probe:
   referenced by the selected snippets; the no-cost
   `2026-05-06-diverse4-localdeps-budget` payload adds `NPartition`, `size`,
   `length`, and `part` before the partition conversion declarations.
+- partition local-dependency v2:
+  `docs/latex-statement-context-runs/2026-05-06-npartition-localdeps-v2-paid/`
+  plus generation cost `$0.00214390`. The selector/generator returned valid JSON
+  and the visible-support verifier materialized `10/11` prompt-visible snippets,
+  including the proof-bearing `filter_ne_zero_sum`, `ofPartition`, and
+  `toPartition`. Compile still remained `0/1` because the model emitted `sorry`
+  code despite `cannot_prove_from_visible_context`, guessed nonexistent
+  `Nat.Partition.length`, and had no extensionality proof for `NPartition`.
 
 ## Lean Dependency Accounting
 

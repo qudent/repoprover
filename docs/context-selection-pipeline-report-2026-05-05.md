@@ -658,6 +658,20 @@ Diverse4 broader-batch probe:
   `docs/latex-statement-context-runs/2026-05-06-diverse4-localdeps-budget/`
   adds `NPartition`, `size`, `length`, and `part` for the partition-bijection
   unit before the four nearest predecessor declarations.
+- one-unit partition follow-up:
+  `docs/latex-statement-context-runs/2026-05-06-npartition-localdeps-v2-paid/`
+  and
+  `docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid/`
+  cost `$0.00214390` total. Selector/generator JSON was valid and target-blind.
+  Hydration rejected the selector's nonexistent `Nat.Partition.length`, but
+  fallback Mathlib hydration succeeded. The visible-support verifier accepted
+  `10/11` support snippets, including `filter_ne_zero_sum`, `ofPartition`, and
+  `toPartition`; the only rejected prompt-visible support was a namespace-local
+  abbrev that depends on `_root_.NPartition`. Generated-only verification stayed
+  `0/1` because the model reported `cannot_prove_from_visible_context` while
+  emitting `sorry` code, used nonexistent `Nat.Partition.length`, and lacked a
+  visible `NPartition` extensionality route. This cleanly separates context
+  materialization success from proof-generation failure.
 
 ### Generation and Verification Counts
 

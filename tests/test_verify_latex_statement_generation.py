@@ -13,6 +13,18 @@ def test_build_lean_source_adds_imports_and_opens() -> None:
     assert source.endswith("trivial\n")
 
 
+def test_build_lean_source_closes_support_namespaces_before_body() -> None:
+    source = build_lean_source(
+        "theorem demo : True := by\n  trivial",
+        imports=["Mathlib"],
+        opens=[],
+        support_context=["structure Box where\n  value : Nat\n\nnamespace Box\n\ndef get (b : Box) : Nat := b.value"],
+    )
+
+    assert "namespace Box" in source
+    assert source.index("end Box") < source.index("theorem demo")
+
+
 def test_verify_generation_output_classifies_placeholders(monkeypatch, tmp_path) -> None:
     def fake_run_lean_source(source, *, project_root, timeout_seconds):
         return {"returncode": 0, "messages": [], "stderr": ""}

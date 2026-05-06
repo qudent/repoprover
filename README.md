@@ -245,6 +245,19 @@ snippets. A no-cost refreshed diverse4 payload at
 includes `NPartition`, `size`, `length`, and `part` before the local
 `part_eq_parts` / `ofPartition` / `toPartition` context.
 
+A one-unit paid partition follow-up then tested that context path. The v2
+selector/generator run cost `$0.00214390` total (`$0.00084532` selection and
+`$0.00129858` generation), returned valid JSON, and kept the hidden target
+statement/name out of the prompt. Mathlib exact-name hydration still rejected
+the selector's `Nat.Partition.length` guess but fallback hydration succeeded.
+With `--materialize-visible-support`, the verifier accepted `10/11` visible
+support snippets, including `filter_ne_zero_sum`, `ofPartition`, and
+`toPartition`. Generated-only compile still remained `0/1`: the model returned
+`cannot_prove_from_visible_context` while emitting a theorem body with `sorry`,
+used nonexistent `Nat.Partition.length`, and failed on `NPartition`
+extensionality. This is a context-collection win and a generation/contract
+failure, not a solved theorem.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

@@ -29,6 +29,8 @@ from openai import OpenAI
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
+LEAN_BLOCK_COMMENT_RE = re.compile(r"/-.*?-/", re.DOTALL)
+LEAN_LINE_COMMENT_RE = re.compile(r"--.*$")
 LEAN_DECL_RE = re.compile(
     r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
     r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)\s+"
@@ -185,7 +187,7 @@ def compact_declaration_text(text: str, *, kind: str) -> str:
     """Keep project context compact by removing theorem proofs from snippets."""
 
     if kind not in {"theorem", "lemma"}:
-        return text
+        return trim_trailing_attributes(text)
     kept: list[str] = []
     for line in text.splitlines():
         if ":= by" in line:
@@ -197,7 +199,32 @@ def compact_declaration_text(text: str, *, kind: str) -> str:
             kept.append(line.rsplit(":=", 1)[0].rstrip())
             break
         kept.append(line)
-    return "\n".join(kept).rstrip()
+    return trim_trailing_attributes("\n".join(kept).rstrip())
+
+
+def strip_lean_comments(text: str) -> str:
+    without_blocks = LEAN_BLOCK_COMMENT_RE.sub("", text)
+    lines = [LEAN_LINE_COMMENT_RE.sub("", line).rstrip() for line in without_blocks.splitlines()]
+    compact: list[str] = []
+    previous_blank = False
+    for line in lines:
+        blank = not line.strip()
+        if blank and previous_blank:
+            continue
+        compact.append(line)
+        previous_blank = blank
+    return "\n".join(compact).strip()
+
+
+def trim_trailing_attributes(text: str) -> str:
+    lines = text.rstrip().splitlines()
+    while lines and not lines[-1].strip():
+        lines.pop()
+    while lines and lines[-1].strip().startswith("@["):
+        lines.pop()
+        while lines and not lines[-1].strip():
+            lines.pop()
+    return "\n".join(lines).rstrip()
 
 
 def local_declaration_spans(lines: list[str]) -> list[dict[str, Any]]:
@@ -253,7 +280,7 @@ def local_predecessor_row(
     start = int(span["start"])
     end = min(int(span["end"]), end_limit)
     declaration_text = "\n".join(lines[start - 1 : min(end, start + 39)]).rstrip()
-    snippet = compact_declaration_text(declaration_text, kind=str(span["kind"]))
+    snippet = trim_trailing_attributes(strip_lean_comments(declaration_text))
     return {
         "name": span["name"],
         "kind": span["kind"],

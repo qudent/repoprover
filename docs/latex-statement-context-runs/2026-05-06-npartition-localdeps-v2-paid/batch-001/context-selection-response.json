@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"The bijection is stated informally; need to define the set of partitions of length ≤ N and the mapping explicitly.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib definition of Nat.Partition and its length; the mapping from a partition to an NPartition by padding zeros.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition n is a structure with parts : Multiset ℕ and parts_pos, parts_sum fields; length is defined as Multiset.card (parts.filter (· ≠ 0))\",\n              \"name_or_query\": \"Nat.Partition\",\n              \"why_needed\": \"The source refers to partitions of length ≤ N; Nat.Partition is the standard Mathlib type for integer partitions.\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition.length : Nat.Partition n → ℕ\",\n              \"name_or_query\": \"Nat.Partition.length\",\n              \"why_needed\": \"To express the condition 'length ≤ N'.\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"NPartition\",\n              \"why_needed\": \"The target type of the bijection is NPartition N, defined in the project.\"\n            },\n            {\n              \"name\": \"NPartition.ofPartition\",\n              \"why_needed\": \"Likely used to construct an NPartition from a Nat.Partition with a proof that its length ≤ N.\"\n            },\n            {\n              \"name\": \"NPartition.toPartition\",\n              \"why_needed\": \"Likely used to map an NPartition back to a Nat.Partition.\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"The source text of prop.sf.Npar-as-par: the bijection mapping a partition (λ1,...,λℓ) to (λ1,...,λℓ,0,...,0) with N-ℓ zeros.\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"There is a bijection between the set of partitions of length ≤ N and the set of N-partitions, given by padding with zeros.\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Proposition stating a bijection between partitions of length ≤ N and N-partitions via zero-padding.\",\n      \"unit_key\": \"unit-001\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778032929,
+  "id": "gen-1778032929-b6VYs290UJevmOgzxxWw",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 592,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00084532,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00016576,
+      "upstream_inference_cost": 0.00084532,
+      "upstream_inference_prompt_cost": 0.00067956
+    },
+    "is_byok": false,
+    "prompt_tokens": 4854,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 5446
+  }
+}
