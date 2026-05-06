@@ -1,0 +1,618 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [
+      "det_of_triangular"
+    ],
+    "lean_file_body": "theorem det_of_triangular {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id ∨ A.BlockTriangular (OrderDual.toDual : Fin n → Fin n)) : A.det = ∏ i : Fin n, A i i := by\n  rcases h with (hU | hL)\n  · exact Matrix.det_of_upperTriangular hU\n  · exact Matrix.det_of_lowerTriangular A hL",
+    "notes": [
+      "Uses the checked Mathlib signatures for Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular, which require BlockTriangular condition rather than explicit zero conditions.",
+      "The theorem combines both upper and lower triangular cases using an `or` hypothesis."
+    ],
+    "status": "generated",
+    "unit_key": "unit-002",
+    "used_context": [
+      "source theorem text: triangular matrix determinant equals product of diagonal entries",
+      "Matrix.det_of_upperTriangular (checked signature)",
+      "Matrix.det_of_lowerTriangular (checked signature)",
+      "local_file_context_candidates: open Matrix Finset BigOperators, namespace AlgebraicCombinatorics, namespace Det, variable {K : Type*} [CommRing K], variable {n m : ℕ}"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+    "unit_key": "unit-002"
+  },
+  "source_unit": {
+    "environment": "theorem",
+    "id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+    "labels": [
+      "thm.det.triang"
+    ],
+    "line_range": [
+      587,
+      596
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{theorem}\n[Determinants of triangular matrices]\\label{thm.det.triang}Let $n\\in\n\\mathbb{N}$. Let $A\\in K^{n\\times n}$ be a triangular (i.e., lower-triangular\nor upper-triangular) $n\\times n$-matrix. Then, the determinant of the matrix\n$A$ is the product of its diagonal entries. That is,%\n\\[\n\\det A=A_{1,1}A_{2,2}\\cdots A_{n,n}.\n\\]\n\n\\end{theorem}"
+  },
+  "unit_key": "unit-002",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "compile_failure",
+    "messages": [
+      {
+        "column": 70,
+        "data": "failed to synthesize instance of type class\n  Zero K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 53,
+        "severity": "error"
+      },
+      {
+        "column": 93,
+        "data": "failed to synthesize instance of type class\n  Zero K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 53,
+        "severity": "error"
+      },
+      {
+        "column": 149,
+        "data": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 53,
+        "severity": "error"
+      },
+      {
+        "column": 157,
+        "data": "failed to synthesize instance of type class\n  CommMonoid K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 53,
+        "severity": "error"
+      },
+      {
+        "column": 10,
+        "data": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 56,
+        "severity": "error"
+      }
+    ],
+    "reported_status": "generated",
+    "skipped_reason": null,
+    "unit_key": "unit-002",
+    "visible_support_context": {
+      "accepted": [
+        {
+          "kind": "def",
+          "name": "AlgebraicCombinatorics.Det.sumMatrix",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean"
+        },
+        {
+          "kind": "def",
+          "name": "AlgebraicCombinatorics.Det.sumMatrix_factorA",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean"
+        },
+        {
+          "kind": "def",
+          "name": "sumMatrix_factorB",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "sumMatrix_factorA_has_zero_col",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "det_sumMatrix_factorA_eq_zero",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean"
+        },
+        {
+          "kind": "theorem",
+          "name": "det_transpose'",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean"
+        }
+      ],
+      "accepted_count": 6,
+      "candidate_count": 8,
+      "rejected": [
+        {
+          "kind": "lemma",
+          "lean_error_count": 3,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 31,
+              "data": "unsolved goals\ncase e_a.e_a.h\nK : Type u_1\ninst✝ : CommRing K\nn : ℕ\nx y : Fin n → K\nhn : 2 ≤ n\ni j : Fin n\nh0 : ↑⟨0, ⋯⟩ = 0\nh1 : ↑⟨1, ⋯⟩ = 1\nk0 : Fin n := ⟨0, ⋯⟩\nk1 : Fin n := ⟨1, ⋯⟩\nhne : k0 ≠ k1\nk : Fin n\nhk : k ≠ k1 ∧ k ≠ k0\nhk0 : ↑k ≠ 0\nhk1 : ↑k ≠ 1\n⊢ (if ↑k = 0 then x i else if ↑k = 1 then y j else 0) = 0",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 82,
+              "severity": "error"
+            },
+            {
+              "column": 101,
+              "data": "unsolved goals\ncase calc.step\nK : Type u_1\ninst✝ : CommRing K\nn : ℕ\nx y : Fin n → K\nhn : 2 ≤ n\ni j : Fin n\nh0 : ↑⟨0, ⋯⟩ = 0\nh1 : ↑⟨1, ⋯⟩ = 1\nk0 : Fin n := ⟨0, ⋯⟩\nk1 : Fin n := ⟨1, ⋯⟩\nhne : k0 ≠ k1\n⊢ x i + (y j + 0) = x i + y j",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 69,
+              "severity": "error"
+            },
+            {
+              "column": 65,
+              "data": "unsolved goals\ncase a\nK : Type u_1\ninst✝ : CommRing K\nn : ℕ\nx y : Fin n → K\nhn : 2 ≤ n\ni j : Fin n\nh0 : ↑⟨0, ⋯⟩ = 0\nh1 : ↑⟨1, ⋯⟩ = 1\nk0 : Fin n := ⟨0, ⋯⟩\nk1 : Fin n := ⟨1, ⋯⟩\nhne : k0 ≠ k1\nhcalc : (∑ k, if ↑k = 0 then x i else if ↑k = 1 then y j else 0) = x i + y j\n⊢ x i + y j = ∑ k, if ↑k = 0 then x i else if ↑k = 1 then y j else 0",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 51,
+              "severity": "error"
+            }
+          ],
+          "name": "sumMatrix_eq_factorA_mul_factorB",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "theorem",
+          "lean_error_count": 2,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 6,
+              "data": "Unknown identifier `sumMatrix_eq_factorA_mul_factorB`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 52,
+              "severity": "error"
+            },
+            {
+              "column": 31,
+              "data": "unsolved goals\nK : Type u_1\ninst✝ : CommRing K\nn : ℕ\nx y : Fin n → K\nhn : 3 ≤ n\n⊢ (sumMatrix x y).det = 0",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 51,
+              "severity": "error"
+            }
+          ],
+          "name": "det_sumMatrix_eq_zero",
+          "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "stderr": ""
+        }
+      ],
+      "rejected_count": 2
+    }
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "triangular matrix definition: need to formalize upper/lower triangular condition",
+      "product of diagonal entries: need to express as product over Fin n"
+    ],
+    "local_file_context_candidates": [
+      {
+        "kind": "open",
+        "line_range": [
+          63,
+          63
+        ],
+        "name": "open Matrix Finset BigOperators",
+        "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          65,
+          65
+        ],
+        "name": "AlgebraicCombinatorics",
+        "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          67,
+          67
+        ],
+        "name": "Det",
+        "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          69,
+          69
+        ],
+        "name": "variable {K : Type*} [CommRing K]",
+        "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          70,
+          70
+        ],
+        "name": "variable {n m : ℕ}",
+        "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      }
+    ],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "prop.det.xi+yj"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "def",
+                "lean_snippet": "def sumMatrix (x y : Fin n → K) : Matrix (Fin n) (Fin n) K :=\n  Matrix.of fun i j => x i + y j",
+                "line_range": [
+                  321,
+                  324
+                ],
+                "module": "AlgebraicCombinatorics.DeterminantsBasic",
+                "name": "AlgebraicCombinatorics.Det.sumMatrix",
+                "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "prop.det.xi+yj"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem det_sumMatrix_eq_zero (x y : Fin n → K) (hn : 3 ≤ n) :\n    (sumMatrix x y).det = 0",
+                "line_range": [
+                  405,
+                  421
+                ],
+                "module": "AlgebraicCombinatorics.DeterminantsBasic",
+                "name": "AlgebraicCombinatorics.Det.det_sumMatrix_eq_zero",
+                "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "prop.det.xi+yj"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem det_sumMatrix_eq_zero' (x y : Fin n → K) (hn : 3 ≤ n) :\n    (sumMatrix x y).det = 0",
+                "line_range": [
+                  691,
+                  698
+                ],
+                "module": "AlgebraicCombinatorics.DeterminantsBasic",
+                "name": "AlgebraicCombinatorics.Det.det_sumMatrix_eq_zero'",
+                "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "referencing_prior_declaration",
+                "declared_source_labels": [],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "def",
+                "lean_snippet": "def sumMatrix_factorA (x : Fin n → K) : Matrix (Fin n) (Fin n) K :=\n  Matrix.of fun i j =>\n    if j.val = 0 then x i\n    else if j.val = 1 then 1\n    else 0",
+                "line_range": [
+                  330,
+                  336
+                ],
+                "module": "AlgebraicCombinatorics.DeterminantsBasic",
+                "name": "AlgebraicCombinatorics.Det.sumMatrix_factorA",
+                "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+                "referenced_source_labels": [
+                  "prop.det.xi+yj"
+                ],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "prop.det.xi+yj"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:prop.det.xi+yj"
+          },
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.det.transp"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem det_transpose' (A : Matrix (Fin n) (Fin n) K) : Aᵀ.det = A.det",
+                "line_range": [
+                  423,
+                  432
+                ],
+                "module": "AlgebraicCombinatorics.DeterminantsBasic",
+                "name": "AlgebraicCombinatorics.Det.det_transpose'",
+                "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "thm.det.transp"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp"
+          }
+        ],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": "Matrix.det_of_upperTriangular",
+            "expected_signature_or_shape": "theorem det_of_upperTriangular (A : Matrix (Fin n) (Fin n) R) (h : ∀ i j, i < j → A i j = 0) : A.det = ∏ i, A i i",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+                  "line": 6,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+              "status": "checked"
+            },
+            "query": "Matrix.det_of_upperTriangular",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": {
+              "declaration_line": "theorem det_of_upperTriangular [LinearOrder m] (h : M.BlockTriangular id) :",
+              "kind": "theorem",
+              "line_number": 281,
+              "name": "Matrix.det_of_upperTriangular",
+              "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+              "source_snippet": "theorem det_of_upperTriangular [LinearOrder m] (h : M.BlockTriangular id) :\n    M.det = ∏ i : m, M i i := by\n  haveI : DecidableEq R := Classical.decEq _\n  simp_rw [h.det, image_id, det_toSquareBlock_id]",
+              "source_snippet_truncated": false
+            },
+            "source_part": "whole unit",
+            "task_id": "unit-002-task-1",
+            "unit_key": "unit-002",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "main theorem for upper triangular matrices"
+          },
+          {
+            "exact_identifier": "Matrix.det_of_lowerTriangular",
+            "expected_signature_or_shape": "theorem det_of_lowerTriangular (A : Matrix (Fin n) (Fin n) R) (h : ∀ i j, j < i → A i j = 0) : A.det = ∏ i, A i i",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+                  "line": 7,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+              "status": "checked"
+            },
+            "query": "Matrix.det_of_lowerTriangular",
+            "related_mathlib_declarations": [],
+            "request_index": 2,
+            "source_declaration": {
+              "declaration_line": "theorem det_of_lowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular toDual) :",
+              "kind": "theorem",
+              "line_number": 286,
+              "name": "Matrix.det_of_lowerTriangular",
+              "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+              "source_snippet": "theorem det_of_lowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular toDual) :\n    M.det = ∏ i : m, M i i := by\n  rw [← det_transpose]\n  exact det_of_upperTriangular h.transpose\n\nopen Polynomial",
+              "source_snippet_truncated": false
+            },
+            "source_part": "whole unit",
+            "task_id": "unit-002-task-1",
+            "unit_key": "unit-002",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "main theorem for lower triangular matrices"
+          }
+        ],
+        "kind": "theorem",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def sumMatrix (x y : Fin n → K) : Matrix (Fin n) (Fin n) K :=\n  Matrix.of fun i j => x i + y j",
+            "line_range": [
+              323,
+              326
+            ],
+            "name": "sumMatrix",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def sumMatrix_factorA (x : Fin n → K) : Matrix (Fin n) (Fin n) K :=\n  Matrix.of fun i j =>\n    if j.val = 0 then x i\n    else if j.val = 1 then 1\n    else 0",
+            "line_range": [
+              332,
+              339
+            ],
+            "name": "sumMatrix_factorA",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def sumMatrix_factorB (y : Fin n → K) : Matrix (Fin n) (Fin n) K :=\n  Matrix.of fun i j =>\n    if i.val = 0 then 1\n    else if i.val = 1 then y j\n    else 0",
+            "line_range": [
+              340,
+              346
+            ],
+            "name": "sumMatrix_factorB",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "lemma sumMatrix_factorA_has_zero_col (x : Fin n → K) (hn : 3 ≤ n) :\n    ∀ i, (sumMatrix_factorA x) i ⟨2, by omega⟩ = 0 := by\n  intro i\n  simp only [sumMatrix_factorA, Matrix.of_apply]\n  have h1 : ¬ (2 : ℕ) = 0 := by omega\n  have h2 : ¬ (2 : ℕ) = 1 := by omega\n  simp only [h1, ite_false, h2]",
+            "line_range": [
+              347,
+              355
+            ],
+            "name": "sumMatrix_factorA_has_zero_col",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "lemma det_sumMatrix_factorA_eq_zero (x : Fin n → K) (hn : 3 ≤ n) :\n    (sumMatrix_factorA x).det = 0 :=\n  det_eq_zero_of_column_eq_zero ⟨2, by omega⟩ (sumMatrix_factorA_has_zero_col x hn)",
+            "line_range": [
+              356,
+              360
+            ],
+            "name": "det_sumMatrix_factorA_eq_zero",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "lemma sumMatrix_eq_factorA_mul_factorB (x y : Fin n → K) (hn : 2 ≤ n) :\n    sumMatrix x y = sumMatrix_factorA x * sumMatrix_factorB y := by\n  ext i j\n  simp only [sumMatrix, sumMatrix_factorA, sumMatrix_factorB, Matrix.of_apply, Matrix.mul_apply]\n  conv_rhs =>\n    arg 2\n    ext k\n    rw [show (if k.val = 0 then x i else if k.val = 1 then 1 else 0) *\n            (if k.val = 0 then 1 else if k.val = 1 then y j else 0) =\n        if k.val = 0 then x i else if k.val = 1 then y j else 0 by\n      split_ifs <;> ring]\n  have h0 : (⟨0, by omega⟩ : Fin n).val = 0 := rfl\n  have h1 : (⟨1, by omega⟩ : Fin n).val = 1 := rfl\n  let k0 : Fin n := ⟨0, by omega⟩\n  let k1 : Fin n := ⟨1, by omega⟩\n  have hne : k0 ≠ k1 := by\n    intro h\n    have : (0 : ℕ) = 1 := by simp only [k0, k1] at h; exact congrArg Fin.val h\n    omega\n  have hcalc : ∑ k : Fin n, (if k.val = 0 then x i else if k.val = 1 then y j else 0) = x i + y j := by\n    calc ∑ k : Fin n, (if k.val = 0 then x i else if k.val = 1 then y j else 0)\n        = (if k0.val = 0 then x i else if k0.val = 1 then y j else 0) +\n          ∑ k ∈ univ.erase k0, (if k.val = 0 then x i else if k.val = 1 then y j else 0) := by\n            rw [← Finset.add_sum_erase univ _ (Finset.mem_univ k0)]\n        _ = x i + ∑ k ∈ univ.erase k0, (if k.val = 0 then x i else if k.val = 1 then y j else 0) := by\n            simp only [k0, ite_true]\n        _ = x i + ((if k1.val = 0 then x i else if k1.val = 1 then y j else 0) +\n            ∑ k ∈ (univ.erase k0).erase k1, (if k.val = 0 then x i else if k.val = 1 then y j else 0)) := by\n            rw [← Finset.add_sum_erase (univ.erase k0) _ (Finset.mem_erase.mpr ⟨hne.symm, Finset.mem_univ k1⟩)]\n        _ = x i + (y j + ∑ k ∈ (univ.erase k0).erase k1, (if k.val = 0 then x i else if k.val = 1 then y j else 0)) := by\n            simp only [k1]\n            norm_num\n        _ = x i + (y j + 0) := by\n            congr 1\n            congr 1\n            apply Finset.sum_eq_zero\n            intro k hk\n            simp only [Finset.mem_erase, Finset.mem_univ, and_true] at hk\n            have hk0 : k.val ≠ 0 := fun h => hk.2 (Fin.ext h)\n            have hk1 : k.val ≠ 1 := fun h => hk.1 (Fin.ext h)",
+            "line_range": [
+              361,
+              408
+            ],
+            "name": "sumMatrix_eq_factorA_mul_factorB",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": true
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem det_sumMatrix_eq_zero (x y : Fin n → K) (hn : 3 ≤ n) :\n    (sumMatrix x y).det = 0 := by\n  rw [sumMatrix_eq_factorA_mul_factorB x y (by omega : 2 ≤ n)]\n  rw [det_mul]\n  rw [det_sumMatrix_factorA_eq_zero x hn]\n  ring",
+            "line_range": [
+              409,
+              424
+            ],
+            "name": "det_sumMatrix_eq_zero",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem det_transpose' (A : Matrix (Fin n) (Fin n) K) : Aᵀ.det = A.det :=\n  det_transpose A",
+            "line_range": [
+              425,
+              433
+            ],
+            "name": "det_transpose'",
+            "path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+            "snippet_truncated": false
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "Mathlib lemma for determinant of triangular matrix"
+        ],
+        "needed_project_context": [],
+        "needed_source_context": [
+          "source theorem text: triangular matrix determinant equals product of diagonal entries"
+        ],
+        "role": "main_claim",
+        "selector_unchecked_statement_sketch": "For any n×n matrix A over a commutative ring K that is either upper triangular or lower triangular, the determinant equals the product of the diagonal entries.",
+        "source_part": "whole unit",
+        "task_id": "unit-002-task-1"
+      }
+    ],
+    "previous_source_context": [
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "proposition",
+          "id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:prop.det.xi+yj",
+          "labels": [
+            "prop.det.xi+yj"
+          ],
+          "line_range": [
+            409,
+            417
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{proposition}\n\\label{prop.det.xi+yj}Let $n\\in\\mathbb{N}$ be such that $n\\geq3$. Let\n$x_{1},x_{2},\\ldots,x_{n}\\in K$ and $y_{1},y_{2},\\ldots,y_{n}\\in K$. Then,%\n\\[\n\\det\\left(  \\left(  x_{i}+y_{j}\\right)  _{1\\leq i\\leq n,\\ 1\\leq j\\leq\nn}\\right)  =0.\n\\]\n\n\\end{proposition}"
+        }
+      },
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "theorem",
+          "id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "labels": [
+            "thm.det.transp"
+          ],
+          "line_range": [
+            576,
+            580
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{theorem}\n[Transposes preserve determinants]\\label{thm.det.transp}Let $n\\in\\mathbb{N}$.\nIf $A\\in K^{n\\times n}$ is any $n\\times n$-matrix, then $\\det\\left(\nA^{T}\\right)  =\\det A$.\n\\end{theorem}"
+        }
+      }
+    ],
+    "source_focus_summary": "Determinant of triangular matrices equals product of diagonal entries."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "base_generation_run": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1",
+  "overlay_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [
+        "isInverse_unique"
+      ],
+      "lean_file_body": "theorem isInverse_unique {L : Type*} [CommRing L] {a b c : L} (hb : IsInverse a b) (hc : IsInverse a c) : b = c := by\n  have hb' : a * b = 1 := hb\n  have hc' : a * c = 1 := hc\n  calc\n    b = b * 1 := by simp\n    _ = b * (a * c) := by rw [hc']\n    _ = (b * a) * c := by ring\n    _ = (a * b) * c := by rw [mul_comm b a]\n    _ = 1 * c := by rw [hb']\n    _ = c := by simp",
+      "notes": [
+        "Uses IsInverse predicate from prior project context; proof uses commutativity and cancellation via ring."
+      ],
+      "status": "generated",
+      "unit_key": "unit-003",
+      "used_context": [
+        "IsInverse definition from prior project context",
+        "CommRing L",
+        "mul_comm, ring, simp"
+      ]
+    }
+  ]
+}

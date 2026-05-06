@@ -710,6 +710,29 @@ file, so verifier-visible imports, opens, and support context are not lost.
 Lean subprocess timeouts are recorded as structured failed checks instead of
 crashing the acceptance run.
 
+Proof-lane generation is scripted separately by
+`scripts/run_latex_statement_proof_lane_generation.py`. In budget-only mode it
+writes the exact reviewable model payloads without calling a provider; in paid
+mode it stores OpenRouter payloads, responses, assistant text, normalized
+`generation-output.json` files, and cost summaries. Budget payloads now exist
+for the four fresh-slice proof-lane tasks and the two original dev-panel
+proof-lane tasks. The first paid dev-panel proof-lane run cost `$0.00311878`
+and cleanly declined both remaining clean-decline units, FPS division and
+NPartition. Running those outputs through the current acceptance verifier
+exposed that the old dev-panel `3/5` result had one stale false-positive:
+triangular determinant relied on visible-support variable leakage and omitted
+`K`/`[CommRing K]` binders. The updated current-verifier task set is
+`docs/latex-statement-proof-lane-tasks/2026-05-06-dev-panel5-v2-current-verifier/`.
+A generic proof-lane instruction now says that missing typeclass errors such as
+`Zero K` or `CommRing K` require explicit binders or emitted variable commands.
+With that generic rule, a focused retry at
+`docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/`
+cost `$0.00144802`; acceptance at
+`docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/`
+restores the current dev panel to generated-only verification `3/5` and
+semantic coverage `3/5`. The two unsolved dev-panel units remain clean
+`cannot_prove_from_visible_context` declines.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

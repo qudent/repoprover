@@ -97,6 +97,8 @@ def generation_payload_paths(run_dir: Path) -> list[Path]:
 def units_from_payload(payload: dict[str, Any]) -> list[dict[str, Any]]:
     if isinstance(payload.get("units"), list):
         return list(payload["units"])
+    if isinstance(payload.get("proof_lane_tasks"), list):
+        return list(payload["proof_lane_tasks"])
     original = payload.get("original_generation_task")
     if isinstance(original, dict) and isinstance(original.get("units"), list):
         return list(original["units"])
@@ -160,6 +162,8 @@ def compact_verification_unit(unit: dict[str, Any]) -> dict[str, Any]:
 
 
 def selected_context_from_prompt_unit(unit: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(unit.get("visible_prompt_context"), dict) and not unit.get("planned_declarations"):
+        return selected_context_from_prompt_unit(unit["visible_prompt_context"])
     tasks: list[dict[str, Any]] = []
     for task in unit.get("planned_declarations") or []:
         tasks.append(

@@ -1,0 +1,23 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "failure_classes": [
+    "declined_cannot_prove",
+    "compile_failure"
+  ],
+  "generated_at": "2026-05-06T11:01:50.601711+00:00",
+  "generation_run": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1",
+  "schema_version": "repoprover.latex_statement_proof_lane_tasks.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated",
+  "semantic_coverage": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/semantic-coverage.json",
+  "unit_count": 3,
+  "unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-005"
+  ],
+  "verification_results": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/verification-results.json"
+}

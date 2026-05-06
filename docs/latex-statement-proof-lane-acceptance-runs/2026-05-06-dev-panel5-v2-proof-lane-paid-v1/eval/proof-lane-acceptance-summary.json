@@ -1,0 +1,87 @@
+{
+  "base_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel",
+  "generated_at": "2026-05-06T10:58:44.176162+00:00",
+  "gold_comparison": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/gold-comparison.json",
+  "gold_comparison_summary": {
+    "compiled_name_overlap_units": 2,
+    "compiled_needs_semantic_review_units": 0,
+    "coverage_status_counts": {
+      "compile_failure": 1,
+      "compiled_name_overlap": 2,
+      "not_generated_cannot_prove": 2
+    }
+  },
+  "merge_summary": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/merge-summary.json",
+  "no_paid_call_made": true,
+  "output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1",
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-dev-panel5-v2-merged-panel",
+  "proof_lane_task_unit_keys": [
+    "unit-001",
+    "unit-005"
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_acceptance.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated",
+  "semantic_coverage": {
+    "all_aligned_gold_proved_units": 2,
+    "coverage_status_counts": {
+      "all_aligned_gold_proved": 2,
+      "generated_not_compiled": 3
+    },
+    "unit_count": 5
+  },
+  "semantic_coverage_results": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/semantic-coverage.json",
+  "solution_failure_class_counts": {
+    "declined_cannot_prove": 2
+  },
+  "solution_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1"
+  ],
+  "solution_semantic_status_counts": {
+    "generated_not_compiled": 2
+  },
+  "solution_unit_keys": [
+    "unit-001",
+    "unit-005"
+  ],
+  "solution_unit_results": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "compile_passed": false,
+      "failure_class": "declined_cannot_prove",
+      "reported_status": "cannot_prove_from_visible_context",
+      "semantic_coverage_status": "generated_not_compiled",
+      "semantic_passed_gold_declarations": 0,
+      "unit_key": "unit-001"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "compile_passed": false,
+      "failure_class": "declined_cannot_prove",
+      "reported_status": "cannot_prove_from_visible_context",
+      "semantic_coverage_status": "generated_not_compiled",
+      "semantic_passed_gold_declarations": 0,
+      "unit_key": "unit-005"
+    }
+  ],
+  "task_leakage_scan": {
+    "enabled": true,
+    "forbidden_patterns": [
+      "posthoc_lean_alignment",
+      "aligned_lean",
+      "aligned_gold",
+      "semantic_passed_gold",
+      "gold_full_name"
+    ],
+    "matches": []
+  },
+  "verification": {
+    "compile_passed_units": 2,
+    "failure_class_counts": {
+      "compile_failure": 1,
+      "compiled": 2,
+      "declined_cannot_prove": 2
+    },
+    "unit_count": 5
+  },
+  "verification_results": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/verification-results.json"
+}

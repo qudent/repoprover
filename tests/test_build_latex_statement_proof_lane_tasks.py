@@ -154,3 +154,110 @@ def test_builds_declined_task_without_posthoc_gold(tmp_path: Path) -> None:
     assert "aligned_gold_declaration_count" not in all_text
     assert "semantic_passed_gold_declarations" not in all_text
     assert "checks" not in task["semantic_coverage"]
+
+
+def test_builds_task_from_prior_proof_lane_payload(tmp_path: Path) -> None:
+    selector = tmp_path / "selector"
+    generation = tmp_path / "generation"
+    output = tmp_path / "proof-lane"
+    (selector / "eval").mkdir(parents=True)
+    (generation / "batch-001").mkdir(parents=True)
+    (generation / "eval").mkdir()
+
+    selected = {
+        "id": "source:demo",
+        "source_unit": {
+            "environment": "lemma",
+            "path": "Demo.tex",
+            "line_range": [1, 2],
+            "labels": ["demo"],
+            "referenced_labels": [],
+            "part_markers": [],
+            "parse_warnings": [],
+            "source_text": "\\begin{lemma}\\label{demo}Demo source.\\end{lemma}",
+        },
+    }
+    (selector / "eval/selected-units.jsonl").write_text(json.dumps(selected) + "\n", encoding="utf-8")
+    (generation / "eval/generation-results.json").write_text(
+        json.dumps({"selector_run": str(selector)}),
+        encoding="utf-8",
+    )
+    (generation / "batch-001/generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "cannot_prove_from_visible_context",
+                        "lean_file_body": "",
+                        "declaration_names": [],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    prior_task = {
+        "unit_key": "unit-001",
+        "visible_prompt_context": {
+            "source_focus_summary": "preserved focus",
+            "planned_declarations": [
+                {
+                    "task_id": "unit-001-task-1",
+                    "kind": "lemma",
+                    "role": "main_claim",
+                    "hydrated_mathlib_context": [
+                        {
+                            "exact_identifier": "Nat.mul_one",
+                            "lean_check": {"status": "checked", "signature": "Nat.mul_one ..."},
+                        }
+                    ],
+                }
+            ],
+        },
+    }
+    (generation / "batch-001/generation-payload.json").write_text(
+        json.dumps({"messages": [{"role": "user", "content": json.dumps({"proof_lane_tasks": [prior_task]})}]}),
+        encoding="utf-8",
+    )
+    verification_path = generation / "eval/verification-results.json"
+    verification_path.write_text(
+        json.dumps(
+            {
+                "batches": [
+                    {
+                        "units": [
+                            {
+                                "unit_key": "unit-001",
+                                "compile_passed": False,
+                                "failure_class": "declined_cannot_prove",
+                                "reported_status": "cannot_prove_from_visible_context",
+                                "skipped_reason": "cannot_prove_from_visible_context",
+                            }
+                        ]
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    run(
+        argparse.Namespace(
+            generation_run=generation,
+            verification_results=verification_path,
+            semantic_coverage=None,
+            selector_run=None,
+            failure_class=["declined_cannot_prove"],
+            unit_key=None,
+            output=output,
+        )
+    )
+
+    task = json.loads((output / "tasks/unit-001.json").read_text(encoding="utf-8"))
+
+    assert task["visible_prompt_context"]["source_focus_summary"] == "preserved focus"
+    assert (
+        task["visible_prompt_context"]["planned_declarations"][0]["hydrated_mathlib_context"][0]["exact_identifier"]
+        == "Nat.mul_one"
+    )

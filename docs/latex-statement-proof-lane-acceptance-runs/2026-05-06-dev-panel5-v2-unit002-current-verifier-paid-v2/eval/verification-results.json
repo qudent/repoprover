@@ -1,0 +1,424 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [],
+      "filtered_target_namespace_opens": [],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.FPS.InfiniteProducts1"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.FPS"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset"
+      ],
+      "unfiltered_inferred_imports": [],
+      "unfiltered_inferred_opens": [],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": null
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 1,
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics",
+        "open Det"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/batch-002/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.Det"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open Matrix Finset BigOperators"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Matrix Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Matrix Finset BigOperators",
+        "open AlgebraicCombinatorics",
+        "open Det"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "det_of_triangular"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "det_of_triangular"
+          ],
+          "failure_class": "compiled",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-002",
+          "visible_support_context": null
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 1,
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.FPS.CommutativeRings"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics.FPS"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/batch-003/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.FPS.CommutativeRings"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.FPS"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "inferred_opens": [],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.FPS.CommutativeRings",
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "unfiltered_inferred_opens": [
+        "open AlgebraicCombinatorics.FPS"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "isInverse_unique"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "isInverse_unique"
+          ],
+          "failure_class": "compiled",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-003",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "def",
+                "name": "AlgebraicCombinatorics.FPS.IsInverse",
+                "path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean"
+              },
+              {
+                "kind": "def",
+                "name": "AlgebraicCombinatorics.FPS.IsInvertible",
+                "path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "isInverse_comm",
+                "path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "isInverse_symm",
+                "path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "isInverse_one_one",
+                "path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "not_isInverse_zero_of_nontrivial",
+                "path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean"
+              }
+            ],
+            "accepted_count": 6,
+            "candidate_count": 6,
+            "rejected": [],
+            "rejected_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 1,
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "filtered_invalid_inferred_opens": [
+        {
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `AlgebraicCombinatorics`",
+              "kind": "[anonymous]",
+              "line": 7,
+              "severity": "error"
+            }
+          ],
+          "open_statement": "open AlgebraicCombinatorics",
+          "stderr": ""
+        }
+      ],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.FPSDefinition"
+      ],
+      "filtered_target_namespace_opens": [
+        "open FPS"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/batch-004/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.FPSDefinition"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.FPS"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts2"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.FPS.InfiniteProducts2"
+      ],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open PowerSeries Finset"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.FPSDefinition",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts2"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics",
+        "open FPS"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "vandermonde_nat"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "vandermonde_nat"
+          ],
+          "failure_class": "compiled",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-004",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "def",
+                "name": "generatingFunction",
+                "path": "AlgebraicCombinatorics/FPSDefinition.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "generatingFunction_neg",
+                "path": "AlgebraicCombinatorics/FPSDefinition.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "generatingFunction_smul",
+                "path": "AlgebraicCombinatorics/FPSDefinition.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "generatingFunction_sub",
+                "path": "AlgebraicCombinatorics/FPSDefinition.lean"
+              },
+              {
+                "kind": "theorem",
+                "name": "generatingFunction_one",
+                "path": "AlgebraicCombinatorics/FPSDefinition.lean"
+              }
+            ],
+            "accepted_count": 5,
+            "candidate_count": 5,
+            "rejected": [],
+            "rejected_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/batch-005/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "hidden_target_namespaces": [
+        "NPartition"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-005",
+          "visible_support_context": null
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 3,
+  "failure_class_counts": {
+    "compiled": 3,
+    "declined_cannot_prove": 2
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T11:07:43.570638+00:00",
+  "generation_run": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2",
+  "infer_context": true,
+  "materialize_visible_support": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 5,
+  "validate_inferred_opens": true
+}

@@ -41,8 +41,10 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - [x] Add target-hidden proof-lane dossier generation for clean declines.
 - [x] Add a no-provider proof-lane acceptance runner that overlays solutions,
   verifies, and runs post-hoc grading.
-- [ ] Route cases with checked context but repeated clean declines to a proof
-  synthesis/coding-agent lane instead of more selector prompt tuning.
+- [x] Route dev-panel clean declines and current-verifier compile failures
+  through a proof-synthesis/coding-agent lane.
+- [ ] Route remaining hard clean declines through stronger proof synthesis or
+  better project/local context acquisition.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -106,6 +108,16 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-unit004-finiteness-smoke/`
   reproduced the signed-sum merge result: `1/5` compiled, `1/5` semantic
   coverage, solution unit `unit-004` still a clean decline.
+- Proof-lane generation is now scripted in
+  `scripts/run_latex_statement_proof_lane_generation.py`. Budget payloads were
+  generated for the four fresh-slice proof-lane tasks and the two original
+  dev-panel proof-lane tasks. A paid dev-panel proof-lane run cost
+  `$0.00311878` and cleanly declined both FPS division and NPartition. Running
+  the current verifier through acceptance then exposed a stale dev-panel
+  false-positive: triangular determinant omitted visible `K`/`[CommRing K]`
+  binders and fell to `2/5`. A generic missing-typeclass-binder instruction plus
+  one focused paid retry cost `$0.00144802` and restored triangular determinant:
+  current dev-panel acceptance is `3/5` compiled and `3/5` semantic coverage.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a

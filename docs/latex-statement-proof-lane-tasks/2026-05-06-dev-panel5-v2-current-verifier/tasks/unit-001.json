@@ -1,0 +1,584 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [],
+    "lean_file_body": "",
+    "notes": [
+      "The lemma xnEquiv_mul_of_coeff_eq failed to compile due to missing Semiring K instance. The visible context does not provide a working lemma for coefficient-wise equality of products, and no lemma for coefficient-wise equality of inverses is available. The source requires a lemma that if c and d are units with equal coefficients up to n, then their inverses also have equal coefficients up to n, which is not available in the visible context. The checked signature PowerSeries.coeff_inv is over fields, not general commutative rings with IsUnit, and cannot be used here."
+    ],
+    "status": "cannot_prove_from_visible_context",
+    "unit_key": "unit-001",
+    "used_context": [
+      "source lemma text (lem.fps.prod.irlv.cong-div)",
+      "local_file_predecessor_declaration: xnEquiv_mul_of_coeff_eq (failed to compile)",
+      "checked_signature: PowerSeries.coeff_inv (field-specific, not applicable)"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+    "unit_key": "unit-001"
+  },
+  "source_unit": {
+    "environment": "lemma",
+    "id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+    "labels": [
+      "lem.fps.prod.irlv.cong-div"
+    ],
+    "line_range": [
+      388,
+      407
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{lemma}\n\\label{lem.fps.prod.irlv.cong-div}Let $a,b,c,d\\in K\\left[  \\left[  x\\right]\n\\right]  $ be four FPSs such that $c$ and $d$ are invertible. Let\n$n\\in\\mathbb{N}$. Assume that\n\\[\n\\left[  x^{m}\\right]  a=\\left[  x^{m}\\right]  b\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{for\neach }m\\in\\left\\{  0,1,\\ldots,n\\right\\}  .\n\\]\nAssume further that%\n\\[\n\\left[  x^{m}\\right]  c=\\left[  x^{m}\\right]  d\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{for\neach }m\\in\\left\\{  0,1,\\ldots,n\\right\\}  .\n\\]\nThen,\n\\[\n\\left[  x^{m}\\right]  \\dfrac{a}{c}=\\left[  x^{m}\\right]  \\dfrac{b}%\n{d}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{for each }m\\in\\left\\{  0,1,\\ldots,n\\right\\}  .\n\\]\n\n\\end{lemma}"
+  },
+  "unit_key": "unit-001",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "declined_cannot_prove",
+    "messages": [],
+    "reported_status": "cannot_prove_from_visible_context",
+    "skipped_reason": "cannot_prove_from_visible_context",
+    "unit_key": "unit-001",
+    "visible_support_context": {}
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "division notation for FPS (a/c) is not standard in Mathlib; need to use multiplication by inverse",
+      "invertibility condition on c and d must be expressed as IsUnit or similar"
+    ],
+    "local_file_context_candidates": [],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": null,
+            "expected_signature_or_shape": "theorem coeff_mul_eq_of_coeff_eq (a b c d : R⟦X⟧) (hab : ∀ m ≤ n, coeff m a = coeff m b) (hcd : ∀ m ≤ n, coeff m c = coeff m d) : ∀ m ≤ n, coeff m (a * c) = coeff m (b * d)",
+            "fallback_mathlib_candidates": [
+              {
+                "declaration_line": "theorem tsum_pow_mul_one_sub_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1",
+                      "line": 4,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1",
+                  "status": "checked"
+                },
+                "line_number": 174,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "mul",
+                  "eq",
+                  "to",
+                  "constant"
+                ],
+                "name": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+                "score": 34,
+                "search_excerpt": "/-- Formula for geometric series. -/ theorem tsum_pow_mul_one_sub_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1 :="
+              },
+              {
+                "declaration_line": "theorem one_sub_mul_tsum_pow_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1",
+                      "line": 5,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1",
+                  "status": "checked"
+                },
+                "line_number": 179,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "mul",
+                  "eq",
+                  "to",
+                  "constant"
+                ],
+                "name": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+                "score": 34,
+                "search_excerpt": "/-- Formula for geometric series. -/ theorem one_sub_mul_tsum_pow_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1 :="
+              },
+              {
+                "declaration_line": "theorem coeff_prod [DecidableEq ι] (f : ι → PowerSeries R) (d : ℕ) (s : Finset ι) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.coeff_prod.{u_2, u_3} {R : Type u_2} [CommSemiring R] {ι : Type u_3} [DecidableEq ι] (f : ι → R⟦X⟧) (d : ℕ)\n  (s : Finset ι) : (coeff d) (∏ j ∈ s, f j) = ∑ l ∈ s.finsuppAntidiag d, ∏ i ∈ s, (coeff (l i)) (f i)",
+                      "line": 6,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.coeff_prod.{u_2, u_3} {R : Type u_2} [CommSemiring R] {ι : Type u_3} [DecidableEq ι] (f : ι → R⟦X⟧) (d : ℕ)\n  (s : Finset ι) : (coeff d) (∏ j ∈ s, f j) = ∑ l ∈ s.finsuppAntidiag d, ∏ i ∈ s, (coeff (l i)) (f i)",
+                  "status": "checked"
+                },
+                "line_number": 658,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "eq",
+                  "coefficients",
+                  "up"
+                ],
+                "name": "PowerSeries.coeff_prod",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+                "score": 29,
+                "search_excerpt": "/-- Coefficients of a product of power series -/ theorem coeff_prod [DecidableEq ι] (f : ι → PowerSeries R) (d : ℕ) (s : Finset ι) : coeff d (∏ j ∈ s, f j) = ∑ l ∈ finsuppAntidiag s d, ∏ i ∈ s, coeff (l i) (f i) := by"
+              },
+              {
+                "declaration_line": "theorem summable_pow_of_constantCoeff_eq_zero {f : PowerSeries R} (h : f.constantCoeff = 0) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero.{u_1} {R : Type u_1} [TopologicalSpace R] [Semiring R]\n  {f : R⟦X⟧} (h : constantCoeff f = 0) : Summable fun x => f ^ x",
+                      "line": 7,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero.{u_1} {R : Type u_1} [TopologicalSpace R] [Semiring R]\n  {f : R⟦X⟧} (h : constantCoeff f = 0) : Summable fun x => f ^ x",
+                  "status": "checked"
+                },
+                "line_number": 165,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "eq",
+                  "to",
+                  "constant"
+                ],
+                "name": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+                "score": 29,
+                "search_excerpt": "/-- The geometric series converges if the constant term is zero. -/ theorem summable_pow_of_constantCoeff_eq_zero {f : PowerSeries R} (h : f.constantCoeff = 0) : Summable (f ^ ·) :="
+              },
+              {
+                "declaration_line": "theorem coeff_zero_eq_constantCoeff : ⇑(coeff (R := R) 0) = constantCoeff := by",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.coeff_zero_eq_constantCoeff.{u_1} {R : Type u_1} [Semiring R] : ⇑(coeff 0) = ⇑constantCoeff",
+                      "line": 8,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.coeff_zero_eq_constantCoeff.{u_1} {R : Type u_1} [Semiring R] : ⇑(coeff 0) = ⇑constantCoeff",
+                  "status": "checked"
+                },
+                "line_number": 223,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.coeff_zero_eq_constantCoeff",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+                "score": 26,
+                "search_excerpt": "@[simp] theorem coeff_zero_eq_constantCoeff : ⇑(coeff (R := R) 0) = constantCoeff := by"
+              },
+              {
+                "declaration_line": "theorem coeff_zero_eq_constantCoeff_apply (φ : R⟦X⟧) : coeff 0 φ = constantCoeff φ := by",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.coeff_zero_eq_constantCoeff_apply.{u_1} {R : Type u_1} [Semiring R] (φ : R⟦X⟧) :\n  (coeff 0) φ = constantCoeff φ",
+                      "line": 9,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.coeff_zero_eq_constantCoeff_apply.{u_1} {R : Type u_1} [Semiring R] (φ : R⟦X⟧) :\n  (coeff 0) φ = constantCoeff φ",
+                  "status": "checked"
+                },
+                "line_number": 227,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.coeff_zero_eq_constantCoeff_apply",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+                "score": 26,
+                "search_excerpt": "theorem coeff_zero_eq_constantCoeff_apply (φ : R⟦X⟧) : coeff 0 φ = constantCoeff φ := by"
+              },
+              {
+                "declaration_line": "theorem constantCoeff_smul {S : Type*} [Semiring S] [Module R S] (φ : PowerSeries S) (a : R) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.constantCoeff_smul.{u_1, u_2} {R : Type u_1} [Semiring R] {S : Type u_2} [Semiring S] [Module R S]\n  (φ : S⟦X⟧) (a : R) : constantCoeff (a • φ) = a • constantCoeff φ",
+                      "line": 10,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.constantCoeff_smul.{u_1, u_2} {R : Type u_1} [Semiring R] {S : Type u_2} [Semiring S] [Module R S]\n  (φ : S⟦X⟧) (a : R) : constantCoeff (a • φ) = a • constantCoeff φ",
+                  "status": "checked"
+                },
+                "line_number": 317,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "mul",
+                  "constant"
+                ],
+                "name": "PowerSeries.constantCoeff_smul",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+                "score": 26,
+                "search_excerpt": "@[simp] theorem constantCoeff_smul {S : Type*} [Semiring S] [Module R S] (φ : PowerSeries S) (a : R) : constantCoeff (a • φ) = a • constantCoeff φ :="
+              },
+              {
+                "declaration_line": "theorem constantCoeff_toSubring : (p.toSubring T hp).constantCoeff = p.constantCoeff :=",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.constantCoeff_toSubring.{u_1} {R : Type u_1} [Ring R] (p : R⟦X⟧) (T : Subring R)\n  (hp : ∀ (n : ℕ), (coeff n) p ∈ T) : ↑(constantCoeff (p.toSubring T hp)) = constantCoeff p",
+                      "line": 11,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.constantCoeff_toSubring.{u_1} {R : Type u_1} [Ring R] (p : R⟦X⟧) (T : Subring R)\n  (hp : ∀ (n : ℕ), (coeff n) p ∈ T) : ↑(constantCoeff (p.toSubring T hp)) = constantCoeff p",
+                  "status": "checked"
+                },
+                "line_number": 577,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "to",
+                  "constant"
+                ],
+                "name": "PowerSeries.constantCoeff_toSubring",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+                "score": 26,
+                "search_excerpt": "@[simp] theorem constantCoeff_toSubring : (p.toSubring T hp).constantCoeff = p.constantCoeff :="
+              }
+            ],
+            "fallback_suppression": null,
+            "lean_check": {
+              "error": "Exact identifier failed Lean check and was redacted from the generation prompt.",
+              "status": "error"
+            },
+            "query": "<redacted failed exact identifier>",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": null,
+            "source_part": "whole unit",
+            "task_id": "unit-001-task-1",
+            "unavailable_exact_identifier_redacted": true,
+            "unit_key": "unit-001",
+            "usage_policy": "exact_identifier_failed_lean_check_redacted_do_not_use; fallback_mathlib_candidates are search hints, not checked facts",
+            "why_needed": "to deduce equality of coefficients of products from equality of coefficients of factors up to n"
+          },
+          {
+            "exact_identifier": null,
+            "expected_signature_or_shape": "theorem coeff_inv_eq_of_coeff_eq (a b : R⟦X⟧) (ha : IsUnit a) (hb : IsUnit b) (h : ∀ m ≤ n, coeff m a = coeff m b) : ∀ m ≤ n, coeff m (a⁻¹) = coeff m (b⁻¹)",
+            "fallback_mathlib_candidates": [
+              {
+                "declaration_line": "theorem inv_eq_inv_aux (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ :=",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.inv_eq_inv_aux.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ",
+                      "line": 12,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.inv_eq_inv_aux.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ",
+                  "status": "checked"
+                },
+                "line_number": 136,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.inv_eq_inv_aux",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "theorem inv_eq_inv_aux (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ :="
+              },
+              {
+                "declaration_line": "theorem inv_eq_zero {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0 :=",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.inv_eq_zero.{u_2} {k : Type u_2} [Field k] {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0",
+                      "line": 13,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.inv_eq_zero.{u_2} {k : Type u_2} [Field k] {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0",
+                  "status": "checked"
+                },
+                "line_number": 152,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.inv_eq_zero",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "theorem inv_eq_zero {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0 :="
+              },
+              {
+                "declaration_line": "theorem invOfUnit_eq (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.invOfUnit_eq.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :\n  φ.invOfUnit (Units.mk0 (constantCoeff φ) h) = φ⁻¹",
+                      "line": 14,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.invOfUnit_eq.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :\n  φ.invOfUnit (Units.mk0 (constantCoeff φ) h) = φ⁻¹",
+                  "status": "checked"
+                },
+                "line_number": 159,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.invOfUnit_eq",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "@[simp] theorem invOfUnit_eq (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) : invOfUnit φ (Units.mk0 _ h) = φ⁻¹ :="
+              },
+              {
+                "declaration_line": "theorem invOfUnit_eq' (φ : k⟦X⟧) (u : Units k) (h : constantCoeff φ = u) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.invOfUnit_eq'.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (u : kˣ) (h : constantCoeff φ = ↑u) :\n  φ.invOfUnit u = φ⁻¹",
+                      "line": 15,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.invOfUnit_eq'.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (u : kˣ) (h : constantCoeff φ = ↑u) :\n  φ.invOfUnit u = φ⁻¹",
+                  "status": "checked"
+                },
+                "line_number": 164,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.invOfUnit_eq'",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "@[simp] theorem invOfUnit_eq' (φ : k⟦X⟧) (u : Units k) (h : constantCoeff φ = u) : invOfUnit φ u = φ⁻¹ :="
+              },
+              {
+                "declaration_line": "theorem eq_mul_inv_iff_mul_eq {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.eq_mul_inv_iff_mul_eq.{u_2} {k : Type u_2} [Field k] {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :\n  φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂",
+                      "line": 16,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.eq_mul_inv_iff_mul_eq.{u_2} {k : Type u_2} [Field k] {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :\n  φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂",
+                  "status": "checked"
+                },
+                "line_number": 176,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.eq_mul_inv_iff_mul_eq",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "theorem eq_mul_inv_iff_mul_eq {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) : φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂ :="
+              },
+              {
+                "declaration_line": "theorem eq_inv_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.eq_inv_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  φ = ψ⁻¹ ↔ φ * ψ = 1",
+                      "line": 17,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.eq_inv_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  φ = ψ⁻¹ ↔ φ * ψ = 1",
+                  "status": "checked"
+                },
+                "line_number": 180,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.eq_inv_iff_mul_eq_one",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "theorem eq_inv_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : φ = ψ⁻¹ ↔ φ * ψ = 1 :="
+              },
+              {
+                "declaration_line": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+                      "line": 18,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+                  "status": "checked"
+                },
+                "line_number": 184,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.inv_eq_iff_mul_eq_one",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : ψ⁻¹ = φ ↔ φ * ψ = 1 :="
+              },
+              {
+                "declaration_line": "theorem ker_coeff_eq_max_ideal : RingHom.ker (constantCoeff (R := k)) = maximalIdeal _ :=",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "PowerSeries.ker_coeff_eq_max_ideal.{u_2} {k : Type u_2} [Field k] :\n  RingHom.ker constantCoeff = IsLocalRing.maximalIdeal k⟦X⟧",
+                      "line": 19,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "PowerSeries.ker_coeff_eq_max_ideal.{u_2} {k : Type u_2} [Field k] :\n  RingHom.ker constantCoeff = IsLocalRing.maximalIdeal k⟦X⟧",
+                  "status": "checked"
+                },
+                "line_number": 364,
+                "matched_tokens": [
+                  "powerseries",
+                  "coeff",
+                  "inv",
+                  "eq",
+                  "constant"
+                ],
+                "name": "PowerSeries.ker_coeff_eq_max_ideal",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+                "score": 37,
+                "search_excerpt": "theorem ker_coeff_eq_max_ideal : RingHom.ker (constantCoeff (R := k)) = maximalIdeal _ :="
+              }
+            ],
+            "fallback_suppression": null,
+            "lean_check": {
+              "error": "Exact identifier failed Lean check and was redacted from the generation prompt.",
+              "status": "error"
+            },
+            "query": "<redacted failed exact identifier>",
+            "related_mathlib_declarations": [],
+            "request_index": 2,
+            "source_declaration": null,
+            "source_part": "whole unit",
+            "task_id": "unit-001-task-1",
+            "unavailable_exact_identifier_redacted": true,
+            "unit_key": "unit-001",
+            "usage_policy": "exact_identifier_failed_lean_check_redacted_do_not_use; fallback_mathlib_candidates are search hints, not checked facts",
+            "why_needed": "to deduce equality of coefficients of inverses from equality of coefficients up to n"
+          }
+        ],
+        "kind": "theorem",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem xnEquiv_mul_of_coeff_eq {n : ℕ} {a b c d : K⟦X⟧}\n    (hab : ∀ m ≤ n, coeff m a = coeff m b)\n    (hcd : ∀ m ≤ n, coeff m c = coeff m d) :\n    ∀ m ≤ n, coeff m (a * c) = coeff m (b * d) :=\n  PowerSeries.XnEquiv.mul hab hcd",
+            "line_range": [
+              134,
+              148
+            ],
+            "name": "xnEquiv_mul_of_coeff_eq",
+            "path": "AlgebraicCombinatorics/FPS/InfiniteProducts1.lean",
+            "snippet_truncated": false
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "exact Mathlib lemma for coeff-wise equality of products given coeff-wise equality of factors up to n"
+        ],
+        "needed_project_context": [
+          {
+            "name": "xnEquiv_mul_of_coeff_eq",
+            "why_needed": "provides the product equality lemma for coefficients up to n"
+          }
+        ],
+        "needed_source_context": [
+          "source lemma text: a,b,c,d ∈ K⟦X⟧, c,d invertible, coeff equality up to n for a,b and for c,d, then coeff equality up to n for a/c and b/d"
+        ],
+        "role": "main_claim",
+        "selector_unchecked_statement_sketch": "For formal power series a,b,c,d over a commutative ring K, with c and d units, if for all m ≤ n the m-th coefficient of a equals that of b, and similarly for c and d, then for all m ≤ n the m-th coefficient of a * (c⁻¹) equals that of b * (d⁻¹).",
+        "source_part": "whole unit",
+        "task_id": "unit-001-task-1"
+      }
+    ],
+    "previous_source_context": [],
+    "source_focus_summary": "Congruence lemma for division of FPS: coefficient-wise equality up to n of numerators and denominators implies coefficient-wise equality up to n of the quotients."
+  }
+}

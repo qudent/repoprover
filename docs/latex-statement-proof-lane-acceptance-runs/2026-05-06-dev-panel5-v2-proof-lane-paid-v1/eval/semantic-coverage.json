@@ -1,0 +1,117 @@
+{
+  "all_aligned_gold_proved_units": 2,
+  "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
+  "coverage_status_counts": {
+    "all_aligned_gold_proved": 2,
+    "generated_not_compiled": 3
+  },
+  "generated_at": "2026-05-06T10:58:44.174806+00:00",
+  "generated_not_compiled_units": 3,
+  "generation_run": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1",
+  "no_aligned_gold_proved_units": 0,
+  "no_aligned_gold_to_check_units": 0,
+  "partial_aligned_gold_proved_units": 0,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated",
+  "unit_count": 5,
+  "units": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001"
+    },
+    {
+      "aligned_gold_declaration_count": 2,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/batch-002/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+      "unit_key": "unit-002"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "isInverse_unique"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.FPS.isInverse_unique",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            484,
+            500
+          ],
+          "gold_path": "AlgebraicCombinatorics/FPS/CommutativeRings.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/semantic-coverage/unit-003/gold-001.lean",
+          "messages": [],
+          "semantic_check_passed": true,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "all_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/batch-003/generation-output.json",
+      "semantic_passed_gold_declarations": 1,
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+      "unit_key": "unit-003"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "vandermonde_nat"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.FPS.vandermonde_nat",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            797,
+            801
+          ],
+          "gold_path": "AlgebraicCombinatorics/FPSDefinition.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/eval/semantic-coverage/unit-004/gold-001.lean",
+          "messages": [],
+          "semantic_check_passed": true,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "all_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/batch-004/generation-output.json",
+      "semantic_passed_gold_declarations": 1,
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+      "unit_key": "unit-004"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-proof-lane-paid-v1/batch-005/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-005"
+    }
+  ]
+}

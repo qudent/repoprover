@@ -1,0 +1,39 @@
+{
+  "schema_version": "repoprover.latex_statement_proof_lane_generation_aggregated.v1",
+  "unit_keys": [
+    "unit-001",
+    "unit-005"
+  ],
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The lemma xnEquiv_mul_of_coeff_eq failed to compile due to missing Semiring K instance. The visible context does not provide a working lemma for coefficient-wise equality of products, and no lemma for coefficient-wise equality of inverses is available. The source requires a lemma that if c and d are units with equal coefficients up to n, then their inverses also have equal coefficients up to n, which is not available in the visible context. The checked signature PowerSeries.coeff_inv is over fields, not general commutative rings with IsUnit, and cannot be used here."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source lemma text (lem.fps.prod.irlv.cong-div)",
+        "local_file_predecessor_declaration: xnEquiv_mul_of_coeff_eq (failed to compile)",
+        "checked_signature: PowerSeries.coeff_inv (field-specific, not applicable)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition structure, toPartition, and filter_ne_zero_sum, but the bijection requires constructing an inverse map from Nat.Partition with parts.card ≤ N to NPartition N, proving antitone of the padded function, and proving left_inv and right_inv. The antitone proof requires case analysis on in-range vs out-of-range indices, using sortedness of the original partition parts. The checked fallback candidates (List.Pairwise.rel_get_of_le, List.sortedGE_iff_antitone_get, etc.) provide ingredients for the in-range case, but the full construction is complex and the visible context does not provide a direct lemma for the padded antitone function. The proof strategy note suggests a multi-step helper plan, but implementing it fully from the visible context is beyond the scope of a single repair step without additional project context or a preexisting bijection lemma."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure with parts, antitone, ext, ext'",
+        "NPartition.toPartition",
+        "filter_ne_zero_sum",
+        "Nat.Partition structure with parts, parts_pos, parts_sum, ext",
+        "checked fallback candidates: List.Pairwise.rel_get_of_le, List.sortedGE_iff_antitone_get, Finset.card_image_le, Fintype.card_fin"
+      ]
+    }
+  ]
+}
