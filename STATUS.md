@@ -116,8 +116,11 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   the current verifier through acceptance then exposed a stale dev-panel
   false-positive: triangular determinant omitted visible `K`/`[CommRing K]`
   binders and fell to `2/5`. A generic missing-typeclass-binder instruction plus
-  one focused paid retry cost `$0.00144802` and restored triangular determinant:
-  current dev-panel acceptance is `3/5` compiled and `3/5` semantic coverage.
+  a second focused retry restored triangular determinant; total dev-panel
+  proof-lane generation cost for these attempts was `$0.00598472`
+  (`$0.00311878` clean-decline pass, `$0.00141792` failed unit-002 retry,
+  `$0.00144802` successful unit-002 retry). Current dev-panel acceptance is
+  `3/5` compiled and `3/5` semantic coverage.
 - Paid proof-lane generation on the four fresh-slice clean declines cost
   `$0.00687388` and produced four contract-clean declines. Acceptance artifact:
   `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/`.

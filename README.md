@@ -725,9 +725,11 @@ triangular determinant relied on visible-support variable leakage and omitted
 `docs/latex-statement-proof-lane-tasks/2026-05-06-dev-panel5-v2-current-verifier/`.
 A generic proof-lane instruction now says that missing typeclass errors such as
 `Zero K` or `CommRing K` require explicit binders or emitted variable commands.
-With that generic rule, a focused retry at
+The first focused unit-002 retry repeated the bad binder-free theorem and cost
+`$0.00141792`. With the generic rule, the second focused retry at
 `docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/`
-cost `$0.00144802`; acceptance at
+cost `$0.00144802`; total dev-panel proof-lane generation spend for this
+sequence was `$0.00598472`. Acceptance at
 `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-dev-panel5-v2-unit002-current-verifier-paid-v2/`
 restores the current dev panel to generated-only verification `3/5` and
 semantic coverage `3/5`. The two unsolved dev-panel units remain clean
