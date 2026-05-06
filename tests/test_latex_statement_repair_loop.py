@@ -3,7 +3,12 @@
 import argparse
 from pathlib import Path
 
-from scripts.run_latex_statement_repair_loop import run
+from scripts.run_latex_statement_repair_loop import (
+    preserve_compile_clean_units,
+    run,
+    semantic_source_coverage_review_keys,
+    semantic_success_keys,
+)
 
 
 def _base_args(tmp_path: Path) -> argparse.Namespace:
@@ -15,6 +20,7 @@ def _base_args(tmp_path: Path) -> argparse.Namespace:
         selector_run=tmp_path / "selector",
         initial_generation_run=initial_generation,
         initial_verification_results=initial_verification,
+        initial_semantic_coverage_results=None,
         output_root=tmp_path / "loop",
         max_rounds=2,
         extra_context=None,
@@ -108,7 +114,168 @@ def test_repair_loop_runs_round_and_stops_on_compile(monkeypatch, tmp_path: Path
 
     summary = run(args)
 
-    assert summary["stop_reason"] == "all_units_compile"
+    assert summary["stop_reason"] == "all_units_semantically_covered"
     assert summary["final_generation_run"] == str(args.output_root / "round-01-repair")
     assert calls == ["context", "hydration", "pack", "repair", "verify", "gold", "semantic"]
     assert repair_extra_contexts == [[args.output_root / "round-01-context" / "checked-repair-context.json"]]
+
+
+def test_preserve_compile_clean_units_replaces_repaired_output(tmp_path: Path) -> None:
+    previous = tmp_path / "previous"
+    repair = tmp_path / "repair"
+    (previous / "batch-001").mkdir(parents=True)
+    (previous / "eval").mkdir()
+    (repair / "batch-001").mkdir(parents=True)
+    previous_output = {
+        "units": [
+            {"unit_key": "unit-001", "status": "generated", "lean_file_body": "clean", "declaration_names": ["clean"]},
+            {"unit_key": "unit-002", "status": "generated", "lean_file_body": "bad", "declaration_names": ["bad"]},
+        ]
+    }
+    repaired_output = {
+        "units": [
+            {"unit_key": "unit-001", "status": "generated", "lean_file_body": "regressed", "declaration_names": ["regressed"]},
+            {"unit_key": "unit-002", "status": "generated", "lean_file_body": "fixed", "declaration_names": ["fixed"]},
+        ]
+    }
+    verification = {
+        "batches": [
+            {
+                "units": [
+                    {"unit_key": "unit-001", "compile_passed": True},
+                    {"unit_key": "unit-002", "compile_passed": False},
+                ]
+            }
+        ]
+    }
+    (previous / "batch-001/generation-output.json").write_text('{\n  "units": []\n}\n', encoding="utf-8")
+    (previous / "batch-001/generation-output.json").write_text(__import__("json").dumps(previous_output), encoding="utf-8")
+    (previous / "eval/verification-results.json").write_text(__import__("json").dumps(verification), encoding="utf-8")
+    for name in ("generation-output.json", "repair-output.json"):
+        (repair / "batch-001" / name).write_text(__import__("json").dumps(repaired_output), encoding="utf-8")
+
+    summary = preserve_compile_clean_units(
+        previous_generation_run=previous,
+        previous_verification_results=previous / "eval/verification-results.json",
+        repair_run=repair,
+    )
+
+    merged = __import__("json").loads((repair / "batch-001/generation-output.json").read_text())
+    assert summary["preserved_unit_keys"] == ["unit-001"]
+    assert [unit["lean_file_body"] for unit in merged["units"]] == ["clean", "fixed"]
+
+
+def test_preserve_compile_clean_units_can_use_semantic_success_keys(tmp_path: Path) -> None:
+    previous = tmp_path / "previous"
+    repair = tmp_path / "repair"
+    (previous / "batch-001").mkdir(parents=True)
+    (previous / "eval").mkdir()
+    (repair / "batch-001").mkdir(parents=True)
+    previous_output = {
+        "units": [
+            {"unit_key": "unit-001", "lean_file_body": "semantic-clean", "declaration_names": ["clean"]},
+            {"unit_key": "unit-002", "lean_file_body": "compile-only", "declaration_names": ["partial"]},
+        ]
+    }
+    repaired_output = {
+        "units": [
+            {"unit_key": "unit-001", "lean_file_body": "regressed", "declaration_names": ["regressed"]},
+            {"unit_key": "unit-002", "lean_file_body": "semantic-fixed", "declaration_names": ["fixed"]},
+        ]
+    }
+    verification = {
+        "batches": [
+            {
+                "units": [
+                    {"unit_key": "unit-001", "compile_passed": True},
+                    {"unit_key": "unit-002", "compile_passed": True},
+                ]
+            }
+        ]
+    }
+    (previous / "batch-001/generation-output.json").write_text(__import__("json").dumps(previous_output), encoding="utf-8")
+    (previous / "eval/verification-results.json").write_text(__import__("json").dumps(verification), encoding="utf-8")
+    for name in ("generation-output.json", "repair-output.json"):
+        (repair / "batch-001" / name).write_text(__import__("json").dumps(repaired_output), encoding="utf-8")
+
+    summary = preserve_compile_clean_units(
+        previous_generation_run=previous,
+        previous_verification_results=previous / "eval/verification-results.json",
+        repair_run=repair,
+        preserve_unit_keys={"unit-001"},
+    )
+
+    merged = __import__("json").loads((repair / "batch-001/generation-output.json").read_text())
+    assert summary["preserved_unit_keys"] == ["unit-001"]
+    assert [unit["lean_file_body"] for unit in merged["units"]] == ["semantic-clean", "semantic-fixed"]
+
+
+def test_semantic_key_helpers() -> None:
+    semantic = {
+        "units": [
+            {"unit_key": "unit-001", "coverage_status": "all_aligned_gold_proved"},
+            {"unit_key": "unit-002", "coverage_status": "partial_aligned_gold_proved"},
+            {"unit_key": "unit-003", "coverage_status": "no_aligned_gold_proved"},
+        ]
+    }
+
+    assert semantic_success_keys(semantic) == {"unit-001"}
+    assert semantic_source_coverage_review_keys(semantic) == {"unit-002", "unit-003"}
+
+
+def test_repair_loop_initial_semantic_results_drive_review_keys(monkeypatch, tmp_path: Path) -> None:
+    args = _base_args(tmp_path)
+    args.max_rounds = 1
+    args.semantic_coverage = False
+    semantic_path = tmp_path / "semantic.json"
+    semantic_path.write_text(
+        __import__("json").dumps(
+            {
+                "units": [
+                    {"unit_key": "unit-001", "coverage_status": "all_aligned_gold_proved"},
+                    {"unit_key": "unit-002", "coverage_status": "partial_aligned_gold_proved"},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    args.initial_semantic_coverage_results = semantic_path
+    seen_review_keys: list[list[str]] = []
+    seen_preserved: list[set[str] | None] = []
+
+    def fake_context_selection(namespace):
+        seen_review_keys.append(list(namespace.source_coverage_review_unit_key))
+        return {"valid_json": True}
+
+    def fake_hydration(namespace):
+        return {}
+
+    def fake_pack(namespace):
+        namespace.output.parent.mkdir(parents=True, exist_ok=True)
+        namespace.output.write_text("{}", encoding="utf-8")
+        return {}
+
+    def fake_repair(namespace):
+        (namespace.output / "batch-001").mkdir(parents=True, exist_ok=True)
+        (namespace.output / "batch-001/generation-output.json").write_text('{"units":[]}', encoding="utf-8")
+        return {}
+
+    def fake_preserve(**kwargs):
+        seen_preserved.append(kwargs.get("preserve_unit_keys"))
+        return {}
+
+    def fake_verify(namespace):
+        return {"unit_count": 1, "compile_passed_units": 0}
+
+    monkeypatch.setattr("scripts.run_latex_statement_repair_loop.run_context_selection", fake_context_selection)
+    monkeypatch.setattr("scripts.run_latex_statement_repair_loop.run_hydration", fake_hydration)
+    monkeypatch.setattr("scripts.run_latex_statement_repair_loop.run_context_pack", fake_pack)
+    monkeypatch.setattr("scripts.run_latex_statement_repair_loop.run_repair", fake_repair)
+    monkeypatch.setattr("scripts.run_latex_statement_repair_loop.preserve_compile_clean_units", fake_preserve)
+    monkeypatch.setattr("scripts.run_latex_statement_repair_loop.run_verification", fake_verify)
+
+    summary = run(args)
+
+    assert summary["initial_semantic_coverage_results"] == str(semantic_path)
+    assert seen_review_keys == [["unit-002"]]
+    assert seen_preserved == [{"unit-001"}]

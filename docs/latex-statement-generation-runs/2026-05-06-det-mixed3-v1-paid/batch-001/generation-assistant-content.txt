@@ -1,0 +1,28 @@
+{
+  "units": [
+    {
+      "declaration_names": ["det_transpose'"],
+      "lean_file_body": "theorem det_transpose' (A : Matrix (Fin n) (Fin n) K) : Aᵀ.det = A.det :=\nby\n  simpa using Matrix.det_transpose A",
+      "notes": ["Uses Matrix.det_transpose from Mathlib."],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": ["Matrix.det_transpose (checked signature)"]
+    },
+    {
+      "declaration_names": ["det_triangular"],
+      "lean_file_body": "theorem det_triangular (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id) : A.det = ∏ i, A i i :=\n  Matrix.det_of_upperTriangular h",
+      "notes": ["Uses Matrix.det_of_upperTriangular for upper triangular; lower triangular case follows by transpose."],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": ["Matrix.det_of_upperTriangular (checked signature)"]
+    },
+    {
+      "declaration_names": ["det_permute_rows", "det_permute_cols"],
+      "lean_file_body": "theorem det_permute_rows (τ : Equiv.Perm (Fin n)) (A : Matrix (Fin n) (Fin n) K) :\n    (A.submatrix τ id).det = (Equiv.Perm.sign τ : K) * A.det :=\n  Matrix.det_permute τ A\n\ntheorem det_permute_cols (τ : Equiv.Perm (Fin n)) (A : Matrix (Fin n) (Fin n) K) :\n    (A.submatrix id τ).det = (Equiv.Perm.sign τ : K) * A.det :=\n  Matrix.det_permute' τ A",
+      "notes": ["Uses Matrix.det_permute and Matrix.det_permute' from Mathlib."],
+      "status": "generated",
+      "unit_key": "unit-003",
+      "used_context": ["Matrix.det_permute (checked signature)", "Matrix.det_permute' (checked signature)"]
+    }
+  ]
+}

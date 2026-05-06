@@ -1,0 +1,16 @@
+{
+  "batches": [
+    {
+      "exact_identifier_count": 6,
+      "fallback_exact_identifier_count": 27,
+      "fallback_lean_check_status": "ok",
+      "hydrated_path": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid/batch-001/mathlib-lean-hydrated-context.json",
+      "lean_check_status": "lean_errors",
+      "output_path": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid/batch-001/context-selection-output.json",
+      "request_count": 6
+    }
+  ],
+  "generated_at": "2026-05-06T00:13:23.675609+00:00",
+  "run": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid",
+  "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+}

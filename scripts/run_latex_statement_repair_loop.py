@@ -53,6 +53,69 @@ def all_units_compile(verification: dict[str, Any]) -> bool:
     return unit_count > 0 and int(verification.get("compile_passed_units") or 0) == unit_count
 
 
+def generation_output_path(run_dir: Path) -> Path:
+    path = run_dir / "batch-001" / "generation-output.json"
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return path
+
+
+def compile_clean_unit_keys(verification: dict[str, Any]) -> set[str]:
+    keys: set[str] = set()
+    for batch in verification.get("batches") or []:
+        for unit in batch.get("units") or []:
+            if unit.get("compile_passed") and unit.get("unit_key"):
+                keys.add(str(unit["unit_key"]))
+    return keys
+
+
+def preserve_compile_clean_units(
+    *,
+    previous_generation_run: Path,
+    previous_verification_results: Path,
+    repair_run: Path,
+    preserve_unit_keys: set[str] | None = None,
+) -> dict[str, Any]:
+    previous_verification = read_json(previous_verification_results)
+    clean_keys = compile_clean_unit_keys(previous_verification)
+    if preserve_unit_keys is not None:
+        clean_keys &= preserve_unit_keys
+    if not clean_keys:
+        return {"preserved_unit_keys": [], "updated_paths": []}
+
+    previous_output = read_json(generation_output_path(previous_generation_run))
+    repair_output_path = generation_output_path(repair_run)
+    repair_output = read_json(repair_output_path)
+
+    previous_units = {str(unit.get("unit_key") or ""): unit for unit in previous_output.get("units") or []}
+    repair_units = {str(unit.get("unit_key") or ""): unit for unit in repair_output.get("units") or []}
+    merged_units: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for previous_unit in previous_output.get("units") or []:
+        unit_key = str(previous_unit.get("unit_key") or "")
+        if unit_key in clean_keys:
+            merged_units.append(previous_unit)
+        else:
+            merged_units.append(repair_units.get(unit_key, previous_unit))
+        seen.add(unit_key)
+    for unit_key, unit in repair_units.items():
+        if unit_key not in seen:
+            merged_units.append(unit)
+    merged_output = dict(repair_output)
+    merged_output["units"] = merged_units
+
+    updated_paths: list[str] = []
+    for name in ("generation-output.json", "repair-output.json"):
+        path = repair_run / "batch-001" / name
+        if path.exists():
+            write_json(path, merged_output)
+            updated_paths.append(str(path))
+    return {
+        "preserved_unit_keys": sorted(clean_keys.intersection(previous_units)),
+        "updated_paths": updated_paths,
+    }
+
+
 def run_gold_graders(
     *,
     selector_run: Path,
@@ -86,6 +149,22 @@ def run_gold_graders(
     return result
 
 
+def semantic_source_coverage_review_keys(semantic_summary: dict[str, Any]) -> set[str]:
+    keys: set[str] = set()
+    for unit in semantic_summary.get("units") or []:
+        if unit.get("coverage_status") != "all_aligned_gold_proved" and unit.get("unit_key"):
+            keys.add(str(unit["unit_key"]))
+    return keys
+
+
+def semantic_success_keys(semantic_summary: dict[str, Any]) -> set[str]:
+    keys: set[str] = set()
+    for unit in semantic_summary.get("units") or []:
+        if unit.get("coverage_status") == "all_aligned_gold_proved" and unit.get("unit_key"):
+            keys.add(str(unit["unit_key"]))
+    return keys
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     output_root = args.output_root
     output_root.mkdir(parents=True, exist_ok=True)
@@ -93,6 +172,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     current_generation_run = args.initial_generation_run
     current_verification_results = args.initial_verification_results
     accumulated_contexts = list(args.extra_context or [])
+    source_coverage_review_keys: set[str] = set()
+    preserve_unit_keys: set[str] | None = None
+    if args.initial_semantic_coverage_results:
+        initial_semantic = read_json(args.initial_semantic_coverage_results)
+        source_coverage_review_keys = semantic_source_coverage_review_keys(initial_semantic)
+        preserve_unit_keys = semantic_success_keys(initial_semantic)
     rounds: list[dict[str, Any]] = []
     stop_reason = "max_rounds_reached"
 
@@ -106,6 +191,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 selector_run=args.selector_run,
                 generation_run=current_generation_run,
                 verification_results=current_verification_results,
+                source_coverage_review_unit_key=sorted(source_coverage_review_keys),
                 output=context_run,
                 model=args.model,
                 base_url=args.base_url,
@@ -160,6 +246,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 budget_only=False,
             )
         )
+        preservation_summary = preserve_compile_clean_units(
+            previous_generation_run=current_generation_run,
+            previous_verification_results=current_verification_results,
+            repair_run=repair_run,
+            preserve_unit_keys=preserve_unit_keys,
+        )
         verification_path = repair_run / "eval" / "verification-results.json"
         verification_summary = run_verification(
             argparse.Namespace(
@@ -180,12 +272,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "checked_repair_context_summary": pack_summary,
                 "repair_run": str(repair_run),
                 "repair": repair_summary,
+                "preserve_compile_clean_units": preservation_summary,
                 "verification_results": str(verification_path),
                 "verification": verification_summary,
             }
         )
         if all_units_compile(verification_summary):
-            round_summary["posthoc_graders"] = run_gold_graders(
+            grader_paths = run_gold_graders(
                 selector_run=args.selector_run,
                 generation_run=repair_run,
                 verification_results=verification_path,
@@ -193,9 +286,22 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 timeout_seconds=args.timeout_seconds,
                 semantic_coverage=args.semantic_coverage,
             )
-            stop_reason = "all_units_compile"
+            round_summary["posthoc_graders"] = grader_paths
             current_generation_run = repair_run
             current_verification_results = verification_path
+            if args.semantic_coverage:
+                semantic_path = repair_run / "eval" / "semantic-coverage.json"
+                semantic_summary = read_json(semantic_path)
+                source_coverage_review_keys = semantic_source_coverage_review_keys(semantic_summary)
+                preserve_unit_keys = semantic_success_keys(semantic_summary)
+                round_summary["source_coverage_review_unit_keys"] = sorted(source_coverage_review_keys)
+                round_summary["semantic_success_unit_keys"] = sorted(preserve_unit_keys)
+                if not source_coverage_review_keys:
+                    stop_reason = "all_units_semantically_covered"
+                    break
+                stop_reason = "semantic_coverage_incomplete"
+                continue
+            stop_reason = "all_units_compile"
             break
 
         current_generation_run = repair_run
@@ -207,6 +313,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "selector_run": str(args.selector_run),
         "initial_generation_run": str(args.initial_generation_run),
         "initial_verification_results": str(args.initial_verification_results),
+        "initial_semantic_coverage_results": (
+            str(args.initial_semantic_coverage_results) if args.initial_semantic_coverage_results else None
+        ),
         "output_root": str(output_root),
         "model": args.model,
         "reasoning_effort": args.reasoning_effort,
@@ -227,6 +336,14 @@ def main() -> None:
     parser.add_argument("--selector-run", type=Path, required=True)
     parser.add_argument("--initial-generation-run", type=Path, required=True)
     parser.add_argument("--initial-verification-results", type=Path, required=True)
+    parser.add_argument(
+        "--initial-semantic-coverage-results",
+        type=Path,
+        help=(
+            "Optional semantic-coverage JSON for resuming from a compile-clean but source-coverage-partial run. "
+            "Only unit keys are used to decide which source units need review; gold statements are not added to prompts."
+        ),
+    )
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--max-rounds", type=int, default=3)
     parser.add_argument("--extra-context", type=Path, action="append")

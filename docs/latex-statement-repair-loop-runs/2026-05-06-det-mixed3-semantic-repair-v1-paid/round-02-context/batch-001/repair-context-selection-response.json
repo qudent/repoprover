@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"unit_key\": \"unit-001\",\n      \"failure_analysis\": \"The generated theorem `det_transpose'` compiles successfully and covers the source theorem `thm.det.transp`. No repair needed.\",\n      \"missing_or_uncertain_context\": [],\n      \"needed_mathlib_context\": [],\n      \"repair_strategy_note\": \"No repair needed; the theorem compiles.\",\n      \"selected_visible_context\": [],\n      \"selector_confidence\": 1.0,\n      \"do_not_use_identifiers\": []\n    },\n    {\n      \"unit_key\": \"unit-002\",\n      \"failure_analysis\": \"The generated theorem `det_triangular` compiles successfully but only covers the upper triangular case via `Matrix.det_of_upperTriangular`. The source theorem `thm.det.triang` explicitly states 'lower-triangular or upper-triangular'. The generated Lean file is missing coverage for the lower triangular case. Since the unit is in `source_coverage_review_unit_keys`, we need to select context to add a theorem for the lower triangular case.\",\n      \"missing_or_uncertain_context\": [\n        \"Whether the hidden target expects a single theorem covering both cases or two separate theorems.\"\n      ],\n      \"needed_mathlib_context\": [\n        {\n          \"name_or_query\": \"Matrix.det_of_lowerTriangular\",\n          \"expected_signature_or_shape\": \"Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i\",\n          \"why_needed\": \"To prove the lower triangular case directly.\"\n        }\n      ],\n      \"repair_strategy_note\": \"Add a second theorem `det_triangular_lower` (or extend the existing theorem) that uses `Matrix.det_of_lowerTriangular` for the lower triangular case. The existing `det_triangular` covers the upper triangular case; the lower triangular case can be proved by applying `det_transpose'` and `det_of_upperTriangular` to the transpose, or directly using `det_of_lowerTriangular`. The visible context already includes `det_transpose'` and `open Matrix`.\",\n      \"selected_visible_context\": [\n        {\n          \"context_kind\": \"local_file_style\",\n          \"name_or_label\": \"variable {K : Type*} [CommRing K]\",\n          \"why_needed\": \"Provides CommRing and Zero instances.\"\n        },\n        {\n          \"context_kind\": \"local_file_style\",\n          \"name_or_label\": \"variable {n : ℕ}\",\n          \"why_needed\": \"Provides the n binder.\"\n        },\n        {\n          \"context_kind\": \"local_file_style\",\n          \"name_or_label\": \"open Matrix\",\n          \"why_needed\": \"Provides access to Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular.\"\n        },\n        {\n          \"context_kind\": \"local_file_predecessor\",\n          \"name_or_label\": \"det_transpose'\",\n          \"why_needed\": \"May be used to reduce lower triangular to upper triangular via transpose.\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"do_not_use_identifiers\": []\n    },\n    {\n      \"unit_key\": \"unit-003\",\n      \"failure_analysis\": \"The generated theorems `det_permute_rows` and `det_permute_cols` compile successfully and cover both equations of the source corollary `cor.det.sig-row-col`. No repair needed.\",\n      \"missing_or_uncertain_context\": [],\n      \"needed_mathlib_context\": [],\n      \"repair_strategy_note\": \"No repair needed; the theorems compile.\",\n      \"selected_visible_context\": [],\n      \"selector_confidence\": 1.0,\n      \"do_not_use_identifiers\": []\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778027056,
+  "id": "gen-1778027056-VtJ4wyqJwL5d045hkrsV",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 896,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00467824,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00025088,
+      "upstream_inference_cost": 0.00467824,
+      "upstream_inference_prompt_cost": 0.00442736
+    },
+    "is_byok": false,
+    "prompt_tokens": 31624,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 32520
+  }
+}

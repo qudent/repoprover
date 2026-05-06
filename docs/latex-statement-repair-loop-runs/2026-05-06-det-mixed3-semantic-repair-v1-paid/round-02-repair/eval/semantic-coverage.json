@@ -1,0 +1,815 @@
+{
+  "all_aligned_gold_proved_units": 3,
+  "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
+  "coverage_status_counts": {
+    "all_aligned_gold_proved": 3
+  },
+  "generated_at": "2026-05-06T00:32:01.327006+00:00",
+  "generated_not_compiled_units": 0,
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
+  "no_aligned_gold_proved_units": 0,
+  "no_aligned_gold_to_check_units": 0,
+  "partial_aligned_gold_proved_units": 0,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid",
+  "unit_count": 3,
+  "units": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "det_transpose'"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.Det.det_transpose'",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            423,
+            432
+          ],
+          "gold_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/eval/semantic-coverage/unit-001/gold-001.lean",
+          "messages": [
+            {
+              "column": 2,
+              "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+              "kind": "linter.unnecessarySimpa",
+              "line": 432,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+              "kind": "linter.unnecessarySimpa",
+              "line": 439,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 440,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 441,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 442,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 443,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 444,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_transpose' A' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 440,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_transpose' (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 441,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_transpose' (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 442,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_transpose'' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 443,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_transpose'' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 444,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`",
+              "kind": "linter.style.nameCheck",
+              "line": 437,
+              "severity": "warning"
+            }
+          ],
+          "semantic_check_passed": true,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "all_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 1,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+      "unit_key": "unit-001"
+    },
+    {
+      "aligned_gold_declaration_count": 2,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "det_triangular",
+            "det_triangular_lower"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.Det.det_upperTriangular",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            434,
+            439
+          ],
+          "gold_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/eval/semantic-coverage/unit-002/gold-001.lean",
+          "messages": [
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 461,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 462,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 463,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 464,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 465,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 466,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 467,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 468,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 469,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 470,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 471,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 472,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 473,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular A hA' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 461,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_triangular A (by simpa [Fintype.card_fin] using hA)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 462,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular A (by simpa [Fintype.card_fin] using hA)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 463,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_triangular_lower A h' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 464,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular_lower A h' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 465,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_triangular_lower A (by simpa [Fintype.card_fin] using h)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 466,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular_lower A (by simpa [Fintype.card_fin] using h)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 467,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_triangular_lower' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 468,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular_lower' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 469,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_triangular_lower A hA' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 470,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular_lower A hA' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 471,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_triangular_lower A (by simpa [Fintype.card_fin] using hA)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 472,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular_lower A (by simpa [Fintype.card_fin] using hA)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 473,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`",
+              "kind": "linter.style.nameCheck",
+              "line": 451,
+              "severity": "warning"
+            }
+          ],
+          "semantic_check_passed": true,
+          "stderr": ""
+        },
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "det_triangular",
+            "det_triangular_lower"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.Det.det_lowerTriangular",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            441,
+            449
+          ],
+          "gold_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/eval/semantic-coverage/unit-002/gold-002.lean",
+          "messages": [
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 478,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 479,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 480,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular_lower A hA' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 478,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_triangular_lower A (by simpa [Fintype.card_fin] using hA)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 479,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_triangular_lower A (by simpa [Fintype.card_fin] using hA)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 480,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`",
+              "kind": "linter.style.nameCheck",
+              "line": 458,
+              "severity": "warning"
+            }
+          ],
+          "semantic_check_passed": true,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "all_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 2,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+      "unit_key": "unit-002"
+    },
+    {
+      "aligned_gold_declaration_count": 2,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "det_permute_rows",
+            "det_permute_cols"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.Det.det_permute_rows",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            626,
+            630
+          ],
+          "gold_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/eval/semantic-coverage/unit-003/gold-001.lean",
+          "messages": [
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 649,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 650,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 651,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 652,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 653,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 654,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 655,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 656,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 657,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 658,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 659,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 660,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 661,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 662,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 663,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_rows τ A' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 649,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_rows τ (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 650,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_rows τ (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 651,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_rows' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 652,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_rows' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 653,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_rows A τ' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 654,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_rows A τ' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 655,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_cols τ A' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 656,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols τ A' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 657,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_cols τ (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 658,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols τ (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 659,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_cols' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 660,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 661,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_cols A τ' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 662,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols A τ' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 663,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`",
+              "kind": "linter.style.nameCheck",
+              "line": 645,
+              "severity": "warning"
+            }
+          ],
+          "semantic_check_passed": true,
+          "stderr": ""
+        },
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "det_permute_rows",
+            "det_permute_cols"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.Det.det_permute_cols",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            632,
+            646
+          ],
+          "gold_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/eval/semantic-coverage/unit-003/gold-002.lean",
+          "messages": [
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 659,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 660,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 661,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 662,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 663,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 664,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
+              "kind": "linter.unreachableTactic",
+              "line": 665,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols τ A' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 659,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_cols τ (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 660,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols τ (by simpa [Fintype.card_fin] using A)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 661,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_cols' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 662,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 663,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa using det_permute_cols A τ' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 664,
+              "severity": "warning"
+            },
+            {
+              "column": 4,
+              "data": "'simpa [Fintype.card_fin] using det_permute_cols A τ' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
+              "kind": "linter.unusedTactic",
+              "line": 665,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`",
+              "kind": "linter.style.nameCheck",
+              "line": 647,
+              "severity": "warning"
+            }
+          ],
+          "semantic_check_passed": true,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "all_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 2,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+      "unit_key": "unit-003"
+    }
+  ]
+}

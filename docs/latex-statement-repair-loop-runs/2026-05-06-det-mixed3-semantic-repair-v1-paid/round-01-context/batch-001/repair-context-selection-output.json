@@ -1,0 +1,63 @@
+{
+  "units": [
+    {
+      "do_not_use_identifiers": [],
+      "failure_analysis": "The generated theorem `det_transpose'` compiles successfully. No additional context is needed.",
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [],
+      "repair_strategy_note": "No repair needed; the theorem compiles.",
+      "selected_visible_context": [],
+      "selector_confidence": 1.0,
+      "unit_key": "unit-001"
+    },
+    {
+      "do_not_use_identifiers": [],
+      "failure_analysis": "The generated theorem `det_triangular` compiles successfully. However, the source theorem `thm.det.triang` states that the determinant of a triangular matrix (lower or upper) equals the product of diagonal entries. The generated declaration only covers the upper triangular case via `Matrix.det_of_upperTriangular`. The lower triangular case is not covered. The source text explicitly says 'lower-triangular or upper-triangular'. The generated Lean file may be missing a second theorem or a combined statement that handles both cases. Since the unit is in `source_coverage_review_unit_keys`, we should review the source text and select context for the missing lower triangular case.",
+      "missing_or_uncertain_context": [
+        "Whether the hidden target expects a single theorem covering both lower and upper triangular, or two separate theorems."
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+          "name_or_query": "Matrix.det_of_lowerTriangular",
+          "why_needed": "To prove the lower triangular case of the theorem."
+        }
+      ],
+      "repair_strategy_note": "Add a second theorem `det_triangular_lower` (or extend the existing theorem) that uses `Matrix.det_of_lowerTriangular` for the lower triangular case. Alternatively, combine both cases into one theorem using `h : A.BlockTriangular id ∨ A.BlockTriangular (OrderDual.toDual ∘ id)` and case analysis. The existing `det_triangular` covers the upper triangular case; the lower triangular case can be proved by applying `det_transpose'` and `det_of_upperTriangular` to the transpose, or directly using `det_of_lowerTriangular`.",
+      "selected_visible_context": [
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {K : Type*} [CommRing K]",
+          "why_needed": "Provides CommRing and Zero instances."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {n : ℕ}",
+          "why_needed": "Provides the n binder."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "open Matrix",
+          "why_needed": "Provides access to Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "det_transpose'",
+          "why_needed": "May be used to reduce lower triangular to upper triangular via transpose."
+        }
+      ],
+      "selector_confidence": 0.9,
+      "unit_key": "unit-002"
+    },
+    {
+      "do_not_use_identifiers": [],
+      "failure_analysis": "The generated theorems `det_permute_rows` and `det_permute_cols` compile successfully. The source corollary `cor.det.sig-row-col` states two equations: one for row permutation and one for column permutation. The generated declarations cover both. No additional context is needed.",
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [],
+      "repair_strategy_note": "No repair needed; the theorems compile.",
+      "selected_visible_context": [],
+      "selector_confidence": 1.0,
+      "unit_key": "unit-003"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "exact_identifier_count": 1,
+  "fallback_exact_identifier_count": 0,
+  "fallback_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "fallback_lean_check_status": "no_exact_identifiers",
+  "generated_at": "2026-05-06T00:22:18.625099+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det_of_lowerTriangular",
+      "expected_signature_or_shape": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "query": "Matrix.det_of_lowerTriangular",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "To prove the lower triangular case of the theorem."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Matrix.det_of_lowerTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "ad5306986ff36e5a19bfe2c88f8dfbfa04c5ffbaa166ecd0a8e09f1703350a17",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 1,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

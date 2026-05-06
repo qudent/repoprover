@@ -1,0 +1,52 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+              "name_or_query": "Matrix.det_of_upperTriangular",
+              "why_needed": "Main theorem for upper triangular determinant."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-002-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-002"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+              "name_or_query": "Matrix.det_permute",
+              "why_needed": "Core lemma for row permutation."
+            },
+            {
+              "expected_signature_or_shape": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+              "name_or_query": "Matrix.det_permute'",
+              "why_needed": "Core lemma for column permutation."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-003-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-003"
+    }
+  ]
+}

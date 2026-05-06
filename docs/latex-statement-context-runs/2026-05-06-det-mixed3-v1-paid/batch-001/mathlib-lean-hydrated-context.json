@@ -1,0 +1,1301 @@
+{
+  "exact_identifier_count": 6,
+  "fallback_exact_identifier_count": 27,
+  "fallback_lean_check": {
+    "checked": {
+      "Matrix.BlockTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} [LT α] [Zero R] (M : Matrix m m R)\n  (b : m → α) : Prop",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} [LT α] [Zero R] (M : Matrix m m R)\n  (b : m → α) : Prop",
+        "status": "checked"
+      },
+      "Matrix.BlockTriangular.add": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.add.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M N : Matrix m m R} {b : m → α}\n  [LT α] [AddZeroClass R] (hM : M.BlockTriangular b) (hN : N.BlockTriangular b) : (M + N).BlockTriangular b",
+            "line": 19,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.add.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M N : Matrix m m R} {b : m → α}\n  [LT α] [AddZeroClass R] (hM : M.BlockTriangular b) (hN : N.BlockTriangular b) : (M + N).BlockTriangular b",
+        "status": "checked"
+      },
+      "Matrix.BlockTriangular.det": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+        "status": "checked"
+      },
+      "Matrix.BlockTriangular.det_fintype": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+        "status": "checked"
+      },
+      "Matrix.BlockTriangular.neg": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.neg.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [NegZeroClass R]\n  {M : Matrix m m R} (hM : M.BlockTriangular b) : (-M).BlockTriangular b",
+            "line": 18,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.neg.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [NegZeroClass R]\n  {M : Matrix m m R} (hM : M.BlockTriangular b) : (-M).BlockTriangular b",
+        "status": "checked"
+      },
+      "Matrix.BlockTriangular.submatrix": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.submatrix.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} {b : m → α} [LT α] [Zero R] {f : n → m} (h : M.BlockTriangular b) :\n  (M.submatrix f f).BlockTriangular (b ∘ f)",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.submatrix.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} {b : m → α} [LT α] [Zero R] {f : n → m} (h : M.BlockTriangular b) :\n  (M.submatrix f f).BlockTriangular (b ∘ f)",
+        "status": "checked"
+      },
+      "Matrix.BlockTriangular.transpose": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.transpose.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [LT α] [Zero R] : M.BlockTriangular b → M.transpose.BlockTriangular (⇑OrderDual.toDual ∘ b)",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.transpose.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [LT α] [Zero R] : M.BlockTriangular b → M.transpose.BlockTriangular (⇑OrderDual.toDual ∘ b)",
+        "status": "checked"
+      },
+      "Matrix.GeneralLinearGroup.det": {
+        "messages": [
+          {
+            "data": "Matrix.GeneralLinearGroup.det.{u, v} {n : Type u} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] : GL n R →* Rˣ",
+            "line": 26,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.GeneralLinearGroup.det.{u, v} {n : Type u} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] : GL n R →* Rˣ",
+        "status": "checked"
+      },
+      "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det": {
+        "messages": [
+          {
+            "data": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+        "status": "checked"
+      },
+      "Matrix.TransvectionStruct.det": {
+        "messages": [
+          {
+            "data": "Matrix.TransvectionStruct.det.{u₂, u_1} {n : Type u_1} {R : Type u₂} [DecidableEq n] [CommRing R] [Fintype n]\n  (t : Matrix.TransvectionStruct n R) : t.toMatrix.det = 1",
+            "line": 27,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.TransvectionStruct.det.{u₂, u_1} {n : Type u_1} {R : Type u₂} [DecidableEq n] [CommRing R] [Fintype n]\n  (t : Matrix.TransvectionStruct n R) : t.toMatrix.det = 1",
+        "status": "checked"
+      },
+      "Matrix.blockTriangular_reindex_iff": {
+        "messages": [
+          {
+            "data": "Matrix.blockTriangular_reindex_iff.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} [LT α] [Zero R] {b : n → α} {e : m ≃ n} :\n  ((Matrix.reindex e e) M).BlockTriangular b ↔ M.BlockTriangular (b ∘ ⇑e)",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.blockTriangular_reindex_iff.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} [LT α] [Zero R] {b : n → α} {e : m ≃ n} :\n  ((Matrix.reindex e e) M).BlockTriangular b ↔ M.BlockTriangular (b ∘ ⇑e)",
+        "status": "checked"
+      },
+      "Matrix.blockTriangular_transpose_iff": {
+        "messages": [
+          {
+            "data": "Matrix.blockTriangular_transpose_iff.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} [LT α]\n  [Zero R] {b : m → αᵒᵈ} : M.transpose.BlockTriangular b ↔ M.BlockTriangular (⇑OrderDual.ofDual ∘ b)",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.blockTriangular_transpose_iff.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} [LT α]\n  [Zero R] {b : m → αᵒᵈ} : M.transpose.BlockTriangular b ↔ M.BlockTriangular (⇑OrderDual.ofDual ∘ b)",
+        "status": "checked"
+      },
+      "Matrix.blockTriangular_zero": {
+        "messages": [
+          {
+            "data": "Matrix.blockTriangular_zero.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [Zero R] :\n  Matrix.BlockTriangular 0 b",
+            "line": 17,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.blockTriangular_zero.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [Zero R] :\n  Matrix.BlockTriangular 0 b",
+        "status": "checked"
+      },
+      "Matrix.det": {
+        "messages": [
+          {
+            "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "line": 25,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+        "status": "checked"
+      },
+      "Matrix.det_eq_zero_of_not_linearIndependent_cols": {
+        "messages": [
+          {
+            "data": "Matrix.det_eq_zero_of_not_linearIndependent_cols.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A.transpose i) : A.det = 0",
+            "line": 29,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_eq_zero_of_not_linearIndependent_cols.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A.transpose i) : A.det = 0",
+        "status": "checked"
+      },
+      "Matrix.det_eq_zero_of_not_linearIndependent_rows": {
+        "messages": [
+          {
+            "data": "Matrix.det_eq_zero_of_not_linearIndependent_rows.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A i) : A.det = 0",
+            "line": 22,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_eq_zero_of_not_linearIndependent_rows.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A i) : A.det = 0",
+        "status": "checked"
+      },
+      "Matrix.det_of_lowerTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "Matrix.det_of_upperTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "Matrix.det_permute": {
+        "messages": [
+          {
+            "data": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "line": 20,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+        "status": "checked"
+      },
+      "Matrix.det_permute'": {
+        "messages": [
+          {
+            "data": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "line": 21,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+        "status": "checked"
+      },
+      "Matrix.linearIndependent_cols_of_det_ne_zero": {
+        "messages": [
+          {
+            "data": "Matrix.linearIndependent_cols_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R A.col",
+            "line": 28,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.linearIndependent_cols_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R A.col",
+        "status": "checked"
+      },
+      "Matrix.linearIndependent_rows_of_det_ne_zero": {
+        "messages": [
+          {
+            "data": "Matrix.linearIndependent_rows_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R fun i => A i",
+            "line": 23,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.linearIndependent_rows_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R fun i => A i",
+        "status": "checked"
+      },
+      "Matrix.permanent_permute_cols": {
+        "messages": [
+          {
+            "data": "Matrix.permanent_permute_cols.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix (⇑σ) id).permanent = M.permanent",
+            "line": 30,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.permanent_permute_cols.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix (⇑σ) id).permanent = M.permanent",
+        "status": "checked"
+      },
+      "Matrix.permanent_permute_rows": {
+        "messages": [
+          {
+            "data": "Matrix.permanent_permute_rows.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix id ⇑σ).permanent = M.permanent",
+            "line": 24,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.permanent_permute_rows.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix id ⇑σ).permanent = M.permanent",
+        "status": "checked"
+      },
+      "Matrix.twoBlockTriangular_det": {
+        "messages": [
+          {
+            "data": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+        "status": "checked"
+      },
+      "Matrix.twoBlockTriangular_det'": {
+        "messages": [
+          {
+            "data": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+        "status": "checked"
+      },
+      "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular": {
+        "messages": [
+          {
+            "data": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "5c0cff5c440f040f5d4950406c4631c8126ba408c8034b9d0b8571f1c1ac585a",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T00:13:23.672964+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det_transpose",
+      "expected_signature_or_shape": "Matrix.det_transpose : det (Aᵀ) = det A",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+        "status": "checked"
+      },
+      "query": "Matrix.det_transpose",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "Core theorem for transpose determinant equality."
+    },
+    {
+      "exact_identifier": "Matrix.det_triangular",
+      "expected_signature_or_shape": "det_triangular : ∀ (A : Matrix (Fin n) (Fin n) K), (Triangular A) → det A = ∏ i, A i i",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem twoBlockTriangular_det (M : Matrix m m R) (p : m → Prop) [DecidablePred p]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "status": "checked"
+          },
+          "line_number": 224,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.twoBlockTriangular_det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem twoBlockTriangular_det' (M : Matrix m m R) (p : m → Prop) [DecidablePred p]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "status": "checked"
+          },
+          "line_number": 233,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.twoBlockTriangular_det'",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "protected theorem BlockTriangular.det [DecidableEq α] [LinearOrder α] (hM : BlockTriangular M b) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+            "status": "checked"
+          },
+          "line_number": 241,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem BlockTriangular.det_fintype [DecidableEq α] [Fintype α] [LinearOrder α]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+            "status": "checked"
+          },
+          "line_number": 275,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.det_fintype",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem det_of_upperTriangular [LinearOrder m] (h : M.BlockTriangular id) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "status": "checked"
+          },
+          "line_number": 281,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.det_of_upperTriangular",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem det_of_lowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular toDual) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "status": "checked"
+          },
+          "line_number": 286,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.det_of_lowerTriangular",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "lemma isParabolic_iff_of_upperTriangular_of_det [LinearOrder K] [IsStrictOrderedRing K]",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "status": "checked"
+          },
+          "line_number": 241,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/FinTwo.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "lemma isParabolic_iff_of_upperTriangular {g} (hg : g ∈ 𝒢) (hg10 : g 1 0 = 0) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "status": "checked"
+          },
+          "line_number": 49,
+          "matched_tokens": [
+            "det",
+            "triangular"
+          ],
+          "name": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular",
+          "path": ".lake/packages/mathlib/Mathlib/NumberTheory/ModularForms/Cusps.lean",
+          "score": 8
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Matrix.det_triangular`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_triangular`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Matrix.det_triangular",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "Main theorem for triangular matrix determinant."
+    },
+    {
+      "exact_identifier": "Matrix.Triangular",
+      "expected_signature_or_shape": "Triangular predicate or condition (lower/upper)",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "def BlockTriangular (M : Matrix m m R) (b : m → α) : Prop :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} [LT α] [Zero R] (M : Matrix m m R)\n  (b : m → α) : Prop",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} [LT α] [Zero R] (M : Matrix m m R)\n  (b : m → α) : Prop",
+            "status": "checked"
+          },
+          "line_number": 61,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "protected theorem BlockTriangular.submatrix {f : n → m} (h : M.BlockTriangular b) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.submatrix.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} {b : m → α} [LT α] [Zero R] {f : n → m} (h : M.BlockTriangular b) :\n  (M.submatrix f f).BlockTriangular (b ∘ f)",
+                "line": 13,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.submatrix.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} {b : m → α} [LT α] [Zero R] {f : n → m} (h : M.BlockTriangular b) :\n  (M.submatrix f f).BlockTriangular (b ∘ f)",
+            "status": "checked"
+          },
+          "line_number": 65,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.submatrix",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem blockTriangular_reindex_iff {b : n → α} {e : m ≃ n} :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.blockTriangular_reindex_iff.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} [LT α] [Zero R] {b : n → α} {e : m ≃ n} :\n  ((Matrix.reindex e e) M).BlockTriangular b ↔ M.BlockTriangular (b ∘ ⇑e)",
+                "line": 14,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.blockTriangular_reindex_iff.{v, u_1, u_3, u_4} {α : Type u_1} {m : Type u_3} {n : Type u_4} {R : Type v}\n  {M : Matrix m m R} [LT α] [Zero R] {b : n → α} {e : m ≃ n} :\n  ((Matrix.reindex e e) M).BlockTriangular b ↔ M.BlockTriangular (b ∘ ⇑e)",
+            "status": "checked"
+          },
+          "line_number": 68,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.blockTriangular_reindex_iff",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "protected theorem BlockTriangular.transpose :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.transpose.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [LT α] [Zero R] : M.BlockTriangular b → M.transpose.BlockTriangular (⇑OrderDual.toDual ∘ b)",
+                "line": 15,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.transpose.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [LT α] [Zero R] : M.BlockTriangular b → M.transpose.BlockTriangular (⇑OrderDual.toDual ∘ b)",
+            "status": "checked"
+          },
+          "line_number": 76,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.transpose",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "protected theorem blockTriangular_transpose_iff {b : m → αᵒᵈ} :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.blockTriangular_transpose_iff.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} [LT α]\n  [Zero R] {b : m → αᵒᵈ} : M.transpose.BlockTriangular b ↔ M.BlockTriangular (⇑OrderDual.ofDual ∘ b)",
+                "line": 16,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.blockTriangular_transpose_iff.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} [LT α]\n  [Zero R] {b : m → αᵒᵈ} : M.transpose.BlockTriangular b ↔ M.BlockTriangular (⇑OrderDual.ofDual ∘ b)",
+            "status": "checked"
+          },
+          "line_number": 81,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.blockTriangular_transpose_iff",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem blockTriangular_zero : BlockTriangular (0 : Matrix m m R) b := fun _ _ _ => rfl",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.blockTriangular_zero.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [Zero R] :\n  Matrix.BlockTriangular 0 b",
+                "line": 17,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.blockTriangular_zero.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [Zero R] :\n  Matrix.BlockTriangular 0 b",
+            "status": "checked"
+          },
+          "line_number": 86,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.blockTriangular_zero",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "protected theorem BlockTriangular.neg [NegZeroClass R] {M : Matrix m m R}",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.neg.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [NegZeroClass R]\n  {M : Matrix m m R} (hM : M.BlockTriangular b) : (-M).BlockTriangular b",
+                "line": 18,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.neg.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {b : m → α} [LT α] [NegZeroClass R]\n  {M : Matrix m m R} (hM : M.BlockTriangular b) : (-M).BlockTriangular b",
+            "status": "checked"
+          },
+          "line_number": 90,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.neg",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem BlockTriangular.add [AddZeroClass R] (hM : BlockTriangular M b) (hN : BlockTriangular N b) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.add.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M N : Matrix m m R} {b : m → α}\n  [LT α] [AddZeroClass R] (hM : M.BlockTriangular b) (hN : N.BlockTriangular b) : (M + N).BlockTriangular b",
+                "line": 19,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.add.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M N : Matrix m m R} {b : m → α}\n  [LT α] [AddZeroClass R] (hM : M.BlockTriangular b) (hN : N.BlockTriangular b) : (M + N).BlockTriangular b",
+            "status": "checked"
+          },
+          "line_number": 94,
+          "matched_tokens": [
+            "matrix",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.add",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 5
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Matrix.Triangular`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.Triangular`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Matrix.Triangular",
+      "request_index": 2,
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "To express the hypothesis that A is triangular."
+    },
+    {
+      "exact_identifier": "Matrix.det_permute_rows",
+      "expected_signature_or_shape": "det_permute_rows : det (A ∘ τ) = sign τ * det A",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem det_permute (σ : Perm n) (M : Matrix n n R) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+                "line": 20,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "status": "checked"
+          },
+          "line_number": 212,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "permute"
+          ],
+          "name": "Matrix.det_permute",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 11
+        },
+        {
+          "declaration_line": "theorem det_permute' (σ : Perm n) (M : Matrix n n R) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+                "line": 21,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "status": "checked"
+          },
+          "line_number": 217,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "permute"
+          ],
+          "name": "Matrix.det_permute'",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem det_eq_zero_of_not_linearIndependent_rows [IsDomain R] {A : Matrix m m R}",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_eq_zero_of_not_linearIndependent_rows.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A i) : A.det = 0",
+                "line": 22,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_eq_zero_of_not_linearIndependent_rows.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A i) : A.det = 0",
+            "status": "checked"
+          },
+          "line_number": 482,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "rows"
+          ],
+          "name": "Matrix.det_eq_zero_of_not_linearIndependent_rows",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem linearIndependent_rows_of_det_ne_zero [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.linearIndependent_rows_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R fun i => A i",
+                "line": 23,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.linearIndependent_rows_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R fun i => A i",
+            "status": "checked"
+          },
+          "line_number": 486,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "rows"
+          ],
+          "name": "Matrix.linearIndependent_rows_of_det_ne_zero",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem permanent_permute_rows (σ : Perm n) (M : Matrix n n R) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.permanent_permute_rows.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix id ⇑σ).permanent = M.permanent",
+                "line": 24,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.permanent_permute_rows.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix id ⇑σ).permanent = M.permanent",
+            "status": "checked"
+          },
+          "line_number": 85,
+          "matched_tokens": [
+            "matrix",
+            "permute",
+            "rows"
+          ],
+          "name": "Matrix.permanent_permute_rows",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Permanent.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "def det (M : Matrix n n R) : R :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+                "line": 25,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "status": "checked"
+          },
+          "line_number": 59,
+          "matched_tokens": [
+            "matrix",
+            "det"
+          ],
+          "name": "Matrix.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "def det : GL n R →* Rˣ where",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.GeneralLinearGroup.det.{u, v} {n : Type u} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] : GL n R →* Rˣ",
+                "line": 26,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.GeneralLinearGroup.det.{u, v} {n : Type u} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] : GL n R →* Rˣ",
+            "status": "checked"
+          },
+          "line_number": 70,
+          "matched_tokens": [
+            "matrix",
+            "det"
+          ],
+          "name": "Matrix.GeneralLinearGroup.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/Defs.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "protected theorem det [Fintype n] (t : TransvectionStruct n R) : det t.toMatrix = 1 :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.TransvectionStruct.det.{u₂, u_1} {n : Type u_1} {R : Type u₂} [DecidableEq n] [CommRing R] [Fintype n]\n  (t : Matrix.TransvectionStruct n R) : t.toMatrix.det = 1",
+                "line": 27,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.TransvectionStruct.det.{u₂, u_1} {n : Type u_1} {R : Type u₂} [DecidableEq n] [CommRing R] [Fintype n]\n  (t : Matrix.TransvectionStruct n R) : t.toMatrix.det = 1",
+            "status": "checked"
+          },
+          "line_number": 166,
+          "matched_tokens": [
+            "matrix",
+            "det"
+          ],
+          "name": "Matrix.TransvectionStruct.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean",
+          "score": 7
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Matrix.det_permute_rows`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_permute_rows`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Matrix.det_permute_rows",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "Core lemma for row permutation effect on determinant."
+    },
+    {
+      "exact_identifier": "Matrix.det_permute_cols",
+      "expected_signature_or_shape": "det_permute_cols : det (A.submatrix id τ) = sign τ * det A",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem det_permute (σ : Perm n) (M : Matrix n n R) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+                "line": 20,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "status": "checked"
+          },
+          "line_number": 212,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "permute"
+          ],
+          "name": "Matrix.det_permute",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 11
+        },
+        {
+          "declaration_line": "theorem det_permute' (σ : Perm n) (M : Matrix n n R) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+                "line": 21,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "status": "checked"
+          },
+          "line_number": 217,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "permute"
+          ],
+          "name": "Matrix.det_permute'",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem linearIndependent_cols_of_det_ne_zero [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.linearIndependent_cols_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R A.col",
+                "line": 28,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.linearIndependent_cols_of_det_ne_zero.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : A.det ≠ 0) : LinearIndependent R A.col",
+            "status": "checked"
+          },
+          "line_number": 491,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "cols"
+          ],
+          "name": "Matrix.linearIndependent_cols_of_det_ne_zero",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem det_eq_zero_of_not_linearIndependent_cols [IsDomain R] {A : Matrix m m R}",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_eq_zero_of_not_linearIndependent_cols.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A.transpose i) : A.det = 0",
+                "line": 29,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_eq_zero_of_not_linearIndependent_cols.{v, u_1} {m : Type u_1} [DecidableEq m] [Fintype m] {R : Type v}\n  [CommRing R] [IsDomain R] {A : Matrix m m R} (hA : ¬LinearIndependent R fun i => A.transpose i) : A.det = 0",
+            "status": "checked"
+          },
+          "line_number": 495,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "cols"
+          ],
+          "name": "Matrix.det_eq_zero_of_not_linearIndependent_cols",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem permanent_permute_cols (σ : Perm n) (M : Matrix n n R) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.permanent_permute_cols.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix (⇑σ) id).permanent = M.permanent",
+                "line": 30,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.permanent_permute_cols.{u_1, u_2} {n : Type u_1} [DecidableEq n] [Fintype n] {R : Type u_2} [CommSemiring R]\n  (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix (⇑σ) id).permanent = M.permanent",
+            "status": "checked"
+          },
+          "line_number": 80,
+          "matched_tokens": [
+            "matrix",
+            "permute",
+            "cols"
+          ],
+          "name": "Matrix.permanent_permute_cols",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Permanent.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "def det (M : Matrix n n R) : R :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+                "line": 25,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "status": "checked"
+          },
+          "line_number": 59,
+          "matched_tokens": [
+            "matrix",
+            "det"
+          ],
+          "name": "Matrix.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "def det : GL n R →* Rˣ where",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.GeneralLinearGroup.det.{u, v} {n : Type u} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] : GL n R →* Rˣ",
+                "line": 26,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.GeneralLinearGroup.det.{u, v} {n : Type u} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] : GL n R →* Rˣ",
+            "status": "checked"
+          },
+          "line_number": 70,
+          "matched_tokens": [
+            "matrix",
+            "det"
+          ],
+          "name": "Matrix.GeneralLinearGroup.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/Defs.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "protected theorem det [Fintype n] (t : TransvectionStruct n R) : det t.toMatrix = 1 :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.TransvectionStruct.det.{u₂, u_1} {n : Type u_1} {R : Type u₂} [DecidableEq n] [CommRing R] [Fintype n]\n  (t : Matrix.TransvectionStruct n R) : t.toMatrix.det = 1",
+                "line": 27,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.TransvectionStruct.det.{u₂, u_1} {n : Type u_1} {R : Type u₂} [DecidableEq n] [CommRing R] [Fintype n]\n  (t : Matrix.TransvectionStruct n R) : t.toMatrix.det = 1",
+            "status": "checked"
+          },
+          "line_number": 166,
+          "matched_tokens": [
+            "matrix",
+            "det"
+          ],
+          "name": "Matrix.TransvectionStruct.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean",
+          "score": 7
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Matrix.det_permute_cols`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_permute_cols`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Matrix.det_permute_cols",
+      "request_index": 2,
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "Core lemma for column permutation effect on determinant."
+    },
+    {
+      "exact_identifier": "Equiv.Perm.sign",
+      "expected_signature_or_shape": "Equiv.Perm.sign : sign of a permutation",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Equiv.Perm.sign.{u} {α : Type u} [DecidableEq α] [Fintype α] : Equiv.Perm α →* ℤˣ",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Equiv.Perm.sign.{u} {α : Type u} [DecidableEq α] [Fintype α] : Equiv.Perm α →* ℤˣ",
+        "status": "checked"
+      },
+      "query": "Equiv.Perm.sign",
+      "request_index": 3,
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "To express (-1)^τ."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Equiv.Perm.sign": {
+        "messages": [
+          {
+            "data": "Equiv.Perm.sign.{u} {α : Type u} [DecidableEq α] [Fintype α] : Equiv.Perm α →* ℤˣ",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Equiv.Perm.sign.{u} {α : Type u} [DecidableEq α] [Fintype α] : Equiv.Perm α →* ℤˣ",
+        "status": "checked"
+      },
+      "Matrix.Triangular": {
+        "error": "Unknown constant `Matrix.Triangular`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.Triangular`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Matrix.det_permute_cols": {
+        "error": "Unknown constant `Matrix.det_permute_cols`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_permute_cols`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Matrix.det_permute_rows": {
+        "error": "Unknown constant `Matrix.det_permute_rows`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_permute_rows`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Matrix.det_transpose": {
+        "messages": [
+          {
+            "data": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_transpose.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) :\n  M.transpose.det = M.det",
+        "status": "checked"
+      },
+      "Matrix.det_triangular": {
+        "error": "Unknown constant `Matrix.det_triangular`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_triangular`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "3a71fb6193a4022797477cec880f1eaae4e5a7030c72f2c5ee2f2c83cc023e59",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 6,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

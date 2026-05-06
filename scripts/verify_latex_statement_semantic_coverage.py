@@ -33,6 +33,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 CHECK_NAME = "__repoprover_latex_statement_check"
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+([A-Za-z0-9_'.]+)\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+([A-Za-z0-9_'.]+))?\s*$")
+DECL_START_RE = re.compile(
+    r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
+    r"(?:theorem|lemma|def|abbrev|instance)\s+([^\s:\{\(\[]+)"
+)
 
 
 def read_json(path: Path) -> Any:
@@ -109,6 +113,33 @@ def active_namespaces(source: str) -> list[str]:
             if not end_name or end_name == stack[-1] or end_name.split(".")[-1] == stack[-1]:
                 stack.pop()
     return stack
+
+
+def declared_names(source: str) -> set[str]:
+    names: set[str] = set()
+    for line in source.splitlines():
+        match = DECL_START_RE.match(line)
+        if match:
+            names.add(match.group(1))
+    return names
+
+
+def drop_declarations_by_name(body: str, names_to_drop: set[str]) -> str:
+    if not names_to_drop:
+        return body
+    lines = body.splitlines()
+    kept: list[str] = []
+    index = 0
+    while index < len(lines):
+        match = DECL_START_RE.match(lines[index])
+        if match and match.group(1) in names_to_drop:
+            index += 1
+            while index < len(lines) and not DECL_START_RE.match(lines[index]):
+                index += 1
+            continue
+        kept.append(lines[index])
+        index += 1
+    return "\n".join(kept).strip()
 
 
 def strip_duplicate_namespace_wrapper(body: str, *, active: list[str]) -> str:
@@ -233,6 +264,7 @@ def build_semantic_check_source(
     _original, gold_head = renamed_gold_head(project_root, aligned)
     prefix = target_file_prefix(project_root, aligned)
     generated_body = strip_duplicate_namespace_wrapper(generated_body, active=active_namespaces(prefix))
+    generated_body = drop_declarations_by_name(generated_body, declared_names(prefix))
     parts = [
         prefix,
         "",

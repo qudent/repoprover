@@ -563,6 +563,40 @@ New theorem-level multi-declaration probe:
   `all_aligned_gold_proved` for the source unit with `2/2` aligned gold
   declarations proved.
 
+Mixed theorem-level determinant batch:
+
+- source units:
+  `thm.det.transp`, `thm.det.triang`, and `cor.det.sig-row-col`.
+- selector/generation:
+  `docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid/` and
+  `docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid/`.
+  Selector cost `$0.0023072`; generation cost `$0.00400176`; both returned
+  valid JSON. Hydration checked exact `Matrix.det_transpose` and
+  `Equiv.Perm.sign`, recovered triangular fallbacks
+  `Matrix.det_of_upperTriangular` / `Matrix.det_of_lowerTriangular`, and found
+  permutation fallbacks `Matrix.det_permute` / `Matrix.det_permute'`.
+- initial generated-only verification: `0/3`, mostly omitted ambient
+  binders/typeclasses, plus one row/column permutation shape issue.
+- compile repair loop:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/`,
+  one repair round, additional cost `$0.00967302`; generated-only compile
+  `3/3`, but semantic coverage was only `1/3` all-covered and `2/3` partial.
+- semantic-aware resume:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/`,
+  two more rounds, additional cost `$0.01909138`; it preserved the already
+  semantically covered transpose unit, fixed the missing lower-triangular
+  declaration, and left a row/column permutation miss that turned out to be a
+  grader artifact.
+- grader fix: `scripts/verify_latex_statement_semantic_coverage.py` now removes
+  generated declarations already present in the target file prefix before
+  appending the grader-only check. This prevents a later aligned-gold check from
+  false-failing due to redeclaring a theorem generated for an earlier aligned
+  gold declaration in the same source unit.
+- final rerun after the grader fix: generated-only compile `3/3`; semantic
+  coverage `all_aligned_gold_proved` for all `3/3` source units and `5/5`
+  aligned gold declarations. Total paid cost for the mixed batch was
+  `$0.03507336`.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

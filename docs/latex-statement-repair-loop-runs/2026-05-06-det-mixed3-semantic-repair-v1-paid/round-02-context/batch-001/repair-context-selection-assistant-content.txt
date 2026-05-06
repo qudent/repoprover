@@ -1,0 +1,63 @@
+{
+  "units": [
+    {
+      "unit_key": "unit-001",
+      "failure_analysis": "The generated theorem `det_transpose'` compiles successfully and covers the source theorem `thm.det.transp`. No repair needed.",
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [],
+      "repair_strategy_note": "No repair needed; the theorem compiles.",
+      "selected_visible_context": [],
+      "selector_confidence": 1.0,
+      "do_not_use_identifiers": []
+    },
+    {
+      "unit_key": "unit-002",
+      "failure_analysis": "The generated theorem `det_triangular` compiles successfully but only covers the upper triangular case via `Matrix.det_of_upperTriangular`. The source theorem `thm.det.triang` explicitly states 'lower-triangular or upper-triangular'. The generated Lean file is missing coverage for the lower triangular case. Since the unit is in `source_coverage_review_unit_keys`, we need to select context to add a theorem for the lower triangular case.",
+      "missing_or_uncertain_context": [
+        "Whether the hidden target expects a single theorem covering both cases or two separate theorems."
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "Matrix.det_of_lowerTriangular",
+          "expected_signature_or_shape": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+          "why_needed": "To prove the lower triangular case directly."
+        }
+      ],
+      "repair_strategy_note": "Add a second theorem `det_triangular_lower` (or extend the existing theorem) that uses `Matrix.det_of_lowerTriangular` for the lower triangular case. The existing `det_triangular` covers the upper triangular case; the lower triangular case can be proved by applying `det_transpose'` and `det_of_upperTriangular` to the transpose, or directly using `det_of_lowerTriangular`. The visible context already includes `det_transpose'` and `open Matrix`.",
+      "selected_visible_context": [
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {K : Type*} [CommRing K]",
+          "why_needed": "Provides CommRing and Zero instances."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {n : ℕ}",
+          "why_needed": "Provides the n binder."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "open Matrix",
+          "why_needed": "Provides access to Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "det_transpose'",
+          "why_needed": "May be used to reduce lower triangular to upper triangular via transpose."
+        }
+      ],
+      "selector_confidence": 0.9,
+      "do_not_use_identifiers": []
+    },
+    {
+      "unit_key": "unit-003",
+      "failure_analysis": "The generated theorems `det_permute_rows` and `det_permute_cols` compile successfully and cover both equations of the source corollary `cor.det.sig-row-col`. No repair needed.",
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [],
+      "repair_strategy_note": "No repair needed; the theorems compile.",
+      "selected_visible_context": [],
+      "selector_confidence": 1.0,
+      "do_not_use_identifiers": []
+    }
+  ]
+}

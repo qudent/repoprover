@@ -1,0 +1,44 @@
+{
+  "budget_only": false,
+  "cost_summary": {
+    "model": "deepseek/deepseek-v4-flash",
+    "openrouter_reported_cost": 0.00492716,
+    "usage": {
+      "completion_tokens": 984,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      },
+      "cost": 0.00492716,
+      "cost_details": {
+        "upstream_inference_completions_cost": 0.00027552,
+        "upstream_inference_cost": 0.00492716,
+        "upstream_inference_prompt_cost": 0.00465164
+      },
+      "is_byok": false,
+      "prompt_tokens": 33226,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "video_tokens": 0
+      },
+      "total_tokens": 34210
+    }
+  },
+  "elapsed_seconds": 37.377,
+  "generated_at": "2026-05-06T00:21:27.764678+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-01-context",
+  "paid_call_made": true,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid",
+  "valid_json": true,
+  "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/eval/verification-results.json"
+}

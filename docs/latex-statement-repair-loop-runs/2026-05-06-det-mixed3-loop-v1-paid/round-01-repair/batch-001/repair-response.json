@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\"det_transpose'\"],\n      \"lean_file_body\": \"variable {K : Type*} [CommRing K]\\nvariable {n : ℕ}\\n\\ntheorem det_transpose' (A : Matrix (Fin n) (Fin n) K) : Aᵀ.det = A.det :=\\nby\\n  simpa using Matrix.det_transpose A\",\n      \"notes\": [\"Added variable commands for K and n to provide CommRing and Fintype instances.\"],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\"Matrix.det_transpose (checked signature)\"]\n    },\n    {\n      \"declaration_names\": [\"det_triangular\"],\n      \"lean_file_body\": \"variable {K : Type*} [CommRing K]\\nvariable {n : ℕ}\\nopen Matrix\\n\\ntheorem det_triangular (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id) : A.det = ∏ i, A i i :=\\n  Matrix.det_of_upperTriangular h\",\n      \"notes\": [\"Added variable commands for K and n, open Matrix. Uses Matrix.det_of_upperTriangular which requires LinearOrder (Fin n) (available via Fintype and DecidableEq).\"],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-002\",\n      \"used_context\": [\"Matrix.det_of_upperTriangular (checked signature)\"]\n    },\n    {\n      \"declaration_names\": [\"det_permute_rows\", \"det_permute_cols\"],\n      \"lean_file_body\": \"variable {K : Type*} [CommRing K]\\nvariable {n : ℕ}\\nopen Matrix\\n\\ntheorem det_permute_rows (τ : Equiv.Perm (Fin n)) (A : Matrix (Fin n) (Fin n) K) :\\n    (A.submatrix τ id).det = ((Equiv.Perm.sign τ : ℤ) : K) * A.det :=\\n  Matrix.det_permute τ A\\n\\ntheorem det_permute_cols (τ : Equiv.Perm (Fin n)) (A : Matrix (Fin n) (Fin n) K) :\\n    (A.submatrix id τ).det = ((Equiv.Perm.sign τ : ℤ) : K) * A.det :=\\n  Matrix.det_permute' τ A\",\n      \"notes\": [\"Added variable commands for K and n, open Matrix. Uses Matrix.det_permute and Matrix.det_permute' which return ↑↑(sign σ) * det; the double coercion from ℤˣ to ℤ to K is handled by the explicit cast ((Equiv.Perm.sign τ : ℤ) : K).\"],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-003\",\n      \"used_context\": [\"Matrix.det_permute (checked signature)\", \"Matrix.det_permute' (checked signature)\"]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778026523,
+  "id": "gen-1778026523-KlmBX9vHEyt0Jlm6nA9W",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 680,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00495404,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0001904,
+      "upstream_inference_cost": 0.00495404,
+      "upstream_inference_prompt_cost": 0.00476364
+    },
+    "is_byok": false,
+    "prompt_tokens": 34026,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 34706
+  }
+}

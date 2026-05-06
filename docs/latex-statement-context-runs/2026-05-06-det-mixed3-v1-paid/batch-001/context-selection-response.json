@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"No missing notation or ambiguity; standard determinant property.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Matrix.det_transpose : det (Aᵀ) = det A\",\n              \"name_or_query\": \"Matrix.det_transpose\",\n              \"why_needed\": \"Core theorem for transpose determinant equality.\"\n            }\n          ],\n          \"needed_project_context\": [],\n          \"needed_source_context\": [\n            \"Source text: thm.det.transp\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For any square matrix A over a commutative ring, det(Aᵀ) = det(A).\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 1.0,\n      \"source_focus_summary\": \"Transpose preserves determinant.\",\n      \"unit_key\": \"unit-001\"\n    },\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Need to handle both lower- and upper-triangular cases; may need separate lemmas or a single theorem with a condition.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Whether Mathlib has a lemma for determinant of triangular matrices; if not, need to prove using row operations or induction.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"det_triangular : ∀ (A : Matrix (Fin n) (Fin n) K), (Triangular A) → det A = ∏ i, A i i\",\n              \"name_or_query\": \"Matrix.det_triangular\",\n              \"why_needed\": \"Main theorem for triangular matrix determinant.\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Triangular predicate or condition (lower/upper)\",\n              \"name_or_query\": \"Matrix.Triangular\",\n              \"why_needed\": \"To express the hypothesis that A is triangular.\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"det_scale_row, det_add_smul_row, det_zero_row, det_swap_rows\",\n              \"why_needed\": \"Row operation lemmas from thm.det.rowop may be used in proof.\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"Source text: thm.det.triang\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For a triangular matrix A (lower or upper), det A equals product of diagonal entries.\",\n          \"task_id\": \"unit-002-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Determinant of triangular matrix equals product of diagonal entries.\",\n      \"unit_key\": \"unit-002\"\n    },\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Need to handle permutation sign; may need to use existing Mathlib lemma for determinant under row/column permutation.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib lemma for determinant under row permutation by a permutation τ.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"det_permute_rows : det (A ∘ τ) = sign τ * det A\",\n              \"name_or_query\": \"Matrix.det_permute_rows\",\n              \"why_needed\": \"Core lemma for row permutation effect on determinant.\"\n            },\n            {\n              \"expected_signature_or_shape\": \"det_permute_cols : det (A.submatrix id τ) = sign τ * det A\",\n              \"name_or_query\": \"Matrix.det_permute_cols\",\n              \"why_needed\": \"Core lemma for column permutation effect on determinant.\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Equiv.Perm.sign : sign of a permutation\",\n              \"name_or_query\": \"Equiv.Perm.sign\",\n              \"why_needed\": \"To express (-1)^τ.\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"det_swap_rows, det_swap_cols\",\n              \"why_needed\": \"May be used to prove the general permutation case via decomposition into swaps.\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"Source text: cor.det.sig-row-col\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For a matrix A and permutation τ, det of matrix with rows permuted by τ equals sign(τ) * det A; similarly for columns.\",\n          \"task_id\": \"unit-003-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.95,\n      \"source_focus_summary\": \"Determinant under row/column permutation by a permutation τ.\",\n      \"unit_key\": \"unit-003\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778026320,
+  "id": "gen-1778026320-pDxrx2BjOhXkyuKuW6M8",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepInfra",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 1176,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0023072,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00032928,
+      "upstream_inference_cost": 0.0023072,
+      "upstream_inference_prompt_cost": 0.00197792
+    },
+    "is_byok": false,
+    "prompt_tokens": 14128,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 15304
+  }
+}

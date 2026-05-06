@@ -196,6 +196,23 @@ def test_repair_context_prompt_includes_previous_checked_repair_context(tmp_path
     assert "Finset.sum_empty" in prompt
 
 
+def test_repair_context_prompt_includes_source_coverage_review_keys(tmp_path: Path) -> None:
+    selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
+
+    messages = build_repair_context_messages(
+        selector_run=selector_run,
+        generation_run=generation_run,
+        verification_results=verification_path,
+        source_coverage_review_unit_keys=["unit-001"],
+    )
+    prompt = json.dumps(messages, ensure_ascii=False)
+    user_payload = json.loads(messages[1]["content"])
+
+    assert user_payload["source_coverage_review_unit_keys"] == ["unit-001"]
+    assert "review the visible source text against the generated declarations" in prompt
+    assert "does not include gold declarations" not in prompt
+
+
 def test_hydratable_selector_output_keeps_only_mathlib_requests() -> None:
     selection = {
         "units": [

@@ -1,0 +1,41 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+              "name_or_query": "Matrix.det_of_lowerTriangular",
+              "why_needed": "To prove the lower triangular case of the theorem."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-002-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-002"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-003-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-003"
+    }
+  ]
+}

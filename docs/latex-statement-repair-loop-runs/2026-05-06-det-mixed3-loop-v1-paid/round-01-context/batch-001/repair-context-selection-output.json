@@ -1,0 +1,93 @@
+{
+  "units": [
+    {
+      "failure_analysis": "The generated theorem `det_transpose'` fails because the binder `K` is missing the `[CommRing K]` typeclass. The local file context shows `variable {K : Type*} [CommRing K]` but the generated code did not include it. The proof uses `Matrix.det_transpose` which requires `CommRing K`.",
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [],
+      "repair_strategy_note": "Add the variable commands `variable {K : Type*} [CommRing K]` and `variable {n : ℕ}` before the theorem, or include them as explicit binders in the theorem statement. The proof `simpa using Matrix.det_transpose A` is correct once the typeclass is available.",
+      "selected_visible_context": [
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {K : Type*} [CommRing K]",
+          "why_needed": "Provides the CommRing instance needed for Matrix.det_transpose."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {n : ℕ}",
+          "why_needed": "Provides the n binder."
+        }
+      ],
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    },
+    {
+      "failure_analysis": "The generated theorem `det_triangular` fails because `K` lacks `CommRing` and `Zero` instances, and `Matrix.det_of_upperTriangular` requires `[LinearOrder (Fin n)]` which is not available. The binder `h : A.BlockTriangular id` also needs `[LT α] [Zero R]` instances. The proof route using `Matrix.det_of_upperTriangular` is viable but requires the correct typeclass context.",
+      "missing_or_uncertain_context": [
+        "Need to confirm that `Matrix.det_of_upperTriangular` works for `Fin n` with the standard linear order."
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+          "name_or_query": "Matrix.det_of_upperTriangular",
+          "why_needed": "Main theorem for upper triangular determinant."
+        }
+      ],
+      "repair_strategy_note": "Add variable commands for `K` and `n` with appropriate typeclasses. Use `Matrix.det_of_upperTriangular` for the upper triangular case. For lower triangular, use `det_transpose'` and `Matrix.det_of_upperTriangular` on the transpose. The theorem can be stated as `theorem det_triangular (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id) : A.det = ∏ i, A i i := Matrix.det_of_upperTriangular h`.",
+      "selected_visible_context": [
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {K : Type*} [CommRing K]",
+          "why_needed": "Provides CommRing and Zero instances."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {n : ℕ}",
+          "why_needed": "Provides the n binder."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "open Matrix",
+          "why_needed": "Provides access to Matrix.det_of_upperTriangular."
+        }
+      ],
+      "selector_confidence": 0.0,
+      "unit_key": "unit-002"
+    },
+    {
+      "failure_analysis": "The generated theorems `det_permute_rows` and `det_permute_cols` fail because `K` lacks `CommRing` instance, and `Equiv.Perm.sign τ` is of type `ℤˣ` but expected `K`. The Mathlib lemmas `Matrix.det_permute` and `Matrix.det_permute'` return `↑↑(Equiv.Perm.sign σ) * M.det` where the double coercion goes to `R`. The generated code used `(Equiv.Perm.sign τ : K)` which is a single coercion from `ℤˣ` to `K`, but the lemma uses a double coercion. The binder `τ : Equiv.Perm (Fin n)` also needs `DecidableEq` and `Fintype` instances.",
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+          "name_or_query": "Matrix.det_permute",
+          "why_needed": "Core lemma for row permutation."
+        },
+        {
+          "expected_signature_or_shape": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+          "name_or_query": "Matrix.det_permute'",
+          "why_needed": "Core lemma for column permutation."
+        }
+      ],
+      "repair_strategy_note": "Add variable commands for `K` and `n`. Use `Matrix.det_permute` and `Matrix.det_permute'` directly, which already handle the sign coercion. The theorems can be stated as `theorem det_permute_rows (τ : Equiv.Perm (Fin n)) (A : Matrix (Fin n) (Fin n) K) : (A.submatrix τ id).det = (Equiv.Perm.sign τ : K) * A.det := by simpa using Matrix.det_permute τ A` and similarly for columns using `Matrix.det_permute'`. Note: `simpa` may need to handle the double coercion; if not, use `exact` with the lemma.",
+      "selected_visible_context": [
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {K : Type*} [CommRing K]",
+          "why_needed": "Provides CommRing instance."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "variable {n : ℕ}",
+          "why_needed": "Provides n binder."
+        },
+        {
+          "context_kind": "local_file_style",
+          "name_or_label": "open Matrix",
+          "why_needed": "Provides access to Matrix.det_permute and Matrix.det_permute'."
+        }
+      ],
+      "selector_confidence": 0.0,
+      "unit_key": "unit-003"
+    }
+  ]
+}

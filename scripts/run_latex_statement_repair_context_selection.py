@@ -91,6 +91,7 @@ def build_repair_context_messages(
     selector_run: Path,
     generation_run: Path,
     verification_results: Path,
+    source_coverage_review_unit_keys: list[str] | None = None,
 ) -> list[dict[str, str]]:
     generation_messages = build_generation_messages(selector_run)
     generation_user = next(message for message in generation_messages if message["role"] == "user")
@@ -110,7 +111,11 @@ def build_repair_context_messages(
             "additional context that should be hydrated before the next repair "
             "attempt. First sketch a proof route from the visible source, prior "
             "project/local context, and verifier errors. Then request only the "
-            "Mathlib/project/local facts needed for that route."
+            "Mathlib/project/local facts needed for that route. If a unit is "
+            "listed in source_coverage_review_unit_keys, Lean may already compile; "
+            "review the visible source text against the generated declarations and "
+            "select context for any missing source cases, alternatives, displayed "
+            "equations, or subclaims."
         ),
         "required_json_schema": {
             "units": [
@@ -155,10 +160,12 @@ def build_repair_context_messages(
             "Keep Mathlib requests tight. Prefer exact names when known; otherwise use narrow search queries with expected shapes.",
             "Separate source, prior project, local file, and Mathlib context in the output.",
             "If the visible context is fundamentally insufficient, explain that in missing_or_uncertain_context rather than inventing facts.",
+            "For units listed in source_coverage_review_unit_keys, do not rely on hidden gold data; use only the visible source text and generated output to identify missing source coverage.",
         ],
         "original_generation_task": generation_payload,
         "failed_generation_output": failed_output,
         "previous_checked_repair_context": load_previous_checked_repair_context(generation_run),
+        "source_coverage_review_unit_keys": source_coverage_review_unit_keys or [],
         "verification_results": {
             "compile_passed_units": verification.get("compile_passed_units"),
             "unit_count": verification.get("unit_count"),
@@ -184,6 +191,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         selector_run=args.selector_run,
         generation_run=args.generation_run,
         verification_results=args.verification_results,
+        source_coverage_review_unit_keys=getattr(args, "source_coverage_review_unit_key", None),
     )
     request_payload: dict[str, Any] = {
         "model": args.model,
@@ -240,6 +248,14 @@ def main() -> None:
     parser.add_argument("--selector-run", type=Path, required=True)
     parser.add_argument("--generation-run", type=Path, required=True)
     parser.add_argument("--verification-results", type=Path, required=True)
+    parser.add_argument(
+        "--source-coverage-review-unit-key",
+        action="append",
+        help=(
+            "Unit key whose generated Lean compiles but should be reviewed for "
+            "visible source coverage; may be repeated. This does not include gold declarations."
+        ),
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)

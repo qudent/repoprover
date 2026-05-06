@@ -1,0 +1,259 @@
+{
+  "budget_only": false,
+  "final_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+  "final_verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/eval/verification-results.json",
+  "generated_at": "2026-05-06T00:17:16.626092+00:00",
+  "initial_generation_run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+  "initial_verification_results": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid/eval/verification-results.json",
+  "max_rounds": 2,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_root": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid",
+  "reasoning_effort": "none",
+  "rounds": [
+    {
+      "checked_repair_context": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-context/checked-repair-context.json",
+      "checked_repair_context_summary": {
+        "checked_signature_count": 3,
+        "failed_or_unchecked_context_request_count": 0,
+        "output": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-context/checked-repair-context.json",
+        "schema_version": "repoprover.latex_statement_checked_repair_context_build.v1"
+      },
+      "context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-context",
+      "context_selection": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.00471898,
+          "usage": {
+            "completion_tokens": 1704,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.00471898,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.00047712,
+              "upstream_inference_cost": 0.00471898,
+              "upstream_inference_prompt_cost": 0.00424186
+            },
+            "is_byok": false,
+            "prompt_tokens": 30299,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 32003
+          }
+        },
+        "elapsed_seconds": 21.967,
+        "generated_at": "2026-05-06T00:14:49.786169+00:00",
+        "generation_run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-context",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid/eval/verification-results.json"
+      },
+      "hydration": {
+        "batches": [
+          {
+            "exact_identifier_count": 3,
+            "fallback_exact_identifier_count": 0,
+            "fallback_lean_check_status": "no_exact_identifiers",
+            "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+            "lean_check_status": "ok",
+            "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-context/batch-001/context-selection-output.json",
+            "request_count": 3
+          }
+        ],
+        "generated_at": "2026-05-06T00:15:23.180838+00:00",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-context",
+        "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+      },
+      "input_generation_run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+      "input_verification_results": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid/eval/verification-results.json",
+      "posthoc_graders": {
+        "gold_comparison": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/eval/gold-comparison.json",
+        "semantic_coverage": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/eval/semantic-coverage.json"
+      },
+      "preserve_compile_clean_units": {
+        "preserved_unit_keys": [],
+        "updated_paths": []
+      },
+      "repair": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.00495404,
+          "usage": {
+            "completion_tokens": 680,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.00495404,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.0001904,
+              "upstream_inference_cost": 0.00495404,
+              "upstream_inference_prompt_cost": 0.00476364
+            },
+            "is_byok": false,
+            "prompt_tokens": 34026,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 34706
+          }
+        },
+        "elapsed_seconds": 6.492,
+        "generated_at": "2026-05-06T00:15:23.205389+00:00",
+        "generation_run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_generation_repair.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid/eval/verification-results.json"
+      },
+      "repair_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+      "round": 1,
+      "verification": {
+        "base_imports": [
+          "Mathlib"
+        ],
+        "base_opens": [
+          "open scoped Polynomial BigOperators",
+          "open PowerSeries Finset"
+        ],
+        "batches": [
+          {
+            "compile_passed_units": 3,
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/batch-001/generation-output.json",
+            "imports": [
+              "Mathlib",
+              "AlgebraicCombinatorics.DeterminantsBasic"
+            ],
+            "inferred_imports": [
+              "AlgebraicCombinatorics.DeterminantsBasic"
+            ],
+            "inferred_opens": [
+              "open Matrix",
+              "open AlgebraicCombinatorics.Det",
+              "open Matrix.BlockTriangular",
+              "open Matrix.GeneralLinearGroup",
+              "open Subgroup.HasDetPlusMinusOne",
+              "open Matrix.TransvectionStruct"
+            ],
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open Matrix",
+              "open AlgebraicCombinatorics.Det",
+              "open Matrix.BlockTriangular",
+              "open Matrix.GeneralLinearGroup",
+              "open Subgroup.HasDetPlusMinusOne",
+              "open Matrix.TransvectionStruct"
+            ],
+            "unit_count": 3,
+            "units": [
+              {
+                "body_declaration_names": [
+                  "det_transpose'"
+                ],
+                "compile_passed": true,
+                "contract_violations": [],
+                "declaration_names": [
+                  "det_transpose'"
+                ],
+                "lean_error_count": 0,
+                "lean_returncode": 0,
+                "messages": [
+                  {
+                    "column": 2,
+                    "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+                    "kind": "linter.unnecessarySimpa",
+                    "line": 16,
+                    "severity": "warning"
+                  }
+                ],
+                "placeholder_tokens": [],
+                "reported_status": "generated",
+                "skipped_reason": null,
+                "stderr": "",
+                "unit_key": "unit-001"
+              },
+              {
+                "body_declaration_names": [
+                  "det_triangular"
+                ],
+                "compile_passed": true,
+                "contract_violations": [],
+                "declaration_names": [
+                  "det_triangular"
+                ],
+                "lean_error_count": 0,
+                "lean_returncode": 0,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "generated",
+                "skipped_reason": null,
+                "stderr": "",
+                "unit_key": "unit-002"
+              },
+              {
+                "body_declaration_names": [
+                  "det_permute_rows",
+                  "det_permute_cols"
+                ],
+                "compile_passed": true,
+                "contract_violations": [],
+                "declaration_names": [
+                  "det_permute_rows",
+                  "det_permute_cols"
+                ],
+                "lean_error_count": 0,
+                "lean_returncode": 0,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "generated",
+                "skipped_reason": null,
+                "stderr": "",
+                "unit_key": "unit-003"
+              }
+            ]
+          }
+        ],
+        "compile_passed_units": 3,
+        "generated_at": "2026-05-06T00:16:06.710142+00:00",
+        "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+        "infer_context": true,
+        "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+        "schema_version": "repoprover.latex_statement_generation_verification.v1",
+        "unit_count": 3
+      },
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/eval/verification-results.json"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_repair_loop.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid",
+  "semantic_coverage": true,
+  "stop_reason": "all_units_compile"
+}

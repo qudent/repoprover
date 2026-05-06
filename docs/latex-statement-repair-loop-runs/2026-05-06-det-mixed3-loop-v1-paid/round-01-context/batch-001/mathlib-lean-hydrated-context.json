@@ -1,0 +1,138 @@
+{
+  "exact_identifier_count": 3,
+  "fallback_exact_identifier_count": 0,
+  "fallback_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "fallback_lean_check_status": "no_exact_identifiers",
+  "generated_at": "2026-05-06T00:15:23.179838+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det_of_upperTriangular",
+      "expected_signature_or_shape": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m] [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "query": "Matrix.det_of_upperTriangular",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Main theorem for upper triangular determinant."
+    },
+    {
+      "exact_identifier": "Matrix.det_permute",
+      "expected_signature_or_shape": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+        "status": "checked"
+      },
+      "query": "Matrix.det_permute",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "Core lemma for row permutation."
+    },
+    {
+      "exact_identifier": "Matrix.det_permute'",
+      "expected_signature_or_shape": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n) (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+        "status": "checked"
+      },
+      "query": "Matrix.det_permute'",
+      "request_index": 2,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "Core lemma for column permutation."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Matrix.det_of_upperTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "Matrix.det_permute": {
+        "messages": [
+          {
+            "data": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_permute.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix (⇑σ) id).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+        "status": "checked"
+      },
+      "Matrix.det_permute'": {
+        "messages": [
+          {
+            "data": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_permute'.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (σ : Equiv.Perm n)\n  (M : Matrix n n R) : (M.submatrix id ⇑σ).det = ↑↑(Equiv.Perm.sign σ) * M.det",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "370925e63422566deaeed04a2236fecb52fed7050762f02316dc4fb28dec3eb1",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 3,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

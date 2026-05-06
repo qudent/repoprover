@@ -1,0 +1,114 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 3,
+      "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "inferred_opens": [
+        "open Matrix",
+        "open AlgebraicCombinatorics.Det",
+        "open Matrix.BlockTriangular",
+        "open Matrix.GeneralLinearGroup",
+        "open Subgroup.HasDetPlusMinusOne",
+        "open Matrix.TransvectionStruct"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Matrix",
+        "open AlgebraicCombinatorics.Det",
+        "open Matrix.BlockTriangular",
+        "open Matrix.GeneralLinearGroup",
+        "open Subgroup.HasDetPlusMinusOne",
+        "open Matrix.TransvectionStruct"
+      ],
+      "unit_count": 3,
+      "units": [
+        {
+          "body_declaration_names": [
+            "det_transpose'"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "det_transpose'"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [
+            {
+              "column": 2,
+              "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
+              "kind": "linter.unnecessarySimpa",
+              "line": 16,
+              "severity": "warning"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        },
+        {
+          "body_declaration_names": [
+            "det_triangular"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "det_triangular"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-002"
+        },
+        {
+          "body_declaration_names": [
+            "det_permute_rows",
+            "det_permute_cols"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "det_permute_rows",
+            "det_permute_cols"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-003"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 3,
+  "generated_at": "2026-05-06T00:16:06.710142+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 3
+}

@@ -1,0 +1,50 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "det_transpose'"
+      ],
+      "lean_file_body": "variable {K : Type*} [CommRing K]\nvariable {n : ℕ}\n\ntheorem det_transpose' (A : Matrix (Fin n) (Fin n) K) : Aᵀ.det = A.det :=\nby\n  simpa using Matrix.det_transpose A",
+      "notes": [
+        "Added variable commands for K and n to provide CommRing and Fintype instances."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "Matrix.det_transpose (checked signature)"
+      ]
+    },
+    {
+      "declaration_names": [
+        "det_triangular",
+        "det_triangular_lower"
+      ],
+      "lean_file_body": "variable {K : Type*} [CommRing K]\nvariable {n : ℕ}\nopen Matrix\n\ntheorem det_triangular (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id) : A.det = ∏ i, A i i :=\n  Matrix.det_of_upperTriangular h\n\ntheorem det_triangular_lower (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular (OrderDual.toDual ∘ id)) : A.det = ∏ i, A i i :=\n  Matrix.det_of_lowerTriangular A h",
+      "notes": [
+        "Added second theorem det_triangular_lower to cover the lower triangular case using Matrix.det_of_lowerTriangular."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "Matrix.det_of_upperTriangular (checked signature)",
+        "Matrix.det_of_lowerTriangular (checked signature)"
+      ]
+    },
+    {
+      "declaration_names": [
+        "det_permute_rows",
+        "det_permute_cols"
+      ],
+      "lean_file_body": "variable {K : Type*} [CommRing K]\nvariable {n : ℕ}\nopen Matrix\n\ntheorem det_permute_rows (τ : Equiv.Perm (Fin n)) (A : Matrix (Fin n) (Fin n) K) :\n    (A.submatrix τ id).det = ((Equiv.Perm.sign τ : ℤ) : K) * A.det :=\n  Matrix.det_permute τ A\n\ntheorem det_permute_cols (τ : Equiv.Perm (Fin n)) (A : Matrix (Fin n) (Fin n) K) :\n    (A.submatrix id τ).det = ((Equiv.Perm.sign τ : ℤ) : K) * A.det :=\n  Matrix.det_permute' τ A",
+      "notes": [
+        "No repair needed; the theorems compile."
+      ],
+      "status": "generated",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Matrix.det_permute (checked signature)",
+        "Matrix.det_permute' (checked signature)"
+      ]
+    }
+  ]
+}

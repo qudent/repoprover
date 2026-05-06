@@ -188,6 +188,24 @@ fixed both in one repair round: generated-only compile `1/1`, exact metadata
 clean, and semantic coverage proved both aligned gold declarations `2/2`. Added
 cost for selector, generation, and repair-loop calls was `$0.00550774`.
 
+The next mixed determinant batch used three source units:
+`thm.det.transp`, `thm.det.triang`, and `cor.det.sig-row-col`. Initial
+generation returned valid JSON but compiled `0/3`, mostly because the generated
+theorems omitted ambient binders/typeclasses and one permutation statement had
+a sign/coercion mismatch. A one-round repair loop made generated-only
+verification compile `3/3`. The first semantic-aware resume preserved the
+transpose unit, fixed the triangular lower-case miss, and exposed a grader
+artifact for the row/column permutation unit: the grader prefix already
+contained the first generated theorem, and the generated body redeclared it
+while checking the second aligned gold theorem. The semantic grader now drops
+generated declarations already present in the target prefix before appending the
+grader-only check. After rerunning semantic coverage, the final repair output
+proved all three source units and all five aligned gold declarations:
+generated-only compile `3/3`, semantic coverage `3/3` units and `5/5` aligned
+gold declarations. Total paid cost for the mixed batch was `$0.03507336`
+(`$0.00630896` initial selector/generation, `$0.00967302` compile repair loop,
+and `$0.01909138` semantic-aware resume).
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

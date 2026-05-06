@@ -436,6 +436,37 @@ New multi-declaration probe:
   semantic coverage proved `2/2` aligned gold declarations. Total added cost
   for this new-unit probe was `$0.00550774`.
 
+Mixed determinant batch:
+
+- source units:
+  `thm.det.transp`, `thm.det.triang`, and `cor.det.sig-row-col`.
+- initial selector/generation:
+  `docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid/` and
+  `docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid/`.
+  The selector understood the broad determinant facts and selected/hydrated
+  useful Mathlib context, including exact `Matrix.det_transpose` plus fallback
+  APIs for triangular and permutation determinant facts. Initial generation
+  compiled `0/3`.
+- compile repair:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/`
+  reached generated-only compile `3/3` in one round, but semantic coverage was
+  still partial: transpose `1/1`, triangular `1/2`, row/column permutation
+  `1/2`.
+- semantic-aware repair:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/`
+  used only unit keys from post-hoc semantic coverage to decide which source
+  units needed review; it did not add hidden gold statements to prompts. It
+  preserved the transpose unit, fixed triangular coverage to `2/2`, and exposed
+  a grader false rejection for the row/column permutation unit.
+- grader fix:
+  `scripts/verify_latex_statement_semantic_coverage.py` now drops generated
+  declarations whose local names are already present in the target prefix
+  before constructing a grader-only Lean file. This fixed the permutation
+  redeclaration failure.
+- final rerun: generated-only compile `3/3`; semantic coverage `3/3` source
+  units and `5/5` aligned gold declarations. Paid cost was `$0.03507336` for
+  the whole mixed batch.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:
