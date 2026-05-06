@@ -657,6 +657,17 @@ Broader diverse4 negative probe:
   prompt artifact at
   `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-budget/`
   records the next retry prompt without a paid call.
+- paid cardinality-bridge retry:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-v1-paid/`
+  cost `$0.00650734` total and selected 13 checked exact signatures with no
+  failed Mathlib requests, including `Multiset.card_map`, `Multiset.filter_le`,
+  `Multiset.card_le_card`, `Finset.card_univ`, and `Fintype.card_fin`. Repair
+  still declined because the selector switched to an invented
+  `OrderedPartition` representation and the generator treated the absence of
+  that type as fatal. This moves the remaining problem from API hydration to
+  proof-plan/representation control: keep the route on `Nat.Partition` plus
+  sorted multiset parts, and synthesize same-unit helpers rather than requiring
+  new ambient types.
 
 ## Lean Dependency Accounting
 

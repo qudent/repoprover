@@ -1,0 +1,453 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "Multiset.card",
+      "signature": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express the length of a partition as `Multiset.card p.parts`."
+    },
+    {
+      "name": "Multiset.card_map",
+      "signature": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To relate cardinalities when mapping parts."
+    },
+    {
+      "name": "Multiset.filter_le",
+      "signature": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To bound the cardinality of filtered parts."
+    },
+    {
+      "name": "Multiset.card_le_card",
+      "signature": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To deduce `card (filter ...) ≤ card s`."
+    },
+    {
+      "name": "Finset.card_univ",
+      "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To know the size of `Finset.univ` for `Fin N`."
+    },
+    {
+      "name": "Fintype.card_fin",
+      "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To compute `Finset.card (Finset.univ : Finset (Fin N)) = N`."
+    },
+    {
+      "name": "List.Sorted",
+      "signature": "List.Sorted.{u} {α : Type u} (R : α → α → Prop) : List α → Prop",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express that a list is weakly decreasing."
+    },
+    {
+      "name": "List.Sorted.le_of_lt",
+      "signature": "List.Sorted.le_of_lt.{u_1} {α : Type u_1} [Preorder α] {l : List α} (h : l.SortedLT) : l.SortedLE",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove the `antitone` condition for `fromPartition` when using a sorted list."
+    },
+    {
+      "name": "List.get",
+      "signature": "List.get.{u} {α : Type u} (as : List α) : Fin as.length → α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To index into a list by a `Fin`."
+    },
+    {
+      "name": "List.length",
+      "signature": "List.length.{u_1} {α : Type u_1} : List α → ℕ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express the length of a list."
+    },
+    {
+      "name": "List.ofFn",
+      "signature": "List.ofFn.{u_1} {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To convert an `NPartition` (function `Fin N → ℕ`) to a list for dropping trailing zeros."
+    },
+    {
+      "name": "List.dropWhile",
+      "signature": "List.dropWhile.{u} {α : Type u} (p : α → Bool) : List α → List α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To drop trailing zeros from the list of parts."
+    },
+    {
+      "name": "List.reverse",
+      "signature": "List.reverse.{u} {α : Type u} (as : List α) : List α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To drop trailing zeros, we reverse, dropWhile (==0), reverse back."
+    }
+  ],
+  "discarded_do_not_use_items": [],
+  "do_not_use_identifiers": [
+    "Nat.Partition.length"
+  ],
+  "failed_or_unchecked_context_requests": [],
+  "generated_at": "2026-05-06T04:13:42.392313+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "No `Nat.Partition.length` exists in Mathlib. The length of a partition must be defined as `Multiset.card p.parts` (counting multiplicities). This is the correct notion for the source's 'length' (number of parts, with multiplicities). The prior attempt used `Multiset.card` but did not prove the length condition correctly.",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "The source bijection is between sets, not sigma types. The correct formalization is an `Equiv` between `{p : Nat.Partition n // Multiset.card p.parts ≤ N}` and `NPartition N` (for a fixed `n`? The source does not fix `n`; it says 'partitions of length ≤ N' without fixing the sum. The bijection should be between `(Σ n, {p : Nat.Partition n // Multiset.card p.parts ≤ N})` and `NPartition N`. The prior attempt used a sigma type for the domain but did not fix the sum. The source text is ambiguous; the most natural interpretation is a bijection for each `n` separately, but the padding changes the sum. Actually padding with zeros does not change the sum, so the bijection is between partitions of `n` of length ≤ N and N-partitions of size `n`. This should be an `Equiv` for each `n`.",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "The `antitone` condition on `NPartition` requires a proof that the padded tuple is weakly decreasing. This can be proved using the fact that the original partition is weakly decreasing (by definition of `Nat.Partition`? Actually `Nat.Partition` does not enforce ordering; the parts are a multiset, not ordered. The source assumes partitions are written in weakly decreasing order. This is a standard convention but not enforced by `Nat.Partition`. To match the source, we need to assume the partition is given as a weakly decreasing list. The `fromPartition` function must take an ordered list as input, not an arbitrary `Nat.Partition`. This is a fundamental mismatch: `Nat.Partition` does not carry an ordering. The repair must either use a different representation (e.g., `List ℕ` sorted) or accept that the bijection is only with the multiset of parts, ignoring order. The source explicitly says 'partitions of length ≤ N' and writes them as tuples, implying an ordered representation. The `NPartition` structure already enforces weak decrease. The forward direction should take a weakly decreasing list of positive integers of length ≤ N and pad with zeros. The backward direction should drop trailing zeros from an N-partition. This can be done using `List ℕ` with a proof of sortedness, not `Nat.Partition`.",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "The `Nat.Partition` type is not suitable for this bijection because it does not enforce ordering. The repair should define a custom type `OrderedPartition` or use `List ℕ` with a sortedness proof. However, the visible context only provides `Nat.Partition` and `NPartition`. The prior project has `NPartition.toPartition` which converts an N-partition to a `Nat.Partition` (losing order). The reverse direction cannot be defined using `Nat.Partition` alone because the order is lost. Therefore, the bijection cannot be proved using `Nat.Partition` as the source type. The repair must either: (1) define a new type `OrderedPartition n` with ordered parts, or (2) change the statement to use `Multiset ℕ` with a cardinality bound, ignoring order. The source explicitly mentions tuples, so option (1) is more faithful. But the visible context does not include such a type. The repair should request a new helper type `OrderedPartition` or use `List ℕ` with sortedness.",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "The `Multiset.card` of `p.parts` counts multiplicities, which matches the source's 'length' (number of parts). This is correct.",
+      "unit_key": "unit-001"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The prior attempt tried to define `fromPartition` using `Multiset.sort` and `Multiset.card` for length, but `Nat.Partition` has no `length` field and `Multiset.card` counts multiplicities, not distinct parts. The `antitone` proof was incomplete. The `toNPartition` returned a sigma type instead of a `Nat.Partition` with a length bound. The bijection statement used `Function.Bijective` on a sigma type, which does not match the source's set bijection. The proof was left as `sorry`. The core issue is the lack of a `Nat.Partition.length` function and a clear way to express the length ≤ N condition.",
+      "proof_strategy_note": "The repair will define a new type `OrderedPartition n` with sorted list of parts, since `Nat.Partition` does not preserve order. Then define `fromOrderedPartition` (pad with zeros) and `toOrderedPartition` (drop trailing zeros). Prove they are inverse using list operations and the antitone property. The main theorem is an `Equiv` between the sigma type of ordered partitions with length ≤ N and `NPartition N`. This avoids the missing `Nat.Partition.length` and the ordering mismatch. The proof will use `List.Sorted` lemmas, `List.dropWhile`, `List.reverse`, and `List.ofFn`. The `antitone` condition for `fromOrderedPartition` will be proved by case analysis on whether indices are within the original list length. The `toOrderedPartition` will use `μ.antitone` to show the dropped list is sorted. The composition proofs will use extensionality for `NPartition` and `OrderedPartition`.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [
+          "Nat.Partition.length"
+        ],
+        "failure_analysis": "The prior attempt tried to define `fromPartition` using `Multiset.sort` and `Multiset.card` for length, but `Nat.Partition` has no `length` field and `Multiset.card` counts multiplicities, not distinct parts. The `antitone` proof was incomplete. The `toNPartition` returned a sigma type instead of a `Nat.Partition` with a length bound. The bijection statement used `Function.Bijective` on a sigma type, which does not match the source's set bijection. The proof was left as `sorry`. The core issue is the lack of a `Nat.Partition.length` function and a clear way to express the length ≤ N condition.",
+        "missing_or_uncertain_context": [
+          "No `Nat.Partition.length` exists in Mathlib. The length of a partition must be defined as `Multiset.card p.parts` (counting multiplicities). This is the correct notion for the source's 'length' (number of parts, with multiplicities). The prior attempt used `Multiset.card` but did not prove the length condition correctly.",
+          "The source bijection is between sets, not sigma types. The correct formalization is an `Equiv` between `{p : Nat.Partition n // Multiset.card p.parts ≤ N}` and `NPartition N` (for a fixed `n`? The source does not fix `n`; it says 'partitions of length ≤ N' without fixing the sum. The bijection should be between `(Σ n, {p : Nat.Partition n // Multiset.card p.parts ≤ N})` and `NPartition N`. The prior attempt used a sigma type for the domain but did not fix the sum. The source text is ambiguous; the most natural interpretation is a bijection for each `n` separately, but the padding changes the sum. Actually padding with zeros does not change the sum, so the bijection is between partitions of `n` of length ≤ N and N-partitions of size `n`. This should be an `Equiv` for each `n`.",
+          "The `antitone` condition on `NPartition` requires a proof that the padded tuple is weakly decreasing. This can be proved using the fact that the original partition is weakly decreasing (by definition of `Nat.Partition`? Actually `Nat.Partition` does not enforce ordering; the parts are a multiset, not ordered. The source assumes partitions are written in weakly decreasing order. This is a standard convention but not enforced by `Nat.Partition`. To match the source, we need to assume the partition is given as a weakly decreasing list. The `fromPartition` function must take an ordered list as input, not an arbitrary `Nat.Partition`. This is a fundamental mismatch: `Nat.Partition` does not carry an ordering. The repair must either use a different representation (e.g., `List ℕ` sorted) or accept that the bijection is only with the multiset of parts, ignoring order. The source explicitly says 'partitions of length ≤ N' and writes them as tuples, implying an ordered representation. The `NPartition` structure already enforces weak decrease. The forward direction should take a weakly decreasing list of positive integers of length ≤ N and pad with zeros. The backward direction should drop trailing zeros from an N-partition. This can be done using `List ℕ` with a proof of sortedness, not `Nat.Partition`.",
+          "The `Nat.Partition` type is not suitable for this bijection because it does not enforce ordering. The repair should define a custom type `OrderedPartition` or use `List ℕ` with a sortedness proof. However, the visible context only provides `Nat.Partition` and `NPartition`. The prior project has `NPartition.toPartition` which converts an N-partition to a `Nat.Partition` (losing order). The reverse direction cannot be defined using `Nat.Partition` alone because the order is lost. Therefore, the bijection cannot be proved using `Nat.Partition` as the source type. The repair must either: (1) define a new type `OrderedPartition n` with ordered parts, or (2) change the statement to use `Multiset ℕ` with a cardinality bound, ignoring order. The source explicitly mentions tuples, so option (1) is more faithful. But the visible context does not include such a type. The repair should request a new helper type `OrderedPartition` or use `List ℕ` with sortedness.",
+          "The `Multiset.card` of `p.parts` counts multiplicities, which matches the source's 'length' (number of parts). This is correct."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Multiset.card {α : Type u_1} : Multiset α → ℕ",
+            "name_or_query": "Multiset.card",
+            "why_needed": "To express the length of a partition as `Multiset.card p.parts`."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.card_map {α β : Type u_1} (f : α → β) (s : Multiset α) : card (map f s) = card s",
+            "name_or_query": "Multiset.card_map",
+            "why_needed": "To relate cardinalities when mapping parts."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.filter_le {α : Type u_1} (p : α → Bool) (s : Multiset α) : filter p s ≤ s",
+            "name_or_query": "Multiset.filter_le",
+            "why_needed": "To bound the cardinality of filtered parts."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.card_le_card {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : card s ≤ card t",
+            "name_or_query": "Multiset.card_le_card",
+            "why_needed": "To deduce `card (filter ...) ≤ card s`."
+          },
+          {
+            "expected_signature_or_shape": "Finset.card_univ {α : Type u_1} [Fintype α] : card (univ : Finset α) = Fintype.card α",
+            "name_or_query": "Finset.card_univ",
+            "why_needed": "To know the size of `Finset.univ` for `Fin N`."
+          },
+          {
+            "expected_signature_or_shape": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+            "name_or_query": "Fintype.card_fin",
+            "why_needed": "To compute `Finset.card (Finset.univ : Finset (Fin N)) = N`."
+          },
+          {
+            "expected_signature_or_shape": "List.Sorted {α : Type u_1} (r : α → α → Prop) [DecidableRel r] : List α → Prop",
+            "name_or_query": "List.Sorted",
+            "why_needed": "To express that a list is weakly decreasing."
+          },
+          {
+            "expected_signature_or_shape": "List.Sorted.le_of_lt {α : Type u_1} [Preorder α] {l : List α} (h : l.Sorted (· ≥ ·)) {i j : ℕ} (hi : j < l.length) (hij : i ≤ j) : l.get ⟨j, hi⟩ ≤ l.get ⟨i, by omega⟩",
+            "name_or_query": "List.Sorted.le_of_lt",
+            "why_needed": "To prove the `antitone` condition for `fromPartition` when using a sorted list."
+          },
+          {
+            "expected_signature_or_shape": "List.get {α : Type u_1} (l : List α) (n : Fin l.length) : α",
+            "name_or_query": "List.get",
+            "why_needed": "To index into a list by a `Fin`."
+          },
+          {
+            "expected_signature_or_shape": "List.length {α : Type u_1} : List α → ℕ",
+            "name_or_query": "List.length",
+            "why_needed": "To express the length of a list."
+          },
+          {
+            "expected_signature_or_shape": "List.ofFn {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+            "name_or_query": "List.ofFn",
+            "why_needed": "To convert an `NPartition` (function `Fin N → ℕ`) to a list for dropping trailing zeros."
+          },
+          {
+            "expected_signature_or_shape": "List.dropWhile {α : Type u_1} (p : α → Bool) : List α → List α",
+            "name_or_query": "List.dropWhile",
+            "why_needed": "To drop trailing zeros from the list of parts."
+          },
+          {
+            "expected_signature_or_shape": "List.reverse {α : Type u_1} : List α → List α",
+            "name_or_query": "List.reverse",
+            "why_needed": "To drop trailing zeros, we reverse, dropWhile (==0), reverse back."
+          }
+        ],
+        "repair_strategy_note": "The repair will define a new type `OrderedPartition n` with sorted list of parts, since `Nat.Partition` does not preserve order. Then define `fromOrderedPartition` (pad with zeros) and `toOrderedPartition` (drop trailing zeros). Prove they are inverse using list operations and the antitone property. The main theorem is an `Equiv` between the sigma type of ordered partitions with length ≤ N and `NPartition N`. This avoids the missing `Nat.Partition.length` and the ordering mismatch. The proof will use `List.Sorted` lemmas, `List.dropWhile`, `List.reverse`, and `List.ofFn`. The `antitone` condition for `fromOrderedPartition` will be proved by case analysis on whether indices are within the original list length. The `toOrderedPartition` will use `μ.antitone` to show the dropped list is sorted. The composition proofs will use extensionality for `NPartition` and `OrderedPartition`.",
+        "same_unit_helper_plan": [
+          {
+            "depends_on": [],
+            "fresh_name_hint": "OrderedPartition",
+            "needed_checked_ingredients": [
+              "List.Sorted",
+              "List.sum"
+            ],
+            "role": "definition",
+            "statement_sketch": "A structure representing a partition of `n` with parts in weakly decreasing order. Fields: `parts : List ℕ`, `sorted : parts.Sorted (· ≥ ·)`, `pos : ∀ a ∈ parts, 0 < a`, `sum : parts.sum = n`.",
+            "why_needed": "To have an ordered representation that matches the source's tuple notation and can be padded/truncated."
+          },
+          {
+            "depends_on": [
+              "OrderedPartition"
+            ],
+            "fresh_name_hint": "length",
+            "needed_checked_ingredients": [
+              "List.length"
+            ],
+            "role": "definition",
+            "statement_sketch": "The length of an `OrderedPartition` is `parts.length`.",
+            "why_needed": "To express the length ≤ N condition."
+          },
+          {
+            "depends_on": [
+              "OrderedPartition",
+              "length"
+            ],
+            "fresh_name_hint": "fromOrderedPartition",
+            "needed_checked_ingredients": [
+              "List.Sorted.le_of_lt",
+              "List.get",
+              "List.ofFn"
+            ],
+            "role": "definition",
+            "statement_sketch": "Given an `OrderedPartition n` with `length ≤ N`, produce an `NPartition N` by padding with zeros. The `antitone` proof uses the sortedness of the original list and the fact that zeros are at the end.",
+            "why_needed": "Forward direction of the bijection."
+          },
+          {
+            "depends_on": [
+              "OrderedPartition",
+              "NPartition.size"
+            ],
+            "fresh_name_hint": "toOrderedPartition",
+            "needed_checked_ingredients": [
+              "List.dropWhile",
+              "List.reverse",
+              "List.Sorted.dropWhile",
+              "List.Sorted.reverse"
+            ],
+            "role": "definition",
+            "statement_sketch": "Given an `NPartition N`, produce an `OrderedPartition (size μ)` by dropping trailing zeros from the list `List.ofFn μ.parts`. The sortedness follows from `μ.antitone`. The positivity follows from `μ.parts i ≠ 0` for non-dropped entries.",
+            "why_needed": "Backward direction of the bijection."
+          },
+          {
+            "depends_on": [
+              "fromOrderedPartition",
+              "toOrderedPartition",
+              "OrderedPartition.ext"
+            ],
+            "fresh_name_hint": "bijection_orderedPartition_NPartition",
+            "needed_checked_ingredients": [
+              "Equiv",
+              "Sigma.ext",
+              "Subtype.ext"
+            ],
+            "role": "theorem",
+            "statement_sketch": "`Equiv` between `(Σ n, {p : OrderedPartition n // p.length ≤ N})` and `NPartition N`. The forward map is `fromOrderedPartition`, the backward is `toOrderedPartition`. Prove both compositions are identity.",
+            "why_needed": "Main claim of the source proposition."
+          }
+        ],
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.Npar-as-par",
+            "why_needed": "Defines the bijection: partitions of length ≤ N ↔ N-partitions, with explicit padding/truncation of zeros."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "NPartition",
+            "why_needed": "Target type of the bijection; provides `parts : Fin N → ℕ` and `antitone` condition."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "NPartition.size",
+            "why_needed": "Sum of parts of an N-partition, used to match the index of `Nat.Partition`."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "NPartition.toPartition",
+            "why_needed": "Existing conversion from `NPartition N` to `Nat.Partition μ.size`; provides the forward direction of the bijection."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.ext",
+            "why_needed": "Extensionality for NPartition, needed to prove equality of N-partitions."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "filter_ne_zero_sum",
+            "why_needed": "Used in `toPartition` to show sum of filtered parts equals total sum; may be reused."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-v1-paid/round-01-context",
+  "same_unit_helper_plan": [
+    {
+      "depends_on": [],
+      "fresh_name_hint": "OrderedPartition",
+      "needed_checked_ingredients": [
+        "List.Sorted",
+        "List.sum"
+      ],
+      "role": "definition",
+      "statement_sketch": "A structure representing a partition of `n` with parts in weakly decreasing order. Fields: `parts : List ℕ`, `sorted : parts.Sorted (· ≥ ·)`, `pos : ∀ a ∈ parts, 0 < a`, `sum : parts.sum = n`.",
+      "unit_key": "unit-001",
+      "why_needed": "To have an ordered representation that matches the source's tuple notation and can be padded/truncated."
+    },
+    {
+      "depends_on": [
+        "OrderedPartition"
+      ],
+      "fresh_name_hint": "length",
+      "needed_checked_ingredients": [
+        "List.length"
+      ],
+      "role": "definition",
+      "statement_sketch": "The length of an `OrderedPartition` is `parts.length`.",
+      "unit_key": "unit-001",
+      "why_needed": "To express the length ≤ N condition."
+    },
+    {
+      "depends_on": [
+        "OrderedPartition",
+        "length"
+      ],
+      "fresh_name_hint": "fromOrderedPartition",
+      "needed_checked_ingredients": [
+        "List.Sorted.le_of_lt",
+        "List.get",
+        "List.ofFn"
+      ],
+      "role": "definition",
+      "statement_sketch": "Given an `OrderedPartition n` with `length ≤ N`, produce an `NPartition N` by padding with zeros. The `antitone` proof uses the sortedness of the original list and the fact that zeros are at the end.",
+      "unit_key": "unit-001",
+      "why_needed": "Forward direction of the bijection."
+    },
+    {
+      "depends_on": [
+        "OrderedPartition",
+        "NPartition.size"
+      ],
+      "fresh_name_hint": "toOrderedPartition",
+      "needed_checked_ingredients": [
+        "List.dropWhile",
+        "List.reverse",
+        "List.Sorted.dropWhile",
+        "List.Sorted.reverse"
+      ],
+      "role": "definition",
+      "statement_sketch": "Given an `NPartition N`, produce an `OrderedPartition (size μ)` by dropping trailing zeros from the list `List.ofFn μ.parts`. The sortedness follows from `μ.antitone`. The positivity follows from `μ.parts i ≠ 0` for non-dropped entries.",
+      "unit_key": "unit-001",
+      "why_needed": "Backward direction of the bijection."
+    },
+    {
+      "depends_on": [
+        "fromOrderedPartition",
+        "toOrderedPartition",
+        "OrderedPartition.ext"
+      ],
+      "fresh_name_hint": "bijection_orderedPartition_NPartition",
+      "needed_checked_ingredients": [
+        "Equiv",
+        "Sigma.ext",
+        "Subtype.ext"
+      ],
+      "role": "theorem",
+      "statement_sketch": "`Equiv` between `(Σ n, {p : OrderedPartition n // p.length ≤ N})` and `NPartition N`. The forward map is `fromOrderedPartition`, the backward is `toOrderedPartition`. Prove both compositions are identity.",
+      "unit_key": "unit-001",
+      "why_needed": "Main claim of the source proposition."
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.Npar-as-par",
+      "unit_key": "unit-001",
+      "why_needed": "Defines the bijection: partitions of length ≤ N ↔ N-partitions, with explicit padding/truncation of zeros."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "NPartition",
+      "unit_key": "unit-001",
+      "why_needed": "Target type of the bijection; provides `parts : Fin N → ℕ` and `antitone` condition."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "NPartition.size",
+      "unit_key": "unit-001",
+      "why_needed": "Sum of parts of an N-partition, used to match the index of `Nat.Partition`."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "NPartition.toPartition",
+      "unit_key": "unit-001",
+      "why_needed": "Existing conversion from `NPartition N` to `Nat.Partition μ.size`; provides the forward direction of the bijection."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.ext",
+      "unit_key": "unit-001",
+      "why_needed": "Extensionality for NPartition, needed to prove equality of N-partitions."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "filter_ne_zero_sum",
+      "unit_key": "unit-001",
+      "why_needed": "Used in `toPartition` to show sum of filtered parts equals total sum; may be reused."
+    }
+  ]
+}

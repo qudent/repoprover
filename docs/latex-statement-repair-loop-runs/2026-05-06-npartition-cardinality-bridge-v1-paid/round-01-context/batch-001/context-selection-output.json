@@ -1,0 +1,81 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.card {α : Type u_1} : Multiset α → ℕ",
+              "name_or_query": "Multiset.card",
+              "why_needed": "To express the length of a partition as `Multiset.card p.parts`."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card_map {α β : Type u_1} (f : α → β) (s : Multiset α) : card (map f s) = card s",
+              "name_or_query": "Multiset.card_map",
+              "why_needed": "To relate cardinalities when mapping parts."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.filter_le {α : Type u_1} (p : α → Bool) (s : Multiset α) : filter p s ≤ s",
+              "name_or_query": "Multiset.filter_le",
+              "why_needed": "To bound the cardinality of filtered parts."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card_le_card {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : card s ≤ card t",
+              "name_or_query": "Multiset.card_le_card",
+              "why_needed": "To deduce `card (filter ...) ≤ card s`."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card_univ {α : Type u_1} [Fintype α] : card (univ : Finset α) = Fintype.card α",
+              "name_or_query": "Finset.card_univ",
+              "why_needed": "To know the size of `Finset.univ` for `Fin N`."
+            },
+            {
+              "expected_signature_or_shape": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+              "name_or_query": "Fintype.card_fin",
+              "why_needed": "To compute `Finset.card (Finset.univ : Finset (Fin N)) = N`."
+            },
+            {
+              "expected_signature_or_shape": "List.Sorted {α : Type u_1} (r : α → α → Prop) [DecidableRel r] : List α → Prop",
+              "name_or_query": "List.Sorted",
+              "why_needed": "To express that a list is weakly decreasing."
+            },
+            {
+              "expected_signature_or_shape": "List.Sorted.le_of_lt {α : Type u_1} [Preorder α] {l : List α} (h : l.Sorted (· ≥ ·)) {i j : ℕ} (hi : j < l.length) (hij : i ≤ j) : l.get ⟨j, hi⟩ ≤ l.get ⟨i, by omega⟩",
+              "name_or_query": "List.Sorted.le_of_lt",
+              "why_needed": "To prove the `antitone` condition for `fromPartition` when using a sorted list."
+            },
+            {
+              "expected_signature_or_shape": "List.get {α : Type u_1} (l : List α) (n : Fin l.length) : α",
+              "name_or_query": "List.get",
+              "why_needed": "To index into a list by a `Fin`."
+            },
+            {
+              "expected_signature_or_shape": "List.length {α : Type u_1} : List α → ℕ",
+              "name_or_query": "List.length",
+              "why_needed": "To express the length of a list."
+            },
+            {
+              "expected_signature_or_shape": "List.ofFn {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+              "name_or_query": "List.ofFn",
+              "why_needed": "To convert an `NPartition` (function `Fin N → ℕ`) to a list for dropping trailing zeros."
+            },
+            {
+              "expected_signature_or_shape": "List.dropWhile {α : Type u_1} (p : α → Bool) : List α → List α",
+              "name_or_query": "List.dropWhile",
+              "why_needed": "To drop trailing zeros from the list of parts."
+            },
+            {
+              "expected_signature_or_shape": "List.reverse {α : Type u_1} : List α → List α",
+              "name_or_query": "List.reverse",
+              "why_needed": "To drop trailing zeros, we reverse, dropWhile (==0), reverse back."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

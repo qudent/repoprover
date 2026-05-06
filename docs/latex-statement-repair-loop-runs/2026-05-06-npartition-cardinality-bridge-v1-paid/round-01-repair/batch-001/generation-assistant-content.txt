@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context lacks an ordered partition type (Nat.Partition does not enforce ordering) and a length function. The repair would require defining a new type OrderedPartition with sorted list, which is not present in the visible context. The checked signatures for List.Sorted, List.dropWhile, etc. are available, but the project context does not include the needed helper definitions. The prior attempt used Multiset.sort which loses the original ordering and cannot guarantee antitone. The source bijection requires an ordered representation. Without an OrderedPartition type or a way to extract an ordered list from Nat.Partition, the bijection cannot be proved. Therefore, cannot_prove_from_visible_context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "List.Sorted, List.dropWhile, List.reverse (checked signatures)",
+        "NPartition.ext, NPartition.toPartition (local predecessors)"
+      ]
+    }
+  ]
+}

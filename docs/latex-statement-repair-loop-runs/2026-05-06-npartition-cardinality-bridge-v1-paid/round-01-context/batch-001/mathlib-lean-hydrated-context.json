@@ -1,0 +1,562 @@
+{
+  "exact_identifier_count": 13,
+  "fallback_exact_identifier_count": 0,
+  "fallback_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "fallback_lean_check_status": "no_exact_identifiers",
+  "generated_at": "2026-05-06T04:13:42.387317+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Multiset.card",
+      "expected_signature_or_shape": "Multiset.card {α : Type u_1} : Multiset α → ℕ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+        "status": "checked"
+      },
+      "query": "Multiset.card",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def card : Multiset α → ℕ := Quot.lift length fun _l₁ _l₂ => Perm.length_eq",
+        "kind": "def",
+        "line_number": 222,
+        "name": "Multiset.card",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Defs.lean",
+        "source_snippet": "def card : Multiset α → ℕ := Quot.lift length fun _l₁ _l₂ => Perm.length_eq\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express the length of a partition as `Multiset.card p.parts`."
+    },
+    {
+      "exact_identifier": "Multiset.card_map",
+      "expected_signature_or_shape": "Multiset.card_map {α β : Type u_1} (f : α → β) (s : Multiset α) : card (map f s) = card s",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+        "status": "checked"
+      },
+      "query": "Multiset.card_map",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "theorem card_map (f : α → β) (s) : card (map f s) = card s :=",
+        "kind": "theorem",
+        "line_number": 106,
+        "name": "Multiset.card_map",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/MapFold.lean",
+        "source_snippet": "@[simp]\ntheorem card_map (f : α → β) (s) : card (map f s) = card s :=\n  Quot.inductionOn s fun _ => length_map _\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To relate cardinalities when mapping parts."
+    },
+    {
+      "exact_identifier": "Multiset.filter_le",
+      "expected_signature_or_shape": "Multiset.filter_le {α : Type u_1} (p : α → Bool) (s : Multiset α) : filter p s ≤ s",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+        "status": "checked"
+      },
+      "query": "Multiset.filter_le",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": {
+        "declaration_line": "theorem filter_le (s : Multiset α) : filter p s ≤ s :=",
+        "kind": "theorem",
+        "line_number": 62,
+        "name": "Multiset.filter_le",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Filter.lean",
+        "source_snippet": "@[simp]\ntheorem filter_le (s : Multiset α) : filter p s ≤ s :=\n  Quot.inductionOn s fun _l => filter_sublist.subperm\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To bound the cardinality of filtered parts."
+    },
+    {
+      "exact_identifier": "Multiset.card_le_card",
+      "expected_signature_or_shape": "Multiset.card_le_card {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : card s ≤ card t",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+        "status": "checked"
+      },
+      "query": "Multiset.card_le_card",
+      "related_mathlib_declarations": [],
+      "request_index": 4,
+      "source_declaration": {
+        "declaration_line": "theorem card_le_card {s t : Multiset α} (h : s ≤ t) : card s ≤ card t :=",
+        "kind": "theorem",
+        "line_number": 228,
+        "name": "Multiset.card_le_card",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Defs.lean",
+        "source_snippet": "theorem card_le_card {s t : Multiset α} (h : s ≤ t) : card s ≤ card t :=\n  leInductionOn h Sublist.length_le",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To deduce `card (filter ...) ≤ card s`."
+    },
+    {
+      "exact_identifier": "Finset.card_univ",
+      "expected_signature_or_shape": "Finset.card_univ {α : Type u_1} [Fintype α] : card (univ : Finset α) = Fintype.card α",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+        "status": "checked"
+      },
+      "query": "Finset.card_univ",
+      "related_mathlib_declarations": [],
+      "request_index": 5,
+      "source_declaration": {
+        "declaration_line": "theorem Finset.card_univ [Fintype α] : #(univ : Finset α) = Fintype.card α := rfl",
+        "kind": "theorem",
+        "line_number": 104,
+        "name": "Finset.card_univ",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Fintype/Card.lean",
+        "source_snippet": "@[simp, grind =]\ntheorem Finset.card_univ [Fintype α] : #(univ : Finset α) = Fintype.card α := rfl",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To know the size of `Finset.univ` for `Fin N`."
+    },
+    {
+      "exact_identifier": "Fintype.card_fin",
+      "expected_signature_or_shape": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+        "status": "checked"
+      },
+      "query": "Fintype.card_fin",
+      "related_mathlib_declarations": [],
+      "request_index": 6,
+      "source_declaration": {
+        "declaration_line": "theorem Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n :=",
+        "kind": "theorem",
+        "line_number": 488,
+        "name": "Fintype.card_fin",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Fintype/Card.lean",
+        "source_snippet": "@[simp]\ntheorem Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n :=\n  List.length_finRange",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To compute `Finset.card (Finset.univ : Finset (Fin N)) = N`."
+    },
+    {
+      "exact_identifier": "List.Sorted",
+      "expected_signature_or_shape": "List.Sorted {α : Type u_1} (r : α → α → Prop) [DecidableRel r] : List α → Prop",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.Sorted.{u} {α : Type u} (R : α → α → Prop) : List α → Prop",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Sorted.{u} {α : Type u} (R : α → α → Prop) : List α → Prop",
+        "status": "checked"
+      },
+      "query": "List.Sorted",
+      "related_mathlib_declarations": [],
+      "request_index": 7,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express that a list is weakly decreasing."
+    },
+    {
+      "exact_identifier": "List.Sorted.le_of_lt",
+      "expected_signature_or_shape": "List.Sorted.le_of_lt {α : Type u_1} [Preorder α] {l : List α} (h : l.Sorted (· ≥ ·)) {i j : ℕ} (hi : j < l.length) (hij : i ≤ j) : l.get ⟨j, hi⟩ ≤ l.get ⟨i, by omega⟩",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.Sorted.le_of_lt.{u_1} {α : Type u_1} [Preorder α] {l : List α} (h : l.SortedLT) : l.SortedLE",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Sorted.le_of_lt.{u_1} {α : Type u_1} [Preorder α] {l : List α} (h : l.SortedLT) : l.SortedLE",
+        "status": "checked"
+      },
+      "query": "List.Sorted.le_of_lt",
+      "related_mathlib_declarations": [],
+      "request_index": 8,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove the `antitone` condition for `fromPartition` when using a sorted list."
+    },
+    {
+      "exact_identifier": "List.get",
+      "expected_signature_or_shape": "List.get {α : Type u_1} (l : List α) (n : Fin l.length) : α",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.get.{u} {α : Type u} (as : List α) : Fin as.length → α",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.get.{u} {α : Type u} (as : List α) : Fin as.length → α",
+        "status": "checked"
+      },
+      "query": "List.get",
+      "related_mathlib_declarations": [],
+      "request_index": 9,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To index into a list by a `Fin`."
+    },
+    {
+      "exact_identifier": "List.length",
+      "expected_signature_or_shape": "List.length {α : Type u_1} : List α → ℕ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.length.{u_1} {α : Type u_1} : List α → ℕ",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.length.{u_1} {α : Type u_1} : List α → ℕ",
+        "status": "checked"
+      },
+      "query": "List.length",
+      "related_mathlib_declarations": [],
+      "request_index": 10,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express the length of a list."
+    },
+    {
+      "exact_identifier": "List.ofFn",
+      "expected_signature_or_shape": "List.ofFn {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.ofFn.{u_1} {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.ofFn.{u_1} {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+        "status": "checked"
+      },
+      "query": "List.ofFn",
+      "related_mathlib_declarations": [],
+      "request_index": 11,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To convert an `NPartition` (function `Fin N → ℕ`) to a list for dropping trailing zeros."
+    },
+    {
+      "exact_identifier": "List.dropWhile",
+      "expected_signature_or_shape": "List.dropWhile {α : Type u_1} (p : α → Bool) : List α → List α",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.dropWhile.{u} {α : Type u} (p : α → Bool) : List α → List α",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.dropWhile.{u} {α : Type u} (p : α → Bool) : List α → List α",
+        "status": "checked"
+      },
+      "query": "List.dropWhile",
+      "related_mathlib_declarations": [],
+      "request_index": 12,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To drop trailing zeros from the list of parts."
+    },
+    {
+      "exact_identifier": "List.reverse",
+      "expected_signature_or_shape": "List.reverse {α : Type u_1} : List α → List α",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.reverse.{u} {α : Type u} (as : List α) : List α",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.reverse.{u} {α : Type u} (as : List α) : List α",
+        "status": "checked"
+      },
+      "query": "List.reverse",
+      "related_mathlib_declarations": [],
+      "request_index": 13,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To drop trailing zeros, we reverse, dropWhile (==0), reverse back."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.card_univ": {
+        "messages": [
+          {
+            "data": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+        "status": "checked"
+      },
+      "Fintype.card_fin": {
+        "messages": [
+          {
+            "data": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+        "status": "checked"
+      },
+      "List.Sorted": {
+        "messages": [
+          {
+            "data": "List.Sorted.{u} {α : Type u} (R : α → α → Prop) : List α → Prop",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Sorted.{u} {α : Type u} (R : α → α → Prop) : List α → Prop",
+        "status": "checked"
+      },
+      "List.Sorted.le_of_lt": {
+        "messages": [
+          {
+            "data": "List.Sorted.le_of_lt.{u_1} {α : Type u_1} [Preorder α] {l : List α} (h : l.SortedLT) : l.SortedLE",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Sorted.le_of_lt.{u_1} {α : Type u_1} [Preorder α] {l : List α} (h : l.SortedLT) : l.SortedLE",
+        "status": "checked"
+      },
+      "List.dropWhile": {
+        "messages": [
+          {
+            "data": "List.dropWhile.{u} {α : Type u} (p : α → Bool) : List α → List α",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.dropWhile.{u} {α : Type u} (p : α → Bool) : List α → List α",
+        "status": "checked"
+      },
+      "List.get": {
+        "messages": [
+          {
+            "data": "List.get.{u} {α : Type u} (as : List α) : Fin as.length → α",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.get.{u} {α : Type u} (as : List α) : Fin as.length → α",
+        "status": "checked"
+      },
+      "List.length": {
+        "messages": [
+          {
+            "data": "List.length.{u_1} {α : Type u_1} : List α → ℕ",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.length.{u_1} {α : Type u_1} : List α → ℕ",
+        "status": "checked"
+      },
+      "List.ofFn": {
+        "messages": [
+          {
+            "data": "List.ofFn.{u_1} {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.ofFn.{u_1} {α : Type u_1} {n : ℕ} (f : Fin n → α) : List α",
+        "status": "checked"
+      },
+      "List.reverse": {
+        "messages": [
+          {
+            "data": "List.reverse.{u} {α : Type u} (as : List α) : List α",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.reverse.{u} {α : Type u} (as : List α) : List α",
+        "status": "checked"
+      },
+      "Multiset.card": {
+        "messages": [
+          {
+            "data": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+        "status": "checked"
+      },
+      "Multiset.card_le_card": {
+        "messages": [
+          {
+            "data": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+        "status": "checked"
+      },
+      "Multiset.card_map": {
+        "messages": [
+          {
+            "data": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+        "status": "checked"
+      },
+      "Multiset.filter_le": {
+        "messages": [
+          {
+            "data": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "9614d3e3faab82b200e9ba1b2542d80882940ef8a94f58bb58bf5411f32f6ae0",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 13,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

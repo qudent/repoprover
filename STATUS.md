@@ -76,8 +76,8 @@ handling on broader theorem units.
 - Diverse4 remains the negative frontier: after transport fixes, split
   generation, visible-support materialization, and two repair rounds, coverage
   stayed `0/4`; the blocker is missing useful project/Mathlib proof context.
-- Failure summary across 42 verification files / 63 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 17 clean cannot-prove
+- Failure summary across 43 verification files / 64 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 18 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -138,6 +138,11 @@ handling on broader theorem units.
   lemmas for `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality
   facts for filtered/mapped finite data. No-cost prompt artifact:
   `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-budget/`.
+- Paid cardinality-bridge retry cost `$0.00650734` and selected 13 checked
+  exact signatures with no failed Mathlib requests, including the needed
+  cardinality facts. Repair still declined because the selector drifted to an
+  invented `OrderedPartition` representation instead of staying on
+  `Nat.Partition` plus sorted multiset parts.
 - Test suite last passed: `uv run pytest tests` (`476 passed`) plus
   `py_compile` over selector/generator/repair/verifier scripts. Full
   `uv run pytest` still has one unrelated blueprint fixture failure because
@@ -147,8 +152,8 @@ handling on broader theorem units.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: make the selector request pointwise bridge lemmas for
-  `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality facts like
-  `Multiset.card_map`, `Multiset.filter_le`, `Multiset.card_le_card`,
-  `Finset.card_univ`, and `Fintype.card_fin`; then retry NPartition proof
-  planning or choose a construction that avoids sorted-list indexing.
+- Next useful work: add a representation-control rule for broad theorem units:
+  when visible source/project context already fixes the carrier type, same-unit
+  helpers must refine that representation (`Nat.Partition` plus sorted
+  multiset parts here) instead of inventing ambient replacement types such as
+  `OrderedPartition`.

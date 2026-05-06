@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 42
-verification-result files and 63 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 17 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 43
+verification-result files and 64 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 18 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -423,6 +423,14 @@ lemmas for `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality
 facts for filtered/mapped finite data. The no-cost next-retry prompt is
 recorded at
 `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-budget/`.
+The paid retry at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-v1-paid/`
+cost `$0.00650734`, selected 13 checked exact signatures with no failed
+Mathlib requests, including the cardinality facts. It still declined: the
+selector drifted toward inventing an `OrderedPartition` representation and the
+generator concluded that the visible context lacked that new type, rather than
+using `Nat.Partition` plus sorted multiset parts. This is now a proof-planning
+and representation-control problem, not a Mathlib hydration failure.
 
 ### Imported Lean surface and likely context needs
 
