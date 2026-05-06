@@ -89,6 +89,15 @@ one-unit result back onto the five-unit run, generated-only verification is
 `1/5` with failure classes `{compiled: 1, declined_cannot_prove: 4}` and
 semantic coverage remains `1/5`, proving the FPS aligned gold theorem.
 
+The current proof-lane handoff for this merged run is
+`docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-finiteness-merged/`.
+It contains target-hidden tasks for the four remaining clean declines:
+`unit-001`, `unit-003`, `unit-004`, and `unit-005`. The task builder keeps only
+visible source/prompt/verifier context plus compact semantic coverage status,
+and strips aligned Lean targets and post-hoc semantic check/count metadata. A
+leakage scan found no hidden target names or gold metadata patterns in the
+generated JSON/Markdown tasks.
+
 ## Interpretation
 
 This fresh slice is much harsher than the development panel. The current

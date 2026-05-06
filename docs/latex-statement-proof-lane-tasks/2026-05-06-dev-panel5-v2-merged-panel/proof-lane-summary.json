@@ -1,0 +1,21 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "failure_classes": [
+    "declined_cannot_prove"
+  ],
+  "generated_at": "2026-05-06T10:28:34.626233+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel",
+  "schema_version": "repoprover.latex_statement_proof_lane_tasks.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated",
+  "semantic_coverage": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/eval/semantic-coverage.json",
+  "unit_count": 2,
+  "unit_keys": [
+    "unit-001",
+    "unit-005"
+  ],
+  "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/eval/verification-results.json"
+}

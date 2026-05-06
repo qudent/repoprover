@@ -1,0 +1,648 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [],
+    "lean_file_body": "",
+    "notes": [
+      "The source lemma sums over sign vectors in {1,-1}^d, which is a finite set of size 2^d. The generated attempt incorrectly summed over all functions Fin d → ℤ, which is infinite and lacks a Fintype instance. The visible context provides toSign : ZMod 2 → ℤ and signSum : (Fin d → ZMod 2) → ℤ, which encode sign vectors as functions from Fin d to ZMod 2. The correct statement should sum over e : Fin d → ZMod 2, using toSign to convert to ℤ. The proof would use Finset.sum_pow' with s = Finset.univ : Finset (ZMod 2) and f = toSign, but the source lemma's right-hand side sums over e of e_{x_1}...e_{x_n}, which is signProduct e x. The visible context includes signProduct, but the lemma signProduct_eq_prod_pow failed to compile due to type errors. Without a working signProduct lemma, the proof cannot be completed from visible context. Therefore cannot_prove_from_visible_context."
+    ],
+    "status": "cannot_prove_from_visible_context",
+    "unit_key": "unit-004",
+    "used_context": [
+      "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+      "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+      "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+      "Finset.sum_pow' (checked signature)",
+      "Fintype.piFinset (checked signature)",
+      "Pi.instFintype (checked fallback candidate)"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+    "unit_key": "unit-004"
+  },
+  "source_unit": {
+    "environment": "lemma",
+    "id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+    "labels": [
+      "lem.cancel.all-even.l1"
+    ],
+    "line_range": [
+      144,
+      154
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{lemma}\n\\label{lem.cancel.all-even.l1}Let $n,d\\in\\mathbb{N}$. Then,%\n\\begin{align*}\n&  \\sum_{\\left(  e_{1},e_{2},\\ldots,e_{d}\\right)  \\in\\left\\{  1,-1\\right\\}\n^{d}}\\left(  e_{1}+e_{2}+\\cdots+e_{d}\\right)  ^{n}\\\\\n&  =\\sum_{\\left(  x_{1},x_{2},\\ldots,x_{n}\\right)  \\in\\left[  d\\right]  ^{n}%\n}\\ \\ \\sum_{\\left(  e_{1},e_{2},\\ldots,e_{d}\\right)  \\in\\left\\{  1,-1\\right\\}\n^{d}}e_{x_{1}}e_{x_{2}}\\cdots e_{x_{n}}.\n\\end{align*}\n\n\\end{lemma}"
+  },
+  "unit_key": "unit-004",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "declined_cannot_prove",
+    "messages": [],
+    "reported_status": "cannot_prove_from_visible_context",
+    "skipped_reason": "cannot_prove_from_visible_context",
+    "unit_key": "unit-004",
+    "visible_support_context": {
+      "accepted": [
+        {
+          "kind": "def",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "def",
+          "name": "toSign",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "def",
+          "name": "signProduct",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "toSign_sq",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "toSign_pow_odd",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "toSign_add_one",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "def",
+          "name": "signSum",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        }
+      ],
+      "accepted_count": 7,
+      "candidate_count": 9,
+      "rejected": [
+        {
+          "kind": "def",
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 4,
+              "data": "`multiplicity` has already been declared",
+              "kind": "[anonymous]",
+              "line": 7,
+              "severity": "error"
+            }
+          ],
+          "name": "multiplicity",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "theorem",
+          "lean_error_count": 2,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 68,
+              "data": "Application type mismatch: The argument\n  k\nhas type\n  Fin d\nbut is expected to have type\n  Fin n → Fin d\nin the application\n  multiplicity x k",
+              "kind": "[anonymous]",
+              "line": 21,
+              "severity": "error"
+            },
+            {
+              "column": 53,
+              "data": "failed to synthesize instance of type class\n  Monoid (Fin n → Fin d)\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 21,
+              "severity": "error"
+            }
+          ],
+          "name": "signProduct_eq_prod_pow",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+          "stderr": ""
+        }
+      ],
+      "rejected_count": 2
+    }
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "Sum over all sign vectors (e_1,...,e_d) ∈ {1,-1}^d; need to encode as functions Fin d → ℤ"
+    ],
+    "local_file_context_candidates": [
+      {
+        "kind": "open",
+        "line_range": [
+          45,
+          45
+        ],
+        "name": "open Finset BigOperators",
+        "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          47,
+          47
+        ],
+        "name": "AlgebraicCombinatorics.SubtractiveMethods",
+        "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      }
+    ],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.cancel.all-even"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "def",
+                "lean_snippet": "def IsAllEven {n d : ℕ} (x : Fin n → Fin d) : Prop :=\n  ∀ k : Fin d, Even ((univ.filter fun i => x i = k).card)",
+                "line_range": [
+                  55,
+                  61
+                ],
+                "module": "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.cancel.all-even"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem allEven_count_formula (n d : ℕ) :\n    ((allEvenTuples n d).card : ℤ) * 2^d = ∑ k ∈ range (d + 1), d.choose k * (d - 2*k : ℤ)^n",
+                "line_range": [
+                  445,
+                  460
+                ],
+                "module": "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.allEven_count_formula",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "thm.cancel.all-even"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:thm.cancel.all-even"
+          }
+        ],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": "Finset.pi",
+            "expected_signature_or_shape": "Finset (Fin d → ℤ) of functions with image in {1,-1}",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Finset.pi.{u, u_1} {α : Type u_1} {β : α → Type u} [DecidableEq α] (s : Finset α) (t : (a : α) → Finset (β a)) :\n  Finset ((a : α) → a ∈ s → β a)",
+                  "line": 9,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Finset.pi.{u, u_1} {α : Type u_1} {β : α → Type u} [DecidableEq α] (s : Finset α) (t : (a : α) → Finset (β a)) :\n  Finset ((a : α) → a ∈ s → β a)",
+              "status": "checked"
+            },
+            "query": "Finset.pi",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": {
+              "declaration_line": "def pi (s : Finset α) (t : ∀ a, Finset (β a)) : Finset (∀ a ∈ s, β a) :=",
+              "kind": "def",
+              "line_number": 50,
+              "name": "Finset.pi",
+              "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Pi.lean",
+              "source_snippet": "def pi (s : Finset α) (t : ∀ a, Finset (β a)) : Finset (∀ a ∈ s, β a) :=\n  ⟨s.1.pi fun a => (t a).1, s.nodup.pi fun a _ => (t a).nodup⟩\n\n@[simp]",
+              "source_snippet_truncated": false
+            },
+            "source_part": "whole unit",
+            "task_id": "unit-004-task-1",
+            "unit_key": "unit-004",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "sum over all sign assignments"
+          },
+          {
+            "exact_identifier": null,
+            "expected_signature_or_shape": "Finset.sum over Finset.univ of Fin d → ℤ",
+            "fallback_mathlib_candidates": [
+              {
+                "declaration_line": "lemma prod_univ_sum {κ : ι → Type*} [Fintype ι] (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) :",
+                "kind": "lemma",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.prod_univ_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  [Fintype ι] (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ Fintype.piFinset t, ∏ i, f i (x i)",
+                      "line": 4,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.prod_univ_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  [Fintype ι] (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ Fintype.piFinset t, ∏ i, f i (x i)",
+                  "status": "checked"
+                },
+                "line_number": 154,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "univ",
+                  "fin"
+                ],
+                "name": "Finset.prod_univ_sum",
+                "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+                "score": 31,
+                "search_excerpt": "lemma prod_univ_sum {κ : ι → Type*} [Fintype ι] (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) : ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ piFinset t, ∏ i, f i (x i) := by"
+              },
+              {
+                "declaration_line": "lemma prod_sum {κ : ι → Type*} (s : Finset ι) (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) :",
+                "kind": "lemma",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.prod_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  (s : Finset ι) (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f (↑x) (p ↑x ⋯)",
+                      "line": 5,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.prod_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  (s : Finset ι) (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f (↑x) (p ↑x ⋯)",
+                  "status": "checked"
+                },
+                "line_number": 121,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "fin"
+                ],
+                "name": "Finset.prod_sum",
+                "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+                "score": 28,
+                "search_excerpt": "lemma prod_sum {κ : ι → Type*} (s : Finset ι) (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) : ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f x.1 (p x.1 x.2) := by"
+              },
+              {
+                "declaration_line": "lemma sum_prod_piFinset [Fintype ι] (s : Finset κ) (g : ι → κ → R) :",
+                "kind": "lemma",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.sum_prod_piFinset.{u_1, u_2, u_4} {ι : Type u_1} {κ : Type u_2} {R : Type u_4} [CommSemiring R] [DecidableEq ι]\n  [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ Fintype.piFinset fun x => s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j",
+                      "line": 6,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.sum_prod_piFinset.{u_1, u_2, u_4} {ι : Type u_1} {κ : Type u_2} {R : Type u_4} [CommSemiring R] [DecidableEq ι]\n  [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ Fintype.piFinset fun x => s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j",
+                  "status": "checked"
+                },
+                "line_number": 158,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "fin"
+                ],
+                "name": "Finset.sum_prod_piFinset",
+                "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+                "score": 28,
+                "search_excerpt": "lemma sum_prod_piFinset [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ piFinset fun _ : ι ↦ s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j := by"
+              },
+              {
+                "declaration_line": "lemma sum_pow' (s : Finset κ) (f : κ → R) (n : ℕ) :",
+                "kind": "lemma",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) :\n  (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+                      "line": 7,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) :\n  (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+                  "status": "checked"
+                },
+                "line_number": 162,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "fin"
+                ],
+                "name": "Finset.sum_pow'",
+                "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+                "score": 28,
+                "search_excerpt": "lemma sum_pow' (s : Finset κ) (f : κ → R) (n : ℕ) : (∑ a ∈ s, f a) ^ n = ∑ p ∈ piFinset fun _i : Fin n ↦ s, ∏ i, f (p i) := by"
+              },
+              {
+                "declaration_line": "def piAntidiag (s : Finset ι) (n : μ) : Finset (ι → μ) := by",
+                "kind": "def",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.piAntidiag.{u_1, u_2} {ι : Type u_1} {μ : Type u_2} [DecidableEq ι] [AddCommMonoid μ] [HasAntidiagonal μ]\n  [DecidableEq μ] (s : Finset ι) (n : μ) : Finset (ι → μ)",
+                      "line": 8,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.piAntidiag.{u_1, u_2} {ι : Type u_1} {μ : Type u_2} [DecidableEq ι] [AddCommMonoid μ] [HasAntidiagonal μ]\n  [DecidableEq μ] (s : Finset ι) (n : μ) : Finset (ι → μ)",
+                  "status": "checked"
+                },
+                "line_number": 113,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "fin"
+                ],
+                "name": "Finset.piAntidiag",
+                "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/Antidiag/Pi.lean",
+                "score": 28,
+                "search_excerpt": "/-- The finset of functions `ι → μ` with support contained in `s` and sum `n`. -/ def piAntidiag (s : Finset ι) (n : μ) : Finset (ι → μ) := by"
+              },
+              {
+                "declaration_line": "theorem Finset.untrop_sum' [LinearOrder R] [OrderTop R] (s : Finset S) (f : S → Tropical R) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.untrop_sum'.{u_1, u_2} {R : Type u_1} {S : Type u_2} [LinearOrder R] [OrderTop R] (s : Finset S)\n  (f : S → Tropical R) : Tropical.untrop (∑ i ∈ s, f i) = s.inf (Tropical.untrop ∘ f)",
+                      "line": 9,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.untrop_sum'.{u_1, u_2} {R : Type u_1} {S : Type u_2} [LinearOrder R] [OrderTop R] (s : Finset S)\n  (f : S → Tropical R) : Tropical.untrop (∑ i ∈ s, f i) = s.inf (Tropical.untrop ∘ f)",
+                  "status": "checked"
+                },
+                "line_number": 107,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "fin"
+                ],
+                "name": "Finset.untrop_sum'",
+                "path": ".lake/packages/mathlib/Mathlib/Algebra/Tropical/BigOperators.lean",
+                "score": 28,
+                "search_excerpt": "theorem Finset.untrop_sum' [LinearOrder R] [OrderTop R] (s : Finset S) (f : S → Tropical R) : untrop (∑ i ∈ s, f i) = s.inf (untrop ∘ f) := by"
+              },
+              {
+                "declaration_line": "theorem Finset.untrop_sum [ConditionallyCompleteLinearOrder R] (s : Finset S)",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.untrop_sum.{u_1, u_2} {R : Type u_1} {S : Type u_2} [ConditionallyCompleteLinearOrder R] (s : Finset S)\n  (f : S → Tropical (WithTop R)) : Tropical.untrop (∑ i ∈ s, f i) = ⨅ i, Tropical.untrop (f ↑i)",
+                      "line": 10,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.untrop_sum.{u_1, u_2} {R : Type u_1} {S : Type u_2} [ConditionallyCompleteLinearOrder R] (s : Finset S)\n  (f : S → Tropical (WithTop R)) : Tropical.untrop (∑ i ∈ s, f i) = ⨅ i, Tropical.untrop (f ↑i)",
+                  "status": "checked"
+                },
+                "line_number": 124,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "fin"
+                ],
+                "name": "Finset.untrop_sum",
+                "path": ".lake/packages/mathlib/Mathlib/Algebra/Tropical/BigOperators.lean",
+                "score": 28,
+                "search_excerpt": "theorem Finset.untrop_sum [ConditionallyCompleteLinearOrder R] (s : Finset S) (f : S → Tropical (WithTop R)) : untrop (∑ i ∈ s, f i) = ⨅ i : s, untrop (f i) := by"
+              },
+              {
+                "declaration_line": "theorem exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum (hf : ∀ a ∈ s, f a ∈ t)",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum.{u, v, w} {α : Type u} {β : Type v} {M : Type w} [DecidableEq β]\n  {s : Finset α} {t : Finset β} {f : α → β} {w : α → M} {b : M} [AddCommMonoid M] [LinearOrder M]\n  [IsOrderedCancelAddMonoid M] (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) :\n  ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x",
+                      "line": 11,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum.{u, v, w} {α : Type u} {β : Type v} {M : Type w} [DecidableEq β]\n  {s : Finset α} {t : Finset β} {f : α → β} {w : α → M} {b : M} [AddCommMonoid M] [LinearOrder M]\n  [IsOrderedCancelAddMonoid M] (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) :\n  ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x",
+                  "status": "checked"
+                },
+                "line_number": 116,
+                "matched_tokens": [
+                  "finset",
+                  "sum",
+                  "pi",
+                  "fin"
+                ],
+                "name": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum",
+                "path": ".lake/packages/mathlib/Mathlib/Combinatorics/Pigeonhole.lean",
+                "score": 28,
+                "search_excerpt": "theorem exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) : ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x :="
+              }
+            ],
+            "fallback_suppression": null,
+            "lean_check": {
+              "error": "Exact identifier failed Lean check and was redacted from the generation prompt.",
+              "status": "error"
+            },
+            "query": "<redacted failed exact identifier>",
+            "related_mathlib_declarations": [],
+            "request_index": 2,
+            "source_declaration": null,
+            "source_part": "whole unit",
+            "task_id": "unit-004-task-1",
+            "unavailable_exact_identifier_redacted": true,
+            "unit_key": "unit-004",
+            "usage_policy": "exact_identifier_failed_lean_check_redacted_do_not_use; fallback_mathlib_candidates are search hints, not checked facts",
+            "why_needed": "expand sum over tuples"
+          }
+        ],
+        "kind": "lemma",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def multiplicity {n d : ℕ} (x : Fin n → Fin d) (k : Fin d) : ℕ :=\n  (univ.filter fun i => x i = k).card",
+            "line_range": [
+              64,
+              67
+            ],
+            "name": "multiplicity",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def toSign (b : ZMod 2) : ℤ := if b = 0 then 1 else -1",
+            "line_range": [
+              83,
+              85
+            ],
+            "name": "toSign",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def signProduct {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) : ℤ :=\n  ∏ i : Fin n, toSign (e (x i))",
+            "line_range": [
+              93,
+              98
+            ],
+            "name": "signProduct",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "lemma toSign_sq (b : ZMod 2) : toSign b ^ 2 = 1 := by\n  fin_cases b <;> simp [toSign]",
+            "line_range": [
+              99,
+              102
+            ],
+            "name": "toSign_sq",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "lemma toSign_pow_odd (b : ZMod 2) (m : ℕ) (hm : Odd m) : toSign b ^ m = toSign b := by\n  obtain ⟨k, hk⟩ := hm\n  calc toSign b ^ m = toSign b ^ (2 * k + 1) := by rw [hk, two_mul]\n    _ = (toSign b ^ 2) ^ k * toSign b := by ring\n    _ = 1 ^ k * toSign b := by rw [toSign_sq]\n    _ = toSign b := by ring",
+            "line_range": [
+              111,
+              118
+            ],
+            "name": "toSign_pow_odd",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "lemma toSign_add_one (b : ZMod 2) : toSign (b + 1) = -toSign b := by\n  fin_cases b <;> decide",
+            "line_range": [
+              119,
+              125
+            ],
+            "name": "toSign_add_one",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem signProduct_eq_prod_pow {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) :\n    signProduct e x = ∏ k : Fin d, (toSign (e k)) ^ (multiplicity x k) := by\n  unfold signProduct multiplicity\n  rw [← Finset.prod_fiberwise Finset.univ x (fun i => toSign (e (x i)))]\n  congr 1\n  ext k\n  simp only [prod_filter]\n  have h1 : ∏ a : Fin n, (if x a = k then toSign (e (x a)) else 1) =\n            ∏ a : Fin n, (if x a = k then toSign (e k) else 1) := by\n    apply Finset.prod_congr rfl\n    intro a _\n    split_ifs with h\n    · rw [h]\n    · rfl\n  rw [h1]\n  rw [Finset.prod_ite]\n  simp only [prod_const_one, mul_one]\n  rw [Finset.prod_const]",
+            "line_range": [
+              126,
+              154
+            ],
+            "name": "signProduct_eq_prod_pow",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "def",
+            "lean_snippet": "def signSum {d : ℕ} (e : Fin d → ZMod 2) : ℤ :=\n  ∑ k : Fin d, toSign (e k)",
+            "line_range": [
+              155,
+              157
+            ],
+            "name": "signSum",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "Encoding of sign vectors as Fin d → ℤ with values ±1; sum over all such functions"
+        ],
+        "needed_project_context": [
+          {
+            "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+            "why_needed": "context for all-even tuples; lemma used in proof of allEven_count_formula"
+          }
+        ],
+        "needed_source_context": [
+          "Lemma lem.cancel.all-even.l1: ∑_{(e_1,...,e_d)∈{1,-1}^d} (e_1+...+e_d)^n = ∑_{x∈[d]^n} ∑_{e∈{1,-1}^d} e_{x_1}...e_{x_n}"
+        ],
+        "role": "same_unit_helper",
+        "selector_unchecked_statement_sketch": "For natural numbers n,d, the sum over all sign vectors e: Fin d → {±1} of (∑_k e_k)^n equals the sum over all tuples x: Fin n → Fin d of the sum over e of ∏_i e_{x_i}.",
+        "source_part": "whole unit",
+        "task_id": "unit-004-task-1"
+      }
+    ],
+    "previous_source_context": [
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "theorem",
+          "id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:thm.cancel.all-even",
+          "labels": [
+            "thm.cancel.all-even"
+          ],
+          "line_range": [
+            25,
+            42
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{theorem}\n\\label{thm.cancel.all-even}Let $n\\in\\mathbb{N}$ and $d\\in\\mathbb{N}$. An\n$n$-tuple $\\left(  x_{1},x_{2},\\ldots,x_{n}\\right)  \\in\\left[  d\\right]  ^{n}$\nis said to be \\emph{all-even} if each element of $\\left[  d\\right]  $ occurs\nan even number of times in this $n$-tuple (i.e., if for each $k\\in\\left[\nd\\right]  $, the number of all $i\\in\\left[  n\\right]  $ satisfying $x_{i}=k$\nis even). For example, the $4$-tuple $\\left(  1,4,4,1\\right)  $ and the\n$6$-tuples $\\left(  1,3,3,5,1,5\\right)  $ and $\\left(  2,4,2,4,3,3\\right)  $\nare all-even, while the $4$-tuples $\\left(  1,2,2,4\\right)  $ and $\\left(\n2,4,6,4\\right)  $ are not.\n\nThen, the number of all all-even $n$-tuples $\\left(  x_{1},x_{2},\\ldots\n,x_{n}\\right)  \\in\\left[  d\\right]  ^{n}$ is\n\\[\n\\dfrac{1}{2^{d}}\\sum_{k=0}^{d}\\dbinom{d}{k}\\left(  d-2k\\right)  ^{n}.\n\\]\n\n\\end{theorem}"
+        }
+      }
+    ],
+    "source_focus_summary": "Identity relating sum over signs to sum over tuples"
+  }
+}

@@ -1,0 +1,632 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [],
+    "lean_file_body": "",
+    "notes": [
+      "The statement is a combinatorial identity over a ℚ-algebra with binomial ring structure. The proof would require known identities for Ring.choose, possibly using polynomial identity trick or generating functions. The available context provides generalizedNewtonBinomial and related lemmas, but a complete proof is not yet constructed. The checked fallback candidates for Ring.choose_add (Ring.add_choose_eq, Ring.choose, Ring.multichoose_neg_add, Ring.choose_add_smul_choose) are insufficient to directly prove the identity. The prior project lemmas fpsPow_mul, generalizedNewtonBinomial, and key_product_identity' fail to compile due to missing HasConstantTermOne and fpsPow notation. Cannot prove from visible context."
+    ],
+    "status": "cannot_prove_from_visible_context",
+    "unit_key": "unit-003",
+    "used_context": [
+      "Ring.choose signature from Mathlib",
+      "Finset.sum_range_succ",
+      "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial (prior project, fails to compile)",
+      "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow (prior project)",
+      "AlgebraicCombinatorics.FPS.polynomial_identity_trick (prior project)",
+      "local lemmas: fpsPow_mul, rescale_neg_one_one_sub_X, one_sub_X_pow_mul_invOneSubPow, one_add_X_pow_mul_rescale_invOneSubPow, one_sub_X_sq_pow, one_sub_X_sq_pow_mul_prod, key_product_identity' (all fail to compile)"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+    "unit_key": "unit-003"
+  },
+  "source_unit": {
+    "environment": "proposition",
+    "id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+    "labels": [
+      "prop.binom.nCk-2i-qedmo.CN"
+    ],
+    "line_range": [
+      601,
+      608
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{proposition}\n\\label{prop.binom.nCk-2i-qedmo.CN}Let $n\\in\\mathbb{C}$ and $k\\in\\mathbb{N}$.\nThen,%\n\\[\n\\sum_{i=0}^{k}\\dbinom{n+i-1}{i}\\dbinom{n}{k-2i}=\\dbinom{n+k-1}{k}.\n\\]\n\n\\end{proposition}"
+  },
+  "unit_key": "unit-003",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "declined_cannot_prove",
+    "messages": [],
+    "reported_status": "cannot_prove_from_visible_context",
+    "skipped_reason": "cannot_prove_from_visible_context",
+    "unit_key": "unit-003",
+    "visible_support_context": {
+      "accepted": [
+        {
+          "kind": "lemma",
+          "name": "rescale_neg_one_one_sub_X",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "one_sub_X_pow_mul_invOneSubPow",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "one_add_X_pow_mul_rescale_invOneSubPow",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "one_sub_X_sq_pow",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+        },
+        {
+          "kind": "lemma",
+          "name": "one_sub_X_sq_pow_mul_prod",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+        }
+      ],
+      "accepted_count": 5,
+      "candidate_count": 8,
+      "rejected": [
+        {
+          "kind": "theorem",
+          "lean_error_count": 6,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 13,
+              "data": "elaboration function for `Mathlib.Tactic.superscriptTerm` has not been implemented\n  ᶠ",
+              "kind": "[anonymous]",
+              "line": 11,
+              "severity": "error"
+            },
+            {
+              "column": 23,
+              "data": "elaboration function for `Mathlib.Tactic.superscriptTerm` has not been implemented\n  ᶠ",
+              "kind": "[anonymous]",
+              "line": 11,
+              "severity": "error"
+            },
+            {
+              "column": 34,
+              "data": "elaboration function for `Mathlib.Tactic.superscriptTerm` has not been implemented\n  ᶠ",
+              "kind": "[anonymous]",
+              "line": 11,
+              "severity": "error"
+            },
+            {
+              "column": 38,
+              "data": "Function expected at\n  HasConstantTermOne\nbut this term has type\n  ?m.6\n\nNote: Expected a function because this term is being applied to the argument\n  f\n\nHint: The identifier `HasConstantTermOne` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 10,
+              "severity": "error"
+            },
+            {
+              "column": 66,
+              "data": "Function expected at\n  HasConstantTermOne\nbut this term has type\n  ?m.6\n\nNote: Expected a function because this term is being applied to the argument\n  g\n\nHint: The identifier `HasConstantTermOne` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 10,
+              "severity": "error"
+            }
+          ],
+          "name": "fpsPow_mul",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "theorem",
+          "lean_error_count": 4,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 20,
+              "data": "elaboration function for `Mathlib.Tactic.superscriptTerm` has not been implemented\n  ᶠ",
+              "kind": "[anonymous]",
+              "line": 11,
+              "severity": "error"
+            },
+            {
+              "column": 49,
+              "data": "elaboration function for `Mathlib.Tactic.superscriptTerm` has not been implemented\n  ᶠ",
+              "kind": "[anonymous]",
+              "line": 17,
+              "severity": "error"
+            },
+            {
+              "column": 8,
+              "data": "Unknown identifier `fpsPow_nat'`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 19,
+              "severity": "error"
+            },
+            {
+              "column": 48,
+              "data": "unsolved goals\ncase h\nK : Type u_1\ninst✝³ : CommRing K\ninst✝² : Algebra ℚ K\ninst✝¹ : BinomialRing K\ninst✝ : CharZero K\nc : K\nk : ℕ\nh_nat : ∀ (n : ℕ), (coeff k) ((1 + X) ^ sorry) = Ring.choose (↑n) k\n⊢ (coeff k) ((1 + X) ^ sorry) = Ring.choose c k",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 11,
+              "severity": "error"
+            }
+          ],
+          "name": "generalizedNewtonBinomial",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "theorem",
+          "lean_error_count": 14,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 8,
+              "data": "automatically included section variable(s) unused in theorem `_private._stdin.0.rescale_neg_one_one_sub_X`:\n  [Algebra ℚ K]\n  [BinomialRing K]\n  [CharZero K]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Algebra ℚ K] [BinomialRing K] [CharZero K] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`",
+              "kind": "linter.unusedSectionVars",
+              "line": 10,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "automatically included section variable(s) unused in theorem `_private._stdin.0.one_sub_X_pow_mul_invOneSubPow`:\n  [Algebra ℚ K]\n  [BinomialRing K]\n  [CharZero K]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Algebra ℚ K] [BinomialRing K] [CharZero K] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`",
+              "kind": "linter.unusedSectionVars",
+              "line": 26,
+              "severity": "warning"
+            },
+            {
+              "column": 8,
+              "data": "automatically included section variable(s) unused in theorem `_private._stdin.0.one_sub_X_sq_pow`:\n  [Algebra ℚ K]\n  [BinomialRing K]\n  [CharZero K]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Algebra ℚ K] [BinomialRing K] [CharZero K] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`",
+              "kind": "linter.unusedSectionVars",
+              "line": 53,
+              "severity": "warning"
+            },
+            {
+              "column": 0,
+              "data": "expected '{' or indented tactic sequence",
+              "kind": "[anonymous]",
+              "line": 93,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "Function expected at\n  f_series'\nbut this term has type\n  ?m.6\n\nNote: Expected a function because this term is being applied to the argument\n  n\n\nHint: The identifier `f_series'` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 77,
+              "severity": "error"
+            }
+          ],
+          "name": "key_product_identity'",
+          "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "stderr": ""
+        }
+      ],
+      "rejected_count": 3
+    }
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "Complex numbers ℂ used; need to work over a ℚ-algebra or field of characteristic 0"
+    ],
+    "local_file_context_candidates": [
+      {
+        "kind": "open",
+        "line_range": [
+          43,
+          43
+        ],
+        "name": "open scoped Polynomial",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "open",
+        "line_range": [
+          44,
+          44
+        ],
+        "name": "open PowerSeries Finset",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          46,
+          46
+        ],
+        "name": "AlgebraicCombinatorics",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          48,
+          48
+        ],
+        "name": "FPS",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          50,
+          50
+        ],
+        "name": "variable {K : Type*} [CommRing K] [Algebra ℚ K]",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "notation",
+        "line_range": [
+          518,
+          518
+        ],
+        "name": "scoped notation:80 f \" ^ᶠ \" c:81 => fpsPow f c",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          733,
+          733
+        ],
+        "name": "variable [BinomialRing K]",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          819,
+          819
+        ],
+        "name": "variable [CharZero K]",
+        "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      }
+    ],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.fps.gen-newton"
+                ],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.FPS.ExpLog"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem generalizedNewtonBinomial (c : K) :\n    (1 + X : K⟦X⟧) ^ᶠ c = binomialSeries K c",
+                "line_range": [
+                  1102,
+                  1228
+                ],
+                "module": "AlgebraicCombinatorics.FPS.NonIntegerPowers",
+                "name": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+                "referenced_source_labels": [
+                  "thm.fps.newton-binom"
+                ],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": true
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.fps.gen-newton"
+                ],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.FPS.ExpLog"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem coeff_one_add_X_fpsPow (c : K) (k : ℕ) :\n    coeff k ((1 + X : K⟦X⟧) ^ᶠ c) = Ring.choose c k",
+                "line_range": [
+                  1230,
+                  1244
+                ],
+                "module": "AlgebraicCombinatorics.FPS.NonIntegerPowers",
+                "name": "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.fps.gen-newton"
+                ],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.FPS.ExpLog"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem polynomial_identity_trick {R : Type*} [CommRing R] [IsDomain R] [CharZero R]\n    (p : Polynomial R) (h : ∀ n : ℕ, p.eval (n : R) = 0) : p = 0",
+                "line_range": [
+                  2346,
+                  2365
+                ],
+                "module": "AlgebraicCombinatorics.FPS.NonIntegerPowers",
+                "name": "AlgebraicCombinatorics.FPS.polynomial_identity_trick",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "thm.fps.gen-newton"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:thm.fps.gen-newton"
+          }
+        ],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": "Ring.choose",
+            "expected_signature_or_shape": "Ring.choose : K → ℕ → K for a CommRing K with ℚ-algebra",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+                  "line": 7,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+              "status": "checked"
+            },
+            "query": "Ring.choose",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": {
+              "declaration_line": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=",
+              "kind": "def",
+              "line_number": 380,
+              "name": "Ring.choose",
+              "path": ".lake/packages/mathlib/Mathlib/RingTheory/Binomial.lean",
+              "source_snippet": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=\n  multichoose (r - n + 1) n\n\nvariable [NonAssocRing R] [Pow R ℕ] [BinomialRing R]",
+              "source_snippet_truncated": false
+            },
+            "source_part": "whole unit",
+            "task_id": "unit-003-task-1",
+            "unit_key": "unit-003",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "generalized binomial coefficient"
+          },
+          {
+            "exact_identifier": "Finset.sum_range_succ",
+            "expected_signature_or_shape": "Sum over Finset.range (k+1)",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :\n  ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n",
+                  "line": 8,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :\n  ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n",
+              "status": "checked"
+            },
+            "query": "Finset.sum_range_succ",
+            "related_mathlib_declarations": [],
+            "request_index": 2,
+            "source_declaration": null,
+            "source_part": "whole unit",
+            "task_id": "unit-003-task-1",
+            "unit_key": "unit-003",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "finite sum manipulation"
+          }
+        ],
+        "kind": "theorem",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "theorem",
+            "lean_snippet": "theorem fpsPow_mul {f g : K⟦X⟧} (hf : HasConstantTermOne f) (hg : HasConstantTermOne g) (a : K) :\n    (f * g) ^ᶠ a = (f ^ᶠ a) * (g ^ᶠ a) := by\n  unfold fpsPow\n\n  rw [fpsLog_mul hf hg]\n\n  rw [smul_add]\n\n  apply fpsExp_add\n  ·\n    rw [constantCoeff_smul, constantCoeff_fpsLog hf, smul_zero]\n  ·\n    rw [constantCoeff_smul, constantCoeff_fpsLog hg, smul_zero]",
+            "line_range": [
+              565,
+              594
+            ],
+            "name": "fpsPow_mul",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "theorem",
+            "lean_snippet": "theorem generalizedNewtonBinomial (c : K) :\n    (1 + X : K⟦X⟧) ^ᶠ c = binomialSeries K c := by\n\n  ext k\n\n  rw [binomialSeries_coeff, smul_eq_mul, mul_one]\n\n  have h_nat : ∀ n : ℕ, coeff k ((1 + X : K⟦X⟧) ^ᶠ (n : K)) = Ring.choose (n : K) k := by\n    intro n\n    rw [fpsPow_nat' hasConstantTermOne_one_add_X n]\n\n    have hpoly : (1 + X : K⟦X⟧) ^ n =\n        (((1 : Polynomial K) + Polynomial.X) ^ n).toPowerSeries := by simp\n    rw [hpoly, Polynomial.coeff_coe, Polynomial.coeff_one_add_X_pow, Ring.choose_natCast]",
+            "line_range": [
+              1127,
+              1231
+            ],
+            "name": "generalizedNewtonBinomial",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": true
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "private lemma rescale_neg_one_one_sub_X :\n    rescale (-1 : K) (1 - X : K⟦X⟧) = 1 + X := by\n  ext n\n  simp only [coeff_rescale, map_sub, map_one, coeff_X, coeff_one, map_add]\n  by_cases hn : n = 0\n  · simp [hn]\n  · by_cases hn1 : n = 1\n    · simp [hn1]\n    · simp only [hn, hn1, ↓reduceIte, mul_zero, zero_sub, neg_zero, add_zero]\n\nomit [Algebra ℚ K] [BinomialRing K] [CharZero K] in",
+            "line_range": [
+              1783,
+              1794
+            ],
+            "name": "rescale_neg_one_one_sub_X",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "private lemma one_sub_X_pow_mul_invOneSubPow (N : ℕ) :\n    (1 - X : K⟦X⟧)^N * (invOneSubPow K N).val = 1 := by\n  have h := (invOneSubPow K N).inv_val\n  rw [invOneSubPow_inv_eq_one_sub_pow] at h\n  exact h\n\nomit [Algebra ℚ K] [BinomialRing K] [CharZero K] in",
+            "line_range": [
+              1795,
+              1802
+            ],
+            "name": "one_sub_X_pow_mul_invOneSubPow",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "private lemma one_add_X_pow_mul_rescale_invOneSubPow (N : ℕ) :\n    (1 + X : K⟦X⟧)^N * rescale (-1 : K) ((invOneSubPow K N).val) = 1 := by\n  calc (1 + X : K⟦X⟧)^N * rescale (-1 : K) ((invOneSubPow K N).val)\n      = rescale (-1 : K) ((1 - X)^N) * rescale (-1 : K) ((invOneSubPow K N).val) := by\n        rw [RingHom.map_pow, rescale_neg_one_one_sub_X]\n    _ = rescale (-1 : K) ((1 - X)^N * (invOneSubPow K N).val) := by rw [map_mul]\n    _ = rescale (-1 : K) 1 := by rw [one_sub_X_pow_mul_invOneSubPow]\n    _ = 1 := by simp\n\nomit [Algebra ℚ K] [BinomialRing K] [CharZero K] in",
+            "line_range": [
+              1803,
+              1813
+            ],
+            "name": "one_add_X_pow_mul_rescale_invOneSubPow",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "private lemma one_sub_X_sq_pow (N : ℕ) :\n    (1 - X^2 : K⟦X⟧)^N = (1 - X)^N * (1 + X)^N := by\n  rw [← mul_pow]; congr 1; ring\n\nomit [Algebra ℚ K] [BinomialRing K] [CharZero K] in",
+            "line_range": [
+              1814,
+              1820
+            ],
+            "name": "one_sub_X_sq_pow",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "private lemma one_sub_X_sq_pow_mul_prod (N : ℕ) :\n    (1 - X^2 : K⟦X⟧)^N * ((invOneSubPow K N).val * rescale (-1 : K) ((invOneSubPow K N).val)) = 1 := by\n  calc (1 - X^2 : K⟦X⟧)^N * ((invOneSubPow K N).val * rescale (-1 : K) ((invOneSubPow K N).val))\n      = (1 - X)^N * (1 + X)^N * (invOneSubPow K N).val * rescale (-1 : K) ((invOneSubPow K N).val) := by\n        rw [one_sub_X_sq_pow]; ring\n    _ = ((1 - X)^N * (invOneSubPow K N).val) * ((1 + X)^N * rescale (-1 : K) ((invOneSubPow K N).val)) := by ring\n    _ = 1 * 1 := by rw [one_sub_X_pow_mul_invOneSubPow, one_add_X_pow_mul_rescale_invOneSubPow]\n    _ = 1 := by ring",
+            "line_range": [
+              1821,
+              1837
+            ],
+            "name": "one_sub_X_sq_pow_mul_prod",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem key_product_identity' (n : K) :\n    f_series' n * g_series' n = rescale (-1 : K) (binomialSeries K (-n)) := by\n\n  have h_one_sub_X : (1 - X : K⟦X⟧) = 1 + (-1 : K) • X := by\n    simp only [neg_smul, one_smul, sub_eq_add_neg]\n  have h_one_sub_X_sq : (1 - X^2 : K⟦X⟧) = (1 - X) * (1 + X) := by ring\n  have h_const_one_sub_X : HasConstantTermOne (1 - X : K⟦X⟧) := by simp [HasConstantTermOne]\n\n  have h_fpsPow_one_sub_X : (1 - X : K⟦X⟧) ^ᶠ (-n) = rescale (-1 : K) (binomialSeries K (-n)) := by\n    rw [h_one_sub_X, fpsPow_one_add_smul_X', generalizedNewtonBinomial]\n\n  have h_fpsPow_one_sub_X_sq : (1 - X^2 : K⟦X⟧) ^ᶠ (-n) =\n      rescale (-1 : K) (binomialSeries K (-n)) * binomialSeries K (-n) := by\n    rw [h_one_sub_X_sq, fpsPow_mul h_const_one_sub_X hasConstantTermOne_one_add_X,\n        h_fpsPow_one_sub_X, generalizedNewtonBinomial]\n\n  have h_f_series_eq : f_series' n = (1 - X^2 : K⟦X⟧) ^ᶠ (-n) := by",
+            "line_range": [
+              1838,
+              2255
+            ],
+            "name": "key_product_identity'",
+            "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+            "snippet_truncated": true
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "Definition of binomial coefficient Ring.choose for complex numbers; identity sum_{i=0}^k C(n+i-1,i) C(n,k-2i) = C(n+k-1,k)"
+        ],
+        "needed_project_context": [
+          {
+            "name": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+            "why_needed": "provides binomial series and coefficient formulas"
+          }
+        ],
+        "needed_source_context": [
+          "Proposition prop.binom.nCk-2i-qedmo.CN: ∑_{i=0}^k C(n+i-1,i) C(n,k-2i) = C(n+k-1,k)"
+        ],
+        "role": "main_claim",
+        "selector_unchecked_statement_sketch": "For any n in a ℚ-algebra K and any natural k, the identity ∑_{i=0}^k Ring.choose (n+i-1) i * Ring.choose n (k-2i) = Ring.choose (n+k-1) k holds.",
+        "source_part": "whole unit",
+        "task_id": "unit-003-task-1"
+      }
+    ],
+    "previous_source_context": [
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "theorem",
+          "id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:thm.fps.power-c.rules",
+          "labels": [
+            "thm.fps.power-c.rules"
+          ],
+          "line_range": [
+            150,
+            159
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{theorem}\n\\label{thm.fps.power-c.rules}Assume that $K$ is a commutative $\\mathbb{Q}%\n$-algebra. For any $a,b\\in K$ and $f,g\\in K\\left[  \\left[  x\\right]  \\right]\n_{1}$, we have\n\\[\nf^{a+b}=f^{a}f^{b},\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\left(  fg\\right)  ^{a}=f^{a}%\ng^{a},\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\left(  f^{a}\\right)  ^{b}=f^{ab}.\n\\]\n\n\\end{theorem}"
+        }
+      },
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "theorem",
+          "id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:thm.fps.gen-newton",
+          "labels": [
+            "thm.fps.gen-newton"
+          ],
+          "line_range": [
+            210,
+            217
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{theorem}\n[Generalized Newton binomial formula]\\label{thm.fps.gen-newton}Assume that $K$\nis a commutative $\\mathbb{Q}$-algebra. Let $c\\in K$. Then,%\n\\[\n\\left(  1+x\\right)  ^{c}=\\sum_{k\\in\\mathbb{N}}\\dbinom{c}{k}x^{k}.\n\\]\n\n\\end{theorem}"
+        }
+      }
+    ],
+    "source_focus_summary": "Binomial coefficient identity"
+  }
+}

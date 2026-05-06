@@ -38,6 +38,7 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   invalid repair-context JSON.
 - [x] Add a targeted proof-lane overlay utility for merging one-unit repairs
   back into a panel/slice artifact without losing hidden-target filtering.
+- [x] Add target-hidden proof-lane dossier generation for clean declines.
 - [ ] Route cases with checked context but repeated clean declines to a proof
   synthesis/coding-agent lane instead of more selector prompt tuning.
 
@@ -87,6 +88,13 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   `Fin d -> ZMod 2`, not all `Fin d -> ℤ`. The merged artifact
   `docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/`
   verifies `1/5` compiled, `4/5` clean declines, and semantic coverage `1/5`.
+- Target-hidden proof-lane dossiers are now generated for clean declines:
+  4 fresh-slice units in
+  `docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-finiteness-merged/`
+  and 2 dev-panel units in
+  `docs/latex-statement-proof-lane-tasks/2026-05-06-dev-panel5-v2-merged-panel/`.
+  The task schema strips aligned targets and post-hoc semantic check/count
+  metadata; leakage scans found no hidden target names.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a

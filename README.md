@@ -682,6 +682,18 @@ hidden-target filtering. The merged artifact
 verifies as `1/5` compiled with four clean declines and no compile failures;
 semantic coverage is still `1/5`.
 
+The next handoff artifact is a target-hidden proof-lane dossier set for the
+remaining clean declines. `scripts/build_latex_statement_proof_lane_tasks.py`
+builds per-unit JSON and Markdown tasks from a generation run, verifier output,
+prompt-visible context, and compact semantic coverage status. It explicitly
+strips aligned Lean targets and post-hoc semantic check/count metadata before
+writing tasks. The fresh-slice merged run produced four such tasks at
+`docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-finiteness-merged/`;
+the latest dev-panel merged run produced two at
+`docs/latex-statement-proof-lane-tasks/2026-05-06-dev-panel5-v2-merged-panel/`.
+Leakage scans over both task directories found no hidden target names or gold
+metadata patterns.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

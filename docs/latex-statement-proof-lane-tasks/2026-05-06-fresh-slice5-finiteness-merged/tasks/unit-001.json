@@ -1,0 +1,697 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [],
+    "lean_file_body": "",
+    "notes": [
+      "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path. Cannot prove without project definitions."
+    ],
+    "status": "cannot_prove_from_visible_context",
+    "unit_key": "unit-001",
+    "used_context": [
+      "catalanHankelMatrix_eq_pathWeightMatrix (same file predecessor, but fails to compile)",
+      "lgv_nonpermutable (prior project declaration, but depends on missing definitions)",
+      "xDecreasing, yIncreasing predicates (from prior context, but not defined in visible context)",
+      "nipatWeightSum (from prior context, but not defined in visible context)",
+      "dyckDigraph_pathFinite, dyckUnitArcWeight (from prior context, but not defined in visible context)"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+    "unit_key": "unit-001"
+  },
+  "source_unit": {
+    "environment": "corollary",
+    "id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+    "labels": [
+      "cor.lgv.catalan-hankel-det-0"
+    ],
+    "line_range": [
+      327,
+      343
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{corollary}\n\\label{cor.lgv.catalan-hankel-det-0}Let $k\\in\\mathbb{N}$. Recall the Catalan\nnumbers $c_{n}=\\dfrac{1}{n+1}\\dbinom{2n}{n}$ for all $n\\in\\mathbb{N}$. Then,%\n\\[\n\\det\\left(  \\left(  c_{i+j-2}\\right)  _{1\\leq i\\leq k,\\ 1\\leq j\\leq k}\\right)\n=\\det\\left(\n\\begin{array}\n[c]{cccc}%\nc_{0} & c_{1} & \\cdots & c_{k-1}\\\\\nc_{1} & c_{2} & \\cdots & c_{k}\\\\\n\\vdots & \\vdots & \\ddots & \\vdots\\\\\nc_{k-1} & c_{k} & \\cdots & c_{2k-2}%\n\\end{array}\n\\right)  =1.\n\\]\n\n\\end{corollary}"
+  },
+  "unit_key": "unit-001",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "declined_cannot_prove",
+    "messages": [],
+    "reported_status": "cannot_prove_from_visible_context",
+    "skipped_reason": "cannot_prove_from_visible_context",
+    "unit_key": "unit-001",
+    "visible_support_context": {
+      "accepted": [],
+      "accepted_count": 0,
+      "candidate_count": 7,
+      "rejected": [
+        {
+          "kind": "def",
+          "lean_error_count": 2,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 31,
+              "data": "Unknown identifier `SimpleDigraph.Path`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 13,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "Unknown identifier `SimpleDigraph.Path`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 14,
+              "severity": "error"
+            }
+          ],
+          "name": "translatePath",
+          "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "lemma",
+          "lean_error_count": 4,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 47,
+              "data": "Unknown identifier `SimpleDigraph.Path`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 13,
+              "severity": "error"
+            },
+            {
+              "column": 5,
+              "data": "Function expected at\n  translatePath\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  d\n\nHint: The identifier `translatePath` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 14,
+              "severity": "error"
+            },
+            {
+              "column": 32,
+              "data": "Function expected at\n  translateVertex\nbut this term has type\n  ?m.2\n\nNote: Expected a function because this term is being applied to the argument\n  d\n\nHint: The identifier `translateVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 14,
+              "severity": "error"
+            },
+            {
+              "column": 9,
+              "data": "Tactic `unfold` failed: Local variable `translatePath` has no definition",
+              "kind": "[anonymous]",
+              "line": 15,
+              "severity": "error"
+            }
+          ],
+          "name": "translatePath_start",
+          "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "lemma",
+          "lean_error_count": 4,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 48,
+              "data": "Unknown identifier `SimpleDigraph.Path`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 13,
+              "severity": "error"
+            },
+            {
+              "column": 5,
+              "data": "Function expected at\n  translatePath\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  d\n\nHint: The identifier `translatePath` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 14,
+              "severity": "error"
+            },
+            {
+              "column": 33,
+              "data": "Function expected at\n  translateVertex\nbut this term has type\n  ?m.2\n\nNote: Expected a function because this term is being applied to the argument\n  d\n\nHint: The identifier `translateVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 14,
+              "severity": "error"
+            },
+            {
+              "column": 9,
+              "data": "Tactic `unfold` failed: Local variable `translatePath` has no definition",
+              "kind": "[anonymous]",
+              "line": 15,
+              "severity": "error"
+            }
+          ],
+          "name": "translatePath_finish",
+          "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "lemma",
+          "lean_error_count": 4,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 45,
+              "data": "Unknown identifier `SimpleDigraph.Path`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 13,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "Function expected at\n  translatePath\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  (-d)\n\nHint: The identifier `translatePath` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 14,
+              "severity": "error"
+            },
+            {
+              "column": 13,
+              "data": "Invalid argument: Variable `translatePath` is not a proposition or let-declaration",
+              "kind": "[anonymous]",
+              "line": 15,
+              "severity": "error"
+            },
+            {
+              "column": 2,
+              "data": "`simp` made no progress",
+              "kind": "[anonymous]",
+              "line": 15,
+              "severity": "error"
+            }
+          ],
+          "name": "translatePath_neg",
+          "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "lemma",
+          "lean_error_count": 3,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 60,
+              "data": "Function expected at\n  translatePath\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  d\n\nHint: The identifier `translatePath` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 13,
+              "severity": "error"
+            },
+            {
+              "column": 22,
+              "data": "Function expected at\n  translatePath\nbut this term has type\n  x✝\n\nNote: Expected a function because this term is being applied to the argument\n  (-d)",
+              "kind": "[anonymous]",
+              "line": 15,
+              "severity": "error"
+            },
+            {
+              "column": 80,
+              "data": "unsolved goals\nx✝ : Sort u_4\ntranslatePath : x✝\nd : ℤ\np q : ?m.6 d\nhpq : sorry p = sorry q\n⊢ p = q",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 13,
+              "severity": "error"
+            }
+          ],
+          "name": "translatePath_injective",
+          "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "theorem",
+          "lean_error_count": 8,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 5,
+              "data": "Function expected at\n  pathsFromTo\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  dyckDigraph\n\nHint: The identifier `pathsFromTo` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 14,
+              "severity": "error"
+            },
+            {
+              "column": 16,
+              "data": "Function expected at\n  pathsFromTo\nbut this term has type\n  x✝\n\nNote: Expected a function because this term is being applied to the argument\n  dyckDigraph",
+              "kind": "[anonymous]",
+              "line": 17,
+              "severity": "error"
+            },
+            {
+              "column": 16,
+              "data": "Function expected at\n  pathsFromTo\nbut this term has type\n  x✝\n\nNote: Expected a function because this term is being applied to the argument\n  dyckDigraph",
+              "kind": "[anonymous]",
+              "line": 18,
+              "severity": "error"
+            },
+            {
+              "column": 6,
+              "data": "No goals to be solved",
+              "kind": "[anonymous]",
+              "line": 22,
+              "severity": "error"
+            },
+            {
+              "column": 6,
+              "data": "No goals to be solved",
+              "kind": "[anonymous]",
+              "line": 32,
+              "severity": "error"
+            }
+          ],
+          "name": "dyck_paths_shifted_eq_catalan",
+          "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "stderr": ""
+        },
+        {
+          "kind": "theorem",
+          "lean_error_count": 3,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 4,
+              "data": "Function expected at\n  catalanHankelMatrix\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  k\n\nHint: The identifier `catalanHankelMatrix` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 14,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "Function expected at\n  pathWeightMatrix\nbut this term has type\n  ?m.2\n\nNote: Expected a function because this term is being applied to the argument\n  dyckDigraph_pathFinite\n\nHint: The identifier `pathWeightMatrix` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 15,
+              "severity": "error"
+            },
+            {
+              "column": 2,
+              "data": "No applicable extensionality theorem found for type\n  ?m.10 k\n\nNote: Extensionality theorems can be registered by marking them with the `[ext]` attribute",
+              "kind": "[anonymous]",
+              "line": 18,
+              "severity": "error"
+            }
+          ],
+          "name": "catalanHankelMatrix_eq_pathWeightMatrix",
+          "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "stderr": ""
+        }
+      ],
+      "rejected_count": 7
+    }
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "Catalan numbers defined via binomial coefficients; determinant of Hankel matrix equals 1"
+    ],
+    "local_file_context_candidates": [
+      {
+        "kind": "open",
+        "line_range": [
+          73,
+          73
+        ],
+        "name": "open Finset BigOperators Matrix",
+        "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          75,
+          75
+        ],
+        "name": "LGV",
+        "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          536,
+          536
+        ],
+        "name": "variable {V : Type*} [DecidableEq V] {K : Type*} [CommRing K]",
+        "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          875,
+          875
+        ],
+        "name": "variable {V : Type*} [DecidableEq V]",
+        "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "open",
+        "line_range": [
+          79,
+          79
+        ],
+        "name": "open Finset BigOperators Matrix MvPolynomial",
+        "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          81,
+          81
+        ],
+        "name": "SymmetricFunctions",
+        "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          83,
+          83
+        ],
+        "name": "variable {N : ℕ} {R : Type*} [CommRing R]",
+        "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      }
+    ],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "cor.lgv.kpaths.wt-np"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem lgv_nonpermutable {k : ℕ} (w : ArcWeight integerLattice K)\n    (A B : kVertex (ℤ × ℤ) k)\n    (hxA : xDecreasing A) (hyA : yIncreasing A)\n    (hxB : xDecreasing B) (hyB : yIncreasing B) :\n    (pathWeightMatrix integerLattice_pathFinite w A B).det =\n      nipatWeightSum integerLattice_pathFinite w A B (Equiv.refl (Fin k))",
+                "line_range": [
+                  4264,
+                  4311
+                ],
+                "module": "AlgebraicCombinatorics.Determinants.LGV2",
+                "name": "LGV.lgv_nonpermutable",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": true
+              },
+              {
+                "context_source": "referencing_prior_declaration",
+                "declared_source_labels": [
+                  "thm.sf.jt-h"
+                ],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.Determinants.LGV2",
+                  "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+                  "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                  "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "/-- First Jacobi-Trudi formula (Theorem thm.sf.jt-h)\n    Label: thm.sf.jt-h\n\n    s_{λ/μ} = det((h_{λᵢ - μⱼ - i + j})_{1 ≤ i,j ≤ M})\n\n    The proof uses the Lindström-Gessel-Viennot lemma with appropriate\n    source and target vertices in the integer lattice ℤ².\n\n    ## Proof Strategy\n\n    **Step 1: Set up the LGV framework**\n    Define source vertices Aᵢ = (μᵢ - i, 1) and target vertices Bⱼ = (λⱼ - j, N) in ℤ².\n    The path weight matrix M_{i,j} = ∑_{p : Aᵢ → Bⱼ} w(p) where w(p) is the product\n    of x_h for each east-step at height h.\n\n    **Step 2: Identify M with the Jacobi-Trudi matrix**\n    By `pathWeightSum_eq_hsymm`, M_{i,j} = h_{λⱼ - μᵢ - j + i} = h_{λⱼ - μᵢ - (j - i)}.\n    Note: The textbook uses 1-indexed notation; our Lean formalization uses 0-indexed.\n    The matrix entry (i,j) is h_{λᵢ - μⱼ - i + j} in the textbook convention.\n\n    **Step 3: Apply the LGV lemma**\n    By `lgv_nonpermutable` (Corollary cor.lgv.kpaths.wt-np), since the source and\n    target vertices satisfy the sorting conditions (x-decreasing, y-increasing),\n    we have:\n      det(M) = ∑_{nipats from 𝐀 to 𝐁} w(nipat)\n    where the sum is only over non-intersecting path tuples (nipats).\n\n    **Step 4: Establish the nipat-SSYT bijection**\n    By `nipat_ssyt_bijection`, there is a weight-preserving bijection between\n    nipats from 𝐀 to 𝐁 and SSYT of skew shape λ/μ:\n    - The nipat (p₁, ..., pₖ) maps to the tableau T where row i contains\n      the heights of east-steps in path pᵢ (in weakly increasing order).\n    - Non-intersection of paths ensures column-strictness of the tableau.\n    - The weight w(nipat) = ∏ᵢ w(pᵢ) equals the monomial x^T.\n\n    **Step 5: Conclude**\n    det(M) = ∑_{nipats} w(nipat) = ∑_{SSYT T of shape λ/μ} x^T = s_{λ/μ}\n\n    ## Key Lemmas Required",
+                "line_range": [
+                  8001,
+                  8066
+                ],
+                "module": "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+                "name": "SymmetricFunctions.jacobiTrudi_h",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+                "referenced_source_labels": [
+                  "cor.lgv.kpaths.wt-np"
+                ],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": true
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "cor.lgv.kpaths.wt-np",
+              "eq.cor.lgv.kpaths.wt-np.xA",
+              "eq.cor.lgv.kpaths.wt-np.yA",
+              "eq.cor.lgv.kpaths.wt-np.xB",
+              "eq.cor.lgv.kpaths.wt-np.yB",
+              "eq.cor.lgv.kpaths.wt-np.claim"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.kpaths.wt-np"
+          }
+        ],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": "Matrix.det",
+            "expected_signature_or_shape": "Matrix (Fin k) (Fin k) ℤ",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+                  "line": 4,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+              "status": "checked"
+            },
+            "query": "Matrix.det",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": {
+              "declaration_line": "def det (M : Matrix n n R) : R :=",
+              "kind": "def",
+              "line_number": 59,
+              "name": "Matrix.det",
+              "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+              "source_snippet": "/-- The determinant of a matrix given by the Leibniz formula. -/\ndef det (M : Matrix n n R) : R :=\n  detRowAlternating M",
+              "source_snippet_truncated": false
+            },
+            "source_part": "whole unit",
+            "task_id": "unit-001-task-1",
+            "unit_key": "unit-001",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "determinant of a square matrix"
+          },
+          {
+            "exact_identifier": null,
+            "expected_signature_or_shape": "Catalan numbers: ℕ → ℕ",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "error": "Exact identifier failed Lean check and was redacted from the generation prompt.",
+              "status": "error"
+            },
+            "query": "<redacted failed exact identifier>",
+            "related_mathlib_declarations": [],
+            "request_index": 2,
+            "source_declaration": null,
+            "source_part": "whole unit",
+            "task_id": "unit-001-task-1",
+            "unavailable_exact_identifier_redacted": true,
+            "unit_key": "unit-001",
+            "usage_policy": "exact_identifier_failed_lean_check_redacted_do_not_use; fallback_mathlib_candidates are search hints, not checked facts",
+            "why_needed": "definition of Catalan numbers"
+          }
+        ],
+        "kind": "theorem",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def translatePath (d : ℤ) (p : SimpleDigraph.Path dyckDigraph) :\n    SimpleDigraph.Path dyckDigraph where\n  vertices := p.vertices.map (translateVertex d)\n  nonempty := by simp [p.nonempty]\n  arcs_valid := by\n    intro k hk\n    simp only [List.length_map] at hk\n    have hk' : k < p.vertices.length := Nat.lt_of_succ_lt hk\n    have hk'' : k + 1 < p.vertices.length := hk\n\n    have h1 : (p.vertices.map (translateVertex d)).get ⟨k, by simp; exact hk'⟩ =\n              translateVertex d (p.vertices.get ⟨k, hk'⟩) := by\n      simp [List.get_eq_getElem]\n    have h2 : (p.vertices.map (translateVertex d)).get ⟨k + 1, by simp; exact hk''⟩ =\n              translateVertex d (p.vertices.get ⟨k + 1, hk''⟩) := by\n      simp [List.get_eq_getElem]\n    rw [h1, h2]\n    rw [← dyckDigraph_arc_translate d]\n    exact p.arcs_valid k hk",
+            "line_range": [
+              5961,
+              5981
+            ],
+            "name": "translatePath",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "private lemma translatePath_start (d : ℤ) (p : SimpleDigraph.Path dyckDigraph) :\n    (translatePath d p).start = translateVertex d p.start := by\n  unfold translatePath SimpleDigraph.Path.start translateVertex\n  simp only [List.head_map]",
+            "line_range": [
+              5982,
+              5986
+            ],
+            "name": "translatePath_start",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "private lemma translatePath_finish (d : ℤ) (p : SimpleDigraph.Path dyckDigraph) :\n    (translatePath d p).finish = translateVertex d p.finish := by\n  unfold translatePath SimpleDigraph.Path.finish translateVertex\n  simp only [List.getLast_map]",
+            "line_range": [
+              5987,
+              5991
+            ],
+            "name": "translatePath_finish",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "private lemma translatePath_neg (d : ℤ) (p : SimpleDigraph.Path dyckDigraph) :\n    translatePath (-d) (translatePath d p) = p := by\n  simp only [translatePath, List.map_map]\n  congr 1\n  conv_rhs => rw [← List.map_id p.vertices]\n  congr 1\n  funext v\n  simp only [Function.comp_apply, translateVertex]\n  ext\n  · simp only [id_eq]; ring\n  · rfl",
+            "line_range": [
+              5992,
+              6003
+            ],
+            "name": "translatePath_neg",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "lemma translatePath_injective (d : ℤ) : Function.Injective (translatePath d) := by\n  intro p q hpq\n  have h := congrArg (translatePath (-d)) hpq\n  simp only [translatePath_neg] at h\n  exact h",
+            "line_range": [
+              6004,
+              6012
+            ],
+            "name": "translatePath_injective",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem dyck_paths_shifted_eq_catalan (i j : ℕ) :\n    (pathsFromTo dyckDigraph dyckDigraph_pathFinite (-(2 * i : ℤ), 0) (2 * j, 0)).card =\n      catalan (i + j) := by\n\n  have equiv : (pathsFromTo dyckDigraph dyckDigraph_pathFinite (-(2 * i : ℤ), 0) (2 * j, 0)) ≃\n               (pathsFromTo dyckDigraph dyckDigraph_pathFinite (0, 0) (2 * (i + j), 0)) := by\n    refine ⟨?toFun, ?invFun, ?left_inv, ?right_inv⟩\n    case toFun =>\n      intro ⟨p, hp⟩\n      refine ⟨translatePath (2 * i) p, ?_⟩\n      rw [mem_pathsFromTo_dyck] at hp ⊢\n      constructor\n      · rw [translatePath_start, hp.1]\n        simp [translateVertex]\n      · rw [translatePath_finish, hp.2]\n        simp [translateVertex]\n        ring\n    case invFun =>\n      intro ⟨p, hp⟩\n      refine ⟨translatePath (-(2 * i : ℤ)) p, ?_⟩\n      rw [mem_pathsFromTo_dyck] at hp ⊢\n      constructor\n      · rw [translatePath_start, hp.1]\n        simp [translateVertex]\n      · rw [translatePath_finish, hp.2]\n        simp [translateVertex]\n        ring\n    case left_inv =>\n      intro ⟨p, hp⟩\n      simp only [Subtype.mk.injEq]\n      exact translatePath_neg (2 * i) p\n    case right_inv =>\n      intro ⟨p, hp⟩\n      simp only [Subtype.mk.injEq]\n      have h : translatePath (2 * ↑i) (translatePath (-(2 * ↑i)) p) = p := by\n        have := translatePath_neg (-(2 * i : ℤ)) p\n        simp only [neg_neg] at this\n        exact this\n      exact h\n  calc (pathsFromTo dyckDigraph dyckDigraph_pathFinite (-(2 * i : ℤ), 0) (2 * j, 0)).card",
+            "line_range": [
+              6013,
+              6058
+            ],
+            "name": "dyck_paths_shifted_eq_catalan",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": true
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem catalanHankelMatrix_eq_pathWeightMatrix (k : ℕ) :\n    catalanHankelMatrix k =\n    pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight\n      (fun i : Fin k => (-(2 * (i : ℤ)), 0))\n      (fun j : Fin k => (2 * (j : ℤ), 0)) := by\n  ext i j\n  simp only [catalanHankelMatrix, pathWeightMatrix, Matrix.of_apply]\n  rw [pathWeightSum_dyckUnitArcWeight]\n\n  rw [← dyck_paths_shifted_eq_catalan]",
+            "line_range": [
+              6059,
+              6078
+            ],
+            "name": "catalanHankelMatrix_eq_pathWeightMatrix",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem catalan_hankel_det_general (n : ℕ) : (catalanHankelMatrix (n + 8)).det = 1 := by\n  sorry",
+            "line_range": [
+              6079,
+              6081
+            ],
+            "name": "catalan_hankel_det_general",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+            "snippet_truncated": false
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "Exact definition of catalanHankelMatrix in the project; whether it matches the matrix (c_{i+j-2})"
+        ],
+        "needed_project_context": [
+          {
+            "name": "catalanHankelMatrix",
+            "why_needed": "definition of the Hankel matrix of Catalan numbers"
+          }
+        ],
+        "needed_source_context": [
+          "Corollary cor.lgv.catalan-hankel-det-0: det((c_{i+j-2})_{1≤i,j≤k}) = 1"
+        ],
+        "role": "main_claim",
+        "selector_unchecked_statement_sketch": "For any natural number k, the determinant of the k×k Hankel matrix of Catalan numbers (entry (i,j) = c_{i+j-2}) equals 1.",
+        "source_part": "whole unit",
+        "task_id": "unit-001-task-1"
+      }
+    ],
+    "previous_source_context": [
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "corollary",
+          "id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.kpaths.wt-np",
+          "labels": [
+            "cor.lgv.kpaths.wt-np",
+            "eq.cor.lgv.kpaths.wt-np.xA",
+            "eq.cor.lgv.kpaths.wt-np.yA",
+            "eq.cor.lgv.kpaths.wt-np.xB",
+            "eq.cor.lgv.kpaths.wt-np.yB",
+            "eq.cor.lgv.kpaths.wt-np.claim"
+          ],
+          "line_range": [
+            130,
+            163
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex",
+          "referenced_labels": [
+            "thm.lgv.kpaths.wt"
+          ],
+          "source_text": "\\begin{corollary}\n[LGV lemma, nonpermutable lattice weight version]\\label{cor.lgv.kpaths.wt-np}%\nConsider the setting of Theorem \\ref{thm.lgv.kpaths.wt}, but additionally\nassume that%\n\\begin{align}\n\\operatorname*{x}\\left(  A_{1}\\right)   &  \\geq\\operatorname*{x}\\left(\nA_{2}\\right)  \\geq\\cdots\\geq\\operatorname*{x}\\left(  A_{k}\\right)\n;\\label{eq.cor.lgv.kpaths.wt-np.xA}\\\\\n\\operatorname*{y}\\left(  A_{1}\\right)   &  \\leq\\operatorname*{y}\\left(\nA_{2}\\right)  \\leq\\cdots\\leq\\operatorname*{y}\\left(  A_{k}\\right)\n;\\label{eq.cor.lgv.kpaths.wt-np.yA}\\\\\n\\operatorname*{x}\\left(  B_{1}\\right)   &  \\geq\\operatorname*{x}\\left(\nB_{2}\\right)  \\geq\\cdots\\geq\\operatorname*{x}\\left(  B_{k}\\right)\n;\\label{eq.cor.lgv.kpaths.wt-np.xB}\\\\\n\\operatorname*{y}\\left(  B_{1}\\right)   &  \\leq\\operatorname*{y}\\left(\nB_{2}\\right)  \\leq\\cdots\\leq\\operatorname*{y}\\left(  B_{k}\\right)  .\n\\label{eq.cor.lgv.kpaths.wt-np.yB}%\n\\end{align}\nHere, $\\operatorname*{x}\\left(  P\\right)  $ and $\\operatorname*{y}\\left(\nP\\right)  $ denote the two coordinates of any point $P\\in\\mathbb{Z}^{2}$.\n\nThen, there are no nipats from $\\mathbf{A}$ to $\\sigma\\left(  \\mathbf{B}%\n\\right)  $ when $\\sigma\\in S_{k}$ is not the identity permutation\n$\\operatorname*{id}\\in S_{k}$. Therefore, the claim of Theorem\n\\ref{thm.lgv.kpaths.wt} simplifies to\n\\begin{align}\n&  \\det\\left(  \\left(  \\sum_{p:A_{i}\\rightarrow B_{j}}w\\left(  p\\right)\n\\right)  _{1\\leq i\\leq k,\\ 1\\leq j\\leq k}\\right) \\nonumber\\\\\n&  =\\sum_{\\substack{\\mathbf{p}\\text{ is a nipat}\\\\\\text{from }\\mathbf{A}\\text{\nto }\\mathbf{B}}}w\\left(  \\mathbf{p}\\right)  .\n\\label{eq.cor.lgv.kpaths.wt-np.claim}%\n\\end{align}\n\n\\end{corollary}"
+        }
+      },
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "corollary",
+          "id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.binom-det-nonneg",
+          "labels": [
+            "cor.lgv.binom-det-nonneg"
+          ],
+          "line_range": [
+            259,
+            273
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{corollary}\n\\label{cor.lgv.binom-det-nonneg}Let $k\\in\\mathbb{N}$. Let $a_{1},a_{2}%\n,\\ldots,a_{k}$ and $b_{1},b_{2},\\ldots,b_{k}$ be nonnegative integers such\nthat\n\\[\na_{1}\\geq a_{2}\\geq\\cdots\\geq a_{k}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{and}%\n\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ b_{1}\\geq b_{2}\\geq\\cdots\\geq b_{k}.\n\\]\nThen,%\n\\[\n\\det\\left(  \\left(  \\dbinom{a_{i}}{b_{j}}\\right)  _{1\\leq i\\leq k,\\ 1\\leq\nj\\leq k}\\right)  \\geq0.\n\\]\n\n\\end{corollary}"
+        }
+      }
+    ],
+    "source_focus_summary": "Catalan Hankel determinant equals 1"
+  }
+}

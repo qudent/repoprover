@@ -1,0 +1,23 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "failure_classes": [
+    "declined_cannot_prove"
+  ],
+  "generated_at": "2026-05-06T10:28:34.693481+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged",
+  "schema_version": "repoprover.latex_statement_proof_lane_tasks.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection",
+  "semantic_coverage": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/eval/semantic-coverage.json",
+  "unit_count": 4,
+  "unit_keys": [
+    "unit-001",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/eval/verification-results.json"
+}
