@@ -1,0 +1,132 @@
+{
+  "all_aligned_gold_proved_units": 0,
+  "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
+  "coverage_status_counts": {
+    "generated_not_compiled": 4,
+    "no_aligned_gold_proved": 1
+  },
+  "generated_at": "2026-05-06T06:22:40.626613+00:00",
+  "generated_not_compiled_units": 4,
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation",
+  "no_aligned_gold_proved_units": 1,
+  "no_aligned_gold_to_check_units": 0,
+  "partial_aligned_gold_proved_units": 0,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid",
+  "unit_count": 5,
+  "units": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001"
+    },
+    {
+      "aligned_gold_declaration_count": 2,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_failed",
+          "failure_class": "semantic_grader_failed",
+          "generated_declaration_names": [
+            "det_of_triangular"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.Det.det_upperTriangular",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            434,
+            439
+          ],
+          "gold_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "lean_source_path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/semantic-coverage/unit-002/gold-001.lean",
+          "messages": [
+            {
+              "column": 59,
+              "data": "Type mismatch: After simplification, term\n  hA\n has type\n  \u2200 (i j : Fin n), j < i \u2192 A i j = 0\nbut is expected to have type\n  A.BlockTriangular id \u2228 A.BlockTriangular \u21d1OrderDual.toDual",
+              "kind": "[anonymous]",
+              "line": 463,
+              "severity": "error"
+            }
+          ],
+          "semantic_check_passed": false,
+          "stderr": ""
+        },
+        {
+          "coverage_status": "semantic_grader_failed",
+          "failure_class": "semantic_grader_failed",
+          "generated_declaration_names": [
+            "det_of_triangular"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.Det.det_lowerTriangular",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            441,
+            449
+          ],
+          "gold_path": "AlgebraicCombinatorics/DeterminantsBasic.lean",
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "lean_source_path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/semantic-coverage/unit-002/gold-002.lean",
+          "messages": [
+            {
+              "column": 59,
+              "data": "Type mismatch: After simplification, term\n  hA\n has type\n  \u2200 (i j : Fin n), i < j \u2192 A i j = 0\nbut is expected to have type\n  A.BlockTriangular id \u2228 A.BlockTriangular \u21d1OrderDual.toDual",
+              "kind": "[anonymous]",
+              "line": 470,
+              "severity": "error"
+            }
+          ],
+          "semantic_check_passed": false,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "no_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-002/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+      "unit_key": "unit-002"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-003/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+      "unit_key": "unit-003"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-004/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+      "unit_key": "unit-004"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-005/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-005"
+    }
+  ]
+}

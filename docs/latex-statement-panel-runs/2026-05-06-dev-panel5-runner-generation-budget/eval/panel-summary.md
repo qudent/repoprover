@@ -27,6 +27,7 @@
     "prompt_tokens": 17077,
     "completion_tokens": 2186,
     "reasoning_tokens": 0,
+    "cached_prompt_tokens": 0,
     "units_selected": 5
   },
   "hydration": {
@@ -52,6 +53,7 @@
     "prompt_tokens": null,
     "completion_tokens": null,
     "reasoning_tokens": null,
+    "cached_prompt_tokens": null,
     "batch_count": 5,
     "normalized_unit_count": 0
   },

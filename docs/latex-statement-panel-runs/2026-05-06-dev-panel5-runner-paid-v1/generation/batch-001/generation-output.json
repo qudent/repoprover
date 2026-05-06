@@ -1,0 +1,32 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "coeff_div_congr"
+        ],
+        "raw_lean_file_body_characters": 521,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-001"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof is incomplete because the needed lemma `xnEquiv_mul_of_coeff_eq` is not available in the context; it is a local file predecessor but not imported. The statement is generated as a placeholder with sorry."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source lemma text",
+        "hydrated_mathlib_context: PowerSeries.coeff, IsUnit, etc.",
+        "local_file_predecessor_declarations: xnEquiv_mul_of_coeff_eq (not available)"
+      ]
+    }
+  ]
+}

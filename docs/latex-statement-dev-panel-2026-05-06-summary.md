@@ -84,6 +84,53 @@ Artifact:
   `Finset.Nat.sum_antidiagonal_eq_sum_range_succ`, and
   `Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk`.
 
+### Panel Runner Smokes
+
+Artifacts:
+
+- `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-budget/`
+- `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-generation-budget/`
+
+The first smoke built the five-unit selector payload through
+`scripts/run_latex_statement_panel.py --budget-only` with no provider call. The
+second reused the existing no-reasoning selector run and built five per-unit
+generation payloads with `--generation-budget-only`, also with no provider
+call.
+
+### Paid Panel Runner V1
+
+Artifact:
+`docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/`
+
+This run reused the default-reasoning selector
+`docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid`, skipped
+rehydration because the selector was already hydrated, generated one unit per
+call, then ran generated-only verification, exact gold comparison, and semantic
+coverage.
+
+- Generation model: `deepseek/deepseek-v4-flash`, `reasoning_effort=none`.
+- Generation cost: `$0.0051861712`.
+- Generation usage: 35,188 prompt tokens, 2,057 completion tokens, 0 reasoning
+  tokens, 2,304 cached prompt tokens.
+- Generation elapsed: 37.115 seconds.
+- Normalized invalid cannot-prove bodies: 2 units.
+- Generated-only verification: 1 compiled / 5 units.
+- Failure classes: 2 compile failures, 2 clean cannot-prove declines, 1
+  compiled unit.
+- Exact gold comparison: 1 compiled unit needs semantic review, 0 exact
+  name-overlap units.
+- Semantic coverage: 0 / 5 units proved all aligned gold declarations.
+
+Per-unit outcome:
+
+| Unit key | Source unit | Outcome |
+|---|---|---|
+| `unit-001` | `lem.fps.prod.irlv.cong-div` | clean `cannot_prove_from_visible_context` |
+| `unit-002` | `thm.det.triang` | generated and compiled, but semantic grader failed against both aligned gold triangular theorems |
+| `unit-003` | `thm.commring.inverse-uni` | generated `isInverse_unique`, but failed because `IsInverse` project context was not available in the checked namespace/import context |
+| `unit-004` | `prop.binom.vandermonde.NN` | generated `vandermonde_nat`, but failed on namespace/syntax around `AlgebraicCombinatorics` and range-sum syntax |
+| `unit-005` | `prop.sf.Npar-as-par` | clean `cannot_prove_from_visible_context` |
+
 ## What This Shows
 
 The five-unit panel gives richer data immediately. The single NPartition loop
@@ -102,6 +149,10 @@ generic or NPartition-shaped. The panel shows:
   batched prompt, even though prior single-unit helper-contract prompts could
   do so. That means the batched selector prompt still needs stronger generic
   helper-planning pressure.
+- The first paid panel runner pass shows a different bottleneck profile than
+  the late one-theorem loop: only 2/5 are clean declines; 2/5 are ordinary
+  compile failures from namespace/import/syntax/context issues; 1/5 compiles
+  but misses the semantic shape of the gold theorems.
 
 ## Recommendations
 
@@ -117,4 +168,3 @@ Use this panel before another one-theorem prompt retry:
    proof-synthesis routing signal, not another context-selector prompt target.
 6. Keep a separate fresh held-out sample for actual benchmark claims. This panel
    is development data.
-

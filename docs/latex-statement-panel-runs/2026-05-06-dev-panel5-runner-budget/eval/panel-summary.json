@@ -5,6 +5,7 @@
   "metrics": {
     "context_selection": {
       "budget_only": true,
+      "cached_prompt_tokens": null,
       "completion_tokens": null,
       "cost": 0.0,
       "elapsed_seconds": null,

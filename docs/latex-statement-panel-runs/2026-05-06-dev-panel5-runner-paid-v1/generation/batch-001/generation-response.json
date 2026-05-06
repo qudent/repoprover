@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"coeff_div_congr\"\n      ],\n      \"lean_file_body\": \"theorem coeff_div_congr {K : Type*} [CommRing K] {a b c d : K⟦X⟧} (hc : IsUnit c) (hd : IsUnit d) {n : ℕ}\\n    (hab : ∀ m ≤ n, coeff m a = coeff m b) (hcd : ∀ m ≤ n, coeff m c = coeff m d) :\\n    ∀ m ≤ n, coeff m (a * c⁻¹) = coeff m (b * d⁻¹) :=\\nby\\n  intro m hm\\n  have hprod : ∀ m ≤ n, coeff m (a * c) = coeff m (b * d) := by\\n    intro m hm\\n    exact calc\\n      coeff m (a * c) = coeff m (a * c) := rfl\\n      _ = coeff m (b * d) := ?_\\n    -- This is where we need the lemma from the local file predecessor\\n    sorry\\n  sorry\",\n      \"notes\": [\n        \"The proof is incomplete because the needed lemma `xnEquiv_mul_of_coeff_eq` is not available in the context; it is a local file predecessor but not imported. The statement is generated as a placeholder with sorry.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source lemma text\",\n        \"hydrated_mathlib_context: PowerSeries.coeff, IsUnit, etc.\",\n        \"local_file_predecessor_declarations: xnEquiv_mul_of_coeff_eq (not available)\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778048447,
+  "id": "gen-1778048447-8kDE1TcgcJed6uYVT6cd",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 400,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0014119784,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.000112,
+      "upstream_inference_cost": 0.0014119784,
+      "upstream_inference_prompt_cost": 0.0012999784
+    },
+    "is_byok": false,
+    "prompt_tokens": 9411,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 128,
+      "video_tokens": 0
+    },
+    "total_tokens": 9811
+  }
+}

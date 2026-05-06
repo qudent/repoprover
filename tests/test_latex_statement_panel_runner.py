@@ -177,11 +177,24 @@ def test_panel_full_flow_writes_summary(monkeypatch, tmp_path: Path) -> None:
                         "elapsed_seconds": 2.0,
                         "cost_summary": {
                             "openrouter_reported_cost": 0.02,
-                            "usage": {
-                                "prompt_tokens": 20,
-                                "completion_tokens": 8,
-                                "completion_tokens_details": {"reasoning_tokens": 0},
-                            },
+                            "batches": [
+                                {
+                                    "usage": {
+                                        "prompt_tokens": 20,
+                                        "completion_tokens": 8,
+                                        "completion_tokens_details": {"reasoning_tokens": 0},
+                                        "prompt_tokens_details": {"cached_tokens": 3},
+                                    }
+                                },
+                                {
+                                    "usage": {
+                                        "prompt_tokens": 7,
+                                        "completion_tokens": 2,
+                                        "completion_tokens_details": {"reasoning_tokens": 1},
+                                        "prompt_tokens_details": {"cached_tokens": 4},
+                                    }
+                                },
+                            ],
                         },
                         "batches": [{"contract_enforcement": {"normalized_unit_count": 1}}],
                     }
@@ -250,6 +263,9 @@ def test_panel_full_flow_writes_summary(monkeypatch, tmp_path: Path) -> None:
     assert metrics["context_selection"]["cost"] == 0.01
     assert metrics["hydration"]["request_count"] == 3
     assert metrics["generation"]["normalized_unit_count"] == 1
+    assert metrics["generation"]["prompt_tokens"] == 27
+    assert metrics["generation"]["completion_tokens"] == 10
+    assert metrics["generation"]["cached_prompt_tokens"] == 7
     assert metrics["verification"]["compile_passed_units"] == 1
     assert metrics["gold_comparison"]["compiled_needs_semantic_review_units"] == 1
     assert metrics["semantic_coverage"]["all_aligned_gold_proved_units"] == 1

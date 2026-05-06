@@ -1,0 +1,33 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "bijection_partitions_length_le_N_and_NPartition"
+        ],
+        "raw_lean_file_body_characters": 1984,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-005"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof is incomplete; the construction of the bijection is sketched but the antitone condition and positivity proofs are not fully fleshed out. The status is cannot_prove_from_visible_context because the required lemmas about sorting and positivity are not available in the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Finset.card_image_le",
+        "Finset.sum_image"
+      ]
+    }
+  ]
+}

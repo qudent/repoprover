@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-05-06T06:20:45.826335+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation",
+  "gold_comparison_results": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/gold-comparison-results.json",
+  "metrics": {
+    "context_selection": {
+      "budget_only": false,
+      "cached_prompt_tokens": 16768,
+      "completion_tokens": 9219,
+      "cost": 0.003094084,
+      "elapsed_seconds": 115.186,
+      "paid_call_made": true,
+      "path": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid",
+      "prompt_tokens": 17077,
+      "reasoning_tokens": 6914,
+      "units_selected": 5,
+      "valid_json": true
+    },
+    "generation": {
+      "batch_count": 5,
+      "budget_only": false,
+      "cached_prompt_tokens": 2304,
+      "completion_tokens": 2057,
+      "cost": 0.0051861712,
+      "elapsed_seconds": 37.115,
+      "normalized_unit_count": 2,
+      "paid_call_made": true,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation",
+      "prompt_tokens": 35188,
+      "reasoning_tokens": 0,
+      "valid_json": true
+    },
+    "gold_comparison": {
+      "compile_passed_units": 1,
+      "compiled_name_overlap_units": 0,
+      "compiled_needs_semantic_review_units": 1,
+      "coverage_status_counts": {
+        "compile_failure": 2,
+        "compiled_needs_semantic_review": 1,
+        "not_generated_cannot_prove": 2
+      },
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/gold-comparison-results.json",
+      "unit_count": 5
+    },
+    "hydration": {
+      "batch_count": 1,
+      "exact_identifier_count": 6,
+      "fallback_exact_identifier_count": 24,
+      "fallback_lean_check_statuses": [
+        "ok"
+      ],
+      "lean_check_statuses": [
+        "lean_errors"
+      ],
+      "path": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid/eval/mathlib-hydration-summary.json",
+      "request_count": 7
+    },
+    "semantic_coverage": {
+      "all_aligned_gold_proved_units": 0,
+      "coverage_status_counts": {
+        "generated_not_compiled": 4,
+        "no_aligned_gold_proved": 1
+      },
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/semantic-coverage-results.json",
+      "unit_count": 5
+    },
+    "verification": {
+      "compile_passed_units": 1,
+      "failure_class_counts": {
+        "compile_failure": 2,
+        "compiled": 1,
+        "declined_cannot_prove": 2
+      },
+      "materialize_visible_support": false,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/verification-results.json",
+      "unit_count": 5
+    }
+  },
+  "output_root": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1",
+  "panel": "/home/name/repos/repoprover/docs/latex-statement-dev-panel-2026-05-06.json",
+  "schema_version": "repoprover.latex_statement_panel_run.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid",
+  "semantic_coverage_results": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/semantic-coverage-results.json",
+  "stages": [
+    {
+      "command": "reuse existing selector run",
+      "elapsed_seconds": 0.0,
+      "exit_code": 0,
+      "stage": "context_selection",
+      "stderr_log": null,
+      "stderr_tail": "",
+      "stdout_log": null,
+      "stdout_tail": ""
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/run_latex_statement_generation.py --selector-run docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation --model deepseek/deepseek-v4-flash --base-url https://openrouter.ai/api/v1 --max-tokens 8192 --temperature 0.0 --max-units-per-call 1 --reasoning-effort none",
+      "elapsed_seconds": 38.397,
+      "exit_code": 0,
+      "stage": "generation",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/generation.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/generation.stdout.log",
+      "stdout_tail": "on_tokens\": null\n          },\n          \"cost\": 0.0011375784,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 8.26e-05,\n            \"upstream_inference_cost\": 0.0011375784,\n            \"upstream_inference_prompt_cost\": 0.0010549784\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 7661,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 128,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 7956\n        }\n      },\n      {\n        \"model\": \"deepseek/deepseek-v4-flash\",\n        \"openrouter_reported_cost\": 0.0008946672,\n        \"usage\": {\n          \"completion_tokens\": 271,\n          \"completion_tokens_details\": {\n            \"accepted_prediction_tokens\": null,\n            \"audio_tokens\": 0,\n            \"image_tokens\": 0,\n            \"reasoning_tokens\": 0,\n            \"rejected_prediction_tokens\": null\n          },\n          \"cost\": 0.0008946672,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 7.588e-05,\n            \"upstream_inference_cost\": 0.0008946672,\n            \"upstream_inference_prompt_cost\": 0.0008187872\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 6852,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 1024,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 7123\n        }\n      },\n      {\n        \"model\": \"deepseek/deepseek-v4-flash\",\n        \"openrouter_reported_cost\": 0.0006243272,\n        \"usage\": {\n          \"completion_tokens\": 226,\n          \"completion_tokens_details\": {\n            \"accepted_prediction_tokens\": null,\n            \"audio_tokens\": 0,\n            \"image_tokens\": 0,\n            \"reasoning_tokens\": 0,\n            \"rejected_prediction_tokens\": null\n          },\n          \"cost\": 0.0006243272,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 6.328e-05,\n            \"upstream_inference_cost\": 0.0006243272,\n            \"upstream_inference_prompt_cost\": 0.0005610472\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 5011,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 1024,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 5237\n        }\n      },\n      {\n        \"model\": \"deepseek/deepseek-v4-flash\",\n        \"openrouter_reported_cost\": 0.00111762,\n        \"usage\": {\n          \"completion_tokens\": 865,\n          \"completion_tokens_details\": {\n            \"accepted_prediction_tokens\": null,\n            \"audio_tokens\": 0,\n            \"image_tokens\": 0,\n            \"reasoning_tokens\": 0,\n            \"rejected_prediction_tokens\": null\n          },\n          \"cost\": 0.00111762,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 0.0002422,\n            \"upstream_inference_cost\": 0.00111762,\n            \"upstream_inference_prompt_cost\": 0.00087542\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 6253,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 0,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 7118\n        }\n      }\n    ],\n    \"model\": \"deepseek/deepseek-v4-flash\",\n    \"openrouter_reported_cost\": 0.0051861712\n  },\n  \"elapsed_seconds\": 37.115,\n  \"generated_at\": \"2026-05-06T06:20:46.687870+00:00\",\n  \"max_units_per_call\": 1,\n  \"model\": \"deepseek/deepseek-v4-flash\",\n  \"output_path\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation\",\n  \"paid_call_made\": true,\n  \"parse_error\": null,\n  \"reasoning_effort\": \"none\",\n  \"schema_version\": \"repoprover.latex_statement_generation.v1\",\n  \"selector_run\": \"docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid\",\n  \"valid_json\": true\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/verify_latex_statement_generation.py --generation-run docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation --project-root /home/name/repos/repoprover/algebraic-combinatorics --timeout-seconds 120.0 --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/verification-results.json",
+      "elapsed_seconds": 44.713,
+      "exit_code": 0,
+      "stage": "verification",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/verification.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/verification.stdout.log",
+      "stdout_tail": "pen AlgebraicCombinatorics\",\n        \"open FPS\"\n      ],\n      \"unit_count\": 1,\n      \"units\": [\n        {\n          \"body_declaration_names\": [\n            \"vandermonde_nat\"\n          ],\n          \"compile_passed\": false,\n          \"contract_violations\": [],\n          \"declaration_names\": [\n            \"vandermonde_nat\"\n          ],\n          \"failure_class\": \"compile_failure\",\n          \"lean_error_count\": 2,\n          \"lean_returncode\": 1,\n          \"messages\": [\n            {\n              \"column\": 5,\n              \"data\": \"unknown namespace `AlgebraicCombinatorics`\",\n              \"kind\": \"[anonymous]\",\n              \"line\": 6,\n              \"severity\": \"error\"\n            },\n            {\n              \"column\": 60,\n              \"data\": \"unexpected token 'in'; expected ','\",\n              \"kind\": \"[anonymous]\",\n              \"line\": 7,\n              \"severity\": \"error\"\n            }\n          ],\n          \"placeholder_tokens\": [],\n          \"reported_status\": \"generated\",\n          \"skipped_reason\": null,\n          \"stderr\": \"\",\n          \"unit_key\": \"unit-004\",\n          \"visible_support_context\": null\n        }\n      ]\n    },\n    {\n      \"compile_passed_units\": 0,\n      \"failure_class_counts\": {\n        \"declined_cannot_prove\": 1\n      },\n      \"filtered_target_module_imports\": [\n        \"AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric\",\n        \"AlgebraicCombinatorics.SymmetricFunctions.NPartition\"\n      ],\n      \"filtered_target_namespace_opens\": [\n        \"open AlgebraicCombinatorics\",\n        \"open SymmetricFunctions\"\n      ],\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-005/generation-output.json\",\n      \"hidden_target_modules\": [\n        \"AlgebraicCombinatorics.SymmetricFunctions.NPartition\"\n      ],\n      \"hidden_target_namespaces\": [\n        \"NPartition\"\n      ],\n      \"imports\": [\n        \"Mathlib\"\n      ],\n      \"inferred_imports\": [],\n      \"inferred_opens\": [\n        \"open scoped Polynomial\",\n        \"open MvPolynomial Finset Equiv\",\n        \"open Finset BigOperators\"\n      ],\n      \"materialize_visible_support\": false,\n      \"opens\": [\n        \"open scoped Polynomial BigOperators\",\n        \"open PowerSeries Finset\",\n        \"open scoped Polynomial\",\n        \"open MvPolynomial Finset Equiv\",\n        \"open Finset BigOperators\"\n      ],\n      \"unfiltered_inferred_imports\": [\n        \"AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric\",\n        \"AlgebraicCombinatorics.SymmetricFunctions.NPartition\"\n      ],\n      \"unfiltered_inferred_opens\": [\n        \"open scoped Polynomial\",\n        \"open MvPolynomial Finset Equiv\",\n        \"open AlgebraicCombinatorics\",\n        \"open SymmetricFunctions\",\n        \"open Finset BigOperators\"\n      ],\n      \"unit_count\": 1,\n      \"units\": [\n        {\n          \"body_declaration_names\": [],\n          \"compile_passed\": false,\n          \"contract_violations\": [],\n          \"declaration_names\": [],\n          \"failure_class\": \"declined_cannot_prove\",\n          \"lean_error_count\": 0,\n          \"lean_returncode\": null,\n          \"messages\": [],\n          \"placeholder_tokens\": [],\n          \"reported_status\": \"cannot_prove_from_visible_context\",\n          \"skipped_reason\": \"cannot_prove_from_visible_context\",\n          \"stderr\": \"\",\n          \"unit_key\": \"unit-005\",\n          \"visible_support_context\": null\n        }\n      ]\n    }\n  ],\n  \"compile_passed_units\": 1,\n  \"failure_class_counts\": {\n    \"compile_failure\": 2,\n    \"compiled\": 1,\n    \"declined_cannot_prove\": 2\n  },\n  \"filter_target_module_imports\": true,\n  \"generated_at\": \"2026-05-06T06:22:08.918846+00:00\",\n  \"generation_run\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation\",\n  \"infer_context\": true,\n  \"materialize_visible_support\": false,\n  \"project_root\": \"/home/name/repos/repoprover/algebraic-combinatorics\",\n  \"schema_version\": \"repoprover.latex_statement_generation_verification.v1\",\n  \"unit_count\": 5\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/compare_latex_statement_generation_to_gold.py --selector-run docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid --generation-run docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation --verification-results docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/verification-results.json --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/gold-comparison-results.json",
+      "elapsed_seconds": 0.086,
+      "exit_code": 0,
+      "stage": "gold_comparison",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/gold_comparison.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/gold_comparison.stdout.log",
+      "stdout_tail": "{\n  \"caveat\": \"This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.\",\n  \"compile_passed_units\": 1,\n  \"compiled_name_overlap_units\": 0,\n  \"compiled_needs_semantic_review_units\": 1,\n  \"coverage_status_counts\": {\n    \"compile_failure\": 2,\n    \"compiled_needs_semantic_review\": 1,\n    \"not_generated_cannot_prove\": 2\n  },\n  \"generated_at\": \"2026-05-06T06:22:09.016583+00:00\",\n  \"generation_run\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation\",\n  \"schema_version\": \"repoprover.latex_statement_gold_comparison.v1\",\n  \"selector_run\": \"docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid\",\n  \"unit_count\": 5,\n  \"units\": [\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"not_generated_cannot_prove\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.FPS.xnEquiv_div\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"xnEquiv_div\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div\",\n      \"unit_key\": \"unit-001\",\n      \"verification_failure_class\": \"declined_cannot_prove\"\n    },\n    {\n      \"compile_passed\": true,\n      \"coverage_status\": \"compiled_needs_semantic_review\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"det_of_triangular\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.Det.det_upperTriangular\",\n        \"AlgebraicCombinatorics.Det.det_lowerTriangular\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"det_upperTriangular\",\n        \"det_lowerTriangular\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang\",\n      \"unit_key\": \"unit-002\",\n      \"verification_failure_class\": \"compiled\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"compile_failure\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"isInverse_unique\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.FPS.isInverse_unique\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"isInverse_unique\"\n      ],\n      \"local_name_overlap\": [\n        \"isInverse_unique\"\n      ],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni\",\n      \"unit_key\": \"unit-003\",\n      \"verification_failure_class\": \"compile_failure\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"compile_failure\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"vandermonde_nat\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.FPS.vandermonde_nat\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"vandermonde_nat\"\n      ],\n      \"local_name_overlap\": [\n        \"vandermonde_nat\"\n      ],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN\",\n      \"unit_key\": \"unit-004\",\n      \"verification_failure_class\": \"compile_failure\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"not_generated_cannot_prove\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [],\n      \"gold_aligned_full_names\": [\n        \"NPartition.ofPartition_size\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"ofPartition_size\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par\",\n      \"unit_key\": \"unit-005\",\n      \"verification_failure_class\": \"declined_cannot_prove\"\n    }\n  ],\n  \"verification_failure_class_counts\": {\n    \"compile_failure\": 2,\n    \"compiled\": 1,\n    \"declined_cannot_prove\": 2\n  }\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/verify_latex_statement_semantic_coverage.py --selector-run docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid --generation-run docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation --verification-results docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/verification-results.json --project-root /home/name/repos/repoprover/algebraic-combinatorics --timeout-seconds 120.0 --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/semantic-coverage-results.json",
+      "elapsed_seconds": 31.849,
+      "exit_code": 0,
+      "stage": "semantic_coverage",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/semantic_coverage.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/logs/semantic_coverage.stdout.log",
+      "stdout_tail": "39\n          ],\n          \"gold_path\": \"AlgebraicCombinatorics/DeterminantsBasic.lean\",\n          \"lean_error_count\": 1,\n          \"lean_returncode\": 1,\n          \"lean_source_path\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/semantic-coverage/unit-002/gold-001.lean\",\n          \"messages\": [\n            {\n              \"column\": 59,\n              \"data\": \"Type mismatch: After simplification, term\\n  hA\\n has type\\n  \\u2200 (i j : Fin n), j < i \\u2192 A i j = 0\\nbut is expected to have type\\n  A.BlockTriangular id \\u2228 A.BlockTriangular \\u21d1OrderDual.toDual\",\n              \"kind\": \"[anonymous]\",\n              \"line\": 463,\n              \"severity\": \"error\"\n            }\n          ],\n          \"semantic_check_passed\": false,\n          \"stderr\": \"\"\n        },\n        {\n          \"coverage_status\": \"semantic_grader_failed\",\n          \"failure_class\": \"semantic_grader_failed\",\n          \"generated_declaration_names\": [\n            \"det_of_triangular\"\n          ],\n          \"gold_full_name\": \"AlgebraicCombinatorics.Det.det_lowerTriangular\",\n          \"gold_kind\": \"theorem\",\n          \"gold_line_range\": [\n            441,\n            449\n          ],\n          \"gold_path\": \"AlgebraicCombinatorics/DeterminantsBasic.lean\",\n          \"lean_error_count\": 1,\n          \"lean_returncode\": 1,\n          \"lean_source_path\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/semantic-coverage/unit-002/gold-002.lean\",\n          \"messages\": [\n            {\n              \"column\": 59,\n              \"data\": \"Type mismatch: After simplification, term\\n  hA\\n has type\\n  \\u2200 (i j : Fin n), i < j \\u2192 A i j = 0\\nbut is expected to have type\\n  A.BlockTriangular id \\u2228 A.BlockTriangular \\u21d1OrderDual.toDual\",\n              \"kind\": \"[anonymous]\",\n              \"line\": 470,\n              \"severity\": \"error\"\n            }\n          ],\n          \"semantic_check_passed\": false,\n          \"stderr\": \"\"\n        }\n      ],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": true,\n      \"coverage_status\": \"no_aligned_gold_proved\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-002/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang\",\n      \"unit_key\": \"unit-002\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-003/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni\",\n      \"unit_key\": \"unit-003\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-004/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN\",\n      \"unit_key\": \"unit-004\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-005/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par\",\n      \"unit_key\": \"unit-005\"\n    }\n  ]\n}\n"
+    }
+  ],
+  "stop_reason": "completed",
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+    "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+    "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+    "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+    "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par"
+  ],
+  "verification_results": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/eval/verification-results.json"
+}

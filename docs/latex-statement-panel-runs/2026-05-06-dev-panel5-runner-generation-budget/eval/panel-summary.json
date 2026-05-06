@@ -5,6 +5,7 @@
   "metrics": {
     "context_selection": {
       "budget_only": false,
+      "cached_prompt_tokens": 0,
       "completion_tokens": 2186,
       "cost": 0.00300286,
       "elapsed_seconds": 33.785,
@@ -18,6 +19,7 @@
     "generation": {
       "batch_count": 5,
       "budget_only": true,
+      "cached_prompt_tokens": null,
       "completion_tokens": null,
       "cost": 0.0,
       "elapsed_seconds": null,

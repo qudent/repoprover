@@ -100,13 +100,48 @@ def cost_from_summary(summary: dict[str, Any]) -> float:
         return 0.0
 
 
+def usage_totals(summary: dict[str, Any]) -> dict[str, int] | None:
+    cost_summary = summary.get("cost_summary") or {}
+    usage = cost_summary.get("usage")
+    if isinstance(usage, dict):
+        details = usage.get("completion_tokens_details") or {}
+        prompt_details = usage.get("prompt_tokens_details") or {}
+        return {
+            "prompt_tokens": int(usage.get("prompt_tokens") or 0),
+            "completion_tokens": int(usage.get("completion_tokens") or 0),
+            "reasoning_tokens": int(details.get("reasoning_tokens") or 0),
+            "cached_prompt_tokens": int(prompt_details.get("cached_tokens") or 0),
+        }
+    batch_summaries = cost_summary.get("batches")
+    if not isinstance(batch_summaries, list):
+        return None
+    totals = {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "reasoning_tokens": 0,
+        "cached_prompt_tokens": 0,
+    }
+    saw_usage = False
+    for batch in batch_summaries:
+        batch_usage = (batch or {}).get("usage") or {}
+        if not batch_usage:
+            continue
+        saw_usage = True
+        details = batch_usage.get("completion_tokens_details") or {}
+        prompt_details = batch_usage.get("prompt_tokens_details") or {}
+        totals["prompt_tokens"] += int(batch_usage.get("prompt_tokens") or 0)
+        totals["completion_tokens"] += int(batch_usage.get("completion_tokens") or 0)
+        totals["reasoning_tokens"] += int(details.get("reasoning_tokens") or 0)
+        totals["cached_prompt_tokens"] += int(prompt_details.get("cached_tokens") or 0)
+    return totals if saw_usage else None
+
+
 def summarize_context_selection(path: Path) -> dict[str, Any] | None:
     summary_path = path / "eval" / "context-selection-results.json"
     if not summary_path.exists():
         return None
     summary = read_json(summary_path)
-    usage = (summary.get("cost_summary") or {}).get("usage") or {}
-    completion_details = usage.get("completion_tokens_details") or {}
+    usage = usage_totals(summary) or {}
     return {
         "path": str(path),
         "budget_only": summary.get("budget_only"),
@@ -116,7 +151,8 @@ def summarize_context_selection(path: Path) -> dict[str, Any] | None:
         "cost": cost_from_summary(summary),
         "prompt_tokens": usage.get("prompt_tokens"),
         "completion_tokens": usage.get("completion_tokens"),
-        "reasoning_tokens": completion_details.get("reasoning_tokens"),
+        "reasoning_tokens": usage.get("reasoning_tokens"),
+        "cached_prompt_tokens": usage.get("cached_prompt_tokens"),
         "units_selected": summary.get("units_selected"),
     }
 
@@ -145,8 +181,7 @@ def summarize_generation(path: Path) -> dict[str, Any] | None:
     if not summary_path.exists():
         return None
     summary = read_json(summary_path)
-    usage = (summary.get("cost_summary") or {}).get("usage") or {}
-    completion_details = usage.get("completion_tokens_details") or {}
+    usage = usage_totals(summary) or {}
     normalized_units = 0
     for batch in summary.get("batches") or []:
         normalized_units += int((batch.get("contract_enforcement") or {}).get("normalized_unit_count") or 0)
@@ -159,7 +194,8 @@ def summarize_generation(path: Path) -> dict[str, Any] | None:
         "cost": cost_from_summary(summary),
         "prompt_tokens": usage.get("prompt_tokens"),
         "completion_tokens": usage.get("completion_tokens"),
-        "reasoning_tokens": completion_details.get("reasoning_tokens"),
+        "reasoning_tokens": usage.get("reasoning_tokens"),
+        "cached_prompt_tokens": usage.get("cached_prompt_tokens"),
         "batch_count": summary.get("batch_count"),
         "normalized_unit_count": normalized_units,
     }

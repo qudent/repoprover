@@ -584,6 +584,15 @@ the selector payload, and
 `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-generation-budget/`
 reuses the existing no-reasoning selector to build five per-unit generation
 payloads.
+The first paid runner pass,
+`docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/`, reused
+the default-reasoning selector and generated one unit per call. Generation cost
+`$0.0051861712` for 35,188 prompt tokens and 2,057 completion tokens. It
+compiled `1/5` units and proved `0/5` aligned gold units semantically: two
+units were clean cannot-prove declines, two were compile failures, and the
+compiled triangular theorem used a statement shape that did not imply either
+aligned gold theorem. This is the intended panel signal: multiple failure
+classes at once, instead of another single-theorem loop.
 
 ### Imported Lean surface and likely context needs
 

@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"bijection_partitions_length_le_N_and_NPartition\"\n      ],\n      \"lean_file_body\": \"open Finset\\n\\nnoncomputable def bijection_partitions_length_le_N_and_NPartition (N : ℕ) :\\n    {p : Nat.Partition (∑ i : Fin N, 0) // p.parts.card ≤ N} ≃ NPartition N where\\n  toFun := λ ⟨p, h⟩ =>\\n    let parts' : Fin N → ℕ := λ i =>\\n      if hi : i.val < p.parts.card then\\n        (p.parts.sort (·≥·)).get ⟨i.val, hi⟩\\n      else 0\\n    { parts := parts'\\n      antitone := by\\n        intro i j hij\\n        dsimp [parts']\\n        split_ifs with hi hj\\n        · have hcard : (p.parts.sort (·≥·)).length = p.parts.card := by simp\\n          have hpos : 0 < p.parts.card := by\\n            by_contra! hzero\\n            have : p.parts.card = 0 := by omega\\n            have : p.parts = 0 := by\\n              simpa [Multiset.card_eq_zero] using this\\n            sorry\\n          sorry\\n        · exact Nat.zero_le _\\n        · exact Nat.zero_le _\\n        · exact le_rfl }\\n  invFun := λ μ =>\\n    let partsMultiset : Multiset ℕ := (Finset.image μ.parts Finset.univ).val\\n    let partsSum : ℕ := partsMultiset.sum\\n    have hsum : partsSum = ∑ i : Fin N, μ.parts i := by\\n      simp [partsMultiset, Finset.sum_image]\\n    have hcard : partsMultiset.card ≤ N := by\\n      calc\\n        partsMultiset.card = (Finset.image μ.parts Finset.univ).card := rfl\\n        _ ≤ Finset.card (Finset.univ : Finset (Fin N)) := Finset.card_image_le\\n        _ = N := by simp\\n    have hparts_pos : ∀ i ∈ partsMultiset, 0 < i := by\\n      intro i hi\\n      have : i ∈ Finset.image μ.parts Finset.univ := hi\\n      rcases Finset.mem_image.1 this with ⟨j, _, hj⟩\\n      have : μ.parts j ≥ 0 := Nat.zero_le _\\n      have hpos : μ.parts j > 0 := by\\n        by_contra! hzero\\n        have : μ.parts j = 0 := by omega\\n        have : μ.parts j = 0 := this\\n        sorry\\n      sorry\\n    have hparts_sum : partsMultiset.sum = partsSum := rfl\\n    ⟨{ parts := partsMultiset\\n       parts_pos := hparts_pos\\n       parts_sum := hparts_sum }, hcard⟩\\n  left_inv := by\\n    intro ⟨p, h⟩\\n    ext\\n    simp\\n  right_inv := by\\n    intro μ\\n    ext i\\n    simp\\n\",\n      \"notes\": [\n        \"The proof is incomplete; the construction of the bijection is sketched but the antitone condition and positivity proofs are not fully fleshed out. The status is cannot_prove_from_visible_context because the required lemmas about sorting and positivity are not available in the visible context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-005\",\n      \"used_context\": [\n        \"NPartition structure with parts and antitone\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum\",\n        \"Finset.card_image_le\",\n        \"Finset.sum_image\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778048469,
+  "id": "gen-1778048469-rl4FUQEBU0fsr6htS9Cg",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 865,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00111762,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0002422,
+      "upstream_inference_cost": 0.00111762,
+      "upstream_inference_prompt_cost": 0.00087542
+    },
+    "is_byok": false,
+    "prompt_tokens": 6253,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 7118
+  }
+}

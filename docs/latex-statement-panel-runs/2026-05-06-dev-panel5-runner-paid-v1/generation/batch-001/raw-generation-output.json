@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "coeff_div_congr"
+      ],
+      "lean_file_body": "theorem coeff_div_congr {K : Type*} [CommRing K] {a b c d : K⟦X⟧} (hc : IsUnit c) (hd : IsUnit d) {n : ℕ}\n    (hab : ∀ m ≤ n, coeff m a = coeff m b) (hcd : ∀ m ≤ n, coeff m c = coeff m d) :\n    ∀ m ≤ n, coeff m (a * c⁻¹) = coeff m (b * d⁻¹) :=\nby\n  intro m hm\n  have hprod : ∀ m ≤ n, coeff m (a * c) = coeff m (b * d) := by\n    intro m hm\n    exact calc\n      coeff m (a * c) = coeff m (a * c) := rfl\n      _ = coeff m (b * d) := ?_\n    -- This is where we need the lemma from the local file predecessor\n    sorry\n  sorry",
+      "notes": [
+        "The proof is incomplete because the needed lemma `xnEquiv_mul_of_coeff_eq` is not available in the context; it is a local file predecessor but not imported. The statement is generated as a placeholder with sorry."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source lemma text",
+        "hydrated_mathlib_context: PowerSeries.coeff, IsUnit, etc.",
+        "local_file_predecessor_declarations: xnEquiv_mul_of_coeff_eq (not available)"
+      ]
+    }
+  ]
+}

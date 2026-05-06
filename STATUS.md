@@ -75,6 +75,11 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   smoke artifacts:
   `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-budget/` and
   `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-generation-budget/`.
+- First paid panel-runner pass:
+  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/`.
+  Generation cost `$0.0051861712` for 35,188 prompt tokens and 2,057 completion
+  tokens. Verification compiled 1/5 units; failures were 2 compile failures and
+  2 clean declines. Semantic coverage proved 0/5 aligned gold units.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
@@ -84,5 +89,7 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
-- Next useful work: use the panel runner for a paid per-unit generation pass
-  over the fixed dev panel, then route failures by class.
+- Next useful work: route the paid panel failures by class. The shortest generic
+  fixes look like project/local context import recovery for inverse uniqueness,
+  syntax/namespace repair for Vandermonde, and stronger target-shape planning
+  for the compiled triangular theorem.

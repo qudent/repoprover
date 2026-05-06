@@ -26,6 +26,7 @@
     "prompt_tokens": null,
     "completion_tokens": null,
     "reasoning_tokens": null,
+    "cached_prompt_tokens": null,
     "units_selected": 5
   },
   "hydration": null,
