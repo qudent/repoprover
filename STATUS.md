@@ -52,6 +52,8 @@ honest handling of cannot-prove outputs on broader theorem units.
   and expand same-file local predecessor context with shallow dependencies.
 - [x] Preserve raw model text and normalize invalid `cannot_prove` outputs before
   downstream verification.
+- [x] Add verifier/gold-comparison failure classes so model declines are not
+  counted as generic compile failures.
 
 ## Blockers
 - Previous-project context is the strongest signal, but it must stay
@@ -125,7 +127,10 @@ honest handling of cannot-prove outputs on broader theorem units.
   `cannot_prove_from_visible_context`. Runners now preserve that exact raw JSON
   and normalize downstream output to empty body/names with
   `contract_enforcement` metadata.
-- Focused theorem-level suite passed: 68 pytest tests plus `py_compile` over
+- Rechecking the normalized v5b artifact now gives verifier
+  `failure_class_counts = {"declined_cannot_prove": 1}` and gold-comparison
+  `coverage_status_counts = {"not_generated_cannot_prove": 1}`.
+- Focused theorem-level suite passed: 70 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes
@@ -134,5 +139,6 @@ honest handling of cannot-prove outputs on broader theorem units.
 - Focused tests should cover theorem selector payload hiding/compaction,
   context hydration, generation prompts, verifier classification, semantic
   coverage, context graph generation, and elaborated dependency summary.
-- Next experiment: use the stricter normalized outputs to compare failures by
-  cause instead of treating scratchpad Lean as generated proof attempts.
+- Next experiment: apply the failure taxonomy across older runs, then choose the
+  largest remaining non-transport failure class for the next context-selection
+  iteration.

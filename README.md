@@ -292,6 +292,12 @@ repair runners now deterministically normalize such
 `contract_enforcement` summary. This is a transport/benchmark-honesty fix, not
 a proof success.
 
+The verifier now carries a generic per-unit `failure_class` and aggregate
+counts. Rechecking the normalized v5b artifact gives
+`{"declined_cannot_prove": 1}` and the post-hoc gold comparison reports
+`not_generated_cannot_prove` for the partition unit, rather than lumping it
+into generic `not_compiled`.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

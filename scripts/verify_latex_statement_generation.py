@@ -542,29 +542,50 @@ def verify_generation_output(
             )
             lean_result = run_lean_source(source, project_root=project_root, timeout_seconds=timeout_seconds)
         errors = [message for message in lean_result["messages"] if message.get("severity") == "error"]
-        rows.append(
-            {
-                "unit_key": unit.get("unit_key"),
-                "reported_status": status,
-                "declaration_names": declaration_names,
-                "body_declaration_names": body_declaration_names,
-                "placeholder_tokens": placeholders,
-                "contract_violations": contract_violations,
-                "lean_returncode": lean_result["returncode"],
-                "lean_error_count": len(errors),
-                "compile_passed": (
-                    status == "generated"
-                    and lean_result["returncode"] == 0
-                    and not placeholders
-                    and not contract_violations
-                ),
-                "messages": lean_result["messages"],
-                "stderr": lean_result["stderr"],
-                "skipped_reason": lean_result.get("skipped_reason"),
-                "visible_support_context": (support_audit_by_unit or {}).get(unit_key),
-            }
+        compile_passed = (
+            status == "generated"
+            and lean_result["returncode"] == 0
+            and not placeholders
+            and not contract_violations
         )
+        row = {
+            "unit_key": unit.get("unit_key"),
+            "reported_status": status,
+            "declaration_names": declaration_names,
+            "body_declaration_names": body_declaration_names,
+            "placeholder_tokens": placeholders,
+            "contract_violations": contract_violations,
+            "lean_returncode": lean_result["returncode"],
+            "lean_error_count": len(errors),
+            "compile_passed": compile_passed,
+            "messages": lean_result["messages"],
+            "stderr": lean_result["stderr"],
+            "skipped_reason": lean_result.get("skipped_reason"),
+            "visible_support_context": (support_audit_by_unit or {}).get(unit_key),
+        }
+        row["failure_class"] = verification_failure_class(row)
+        rows.append(row)
     return rows
+
+
+def verification_failure_class(unit: dict[str, Any]) -> str:
+    if unit.get("compile_passed"):
+        return "compiled"
+    if unit.get("contract_violations"):
+        return "contract_violation"
+    if unit.get("skipped_reason") == "cannot_prove_from_visible_context":
+        return "declined_cannot_prove"
+    if unit.get("lean_returncode") is None:
+        return "not_checked"
+    return "compile_failure"
+
+
+def failure_class_counts(units: list[dict[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for unit in units:
+        failure_class = str(unit.get("failure_class") or "unclassified")
+        counts[failure_class] = counts.get(failure_class, 0) + 1
+    return dict(sorted(counts.items()))
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
@@ -657,6 +678,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
                 "units": units,
                 "compile_passed_units": sum(1 for unit in units if unit["compile_passed"]),
+                "failure_class_counts": failure_class_counts(units),
                 "unit_count": len(units),
             }
         )
@@ -672,6 +694,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
         "batches": batches,
         "compile_passed_units": sum(batch["compile_passed_units"] for batch in batches),
+        "failure_class_counts": failure_class_counts(
+            [unit for batch in batches for unit in batch["units"]]
+        ),
         "unit_count": sum(batch["unit_count"] for batch in batches),
     }
     write_json(args.output, summary)

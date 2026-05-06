@@ -47,6 +47,34 @@ def verification_results(run_dir: Path, path: Path | None = None) -> dict[str, d
     return rows
 
 
+def coverage_status_for_verification(
+    *,
+    compile_passed: bool,
+    failure_class: str | None,
+    full_overlap: list[str],
+    local_overlap: list[str],
+) -> str:
+    if not compile_passed:
+        if failure_class == "declined_cannot_prove":
+            return "not_generated_cannot_prove"
+        if failure_class == "contract_violation":
+            return "contract_violation"
+        if failure_class == "compile_failure":
+            return "compile_failure"
+        return "not_compiled"
+    if full_overlap or local_overlap:
+        return "compiled_name_overlap"
+    return "compiled_needs_semantic_review"
+
+
+def count_by_key(rows: list[dict[str, Any]], key: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in rows:
+        value = str(row.get(key) or "unknown")
+        counts[value] = counts.get(value, 0) + 1
+    return dict(sorted(counts.items()))
+
+
 def compare(selector_run: Path, generation_run: Path, *, verification_path: Path | None = None) -> dict[str, Any]:
     selected_units = read_jsonl(selector_run / "eval" / "selected-units.jsonl")
     selected_by_key = {f"unit-{index + 1:03d}": row for index, row in enumerate(selected_units)}
@@ -67,12 +95,13 @@ def compare(selector_run: Path, generation_run: Path, *, verification_path: Path
             local_overlap = sorted(set(generated_local) & set(aligned_local))
             verification = verification_by_key.get(unit_key, {})
             compile_passed = bool(verification.get("compile_passed"))
-            if not compile_passed:
-                coverage_status = "not_compiled"
-            elif full_overlap or local_overlap:
-                coverage_status = "compiled_name_overlap"
-            else:
-                coverage_status = "compiled_needs_semantic_review"
+            failure_class = str(verification.get("failure_class") or "") or None
+            coverage_status = coverage_status_for_verification(
+                compile_passed=compile_passed,
+                failure_class=failure_class,
+                full_overlap=full_overlap,
+                local_overlap=local_overlap,
+            )
             unit_rows.append(
                 {
                     "unit_key": unit_key,
@@ -83,6 +112,7 @@ def compare(selector_run: Path, generation_run: Path, *, verification_path: Path
                     "full_name_overlap": full_overlap,
                     "local_name_overlap": local_overlap,
                     "compile_passed": compile_passed,
+                    "verification_failure_class": failure_class,
                     "coverage_status": coverage_status,
                 }
             )
@@ -98,6 +128,8 @@ def compare(selector_run: Path, generation_run: Path, *, verification_path: Path
         "compiled_needs_semantic_review_units": sum(
             1 for row in unit_rows if row["coverage_status"] == "compiled_needs_semantic_review"
         ),
+        "coverage_status_counts": count_by_key(unit_rows, "coverage_status"),
+        "verification_failure_class_counts": count_by_key(unit_rows, "verification_failure_class"),
         "units": unit_rows,
         "caveat": (
             "This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. "

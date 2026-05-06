@@ -51,6 +51,7 @@ def test_verify_generation_output_classifies_placeholders(monkeypatch, tmp_path)
     assert rows[0]["contract_violations"] == ["generated_lean_contains_placeholder"]
     assert rows[0]["lean_returncode"] == 0
     assert rows[0]["compile_passed"] is False
+    assert rows[0]["failure_class"] == "contract_violation"
 
 
 def test_verify_generation_output_flags_generated_comments(monkeypatch, tmp_path) -> None:
@@ -134,6 +135,7 @@ def test_verify_generation_output_skips_empty_cannot_prove(monkeypatch, tmp_path
     assert rows[0]["reported_status"] == "cannot_prove_from_visible_context"
     assert rows[0]["skipped_reason"] == "cannot_prove_from_visible_context"
     assert rows[0]["compile_passed"] is False
+    assert rows[0]["failure_class"] == "declined_cannot_prove"
 
 
 def test_verify_generation_output_flags_cannot_prove_names_and_body(monkeypatch, tmp_path) -> None:
@@ -162,6 +164,7 @@ def test_verify_generation_output_flags_cannot_prove_names_and_body(monkeypatch,
         "cannot_prove_output_must_have_empty_lean_file_body",
         "cannot_prove_output_must_have_empty_declaration_names",
     ]
+    assert rows[0]["failure_class"] == "contract_violation"
 
 
 def test_payload_context_infers_project_imports_and_opens(tmp_path) -> None:
@@ -294,8 +297,56 @@ def test_run_uses_inferred_context(monkeypatch, tmp_path) -> None:
     )
 
     assert summary["compile_passed_units"] == 1
+    assert summary["failure_class_counts"] == {"compiled": 1}
     assert summary["batches"][0]["inferred_imports"] == ["Demo.Module"]
     assert summary["batches"][0]["inferred_opens"] == ["open Demo"]
+
+
+def test_run_summarizes_cannot_prove_failure_class(monkeypatch, tmp_path) -> None:
+    run_dir = tmp_path / "run"
+    batch = run_dir / "batch-001"
+    batch.mkdir(parents=True)
+    (batch / "generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "cannot_prove_from_visible_context",
+                        "declaration_names": [],
+                        "lean_file_body": "",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (batch / "generation-payload.json").write_text(
+        json.dumps({"messages": [{"role": "user", "content": json.dumps({"units": []})}]}),
+        encoding="utf-8",
+    )
+
+    def fail_if_called(source, *, project_root, timeout_seconds):
+        raise AssertionError("Lean should not run for empty cannot-prove outputs")
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fail_if_called)
+    summary = run(
+        argparse.Namespace(
+            generation_run=run_dir,
+            project_root=tmp_path,
+            imports=["Mathlib"],
+            opens=[],
+            infer_context=True,
+            filter_target_module_imports=True,
+            materialize_visible_support=False,
+            timeout_seconds=1.0,
+            output=run_dir / "eval/verification-results.json",
+        )
+    )
+
+    assert summary["compile_passed_units"] == 0
+    assert summary["failure_class_counts"] == {"declined_cannot_prove": 1}
+    assert summary["batches"][0]["failure_class_counts"] == {"declined_cannot_prove": 1}
 
 
 def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None:

@@ -705,6 +705,13 @@ Diverse4 broader-batch probe:
   for downstream verification, and the exact paid text is retained in
   `raw-generation-output.json` or `raw-repair-output.json` with a
   `contract_enforcement` summary.
+- failure-taxonomy follow-up:
+  generated-only verification now records a per-unit `failure_class` and batch
+  counts. Rechecking the normalized v5b artifact yields
+  `{"declined_cannot_prove": 1}`; the post-hoc gold comparison maps that to
+  `not_generated_cannot_prove` instead of generic `not_compiled`. This keeps
+  proof failures, model refusals, and schema/transport violations separate in
+  benchmark summaries.
 
 ### Generation and Verification Counts
 

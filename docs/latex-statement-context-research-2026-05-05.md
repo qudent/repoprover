@@ -537,6 +537,13 @@ Broader diverse4 negative probe:
   body/names and records the exact raw response separately, so future verifier
   counts do not treat scratchpad Lean as a generated proof attempt while still
   keeping paid model behavior auditable.
+- failure taxonomy:
+  verification now emits `failure_class` values such as `compiled`,
+  `contract_violation`, `declined_cannot_prove`, and `compile_failure`.
+  The normalized v5b partition artifact verifies as
+  `{"declined_cannot_prove": 1}` and compares against gold as
+  `not_generated_cannot_prove`, making the current result a clean model-decline
+  rather than a bad Lean proof attempt.
 
 ## Lean Dependency Accounting
 
