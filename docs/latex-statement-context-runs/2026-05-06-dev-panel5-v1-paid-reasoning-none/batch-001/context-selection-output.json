@@ -1,0 +1,196 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Division notation for FPS: need to define or use existing notation for a/c where c is invertible."
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for coefficient-wise equality of products given coefficient-wise equality up to n."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem coeff_mul_eq_of_coeff_eq (a b c d : R⟦X⟧) (hab : ∀ m ≤ n, coeff m a = coeff m b) (hcd : ∀ m ≤ n, coeff m c = coeff m d) : ∀ m ≤ n, coeff m (a * c) = coeff m (b * d)",
+              "name_or_query": "PowerSeries.coeff_mul_eq_of_coeff_eq",
+              "why_needed": "To prove the product equality from coefficient-wise hypotheses."
+            },
+            {
+              "expected_signature_or_shape": "theorem coeff_inv_eq_of_coeff_eq (c d : R⟦X⟧) (hc : IsUnit c) (hd : IsUnit d) (hcd : ∀ m ≤ n, coeff m c = coeff m d) : ∀ m ≤ n, coeff m (c⁻¹) = coeff m (d⁻¹)",
+              "name_or_query": "PowerSeries.coeff_inv_eq_of_coeff_eq",
+              "why_needed": "To extend the equality to inverses, needed for division."
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "xnEquiv_mul_of_coeff_eq",
+              "why_needed": "Provides the product equality lemma for FPS up to degree n."
+            }
+          ],
+          "needed_source_context": [
+            "Source lemma: lem.fps.prod.irlv.cong-div"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "For FPS a,b,c,d over a commutative ring K, with c,d invertible, if coefficients of a and b agree up to n, and coefficients of c and d agree up to n, then coefficients of a/c and b/d agree up to n.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Congruence lemma for division of FPS: coefficient-wise equality up to n of numerators and denominators implies coefficient-wise equality of quotients up to n.",
+      "unit_key": "unit-001"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Triangular matrix definition: need to define lower/upper triangular in terms of matrix entries."
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for determinant of triangular matrix."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem det_of_lowerTriangular (A : Matrix (Fin n) (Fin n) K) (h : ∀ i j, i < j → A i j = 0) : A.det = ∏ i, A i i",
+              "name_or_query": "Matrix.det_of_lowerTriangular",
+              "why_needed": "To compute determinant of lower triangular matrix as product of diagonal entries."
+            },
+            {
+              "expected_signature_or_shape": "theorem det_of_upperTriangular (A : Matrix (Fin n) (Fin n) K) (h : ∀ i j, i > j → A i j = 0) : A.det = ∏ i, A i i",
+              "name_or_query": "Matrix.det_of_upperTriangular",
+              "why_needed": "To compute determinant of upper triangular matrix as product of diagonal entries."
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "Source theorem: thm.det.triang"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any triangular (lower or upper) matrix A over a commutative ring K, its determinant equals the product of its diagonal entries.",
+          "task_id": "unit-002-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Determinant of triangular matrix equals product of diagonal entries.",
+      "unit_key": "unit-002"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Uniqueness of inverse in a commutative ring: straightforward from definition."
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem IsInverse.unique (a b c : L) (h1 : IsInverse a b) (h2 : IsInverse a c) : b = c",
+              "name_or_query": "IsInverse.unique",
+              "why_needed": "To prove at most one inverse."
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "IsInverse",
+              "why_needed": "Definition of IsInverse used in the statement."
+            }
+          ],
+          "needed_source_context": [
+            "Source theorem: thm.commring.inverse-uni"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "In a commutative ring L, any element a has at most one inverse.",
+          "task_id": "unit-003-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Uniqueness of multiplicative inverse in a commutative ring.",
+      "unit_key": "unit-003"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Vandermonde identity for natural numbers: standard combinatorial identity."
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for Vandermonde identity for natural numbers."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem vandermonde (a b n : ℕ) : (a+b).choose n = ∑ k in range (n+1), (a.choose k) * (b.choose (n-k))",
+              "name_or_query": "Nat.vandermonde",
+              "why_needed": "To prove the Vandermonde identity for binomial coefficients."
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "Source proposition: prop.binom.vandermonde.NN"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "For natural numbers a, b, n, the binomial coefficient (a+b choose n) equals the sum over k from 0 to n of (a choose k)*(b choose n-k).",
+          "task_id": "unit-004-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Vandermonde identity for binomial coefficients over natural numbers.",
+      "unit_key": "unit-004"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Bijection between partitions of length ≤ N and N-partitions: need to define both sets and the bijection."
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for bijection between partitions of length ≤ N and N-partitions."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem NPartition_bijection : {λ : Nat.Partition | λ.length ≤ N} ≃ NPartition N",
+              "name_or_query": "NPartition.bijection",
+              "why_needed": "To formalize the bijection stated in the proposition."
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "Definition of NPartition structure."
+            },
+            {
+              "name": "toPartition",
+              "why_needed": "Existing function from NPartition to Nat.Partition."
+            }
+          ],
+          "needed_source_context": [
+            "Source proposition: prop.sf.Npar-as-par"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "There is a bijection between partitions of length ≤ N and N-partitions, given by padding with zeros.",
+          "task_id": "unit-005-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Bijection between partitions of length ≤ N and N-partitions.",
+      "unit_key": "unit-005"
+    }
+  ]
+}

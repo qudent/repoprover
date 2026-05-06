@@ -1,0 +1,1073 @@
+{
+  "exact_identifier_count": 7,
+  "fallback_exact_identifier_count": 19,
+  "fallback_lean_check": {
+    "checked": {
+      "Finset.Nat.sum_antidiagonal_eq_sum_range_succ": {
+        "messages": [
+          {
+            "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+            "line": 21,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+        "status": "checked"
+      },
+      "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk": {
+        "messages": [
+          {
+            "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+            "line": 22,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+        "status": "checked"
+      },
+      "Nat.add_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "line": 20,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+        "status": "checked"
+      },
+      "PowerSeries.WithPiTopology.continuous_constantCoeff": {
+        "messages": [
+          {
+            "data": "PowerSeries.WithPiTopology.continuous_constantCoeff.{u_1} (R : Type u_1) [TopologicalSpace R] [Semiring R] :\n  Continuous ⇑constantCoeff",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.WithPiTopology.continuous_constantCoeff.{u_1} (R : Type u_1) [TopologicalSpace R] [Semiring R] :\n  Continuous ⇑constantCoeff",
+        "status": "checked"
+      },
+      "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero": {
+        "messages": [
+          {
+            "data": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1",
+        "status": "checked"
+      },
+      "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero": {
+        "messages": [
+          {
+            "data": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero.{u_1} {R : Type u_1} [TopologicalSpace R] [Semiring R]\n  {f : R⟦X⟧} (h : constantCoeff f = 0) : Summable fun x => f ^ x",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero.{u_1} {R : Type u_1} [TopologicalSpace R] [Semiring R]\n  {f : R⟦X⟧} (h : constantCoeff f = 0) : Summable fun x => f ^ x",
+        "status": "checked"
+      },
+      "PowerSeries.WithPiTopology.tendsto_iff_coeff_tendsto": {
+        "messages": [
+          {
+            "data": "PowerSeries.WithPiTopology.tendsto_iff_coeff_tendsto.{u_1, u_2} (R : Type u_1) [TopologicalSpace R] [Semiring R]\n  {ι : Type u_2} (f : ι → R⟦X⟧) (u : Filter ι) (g : R⟦X⟧) :\n  Filter.Tendsto f u (nhds g) ↔ ∀ (d : ℕ), Filter.Tendsto (fun i => (coeff d) (f i)) u (nhds ((coeff d) g))",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.WithPiTopology.tendsto_iff_coeff_tendsto.{u_1, u_2} (R : Type u_1) [TopologicalSpace R] [Semiring R]\n  {ι : Type u_2} (f : ι → R⟦X⟧) (u : Filter ι) (g : R⟦X⟧) :\n  Filter.Tendsto f u (nhds g) ↔ ∀ (d : ℕ), Filter.Tendsto (fun i => (coeff d) (f i)) u (nhds ((coeff d) g))",
+        "status": "checked"
+      },
+      "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero": {
+        "messages": [
+          {
+            "data": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1",
+        "status": "checked"
+      },
+      "PowerSeries.coeff_one_mul": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_one_mul.{u_2} {R : Type u_2} [CommSemiring R] (φ ψ : R⟦X⟧) :\n  (coeff 1) (φ * ψ) = (coeff 1) φ * constantCoeff ψ + (coeff 1) ψ * constantCoeff φ",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_one_mul.{u_2} {R : Type u_2} [CommSemiring R] (φ ψ : R⟦X⟧) :\n  (coeff 1) (φ * ψ) = (coeff 1) φ * constantCoeff ψ + (coeff 1) ψ * constantCoeff φ",
+        "status": "checked"
+      },
+      "PowerSeries.coeff_prod": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_prod.{u_2, u_3} {R : Type u_2} [CommSemiring R] {ι : Type u_3} [DecidableEq ι] (f : ι → R⟦X⟧) (d : ℕ)\n  (s : Finset ι) : (coeff d) (∏ j ∈ s, f j) = ∑ l ∈ s.finsuppAntidiag d, ∏ i ∈ s, (coeff (l i)) (f i)",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_prod.{u_2, u_3} {R : Type u_2} [CommSemiring R] {ι : Type u_3} [DecidableEq ι] (f : ι → R⟦X⟧) (d : ℕ)\n  (s : Finset ι) : (coeff d) (∏ j ∈ s, f j) = ∑ l ∈ s.finsuppAntidiag d, ∏ i ∈ s, (coeff (l i)) (f i)",
+        "status": "checked"
+      },
+      "PowerSeries.constantCoeff": {
+        "messages": [
+          {
+            "data": "PowerSeries.constantCoeff.{u_1} {R : Type u_1} [Semiring R] : R⟦X⟧ →+* R",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.constantCoeff.{u_1} {R : Type u_1} [Semiring R] : R⟦X⟧ →+* R",
+        "status": "checked"
+      },
+      "PowerSeries.eq_inv_iff_mul_eq_one": {
+        "messages": [
+          {
+            "data": "PowerSeries.eq_inv_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  φ = ψ⁻¹ ↔ φ * ψ = 1",
+            "line": 18,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.eq_inv_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  φ = ψ⁻¹ ↔ φ * ψ = 1",
+        "status": "checked"
+      },
+      "PowerSeries.eq_mul_inv_iff_mul_eq": {
+        "messages": [
+          {
+            "data": "PowerSeries.eq_mul_inv_iff_mul_eq.{u_2} {k : Type u_2} [Field k] {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :\n  φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂",
+            "line": 17,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.eq_mul_inv_iff_mul_eq.{u_2} {k : Type u_2} [Field k] {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :\n  φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂",
+        "status": "checked"
+      },
+      "PowerSeries.invOfUnit_eq": {
+        "messages": [
+          {
+            "data": "PowerSeries.invOfUnit_eq.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :\n  φ.invOfUnit (Units.mk0 (constantCoeff φ) h) = φ⁻¹",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.invOfUnit_eq.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :\n  φ.invOfUnit (Units.mk0 (constantCoeff φ) h) = φ⁻¹",
+        "status": "checked"
+      },
+      "PowerSeries.invOfUnit_eq'": {
+        "messages": [
+          {
+            "data": "PowerSeries.invOfUnit_eq'.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (u : kˣ) (h : constantCoeff φ = ↑u) :\n  φ.invOfUnit u = φ⁻¹",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.invOfUnit_eq'.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (u : kˣ) (h : constantCoeff φ = ↑u) :\n  φ.invOfUnit u = φ⁻¹",
+        "status": "checked"
+      },
+      "PowerSeries.inv_eq_iff_mul_eq_one": {
+        "messages": [
+          {
+            "data": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+            "line": 19,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+        "status": "checked"
+      },
+      "PowerSeries.inv_eq_inv_aux": {
+        "messages": [
+          {
+            "data": "PowerSeries.inv_eq_inv_aux.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.inv_eq_inv_aux.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ",
+        "status": "checked"
+      },
+      "PowerSeries.inv_eq_zero": {
+        "messages": [
+          {
+            "data": "PowerSeries.inv_eq_zero.{u_2} {k : Type u_2} [Field k] {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.inv_eq_zero.{u_2} {k : Type u_2} [Field k] {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0",
+        "status": "checked"
+      },
+      "PowerSeries.isUnit_constantCoeff": {
+        "messages": [
+          {
+            "data": "PowerSeries.isUnit_constantCoeff.{u_1} {R : Type u_1} [Semiring R] (φ : R⟦X⟧) (h : IsUnit φ) : IsUnit (constantCoeff φ)",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.isUnit_constantCoeff.{u_1} {R : Type u_1} [Semiring R] (φ : R⟦X⟧) (h : IsUnit φ) : IsUnit (constantCoeff φ)",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "d5982c1c8f4cd742773e3c2b47d5e51500949b71dbdc11007bd4c44137773b70",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T06:07:57.727215+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "PowerSeries.coeff_mul_eq_of_coeff_eq",
+      "expected_signature_or_shape": "theorem coeff_mul_eq_of_coeff_eq (a b c d : R⟦X⟧) (hab : ∀ m ≤ n, coeff m a = coeff m b) (hcd : ∀ m ≤ n, coeff m c = coeff m d) : ∀ m ≤ n, coeff m (a * c) = coeff m (b * d)",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem tsum_pow_mul_one_sub_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1",
+            "status": "checked"
+          },
+          "line_number": 174,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "mul",
+            "eq",
+            "to",
+            "constant"
+          ],
+          "name": "PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+          "score": 34,
+          "search_excerpt": "/-- Formula for geometric series. -/ theorem tsum_pow_mul_one_sub_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) : (∑' (i : ℕ), f ^ i) * (1 - f) = 1 :="
+        },
+        {
+          "declaration_line": "theorem one_sub_mul_tsum_pow_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero.{u_3} {R : Type u_3} [TopologicalSpace R]\n  [Ring R] [IsTopologicalRing R] [T2Space R] {f : R⟦X⟧} (h : constantCoeff f = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1",
+            "status": "checked"
+          },
+          "line_number": 179,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "mul",
+            "eq",
+            "to",
+            "constant"
+          ],
+          "name": "PowerSeries.WithPiTopology.one_sub_mul_tsum_pow_of_constantCoeff_eq_zero",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+          "score": 34,
+          "search_excerpt": "/-- Formula for geometric series. -/ theorem one_sub_mul_tsum_pow_of_constantCoeff_eq_zero (h : f.constantCoeff = 0) : (1 - f) * ∑' (i : ℕ), f ^ i = 1 :="
+        },
+        {
+          "declaration_line": "lemma coeff_one_mul (φ ψ : R⟦X⟧) : coeff 1 (φ * ψ) =",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.coeff_one_mul.{u_2} {R : Type u_2} [CommSemiring R] (φ ψ : R⟦X⟧) :\n  (coeff 1) (φ * ψ) = (coeff 1) φ * constantCoeff ψ + (coeff 1) ψ * constantCoeff φ",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.coeff_one_mul.{u_2} {R : Type u_2} [CommSemiring R] (φ ψ : R⟦X⟧) :\n  (coeff 1) (φ * ψ) = (coeff 1) φ * constantCoeff ψ + (coeff 1) ψ * constantCoeff φ",
+            "status": "checked"
+          },
+          "line_number": 689,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "mul",
+            "product",
+            "coefficient",
+            "constant"
+          ],
+          "name": "PowerSeries.coeff_one_mul",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+          "score": 32,
+          "search_excerpt": "/-- First coefficient of the product of two power series. -/ lemma coeff_one_mul (φ ψ : R⟦X⟧) : coeff 1 (φ * ψ) = coeff 1 φ * constantCoeff ψ + coeff 1 ψ * constantCoeff φ := by"
+        },
+        {
+          "declaration_line": "theorem coeff_prod [DecidableEq ι] (f : ι → PowerSeries R) (d : ℕ) (s : Finset ι) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.coeff_prod.{u_2, u_3} {R : Type u_2} [CommSemiring R] {ι : Type u_3} [DecidableEq ι] (f : ι → R⟦X⟧) (d : ℕ)\n  (s : Finset ι) : (coeff d) (∏ j ∈ s, f j) = ∑ l ∈ s.finsuppAntidiag d, ∏ i ∈ s, (coeff (l i)) (f i)",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.coeff_prod.{u_2, u_3} {R : Type u_2} [CommSemiring R] {ι : Type u_3} [DecidableEq ι] (f : ι → R⟦X⟧) (d : ℕ)\n  (s : Finset ι) : (coeff d) (∏ j ∈ s, f j) = ∑ l ∈ s.finsuppAntidiag d, ∏ i ∈ s, (coeff (l i)) (f i)",
+            "status": "checked"
+          },
+          "line_number": 658,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "eq",
+            "product",
+            "coefficient"
+          ],
+          "name": "PowerSeries.coeff_prod",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+          "score": 29,
+          "search_excerpt": "/-- Coefficients of a product of power series -/ theorem coeff_prod [DecidableEq ι] (f : ι → PowerSeries R) (d : ℕ) (s : Finset ι) : coeff d (∏ j ∈ s, f j) = ∑ l ∈ finsuppAntidiag s d, ∏ i ∈ s, coeff (l i) (f i) := by"
+        },
+        {
+          "declaration_line": "theorem continuous_constantCoeff [Semiring R] : Continuous (constantCoeff (R := R)) :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.WithPiTopology.continuous_constantCoeff.{u_1} (R : Type u_1) [TopologicalSpace R] [Semiring R] :\n  Continuous ⇑constantCoeff",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.WithPiTopology.continuous_constantCoeff.{u_1} (R : Type u_1) [TopologicalSpace R] [Semiring R] :\n  Continuous ⇑constantCoeff",
+            "status": "checked"
+          },
+          "line_number": 89,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "to",
+            "coefficient",
+            "constant"
+          ],
+          "name": "PowerSeries.WithPiTopology.continuous_constantCoeff",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+          "score": 29,
+          "search_excerpt": "/-- The constant coefficient is continuous -/ theorem continuous_constantCoeff [Semiring R] : Continuous (constantCoeff (R := R)) :="
+        },
+        {
+          "declaration_line": "theorem tendsto_iff_coeff_tendsto [Semiring R] {ι : Type*}",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.WithPiTopology.tendsto_iff_coeff_tendsto.{u_1, u_2} (R : Type u_1) [TopologicalSpace R] [Semiring R]\n  {ι : Type u_2} (f : ι → R⟦X⟧) (u : Filter ι) (g : R⟦X⟧) :\n  Filter.Tendsto f u (nhds g) ↔ ∀ (d : ℕ), Filter.Tendsto (fun i => (coeff d) (f i)) u (nhds ((coeff d) g))",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.WithPiTopology.tendsto_iff_coeff_tendsto.{u_1, u_2} (R : Type u_1) [TopologicalSpace R] [Semiring R]\n  {ι : Type u_2} (f : ι → R⟦X⟧) (u : Filter ι) (g : R⟦X⟧) :\n  Filter.Tendsto f u (nhds g) ↔ ∀ (d : ℕ), Filter.Tendsto (fun i => (coeff d) (f i)) u (nhds ((coeff d) g))",
+            "status": "checked"
+          },
+          "line_number": 93,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "to",
+            "coefficient",
+            "wise"
+          ],
+          "name": "PowerSeries.WithPiTopology.tendsto_iff_coeff_tendsto",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+          "score": 29,
+          "search_excerpt": "/-- A family of power series converges iff it converges coefficientwise -/ theorem tendsto_iff_coeff_tendsto [Semiring R] {ι : Type*} (f : ι → PowerSeries R) (u : Filter ι) (g : PowerSeries R) : Tendsto f u (nhds g) ↔ ∀ d : ℕ, Tendsto (fun i => coeff d (f i)) u (nhds (coeff d g)) := by"
+        },
+        {
+          "declaration_line": "theorem summable_pow_of_constantCoeff_eq_zero {f : PowerSeries R} (h : f.constantCoeff = 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero.{u_1} {R : Type u_1} [TopologicalSpace R] [Semiring R]\n  {f : R⟦X⟧} (h : constantCoeff f = 0) : Summable fun x => f ^ x",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero.{u_1} {R : Type u_1} [TopologicalSpace R] [Semiring R]\n  {f : R⟦X⟧} (h : constantCoeff f = 0) : Summable fun x => f ^ x",
+            "status": "checked"
+          },
+          "line_number": 165,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "eq",
+            "to",
+            "constant"
+          ],
+          "name": "PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/PiTopology.lean",
+          "score": 29,
+          "search_excerpt": "/-- The geometric series converges if the constant term is zero. -/ theorem summable_pow_of_constantCoeff_eq_zero {f : PowerSeries R} (h : f.constantCoeff = 0) : Summable (f ^ ·) :="
+        },
+        {
+          "declaration_line": "def constantCoeff : R⟦X⟧ →+* R :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.constantCoeff.{u_1} {R : Type u_1} [Semiring R] : R⟦X⟧ →+* R",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.constantCoeff.{u_1} {R : Type u_1} [Semiring R] : R⟦X⟧ →+* R",
+            "status": "checked"
+          },
+          "line_number": 197,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "coefficient",
+            "constant"
+          ],
+          "name": "PowerSeries.constantCoeff",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+          "score": 26,
+          "search_excerpt": "/-- The constant coefficient of a formal power series. -/ def constantCoeff : R⟦X⟧ →+* R :="
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `PowerSeries.coeff_mul_eq_of_coeff_eq`",
+        "messages": [
+          {
+            "data": "Unknown constant `PowerSeries.coeff_mul_eq_of_coeff_eq`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "PowerSeries.coeff_mul_eq_of_coeff_eq",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove the product equality from coefficient-wise hypotheses."
+    },
+    {
+      "exact_identifier": "PowerSeries.coeff_inv_eq_of_coeff_eq",
+      "expected_signature_or_shape": "theorem coeff_inv_eq_of_coeff_eq (c d : R⟦X⟧) (hc : IsUnit c) (hd : IsUnit d) (hcd : ∀ m ≤ n, coeff m c = coeff m d) : ∀ m ≤ n, coeff m (c⁻¹) = coeff m (d⁻¹)",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem isUnit_constantCoeff (φ : R⟦X⟧) (h : IsUnit φ) : IsUnit (constantCoeff φ) :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.isUnit_constantCoeff.{u_1} {R : Type u_1} [Semiring R] (φ : R⟦X⟧) (h : IsUnit φ) : IsUnit (constantCoeff φ)",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.isUnit_constantCoeff.{u_1} {R : Type u_1} [Semiring R] (φ : R⟦X⟧) (h : IsUnit φ) : IsUnit (constantCoeff φ)",
+            "status": "checked"
+          },
+          "line_number": 472,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "isunit",
+            "for",
+            "constant"
+          ],
+          "name": "PowerSeries.isUnit_constantCoeff",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Basic.lean",
+          "score": 38,
+          "search_excerpt": "/-- If a formal power series is invertible, then so is its constant coefficient. -/ theorem isUnit_constantCoeff (φ : R⟦X⟧) (h : IsUnit φ) : IsUnit (constantCoeff φ) :="
+        },
+        {
+          "declaration_line": "theorem inv_eq_inv_aux (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.inv_eq_inv_aux.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ",
+                "line": 13,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.inv_eq_inv_aux.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ",
+            "status": "checked"
+          },
+          "line_number": 136,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "eq",
+            "constant"
+          ],
+          "name": "PowerSeries.inv_eq_inv_aux",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+          "score": 37,
+          "search_excerpt": "theorem inv_eq_inv_aux (φ : k⟦X⟧) : φ⁻¹ = inv.aux (constantCoeff φ)⁻¹ φ :="
+        },
+        {
+          "declaration_line": "theorem inv_eq_zero {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0 :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.inv_eq_zero.{u_2} {k : Type u_2} [Field k] {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0",
+                "line": 14,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.inv_eq_zero.{u_2} {k : Type u_2} [Field k] {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0",
+            "status": "checked"
+          },
+          "line_number": 152,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "eq",
+            "constant"
+          ],
+          "name": "PowerSeries.inv_eq_zero",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+          "score": 37,
+          "search_excerpt": "theorem inv_eq_zero {φ : k⟦X⟧} : φ⁻¹ = 0 ↔ constantCoeff φ = 0 :="
+        },
+        {
+          "declaration_line": "theorem invOfUnit_eq (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.invOfUnit_eq.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :\n  φ.invOfUnit (Units.mk0 (constantCoeff φ) h) = φ⁻¹",
+                "line": 15,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.invOfUnit_eq.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) :\n  φ.invOfUnit (Units.mk0 (constantCoeff φ) h) = φ⁻¹",
+            "status": "checked"
+          },
+          "line_number": 159,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "eq",
+            "constant"
+          ],
+          "name": "PowerSeries.invOfUnit_eq",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+          "score": 37,
+          "search_excerpt": "@[simp] theorem invOfUnit_eq (φ : k⟦X⟧) (h : constantCoeff φ ≠ 0) : invOfUnit φ (Units.mk0 _ h) = φ⁻¹ :="
+        },
+        {
+          "declaration_line": "theorem invOfUnit_eq' (φ : k⟦X⟧) (u : Units k) (h : constantCoeff φ = u) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.invOfUnit_eq'.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (u : kˣ) (h : constantCoeff φ = ↑u) :\n  φ.invOfUnit u = φ⁻¹",
+                "line": 16,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.invOfUnit_eq'.{u_2} {k : Type u_2} [Field k] (φ : k⟦X⟧) (u : kˣ) (h : constantCoeff φ = ↑u) :\n  φ.invOfUnit u = φ⁻¹",
+            "status": "checked"
+          },
+          "line_number": 164,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "eq",
+            "constant"
+          ],
+          "name": "PowerSeries.invOfUnit_eq'",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+          "score": 37,
+          "search_excerpt": "@[simp] theorem invOfUnit_eq' (φ : k⟦X⟧) (u : Units k) (h : constantCoeff φ = u) : invOfUnit φ u = φ⁻¹ :="
+        },
+        {
+          "declaration_line": "theorem eq_mul_inv_iff_mul_eq {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.eq_mul_inv_iff_mul_eq.{u_2} {k : Type u_2} [Field k] {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :\n  φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂",
+                "line": 17,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.eq_mul_inv_iff_mul_eq.{u_2} {k : Type u_2} [Field k] {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) :\n  φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂",
+            "status": "checked"
+          },
+          "line_number": 176,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "eq",
+            "constant"
+          ],
+          "name": "PowerSeries.eq_mul_inv_iff_mul_eq",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+          "score": 37,
+          "search_excerpt": "theorem eq_mul_inv_iff_mul_eq {φ₁ φ₂ φ₃ : k⟦X⟧} (h : constantCoeff φ₃ ≠ 0) : φ₁ = φ₂ * φ₃⁻¹ ↔ φ₁ * φ₃ = φ₂ :="
+        },
+        {
+          "declaration_line": "theorem eq_inv_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.eq_inv_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  φ = ψ⁻¹ ↔ φ * ψ = 1",
+                "line": 18,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.eq_inv_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  φ = ψ⁻¹ ↔ φ * ψ = 1",
+            "status": "checked"
+          },
+          "line_number": 180,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "eq",
+            "constant"
+          ],
+          "name": "PowerSeries.eq_inv_iff_mul_eq_one",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+          "score": 37,
+          "search_excerpt": "theorem eq_inv_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : φ = ψ⁻¹ ↔ φ * ψ = 1 :="
+        },
+        {
+          "declaration_line": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+                "line": 19,
+                "severity": "information"
+              }
+            ],
+            "signature": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+            "status": "checked"
+          },
+          "line_number": 184,
+          "matched_tokens": [
+            "powerseries",
+            "coeff",
+            "inv",
+            "eq",
+            "constant"
+          ],
+          "name": "PowerSeries.inv_eq_iff_mul_eq_one",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+          "score": 37,
+          "search_excerpt": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : ψ⁻¹ = φ ↔ φ * ψ = 1 :="
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `PowerSeries.coeff_inv_eq_of_coeff_eq`",
+        "messages": [
+          {
+            "data": "Unknown constant `PowerSeries.coeff_inv_eq_of_coeff_eq`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "PowerSeries.coeff_inv_eq_of_coeff_eq",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "To extend the equality to inverses, needed for division."
+    },
+    {
+      "exact_identifier": "Matrix.det_of_lowerTriangular",
+      "expected_signature_or_shape": "theorem det_of_lowerTriangular (A : Matrix (Fin n) (Fin n) K) (h : ∀ i j, i < j → A i j = 0) : A.det = ∏ i, A i i",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "query": "Matrix.det_of_lowerTriangular",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem det_of_lowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular toDual) :",
+        "kind": "theorem",
+        "line_number": 286,
+        "name": "Matrix.det_of_lowerTriangular",
+        "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+        "source_snippet": "theorem det_of_lowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular toDual) :\n    M.det = ∏ i : m, M i i := by\n  rw [← det_transpose]\n  exact det_of_upperTriangular h.transpose\n\nopen Polynomial",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "To compute determinant of lower triangular matrix as product of diagonal entries."
+    },
+    {
+      "exact_identifier": "Matrix.det_of_upperTriangular",
+      "expected_signature_or_shape": "theorem det_of_upperTriangular (A : Matrix (Fin n) (Fin n) K) (h : ∀ i j, i > j → A i j = 0) : A.det = ∏ i, A i i",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "query": "Matrix.det_of_upperTriangular",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "theorem det_of_upperTriangular [LinearOrder m] (h : M.BlockTriangular id) :",
+        "kind": "theorem",
+        "line_number": 281,
+        "name": "Matrix.det_of_upperTriangular",
+        "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+        "source_snippet": "theorem det_of_upperTriangular [LinearOrder m] (h : M.BlockTriangular id) :\n    M.det = ∏ i : m, M i i := by\n  haveI : DecidableEq R := Classical.decEq _\n  simp_rw [h.det, image_id, det_toSquareBlock_id]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "To compute determinant of upper triangular matrix as product of diagonal entries."
+    },
+    {
+      "exact_identifier": "IsInverse.unique",
+      "expected_signature_or_shape": "theorem IsInverse.unique (a b c : L) (h1 : IsInverse a b) (h2 : IsInverse a c) : b = c",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown identifier `IsInverse.unique`",
+        "messages": [
+          {
+            "data": "Unknown identifier `IsInverse.unique`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "IsInverse.unique",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "To prove at most one inverse."
+    },
+    {
+      "exact_identifier": "Nat.vandermonde",
+      "expected_signature_or_shape": "theorem vandermonde (a b n : ℕ) : (a+b).choose n = ∑ k in range (n+1), (a.choose k) * (b.choose (n-k))",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+                "line": 20,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "status": "checked"
+          },
+          "line_number": 1,
+          "matched_tokens": [
+            "binomial",
+            "choose",
+            "coefficients",
+            "constant",
+            "for",
+            "identity",
+            "in",
+            "nat",
+            "prove",
+            "range",
+            "to",
+            "unknown",
+            "vandermonde"
+          ],
+          "name": "Nat.add_choose_eq",
+          "path": "<shape-driven-fallback>",
+          "score": 100
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+                "line": 21,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+            "status": "checked"
+          },
+          "line_number": 2,
+          "matched_tokens": [
+            "binomial",
+            "choose",
+            "coefficients",
+            "constant",
+            "for",
+            "identity",
+            "in",
+            "nat",
+            "prove",
+            "range",
+            "to",
+            "unknown",
+            "vandermonde"
+          ],
+          "name": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+          "path": "<shape-driven-fallback>",
+          "score": 99
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+                "line": 22,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+            "status": "checked"
+          },
+          "line_number": 3,
+          "matched_tokens": [
+            "binomial",
+            "choose",
+            "coefficients",
+            "constant",
+            "for",
+            "identity",
+            "in",
+            "nat",
+            "prove",
+            "range",
+            "to",
+            "unknown",
+            "vandermonde"
+          ],
+          "name": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
+          "path": "<shape-driven-fallback>",
+          "score": 98
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Nat.vandermonde`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.vandermonde`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.vandermonde",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-004-task-1",
+      "unit_key": "unit-004",
+      "why_needed": "To prove the Vandermonde identity for binomial coefficients."
+    },
+    {
+      "exact_identifier": "NPartition.bijection",
+      "expected_signature_or_shape": "theorem NPartition_bijection : {λ : Nat.Partition | λ.length ≤ N} ≃ NPartition N",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown identifier `NPartition.bijection`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.bijection`",
+            "line": 10,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "NPartition.bijection",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-005-task-1",
+      "unit_key": "unit-005",
+      "why_needed": "To formalize the bijection stated in the proposition."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "IsInverse.unique": {
+        "error": "Unknown identifier `IsInverse.unique`",
+        "messages": [
+          {
+            "data": "Unknown identifier `IsInverse.unique`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Matrix.det_of_lowerTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "Matrix.det_of_upperTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "NPartition.bijection": {
+        "error": "Unknown identifier `NPartition.bijection`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.bijection`",
+            "line": 10,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.vandermonde": {
+        "error": "Unknown constant `Nat.vandermonde`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.vandermonde`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "PowerSeries.coeff_inv_eq_of_coeff_eq": {
+        "error": "Unknown constant `PowerSeries.coeff_inv_eq_of_coeff_eq`",
+        "messages": [
+          {
+            "data": "Unknown constant `PowerSeries.coeff_inv_eq_of_coeff_eq`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "PowerSeries.coeff_mul_eq_of_coeff_eq": {
+        "error": "Unknown constant `PowerSeries.coeff_mul_eq_of_coeff_eq`",
+        "messages": [
+          {
+            "data": "Unknown constant `PowerSeries.coeff_mul_eq_of_coeff_eq`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "706bf7e4364aefaec64eab5007c392210836998f0992f8dfcb154469be337ff7",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 7,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

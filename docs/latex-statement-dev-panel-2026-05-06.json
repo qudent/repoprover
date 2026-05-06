@@ -1,0 +1,119 @@
+{
+  "created_at": "2026-05-06T00:00:00Z",
+  "purpose": "Fixed five-unit development panel for theorem-level LaTeX-to-Lean context-selection and generation loops. This is a dev panel, not a held-out benchmark.",
+  "rationale": [
+    "A single LaTeX theorem is useful only as a canary; it does not expose enough variation in source/project/local/Mathlib context needs.",
+    "The panel deliberately mixes known positives, unresolved context gaps, and hard dev-contaminated cases so each prompt or retrieval change can be checked against several failure modes at once.",
+    "Any theorem already used for manual prompt or hydrator iteration must be reported as dev-contaminated, not held out."
+  ],
+  "recommended_use": {
+    "context_selection": "Run all five unit ids in one selector batch when evaluating prompt/context-selection changes.",
+    "generation": "Generate and verify per unit after hydration; compare success/failure taxonomy by panel role, not only aggregate pass rate.",
+    "benchmark_honesty": "Do not promote this panel to held-out evaluation. Use it to debug loop mechanics, then validate changes on fresh sampled LaTeX theorem units."
+  },
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+    "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+    "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+    "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+    "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par"
+  ],
+  "units": [
+    {
+      "id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+      "role": "known-positive/source-to-project-context-control",
+      "contamination": "dev_known_positive",
+      "why_in_panel": "Short algebra theorem whose successful formalization depends on finding the right previous-project inverse theorem shape rather than broad Mathlib search.",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex",
+        "line_range": [
+          70,
+          73
+        ],
+        "environment": "theorem",
+        "labels": [
+          "thm.commring.inverse-uni"
+        ],
+        "estimated_tokens": 40
+      },
+      "expected_signal": "A regression here means the loop lost a basic positive-control ability."
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+      "role": "known-positive/mathlib-local-style-control",
+      "contamination": "dev_known_positive",
+      "why_in_panel": "A determinant theorem with local matrix style and standard Mathlib determinant APIs; useful for detecting whether selector/generator changes still handle ordinary Mathlib-backed statements.",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex",
+        "line_range": [
+          587,
+          596
+        ],
+        "environment": "theorem",
+        "labels": [
+          "thm.det.triang"
+        ],
+        "estimated_tokens": 88
+      },
+      "expected_signal": "A regression here points to local style/import or standard API context loss."
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "role": "unresolved-project-context-gap",
+      "contamination": "dev_gap_case",
+      "why_in_panel": "Previously diagnosed as needing project/FPS context; tests whether selectors retrieve the local formal theory around formal power series division and coefficient congruence.",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex",
+        "line_range": [
+          388,
+          407
+        ],
+        "environment": "lemma",
+        "labels": [
+          "lem.fps.prod.irlv.cong-div"
+        ],
+        "estimated_tokens": 157
+      },
+      "expected_signal": "If selected context is insufficient, the bottleneck is project-local context retrieval rather than generation alone."
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+      "role": "unresolved-mathlib-bridge-and-proof-planning-case",
+      "contamination": "dev_contaminated_by_vandermonde_hydration_work",
+      "why_in_panel": "The selector/hydrator can now expose checked Vandermonde and antidiagonal/range bridge facts, but recent generation still declined; useful for distinguishing Mathlib lookup from proof-planning failure.",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex",
+        "line_range": [
+          859,
+          867
+        ],
+        "environment": "proposition",
+        "labels": [
+          "prop.binom.vandermonde.NN",
+          "eq.prop.binom.vandermonde.NN.eq"
+        ],
+        "estimated_tokens": 66
+      },
+      "expected_signal": "If context is complete but generation declines, route to proof-planning or coding-agent diagnostics."
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "role": "hard-same-unit-helper-planning-case",
+      "contamination": "dev_contaminated_by_npartition_iterations",
+      "why_in_panel": "The model can sketch zero-padding and inverse helper structure but has not completed Lean proofs honestly; useful for testing helper planning, no-placeholder normalization, and hard-case routing.",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex",
+        "line_range": [
+          21,
+          31
+        ],
+        "environment": "proposition",
+        "labels": [
+          "prop.sf.Npar-as-par"
+        ],
+        "estimated_tokens": 103
+      },
+      "expected_signal": "Repeated clean declines or placeholder skeletons indicate a need for stronger proof agents or manual helper-library growth, not more theorem-specific prompt hints."
+    }
+  ]
+}

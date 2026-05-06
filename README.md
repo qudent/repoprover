@@ -556,6 +556,25 @@ verification is `declined_cannot_prove` and gold comparison is
 blocker is not just DeepSeek Flash underperformance; Kimi also fails the hard
 same-unit inverse proof under the honest no-placeholder contract.
 
+The next loop correction is a fixed five-unit development panel, recorded in
+`docs/latex-statement-dev-panel-2026-05-06.json`, so prompt/context changes are
+not optimized only on one theorem. The panel mixes two known positives
+(`thm.commring.inverse-uni`, `thm.det.triang`), one unresolved FPS project
+context gap (`lem.fps.prod.irlv.cong-div`), one Vandermonde Mathlib/rewrite
+planning case, and the hard NPartition same-unit helper case. A budget-only
+batched selector payload is 72,421 bytes and made no provider call. The first
+paid batch with `deepseek/deepseek-v4-flash` selected context for all five
+units in valid JSON for `$0.003094084`, 115.186 seconds, 17,077 prompt tokens,
+and 9,219 completion tokens, of which 6,914 were reported reasoning tokens.
+Lean hydration checked the central determinant, Vandermonde, and
+`Nat.Partition` requests directly, but rejected invented FPS coefficient lemmas
+and an inverse-cancellation guess. A no-reasoning selector variant returned
+valid JSON in 33.785 seconds for `$0.00300286` and only 2,186 completion
+tokens, but its exact API recall was worse (`Nat.vandermonde`,
+`IsInverse.unique`, and `NPartition.bijection` were bad guesses). This supports
+using no-reasoning selection for cheap triage, then escalating failed/high-risk
+units after Lean hydration rather than continuing one-theorem prompt tuning.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad
