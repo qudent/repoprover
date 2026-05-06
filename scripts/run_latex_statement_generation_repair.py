@@ -106,6 +106,7 @@ def build_repair_messages(
             "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context checked_signatures or selected_visible_context.",
             "If notes describe a simpler corrected proof, implement that proof in lean_file_body instead of saying it will be adjusted later.",
             "If status is cannot_prove_from_visible_context, lean_file_body must be exactly empty and declaration_names must be an empty list.",
+            "When status is cannot_prove_from_visible_context, do not use lean_file_body as a scratchpad. Put analysis in notes only; lean_file_body must be exactly \"\" and declaration_names exactly [].",
             "The repair output must be directly acceptable as a generation-output.json file.",
         ],
         "original_generation_task": generation_payload,

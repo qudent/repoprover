@@ -281,6 +281,7 @@ def build_generation_messages(
             "If you use a variable command instead of explicit binders, the command itself must appear in lean_file_body. Do not depend on file-scope variables that are not emitted in your output.",
             "Every identifier used in a theorem statement must be introduced by an explicit binder, local declaration, or imported/opened declaration. In particular, source parameters such as coefficient types, matrix sizes, rings, variables, and typeclass assumptions must be bound in the generated theorem, e.g. `{K : Type*} [CommRing K] {n : ℕ}` when the source quantifies over a commutative ring and a natural number.",
             "If you cannot produce a complete proof from visible context, set status to cannot_prove_from_visible_context and leave lean_file_body empty. Never output Lean containing sorry/admit/placeholders.",
+            "When status is cannot_prove_from_visible_context, do not use lean_file_body as a scratchpad. Put analysis in notes only; lean_file_body must be exactly \"\" and declaration_names exactly [].",
         ],
         "lean_environment": {
             "toolchain": "leanprover/lean4:v4.28.0",
