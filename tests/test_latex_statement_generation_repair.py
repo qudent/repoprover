@@ -191,6 +191,9 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "helper_add_zero" in prompt
     assert "newly introduced declarations" in prompt
     assert "Do not introduce a replacement carrier type" in prompt
+    assert "checked sort/enumeration route can be a valid local helper plan" in prompt
+    assert "direct library theorem for the whole padded function is not required" in prompt
+    assert "fallback_resolved_context_requests" in prompt
     assert "schema sanitation notes only" in prompt
     assert "theorem bad" in prompt
     assert "Demo.hidden_target" not in prompt

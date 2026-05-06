@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The visible context provides NPartition, Nat.Partition, and the existing toPartition conversion, but the source proposition requires a bijection between partitions of length ≤ N and N-partitions. The length of a Nat.Partition is not available as a field; the only way to measure length is via Multiset.card p.parts. The forward direction (padding with zeros) requires constructing an NPartition from a Nat.Partition with a proof that Multiset.card p.parts ≤ N, and proving the antitone condition. The antitone condition requires that the sorted list of parts (by ≥) is weakly decreasing, which is true by Multiset.sort_sorted, but the padding with zeros must also be antitone. The checked signatures include Multiset.sort_sorted and Multiset.length_sort, but the antitone proof for the padded list requires reasoning about the sorted list's indices and the zero tail. The existing toPartition from NPartition to Nat.Partition already drops zeros, but the inverse direction (fromPartition) is not provided. The same_unit_helper_plan in the repair context suggests defining fromPartition, size_fromPartition, toPartition_length, fromPartition_toPartition, toPartition_fromPartition, and then the main bijection. However, the antitone proof for fromPartition is nontrivial: it requires showing that for i < j, the i-th element (either from the sorted list or zero) is ≥ the j-th element. This involves case analysis on whether i and j are within the length of the sorted list, and using the sorted property. The checked signature Multiset.sort_sorted gives List.Sorted (· ≥ ·) for the sorted list, but converting that to an Antitone condition on the Fin N function requires additional lemmas about List.get and the ordering of indices. The checked signature List.sortedGE_iff_antitone_get (from fallback candidates) could help, but it is a fallback candidate, not a checked signature. The checked signatures do not include a lemma that directly gives Antitone for the padded function. Moreover, the bijection statement should be an Equiv between the set of Nat.Partition n with Multiset.card p.parts ≤ N and the set of NPartition N with size = n. The existing toPartition returns a Nat.Partition μ.size, so the size condition is automatically satisfied. The inverse direction fromPartition must also satisfy that its size equals n, which requires Multiset.sum_sort and Nat.Partition.parts_sum. The checked signature Multiset.sum_sort is not available (it was a failed request), and the fallback candidates do not provide a direct sum-of-sort lemma. Without Multiset.sum_sort, proving that the sum of the sorted list equals the sum of the multiset is not possible from the visible checked signatures. The fallback candidates Multiset.sum_map_div, Multiset.mem_sum are not relevant. Therefore, the visible context is insufficient to prove the main claim. The repair context's same_unit_helper_plan relies on Multiset.sum_sort, which is not checked. Hence, the status must be cannot_prove_from_visible_context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure with parts and antitone\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum\",\n        \"Multiset.card for length\",\n        \"Multiset.sort_sorted (checked)\",\n        \"Multiset.length_sort (checked)\",\n        \"NPartition.toPartition (local predecessor)\",\n        \"NPartition.ext, NPartition.ext' (local predecessor)\",\n        \"filter_ne_zero_sum (local predecessor)\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778042035,
+  "id": "gen-1778042035-3Hss8fqJPRBmHnLy1ztm",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 819,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00351946,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00022932,
+      "upstream_inference_cost": 0.00351946,
+      "upstream_inference_prompt_cost": 0.00329014
+    },
+    "is_byok": false,
+    "prompt_tokens": 23501,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 24320
+  }
+}

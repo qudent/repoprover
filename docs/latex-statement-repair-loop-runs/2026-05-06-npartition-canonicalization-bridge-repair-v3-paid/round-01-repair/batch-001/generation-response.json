@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The visible context provides NPartition structure, Nat.Partition structure, and the existing toPartition conversion. However, the source requires a bijection between partitions of length ≤ N and N-partitions. The length of a Nat.Partition is not available as a field; we must use Multiset.card p.parts. The forward direction (padding with zeros) requires constructing an NPartition from a sorted list of parts, proving antitone, and proving size equality. The checked signatures provide Multiset.sort_sorted, Multiset.length_sort, and List.Pairwise.rel_get_of_le, which are sufficient to prove antitone pointwise. However, the sum equality (size preservation) requires Multiset.sum_sort, which is unavailable; the fallback candidates Multiset.sort_eq and Multiset.sum_coe are not sufficient to directly prove that the sum of the sorted list equals the multiset sum. Moreover, the inverse direction (truncating zeros) is already provided by toPartition, but proving that toPartition lands in partitions of length ≤ N requires a lemma about the cardinality of the filtered multiset, which is not directly available from the checked signatures. The bijection statement also requires an Equiv between subtypes, which is not supported by the visible context. Therefore, the visible context is insufficient to produce a complete Lean-compiling proof.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure with parts, antitone, ext, ext', size, toPartition\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum, ext\",\n        \"Multiset.sort_sorted, Multiset.length_sort, List.Pairwise.rel_get_of_le\",\n        \"Multiset.card_map, Finset.card_univ, Fintype.card_fin\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778042979,
+  "id": "gen-1778042979-v0fvbgRdSLcfLBAXrwCL",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepInfra",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 427,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00348026,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00011956,
+      "upstream_inference_cost": 0.00348026,
+      "upstream_inference_prompt_cost": 0.0033607
+    },
+    "is_byok": false,
+    "prompt_tokens": 24005,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 24432
+  }
+}

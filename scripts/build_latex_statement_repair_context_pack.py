@@ -62,6 +62,7 @@ def build_context_pack(
     request_index = mathlib_request_index(selection)
     checked_signatures: list[dict[str, Any]] = []
     failed_or_unchecked: list[dict[str, Any]] = []
+    fallback_resolved: list[dict[str, Any]] = []
 
     for row in hydration.get("hydrated_mathlib_context") or []:
         unit_key = str(row.get("unit_key") or "")
@@ -107,10 +108,11 @@ def build_context_pack(
                     }
                 )
         else:
-            failed_or_unchecked.append(record)
+            checked_fallback_names: list[str] = []
             for candidate in (row.get("fallback_mathlib_candidates") or [])[:4]:
                 candidate_check = candidate.get("lean_check") or {}
                 if candidate_check.get("status") == "checked":
+                    checked_fallback_names.append(str(candidate.get("name") or ""))
                     checked_signatures.append(
                         {
                             "unit_key": unit_key,
@@ -126,6 +128,20 @@ def build_context_pack(
                             "declaration_line": candidate.get("declaration_line"),
                         }
                     )
+            if checked_fallback_names:
+                fallback_resolved.append(
+                    {
+                        **record,
+                        "resolved_by_checked_fallback_candidates": checked_fallback_names,
+                        "policy": (
+                            "The requested direct identifier did not check, but the listed "
+                            "fallback candidates did. Treat the requested identifier as "
+                            "unavailable and use the checked fallback signatures instead."
+                        ),
+                    }
+                )
+            else:
+                failed_or_unchecked.append(record)
 
     proof_strategy_notes: list[dict[str, Any]] = []
     same_unit_helper_plan: list[dict[str, Any]] = []
@@ -176,6 +192,7 @@ def build_context_pack(
         "same_unit_helper_plan": same_unit_helper_plan,
         "selected_visible_context": selected_visible_context,
         "checked_signatures": checked_signatures,
+        "fallback_resolved_context_requests": fallback_resolved,
         "failed_or_unchecked_context_requests": failed_or_unchecked,
         "do_not_use_identifiers": do_not_use_identifiers,
         "discarded_do_not_use_items": discarded_do_not_use_items,
@@ -195,6 +212,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "schema_version": "repoprover.latex_statement_checked_repair_context_build.v1",
         "output": str(args.output),
         "checked_signature_count": len(pack["checked_signatures"]),
+        "fallback_resolved_context_request_count": len(pack["fallback_resolved_context_requests"]),
         "failed_or_unchecked_context_request_count": len(pack["failed_or_unchecked_context_requests"]),
     }
 

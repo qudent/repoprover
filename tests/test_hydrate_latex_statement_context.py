@@ -470,3 +470,59 @@ def test_fallback_mathlib_candidates_uses_signature_shape_and_aliases(tmp_path) 
     names = [candidate["name"] for candidate in candidates]
     assert "List.Pairwise.rel_get_of_le" in names
     assert "List.Sorted.rel_get_of_le" in names
+
+
+def test_fallback_mathlib_candidates_bridges_multiset_sum_sort_shape(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/MultisetSort.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace Multiset",
+                "def sort (s : Multiset α) : List α := []",
+                "lemma sum_map_div (s : Multiset α) : True := by trivial",
+                "theorem sort_eq (s : Multiset α) : True := by trivial",
+                "end Multiset",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates(
+        "Multiset.sum_sort",
+        project_root=tmp_path,
+        expected_signature_or_shape="(Multiset.sort r s).sum = s.sum",
+    )
+
+    names = [candidate["name"] for candidate in candidates[:2]]
+    assert names == ["Multiset.sort_eq", "Multiset.sum_coe"]
+
+
+def test_fallback_mathlib_candidates_bridges_sorted_antitone_shape(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/ListPairwise.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace List",
+                "theorem sortedGE_iff_antitone_get : True := by trivial",
+                "theorem Pairwise.rel_get_of_le : True := by trivial",
+                "theorem Pairwise.rel_get_of_lt : True := by trivial",
+                "end List",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates(
+        "List.sum_of_sorted_antitone",
+        project_root=tmp_path,
+        expected_signature_or_shape="If a list is sorted by (· ≥ ·), then the function i ↦ list.get i is antitone on Fin (list.length).",
+    )
+
+    names = [candidate["name"] for candidate in candidates[:3]]
+    assert names == [
+        "List.Pairwise.rel_get_of_le",
+        "List.Pairwise.rel_get_of_lt",
+        "List.sortedGE_iff_antitone_get",
+    ]

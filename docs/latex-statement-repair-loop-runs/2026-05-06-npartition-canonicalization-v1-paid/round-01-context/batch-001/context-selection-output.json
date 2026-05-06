@@ -1,0 +1,56 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.sort_sorted (r : α → α → Prop) [DecidableRel r] (s : Multiset α) : List.Sorted r (Multiset.sort r s)",
+              "name_or_query": "Multiset.sort_sorted",
+              "why_needed": "To prove that the sorted list of parts is weakly decreasing, which is needed for the antitone condition of the padded NPartition."
+            },
+            {
+              "expected_signature_or_shape": "(Multiset.sort r s).length = Multiset.card s",
+              "name_or_query": "Multiset.length_sort",
+              "why_needed": "To relate the length of the sorted list to the cardinality of the multiset, used in the padding construction."
+            },
+            {
+              "expected_signature_or_shape": "Any lemma that relates `List.get` to the element at a given index in a sorted list; needed to extract the i-th part.",
+              "name_or_query": "List.get_of_eq",
+              "why_needed": "To define the i-th part of the padded NPartition from the sorted list."
+            },
+            {
+              "expected_signature_or_shape": "(Multiset.sort r s).sum = s.sum",
+              "name_or_query": "Multiset.sum_sort",
+              "why_needed": "To show that the sum of the sorted list equals the sum of the multiset, used to prove that the padded NPartition has the correct size."
+            },
+            {
+              "expected_signature_or_shape": "If a list is sorted by (· ≥ ·), then the function i ↦ list.get i is antitone on Fin (list.length).",
+              "name_or_query": "List.sum_of_sorted_antitone",
+              "why_needed": "To prove the antitone condition of the padded NPartition directly from the sorted list."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card (Multiset.map f s) = Multiset.card s",
+              "name_or_query": "Multiset.card_map",
+              "why_needed": "Used in the forward direction `toPartition` to relate cardinalities; may be needed for the inverse direction."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card (Finset.univ : Finset (Fin N)) = N",
+              "name_or_query": "Finset.card_univ",
+              "why_needed": "To reason about the length of the NPartition (which is always N)."
+            },
+            {
+              "expected_signature_or_shape": "Fintype.card (Fin N) = N",
+              "name_or_query": "Fintype.card_fin",
+              "why_needed": "Alternative to Finset.card_univ for cardinality of Fin N."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

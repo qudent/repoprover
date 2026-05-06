@@ -1,0 +1,34 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition, Nat.Partition, and the existing toPartition conversion. The source describes a bijection between partitions of length ≤ N and N-partitions by padding/truncating zeros. The checked signatures include Multiset.sort_sorted, Multiset.length_sort, List.get_of_eq, Multiset.sort_eq, Multiset.sum_coe, Multiset.card_map, Finset.card_univ, Fintype.card_fin, and the fallback candidates List.sortedGE_iff_antitone_get, List.length_le_sum_of_one_le, List.sortedLE_iff_monotone_get. However, the source requires a notion of 'length' for a Nat.Partition, which is not available in Mathlib (Nat.Partition.length is not a field). The only way to measure length is via Multiset.card p.parts. The same_unit_helper_plan suggests defining fromPartition using Multiset.sort and padding with zeros, and proving antitone via Multiset.sort_sorted. However, the antitone condition for NPartition requires a proof that the function i ↦ parts i is antitone on Fin N. The sorted list from Multiset.sort is only defined for indices less than the cardinality; for indices beyond, we pad with zeros. The antitone condition must hold across the boundary between non-zero and zero entries. This requires a lemma that the sorted list is weakly decreasing and that zeros are ≤ any non-negative integer. While Multiset.sort_sorted gives List.Sorted (· ≥ ·) for the sorted list, we need to lift this to the padded function on Fin N. The checked signature List.sortedGE_iff_antitone_get provides a connection between sortedness and antitone get for a list, but the padded function is not exactly the get of the sorted list because of the zero padding. The proof would require constructing a list of length N that is the sorted list concatenated with zeros, and then using sortedness of the concatenated list. This is doable but requires additional lemmas about List.Sorted and concatenation with zeros. The visible context does not provide such lemmas, and the checked signatures do not include them. Moreover, the bijection statement should be an Equiv between {p : Nat.Partition n // Multiset.card p.parts ≤ N} and {μ : NPartition N // μ.size = n}. The existing toPartition returns a Nat.Partition μ.size, which matches the index. The inverse fromPartition would need to produce an NPartition N with size = n. The size equality requires showing that the sum of the padded parts equals n, which uses Multiset.sum_sort and Nat.Partition.parts_sum. However, the checked fallback candidates for Multiset.sum_sort are Multiset.sort_eq and Multiset.sum_coe, which together can show that the sum of the sorted list equals the sum of the multiset. This is sufficient. The main missing piece is a clean proof of the antitone condition for the padded function. Without a lemma that concatenating a sorted list with zeros preserves sortedness (in the sense of antitone on Fin N), the proof cannot be completed from the visible context alone. Therefore, the visible context is insufficient to produce a complete Lean-compiling proof."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "Multiset.sort for ordering",
+        "Multiset.sort_sorted",
+        "Multiset.length_sort",
+        "List.get_of_eq",
+        "Multiset.sort_eq",
+        "Multiset.sum_coe",
+        "Multiset.card_map",
+        "Finset.card_univ",
+        "Fintype.card_fin",
+        "List.sortedGE_iff_antitone_get",
+        "List.length_le_sum_of_one_le",
+        "List.sortedLE_iff_monotone_get",
+        "NPartition.toPartition",
+        "NPartition.ext",
+        "NPartition.ext'",
+        "filter_ne_zero_sum"
+      ]
+    }
+  ]
+}

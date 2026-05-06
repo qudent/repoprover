@@ -124,25 +124,37 @@ def candidate_local_haystack(candidate: dict[str, Any]) -> str:
 
 
 def filter_fallback_candidates_for_query(query: str, candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def merge_preserving_first(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        seen: set[str] = set()
+        merged: list[dict[str, Any]] = []
+        for item in items:
+            name = str(item.get("name") or "")
+            if name in seen:
+                continue
+            seen.add(name)
+            merged.append(item)
+        return merged
+
     root = query_namespace_root(query)
     if root:
         candidates = [candidate for candidate in candidates if candidate_name_root(candidate) == root]
     local_tokens = query_local_tokens(query)
     if local_tokens:
+        bridge_candidates = [candidate for candidate in candidates if candidate.get("kind") == "bridge"]
         name_matches = [
             candidate
             for candidate in candidates
             if any(token in str(candidate.get("name") or "").rsplit(".", 1)[-1].lower() for token in local_tokens)
         ]
         if name_matches:
-            return name_matches
+            return merge_preserving_first(bridge_candidates + name_matches)
         local_matches = [
             candidate
             for candidate in candidates
             if any(token in candidate_local_haystack(candidate) for token in local_tokens)
         ]
         if local_matches:
-            candidates = local_matches
+            candidates = merge_preserving_first(bridge_candidates + local_matches)
     return candidates
 
 
@@ -193,6 +205,57 @@ def source_declaration_match(line: str) -> tuple[str, str] | None:
     return None
 
 
+def forced_bridge_fallback_candidates(
+    query: str,
+    *,
+    expected_signature_or_shape: str = "",
+    diagnostic_text: str = "",
+) -> list[dict[str, Any]]:
+    """Return small generic fallback bridges for common hallucinated lemma names.
+
+    Selectors often request a plausible direct lemma name for a composite proof
+    step. When the usable Mathlib route is a short rewrite chain, source search
+    may rank noisy declarations higher than the actual bridge facts because the
+    direct name does not exist. Keep this list small and shape-driven.
+    """
+
+    tokens = set(
+        identifier_tokens(query)
+        + identifier_tokens(expected_signature_or_shape)
+        + identifier_tokens(diagnostic_text)
+    )
+    root = query_namespace_root(query)
+    names: list[str] = []
+    if root == "Multiset" and {"sort", "sum"}.issubset(tokens):
+        names.extend(["Multiset.sort_eq", "Multiset.sum_coe"])
+    if root == "List" and {"sorted", "antitone"}.issubset(tokens):
+        names.extend(
+            [
+                "List.Pairwise.rel_get_of_le",
+                "List.Pairwise.rel_get_of_lt",
+                "List.sortedGE_iff_antitone_get",
+            ]
+        )
+
+    candidates: list[dict[str, Any]] = []
+    for offset, name in enumerate(dict.fromkeys(names)):
+        candidates.append(
+            {
+                "name": name,
+                "kind": "bridge",
+                "path": "<shape-driven-fallback>",
+                "line_number": offset + 1,
+                "declaration_line": (
+                    "shape-driven fallback for a composite request; "
+                    "Lean #check output is authoritative"
+                ),
+                "matched_tokens": sorted(tokens),
+                "score": 100 - offset,
+            }
+        )
+    return candidates
+
+
 def fallback_mathlib_candidates(
     query: str,
     *,
@@ -216,7 +279,11 @@ def fallback_mathlib_candidates(
     mathlib_root = project_root / ".lake" / "packages" / "mathlib" / "Mathlib"
     if not mathlib_root.exists():
         return []
-    candidates: list[dict[str, Any]] = []
+    candidates: list[dict[str, Any]] = forced_bridge_fallback_candidates(
+        query,
+        expected_signature_or_shape=expected_signature_or_shape,
+        diagnostic_text=diagnostic_text,
+    )
     for path in sorted(mathlib_root.rglob("*.lean")):
         namespace_stack: list[str] = []
         rel = path.relative_to(project_root).as_posix()

@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 44
-verification-result files and 65 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 19 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 48
+verification-result files and 69 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 23 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -450,6 +450,40 @@ right carrier"; it is whether a source-only proof-planning loop can synthesize
 and prove the sorted/padded representative, the filtered-map length bound, and
 the inverse lemmas from visible context and checked Mathlib facts.
 
+A post-hoc local-source diagnostic is recorded at
+`docs/npartition-helper-route-diagnostic-2026-05-06.md`. It is not model-facing
+benchmark context. It shows that the existing proof route canonicalizes
+`Nat.Partition.parts : Multiset Nat` by sorting in decreasing order and padding
+with zeros, then proves orderedness, size, filtered-cardinality, and inverse
+facts from ordinary finite-data lemmas. The generic prompt lesson added from
+that diagnostic is: when visible Lean context stores unordered finite data but
+the source theorem talks like an ordered tuple/list, the selector should request
+sort/enumeration, pointwise access, cardinality, sum-preservation, and
+zero-padding facts instead of inventing a replacement carrier type.
+
+The paid canonicalization retry at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-v1-paid/`
+cost `$0.00652176` total (`$0.00300230` context selection and `$0.00351946`
+repair). It selected 12 checked signatures and 2 unchecked direct requests,
+stayed on the sorted/padded `Nat.Partition` route, and still cleanly declined.
+The no-new-call bridge hydration rerun at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-hydration/`
+then resolved the nonexistent `Multiset.sum_sort` request to checked
+fallbacks including `Multiset.sort_eq` and `Multiset.sum_coe`, and resolved the
+nonexistent `List.sum_of_sorted_antitone` request to checked `List.Pairwise`
+and `List.sortedGE_iff_antitone_get` facts. Its checked repair pack has 13
+checked signatures, 2 fallback-resolved requests, and 0 failed or unchecked
+requests.
+
+Three repair-only paid probes against that bridge-hydrated context cost
+`$0.01062936` total; the latest v3 retry cost `$0.00348026` and is recorded at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-repair-v3-paid/`.
+It still produced a clean `declined_cannot_prove` with gold comparison
+`not_generated_cannot_prove`. The current blocker has shifted from context
+selection/hydration to proof synthesis: the model recognizes the sorted/padded
+route but still fails to use the checked `sort_eq`/`sum_coe` and finite
+cardinality facts to close the local helper proofs.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad
@@ -529,7 +563,9 @@ the compiled declarations.
 
 An elaborated Lean pass now records direct constants from checked
 `ConstantInfo` expressions. The raw scan produced 16,485 unique project
-constant rows, including private/generated helper constants. Summarized against
+constant rows, including private/generated helper constants. They are called
+"rows" because the JSONL artifact has one dependency-accounting record per
+compiled Lean declaration, not one record per LaTeX theorem. Summarized against
 the 114 LaTeX statement gold-candidate rows:
 
 | Elaborated direct-dependency signal | Median | p90 | p95 | Max |

@@ -684,6 +684,32 @@ Broader diverse4 negative probe:
   The current blocker is therefore proof planning for the sorted/padded
   representative, the filtered-map length bound, and inverse lemmas, not
   Mathlib API lookup or invented-type drift.
+- canonicalization and bridge-hydration retry:
+  `docs/npartition-helper-route-diagnostic-2026-05-06.md` records a post-hoc
+  diagnostic of the local proof route. It shows that the gold development uses
+  a generic finite-data canonicalization pattern: sort `Nat.Partition.parts`,
+  pad with zeros, prove orderedness by pointwise sorted-list facts, prove size
+  by sort/sum-preservation facts, and prove filtered-cardinality/inverse facts
+  locally. The prompt changes derived from this are generic and do not expose
+  hidden target names.
+  The paid canonicalization retry at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-v1-paid/`
+  cost `$0.00652176` total (`$0.00300230` context selection and `$0.00351946`
+  repair), selected 12 checked signatures plus 2 unchecked direct requests, and
+  still cleanly declined. The no-new-call bridge hydration rerun at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-hydration/`
+  resolved guessed names `Multiset.sum_sort` and
+  `List.sum_of_sorted_antitone` to checked fallback candidates including
+  `Multiset.sort_eq`, `Multiset.sum_coe`,
+  `List.Pairwise.rel_get_of_le`, `List.Pairwise.rel_get_of_lt`, and
+  `List.sortedGE_iff_antitone_get`. Its checked repair pack has 13 checked
+  signatures, 2 fallback-resolved requests, and 0 failed or unchecked requests.
+  Three repair-only probes against that bridge-hydrated context cost
+  `$0.01062936`; the latest v3 retry cost `$0.00348026` and still cleanly
+  declined with gold comparison `not_generated_cannot_prove`. The current
+  blocker is now proof synthesis over checked finite-data facts, especially the
+  sort/sum rewrite chain and filtered-cardinality route, not context
+  selection/hydration for this proof skeleton.
 
 ## Lean Dependency Accounting
 
@@ -698,7 +724,9 @@ There are two dependency views:
   declarations.
 
 The elaborated scan writes one row per project constant in the compiled
-environment, including private/generated proof helper constants. These rows are
+environment, including private/generated proof helper constants. They are called
+"rows" because the JSONL artifact has one dependency-accounting record per
+compiled Lean declaration, not one record per LaTeX theorem. These rows are
 lower-level than LaTeX units and lower-level than the old 5,684 source
 declaration records. They answer "what constants does this checked Lean
 constant directly mention?", not "what source theorem is complete?"

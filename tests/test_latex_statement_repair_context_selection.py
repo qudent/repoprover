@@ -160,6 +160,8 @@ def test_repair_context_prompt_selects_context_without_hidden_target(tmp_path: P
     assert "request the checked pointwise/application lemmas" in prompt
     assert "Multiset.card_map" in prompt
     assert "not introduce a replacement carrier type" in prompt
+    assert "canonicalization route by sorting or enumerating" in prompt
+    assert "case-splitting in-range/out-of-range indices" in prompt
     assert "prior_helper" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt
@@ -395,7 +397,11 @@ def test_checked_context_pack_promotes_checked_fallback_candidates() -> None:
 
     assert pack["checked_signatures"][0]["name"] == "Finset.powersetCard_eq_empty"
     assert pack["checked_signatures"][0]["fallback_for_query"] == "Finset.powersetCard_eq_empty_of_lt"
-    assert pack["failed_or_unchecked_context_requests"][0]["exact_identifier"] == "Finset.powersetCard_eq_empty_of_lt"
+    assert pack["failed_or_unchecked_context_requests"] == []
+    assert pack["fallback_resolved_context_requests"][0]["exact_identifier"] == "Finset.powersetCard_eq_empty_of_lt"
+    assert pack["fallback_resolved_context_requests"][0]["resolved_by_checked_fallback_candidates"] == [
+        "Finset.powersetCard_eq_empty"
+    ]
 
 
 def test_repair_context_budget_payload(tmp_path: Path) -> None:

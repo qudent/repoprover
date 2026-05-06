@@ -1,0 +1,16 @@
+{
+  "batches": [
+    {
+      "exact_identifier_count": 8,
+      "fallback_exact_identifier_count": 16,
+      "fallback_lean_check_status": "lean_errors",
+      "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-hydration/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+      "lean_check_status": "lean_errors",
+      "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-hydration/round-01-context/batch-001/context-selection-output.json",
+      "request_count": 8
+    }
+  ],
+  "generated_at": "2026-05-06T04:49:18.798688+00:00",
+  "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-hydration/round-01-context",
+  "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+}

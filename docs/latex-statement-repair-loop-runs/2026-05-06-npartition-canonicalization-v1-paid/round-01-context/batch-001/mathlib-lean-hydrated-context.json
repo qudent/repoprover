@@ -1,0 +1,951 @@
+{
+  "exact_identifier_count": 8,
+  "fallback_exact_identifier_count": 16,
+  "fallback_lean_check": {
+    "checked": {
+      "List._root_.Antitone.ofFn_sorted": {
+        "error": "Unknown constant `List._root_.Antitone.ofFn_sorted`",
+        "messages": [
+          {
+            "data": "Unknown constant `List._root_.Antitone.ofFn_sorted`",
+            "line": 13,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "List.dvd_sum": {
+        "messages": [
+          {
+            "data": "List.dvd_sum.{u_5} {R : Type u_5} [NonUnitalSemiring R] {a : R} {l : List R} (h : ∀ x ∈ l, a ∣ x) : a ∣ l.sum",
+            "line": 19,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.dvd_sum.{u_5} {R : Type u_5} [NonUnitalSemiring R] {a : R} {l : List R} (h : ∀ x ∈ l, a ∣ x) : a ∣ l.sum",
+        "status": "checked"
+      },
+      "List.length_le_sum_of_one_le": {
+        "messages": [
+          {
+            "data": "List.length_le_sum_of_one_le (L : List ℕ) (h : ∀ i ∈ L, 1 ≤ i) : L.length ≤ L.sum",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.length_le_sum_of_one_le (L : List ℕ) (h : ∀ i ∈ L, 1 ≤ i) : L.length ≤ L.sum",
+        "status": "checked"
+      },
+      "List.sortedGE_iff_antitone_get": {
+        "messages": [
+          {
+            "data": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+        "status": "checked"
+      },
+      "List.sortedLE_iff_monotone_get": {
+        "messages": [
+          {
+            "data": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+        "status": "checked"
+      },
+      "List.sortedLT_iff_strictMono_get": {
+        "messages": [
+          {
+            "data": "List.sortedLT_iff_strictMono_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLT ↔ StrictMono l.get",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedLT_iff_strictMono_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLT ↔ StrictMono l.get",
+        "status": "checked"
+      },
+      "List.sorted_cons_cons": {
+        "messages": [
+          {
+            "data": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+            "line": 17,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+        "status": "checked"
+      },
+      "List.sum_toFinset_count_eq_length": {
+        "messages": [
+          {
+            "data": "List.sum_toFinset_count_eq_length.{u_1} {ι : Type u_1} [DecidableEq ι] (l : List ι) :\n  ∑ a ∈ l.toFinset, List.count a l = l.length",
+            "line": 18,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sum_toFinset_count_eq_length.{u_1} {ι : Type u_1} [DecidableEq ι] (l : List ι) :\n  ∑ a ∈ l.toFinset, List.count a l = l.length",
+        "status": "checked"
+      },
+      "Multiset._root_.Finset.mem_sum": {
+        "error": "Unknown constant `Multiset._root_.Finset.mem_sum`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset._root_.Finset.mem_sum`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Multiset.card_sum": {
+        "messages": [
+          {
+            "data": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+        "status": "checked"
+      },
+      "Multiset.mem_sum": {
+        "messages": [
+          {
+            "data": "Multiset.mem_sum.{u_1, u_4} {ι : Type u_1} {M : Type u_4} {a : M} {s : Finset ι} {m : ι → Multiset M} :\n  a ∈ ∑ i ∈ s, m i ↔ ∃ i ∈ s, a ∈ m i",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.mem_sum.{u_1, u_4} {ι : Type u_1} {M : Type u_4} {a : M} {s : Finset ι} {m : ι → Multiset M} :\n  a ∈ ∑ i ∈ s, m i ↔ ∃ i ∈ s, a ∈ m i",
+        "status": "checked"
+      },
+      "Multiset.prod_sum": {
+        "messages": [
+          {
+            "data": "Multiset.prod_sum.{u_4, u_5} {M : Type u_4} {ι : Type u_5} [CommMonoid M] (f : ι → Multiset M) (s : Finset ι) :\n  (∑ x ∈ s, f x).prod = ∏ x ∈ s, (f x).prod",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.prod_sum.{u_4, u_5} {M : Type u_4} {ι : Type u_5} [CommMonoid M] (f : ι → Multiset M) (s : Finset ι) :\n  (∑ x ∈ s, f x).prod = ∏ x ∈ s, (f x).prod",
+        "status": "checked"
+      },
+      "Multiset.sort": {
+        "messages": [
+          {
+            "data": "Multiset.sort.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop := by exact fun a b => a ≤ b) [DecidableRel r]\n  [IsTrans α r] [Std.Antisymm r] [Std.Total r] : List α",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.sort.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop := by exact fun a b => a ≤ b) [DecidableRel r]\n  [IsTrans α r] [Std.Antisymm r] [Std.Total r] : List α",
+        "status": "checked"
+      },
+      "Multiset.sum_map_div": {
+        "messages": [
+          {
+            "data": "Multiset.sum_map_div.{u_1, u_2} {ι : Type u_1} {K : Type u_2} [DivisionSemiring K] (s : Multiset ι) (f : ι → K)\n  (a : K) : (Multiset.map (fun x => f x / a) s).sum = (Multiset.map f s).sum / a",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.sum_map_div.{u_1, u_2} {ι : Type u_1} {K : Type u_2} [DivisionSemiring K] (s : Multiset ι) (f : ι → K)\n  (a : K) : (Multiset.map (fun x => f x / a) s).sum = (Multiset.map f s).sum / a",
+        "status": "checked"
+      },
+      "Multiset.toFinset_sum_count_eq": {
+        "messages": [
+          {
+            "data": "Multiset.toFinset_sum_count_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s = s.card",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.toFinset_sum_count_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s = s.card",
+        "status": "checked"
+      },
+      "Multiset.toFinset_sum_count_nsmul_eq": {
+        "messages": [
+          {
+            "data": "Multiset.toFinset_sum_count_nsmul_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s • {a} = s",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.toFinset_sum_count_nsmul_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s • {a} = s",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "078c22cf7207e58de66a3e5bc202a6d11515a396ff87ed221a819f0c998bbfed",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "lean_errors",
+  "generated_at": "2026-05-06T04:33:55.559906+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Multiset.sort_sorted",
+      "expected_signature_or_shape": "Multiset.sort_sorted (r : α → α → Prop) [DecidableRel r] (s : Multiset α) : List.Sorted r (Multiset.sort r s)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Multiset.sort_sorted.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.sort_sorted.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+        "status": "checked"
+      },
+      "query": "Multiset.sort_sorted",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove that the sorted list of parts is weakly decreasing, which is needed for the antitone condition of the padded NPartition."
+    },
+    {
+      "exact_identifier": "Multiset.length_sort",
+      "expected_signature_or_shape": "(Multiset.sort r s).length = Multiset.card s",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+        "status": "checked"
+      },
+      "query": "Multiset.length_sort",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "theorem length_sort : (sort s r).length = card s := Quot.inductionOn s <| length_mergeSort",
+        "kind": "theorem",
+        "line_number": 88,
+        "name": "Multiset.length_sort",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Sort.lean",
+        "source_snippet": "@[simp]\ntheorem length_sort : (sort s r).length = card s := Quot.inductionOn s <| length_mergeSort\n\nend\n\nend sort\n\nopen Qq in\nuniverse u in\nmeta unsafe instance {α : Type u} [Lean.ToLevel.{u}] [Lean.ToExpr α] :\n    Lean.ToExpr (Multiset α) :=\n  haveI u' := Lean.toLevel.{u}\n  haveI α' : Q(Type u') := Lean.toTypeExpr α\n  { toTypeExpr := q(Multiset $α')\n    toExpr s := show Q(Multiset $α') from\n      if Multiset.card s = 0 then\n        q(0)\n      else\n        mkSetLiteralQ (α := q($α')) q(Multiset $α') (s.unquot.map Lean.toExpr)}\n\n-- TODO: use a sort order if available, gh-18166\nunsafe instance [Repr α] : Repr (Multiset α) where\n  reprPrec s _ :=\n    if Multiset.card s = 0 then\n      \"0\"\n    else\n      Std.Format.bracket \"{\" (Std.Format.joinSep (s.unquot.map repr) (\",\" ++ Std.Format.line)) \"}\"\n\nend Multiset",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To relate the length of the sorted list to the cardinality of the multiset, used in the padding construction."
+    },
+    {
+      "exact_identifier": "List.get_of_eq",
+      "expected_signature_or_shape": "Any lemma that relates `List.get` to the element at a given index in a sorted list; needed to extract the i-th part.",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.get_of_eq.{u_1} {α : Type u_1} {l l' : List α} (h : l = l') (i : Fin l.length) : l.get i = l'.get ⟨↑i, ⋯⟩",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.get_of_eq.{u_1} {α : Type u_1} {l l' : List α} (h : l = l') (i : Fin l.length) : l.get i = l'.get ⟨↑i, ⋯⟩",
+        "status": "checked"
+      },
+      "query": "List.get_of_eq",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To define the i-th part of the padded NPartition from the sorted list."
+    },
+    {
+      "exact_identifier": "Multiset.sum_sort",
+      "expected_signature_or_shape": "(Multiset.sort r s).sum = s.sum",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "def sort (s : Multiset α) (r : α → α → Prop := by exact fun a b => a ≤ b)",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.sort.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop := by exact fun a b => a ≤ b) [DecidableRel r]\n  [IsTrans α r] [Std.Antisymm r] [Std.Total r] : List α",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.sort.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop := by exact fun a b => a ≤ b) [DecidableRel r]\n  [IsTrans α r] [Std.Antisymm r] [Std.Total r] : List α",
+            "status": "checked"
+          },
+          "line_number": 30,
+          "matched_tokens": [
+            "multiset",
+            "sort"
+          ],
+          "name": "Multiset.sort",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Sort.lean",
+          "score": 20
+        },
+        {
+          "declaration_line": "lemma Multiset.sum_map_div (s : Multiset ι) (f : ι → K) (a : K) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.sum_map_div.{u_1, u_2} {ι : Type u_1} {K : Type u_2} [DivisionSemiring K] (s : Multiset ι) (f : ι → K)\n  (a : K) : (Multiset.map (fun x => f x / a) s).sum = (Multiset.map f s).sum / a",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.sum_map_div.{u_1, u_2} {ι : Type u_1} {K : Type u_2} [DivisionSemiring K] (s : Multiset ι) (f : ι → K)\n  (a : K) : (Multiset.map (fun x => f x / a) s).sum = (Multiset.map f s).sum / a",
+            "status": "checked"
+          },
+          "line_number": 22,
+          "matched_tokens": [
+            "multiset",
+            "sum"
+          ],
+          "name": "Multiset.sum_map_div",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Field.lean",
+          "score": 18
+        },
+        {
+          "declaration_line": "lemma mem_sum {a : M} {s : Finset ι} {m : ι → Multiset M} :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.mem_sum.{u_1, u_4} {ι : Type u_1} {M : Type u_4} {a : M} {s : Finset ι} {m : ι → Multiset M} :\n  a ∈ ∑ i ∈ s, m i ↔ ∃ i ∈ s, a ∈ m i",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.mem_sum.{u_1, u_4} {ι : Type u_1} {M : Type u_4} {a : M} {s : Finset ι} {m : ι → Multiset M} :\n  a ∈ ∑ i ∈ s, m i ↔ ∃ i ∈ s, a ∈ m i",
+            "status": "checked"
+          },
+          "line_number": 1066,
+          "matched_tokens": [
+            "multiset",
+            "sum"
+          ],
+          "name": "Multiset.mem_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+          "score": 18
+        },
+        {
+          "declaration_line": "theorem _root_.Finset.mem_sum {f : ι → Multiset M} (s : Finset ι) (b : M) :",
+          "kind": "theorem",
+          "lean_check": {
+            "error": "Unknown constant `Multiset._root_.Finset.mem_sum`",
+            "messages": [
+              {
+                "data": "Unknown constant `Multiset._root_.Finset.mem_sum`",
+                "line": 7,
+                "severity": "error"
+              }
+            ],
+            "status": "error"
+          },
+          "line_number": 1071,
+          "matched_tokens": [
+            "multiset",
+            "sum"
+          ],
+          "name": "Multiset._root_.Finset.mem_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+          "score": 18
+        },
+        {
+          "declaration_line": "theorem toFinset_sum_count_eq (s : Multiset ι) : ∑ a ∈ s.toFinset, s.count a = card s := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.toFinset_sum_count_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s = s.card",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.toFinset_sum_count_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s = s.card",
+            "status": "checked"
+          },
+          "line_number": 1084,
+          "matched_tokens": [
+            "multiset",
+            "sum"
+          ],
+          "name": "Multiset.toFinset_sum_count_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+          "score": 18
+        },
+        {
+          "declaration_line": "theorem toFinset_sum_count_nsmul_eq (s : Multiset ι) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.toFinset_sum_count_nsmul_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s • {a} = s",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.toFinset_sum_count_nsmul_eq.{u_1} {ι : Type u_1} [DecidableEq ι] (s : Multiset ι) :\n  ∑ a ∈ s.toFinset, Multiset.count a s • {a} = s",
+            "status": "checked"
+          },
+          "line_number": 1094,
+          "matched_tokens": [
+            "multiset",
+            "sum"
+          ],
+          "name": "Multiset.toFinset_sum_count_nsmul_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+          "score": 18
+        },
+        {
+          "declaration_line": "theorem prod_sum {ι : Type*} [CommMonoid M] (f : ι → Multiset M) (s : Finset ι) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.prod_sum.{u_4, u_5} {M : Type u_4} {ι : Type u_5} [CommMonoid M] (f : ι → Multiset M) (s : Finset ι) :\n  (∑ x ∈ s, f x).prod = ∏ x ∈ s, (f x).prod",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.prod_sum.{u_4, u_5} {M : Type u_4} {ι : Type u_5} [CommMonoid M] (f : ι → Multiset M) (s : Finset ι) :\n  (∑ x ∈ s, f x).prod = ∏ x ∈ s, (f x).prod",
+            "status": "checked"
+          },
+          "line_number": 1110,
+          "matched_tokens": [
+            "multiset",
+            "sum"
+          ],
+          "name": "Multiset.prod_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+          "score": 18
+        },
+        {
+          "declaration_line": "lemma card_sum (s : Finset ι) (f : ι → Multiset α) : card (∑ i ∈ s, f i) = ∑ i ∈ s, card (f i) :=",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+            "status": "checked"
+          },
+          "line_number": 752,
+          "matched_tokens": [
+            "multiset",
+            "sum"
+          ],
+          "name": "Multiset.card_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean",
+          "score": 18
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Multiset.sum_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.sum_sort`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Multiset.sum_sort",
+      "related_mathlib_declarations": [],
+      "request_index": 4,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the sum of the sorted list equals the sum of the multiset, used to prove that the padded NPartition has the correct size."
+    },
+    {
+      "exact_identifier": "List.sum_of_sorted_antitone",
+      "expected_signature_or_shape": "If a list is sorted by (· ≥ ·), then the function i ↦ list.get i is antitone on Fin (list.length).",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem sortedGE_iff_antitone_get : l.SortedGE ↔ Antitone l.get := .rfl",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+            "status": "checked"
+          },
+          "line_number": 421,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "antitone",
+            "if",
+            "is",
+            "get",
+            "on"
+          ],
+          "name": "List.sortedGE_iff_antitone_get",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 39
+        },
+        {
+          "declaration_line": "alias _root_.Antitone.ofFn_sorted := Antitone.sortedGE_ofFn",
+          "kind": "alias",
+          "lean_check": {
+            "error": "Unknown constant `List._root_.Antitone.ofFn_sorted`",
+            "messages": [
+              {
+                "data": "Unknown constant `List._root_.Antitone.ofFn_sorted`",
+                "line": 13,
+                "severity": "error"
+              }
+            ],
+            "status": "error"
+          },
+          "line_number": 595,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "antitone",
+            "is",
+            "on"
+          ],
+          "name": "List._root_.Antitone.ofFn_sorted",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 34
+        },
+        {
+          "declaration_line": "theorem length_le_sum_of_one_le (L : List ℕ) (h : ∀ i ∈ L, 1 ≤ i) : L.length ≤ L.sum := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.length_le_sum_of_one_le (L : List ℕ) (h : ∀ i ∈ L, 1 ≤ i) : L.length ≤ L.sum",
+                "line": 14,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.length_le_sum_of_one_le (L : List ℕ) (h : ∀ i ∈ L, 1 ≤ i) : L.length ≤ L.sum",
+            "status": "checked"
+          },
+          "line_number": 514,
+          "matched_tokens": [
+            "list",
+            "sum",
+            "is",
+            "by",
+            "on",
+            "length"
+          ],
+          "name": "List.length_le_sum_of_one_le",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/List/Basic.lean",
+          "score": 30
+        },
+        {
+          "declaration_line": "theorem sortedLE_iff_monotone_get : l.SortedLE ↔ Monotone l.get := .rfl",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+                "line": 15,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+            "status": "checked"
+          },
+          "line_number": 420,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "if",
+            "is",
+            "get",
+            "on"
+          ],
+          "name": "List.sortedLE_iff_monotone_get",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 30
+        },
+        {
+          "declaration_line": "theorem sortedLT_iff_strictMono_get : l.SortedLT ↔ StrictMono l.get := .rfl",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedLT_iff_strictMono_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLT ↔ StrictMono l.get",
+                "line": 16,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedLT_iff_strictMono_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLT ↔ StrictMono l.get",
+            "status": "checked"
+          },
+          "line_number": 422,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "if",
+            "is",
+            "get",
+            "on"
+          ],
+          "name": "List.sortedLT_iff_strictMono_get",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 30
+        },
+        {
+          "declaration_line": "alias sorted_cons_cons := pairwise_cons_cons_iff_of_trans",
+          "kind": "alias",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+                "line": 17,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+            "status": "checked"
+          },
+          "line_number": 127,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "if",
+            "is",
+            "on"
+          ],
+          "name": "List.sorted_cons_cons",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Pairwise.lean",
+          "score": 28
+        },
+        {
+          "declaration_line": "theorem sum_toFinset_count_eq_length [DecidableEq ι] (l : List ι) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sum_toFinset_count_eq_length.{u_1} {ι : Type u_1} [DecidableEq ι] (l : List ι) :\n  ∑ a ∈ l.toFinset, List.count a l = l.length",
+                "line": 18,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sum_toFinset_count_eq_length.{u_1} {ι : Type u_1} [DecidableEq ι] (l : List ι) :\n  ∑ a ∈ l.toFinset, List.count a l = l.length",
+            "status": "checked"
+          },
+          "line_number": 1057,
+          "matched_tokens": [
+            "list",
+            "sum",
+            "is",
+            "fin",
+            "length"
+          ],
+          "name": "List.sum_toFinset_count_eq_length",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+          "score": 27
+        },
+        {
+          "declaration_line": "lemma dvd_sum [NonUnitalSemiring R] {a} {l : List R} (h : ∀ x ∈ l, a ∣ x) : a ∣ l.sum := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.dvd_sum.{u_5} {R : Type u_5} [NonUnitalSemiring R] {a : R} {l : List R} (h : ∀ x ∈ l, a ∣ x) : a ∣ l.sum",
+                "line": 19,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.dvd_sum.{u_5} {R : Type u_5} [NonUnitalSemiring R] {a : R} {l : List R} (h : ∀ x ∈ l, a ∣ x) : a ∣ l.sum",
+            "status": "checked"
+          },
+          "line_number": 89,
+          "matched_tokens": [
+            "list",
+            "sum",
+            "is",
+            "by",
+            "on"
+          ],
+          "name": "List.dvd_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/List.lean",
+          "score": 27
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `List.sum_of_sorted_antitone`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sum_of_sorted_antitone`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "List.sum_of_sorted_antitone",
+      "related_mathlib_declarations": [],
+      "request_index": 5,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove the antitone condition of the padded NPartition directly from the sorted list."
+    },
+    {
+      "exact_identifier": "Multiset.card_map",
+      "expected_signature_or_shape": "Multiset.card (Multiset.map f s) = Multiset.card s",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+        "status": "checked"
+      },
+      "query": "Multiset.card_map",
+      "related_mathlib_declarations": [],
+      "request_index": 6,
+      "source_declaration": {
+        "declaration_line": "theorem card_map (f : α → β) (s) : card (map f s) = card s :=",
+        "kind": "theorem",
+        "line_number": 106,
+        "name": "Multiset.card_map",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/MapFold.lean",
+        "source_snippet": "@[simp]\ntheorem card_map (f : α → β) (s) : card (map f s) = card s :=\n  Quot.inductionOn s fun _ => length_map _\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Used in the forward direction `toPartition` to relate cardinalities; may be needed for the inverse direction."
+    },
+    {
+      "exact_identifier": "Finset.card_univ",
+      "expected_signature_or_shape": "Finset.card (Finset.univ : Finset (Fin N)) = N",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+        "status": "checked"
+      },
+      "query": "Finset.card_univ",
+      "related_mathlib_declarations": [],
+      "request_index": 7,
+      "source_declaration": {
+        "declaration_line": "theorem Finset.card_univ [Fintype α] : #(univ : Finset α) = Fintype.card α := rfl",
+        "kind": "theorem",
+        "line_number": 104,
+        "name": "Finset.card_univ",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Fintype/Card.lean",
+        "source_snippet": "@[simp, grind =]\ntheorem Finset.card_univ [Fintype α] : #(univ : Finset α) = Fintype.card α := rfl",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To reason about the length of the NPartition (which is always N)."
+    },
+    {
+      "exact_identifier": "Fintype.card_fin",
+      "expected_signature_or_shape": "Fintype.card (Fin N) = N",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+        "status": "checked"
+      },
+      "query": "Fintype.card_fin",
+      "related_mathlib_declarations": [],
+      "request_index": 8,
+      "source_declaration": {
+        "declaration_line": "theorem Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n :=",
+        "kind": "theorem",
+        "line_number": 488,
+        "name": "Fintype.card_fin",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Fintype/Card.lean",
+        "source_snippet": "@[simp]\ntheorem Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n :=\n  List.length_finRange",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Alternative to Finset.card_univ for cardinality of Fin N."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.card_univ": {
+        "messages": [
+          {
+            "data": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+        "status": "checked"
+      },
+      "Fintype.card_fin": {
+        "messages": [
+          {
+            "data": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+        "status": "checked"
+      },
+      "List.get_of_eq": {
+        "messages": [
+          {
+            "data": "List.get_of_eq.{u_1} {α : Type u_1} {l l' : List α} (h : l = l') (i : Fin l.length) : l.get i = l'.get ⟨↑i, ⋯⟩",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.get_of_eq.{u_1} {α : Type u_1} {l l' : List α} (h : l = l') (i : Fin l.length) : l.get i = l'.get ⟨↑i, ⋯⟩",
+        "status": "checked"
+      },
+      "List.sum_of_sorted_antitone": {
+        "error": "Unknown constant `List.sum_of_sorted_antitone`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sum_of_sorted_antitone`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Multiset.card_map": {
+        "messages": [
+          {
+            "data": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+        "status": "checked"
+      },
+      "Multiset.length_sort": {
+        "messages": [
+          {
+            "data": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+        "status": "checked"
+      },
+      "Multiset.sort_sorted": {
+        "messages": [
+          {
+            "data": "Multiset.sort_sorted.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.sort_sorted.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+        "status": "checked"
+      },
+      "Multiset.sum_sort": {
+        "error": "Unknown constant `Multiset.sum_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.sum_sort`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "4bde1ded216874f027675a9bf0692383a0375c89265a969dee28a25d1e1fa741",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 8,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

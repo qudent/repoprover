@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition structure, Nat.Partition structure, and the existing toPartition conversion. However, the source requires a bijection between partitions of length ≤ N and N-partitions. The length of a Nat.Partition is not available as a field; we must use Multiset.card p.parts. The forward direction (padding with zeros) requires constructing an NPartition from a sorted list of parts, proving antitone, and proving size equality. The checked signatures provide Multiset.sort_sorted, Multiset.length_sort, and List.Pairwise.rel_get_of_le, which are sufficient to prove antitone pointwise. However, the sum equality (size preservation) requires Multiset.sum_sort, which is unavailable; the fallback candidates Multiset.sort_eq and Multiset.sum_coe are not sufficient to directly prove that the sum of the sorted list equals the multiset sum. Moreover, the inverse direction (truncating zeros) is already provided by toPartition, but proving that toPartition lands in partitions of length ≤ N requires a lemma about the cardinality of the filtered multiset, which is not directly available from the checked signatures. The bijection statement also requires an Equiv between subtypes, which is not supported by the visible context. Therefore, the visible context is insufficient to produce a complete Lean-compiling proof."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts, antitone, ext, ext', size, toPartition",
+        "Nat.Partition structure with parts, parts_pos, parts_sum, ext",
+        "Multiset.sort_sorted, Multiset.length_sort, List.Pairwise.rel_get_of_le",
+        "Multiset.card_map, Finset.card_univ, Fintype.card_fin"
+      ]
+    }
+  ]
+}
