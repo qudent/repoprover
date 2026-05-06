@@ -153,7 +153,19 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
     extra_context = tmp_path / "extra.json"
     extra_context.write_text(
-        json.dumps({"checked_signatures": [{"name": "Nat.add_zero", "signature": "n + 0 = n"}]}),
+        json.dumps(
+            {
+                "checked_signatures": [{"name": "Nat.add_zero", "signature": "n + 0 = n"}],
+                "same_unit_helper_plan": [
+                    {
+                        "unit_key": "unit-001",
+                        "role": "lemma",
+                        "fresh_name_hint": "helper_add_zero",
+                        "statement_sketch": "helper theorem about n + 0",
+                    }
+                ],
+            }
+        ),
         encoding="utf-8",
     )
 
@@ -172,6 +184,9 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "do not use lean_file_body as a scratchpad" in prompt
     assert "prior_helper" in prompt
     assert "Nat.add_zero" in prompt
+    assert "same_unit_helper_plan" in prompt
+    assert "helper_add_zero" in prompt
+    assert "newly introduced declarations" in prompt
     assert "theorem bad" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt

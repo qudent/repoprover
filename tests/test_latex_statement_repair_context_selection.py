@@ -154,6 +154,8 @@ def test_repair_context_prompt_selects_context_without_hidden_target(tmp_path: P
     assert "Unknown constant `Demo.bad_guess`" in prompt
     assert "Do not output Lean theorem code" in prompt
     assert "Do not stop at a missing direct theorem" in prompt
+    assert "same_unit_helper_plan" in prompt
+    assert "fresh descriptive names" in prompt
     assert "prior_helper" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt
@@ -283,6 +285,16 @@ def test_checked_context_pack_records_hydrated_signatures() -> None:
                         "why_needed": "rewrite the target",
                     }
                 ],
+                "same_unit_helper_plan": [
+                    {
+                        "role": "lemma",
+                        "fresh_name_hint": "prior_helper_zero",
+                        "statement_sketch": "a helper lemma about adding zero",
+                        "depends_on": ["prior_helper"],
+                        "needed_checked_ingredients": ["Nat.add_zero"],
+                        "why_needed": "main proof closes by this helper",
+                    }
+                ],
                 "needed_mathlib_context": [
                     {
                         "name_or_query": "Nat.add_zero",
@@ -323,6 +335,7 @@ def test_checked_context_pack_records_hydrated_signatures() -> None:
     assert pack["checked_signatures"][1]["name"] == "Nat.add_zero_related"
     assert pack["checked_signatures"][1]["related_to"] == "Nat.add_zero"
     assert pack["proof_strategy_notes"][0]["proof_strategy_note"] == "rewrite with visible helper, then use add_zero"
+    assert pack["same_unit_helper_plan"][0]["fresh_name_hint"] == "prior_helper_zero"
     assert pack["selected_visible_context"][0]["name_or_label"] == "prior_helper"
     assert pack["do_not_use_identifiers"] == ["Demo.bad_guess"]
 

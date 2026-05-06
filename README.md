@@ -374,6 +374,14 @@ context selector can improve API accuracy, but this theorem needs either
 stronger source-only helper synthesis or an explicit proof-planning stage for
 new same-unit lemmas.
 
+The repair-context schema now includes `same_unit_helper_plan`, where the
+context selector can propose fresh helper definitions/lemmas/theorems before a
+repair generation call. Repair generation is instructed to introduce these
+helpers before the main declaration when visible context and checked signatures
+support them, without treating the fresh names as preexisting project facts. The
+no-cost NPartition prompt artifact is
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-budget/`.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

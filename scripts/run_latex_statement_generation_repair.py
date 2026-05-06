@@ -119,6 +119,8 @@ def build_repair_messages(
             "Fallback Mathlib candidates are search hints only; use them only when the shown declaration line is sufficient.",
             "Use local_file_predecessor_declarations and available_prior_project_context exactly as visible helper context.",
             "If additional_checked_repair_context contains proof_strategy_notes, selected_visible_context, or checked_signatures, attempt that checked route before declaring cannot_prove_from_visible_context.",
+            "If additional_checked_repair_context contains same_unit_helper_plan, introduce those helper definitions/lemmas before the repaired main declaration when their sketches are supported by visible context and checked signatures.",
+            "Use fresh descriptive helper names from same_unit_helper_plan only as newly introduced declarations; do not treat them as preexisting project facts.",
             "Treat checked_signatures in additional_checked_repair_context as authoritative only when their source says they were hydrated with Lean #check or are checked fallback candidates.",
             "Respect do_not_use_identifiers and failed_or_unchecked_context_requests from additional_checked_repair_context.",
             "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context checked_signatures or selected_visible_context.",

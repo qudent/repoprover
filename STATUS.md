@@ -41,8 +41,10 @@ handling on broader theorem units.
   `prop.sf.Npar-as-par` without exposing same-source gold declarations.
 - [x] Turn the remaining NPartition failure into a precise missing-proof-context
   report.
-- [ ] Add a source-only proof-planning/helper-synthesis stage for same-unit
-  lemmas, then retest NPartition or another broad theorem unit.
+- [x] Add a source-only proof-planning/helper-synthesis contract for same-unit
+  lemmas.
+- [ ] Run a paid helper-plan repair-context retry and generation repair, then
+  retest NPartition or another broad theorem unit.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -96,6 +98,11 @@ handling on broader theorem units.
   matching universe `Sort` for `sort`, it also declined. This is now a precise
   missing-proof-context/helper-synthesis blocker, not a `Nat.Partition.length`
   API hallucination.
+- Repair-context selection now has a `same_unit_helper_plan` schema for fresh
+  helper definitions/lemmas/theorems, and repair generation is instructed to
+  introduce those helpers before the main declaration when checked context
+  supports them. No-cost NPartition prompt artifact:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-budget/`.
 - Focused theorem-level suite last passed: 84 pytest tests plus `py_compile`
   over selector/generator/repair/verifier scripts.
 

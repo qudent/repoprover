@@ -117,6 +117,7 @@ def build_context_pack(
                     )
 
     proof_strategy_notes: list[dict[str, Any]] = []
+    same_unit_helper_plan: list[dict[str, Any]] = []
     selected_visible_context: list[dict[str, Any]] = []
     do_not_use_identifiers: list[str] = []
     missing_or_uncertain_context: list[dict[str, Any]] = []
@@ -132,6 +133,8 @@ def build_context_pack(
         )
         for item in unit.get("selected_visible_context") or []:
             selected_visible_context.append({"unit_key": unit_key, **item})
+        for item in unit.get("same_unit_helper_plan") or []:
+            same_unit_helper_plan.append({"unit_key": unit_key, **item})
         for name in unit.get("do_not_use_identifiers") or []:
             if name not in do_not_use_identifiers:
                 do_not_use_identifiers.append(name)
@@ -148,6 +151,7 @@ def build_context_pack(
             "are included only after Lean #check hydration."
         ),
         "proof_strategy_notes": proof_strategy_notes,
+        "same_unit_helper_plan": same_unit_helper_plan,
         "selected_visible_context": selected_visible_context,
         "checked_signatures": checked_signatures,
         "failed_or_unchecked_context_requests": failed_or_unchecked,

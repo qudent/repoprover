@@ -1,0 +1,14 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-06T03:36:21.617364+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-v1-paid",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-budget/round-01-context",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-v1-paid",
+  "valid_json": false,
+  "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-v1-paid/eval/verification-results.json"
+}

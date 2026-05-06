@@ -597,6 +597,13 @@ Broader diverse4 negative probe:
   declined. This leaves a sharper next target: source-only helper synthesis and
   proof planning for newly introduced same-unit lemmas, not merely more exact
   API signatures.
+- same-unit repair helper plan:
+  repair-context selection now has a `same_unit_helper_plan` field for fresh
+  helper definitions/lemmas/theorems, and repair generation is instructed to
+  introduce those helpers before the main declaration when visible context plus
+  checked signatures support them. The no-cost NPartition prompt artifact at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-budget/`
+  records this contract without another paid call.
 
 ## Lean Dependency Accounting
 

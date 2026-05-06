@@ -134,6 +134,16 @@ def build_repair_context_messages(
                             "why_needed": "how it supports the repair proof route",
                         }
                     ],
+                    "same_unit_helper_plan": [
+                        {
+                            "role": "definition|lemma|theorem",
+                            "fresh_name_hint": "descriptive non-gold helper name to introduce",
+                            "statement_sketch": "helper statement to prove from visible context",
+                            "depends_on": ["fresh_name_hint values or visible context names"],
+                            "needed_checked_ingredients": ["Mathlib/project/local facts needed for this helper"],
+                            "why_needed": "which part of the main source theorem this helper supports",
+                        }
+                    ],
                     "needed_mathlib_context": [
                         {
                             "name_or_query": "exact Mathlib name or narrow search query",
@@ -161,6 +171,8 @@ def build_repair_context_messages(
             "Keep Mathlib requests tight. Prefer exact names when known; otherwise use narrow search queries with expected shapes.",
             "Separate source, prior project, local file, and Mathlib context in the output.",
             "If the visible context is fundamentally insufficient, explain that in missing_or_uncertain_context rather than inventing facts.",
+            "If the repair route requires new intermediate facts inside this same source unit, list them in same_unit_helper_plan with fresh descriptive names. Do not classify such facts as missing ambient context unless they cannot be proved from visible source plus requested checked ingredients.",
+            "same_unit_helper_plan must not contain hidden aligned target names; use role/statement sketches and fresh names only.",
             "If raw_invalid_generation_output is present, treat it as unverified prior scratchpad only: use it to understand the attempted route, but do not request or rely on identifiers unless visible context and Lean-checked signatures justify them.",
             "For units listed in source_coverage_review_unit_keys, do not rely on hidden gold data; use only the visible source text and generated output to identify missing source coverage.",
         ],
