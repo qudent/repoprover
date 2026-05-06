@@ -685,6 +685,17 @@ Diverse4 broader-batch probe:
   `local_file_predecessor_declarations`; the no-cost
   `2026-05-06-npartition-localdeps-v3-honest-budget` payload removes the
   same-source `ofPartition` predecessor accordingly.
+- structure-support follow-up:
+  v4/v5 partition probes cost `$0.00431831` across two selector/generator
+  pairs. The context selector now adds nearby structure extensionality support
+  for exposed local structures, and visible-support verification preserves
+  declaration attributes such as `@[ext]`. The v5 support verifier accepted
+  `10/11` snippets including `ext`, `ext'`, and `toPartition`, while same-source
+  `ofPartition` remained withheld. Generation still compiled `0/1`: the model
+  started defining `ofPartition` and inverse lemmas itself, but returned
+  `cannot_prove_from_visible_context` with `sorry` placeholders and syntax
+  errors. This is a stricter negative result: local support now materializes,
+  but the open model still does not construct the proof from it.
 
 ### Generation and Verification Counts
 

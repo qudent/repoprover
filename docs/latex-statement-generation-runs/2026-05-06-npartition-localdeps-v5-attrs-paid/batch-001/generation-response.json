@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"NPartition.toPartition\",\n        \"NPartition.ofPartition\",\n        \"NPartition.toPartition_ofPartition\",\n        \"NPartition.ofPartition_toPartition\"\n      ],\n      \"lean_file_body\": \"open Finset\\n\\nnamespace NPartition\\n\\nvariable {N : ℕ}\\n\\n/-- Given a partition λ of length ℓ ≤ N, produce an N-partition by padding with zeros. -/\\ndef ofPartition (λ : Nat.Partition (∑ i : Fin N, 0)) (h : λ.length ≤ N) : NPartition N :=\\n  sorry\\n\\n/-- The bijection: toPartition and ofPartition are mutual inverses. -/\\ntheorem toPartition_ofPartition (λ : Nat.Partition (∑ i : Fin N, 0)) (h : λ.length ≤ N) :\\n    (ofPartition λ h).toPartition = λ :=\\n  sorry\\n\\ntheorem ofPartition_toPartition (μ : NPartition N) :\\n    ofPartition (μ.toPartition) (by\\n      have hlen : μ.toPartition.length ≤ N := by\\n        sorry\\n      exact hlen) = μ :=\\n  sorry\\n\\nend NPartition\",\n      \"notes\": [\n        \"The proof of the bijection requires constructing the inverse map and verifying the two compositions. The current context provides NPartition, its size, and toPartition, but the exact definition of Nat.Partition.length and the ability to compute lengths from NPartition are missing. The proofs are left as sorries because the necessary lemmas about Nat.Partition.length and the relationship with NPartition are not available in the visible context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure from AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean\",\n        \"NPartition.size definition\",\n        \"NPartition.toPartition definition\",\n        \"Nat.Partition type from Mathlib\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778034666,
+  "id": "gen-1778034666-1E54ygAz0DpuTE0gvxTl",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 484,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00118748,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00013552,
+      "upstream_inference_cost": 0.00118748,
+      "upstream_inference_prompt_cost": 0.00105196
+    },
+    "is_byok": false,
+    "prompt_tokens": 7514,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 7998
+  }
+}

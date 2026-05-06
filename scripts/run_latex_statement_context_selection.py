@@ -60,6 +60,7 @@ COMMON_LOCAL_DEPENDENCY_NAMES = {
     "Nat",
     "Fin",
 }
+STRUCTURE_SUPPORT_LOCAL_NAMES = {"ext", "ext'", "ext_parts", "parts_ext_iff"}
 
 
 @dataclass(frozen=True)
@@ -269,6 +270,41 @@ def local_name_referenced_by_snippets(snippets: list[str], name: str) -> bool:
     return False
 
 
+def structure_support_spans(
+    *,
+    spans: list[dict[str, Any]],
+    structure_spans: list[dict[str, Any]],
+    withheld_names: set[str],
+    limit: int,
+) -> list[dict[str, Any]]:
+    if limit <= 0 or not structure_spans:
+        return []
+    support: list[dict[str, Any]] = []
+    for structure in structure_spans:
+        structure_start = int(structure["start"])
+        for span in spans:
+            if int(span["start"]) <= structure_start:
+                continue
+            name = local_declaration_name(str(span["name"]))
+            if name in withheld_names or name not in STRUCTURE_SUPPORT_LOCAL_NAMES:
+                continue
+            support.append(span)
+            if len(support) >= limit:
+                return support
+    return support
+
+
+def declaration_start_with_attributes(lines: list[str], start: int) -> int:
+    index = start - 2
+    while index >= 0:
+        if not lines[index].strip():
+            break
+        if not lines[index].strip().startswith("@["):
+            break
+        index -= 1
+    return index + 2
+
+
 def local_predecessor_row(
     *,
     lines: list[str],
@@ -278,14 +314,15 @@ def local_predecessor_row(
     context_source: str,
 ) -> dict[str, Any]:
     start = int(span["start"])
+    snippet_start = declaration_start_with_attributes(lines, start)
     end = min(int(span["end"]), end_limit)
-    declaration_text = "\n".join(lines[start - 1 : min(end, start + 39)]).rstrip()
+    declaration_text = "\n".join(lines[snippet_start - 1 : min(end, start + 39)]).rstrip()
     snippet = trim_trailing_attributes(strip_lean_comments(declaration_text))
     return {
         "name": span["name"],
         "kind": span["kind"],
         "path": relative_path,
-        "line_range": [start, end],
+        "line_range": [snippet_start, end],
         "lean_snippet": snippet[:3000],
         "snippet_truncated": end - start + 1 > 40 or len(snippet) > 3000,
         "context_source": context_source,
@@ -317,6 +354,7 @@ def target_file_predecessor_declarations(
     project_root: Path | None,
     limit: int = 4,
     dependency_limit: int = 4,
+    structure_support_limit: int = 2,
 ) -> list[dict[str, Any]]:
     """Collect same-file declarations before the hidden target declaration.
 
@@ -373,7 +411,13 @@ def target_file_predecessor_declarations(
                 if local_name_referenced_by_snippets(selected_snippet_texts, name):
                     dependency_spans.append(span)
             dependency_spans = dependency_spans[-dependency_limit:]
-        for span in [*dependency_spans, *selected_spans]:
+        support_spans = structure_support_spans(
+            spans=spans,
+            structure_spans=[span for span in [*dependency_spans, *selected_spans] if span.get("kind") == "structure"],
+            withheld_names=withheld_names,
+            limit=structure_support_limit,
+        )
+        for span in [*dependency_spans, *support_spans, *selected_spans]:
             predecessors.append(
                 local_predecessor_row(
                     lines=lines,
@@ -383,11 +427,13 @@ def target_file_predecessor_declarations(
                     context_source=(
                         "same_file_dependency_of_local_predecessor"
                         if span in dependency_spans
+                        else "same_file_structure_support"
+                        if span in support_spans
                         else "same_file_before_selected_unit_line"
                     ),
                 )
             )
-    return predecessors[-(limit + max(dependency_limit, 0)) :]
+    return predecessors[-(limit + max(dependency_limit, 0) + max(structure_support_limit, 0)) :]
 
 
 def project_declarations_for_prior(
@@ -654,8 +700,9 @@ def build_messages(
                     "local_file_context_source": "prior_project_declarations_only",
                     "local_file_predecessor_declaration_source": (
                         "same Lean file declarations before selected unit placement line, plus shallow "
-                        "same-file dependencies referenced by those predecessor snippets; benchmark-only "
-                        "placement metadata, current-unit aligned/referencing declarations omitted"
+                        "same-file dependencies and nearby structure extensionality support referenced by "
+                        "those predecessor snippets; benchmark-only placement metadata, current-unit "
+                        "aligned/referencing declarations omitted"
                     ),
                 },
             }

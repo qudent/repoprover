@@ -522,6 +522,14 @@ Broader diverse4 negative probe:
   referencing Lean declarations from local predecessor snippets. The no-cost
   `2026-05-06-npartition-localdeps-v3-honest-budget` payload demonstrates this
   by removing same-source `ofPartition` from the predecessor context.
+- structure-support v4/v5:
+  two stricter selector/generator probes cost `$0.00431831`. Local predecessor
+  context now includes nearby structure extensionality support and
+  support-materialization preserves attributes like `@[ext]`. The v5 verifier
+  accepted `ext`, `ext'`, and `toPartition` support while keeping same-source
+  `ofPartition` withheld, but generation still compiled `0/1` because the model
+  emitted `sorry` code and syntax errors after reporting
+  `cannot_prove_from_visible_context`.
 
 ## Lean Dependency Accounting
 

@@ -270,6 +270,18 @@ declarations from `local_file_predecessor_declarations`; the no-cost refreshed
 `2026-05-06-npartition-localdeps-v3-honest-budget` payload removes
 `ofPartition` from predecessor context for this reason.
 
+Two stricter follow-up probes tested generic local-context fixes. The v4/v5
+partition selector/generator probes cost `$0.00431831` total. Local predecessor
+context now adds nearby structure extensionality support when it exposes a
+structure, and the verifier preserves immediate attributes such as `@[ext]`
+when materializing support. The v5 visible-support verifier accepted `10/11`
+support snippets, including `ext`, `ext'`, and `toPartition`, with same-source
+`ofPartition` still withheld. The generated output nevertheless stayed `0/1`:
+DeepSeek V4 Flash attempted to define `ofPartition` and inverse lemmas, but
+reported `cannot_prove_from_visible_context` while emitting `sorry` code and
+Lean syntax errors. The remaining issue is generation discipline and missing
+construction/proof planning, not support-snippet compilation.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

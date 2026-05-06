@@ -273,8 +273,6 @@ def strip_lean_comments(source: str) -> str:
     previous_blank = False
     for line in lines:
         stripped = line.strip()
-        if stripped.startswith("@["):
-            continue
         blank = not stripped
         if blank and previous_blank:
             continue

@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "NPartitionBijection"
+      ],
+      "lean_file_body": "open Finset\n\nnoncomputable section\n\nvariable {N : ℕ}\n\n/-- The set of partitions of length ≤ N, represented as a Finset of Nat.Partition of size n. -/\ndef partitionsLengthLE (n : ℕ) : Finset (Nat.Partition n) :=\n  Finset.filter (fun p : Nat.Partition n => p.length ≤ N) (Finset.univ : Finset (Nat.Partition n))\n\n/-- Forward map: append zeros to a partition of length ℓ ≤ N to get an N-partition. -/\ndef forward (μ : Nat.Partition n) (h : μ.length ≤ N) : NPartition N :=\n  { parts := λ i =>\n      if hi : (i : ℕ) < μ.length then μ.parts ⟨i, hi⟩ else 0\n    antitone := by\n      intro i j hij\n      dsimp\n      by_cases hi : (i : ℕ) < μ.length\n      · by_cases hj : (j : ℕ) < μ.length\n        · have hval : μ.parts ⟨i, hi⟩ ≥ μ.parts ⟨j, hj⟩ := μ.antitone (by exact_mod_cast hij)\n          exact hval\n        · simp [hj]\n      · simp [hi]\n  }\n\n/-- Inverse map: drop trailing zeros from an N-partition to get a partition of length ≤ N. -/\ndef backward (μ : NPartition N) : Nat.Partition (μ.size) :=\n  μ.toPartition\n\n/-- The backward map yields a partition whose length is ≤ N. -/\nlemma backward_length_le (μ : NPartition N) : (backward μ).length ≤ N := by\n  -- This follows because the parts of μ are zero after index N-1, so the nonzero parts are at most N.\n  sorry\n\n/-- The forward and backward maps are inverse. -/\ntheorem forward_backward (μ : NPartition N) : forward (backward μ) (backward_length_le μ) = μ := by\n  ext i\n  dsimp [forward, backward, NPartition.toPartition]\n  sorry\n\ntheorem backward_forward (p : Nat.Partition n) (h : p.length ≤ N) : backward (forward p h) = p := by\n  ext\n  · -- equality of sizes\n    dsimp [backward, forward, NPartition.size, NPartition.toPartition]\n    sorry\n  · -- equality of parts\n    dsimp [backward, forward, NPartition.toPartition]\n    sorry\n\nend",
+      "notes": [
+        "The proof of backward_length_le and the inverse properties are not fully provided; they rely on properties of Nat.Partition.length and NPartition.toPartition that are not fully axiomatized here. The statement is correct but the proofs are sketched with sorry."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source proposition prop.sf.Npar-as-par",
+        "NPartition structure and size",
+        "NPartition.toPartition",
+        "Nat.Partition type from Mathlib",
+        "Finset.filter"
+      ]
+    }
+  ]
+}

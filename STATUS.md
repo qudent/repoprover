@@ -112,7 +112,13 @@ on broader theorem units.
   declarations from local predecessor snippets; the no-cost
   `2026-05-06-npartition-localdeps-v3-honest-budget` payload removes
   same-source `ofPartition` from predecessor context.
-- Focused theorem-level suite passed: 66 pytest tests plus `py_compile` over
+- Stricter v4/v5 partition probes cost `$0.00431831`. Context now includes
+  nearby structure extensionality support and verifier support materialization
+  preserves attributes like `@[ext]`; v5 accepted `ext`, `ext'`, and
+  `toPartition` support while withholding same-source `ofPartition`. Generation
+  still compiled `0/1` because the model emitted `sorry` code and syntax errors
+  despite reporting `cannot_prove_from_visible_context`.
+- Focused theorem-level suite passed: 67 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes

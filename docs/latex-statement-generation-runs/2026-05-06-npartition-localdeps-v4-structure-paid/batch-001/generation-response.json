@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"NPartitionBijection\"\n      ],\n      \"lean_file_body\": \"open Finset\\n\\nnoncomputable section\\n\\nvariable {N : ℕ}\\n\\n/-- The set of partitions of length ≤ N, represented as a Finset of Nat.Partition of size n. -/\\ndef partitionsLengthLE (n : ℕ) : Finset (Nat.Partition n) :=\\n  Finset.filter (fun p : Nat.Partition n => p.length ≤ N) (Finset.univ : Finset (Nat.Partition n))\\n\\n/-- Forward map: append zeros to a partition of length ℓ ≤ N to get an N-partition. -/\\ndef forward (μ : Nat.Partition n) (h : μ.length ≤ N) : NPartition N :=\\n  { parts := λ i =>\\n      if hi : (i : ℕ) < μ.length then μ.parts ⟨i, hi⟩ else 0\\n    antitone := by\\n      intro i j hij\\n      dsimp\\n      by_cases hi : (i : ℕ) < μ.length\\n      · by_cases hj : (j : ℕ) < μ.length\\n        · have hval : μ.parts ⟨i, hi⟩ ≥ μ.parts ⟨j, hj⟩ := μ.antitone (by exact_mod_cast hij)\\n          exact hval\\n        · simp [hj]\\n      · simp [hi]\\n  }\\n\\n/-- Inverse map: drop trailing zeros from an N-partition to get a partition of length ≤ N. -/\\ndef backward (μ : NPartition N) : Nat.Partition (μ.size) :=\\n  μ.toPartition\\n\\n/-- The backward map yields a partition whose length is ≤ N. -/\\nlemma backward_length_le (μ : NPartition N) : (backward μ).length ≤ N := by\\n  -- This follows because the parts of μ are zero after index N-1, so the nonzero parts are at most N.\\n  sorry\\n\\n/-- The forward and backward maps are inverse. -/\\ntheorem forward_backward (μ : NPartition N) : forward (backward μ) (backward_length_le μ) = μ := by\\n  ext i\\n  dsimp [forward, backward, NPartition.toPartition]\\n  sorry\\n\\ntheorem backward_forward (p : Nat.Partition n) (h : p.length ≤ N) : backward (forward p h) = p := by\\n  ext\\n  · -- equality of sizes\\n    dsimp [backward, forward, NPartition.size, NPartition.toPartition]\\n    sorry\\n  · -- equality of parts\\n    dsimp [backward, forward, NPartition.toPartition]\\n    sorry\\n\\nend\",\n      \"notes\": [\n        \"The proof of backward_length_le and the inverse properties are not fully provided; they rely on properties of Nat.Partition.length and NPartition.toPartition that are not fully axiomatized here. The statement is correct but the proofs are sketched with sorry.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source proposition prop.sf.Npar-as-par\",\n        \"NPartition structure and size\",\n        \"NPartition.toPartition\",\n        \"Nat.Partition type from Mathlib\",\n        \"Finset.filter\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778034301,
+  "id": "gen-1778034301-GlFRtcLuTEVn8MOLrvl4",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 780,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0011895688,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0002184,
+      "upstream_inference_cost": 0.0011895688,
+      "upstream_inference_prompt_cost": 0.0009711688
+    },
+    "is_byok": false,
+    "prompt_tokens": 7815,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 896,
+      "video_tokens": 0
+    },
+    "total_tokens": 8595
+  }
+}

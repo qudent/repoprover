@@ -1,0 +1,60 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Need to define the set of partitions of length ≤ N as a type or subtype",
+        "Bijection requires constructing two maps and proving they are inverse"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib type for partitions (Nat.Partition) and its length",
+            "How to represent the set of partitions of length ≤ N"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition (size : ℕ) : Type",
+              "name_or_query": "Nat.Partition",
+              "why_needed": "Target type for partitions"
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.length (p : Nat.Partition n) : ℕ",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "To define the condition length ≤ N"
+            },
+            {
+              "expected_signature_or_shape": "Finset.filter (fun p => p.length ≤ N) (Finset.univ : Finset (Nat.Partition n))",
+              "name_or_query": "Finset.filter",
+              "why_needed": "To represent the set of partitions of length ≤ N as a Finset"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "Target type for N-partitions"
+            },
+            {
+              "name": "NPartition.size",
+              "why_needed": "Size of an N-partition, needed for the bijection"
+            },
+            {
+              "name": "NPartition.toPartition",
+              "why_needed": "One direction of the bijection: NPartition → Nat.Partition"
+            }
+          ],
+          "needed_source_context": [
+            "The bijection maps a partition (λ1,...,λℓ) to (λ1,...,λℓ,0,...,0) with N-ℓ zeros."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "There is a bijection between the set of partitions of length ≤ N and the type of N-partitions. The forward map appends zeros to reach length N; the inverse map removes trailing zeros.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Bijection between partitions of length ≤ N and N-partitions",
+      "unit_key": "unit-001"
+    }
+  ]
+}

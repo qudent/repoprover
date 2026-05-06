@@ -1,0 +1,24 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "NPartition.toPartition",
+        "NPartition.ofPartition",
+        "NPartition.toPartition_ofPartition",
+        "NPartition.ofPartition_toPartition"
+      ],
+      "lean_file_body": "open Finset\n\nnamespace NPartition\n\nvariable {N : ℕ}\n\n/-- Given a partition λ of length ℓ ≤ N, produce an N-partition by padding with zeros. -/\ndef ofPartition (λ : Nat.Partition (∑ i : Fin N, 0)) (h : λ.length ≤ N) : NPartition N :=\n  sorry\n\n/-- The bijection: toPartition and ofPartition are mutual inverses. -/\ntheorem toPartition_ofPartition (λ : Nat.Partition (∑ i : Fin N, 0)) (h : λ.length ≤ N) :\n    (ofPartition λ h).toPartition = λ :=\n  sorry\n\ntheorem ofPartition_toPartition (μ : NPartition N) :\n    ofPartition (μ.toPartition) (by\n      have hlen : μ.toPartition.length ≤ N := by\n        sorry\n      exact hlen) = μ :=\n  sorry\n\nend NPartition",
+      "notes": [
+        "The proof of the bijection requires constructing the inverse map and verifying the two compositions. The current context provides NPartition, its size, and toPartition, but the exact definition of Nat.Partition.length and the ability to compute lengths from NPartition are missing. The proofs are left as sorries because the necessary lemmas about Nat.Partition.length and the relationship with NPartition are not available in the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure from AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+        "NPartition.size definition",
+        "NPartition.toPartition definition",
+        "Nat.Partition type from Mathlib"
+      ]
+    }
+  ]
+}

@@ -315,6 +315,50 @@ def test_local_file_predecessors_exclude_same_source_referencing_declarations(tm
     assert "hidden_target" not in messages[1]["content"]
 
 
+def test_local_file_predecessors_include_structure_extensionality_support(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
+    lean_path.parent.mkdir(parents=True)
+    lean_path.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "structure Box where",
+                "  value : Nat",
+                "@[ext]",
+                "theorem ext {a b : Box} (h : a.value = b.value) : a = b := by",
+                "  cases a; cases b; simp at h; simp [h]",
+                "def nearby : Box := ⟨0⟩",
+                "theorem hidden_target : nearby = nearby := by",
+                "  rfl",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    target = _unit(
+        unit_id="target",
+        label="lem.target",
+        source_text="\\begin{lemma}\\label{lem.target}Target.\\end{lemma}",
+        aligned_name="Demo.hidden_target",
+    )
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [8, 9]
+
+    messages = build_messages(
+        [SelectedUnit(public_key="unit-001", row=target)],
+        [target],
+        source_units=[target],
+        project_root=project_root,
+        local_predecessor_declarations=1,
+        local_predecessor_dependency_declarations=1,
+    )
+    payload = json.loads(messages[1]["content"])
+    predecessors = payload["units"][0]["local_file_predecessor_declarations"]
+
+    assert [row["name"] for row in predecessors] == ["Box", "ext", "nearby"]
+    assert predecessors[1]["context_source"] == "same_file_structure_support"
+    assert predecessors[1]["lean_snippet"].startswith("@[ext]\ntheorem ext")
+
+
 def test_select_units_supports_offset_and_exact_id() -> None:
     rows = [
         {**_unit(unit_id="u1", label="l1", source_text="one"), "selection": {"status": "gold_candidate"}},

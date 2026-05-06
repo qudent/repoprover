@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Need to define the set of partitions of length ≤ N as a type or subtype\",\n        \"Bijection requires constructing two maps and proving they are inverse\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib type for partitions (Nat.Partition) and its length\",\n            \"How to represent the set of partitions of length ≤ N\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition (size : ℕ) : Type\",\n              \"name_or_query\": \"Nat.Partition\",\n              \"why_needed\": \"Target type for partitions\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Nat.Partition.length (p : Nat.Partition n) : ℕ\",\n              \"name_or_query\": \"Nat.Partition.length\",\n              \"why_needed\": \"To define the condition length ≤ N\"\n            },\n            {\n              \"expected_signature_or_shape\": \"Finset.filter (fun p => p.length ≤ N) (Finset.univ : Finset (Nat.Partition n))\",\n              \"name_or_query\": \"Finset.filter\",\n              \"why_needed\": \"To represent the set of partitions of length ≤ N as a Finset\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"NPartition\",\n              \"why_needed\": \"Target type for N-partitions\"\n            },\n            {\n              \"name\": \"NPartition.size\",\n              \"why_needed\": \"Size of an N-partition, needed for the bijection\"\n            },\n            {\n              \"name\": \"NPartition.toPartition\",\n              \"why_needed\": \"One direction of the bijection: NPartition → Nat.Partition\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"The bijection maps a partition (λ1,...,λℓ) to (λ1,...,λℓ,0,...,0) with N-ℓ zeros.\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"There is a bijection between the set of partitions of length ≤ N and the type of N-partitions. The forward map appends zeros to reach length N; the inverse map removes trailing zeros.\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Bijection between partitions of length ≤ N and N-partitions\",\n      \"unit_key\": \"unit-001\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778034247,
+  "id": "gen-1778034247-7oiUi2XSUiMBU7N2oz3e",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepInfra",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 605,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00083286,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0001694,
+      "upstream_inference_cost": 0.00083286,
+      "upstream_inference_prompt_cost": 0.00066346
+    },
+    "is_byok": false,
+    "prompt_tokens": 4739,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 5344
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v4-structure-paid/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "hidden_target_namespaces": [
+        "NPartition"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": false,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "partitionsLengthLE",
+            "forward",
+            "backward",
+            "backward_length_le",
+            "forward_backward",
+            "backward_forward"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "cannot_prove_output_must_have_empty_lean_file_body",
+            "cannot_prove_output_must_have_empty_declaration_names",
+            "generated_lean_contains_placeholder"
+          ],
+          "declaration_names": [
+            "NPartitionBijection"
+          ],
+          "lean_error_count": 7,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 46,
+              "data": "Invalid field `length`: The environment does not contain `Nat.Partition.length`, so it is not possible to project the field `length` from an expression\n  p\nof type `n.Partition`",
+              "kind": "lean.invalidField._namedError",
+              "line": 15,
+              "severity": "error"
+            },
+            {
+              "column": 41,
+              "data": "Invalid field `length`: The environment does not contain `Nat.Partition.length`, so it is not possible to project the field `length` from an expression\n  μ\nof type `n.Partition`",
+              "kind": "lean.invalidField._namedError",
+              "line": 18,
+              "severity": "error"
+            },
+            {
+              "column": 55,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.2\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 18,
+              "severity": "error"
+            },
+            {
+              "column": 18,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 33,
+              "severity": "error"
+            },
+            {
+              "column": 30,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 37,
+              "severity": "error"
+            },
+            {
+              "column": 30,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 42,
+              "severity": "error"
+            },
+            {
+              "column": 54,
+              "data": "Invalid field `length`: The environment does not contain `Nat.Partition.length`, so it is not possible to project the field `length` from an expression\n  p\nof type `n.Partition`",
+              "kind": "lean.invalidField._namedError",
+              "line": 47,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [
+            "sorry"
+          ],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": null
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T02:25:31.436601+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v4-structure-paid",
+  "infer_context": true,
+  "materialize_visible_support": false,
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

@@ -1,0 +1,54 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Need to define bijection between partitions of length ≤ N and N-partitions",
+        "Need to handle the padding with zeros"
+      ],
+      "planned_declarations": [
+        {
+          "kind": "def",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib definition of Nat.Partition and its length"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition (n : ℕ) where parts : Multiset ℕ, parts_pos, parts_sum",
+              "name_or_query": "Nat.Partition",
+              "why_needed": "Target type for partitions"
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.length (p : Nat.Partition n) : ℕ",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "To express condition length ≤ N"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "Target type for N-partitions"
+            },
+            {
+              "name": "NPartition.size",
+              "why_needed": "Size of an N-partition, needed for Nat.Partition construction"
+            },
+            {
+              "name": "NPartition.toPartition",
+              "why_needed": "Existing conversion from NPartition to Nat.Partition, may be reused"
+            }
+          ],
+          "needed_source_context": [
+            "prop.sf.Npar-as-par: bijection between partitions of length ≤ N and N-partitions via padding with zeros"
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "Define a bijection: given a partition λ of length ℓ ≤ N, map it to an N-partition by appending N-ℓ zeros. Conversely, given an N-partition, drop trailing zeros to get a partition of length ≤ N. Prove these are mutual inverses.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Bijection between partitions of length ≤ N and N-partitions via zero padding",
+      "unit_key": "unit-001"
+    }
+  ]
+}

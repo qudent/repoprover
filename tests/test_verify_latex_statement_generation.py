@@ -477,6 +477,11 @@ def test_run_can_materialize_visible_support_snippets(monkeypatch, tmp_path) -> 
                                                                 "lean_snippet": "theorem prior_helper : True := by\n  trivial",
                                                             },
                                                             {
+                                                                "kind": "theorem",
+                                                                "name": "prior_ext",
+                                                                "lean_snippet": "@[ext]\ntheorem prior_ext : True := by\n  trivial",
+                                                            },
+                                                            {
                                                                 "kind": "lemma",
                                                                 "name": "partial_helper",
                                                                 "lean_snippet": "lemma partial_helper : True",
@@ -520,9 +525,10 @@ def test_run_can_materialize_visible_support_snippets(monkeypatch, tmp_path) -> 
 
     final_source = calls[-1]
     assert "theorem prior_helper : True" in final_source
+    assert "@[ext]\ntheorem prior_ext : True" in final_source
     assert final_source.index("theorem prior_helper") < final_source.index("theorem generated")
     assert "partial_helper" not in final_source
     support = summary["batches"][0]["units"][0]["visible_support_context"]
-    assert support["candidate_count"] == 1
-    assert support["accepted_count"] == 1
+    assert support["candidate_count"] == 2
+    assert support["accepted_count"] == 2
     assert support["rejected_count"] == 0
