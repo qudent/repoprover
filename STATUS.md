@@ -80,6 +80,11 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   present in `decline_context_pack.selected_project_context`; declines must
   identify dependency/import/signature/proof-synthesis blockers. Packed budget
   payloads were regenerated with this generic instruction.
+- A one-unit stricter-prompt paid probe on fresh `unit-001` cost `$0.00222572`.
+  It used the acquired LGV declarations in a partial Catalan proof sketch but
+  violated the contract by returning `cannot_prove_from_visible_context` with a
+  nonempty Lean body and `sorry`; contract enforcement normalized it to a clean
+  decline.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -90,6 +95,6 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: review the stricter packed budget payload, then either run a
-  tiny paid retry on one context-bearing fresh unit or switch to a stronger
-  proof-synthesis lane.
+- Next useful work: build a partial-proof diagnostic/repair lane or use a
+  stronger proof-synthesis agent for the raw Catalan sketch; do not keep
+  spending ordinary proof-lane calls on the same prompt shape.

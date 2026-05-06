@@ -800,7 +800,20 @@ the model may not report it as simply missing. If it still declines, it must
 state whether the blocker is an unresolved dependency, namespace/import mismatch,
 type/signature mismatch, or proof-synthesis gap. The budget-only packed payloads
 above were regenerated with that stricter instruction; no additional paid retry
-has been run with it yet.
+had been run at that point.
+
+A one-unit paid probe with the stricter instruction was then run at
+`docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1/`.
+It cost `$0.00222572`. The model did use the acquired LGV declarations in a
+partial Catalan Hankel proof sketch, which is better than calling them missing,
+but it violated the output contract by setting
+`cannot_prove_from_visible_context` while also emitting a nonempty Lean body
+with `sorry`. Contract enforcement preserved benchmark honesty by normalizing
+the consumer-facing output back to an empty clean decline and saving the raw
+attempt separately. This points to the next control problem: if acquired context
+induces a partial proof, the proof lane needs either a dedicated partial-proof
+diagnostic channel or a stronger proof-synthesis agent, not another ordinary
+JSON generation retry.
 
 ### Imported Lean surface and likely context needs
 

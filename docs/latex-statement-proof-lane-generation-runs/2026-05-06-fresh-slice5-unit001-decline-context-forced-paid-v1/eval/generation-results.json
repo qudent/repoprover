@@ -1,0 +1,110 @@
+{
+  "attached_decline_context_pack_count": 1,
+  "batch_count": 1,
+  "batches": [
+    {
+      "batch_index": 1,
+      "budget_only": false,
+      "contract_enforcement": {
+        "normalized_unit_count": 1,
+        "normalized_units": [
+          {
+            "raw_declaration_names": [
+              "catalan_hankel_det_one"
+            ],
+            "raw_lean_file_body_characters": 1140,
+            "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.00222572,
+        "usage": {
+          "completion_tokens": 738,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.00222572,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.00020664,
+            "upstream_inference_cost": 0.00222572,
+            "upstream_inference_prompt_cost": 0.00201908
+          },
+          "is_byok": false,
+          "prompt_tokens": 14422,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 15160
+        }
+      },
+      "elapsed_seconds": 10.323,
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1/batch-001/generation-payload.json",
+      "task_unit_keys": [
+        "unit-001"
+      ],
+      "valid_json": true
+    }
+  ],
+  "budget_only": false,
+  "cost_summary": {
+    "batches": [
+      {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.00222572,
+        "usage": {
+          "completion_tokens": 738,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.00222572,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.00020664,
+            "upstream_inference_cost": 0.00222572,
+            "upstream_inference_prompt_cost": 0.00201908
+          },
+          "is_byok": false,
+          "prompt_tokens": 14422,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 15160
+        }
+      }
+    ],
+    "model": "deepseek/deepseek-v4-flash",
+    "openrouter_reported_cost": 0.00222572
+  },
+  "decline_context_pack": "docs/latex-statement-proof-lane-decline-context-pack-2026-05-06.json",
+  "generated_at": "2026-05-06T11:47:51.143859+00:00",
+  "max_tasks_per_call": 1,
+  "max_tokens": 8192,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1",
+  "paid_call_made": true,
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-finiteness-merged",
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
+  "task_unit_keys": [
+    "unit-001"
+  ],
+  "temperature": 0.0
+}

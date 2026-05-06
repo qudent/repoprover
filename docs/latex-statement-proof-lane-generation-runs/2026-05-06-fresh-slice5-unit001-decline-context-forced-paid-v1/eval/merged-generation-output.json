@@ -1,0 +1,30 @@
+{
+  "schema_version": "repoprover.latex_statement_proof_lane_generation_aggregated.v1",
+  "unit_keys": [
+    "unit-001"
+  ],
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof uses the LGV nonpermutable lemma to reduce the determinant to a sum over non-intersecting path tuples. The equality of the Catalan Hankel matrix to the path weight matrix is given by catalanHankelMatrix_eq_pathWeightMatrix. The sorting conditions for the source and target vertices are verified. The final simplification of the nipat weight sum to 1 requires additional lemmas about the structure of non-intersecting path tuples in the Dyck digraph with unit arc weights, which are not yet available in the visible context. The proof is incomplete at the last step."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix",
+        "pathWeightMatrix",
+        "dyckDigraph_pathFinite",
+        "dyckUnitArcWeight",
+        "xDecreasing",
+        "yIncreasing",
+        "lgv_nonpermutable",
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "nipatWeightSum",
+        "nipatFinset",
+        "pathTupleWeight"
+      ]
+    }
+  ]
+}

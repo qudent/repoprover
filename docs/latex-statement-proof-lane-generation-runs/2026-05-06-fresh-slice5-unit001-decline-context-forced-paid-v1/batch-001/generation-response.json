@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"catalan_hankel_det_one\"\n      ],\n      \"lean_file_body\": \"open Finset BigOperators Matrix\\n\\nnamespace LGV\\n\\ntheorem catalan_hankel_det_one (k : ℕ) : (catalanHankelMatrix k).det = (1 : ℤ) := by\\n  have h_eq : catalanHankelMatrix k =\\n    pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight\\n      (fun i : Fin k => (-(2 * (i : ℤ)), 0))\\n      (fun j : Fin k => (2 * (j : ℤ), 0)) := by\\n    exact catalanHankelMatrix_eq_pathWeightMatrix k\\n  rw [h_eq]\\n  have hxA : xDecreasing (fun i : Fin k => (-(2 * (i : ℤ)), 0)) := by\\n    intro i j hij\\n    have : (j : ℕ) ≤ (i : ℕ) := by exact_mod_cast hij\\n    simp [xCoord, xDecreasing]\\n    omega\\n  have hyA : yIncreasing (fun i : Fin k => (-(2 * (i : ℤ)), 0)) := by\\n    intro i j hij\\n    simp [yCoord, yIncreasing]\\n  have hxB : xDecreasing (fun j : Fin k => (2 * (j : ℤ), 0)) := by\\n    intro i j hij\\n    have : (j : ℕ) ≤ (i : ℕ) := by exact_mod_cast hij\\n    simp [xCoord, xDecreasing]\\n    omega\\n  have hyB : yIncreasing (fun j : Fin k => (2 * (j : ℤ), 0)) := by\\n    intro i j hij\\n    simp [yCoord, yIncreasing]\\n  rw [lgv_nonpermutable dyckUnitArcWeight _ _ hxA hyA hxB hyB]\\n  simp [nipatWeightSum, nipatFinset, pathTupleWeight, dyckUnitArcWeight]\\n  sorry\\n\\nend LGV\",\n      \"notes\": [\n        \"The proof uses the LGV nonpermutable lemma to reduce the determinant to a sum over non-intersecting path tuples. The equality of the Catalan Hankel matrix to the path weight matrix is given by catalanHankelMatrix_eq_pathWeightMatrix. The sorting conditions for the source and target vertices are verified. The final simplification of the nipat weight sum to 1 requires additional lemmas about the structure of non-intersecting path tuples in the Dyck digraph with unit arc weights, which are not yet available in the visible context. The proof is incomplete at the last step.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"catalanHankelMatrix\",\n        \"pathWeightMatrix\",\n        \"dyckDigraph_pathFinite\",\n        \"dyckUnitArcWeight\",\n        \"xDecreasing\",\n        \"yIncreasing\",\n        \"lgv_nonpermutable\",\n        \"catalanHankelMatrix_eq_pathWeightMatrix\",\n        \"nipatWeightSum\",\n        \"nipatFinset\",\n        \"pathTupleWeight\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778068072,
+  "id": "gen-1778068071-peyvx2cW7u8dSjXk343q",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 738,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00222572,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00020664,
+      "upstream_inference_cost": 0.00222572,
+      "upstream_inference_prompt_cost": 0.00201908
+    },
+    "is_byok": false,
+    "prompt_tokens": 14422,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 15160
+  }
+}
