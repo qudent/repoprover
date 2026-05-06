@@ -261,6 +261,14 @@ def normalize_decl_name(raw_name: str) -> str:
     return name
 
 
+def scoped_decl_name(raw_name: str, namespace_stack: list[str]) -> str:
+    if raw_name.startswith("_root_."):
+        return raw_name.removeprefix("_root_.")
+    if namespace_stack:
+        return ".".join([*namespace_stack, raw_name])
+    return raw_name
+
+
 def snippet_from_lines(lines: list[str], start_index: int, *, max_lines: int = 32) -> str:
     end_index = start_index + 1
     while end_index < len(lines) and end_index - start_index < max_lines:
@@ -299,7 +307,7 @@ def parse_project_declarations(project_root: Path) -> list[Declaration]:
                 raw_name = normalize_decl_name(match.group("name"))
                 if not raw_name or raw_name.startswith(("[", "{", "(")):
                     continue
-                full_name = raw_name if "." in raw_name or not namespace_stack else ".".join(namespace_stack + [raw_name])
+                full_name = scoped_decl_name(raw_name, namespace_stack)
                 declarations.append(
                     Declaration(
                         full_name=full_name,

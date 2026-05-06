@@ -815,3 +815,187 @@ def test_visible_support_snippet_trims_trailing_namespace_directives() -> None:
     )
 
     assert candidates[0]["text"] == "structure Box where\n  value : Nat"
+
+
+def test_visible_support_assumption_mode_keeps_theorem_signatures() -> None:
+    candidates = visible_support_candidates_for_unit(
+        {
+            "planned_declarations": [
+                {
+                    "available_prior_project_context": [
+                        {
+                            "project_declarations": [
+                                {
+                                    "kind": "theorem",
+                                    "name": "Demo.helper",
+                                    "lean_snippet": "theorem helper (n : Nat) : n = n",
+                                },
+                                {
+                                    "kind": "lemma",
+                                    "name": "Demo.partial",
+                                    "lean_snippet": "private lemma partial (n : Nat) : n = n := by\n  rfl",
+                                },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        assumption_mode=True,
+    )
+
+    texts = [candidate["text"] for candidate in candidates]
+    assert "namespace Demo\naxiom helper (n : Nat) : n = n\nend Demo" in texts
+    assert "namespace Demo\naxiom partial (n : Nat) : n = n\nend Demo" in texts
+
+
+def test_visible_support_assumption_mode_wraps_relative_dotted_names() -> None:
+    candidates = visible_support_candidates_for_unit(
+        {
+            "planned_declarations": [
+                {
+                    "available_prior_project_context": [
+                        {
+                            "project_declarations": [
+                                {
+                                    "kind": "def",
+                                    "name": "LGV1.LatticeStep.apply",
+                                    "lean_snippet": (
+                                        "def LatticeStep.apply (s : LatticeStep) "
+                                        "(p : LatticePoint) : LatticePoint := p"
+                                    ),
+                                },
+                                {
+                                    "kind": "def",
+                                    "name": "LatticeStep.rootApply",
+                                    "lean_snippet": (
+                                        "def LatticeStep.rootApply (s : LatticeStep) "
+                                        "(p : LatticePoint) : LatticePoint := p"
+                                    ),
+                                },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        assumption_mode=True,
+    )
+
+    texts = [candidate["text"] for candidate in candidates]
+    assert (
+        "namespace LGV1\n"
+        "axiom LatticeStep.apply (s : LatticeStep) (p : LatticePoint) : LatticePoint\n"
+        "end LGV1"
+    ) in texts
+    assert (
+        "axiom LatticeStep.rootApply (s : LatticeStep) (p : LatticePoint) : LatticePoint"
+    ) in texts
+
+
+def test_visible_support_assumption_mode_preserves_type_alias_abbrevs() -> None:
+    candidates = visible_support_candidates_for_unit(
+        {
+            "planned_declarations": [
+                {
+                    "available_prior_project_context": [
+                        {
+                            "project_declarations": [
+                                {
+                                    "kind": "abbrev",
+                                    "name": "LGV1.LatticePoint",
+                                    "lean_snippet": "abbrev LatticePoint := ℤ × ℤ",
+                                },
+                                {
+                                    "kind": "abbrev",
+                                    "name": "Demo.h",
+                                    "lean_snippet": "noncomputable abbrev h (n : ℕ) : Nat := n",
+                                },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        assumption_mode=True,
+    )
+
+    texts = [candidate["text"] for candidate in candidates]
+    assert "namespace LGV1\nabbrev LatticePoint := ℤ × ℤ\nend LGV1" in texts
+    assert "namespace Demo\naxiom h (n : ℕ) : Nat\nend Demo" in texts
+
+
+def test_visible_support_assumption_mode_splits_only_top_level_body_markers() -> None:
+    candidates = visible_support_candidates_for_unit(
+        {
+            "planned_declarations": [
+                {
+                    "available_prior_project_context": [
+                        {
+                            "project_declarations": [
+                                {
+                                    "kind": "def",
+                                    "name": "LGV.nipatSetFinite",
+                                    "lean_snippet": (
+                                        "noncomputable def nipatSetFinite {D : SimpleDigraph V} "
+                                        ": Set.Finite (nipatSet (D := D) A B) := by\n"
+                                        "  trivial"
+                                    ),
+                                },
+                                {
+                                    "kind": "def",
+                                    "name": "LGV.dyckDigraph",
+                                    "lean_snippet": (
+                                        "def dyckDigraph : SimpleDigraph (ℤ × ℕ) where\n"
+                                        "  arc u v := True"
+                                    ),
+                                },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        assumption_mode=True,
+    )
+
+    texts = [candidate["text"] for candidate in candidates]
+    assert (
+        "namespace LGV\n"
+        "axiom nipatSetFinite {D : SimpleDigraph V} : Set.Finite (nipatSet (D := D) A B)\n"
+        "end LGV"
+    ) in texts
+    assert "namespace LGV\naxiom dyckDigraph : SimpleDigraph (ℤ × ℕ)\nend LGV" in texts
+
+
+def test_visible_support_snippet_trims_trailing_attributes() -> None:
+    candidates = visible_support_candidates_for_unit(
+        {
+            "planned_declarations": [
+                {
+                    "available_prior_project_context": [
+                        {
+                            "project_declarations": [
+                                {
+                                    "kind": "structure",
+                                    "name": "LGV.PathTuple",
+                                    "lean_snippet": "\n".join(
+                                        [
+                                            "structure PathTuple where",
+                                            "  paths : Nat",
+                                            "",
+                                            "@[ext]",
+                                            "lemma PathTuple.ext : True := by trivial",
+                                        ]
+                                    ),
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        assumption_mode=True,
+    )
+
+    assert candidates[0]["text"] == "namespace LGV\nstructure PathTuple where\n  paths : Nat\nend LGV"

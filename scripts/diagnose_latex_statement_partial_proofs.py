@@ -65,7 +65,9 @@ def load_decline_context_pack(path: Path | None) -> dict[tuple[str, str], dict[s
     return packs
 
 
-def extra_support_candidates_by_unit(raw_path: Path, pack_path: Path | None) -> dict[str, list[dict[str, str]]]:
+def extra_support_candidates_by_unit(
+    raw_path: Path, pack_path: Path | None, *, assumption_mode: bool
+) -> dict[str, list[dict[str, str]]]:
     packs = load_decline_context_pack(pack_path)
     if not packs:
         return {}
@@ -79,7 +81,8 @@ def extra_support_candidates_by_unit(raw_path: Path, pack_path: Path | None) -> 
             {
                 "unit_key": unit_key,
                 "diagnostic_decline_context_pack": pack,
-            }
+            },
+            assumption_mode=assumption_mode,
         )
     return candidates
 
@@ -146,15 +149,40 @@ def materialize_support(
     enabled: bool,
     timeout_seconds: float,
     decline_context_pack: Path | None = None,
+    support_mode: str = "body",
 ) -> tuple[dict[str, list[str]], dict[str, dict[str, Any]]]:
     if not enabled:
         return {}, {}
     support_context_by_unit: dict[str, list[str]] = {}
     support_audit_by_unit: dict[str, dict[str, Any]] = {}
-    candidates_by_unit = verify.visible_support_candidates_by_unit(raw_path)
-    for unit_key, extra_candidates in extra_support_candidates_by_unit(raw_path, decline_context_pack).items():
+    assumption_mode = support_mode == "assumption"
+    candidates_by_unit = verify.visible_support_candidates_by_unit(raw_path, assumption_mode=assumption_mode)
+    for unit_key, extra_candidates in extra_support_candidates_by_unit(
+        raw_path, decline_context_pack, assumption_mode=assumption_mode
+    ).items():
         candidates_by_unit.setdefault(unit_key, []).extend(extra_candidates)
     for unit_key, candidates in candidates_by_unit.items():
+        if assumption_mode:
+            seen_text: set[str] = set()
+            sorted_candidates = []
+            for candidate in sorted(candidates, key=verify.support_candidate_sort_key):
+                if candidate["text"] in seen_text:
+                    continue
+                seen_text.add(candidate["text"])
+                sorted_candidates.append(candidate)
+            support_context_by_unit[unit_key] = [candidate["text"] for candidate in sorted_candidates]
+            support_audit_by_unit[unit_key] = {
+                "candidate_count": len(sorted_candidates),
+                "accepted_count": len(sorted_candidates),
+                "rejected_count": 0,
+                "assumption_mode": True,
+                "accepted": [
+                    {key: value for key, value in candidate.items() if key != "text"}
+                    for candidate in sorted_candidates
+                ],
+                "rejected": [],
+            }
+            continue
         support = verify.materialize_visible_support_context(
             candidates,
             project_root=project_root,
@@ -230,6 +258,7 @@ def diagnose_raw_path(args: argparse.Namespace, raw_path: Path) -> tuple[list[di
         enabled=args.materialize_visible_support,
         timeout_seconds=args.support_timeout_seconds,
         decline_context_pack=args.decline_context_pack,
+        support_mode=args.support_mode,
     )
     verification_rows = verify.verify_generation_output(
         raw_output,
@@ -275,6 +304,7 @@ def diagnose_raw_path(args: argparse.Namespace, raw_path: Path) -> tuple[list[di
                     "candidate_count": support_audit.get("candidate_count", 0),
                     "accepted_count": support_audit.get("accepted_count", 0),
                     "rejected_count": support_audit.get("rejected_count", 0),
+                    "assumption_mode": support_audit.get("assumption_mode", False),
                     "accepted": support_audit.get("accepted", []),
                     "rejected": support_audit.get("rejected", [])[:8],
                 },
@@ -405,6 +435,7 @@ def main() -> None:
     parser.add_argument("--open-timeout-seconds", type=float, default=30.0)
     parser.add_argument("--no-materialize-visible-support", dest="materialize_visible_support", action="store_false")
     parser.set_defaults(materialize_visible_support=True)
+    parser.add_argument("--support-mode", choices=["body", "assumption"], default="body")
     parser.add_argument("--support-timeout-seconds", type=float, default=30.0)
     parser.add_argument("--include-empty-raw-units", action="store_true")
     args = parser.parse_args()

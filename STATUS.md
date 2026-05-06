@@ -103,6 +103,18 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   still fails (`lean_errors_before_or_at_placeholder`): 49 candidates, 0 accepted
   under a 10s per-snippet timeout, and remaining unknown Catalan/path-matrix
   identifiers. Body-snippet copying is too noisy/slow for same-file context.
+- Assumption/signature prelude diagnostics now avoid per-snippet timeout loops
+  and distinguish context-name damage from proof-body damage. The project
+  declaration miner now prefixes dotted declarations inside namespaces
+  (`LGV1.LatticeStep.apply`, `LGV.SimpleDigraph.Path.start`). A corrected d2
+  context pack at
+  `docs/latex-statement-proof-lane-decline-context-pack-closure-d2-2026-05-06.json`
+  selects 95 rows / 55 dependency rows. The best local Catalan diagnostic at
+  `docs/latex-statement-partial-proof-diagnostics/2026-05-06-fresh-unit001-assumption-signature-d2-v2/`
+  still fails before the final `sorry`, but errors dropped from copied-body
+  namespace/projection failures to 21 remaining prelude/name issues: missing
+  deeper deps such as `LGV1.LatticeStep`/`LGV.nipatSet` and same-file predecessor
+  snippets whose local names need full namespace recovery.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -113,8 +125,8 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: replace arbitrary body-snippet materialization with a
-  target-hidden signature/assumption prelude or redacted-prefix module for
-  previous declarations, then route remaining partial raw bodies to a stronger
-  proof-synthesis/repair lane. Do not keep spending ordinary proof-lane calls on
-  the same prompt shape.
+- Next useful work: resolve full names for same-file predecessor snippets using
+  source line ranges, then run a bounded d3/signature prelude check. If that
+  clears prelude errors, route remaining raw bodies to a stronger proof
+  synthesis/repair lane; do not keep spending ordinary proof-lane calls on the
+  same prompt shape.

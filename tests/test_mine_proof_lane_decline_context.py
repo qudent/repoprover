@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from scripts.mine_proof_lane_decline_context import analyze
+from scripts.mine_proof_lane_decline_context import analyze, parse_project_declarations
 
 
 def _write_json(path: Path, data: object) -> None:
@@ -100,3 +100,29 @@ def test_mines_found_selected_and_missing_identifiers(tmp_path: Path) -> None:
     assert results["Project.Bar.bazThing"]["classification"] == "found_but_not_visible"
     assert results["selectedLemma"]["classification"] == "found_and_selected_as_visible_context"
     assert results["absentFact"]["classification"] == "not_found_in_project_index"
+
+
+def test_parse_project_declarations_prefixes_dotted_names_inside_namespace(tmp_path: Path) -> None:
+    project = tmp_path / "project"
+    lean_file = project / "Project/Foo.lean"
+    lean_file.parent.mkdir(parents=True)
+    lean_file.write_text(
+        "\n".join(
+            [
+                "namespace Project",
+                "inductive Step where",
+                "  | east",
+                "def Step.apply : Step -> Nat",
+                "  | Step.east => 1",
+                "def _root_.Global.helper : Nat := 2",
+                "end Project",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    by_name = {declaration.full_name: declaration for declaration in parse_project_declarations(project)}
+
+    assert "Project.Step" in by_name
+    assert "Project.Step.apply" in by_name
+    assert "Global.helper" in by_name

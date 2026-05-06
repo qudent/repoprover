@@ -106,6 +106,7 @@ def test_partial_proof_diagnostic_classifies_sorry_body(monkeypatch, tmp_path: P
             validate_inferred_opens=True,
             open_timeout_seconds=1.0,
             materialize_visible_support=True,
+            support_mode="body",
             support_timeout_seconds=1.0,
             timeout_seconds=1.0,
             include_empty_raw_units=False,

@@ -29,6 +29,18 @@ LEAN_DECL_RE = re.compile(
     r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
     r"(?:theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([^\s:\{\(\[]+)"
 )
+LEAN_ASSUME_DECL_START_RE = re.compile(
+    r"(?m)^(\s*)(?:(?:private|protected|noncomputable|unsafe|partial|nonrec)\s+)*"
+    r"(?:theorem|lemma|def|abbrev|axiom)\s+"
+)
+LEAN_DECL_NAME_LINE_RE = re.compile(
+    r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial|nonrec)\s+)*"
+    r"(?:theorem|lemma|def|abbrev|instance|structure|class|inductive|axiom)\s+([^\s:\{\(\[]+)"
+)
+LEAN_DECL_KIND_LINE_RE = re.compile(
+    r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial|nonrec)\s+)*"
+    r"(theorem|lemma|def|abbrev|instance|structure|class|inductive|axiom)\s+"
+)
 
 
 def read_json(path: Path) -> Any:
@@ -315,6 +327,10 @@ def support_snippet_is_complete(snippet: str) -> bool:
     return ":=" in snippet or " where" in snippet or "\nwhere" in snippet
 
 
+def support_snippet_is_assumable(snippet: str) -> bool:
+    return bool(snippet and not PLACEHOLDER_RE.search(snippet) and LEAN_DECL_RE.search(snippet))
+
+
 def trim_support_snippet(snippet: str) -> str:
     lines = snippet.splitlines()
     trimmed: list[str] = []
@@ -327,6 +343,7 @@ def trim_support_snippet(snippet: str) -> str:
             or stripped.startswith("end ")
             or stripped == "end"
             or stripped.startswith("variable ")
+            or stripped.startswith("@[")
         ):
             break
         if LEAN_DECL_KIND_RE.match(line):
@@ -345,7 +362,117 @@ def support_candidate_sort_key(candidate: dict[str, str]) -> tuple[str, int, str
     return (path, line_key, candidate.get("name") or "")
 
 
-def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[dict[str, str]]:
+def declaration_namespace(name: str) -> str:
+    if not LEAN_DOTTED_NAME_RE.fullmatch(name):
+        return ""
+    parts = name.split(".")
+    if len(parts) <= 1:
+        return ""
+    return ".".join(parts[:-1])
+
+
+def declaration_name_from_text(text: str) -> str:
+    match = LEAN_DECL_NAME_LINE_RE.search(text)
+    return match.group(1).strip().strip("`") if match else ""
+
+
+def declaration_kind_from_text(text: str) -> str:
+    match = LEAN_DECL_KIND_LINE_RE.search(text)
+    return match.group(1) if match else ""
+
+
+def top_level_colon_exists(text: str) -> bool:
+    depth = 0
+    pairs = {"(": ")", "[": "]", "{": "}", "⟨": "⟩"}
+    closing = set(pairs.values())
+    for char in text:
+        if char in pairs:
+            depth += 1
+        elif char in closing and depth > 0:
+            depth -= 1
+        elif char == ":" and depth == 0:
+            return True
+    return False
+
+
+def declaration_header_without_body(text: str) -> str:
+    depth = 0
+    pairs = {"(": ")", "[": "]", "{": "}", "⟨": "⟩"}
+    closing = set(pairs.values())
+    index = 0
+    while index < len(text):
+        char = text[index]
+        if char in pairs:
+            depth += 1
+            index += 1
+            continue
+        if char in closing and depth > 0:
+            depth -= 1
+            index += 1
+            continue
+        if depth == 0 and text.startswith(":=", index):
+            return text[:index].rstrip()
+        if depth == 0 and text.startswith("where", index):
+            before = text[index - 1] if index else " "
+            after = text[index + len("where")] if index + len("where") < len(text) else " "
+            if before.isspace() and after.isspace():
+                return text[:index].rstrip()
+        index += 1
+    return text.rstrip()
+
+
+def wrapper_namespace(indexed_name: str, declared_name: str) -> str:
+    if not LEAN_DOTTED_NAME_RE.fullmatch(indexed_name) or not declared_name:
+        return ""
+    indexed_parts = indexed_name.split(".")
+    declared_parts = declared_name.split(".")
+    if len(indexed_parts) <= len(declared_parts):
+        return ""
+    if indexed_parts[-len(declared_parts) :] == declared_parts:
+        return ".".join(indexed_parts[: -len(declared_parts)])
+    if len(declared_parts) == 1:
+        return ".".join(indexed_parts[:-1])
+    return ""
+
+
+def declaration_signature_assumption(text: str) -> str:
+    kind = declaration_kind_from_text(text)
+    if kind not in {"theorem", "lemma", "def", "abbrev", "axiom"}:
+        return text
+    text = declaration_header_without_body(text)
+    if kind in {"def", "abbrev"} and not top_level_colon_exists(text):
+        return ""
+    return LEAN_ASSUME_DECL_START_RE.sub(r"\1axiom ", text, count=1).strip()
+
+
+def support_assumption_text(text: str, declaration_name: str) -> str:
+    lines = text.splitlines()
+    declaration_index = next((index for index, line in enumerate(lines) if LEAN_DECL_KIND_RE.match(line)), None)
+    if declaration_index is None:
+        return text
+    prefix = lines[:declaration_index]
+    declaration_lines = lines[declaration_index:]
+    suffix: list[str] = []
+    while declaration_lines and declaration_lines[-1].strip() == "end":
+        suffix.insert(0, declaration_lines.pop())
+    declaration_text = "\n".join(declaration_lines).strip()
+    declared_name = declaration_name_from_text(declaration_text)
+    kinds = set(LEAN_DECL_KIND_RE.findall(declaration_text))
+    if kinds & {"theorem", "lemma", "def", "abbrev"}:
+        assumed_text = declaration_signature_assumption(declaration_text)
+        if assumed_text:
+            declaration_text = assumed_text
+    block_lines = [*prefix, declaration_text, *suffix]
+    block = "\n".join(line for line in block_lines if line.strip()).strip()
+    namespace = wrapper_namespace(declaration_name, declared_name)
+    if namespace:
+        block = f"namespace {namespace}\n{block}\nend {namespace}"
+    return block
+
+
+def visible_support_candidates_for_unit(
+    unit_payload: dict[str, Any], *, assumption_mode: bool = False
+) -> list[dict[str, str]]:
     candidates: list[dict[str, str]] = []
     variables_by_path: dict[str, list[str]] = {}
     for item in iter_dicts(unit_payload):
@@ -358,15 +485,20 @@ def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[di
         snippet = item.get("lean_snippet")
         if isinstance(snippet, str):
             cleaned = trim_support_snippet(strip_lean_comments(snippet))
-            if support_snippet_is_complete(cleaned):
+            is_usable = support_snippet_is_assumable(cleaned) if assumption_mode else support_snippet_is_complete(cleaned)
+            if is_usable:
                 path = str(item.get("path") or "")
+                name = str(item.get("name") or "")
+                text = support_snippet_block(cleaned, variables_by_path.get(path, []))
+                if assumption_mode:
+                    text = support_assumption_text(text, name)
                 candidates.append(
                     {
                         "kind": str(item.get("kind") or "lean_snippet"),
-                        "name": str(item.get("name") or ""),
+                        "name": name,
                         "path": path,
                         "line": str(item.get("line") or ""),
-                        "text": support_snippet_block(cleaned, variables_by_path.get(path, [])),
+                        "text": text,
                     }
                 )
     seen: set[str] = set()
@@ -415,10 +547,14 @@ def generation_prompt_units(user_payload: dict[str, Any]) -> list[dict[str, Any]
     return []
 
 
-def visible_support_candidates_by_unit(output_path: Path) -> dict[str, list[dict[str, str]]]:
+def visible_support_candidates_by_unit(
+    output_path: Path, *, assumption_mode: bool = False
+) -> dict[str, list[dict[str, str]]]:
     units = generation_prompt_units(user_payload_from_generation_payload(output_path))
     return {
-        str(unit.get("unit_key") or ""): visible_support_candidates_for_unit(unit)
+        str(unit.get("unit_key") or ""): visible_support_candidates_for_unit(
+            unit, assumption_mode=assumption_mode
+        )
         for unit in units
         if unit.get("unit_key")
     }
