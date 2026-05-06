@@ -1,0 +1,244 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "Multiset.card",
+      "signature": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To express the length condition on partitions."
+    },
+    {
+      "name": "Multiset.sort_sorted",
+      "signature": "Multiset.sort_sorted.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove that the sorted list of parts is decreasing, which is needed for the antitone condition."
+    },
+    {
+      "declaration_line": "theorem sort_eq : ↑(sort s r) = s :=",
+      "fallback_for_query": "Multiset.sort_eq_sort",
+      "name": "Multiset.sort_eq",
+      "signature": "Multiset.sort_eq.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : ↑(s.sort r) = s",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sort_eq_sort: To relate the sorted list back to the original multiset, needed for the inverse direction."
+    },
+    {
+      "declaration_line": "def sort (s : Multiset α) (r : α → α → Prop := by exact fun a b => a ≤ b)",
+      "fallback_for_query": "Multiset.sort_eq_sort",
+      "name": "Multiset.sort",
+      "signature": "Multiset.sort.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop := by exact fun a b => a ≤ b) [DecidableRel r]\n  [IsTrans α r] [Std.Antisymm r] [Std.Total r] : List α",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sort_eq_sort: To relate the sorted list back to the original multiset, needed for the inverse direction."
+    },
+    {
+      "declaration_line": "theorem mem_sort : a ∈ sort s r ↔ a ∈ s := by rw [← mem_coe, sort_eq]",
+      "fallback_for_query": "Multiset.sort_eq_sort",
+      "name": "Multiset.mem_sort",
+      "signature": "Multiset.mem_sort.{u_1} {α : Type u_1} {a : α} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : a ∈ s.sort r ↔ a ∈ s",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sort_eq_sort: To relate the sorted list back to the original multiset, needed for the inverse direction."
+    },
+    {
+      "declaration_line": "theorem coe_sort : sort l r = mergeSort l (r · ·) :=",
+      "fallback_for_query": "Multiset.sort_eq_sort",
+      "name": "Multiset.coe_sort",
+      "signature": "Multiset.coe_sort.{u_1} {α : Type u_1} (l : List α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r] [Std.Antisymm r]\n  [Std.Total r] : (↑l).sort r = l.mergeSort fun x1 x2 => decide (r x1 x2)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sort_eq_sort: To relate the sorted list back to the original multiset, needed for the inverse direction."
+    },
+    {
+      "name": "List.get",
+      "signature": "List.get.{u} {α : Type u} (as : List α) : Fin as.length → α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To extract the i-th element of the sorted list in fromPartition."
+    },
+    {
+      "name": "Multiset.length_sort",
+      "signature": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To relate the length of the sorted list to Multiset.card, needed for the index bounds."
+    },
+    {
+      "name": "Nat.Partition.ext",
+      "signature": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove equality of Nat.Partitions in the bijection proof."
+    }
+  ],
+  "do_not_use_identifiers": [
+    "Nat.Partition.length"
+  ],
+  "failed_or_unchecked_context_requests": [
+    {
+      "exact_identifier": "Multiset.sort_eq_sort",
+      "expected_signature_or_shape": "Multiset.sort_eq_sort (r : α → α → Prop) [DecidableRel r] [IsTotal α r] (s : Multiset α) : (Multiset.sort r s).val = s",
+      "lean_check": {
+        "error": "Unknown constant `Multiset.sort_eq_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.sort_eq_sort`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Multiset.sort_eq_sort",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To relate the sorted list back to the original multiset, needed for the inverse direction."
+    }
+  ],
+  "generated_at": "2026-05-06T03:30:31.074158+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "The exact relationship between Multiset.card p.parts and the length of the sorted list is needed. Also, a lemma that toPartition preserves size (i.e., (toPartition μ).size = μ.size) is not explicitly in the visible context but can be derived from the definition. The fromPartition construction requires a way to extract the i-th element of a sorted multiset; Multiset.sort returns a list, so we can use List.get. The antitone proof requires that the sorted list is decreasing, which is given by Multiset.sort_sorted with ≥. The proof that fromPartition composed with toPartition is identity requires that padding zeros and then dropping them recovers the original NPartition; this uses the fact that the parts of an NPartition are already antitone and that trailing zeros are dropped by toPartition.",
+      "unit_key": "unit-001"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The previous attempt tried to define fromPartition using Multiset.sort and a sigma type for toNPartition, but could not complete the bijection proof. The key difficulty is that Nat.Partition is indexed by the sum n, so the bijection must be between partitions of a fixed sum n with length ≤ N and N-partitions of size n. The visible context provides NPartition (with parts: Fin N → ℕ and antitone), NPartition.size, NPartition.toPartition (which converts an NPartition to a Nat.Partition of its size), and NPartition.ext. The source proposition describes a bijection between the set of partitions of length ≤ N (i.e., Nat.Partition n with Multiset.card parts ≤ N) and the set of N-partitions (i.e., NPartition N with size = n). The repair should use the existing toPartition as one direction and define a new function fromPartition that takes a Nat.Partition n and a proof that its length ≤ N and produces an NPartition N of size n. The bijection can then be stated as an Equiv between the subtype of Nat.Partition n with length ≤ N and the subtype of NPartition N with size = n. The missing context is: (1) a way to compute the length of a Nat.Partition (Multiset.card of its parts), (2) a lemma that toPartition preserves size, (3) a lemma that fromPartition composed with toPartition gives identity, and (4) a lemma that toPartition composed with fromPartition gives identity. The visible local_file_predecessor_declarations include toPartition but not its inverse. The prior attempt's fromPartition used Multiset.sort which is not needed; a simpler approach is to pad with zeros using the Fin N indexing directly.",
+      "proof_strategy_note": "Define fromPartition (p : Nat.Partition n) (h : Multiset.card p.parts ≤ N) : NPartition N by setting parts i = the i-th element of the sorted parts list if i < length, else 0, and prove antitone using the sorted order. Then prove that toPartition (fromPartition p h) = p (as Nat.Partition n) and that fromPartition (toPartition μ) (some proof of length condition) = μ (as NPartition N). The bijection is then an Equiv between the two subtypes. The proof will need lemmas about Multiset.card, Multiset.sort, and the relationship between the sorted list and the original parts multiset.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [
+          "Nat.Partition.length"
+        ],
+        "failure_analysis": "The previous attempt tried to define fromPartition using Multiset.sort and a sigma type for toNPartition, but could not complete the bijection proof. The key difficulty is that Nat.Partition is indexed by the sum n, so the bijection must be between partitions of a fixed sum n with length ≤ N and N-partitions of size n. The visible context provides NPartition (with parts: Fin N → ℕ and antitone), NPartition.size, NPartition.toPartition (which converts an NPartition to a Nat.Partition of its size), and NPartition.ext. The source proposition describes a bijection between the set of partitions of length ≤ N (i.e., Nat.Partition n with Multiset.card parts ≤ N) and the set of N-partitions (i.e., NPartition N with size = n). The repair should use the existing toPartition as one direction and define a new function fromPartition that takes a Nat.Partition n and a proof that its length ≤ N and produces an NPartition N of size n. The bijection can then be stated as an Equiv between the subtype of Nat.Partition n with length ≤ N and the subtype of NPartition N with size = n. The missing context is: (1) a way to compute the length of a Nat.Partition (Multiset.card of its parts), (2) a lemma that toPartition preserves size, (3) a lemma that fromPartition composed with toPartition gives identity, and (4) a lemma that toPartition composed with fromPartition gives identity. The visible local_file_predecessor_declarations include toPartition but not its inverse. The prior attempt's fromPartition used Multiset.sort which is not needed; a simpler approach is to pad with zeros using the Fin N indexing directly.",
+        "missing_or_uncertain_context": [
+          "The exact relationship between Multiset.card p.parts and the length of the sorted list is needed. Also, a lemma that toPartition preserves size (i.e., (toPartition μ).size = μ.size) is not explicitly in the visible context but can be derived from the definition. The fromPartition construction requires a way to extract the i-th element of a sorted multiset; Multiset.sort returns a list, so we can use List.get. The antitone proof requires that the sorted list is decreasing, which is given by Multiset.sort_sorted with ≥. The proof that fromPartition composed with toPartition is identity requires that padding zeros and then dropping them recovers the original NPartition; this uses the fact that the parts of an NPartition are already antitone and that trailing zeros are dropped by toPartition."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Multiset.card (s : Multiset α) : ℕ",
+            "name_or_query": "Multiset.card",
+            "why_needed": "To express the length condition on partitions."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.sort_sorted (r : α → α → Prop) [DecidableRel r] (s : Multiset α) : (Multiset.sort r s).Sorted r",
+            "name_or_query": "Multiset.sort_sorted",
+            "why_needed": "To prove that the sorted list of parts is decreasing, which is needed for the antitone condition."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.sort_eq_sort (r : α → α → Prop) [DecidableRel r] [IsTotal α r] (s : Multiset α) : (Multiset.sort r s).val = s",
+            "name_or_query": "Multiset.sort_eq_sort",
+            "why_needed": "To relate the sorted list back to the original multiset, needed for the inverse direction."
+          },
+          {
+            "expected_signature_or_shape": "List.get (l : List α) (i : Fin l.length) : α",
+            "name_or_query": "List.get",
+            "why_needed": "To extract the i-th element of the sorted list in fromPartition."
+          },
+          {
+            "expected_signature_or_shape": "(Multiset.sort r s).length = Multiset.card s",
+            "name_or_query": "Multiset.length_sort",
+            "why_needed": "To relate the length of the sorted list to Multiset.card, needed for the index bounds."
+          },
+          {
+            "expected_signature_or_shape": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+            "name_or_query": "Nat.Partition.ext",
+            "why_needed": "To prove equality of Nat.Partitions in the bijection proof."
+          }
+        ],
+        "repair_strategy_note": "Define fromPartition (p : Nat.Partition n) (h : Multiset.card p.parts ≤ N) : NPartition N by setting parts i = the i-th element of the sorted parts list if i < length, else 0, and prove antitone using the sorted order. Then prove that toPartition (fromPartition p h) = p (as Nat.Partition n) and that fromPartition (toPartition μ) (some proof of length condition) = μ (as NPartition N). The bijection is then an Equiv between the two subtypes. The proof will need lemmas about Multiset.card, Multiset.sort, and the relationship between the sorted list and the original parts multiset.",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.Npar-as-par",
+            "why_needed": "Provides the mathematical statement of the bijection and the padding construction."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "NPartition",
+            "why_needed": "Target type of the bijection; provides parts, antitone, and ext."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "NPartition.size",
+            "why_needed": "Size of an N-partition; needed to match the sum n."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.toPartition",
+            "why_needed": "Existing conversion from NPartition to Nat.Partition; will be one direction of the bijection."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.ext",
+            "why_needed": "Extensionality for NPartition; needed to prove equality of NPartitions."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "filter_ne_zero_sum",
+            "why_needed": "Used in toPartition's proof; may be needed for size preservation."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-neighborhood-repair-v1-paid/round-01-context",
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.Npar-as-par",
+      "unit_key": "unit-001",
+      "why_needed": "Provides the mathematical statement of the bijection and the padding construction."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "NPartition",
+      "unit_key": "unit-001",
+      "why_needed": "Target type of the bijection; provides parts, antitone, and ext."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "NPartition.size",
+      "unit_key": "unit-001",
+      "why_needed": "Size of an N-partition; needed to match the sum n."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.toPartition",
+      "unit_key": "unit-001",
+      "why_needed": "Existing conversion from NPartition to Nat.Partition; will be one direction of the bijection."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.ext",
+      "unit_key": "unit-001",
+      "why_needed": "Extensionality for NPartition; needed to prove equality of NPartitions."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "filter_ne_zero_sum",
+      "unit_key": "unit-001",
+      "why_needed": "Used in toPartition's proof; may be needed for size preservation."
+    }
+  ]
+}

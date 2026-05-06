@@ -1,0 +1,25 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition, its size, toPartition, ext, and filter_ne_zero_sum, but does not provide a way to compute the length of a Nat.Partition (Multiset.card of its parts) in a way that can be used to construct the inverse fromPartition with a proof of antitone. The checked signatures include Multiset.card, Multiset.sort_sorted, Multiset.length_sort, and List.get, but the proof that the sorted list is decreasing (needed for antitone) requires the relation (· ≥ ·) to be a total order with DecidableRel, which is available, but the proof that the sorted list's elements are in decreasing order and that padding zeros preserves the antitone condition is nontrivial and not fully supported by the visible lemmas. Moreover, the bijection statement requires an Equiv between subtypes, which would need to construct both directions and prove they are inverse; the visible context does not provide a lemma that toPartition preserves size (i.e., (toPartition μ).size = μ.size) or that fromPartition composed with toPartition is identity. The failed_or_unchecked_context_requests show that Multiset.sort_eq_sort is unavailable, making it impossible to relate the sorted list back to the original multiset. The do_not_use_identifiers list includes Nat.Partition.length, which would have been the natural way to express the length condition. Without these ingredients, a complete Lean-compiling formalization of the bijection cannot be produced from the visible context alone."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "NPartition.size",
+        "NPartition.toPartition",
+        "NPartition.ext",
+        "filter_ne_zero_sum",
+        "Multiset.card",
+        "Multiset.sort_sorted",
+        "Multiset.length_sort",
+        "List.get",
+        "Nat.Partition.ext"
+      ]
+    }
+  ]
+}

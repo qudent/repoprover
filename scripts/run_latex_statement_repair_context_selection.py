@@ -38,6 +38,7 @@ from scripts.run_latex_statement_generation import (  # noqa: E402
 from scripts.run_latex_statement_generation_repair import (  # noqa: E402
     flatten_verification_units,
     load_generation_output,
+    load_raw_invalid_generation_output,
     load_verification_results,
 )
 
@@ -160,10 +161,12 @@ def build_repair_context_messages(
             "Keep Mathlib requests tight. Prefer exact names when known; otherwise use narrow search queries with expected shapes.",
             "Separate source, prior project, local file, and Mathlib context in the output.",
             "If the visible context is fundamentally insufficient, explain that in missing_or_uncertain_context rather than inventing facts.",
+            "If raw_invalid_generation_output is present, treat it as unverified prior scratchpad only: use it to understand the attempted route, but do not request or rely on identifiers unless visible context and Lean-checked signatures justify them.",
             "For units listed in source_coverage_review_unit_keys, do not rely on hidden gold data; use only the visible source text and generated output to identify missing source coverage.",
         ],
         "original_generation_task": generation_payload,
         "failed_generation_output": failed_output,
+        "raw_invalid_generation_output": load_raw_invalid_generation_output(generation_run),
         "previous_checked_repair_context": load_previous_checked_repair_context(generation_run),
         "source_coverage_review_unit_keys": source_coverage_review_unit_keys or [],
         "verification_results": {

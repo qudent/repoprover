@@ -43,6 +43,23 @@ def load_generation_output(generation_run: Path) -> dict[str, Any]:
     return read_json(path)
 
 
+def load_raw_invalid_generation_output(generation_run: Path) -> dict[str, Any] | None:
+    for name in ("raw-generation-output.json", "raw-repair-output.json"):
+        path = generation_run / "batch-001" / name
+        if path.exists():
+            return {
+                "path": str(path),
+                "policy": (
+                    "Unverified prior model output preserved because the normalized "
+                    "consumer-facing artifact enforced the cannot-prove empty-output "
+                    "contract. Use only for failure analysis; do not treat any Lean "
+                    "code here as checked or acceptable."
+                ),
+                "output": read_json(path),
+            }
+    return None
+
+
 def load_verification_results(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise FileNotFoundError(path)
@@ -105,6 +122,7 @@ def build_repair_messages(
             "Treat checked_signatures in additional_checked_repair_context as authoritative only when their source says they were hydrated with Lean #check or are checked fallback candidates.",
             "Respect do_not_use_identifiers and failed_or_unchecked_context_requests from additional_checked_repair_context.",
             "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context checked_signatures or selected_visible_context.",
+            "If raw_invalid_generation_output is present, treat it as unverified prior scratchpad only: use it to understand the attempted route, but do not copy identifiers or proof steps unless visible context and Lean-checked signatures justify them.",
             "If notes describe a simpler corrected proof, implement that proof in lean_file_body instead of saying it will be adjusted later.",
             "If status is cannot_prove_from_visible_context, lean_file_body must be exactly empty and declaration_names must be an empty list.",
             "When status is cannot_prove_from_visible_context, do not use lean_file_body as a scratchpad. Put analysis in notes only; lean_file_body must be exactly \"\" and declaration_names exactly [].",
@@ -118,6 +136,7 @@ def build_repair_messages(
             "units": flatten_verification_units(verification),
         },
         "additional_checked_repair_context": load_extra_context(extra_context_paths),
+        "raw_invalid_generation_output": load_raw_invalid_generation_output(generation_run),
         "benchmark_policy": {
             "target_lean_available_to_repair": False,
             "posthoc_alignment_hidden": True,

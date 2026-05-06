@@ -125,6 +125,13 @@ def filter_fallback_candidates_for_query(query: str, candidates: list[dict[str, 
         candidates = [candidate for candidate in candidates if candidate_name_root(candidate) == root]
     local_tokens = query_local_tokens(query)
     if local_tokens:
+        name_matches = [
+            candidate
+            for candidate in candidates
+            if any(token in str(candidate.get("name") or "").rsplit(".", 1)[-1].lower() for token in local_tokens)
+        ]
+        if name_matches:
+            return name_matches
         local_matches = [
             candidate
             for candidate in candidates

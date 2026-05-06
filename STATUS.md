@@ -39,8 +39,10 @@ handling on broader theorem units.
 - [ ] Scale beyond determinant/symmetric probes and reduce noisy fallback context.
 - [x] Test helper planning plus better Mathlib/project context on
   `prop.sf.Npar-as-par` without exposing same-source gold declarations.
-- [ ] Turn the remaining NPartition failure into either a source-only repair
-  success or a precise missing-proof-context report.
+- [x] Turn the remaining NPartition failure into a precise missing-proof-context
+  report.
+- [ ] Add a source-only proof-planning/helper-synthesis stage for same-unit
+  lemmas, then retest NPartition or another broad theorem unit.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -63,8 +65,8 @@ handling on broader theorem units.
 - Diverse4 remains the negative frontier: after transport fixes, split
   generation, visible-support materialization, and two repair rounds, coverage
   stayed `0/4`; the blocker is missing useful project/Mathlib proof context.
-- Failure summary across 45 verification files / 57 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 11 clean cannot-prove
+- Failure summary across 47 verification files / 59 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 13 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -86,14 +88,21 @@ handling on broader theorem units.
   `$0.00206416`; raw output correctly used `Multiset.card p.parts` instead of
   nonexistent `Nat.Partition.length`, but still normalized to a clean
   `declined_cannot_prove`.
-- Focused theorem-level suite last passed: 76 pytest tests plus `py_compile`
+- NPartition repair-context loop cost `$0.00681880` and selected 9 checked
+  signatures around `Multiset.card`, `Multiset.sort`, `Multiset.sort_sorted`,
+  `List.get`, `Multiset.length_sort`, and `Nat.Partition.ext`. It still
+  cleanly declined, diagnosing missing same-unit inverse/padding proof lemmas.
+  A filtered repair retry cost `$0.00294070`; after fallback search stopped
+  matching universe `Sort` for `sort`, it also declined. This is now a precise
+  missing-proof-context/helper-synthesis blocker, not a `Nat.Partition.length`
+  API hallucination.
+- Focused theorem-level suite last passed: 84 pytest tests plus `py_compile`
   over selector/generator/repair/verifier scripts.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: either run a repair-context round using the improved
-  NPartition neighborhood prompt, or add a deterministic diagnostic that
-  extracts missing proof APIs from the raw `Multiset.card p.parts` attempt
-  without exposing same-source gold declarations to future model prompts.
+- Next useful work: implement a generic same-unit proof-planning stage that can
+  propose helper lemmas like inverse/padding facts before generation, without
+  exposing same-source gold declarations to future model prompts.

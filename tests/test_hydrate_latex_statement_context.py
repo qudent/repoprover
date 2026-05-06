@@ -407,3 +407,24 @@ def test_fallback_mathlib_candidates_prefer_local_name_tokens(tmp_path) -> None:
     candidates = fallback_mathlib_candidates("Nat.choose_sq_ge_choose_mul_choose_succ", project_root=tmp_path)
 
     assert [candidate["name"] for candidate in candidates] == ["Nat.choose_mul_succ_eq"]
+
+
+def test_fallback_mathlib_candidates_prefer_name_matches_over_type_sort_mentions(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/MultisetSort.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace Multiset",
+                "theorem strongInductionOn_eq {p : Multiset α → Sort u} (s : Multiset α) : True := by trivial",
+                "theorem sort_eq (s : Multiset α) : True := by trivial",
+                "def sort (s : Multiset α) : List α := []",
+                "end Multiset",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates("Multiset.sort_eq_sort", project_root=tmp_path)
+
+    assert [candidate["name"] for candidate in candidates] == ["Multiset.sort_eq", "Multiset.sort"]

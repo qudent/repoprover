@@ -177,6 +177,37 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "posthoc_lean_alignment" not in prompt
 
 
+def test_repair_prompt_includes_raw_invalid_generation_output_as_unchecked(tmp_path: Path) -> None:
+    selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
+    (generation_run / "batch-001/raw-generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "cannot_prove_from_visible_context",
+                        "declaration_names": ["scratch"],
+                        "lean_file_body": "theorem scratch : True := by\n  trivial",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    messages = build_repair_messages(
+        selector_run=selector_run,
+        generation_run=generation_run,
+        verification_results=verification_path,
+    )
+    prompt = json.dumps(messages, ensure_ascii=False)
+
+    assert "raw_invalid_generation_output" in prompt
+    assert "unverified prior scratchpad only" in prompt
+    assert "theorem scratch" in prompt
+    assert "Demo.hidden_target" not in prompt
+
+
 def test_repair_budget_payload_writes_generation_payload(tmp_path: Path) -> None:
     selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
     output = tmp_path / "repair"

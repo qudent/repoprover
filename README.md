@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 45
-verification-result files and 57 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 11 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 47
+verification-result files and 59 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 13 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -359,6 +359,20 @@ instead of nonexistent `Nat.Partition.length`. It still emitted an incomplete
 scratchpad under `cannot_prove_from_visible_context`, so normalized verification
 remains `declined_cannot_prove` and gold comparison remains
 `not_generated_cannot_prove`.
+
+A one-round repair-context loop on that improved NPartition run cost
+`$0.00681880` (`$0.00259700` context selection and `$0.00422180` repair). The
+selector chose 9 checked signatures around `Multiset.card`, `Multiset.sort`,
+`Multiset.sort_sorted`, `List.get`, `Multiset.length_sort`, and
+`Nat.Partition.ext`. It still declined, now with a narrower diagnosis: visible
+context does not supply the same-unit inverse/padding proof lemmas needed to
+show the two constructed maps are inverse. A filtered repair retry cost
+`$0.00294070` after tightening fallback search so `sort` no longer matches
+unrelated Lean universe `Sort` declarations; it also remained a clean
+`cannot_prove_from_visible_context`. The current evidence is therefore that the
+context selector can improve API accuracy, but this theorem needs either
+stronger source-only helper synthesis or an explicit proof-planning stage for
+new same-unit lemmas.
 
 ### Imported Lean surface and likely context needs
 

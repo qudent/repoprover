@@ -1,0 +1,46 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.card (s : Multiset α) : ℕ",
+              "name_or_query": "Multiset.card",
+              "why_needed": "To express the length condition on partitions."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sort_sorted (r : α → α → Prop) [DecidableRel r] (s : Multiset α) : (Multiset.sort r s).Sorted r",
+              "name_or_query": "Multiset.sort_sorted",
+              "why_needed": "To prove that the sorted list of parts is decreasing, which is needed for the antitone condition."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sort_eq_sort (r : α → α → Prop) [DecidableRel r] [IsTotal α r] (s : Multiset α) : (Multiset.sort r s).val = s",
+              "name_or_query": "Multiset.sort_eq_sort",
+              "why_needed": "To relate the sorted list back to the original multiset, needed for the inverse direction."
+            },
+            {
+              "expected_signature_or_shape": "List.get (l : List α) (i : Fin l.length) : α",
+              "name_or_query": "List.get",
+              "why_needed": "To extract the i-th element of the sorted list in fromPartition."
+            },
+            {
+              "expected_signature_or_shape": "(Multiset.sort r s).length = Multiset.card s",
+              "name_or_query": "Multiset.length_sort",
+              "why_needed": "To relate the length of the sorted list to Multiset.card, needed for the index bounds."
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+              "name_or_query": "Nat.Partition.ext",
+              "why_needed": "To prove equality of Nat.Partitions in the bijection proof."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

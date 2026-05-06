@@ -77,6 +77,24 @@ def build_context_pack(
                     "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
                 }
             )
+            for related in row.get("related_mathlib_declarations") or []:
+                related_check = related.get("lean_check") or {}
+                if related_check.get("status") != "checked":
+                    continue
+                checked_signatures.append(
+                    {
+                        "unit_key": unit_key,
+                        "task_id": row.get("task_id"),
+                        "name": related.get("name"),
+                        "signature": related_check.get("signature"),
+                        "why_needed": (
+                            f"Checked related declaration for selected {row.get('exact_identifier') or row.get('query')}: "
+                            f"{row.get('why_needed') or original.get('why_needed') or ''}"
+                        ).strip(),
+                        "source": "autonomous_repair_context_selection_checked_related_declaration",
+                        "related_to": row.get("exact_identifier") or row.get("query"),
+                    }
+                )
         else:
             failed_or_unchecked.append(record)
             for candidate in (row.get("fallback_mathlib_candidates") or [])[:4]:

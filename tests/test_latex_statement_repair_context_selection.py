@@ -213,6 +213,37 @@ def test_repair_context_prompt_includes_source_coverage_review_keys(tmp_path: Pa
     assert "does not include gold declarations" not in prompt
 
 
+def test_repair_context_prompt_includes_raw_invalid_generation_output_as_unchecked(tmp_path: Path) -> None:
+    selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
+    (generation_run / "batch-001/raw-generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "cannot_prove_from_visible_context",
+                        "declaration_names": ["scratch"],
+                        "lean_file_body": "theorem scratch : True := by\n  trivial",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    messages = build_repair_context_messages(
+        selector_run=selector_run,
+        generation_run=generation_run,
+        verification_results=verification_path,
+    )
+    prompt = json.dumps(messages, ensure_ascii=False)
+
+    assert "raw_invalid_generation_output" in prompt
+    assert "unverified prior scratchpad only" in prompt
+    assert "theorem scratch" in prompt
+    assert "Demo.hidden_target" not in prompt
+
+
 def test_hydratable_selector_output_keeps_only_mathlib_requests() -> None:
     selection = {
         "units": [
@@ -276,6 +307,12 @@ def test_checked_context_pack_records_hydrated_signatures() -> None:
                 "expected_signature_or_shape": "n + 0 = n",
                 "why_needed": "close the proof",
                 "lean_check": {"status": "checked", "signature": "Nat.add_zero (n : Nat) : n + 0 = n"},
+                "related_mathlib_declarations": [
+                    {
+                        "name": "Nat.add_zero_related",
+                        "lean_check": {"status": "checked", "signature": "Nat.add_zero_related : True"},
+                    }
+                ],
             }
         ]
     }
@@ -283,6 +320,8 @@ def test_checked_context_pack_records_hydrated_signatures() -> None:
     pack = build_context_pack(selection=selection, hydration=hydration)
 
     assert pack["checked_signatures"][0]["name"] == "Nat.add_zero"
+    assert pack["checked_signatures"][1]["name"] == "Nat.add_zero_related"
+    assert pack["checked_signatures"][1]["related_to"] == "Nat.add_zero"
     assert pack["proof_strategy_notes"][0]["proof_strategy_note"] == "rewrite with visible helper, then use add_zero"
     assert pack["selected_visible_context"][0]["name_or_label"] == "prior_helper"
     assert pack["do_not_use_identifiers"] == ["Demo.bad_guess"]

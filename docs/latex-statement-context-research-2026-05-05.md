@@ -586,6 +586,17 @@ Broader diverse4 negative probe:
   `Multiset.card p.parts` but still cleanly declined after emitting an
   incomplete scratchpad, so this is an API/context improvement rather than a
   coverage win.
+- NPartition neighborhood repair:
+  a one-round repair-context loop cost `$0.00681880` and selected 9 checked
+  signatures around `Multiset.card`, `Multiset.sort`, `Multiset.sort_sorted`,
+  `List.get`, `Multiset.length_sort`, and `Nat.Partition.ext`. The repair still
+  returned a clean `cannot_prove_from_visible_context`, diagnosing that the
+  visible context lacks the same-unit inverse/padding lemmas needed for the
+  bijection. A filtered repair retry cost `$0.00294070` after fallback search
+  stopped treating Lean universe `Sort` as evidence for `Multiset.sort`; it also
+  declined. This leaves a sharper next target: source-only helper synthesis and
+  proof planning for newly introduced same-unit lemmas, not merely more exact
+  API signatures.
 
 ## Lean Dependency Accounting
 
