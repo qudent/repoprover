@@ -8,6 +8,7 @@ import json
 import re
 import subprocess
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +42,9 @@ LEAN_DECL_KIND_LINE_RE = re.compile(
     r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial|nonrec)\s+)*"
     r"(theorem|lemma|def|abbrev|instance|structure|class|inductive|axiom)\s+"
 )
+LEAN_NAMESPACE_RE = re.compile(r"^\s*namespace\s+([A-Za-z0-9_'. ]+)\s*$")
+LEAN_SECTION_RE = re.compile(r"^\s*(?:noncomputable\s+)?section(?:\s+[A-Za-z0-9_'.]+)?\s*$")
+LEAN_END_RE = re.compile(r"^\s*end(?:\s+([A-Za-z0-9_'.]+))?\s*$")
 
 
 def read_json(path: Path) -> Any:
@@ -98,6 +102,93 @@ def lean_module_path(module: str) -> Path | None:
     if not LEAN_DOTTED_NAME_RE.fullmatch(module):
         return None
     return Path(*module.split(".")).with_suffix(".lean")
+
+
+def project_source_path(project_root: Path, path_text: str) -> Path | None:
+    if not path_text:
+        return None
+    path = Path(path_text)
+    candidates: list[Path] = []
+    if path.is_absolute():
+        candidates.append(path)
+    else:
+        candidates.extend([project_root / path, REPO_ROOT / path, project_root.parent / path])
+        if path.parts and path.parts[0] == project_root.name:
+            candidates.append(project_root.parent / path)
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def scoped_source_decl_name(raw_name: str, namespace_stack: list[str]) -> str:
+    name = raw_name.strip().strip("`")
+    if name.startswith("_root_."):
+        return name.removeprefix("_root_.")
+    if namespace_stack:
+        return ".".join([*namespace_stack, name])
+    return name
+
+
+@lru_cache(maxsize=512)
+def source_declarations_for_path(path_text: str) -> tuple[tuple[int, str, str], ...]:
+    path = Path(path_text)
+    if not path.exists():
+        return ()
+    namespace_stack: list[str] = []
+    scope_stack: list[tuple[str, list[str]]] = []
+    declarations: list[tuple[int, str, str]] = []
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if match := LEAN_NAMESPACE_RE.match(line):
+            parts = [part for part in match.group(1).strip().split() if part]
+            namespace_stack.extend(parts)
+            scope_stack.append(("namespace", parts))
+            continue
+        if LEAN_SECTION_RE.match(line):
+            scope_stack.append(("section", []))
+            continue
+        if LEAN_END_RE.match(line):
+            if scope_stack:
+                kind, parts = scope_stack.pop()
+                if kind == "namespace":
+                    for _ in parts:
+                        if namespace_stack:
+                            namespace_stack.pop()
+            continue
+        if match := LEAN_DECL_NAME_LINE_RE.match(line):
+            raw_name = match.group(1).strip().strip("`")
+            if raw_name and not raw_name.startswith(("[", "{", "(")):
+                full_name = scoped_source_decl_name(raw_name, namespace_stack)
+                declarations.append((line_number, full_name, full_name.split(".")[-1]))
+    return tuple(declarations)
+
+
+def resolve_source_declaration_name(
+    name: str, *, project_root: Path | None, path_text: str, line_text: str
+) -> str:
+    if project_root is None:
+        return name
+    source_path = project_source_path(project_root, path_text)
+    if source_path is None:
+        return name
+    declarations = source_declarations_for_path(str(source_path))
+    try:
+        line = int(line_text or 0)
+    except ValueError:
+        line = 0
+    if line:
+        for declaration_line, full_name, _local_name in declarations:
+            if declaration_line == line:
+                return full_name
+    if not name:
+        return name
+    matches: list[str] = []
+    suffix = f".{name}"
+    for _line, full_name, local_name in declarations:
+        if full_name == name or full_name.endswith(suffix) or local_name == name:
+            matches.append(full_name)
+    unique_matches = unique_in_order(matches)
+    return unique_matches[0] if len(unique_matches) == 1 else name
 
 
 def import_modules_from_lean(path: Path) -> list[str]:
@@ -471,7 +562,7 @@ def support_assumption_text(text: str, declaration_name: str) -> str:
 
 
 def visible_support_candidates_for_unit(
-    unit_payload: dict[str, Any], *, assumption_mode: bool = False
+    unit_payload: dict[str, Any], *, assumption_mode: bool = False, project_root: Path | None = None
 ) -> list[dict[str, str]]:
     candidates: list[dict[str, str]] = []
     variables_by_path: dict[str, list[str]] = {}
@@ -488,7 +579,17 @@ def visible_support_candidates_for_unit(
             is_usable = support_snippet_is_assumable(cleaned) if assumption_mode else support_snippet_is_complete(cleaned)
             if is_usable:
                 path = str(item.get("path") or "")
-                name = str(item.get("name") or "")
+                raw_line = item.get("line") or ""
+                if not raw_line and isinstance(item.get("line_range"), list) and item["line_range"]:
+                    raw_line = item["line_range"][0]
+                line = str(raw_line or "")
+                name = str(item.get("full_name") or item.get("name") or "")
+                name = resolve_source_declaration_name(
+                    name,
+                    project_root=project_root,
+                    path_text=path,
+                    line_text=line,
+                )
                 text = support_snippet_block(cleaned, variables_by_path.get(path, []))
                 if assumption_mode:
                     text = support_assumption_text(text, name)
@@ -497,7 +598,7 @@ def visible_support_candidates_for_unit(
                         "kind": str(item.get("kind") or "lean_snippet"),
                         "name": name,
                         "path": path,
-                        "line": str(item.get("line") or ""),
+                        "line": line,
                         "text": text,
                     }
                 )
@@ -548,12 +649,12 @@ def generation_prompt_units(user_payload: dict[str, Any]) -> list[dict[str, Any]
 
 
 def visible_support_candidates_by_unit(
-    output_path: Path, *, assumption_mode: bool = False
+    output_path: Path, *, assumption_mode: bool = False, project_root: Path | None = None
 ) -> dict[str, list[dict[str, str]]]:
     units = generation_prompt_units(user_payload_from_generation_payload(output_path))
     return {
         str(unit.get("unit_key") or ""): visible_support_candidates_for_unit(
-            unit, assumption_mode=assumption_mode
+            unit, assumption_mode=assumption_mode, project_root=project_root
         )
         for unit in units
         if unit.get("unit_key")
@@ -904,7 +1005,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         support_context_by_unit: dict[str, list[str]] = {}
         support_audit_by_unit: dict[str, dict[str, Any]] = {}
         if getattr(args, "materialize_visible_support", False):
-            support_candidates = visible_support_candidates_by_unit(output_path)
+            support_candidates = visible_support_candidates_by_unit(output_path, project_root=args.project_root)
             for unit_key, candidates in support_candidates.items():
                 support = materialize_visible_support_context(
                     candidates,

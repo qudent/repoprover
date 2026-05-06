@@ -999,3 +999,46 @@ def test_visible_support_snippet_trims_trailing_attributes() -> None:
     )
 
     assert candidates[0]["text"] == "namespace LGV\nstructure PathTuple where\n  paths : Nat\nend LGV"
+
+
+def test_visible_support_resolves_full_name_from_source_line(tmp_path) -> None:
+    project = tmp_path / "project"
+    source = project / "AlgebraicCombinatorics/Determinants/LGV2.lean"
+    source.parent.mkdir(parents=True)
+    source.write_text(
+        "\n".join(
+            [
+                "namespace LGV",
+                "",
+                "theorem helper : True := by trivial",
+                "",
+                "def translatePath : Nat := 0",
+                "",
+                "end LGV",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = visible_support_candidates_for_unit(
+        {
+            "planned_declarations": [
+                {
+                    "local_file_predecessor_declarations": [
+                        {
+                            "kind": "def",
+                            "name": "translatePath",
+                            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean",
+                            "line_range": [5, 5],
+                            "lean_snippet": "def translatePath : Nat := 0",
+                        }
+                    ]
+                }
+            ]
+        },
+        assumption_mode=True,
+        project_root=project,
+    )
+
+    assert candidates[0]["name"] == "LGV.translatePath"
+    assert candidates[0]["text"] == "namespace LGV\naxiom translatePath : Nat\nend LGV"

@@ -109,12 +109,17 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   (`LGV1.LatticeStep.apply`, `LGV.SimpleDigraph.Path.start`). A corrected d2
   context pack at
   `docs/latex-statement-proof-lane-decline-context-pack-closure-d2-2026-05-06.json`
-  selects 95 rows / 55 dependency rows. The best local Catalan diagnostic at
-  `docs/latex-statement-partial-proof-diagnostics/2026-05-06-fresh-unit001-assumption-signature-d2-v2/`
-  still fails before the final `sorry`, but errors dropped from copied-body
-  namespace/projection failures to 21 remaining prelude/name issues: missing
-  deeper deps such as `LGV1.LatticeStep`/`LGV.nipatSet` and same-file predecessor
-  snippets whose local names need full namespace recovery.
+  selects 95 rows / 55 dependency rows.
+- Source-line full-name recovery now resolves same-file predecessor snippets
+  such as `translatePath` to `LGV.translatePath`. The best local Catalan
+  diagnostic at
+  `docs/latex-statement-partial-proof-diagnostics/2026-05-06-fresh-unit001-assumption-signature-d2-v3/`
+  drops to 12 errors and reaches a real raw-proof tactic failure (`intro` after
+  `xDecreasing` is not unfolded as a binder). A bounded d3 context pack at
+  `docs/latex-statement-proof-lane-decline-context-pack-closure-d3-2026-05-06.json`
+  selects 106 rows / 65 dependency rows and fixes missing `LGV1.LatticeStep` and
+  `LGV.nipatSet`, but adds noise/duplicates (`BivFPS`, `P`, `p`) and still has
+  11 errors. D2 plus full-name recovery is the better current diagnostic point.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -125,8 +130,7 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: resolve full names for same-file predecessor snippets using
-  source line ranges, then run a bounded d3/signature prelude check. If that
-  clears prelude errors, route remaining raw bodies to a stronger proof
-  synthesis/repair lane; do not keep spending ordinary proof-lane calls on the
+- Next useful work: add a cheap duplicate/already-imported declaration filter
+  for assumption preludes, then route remaining raw bodies to a stronger proof
+  synthesis/repair lane. Do not keep spending ordinary proof-lane calls on the
   same prompt shape.

@@ -66,7 +66,7 @@ def load_decline_context_pack(path: Path | None) -> dict[tuple[str, str], dict[s
 
 
 def extra_support_candidates_by_unit(
-    raw_path: Path, pack_path: Path | None, *, assumption_mode: bool
+    raw_path: Path, pack_path: Path | None, *, assumption_mode: bool, project_root: Path | None
 ) -> dict[str, list[dict[str, str]]]:
     packs = load_decline_context_pack(pack_path)
     if not packs:
@@ -83,6 +83,7 @@ def extra_support_candidates_by_unit(
                 "diagnostic_decline_context_pack": pack,
             },
             assumption_mode=assumption_mode,
+            project_root=project_root,
         )
     return candidates
 
@@ -156,9 +157,11 @@ def materialize_support(
     support_context_by_unit: dict[str, list[str]] = {}
     support_audit_by_unit: dict[str, dict[str, Any]] = {}
     assumption_mode = support_mode == "assumption"
-    candidates_by_unit = verify.visible_support_candidates_by_unit(raw_path, assumption_mode=assumption_mode)
+    candidates_by_unit = verify.visible_support_candidates_by_unit(
+        raw_path, assumption_mode=assumption_mode, project_root=project_root
+    )
     for unit_key, extra_candidates in extra_support_candidates_by_unit(
-        raw_path, decline_context_pack, assumption_mode=assumption_mode
+        raw_path, decline_context_pack, assumption_mode=assumption_mode, project_root=project_root
     ).items():
         candidates_by_unit.setdefault(unit_key, []).extend(extra_candidates)
     for unit_key, candidates in candidates_by_unit.items():

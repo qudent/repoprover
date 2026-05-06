@@ -1,0 +1,1293 @@
+{
+  "decline_context_report": "docs/latex-statement-proof-lane-decline-context-2026-05-06.json",
+  "dependency_closure": {
+    "depth": 3,
+    "enabled": true,
+    "indexed_project_declaration_count": 5677,
+    "max_dependencies_per_unit": 96
+  },
+  "dependency_project_context_count": 65,
+  "excluded_hidden_candidate_count": 0,
+  "excluded_hidden_dependency_count": 0,
+  "generated_at": "2026-05-06T13:44:42.682538+00:00",
+  "gold_candidates_filter": "docs/latex-statement-gold-candidates.jsonl",
+  "gold_filter_policy": "Gold-candidate metadata is used only to exclude same-source aligned/referencing target declarations. Hidden target names and snippets are not emitted.",
+  "schema_version": "repoprover.proof_lane_decline_context_pack.v1",
+  "selected_project_context_count": 106,
+  "unit_count": 6,
+  "units": [
+    {
+      "dependency_project_context_count": 32,
+      "excluded_hidden_candidate_count": 0,
+      "excluded_hidden_dependency_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "catalanHankelMatrix",
+          "kind": "def",
+          "lean_snippet": "def catalanHankelMatrix (k : ℕ) : Matrix (Fin k) (Fin k) ℤ :=\n  Matrix.of fun i j => (catalan ((i : ℕ) + (j : ℕ)) : ℤ)\n\n/-- The Catalan Hankel matrix is symmetric (since c_{i+j} = c_{j+i}). -/",
+          "line": 5147,
+          "match_kind": "exact_local_name",
+          "name": "LGV.catalanHankelMatrix",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "pathWeightMatrix",
+          "kind": "def",
+          "lean_snippet": "noncomputable def pathWeightMatrix {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) (w : ArcWeight D K) {k : ℕ}\n    (A B : kVertex V k) : Matrix (Fin k) (Fin k) K :=\n  Matrix.of fun i j => pathWeightSum hpf w (A i) (B j)\n\n/-!\n## LGV Lemma: Weighted Lattice Version\n\nTheorem thm.lgv.kpaths.wt: For the integer lattice with arc weights w,\ndet(M) = ∑_{σ ∈ Sₖ} (-1)^σ ∑_{𝐩 nipat from 𝐀 to σ(𝐁)} w(𝐩)\n-/\n\n/-- The set of non-intersecting path tuples from 𝐀 to 𝐁 -/",
+          "line": 758,
+          "match_kind": "exact_local_name",
+          "name": "LGV.pathWeightMatrix",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "dyckDigraph_pathFinite",
+          "kind": "theorem",
+          "lean_snippet": "theorem dyckDigraph_pathFinite : dyckDigraph.IsPathFinite := by\n  intro u v\n  by_cases h : v.1 < u.1\n  · -- Case 1: No paths exist (would need to go backwards in x)\n    convert Set.finite_empty\n    ext p\n    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]\n    intro hstart hfinish\n    have hlen := dyckDigraph_path_length_eq p\n    rw [hstart, hfinish] at hlen\n    have hpos : 0 < p.vertices.length := List.length_pos_of_ne_nil p.nonempty\n    omega\n  · -- Case 2: Paths exist but are finite\n    push_neg at h\n    -- Define the path length\n    let n := (v.1 - u.1 + 1).toNat\n    -- Define the bounding box for the second coordinate\n    -- The second coordinate stays between 0 and u.2 + n\n    let maxY := u.2 + n\n    let box : Finset (ℤ × ℕ) := (Finset.Icc u.1 v.1) ×ˢ (Finset.range (maxY + 1))\n    -- Define the subtype of paths from u to v\n    let S := {p : SimpleDigraph.Path dyckDigraph | p.start = u ∧ p.finish = v}\n    -- Show S is finite by injecting into Fin n → box\n    suffices Finite S by exact Set.finite_coe_iff.mpr this\n    -- Define the injection: map each path to its vertex list as a function\n    let f : S → (Fin n → box) := fun ⟨p, hp⟩ i =>\n      let hi : i.val < p.vertices.length := by\n        have hlen := dyckDigraph_path_length_eq p\n        rw [hp.1, hp.2] at hlen\n        simp only [n] at hlen ⊢\n        have := i.isLt\n        omega",
+          "line": 5305,
+          "match_kind": "exact_local_name",
+          "name": "LGV.dyckDigraph_pathFinite",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "dyckUnitArcWeight",
+          "kind": "def",
+          "lean_snippet": "noncomputable def dyckUnitArcWeight : ArcWeight dyckDigraph ℤ :=\n  fun _ _ _ => 1\n\n/-- Helper: path weight with unit weight is 1 -/",
+          "line": 5426,
+          "match_kind": "exact_local_name",
+          "name": "LGV.dyckUnitArcWeight",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "xDecreasing",
+          "kind": "def",
+          "lean_snippet": "def xDecreasing {k : ℕ} (A : kVertex (ℤ × ℤ) k) : Prop :=\n  ∀ i j : Fin k, i ≤ j → xCoord (A j) ≤ xCoord (A i)\n\n/-- A k-vertex has weakly increasing y-coordinates -/",
+          "line": 3858,
+          "match_kind": "exact_local_name",
+          "name": "LGV.xDecreasing",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "yIncreasing",
+          "kind": "def",
+          "lean_snippet": "def yIncreasing {k : ℕ} (A : kVertex (ℤ × ℤ) k) : Prop :=\n  ∀ i j : Fin k, i ≤ j → yCoord (A i) ≤ yCoord (A j)\n\n/-- Discrete intermediate value theorem for integers (auxiliary version with explicit n) -/",
+          "line": 3862,
+          "match_kind": "exact_local_name",
+          "name": "LGV.yIncreasing",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "nipatWeightSum",
+          "kind": "def",
+          "lean_snippet": "noncomputable def nipatWeightSum {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) (w : ArcWeight D K) {k : ℕ}\n    (A B : kVertex V k) (_σ : Equiv.Perm (Fin k)) : K :=\n  ∑ pt ∈ nipatFinset hpf A B, pathTupleWeight w pt.paths\n\n/-!\n## Path Tuple Infrastructure for LGV\n\nThe key step in the LGV proof is to express the product of sums as a sum over path tuples:\n  ∏_j (∑_{p : A_j → B_j} w(p)) = ∑_{pt : PathTuple} pathTupleWeight w pt.paths\n\nThis uses `Finset.prod_univ_sum` and a bijection between PathTuple and the piFinset.\n-/\n\n/-- Bijection between PathTuple and the piFinset of pathsFromTo.\n    This is the key to converting the product of sums to a sum over path tuples. -/",
+          "line": 818,
+          "match_kind": "exact_local_name",
+          "name": "LGV.nipatWeightSum",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "SimpleDigraph.Path",
+          "kind": "structure",
+          "lean_snippet": "structure Path (D : SimpleDigraph V) where\n  /-- The vertices of the path, in order -/\n  vertices : List V\n  /-- The path is nonempty -/\n  nonempty : vertices ≠ []\n  /-- Consecutive vertices are connected by arcs -/\n  arcs_valid : ∀ i : ℕ, ∀ hi : i + 1 < vertices.length, D.arc (vertices.get ⟨i, Nat.lt_of_succ_lt hi⟩)\n      (vertices.get ⟨i + 1, hi⟩)\n\n/-- The starting vertex of a path -/",
+          "line": 97,
+          "match_kind": "suffix_full_name",
+          "name": "LGV.SimpleDigraph.Path",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.catalanHankelMatrix",
+          "identifier_from_decline_note": "catalan",
+          "kind": "def",
+          "lean_snippet": "def catalan (n : ℕ) : ℕ := (2 * n).choose n / (n + 1)\n\n/-- Our explicit definition of `catalan` equals Mathlib's recursive `catalan`.\n\nThis follows from `catalan_eq_centralBinom_div` in Mathlib. -/",
+          "line": 520,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.FPS.catalan",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NotationsExamples.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeightMatrix",
+          "identifier_from_decline_note": "SimpleDigraph",
+          "kind": "structure",
+          "lean_snippet": "structure SimpleDigraph (V : Type*) where\n  /-- The arc relation: `arc u v` means there is an arc from `u` to `v` -/\n  arc : V → V → Prop\n  /-- No self-loops -/\n  arc_irrefl : ∀ v, ¬arc v v\n\nnamespace SimpleDigraph\n\nvariable {V : Type*} [DecidableEq V]\n\n/-- A path in a digraph is a list of vertices where consecutive vertices are connected by arcs.\n    A path may contain 0 arcs (in which case start and end are identical). -/",
+          "line": 85,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.SimpleDigraph",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeightMatrix",
+          "identifier_from_decline_note": "D.IsPathFinite",
+          "kind": "def",
+          "lean_snippet": "def IsPathFinite (D : SimpleDigraph V) : Prop :=\n  ∀ u v : V, Set.Finite {p : Path D | p.start = u ∧ p.finish = v}\n\n/-- A digraph is acyclic if it has no directed cycles.\n    Convention conv.lgv.digraph(c) -/",
+          "line": 130,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.SimpleDigraph.IsPathFinite",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeightMatrix",
+          "identifier_from_decline_note": "ArcWeight",
+          "kind": "def",
+          "lean_snippet": "def ArcWeight (D : SimpleDigraph V) (K : Type*) := (u v : V) → D.arc u v → K\n\n/-- Helper function to compute the product of arc weights along a vertex list.\n    Uses recursion on the structure of the list.\n    - For an empty list or single vertex, the weight is 1 (no arcs).\n    - For a list [v₀, v₁, ...], the weight is w(v₀, v₁) * (weight of [v₁, ...]). -/",
+          "line": 540,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.ArcWeight",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeightMatrix",
+          "identifier_from_decline_note": "kVertex",
+          "kind": "abbrev",
+          "lean_snippet": "abbrev kVertex (V : Type*) (k : ℕ) := Fin k → V\n\n/-- Permute a k-vertex by a permutation σ: σ(𝐀) = (A_{σ(1)}, A_{σ(2)}, ..., A_{σ(k)}).\n    Definition def.lgv.path-tups(b) -/",
+          "line": 696,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.kVertex",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeightMatrix",
+          "identifier_from_decline_note": "pathWeightSum",
+          "kind": "def",
+          "lean_snippet": "noncomputable def pathWeightSum {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) (w : ArcWeight D K) (u v : V) : K :=\n  ∑ p ∈ pathsFromTo D hpf u v, pathWeight w p\n\n/-- The path weight matrix M_{i,j} = ∑_{p : Aᵢ → Bⱼ} w(p) -/",
+          "line": 753,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.pathWeightSum",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.dyckUnitArcWeight",
+          "identifier_from_decline_note": "dyckDigraph",
+          "kind": "def",
+          "lean_snippet": "def dyckDigraph : SimpleDigraph (ℤ × ℕ) where\n  arc u v := (v.1 = u.1 + 1 ∧ v.2 = u.2 + 1) ∨\n             (v.1 = u.1 + 1 ∧ v.2 + 1 = u.2 ∧ 0 < u.2)\n  arc_irrefl := by\n    intro ⟨x, y⟩\n    simp only [not_or, not_and]\n    constructor <;> omega\n\n/-- Every arc in the Dyck digraph increases the first coordinate by 1 -/",
+          "line": 5222,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.dyckDigraph",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.xDecreasing",
+          "identifier_from_decline_note": "xCoord",
+          "kind": "def",
+          "lean_snippet": "def xCoord : ℤ × ℤ → ℤ := Prod.fst\n\n/-- The y-coordinate of a lattice point -/",
+          "line": 3852,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.xCoord",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.yIncreasing",
+          "identifier_from_decline_note": "yCoord",
+          "kind": "def",
+          "lean_snippet": "def yCoord : ℤ × ℤ → ℤ := Prod.snd\n\n/-- A k-vertex has weakly decreasing x-coordinates -/",
+          "line": 3855,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.yCoord",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.nipatWeightSum",
+          "identifier_from_decline_note": "nipatFinset",
+          "kind": "def",
+          "lean_snippet": "noncomputable def nipatFinset {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) {k : ℕ} (A B : kVertex V k) : Finset (PathTuple D k A B) :=\n  (nipatSetFinite hpf A B).toFinset\n\n/-- When nipatSet is empty, nipatFinset is empty -/",
+          "line": 802,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.nipatFinset",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.nipatWeightSum",
+          "identifier_from_decline_note": "pathTupleWeight",
+          "kind": "def",
+          "lean_snippet": "noncomputable def pathTupleWeight {D : SimpleDigraph V} {k : ℕ} (w : ArcWeight D K)\n    (ps : Fin k → SimpleDigraph.Path D) : K :=\n  ∏ i, pathWeight w (ps i)\n\n/-!\n## k-Vertices and Path Tuples\n\nDefinition def.lgv.path-tups: A k-vertex is a k-tuple of vertices.\nA path tuple from 𝐀 to 𝐁 is a k-tuple of paths where pᵢ goes from Aᵢ to Bᵢ.\n-/\n\n/-- A k-vertex is a k-tuple of vertices of D.\n    Definition def.lgv.path-tups(a) -/",
+          "line": 683,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.pathTupleWeight",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.SimpleDigraph.Path",
+          "identifier_from_decline_note": "vertices",
+          "kind": "def",
+          "lean_snippet": "def LatticePath.vertices (path : LatticePath) (start : LatticePoint) : List LatticePoint :=\n  start :: path.scanl (fun p s => s.apply p) start |>.tail\n\n/-- Check if a path goes from point a to point b. -/",
+          "line": 346,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticePath.vertices",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.SimpleDigraph.Path",
+          "identifier_from_decline_note": "vertices.length",
+          "kind": "def",
+          "lean_snippet": "def length (σ : Perm (Fin n)) : ℕ := (inversions σ).card\n\n/-- Notation for length. -/\nscoped notation \"ℓ\" => length\n\n/-! ### Equivalence with Inversions1 definitions -/\n\n/-- `Equiv.Perm.inversions` equals `AlgebraicCombinatorics.Perm.inv`. -/\n@[simp]",
+          "line": 180,
+          "match_kind": "dependency_local_name",
+          "name": "Equiv.Perm.length",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.SimpleDigraph.IsPathFinite",
+          "identifier_from_decline_note": "p",
+          "kind": "abbrev",
+          "lean_snippet": "noncomputable abbrev p (n : ℕ) : P K N := psum (Fin N) K n\n\n/-- Power sums are symmetric.\n    Label: def.sf.ehp -/",
+          "line": 819,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.SymmetricPolynomials.p",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.SimpleDigraph.IsPathFinite",
+          "identifier_from_decline_note": "p.start",
+          "kind": "def",
+          "lean_snippet": "def Path.start {D : SimpleDigraph V} (p : Path D) : V :=\n  p.vertices.head p.nonempty\n\n/-- The ending vertex of a path -/",
+          "line": 107,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.SimpleDigraph.Path.start",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.SimpleDigraph.IsPathFinite",
+          "identifier_from_decline_note": "p.finish",
+          "kind": "def",
+          "lean_snippet": "def Path.finish {D : SimpleDigraph V} (p : Path D) : V :=\n  p.vertices.getLast p.nonempty\n\nomit [DecidableEq V] in\n/-- Simp lemma for `Path.start` on a constructed path -/\n@[simp] lemma Path.start_mk {D : SimpleDigraph V} (vs : List V) (hne : vs ≠ [])\n    (harcs : ∀ i : ℕ, ∀ hi : i + 1 < vs.length, D.arc (vs.get ⟨i, Nat.lt_of_succ_lt hi⟩)\n        (vs.get ⟨i + 1, hi⟩)) :\n    (Path.mk vs hne harcs).start = vs.head hne := rfl\n\nomit [DecidableEq V] in\n/-- Simp lemma for `Path.finish` on a constructed path -/\n@[simp] lemma Path.finish_mk {D : SimpleDigraph V} (vs : List V) (hne : vs ≠ [])\n    (harcs : ∀ i : ℕ, ∀ hi : i + 1 < vs.length, D.arc (vs.get ⟨i, Nat.lt_of_succ_lt hi⟩)\n        (vs.get ⟨i + 1, hi⟩)) :\n    (Path.mk vs hne harcs).finish = vs.getLast hne := rfl\n\n/-- A digraph is path-finite if there are only finitely many paths between any two vertices.\n    Convention conv.lgv.digraph(b) -/",
+          "line": 111,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.SimpleDigraph.Path.finish",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeightSum",
+          "identifier_from_decline_note": "pathsFromTo",
+          "kind": "def",
+          "lean_snippet": "noncomputable def pathsFromTo {V : Type*} [DecidableEq V] (D : SimpleDigraph V)\n    (hpf : D.IsPathFinite) (u v : V) : Finset (SimpleDigraph.Path D) :=\n  (hpf u v).toFinset\n\n/-- The sum of weights of all paths from u to v.\n    ∑_{p : u → v} w(p) -/",
+          "line": 747,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.pathsFromTo",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeightSum",
+          "identifier_from_decline_note": "pathWeight",
+          "kind": "def",
+          "lean_snippet": "noncomputable def pathWeight {D : SimpleDigraph V} (w : ArcWeight D K) (p : SimpleDigraph.Path D) : K :=\n  pathWeightAux w p.vertices p.arcs_valid\n\nomit [DecidableEq V] in\n/-- pathWeightAux is independent of the proof of arcs_valid (proof irrelevance). -/",
+          "line": 569,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.pathWeight",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.dyckDigraph",
+          "identifier_from_decline_note": "x",
+          "kind": "def",
+          "lean_snippet": "noncomputable def BivFPS.x : BivFPS R := MvPowerSeries.X 0\n\n/-- The second variable `y` in a bivariate power series ring. -/",
+          "line": 79,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.BivFPS.x",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.dyckDigraph",
+          "identifier_from_decline_note": "y",
+          "kind": "def",
+          "lean_snippet": "noncomputable def BivFPS.y : BivFPS R := MvPowerSeries.X 1\n\n/-!\n### Embedding univariate power series into bivariate power series\n\nTo formalize Proposition `prop.fps.mulvar.comp-y-coeff`, we need to embed sequences of\nunivariate power series into bivariate power series. Given a sequence `f : ℕ → PowerSeries R`,\nwe define the bivariate power series `∑_k f_k y^k` whose coefficient at `x^n y^k` is the\ncoefficient of `x^n` in `f_k`.\n-/\n\n/-- Embedding of a sequence of univariate power series `f : ℕ → PowerSeries R` into a\n    bivariate power series `∑_k f_k y^k` in `K[[x, y]]`.\n\n    The coefficient of `x^n y^k` in the result is the coefficient of `x^n` in `f_k`. -/",
+          "line": 82,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.BivFPS.y",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.nipatFinset",
+          "identifier_from_decline_note": "PathTuple",
+          "kind": "structure",
+          "lean_snippet": "structure PathTuple {V : Type*} [DecidableEq V] (D : SimpleDigraph V) (k : ℕ)\n    (A B : kVertex V k) where\n  /-- The paths in the tuple -/\n  paths : Fin k → SimpleDigraph.Path D\n  /-- Each path starts at the corresponding source vertex -/\n  starts : ∀ i, (paths i).start = A i\n  /-- Each path ends at the corresponding target vertex -/\n  finishes : ∀ i, (paths i).finish = B i\n\n@[ext]",
+          "line": 705,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.PathTuple",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.nipatFinset",
+          "identifier_from_decline_note": "nipatSetFinite",
+          "kind": "def",
+          "lean_snippet": "noncomputable def nipatSetFinite {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) {k : ℕ} (A B : kVertex V k) : Set.Finite (nipatSet (D := D) A B) := by\n  -- The set of all path tuples from A to B is finite\n  have h_all_finite : Set.Finite {pt : PathTuple D k A B | True} := by\n    let pathSets : Fin k → Set (SimpleDigraph.Path D) := fun i => \n      {p : SimpleDigraph.Path D | p.start = A i ∧ p.finish = B i}\n    have h_each_finite : ∀ i, Set.Finite (pathSets i) := fun i => hpf (A i) (B i)\n    have h_prod_finite : Set.Finite (Set.pi Set.univ pathSets) := \n      Set.Finite.pi (fun i => h_each_finite i)\n    -- Define the map from PathTuple to the pi type\n    let f : {pt : PathTuple D k A B | True} → Set.pi Set.univ pathSets := fun ⟨pt, _⟩ =>\n      ⟨pt.paths, fun i _ => ⟨pt.starts i, pt.finishes i⟩⟩\n    have hf_inj : Function.Injective f := by\n      intro ⟨pt1, _⟩ ⟨pt2, _⟩ heq\n      simp only [Subtype.mk.injEq, f] at heq ⊢\n      cases pt1; cases pt2\n      simp only [PathTuple.mk.injEq] at heq ⊢\n      exact heq\n    -- The pi type is finite\n    have h_pi_finite : Finite (Set.pi Set.univ pathSets) := h_prod_finite\n    -- Since f is injective and the codomain is finite, the domain is finite\n    have h_finite : Finite {pt : PathTuple D k A B | True} := Finite.of_injective f hf_inj\n    exact Set.finite_coe_iff.mp h_finite\n  exact h_all_finite.subset (fun _ _ => trivial)\n\n/-- Convert nipatSet to Finset using the finiteness proof -/",
+          "line": 776,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.nipatSetFinite",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV1.LatticePath.vertices",
+          "identifier_from_decline_note": "LatticePath",
+          "kind": "abbrev",
+          "lean_snippet": "abbrev LatticePath := List LatticeStep\n\n/-- The endpoint of a path starting from a given point. -/",
+          "line": 266,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticePath",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV1.LatticePath.vertices",
+          "identifier_from_decline_note": "LatticePoint",
+          "kind": "abbrev",
+          "lean_snippet": "abbrev LatticePoint := ℤ × ℤ\n\n/-- The x-coordinate of a lattice point. -/",
+          "line": 109,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticePoint",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV1.LatticePath.vertices",
+          "identifier_from_decline_note": "s.apply",
+          "kind": "def",
+          "lean_snippet": "def LatticeStep.apply (s : LatticeStep) (p : LatticePoint) : LatticePoint :=\n  match s with\n  | east => (p.1 + 1, p.2)\n  | north => (p.1, p.2 + 1)\n\n/-- A step corresponds to an arc in the integer lattice digraph. -/",
+          "line": 247,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticeStep.apply",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "Equiv.Perm.length",
+          "identifier_from_decline_note": "inversions",
+          "kind": "def",
+          "lean_snippet": "def inversions (σ : Perm (Fin n)) : Finset (Fin n × Fin n) :=\n  Finset.filter (fun p => p.1 < p.2 ∧ σ p.2 < σ p.1) (Finset.univ)\n\n/-- The length of a permutation is the number of its inversions. -/",
+          "line": 176,
+          "match_kind": "dependency_local_name",
+          "name": "Equiv.Perm.inversions",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "AlgebraicCombinatorics.SymmetricPolynomials.p",
+          "identifier_from_decline_note": "P",
+          "kind": "abbrev",
+          "lean_snippet": "abbrev P (K : Type*) [CommRing K] (N : ℕ) : Type _ := MvPolynomial (Fin N) K\n\n/-!\n## The Symmetric Group Action (Definition def.sf.PS (b))\n\nThe symmetric group S_N acts on P by permuting variables:\n  σ · f = f[x_{σ(1)}, x_{σ(2)}, ..., x_{σ(N)}]\n\nIn Mathlib, this is given by `MvPolynomial.rename σ f` where σ : Equiv.Perm (Fin N).\n-/\n\n/-- The action of a permutation on a polynomial by renaming variables.\n    This is σ · f = f[x_{σ(1)}, ..., x_{σ(N)}] in the source.\n    Label: def.sf.PS -/",
+          "line": 66,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.SymmetricPolynomials.P",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.pathWeight",
+          "identifier_from_decline_note": "pathWeightAux",
+          "kind": "def",
+          "lean_snippet": "noncomputable def pathWeightAux {D : SimpleDigraph V} (w : ArcWeight D K)\n    (vertices : List V) (arcs_valid : ∀ i : ℕ, ∀ hi : i + 1 < vertices.length,\n      D.arc (vertices.get ⟨i, Nat.lt_of_succ_lt hi⟩) (vertices.get ⟨i + 1, hi⟩)) : K :=\n  match vertices with\n  | [] => 1\n  | [_] => 1\n  | v₀ :: v₁ :: rest =>\n    have h : 0 + 1 < (v₀ :: v₁ :: rest).length := by simp\n    have arc_proof : D.arc v₀ v₁ := by\n      have := arcs_valid 0 h\n      simp at this\n      exact this\n    have rest_arcs_valid : ∀ i : ℕ, ∀ hi : i + 1 < (v₁ :: rest).length,\n        D.arc ((v₁ :: rest).get ⟨i, Nat.lt_of_succ_lt hi⟩) ((v₁ :: rest).get ⟨i + 1, hi⟩) := by\n      intro i hi\n      have hi' : (i + 1) + 1 < (v₀ :: v₁ :: rest).length := by simp at hi ⊢; omega\n      have := arcs_valid (i + 1) hi'\n      simp only [List.length_cons, List.get_cons_succ] at this ⊢\n      exact this\n    w v₀ v₁ arc_proof * pathWeightAux w (v₁ :: rest) rest_arcs_valid\n\n/-- The weight of a path is the product of weights of its arcs.\n    w(p) := ∏_{a is an arc of p} w(a) -/",
+          "line": 546,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.pathWeightAux",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "AlgebraicCombinatorics.BivFPS.x",
+          "identifier_from_decline_note": "BivFPS",
+          "kind": "abbrev",
+          "lean_snippet": "abbrev BivFPS (R : Type*) [CommSemiring R] := MvPowerSeries (Fin 2) R\n\n/-- The first variable `x` in a bivariate power series ring. -/",
+          "line": 76,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.BivFPS",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.PathTuple",
+          "identifier_from_decline_note": "ext",
+          "kind": "lemma",
+          "lean_snippet": "lemma PathTuple.ext {V : Type*} [DecidableEq V] {D : SimpleDigraph V} {k : ℕ}\n    {A B : kVertex V k} (pt1 pt2 : PathTuple D k A B)\n    (h : ∀ i, pt1.paths i = pt2.paths i) : pt1 = pt2 := by\n  cases pt1; cases pt2\n  simp only [PathTuple.mk.injEq]\n  ext i\n  exact h i\n\n/-- Two paths have a vertex in common -/",
+          "line": 715,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.PathTuple.ext",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV.nipatSetFinite",
+          "identifier_from_decline_note": "nipatSet",
+          "kind": "def",
+          "lean_snippet": "noncomputable def nipatSet {V : Type*} [DecidableEq V] {D : SimpleDigraph V} {k : ℕ}\n    (A B : kVertex V k) : Set (PathTuple D k A B) :=\n  {pt | pt.isNonIntersecting}\n\n/-- The set of nipats is finite (follows from path-finiteness) -/",
+          "line": 771,
+          "match_kind": "dependency_local_name",
+          "name": "LGV.nipatSet",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV1.LatticePath",
+          "identifier_from_decline_note": "LatticeStep",
+          "kind": "inductive",
+          "lean_snippet": "inductive LatticeStep : Type\n  | east : LatticeStep  -- (i,j) → (i+1,j)\n  | north : LatticeStep -- (i,j) → (i,j+1)\n  deriving DecidableEq, Repr, Fintype\n\n/-- Apply a step to a lattice point. -/",
+          "line": 241,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticeStep",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 93,
+          "name": "variable {V : Type*} [DecidableEq V]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 229,
+          "name": "variable {V : Type*}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 536,
+          "name": "variable {V : Type*} [DecidableEq V] {K : Type*} [CommRing K]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 93,
+          "name": "variable {n : ℕ}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 53,
+          "name": "variable {K : Type*} [CommRing K]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 54,
+          "name": "variable {N : ℕ}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 786,
+          "name": "variable [DecidableEq (Fin N)]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 59,
+          "name": "variable {R : Type*} [CommSemiring R]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        }
+      ],
+      "selected_project_context_count": 48,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "cor.lgv.catalan-hankel-det-0"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+      "unit_key": "unit-001"
+    },
+    {
+      "dependency_project_context_count": 3,
+      "excluded_hidden_candidate_count": 0,
+      "excluded_hidden_dependency_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "HasConstantTermOne",
+          "kind": "def",
+          "lean_snippet": "def HasConstantTermOne (f : K⟦X⟧) : Prop := constantCoeff f = 1\n\n/-- `HasConstantTermOne f` is equivalent to membership in `PowerSeries₁`.\n    This bridges the two representations of \"constant term equals 1\". -/",
+          "line": 115,
+          "match_kind": "exact_local_name",
+          "name": "AlgebraicCombinatorics.FPS.HasConstantTermOne",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "fpsPow",
+          "kind": "def",
+          "lean_snippet": "noncomputable def fpsPow (f : K⟦X⟧) (c : K) : K⟦X⟧ :=\n  fpsExp (c • fpsLog f)\n\n/-- Notation for non-integer powers (when needed) -/\nscoped notation:80 f \" ^ᶠ \" c:81 => fpsPow f c\n\n/-- f^0 = 1 for any f with constant term 1 -/\n@[simp]",
+          "line": 514,
+          "match_kind": "exact_local_name",
+          "name": "AlgebraicCombinatorics.FPS.fpsPow",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "AlgebraicCombinatorics.FPS.fpsPow",
+          "identifier_from_decline_note": "fpsExp",
+          "kind": "def",
+          "lean_snippet": "noncomputable def fpsExp (g : K⟦X⟧) : K⟦X⟧ :=\n  (exp K).subst g\n\n/-- Exp(0) = 1 -/\n@[simp]",
+          "line": 221,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.FPS.fpsExp",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "AlgebraicCombinatorics.FPS.fpsPow",
+          "identifier_from_decline_note": "fpsLog",
+          "kind": "def",
+          "lean_snippet": "noncomputable def fpsLog (f : K⟦X⟧) : K⟦X⟧ :=\n  (logSeries (K := K)).subst (f - 1)\n\n/-- Log(1) = 0 -/\n@[simp]",
+          "line": 177,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.FPS.fpsLog",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "AlgebraicCombinatorics.FPS.fpsLog",
+          "identifier_from_decline_note": "logSeries",
+          "kind": "def",
+          "lean_snippet": "noncomputable def logSeries : K⟦X⟧ :=\n  PowerSeries.mk fun n => if n = 0 then 0 else algebraMap ℚ K ((-1 : ℚ)^(n-1) / n)\n\n/-- Coefficient of the log series at position n.\n    For n ≥ 1: [x^n] log(1+x) = (-1)^{n-1}/n -/",
+          "line": 62,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.FPS.logSeries",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 50,
+          "name": "variable {K : Type*} [CommRing K] [Algebra ℚ K]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 131,
+          "name": "variable {R : Type*} [CommRing R]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        }
+      ],
+      "selected_project_context_count": 7,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "prop.binom.nCk-2i-qedmo.CN"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+      "unit_key": "unit-003"
+    },
+    {
+      "dependency_project_context_count": 0,
+      "excluded_hidden_candidate_count": 0,
+      "excluded_hidden_dependency_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [],
+      "selected_project_context_count": 0,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "lem.cancel.all-even.l1"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+      "unit_key": "unit-004"
+    },
+    {
+      "dependency_project_context_count": 30,
+      "excluded_hidden_candidate_count": 0,
+      "excluded_hidden_dependency_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "NPartition.transpose",
+          "kind": "def",
+          "lean_snippet": "noncomputable def transpose (μ : NPartition N) (hN : 0 < N) : NPartition (μ.parts ⟨0, hN⟩) where\n  parts := fun i => (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ μ.parts j).card\n  antitone := by\n    intro i j hij\n    apply Finset.card_le_card\n    intro r hr\n    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hr ⊢\n    exact le_trans (Nat.add_le_add_right hij 1) hr\n\n/-- Predicate asserting that `lamt` is the transpose of `lam`.\n    The transpose λᵗ of a partition λ satisfies:\n    (λᵗ)ᵢ = |{j : λⱼ ≥ i}| for each i.\n\n    Since we work with fixed-length tuples, this predicate captures\n    when two tuples represent transpose partitions (possibly with trailing zeros). -/",
+          "line": 1057,
+          "match_kind": "exact_full_name",
+          "name": "NPartition.transpose",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "NPartition.transpose",
+          "kind": "def",
+          "lean_snippet": "noncomputable def transpose (lam : NPartition N) (hN : 0 < N) : NPartition (lam.parts ⟨0, hN⟩) where\n  parts := fun i => (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ lam.parts j).card\n  weaklyDecreasing := by\n    intro i j hij\n    apply Finset.card_le_card\n    intro r hr\n    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hr ⊢\n    exact le_trans (Nat.add_le_add_right hij 1) hr\n\n/-- Predicate asserting that `lamt` is the transpose of `lam`.\n    The transpose λᵗ of a partition λ satisfies:\n    (λᵗ)ᵢ = |{j : λⱼ ≥ i}| for each i.\n\n    Since we work with fixed-length tuples, this predicate captures\n    when two tuples represent transpose partitions (possibly with trailing zeros). -/",
+          "line": 159,
+          "match_kind": "suffix_full_name",
+          "name": "SymmetricFunctions.NPartition.transpose",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "NPartition.transpose",
+          "kind": "def",
+          "lean_snippet": "noncomputable def transpose {n : ℕ} (p : Partition n) : Partition n := by\n  -- The transpose has parts: for each i from 1 to (largest part of p),\n  -- the i-th part of the transpose is the number of parts of p that are ≥ i\n  let largest := p.parts.fold max 0\n  let newParts : Multiset ℕ := (Finset.range largest).val.map\n    (fun i => (p.parts.filter (· > i)).card)\n  refine ⟨newParts.filter (· > 0), ?_, ?_⟩\n  · intro i hi\n    simp only [Multiset.mem_filter] at hi\n    exact hi.2\n  · -- Prove sum equals n using double counting\n    show (newParts.filter (· > 0)).sum = n\n    have h1 : newParts.sum = n := by\n      show ((Finset.range largest).val.map (fun i => (p.parts.filter (· > i)).card)).sum = n\n      have heq : ((Finset.range largest).val.map (fun i => (p.parts.filter (· > i)).card)).sum =\n                 (Finset.range largest).sum (fun i => (p.parts.filter (· > i)).card) := rfl\n      rw [heq]\n      have hp' : ∀ i ∈ p.parts, 0 < i := fun i hi => p.parts_pos hi\n      have := sum_filter_card_eq_sum p.parts hp'\n      rw [p.parts_sum] at this\n      exact this\n    rw [sum_filter_positive newParts]\n    exact h1\n\n/-- Helper lemma: for a sorted decreasing list, the count of elements > i is > j iff the j-th element > i.\n    This is the key bijection for the Young diagram transpose. -/",
+          "line": 1721,
+          "match_kind": "exact_local_name",
+          "name": "Nat.Partition.transpose",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "ssytFinset",
+          "kind": "def",
+          "lean_snippet": "noncomputable def ssytFinset (lam : NPartition N) : Finset (SSYT lam) :=\n  (ssytFillingFinsetNonSkew lam).attach.map ⟨\n    fun ⟨f, hf⟩ => fillingToSSYT lam f (Finset.mem_filter.mp hf).2,\n    fun ⟨f₁, hf₁⟩ ⟨f₂, hf₂⟩ h => by\n      simp only [Subtype.mk.injEq]\n      have : (fillingToSSYT lam f₁ (Finset.mem_filter.mp hf₁).2).entries =\n             (fillingToSSYT lam f₂ (Finset.mem_filter.mp hf₂).2).entries := by\n        simp only [fillingToSSYT] at h\n        cases h\n        rfl\n      exact this\n  ⟩\n\n/-- Every SSYT is in ssytFinset. -/",
+          "line": 1211,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.ssytFinset",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "Nipat",
+          "kind": "structure",
+          "lean_snippet": "structure Nipat (lam mu : Fin N → ℕ)\n    (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)\n    (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)\n    (hcontained : ∀ i, mu i ≤ lam i) where\n  /-- The tuple of paths, one for each i ∈ [N] -/\n  paths : (i : Fin N) → LatticePath (N := N)\n    ((mu i : ℤ) - (i.val : ℤ)) ((lam i : ℤ) - (i.val : ℤ))\n  /-- The paths satisfy column-strictness: for i < j, if east steps k (in path i)\n      and k' (in path j) correspond to the same tableau column (mu i + k = mu j + k'),\n      then the height of path i at step k is strictly less than the height of path j at step k'.\n      This is the key property that makes the nipat-SSYT bijection work. -/\n  colStrictPaths : ∀ i j : Fin N, i < j →\n    ∀ k : ℕ, ∀ hk : k < (paths i).eastStepHeights.length,\n    ∀ k' : ℕ, ∀ hk' : k' < (paths j).eastStepHeights.length,\n    mu i + k = mu j + k' →\n    (paths i).eastStepHeights[k] < (paths j).eastStepHeights[k']\n\n/-- The weight of a nipat is the product of the weights of its component paths. -/",
+          "line": 2872,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.Nipat",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "SkewSSYT",
+          "kind": "structure",
+          "lean_snippet": "structure SkewSSYT {N : ℕ} [NeZero N] (lam mu : NPartition N) extends SkewYoungTableau lam mu where\n  /-- Entries increase weakly along rows -/\n  row_weak : ∀ i : Fin N, ∀ j₁ j₂ : ℕ,\n    (i, j₁) ∈ skewYoungDiagram lam mu → (i, j₂) ∈ skewYoungDiagram lam mu → j₁ < j₂ →\n    entry (i, j₁) ≤ entry (i, j₂)\n  /-- Entries increase strictly down columns -/\n  col_strict : ∀ i₁ i₂ : Fin N, ∀ j : ℕ,\n    (i₁, j) ∈ skewYoungDiagram lam mu → (i₂, j) ∈ skewYoungDiagram lam mu → i₁ < i₂ →\n    entry (i₁, j) < entry (i₂, j)\n\n/-! ## Properties of Semistandard Skew Tableaux -/\n\n/-- In a semistandard skew tableau, entries increase weakly along rows (general version).\n    Lemma \\ref{lem.sf.skew-ssyt.increase}(a) in the source. -/",
+          "line": 1960,
+          "match_kind": "exact_full_name",
+          "name": "SkewSSYT",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "SkewSSYT",
+          "kind": "structure",
+          "lean_snippet": "structure SkewSSYT (s : SkewPartition N) where\n  /-- The entries of the tableau, only for boxes in Y(λ/μ).\n      Entry (i, k) corresponds to box (i, μᵢ + k + 1) in Y(λ/μ). -/\n  entries : (i : Fin N) → (k : Fin (s.outer.parts i - s.inner.parts i)) → Fin N\n  /-- Entries are weakly increasing along rows -/\n  rowWeak : ∀ i : Fin N, ∀ j k : Fin (s.outer.parts i - s.inner.parts i),\n    j ≤ k → entries i j ≤ entries i k\n  /-- Entries are strictly increasing down columns.\n      If boxes (i, c) and (i', c) are both in Y(λ/μ) with i < i', then\n      T(i, c) < T(i', c). Here c = μᵢ + k + 1 for some k.\n      The condition checks: for row i and column offset k, if row i+1 also\n      contains column μᵢ + k + 1 (i.e., μᵢ + k + 1 > μᵢ₊₁ and μᵢ + k + 1 ≤ λᵢ₊₁),\n      then the entry in row i is strictly less than the entry in row i+1. -/\n  colStrict : ∀ i : Fin N, ∀ hi : i.val + 1 < N,\n    ∀ k : Fin (s.outer.parts i - s.inner.parts i),\n    -- The absolute column is μᵢ + k + 1. For this to be in row i+1:\n    -- 1. μᵢ + k + 1 > μᵢ₊₁ (column is after the inner partition in row i+1)\n    -- 2. μᵢ + k + 1 ≤ λᵢ₊₁ (column is within the outer partition in row i+1)\n    ∀ _hcol : s.inner.parts i + k.val + 1 > s.inner.parts ⟨i.val + 1, hi⟩ ∧\n             s.inner.parts i + k.val + 1 ≤ s.outer.parts ⟨i.val + 1, hi⟩,\n    -- The offset in row i+1 for the same column\n    let k' : ℕ := s.inner.parts i + k.val - s.inner.parts ⟨i.val + 1, hi⟩\n    ∀ hk' : k' < s.outer.parts ⟨i.val + 1, hi⟩ - s.inner.parts ⟨i.val + 1, hi⟩,\n    entries i k < entries ⟨i.val + 1, hi⟩ ⟨k', hk'⟩\n\n/-- The monomial x^T associated to a tableau T.\n    x_T = ∏_{(i,j) ∈ Y(λ)} x_{T(i,j)} -/",
+          "line": 926,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.SkewSSYT",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "potentialVerticalStrips",
+          "kind": "def",
+          "lean_snippet": "def potentialVerticalStrips (mu : NPartition N) : Finset (Fin N → ℕ) :=\n  Fintype.piFinset (fun i => Finset.Icc (mu.parts i) (verticalStripUpperBound mu i))\n\n/-- The set of N-partitions λ such that λ/μ is a vertical n-strip.\n\n    This is the set of all N-partitions λ satisfying:\n    1. μ ⊆ λ (containment): μ_i ≤ λ_i for all i\n    2. Vertical strip: λ_i ≤ μ_i + 1 for all i\n    3. Size: |λ| - |μ| = n\n\n    The set is finite because each λ_i ∈ {μ_i, μ_i + 1}. -/",
+          "line": 1509,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.potentialVerticalStrips",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "NPartition.transpose",
+          "identifier_from_decline_note": "NPartition",
+          "kind": "structure",
+          "lean_snippet": "structure NPartition (N : ℕ) where\n  /-- The entries of the N-partition as a function from `Fin N` to `ℕ` -/\n  parts : Fin N → ℕ\n  /-- The entries are weakly decreasing (antitone) -/\n  antitone : Antitone parts\n\nnamespace NPartition\n\nvariable {N : ℕ}\n\n/-! ## Compatibility aliases for field names -/\n\n/-- Alias for `antitone` to match SchurBasics.lean naming convention.\n    The weakly decreasing condition: if `i ≤ j` then `parts j ≤ parts i`. -/",
+          "line": 132,
+          "match_kind": "exact_full_name",
+          "name": "NPartition",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "NPartition.transpose",
+          "identifier_from_decline_note": "apply",
+          "kind": "def",
+          "lean_snippet": "def LatticeStep.apply (s : LatticeStep) (p : LatticePoint) : LatticePoint :=\n  match s with\n  | east => (p.1 + 1, p.2)\n  | north => (p.1, p.2 + 1)\n\n/-- A step corresponds to an arc in the integer lattice digraph. -/",
+          "line": 247,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticeStep.apply",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.NPartition.transpose",
+          "identifier_from_decline_note": "weaklyDecreasing",
+          "kind": "theorem",
+          "lean_snippet": "theorem weaklyDecreasing (μ : NPartition N) : ∀ i j : Fin N, i ≤ j → μ.parts j ≤ μ.parts i :=\n  μ.antitone\n\n/-- The antitone property as a function (for use in proofs). -/",
+          "line": 151,
+          "match_kind": "dependency_local_name",
+          "name": "NPartition.weaklyDecreasing",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "Nat.Partition.transpose",
+          "identifier_from_decline_note": "p",
+          "kind": "abbrev",
+          "lean_snippet": "noncomputable abbrev p (n : ℕ) : P K N := psum (Fin N) K n\n\n/-- Power sums are symmetric.\n    Label: def.sf.ehp -/",
+          "line": 819,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.SymmetricPolynomials.p",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "Nat.Partition.transpose",
+          "identifier_from_decline_note": "newParts.sum",
+          "kind": "theorem",
+          "lean_snippet": "theorem XnEquiv.sum [DecidableEq ι] {n : ℕ} {s : Finset ι} {a b : ι → R⟦X⟧}\n    (h : ∀ i ∈ s, XnEquiv n (a i) (b i)) : XnEquiv n (∑ i ∈ s, a i) (∑ i ∈ s, b i) := by\n  induction s using Finset.induction_on with\n  | empty =>\n    simp only [sum_empty]\n    exact XnEquiv.refl n 0\n  | @insert x s hxs ih =>\n    rw [sum_insert hxs, sum_insert hxs]\n    apply XnEquiv.add\n    · exact h x (mem_insert_self x s)\n    · exact ih (fun i hi' => h i (mem_insert_of_mem hi'))\n\n/-- x^n-equivalence is preserved by finite products (Theorem `thm.fps.xneq.props` (f), eq.thm.fps.xneq.props.e.*). -/",
+          "line": 249,
+          "match_kind": "dependency_local_name",
+          "name": "PowerSeries.XnEquiv.sum",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "Nat.Partition.transpose",
+          "identifier_from_decline_note": "sum_filter_card_eq_sum",
+          "kind": "lemma",
+          "lean_snippet": "lemma sum_filter_card_eq_sum (p : Multiset ℕ) (hp : ∀ i ∈ p, 0 < i) :\n    (Finset.range (p.fold max 0)).sum (fun i => (p.filter (· > i)).card) = p.sum := by\n  induction p using Multiset.induction with\n  | empty => simp\n  | cons a s ih =>\n    have hs : ∀ i ∈ s, 0 < i := fun i hi => hp i (Multiset.mem_cons_of_mem hi)\n    have ha : 0 < a := hp a (Multiset.mem_cons_self a s)\n    specialize ih hs\n    simp only [Multiset.sum_cons, Multiset.fold_cons_left]\n    let M := s.fold max 0\n    conv_lhs =>\n      arg 2\n      ext i\n      rw [Multiset.filter_cons]\n    have hcard : ∀ i, ((if a > i then {a} else 0) + s.filter (· > i)).card =\n                      (if a > i then 1 else 0) + (s.filter (· > i)).card := by\n      intro i\n      split_ifs with h\n      · simp only [Multiset.singleton_add, Multiset.card_cons]; ring\n      · simp only [zero_add]\n    simp_rw [hcard]\n    rw [Finset.sum_add_distrib]\n    have h1 : ∑ i ∈ Finset.range (max a M), (if a > i then 1 else 0) = a := by\n      rw [Finset.sum_boole, Nat.cast_id]\n      convert card_range_filter_gt a (max a M) using 2\n      simp only [le_max_iff, le_refl, true_or, min_eq_left]\n    rw [h1]\n    have hbound : ∀ x ∈ s, x ≤ M := fun x hx => fold_max_ge_of_mem s x hx\n    have h2 : (Finset.range (max a M)).sum (fun i => (s.filter (· > i)).card) =\n              (Finset.range M).sum (fun i => (s.filter (· > i)).card) := by\n      apply sum_filter_card_range_extend s M (max a M) hbound (le_max_right a M)\n    rw [h2, ih]",
+          "line": 567,
+          "match_kind": "dependency_local_name",
+          "name": "Nat.Partition.sum_filter_card_eq_sum",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "Nat.Partition.transpose",
+          "identifier_from_decline_note": "sum_filter_positive",
+          "kind": "lemma",
+          "lean_snippet": "lemma sum_filter_positive (s : Multiset ℕ) : (s.filter (· > 0)).sum = s.sum := by\n  have h := @Multiset.sum_filter_add_sum_filter_not ℕ _ s (· > 0) _\n  simp only [gt_iff_lt, Nat.not_lt, Nat.le_zero] at h\n  suffices hz : (s.filter (· = 0)).sum = 0 by linarith\n  rw [Multiset.sum_eq_zero_iff]\n  intro x hx\n  simp only [Multiset.mem_filter] at hx\n  exact hx.2\n\n/-! ### Partition counting functions -/\n\n/-- The partition function `p(n)`: the number of partitions of `n`.\n    (Definition \\ref{def.pars.pn-pkn} (b)) -/",
+          "line": 601,
+          "match_kind": "dependency_local_name",
+          "name": "Nat.Partition.sum_filter_positive",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.ssytFinset",
+          "identifier_from_decline_note": "SSYT",
+          "kind": "structure",
+          "lean_snippet": "structure SSYT {N : ℕ} [NeZero N] (lam : NPartition N) extends YoungTableau lam where\n  /-- Entries increase weakly along rows -/\n  row_weak : ∀ i : Fin N, ∀ j₁ j₂ : ℕ, (i, j₂) ∈ lam.youngDiagram → j₁ < j₂ →\n    entry (i, j₁) ≤ entry (i, j₂)\n  /-- Entries increase strictly down columns -/\n  col_strict : ∀ i₁ i₂ : Fin N, ∀ j : ℕ, (i₂, j) ∈ lam.youngDiagram → i₁ < i₂ →\n    entry (i₁, j) < entry (i₂, j)\n\nnamespace SSYT\n\nvariable {N : ℕ} [NeZero N] {lam : NPartition N}\n\n/-! ### Basic Properties -/\n\n/-- Two SSYTs are equal iff their entries agree on all cells. -/\n@[ext]",
+          "line": 385,
+          "match_kind": "exact_full_name",
+          "name": "SSYT",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.ssytFinset",
+          "identifier_from_decline_note": "ssytFillingFinsetNonSkew",
+          "kind": "def",
+          "lean_snippet": "noncomputable def ssytFillingFinsetNonSkew (lam : NPartition N) : Finset (Filling lam) :=\n  Finset.univ.filter (isSSYTFillingNonSkew lam)\n\n/-- Convert a valid filling to an SSYT. -/",
+          "line": 1189,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.ssytFillingFinsetNonSkew",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.ssytFinset",
+          "identifier_from_decline_note": "fillingToSSYT",
+          "kind": "def",
+          "lean_snippet": "def fillingToSSYT (lam : NPartition N) (f : Filling lam)\n    (hf : isSSYTFillingNonSkew lam f) : SSYT lam where\n  entries := f\n  rowWeak := hf.1\n  colStrict := hf.2\n\n/-- An SSYT's entries form a valid filling. -/",
+          "line": 1193,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.fillingToSSYT",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.ssytFinset",
+          "identifier_from_decline_note": "h",
+          "kind": "abbrev",
+          "lean_snippet": "noncomputable abbrev h (n : ℕ) : P K N := hsymm (Fin N) K n\n\n/-- Complete homogeneous symmetric polynomials are symmetric.\n    Label: def.sf.ehp -/",
+          "line": 790,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.SymmetricPolynomials.h",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.Nipat",
+          "identifier_from_decline_note": "LatticePath",
+          "kind": "structure",
+          "lean_snippet": "structure LatticePath (a c : ℤ) where\n  /-- The sequence of heights at which east-steps are taken.\n      A path from (a, 1) to (c, N) has exactly (c - a) east-steps\n      (when c ≥ a), and each east-step occurs at some height in [1, N]. -/\n  eastStepHeights : List (Fin N)\n  /-- The heights form a weakly increasing sequence (path goes north or east) -/\n  weaklyIncreasing : eastStepHeights.IsChain (· ≤ ·)\n  /-- The number of east-steps equals c - a (when non-negative) -/\n  length_eq : eastStepHeights.length = (c - a).toNat\n\n/-- The weight of a lattice path is the product of x_j for each east-step at height j.\n    This corresponds to the weight function w in the source. -/",
+          "line": 2769,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.LatticePath",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SkewSSYT",
+          "identifier_from_decline_note": "SkewYoungTableau",
+          "kind": "structure",
+          "lean_snippet": "structure SkewYoungTableau {N : ℕ} [NeZero N] (lam mu : NPartition N) where\n  /-- The filling function T : Y(λ/μ) → [N] -/\n  entry : Fin N × ℕ → Fin N\n  /-- The entry is only meaningful for cells in the skew diagram -/\n  support : ∀ c, c ∉ skewYoungDiagram lam mu → entry c = 0\n\nnamespace SkewYoungTableau\n\nvariable {N : ℕ} [NeZero N] {lam mu : NPartition N}\n\n/-- Two skew Young tableaux are equal if their entries agree on the skew diagram -/\n@[ext]",
+          "line": 1875,
+          "match_kind": "exact_full_name",
+          "name": "SkewYoungTableau",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SkewSSYT",
+          "identifier_from_decline_note": "skewYoungDiagram",
+          "kind": "def",
+          "lean_snippet": "def skewYoungDiagram {N : ℕ} [NeZero N] (lam mu : NPartition N) : Finset (Fin N × ℕ) :=\n  lam.youngDiagram \\ mu.youngDiagram\n\n/-- Membership in a skew Young diagram: (i, j) ∈ Y(λ/μ) iff μ_i ≤ j < λ_i.\n    This is the 0-indexed version of the textbook condition μ_i < j ≤ λ_i. -/",
+          "line": 1797,
+          "match_kind": "exact_full_name",
+          "name": "skewYoungDiagram",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.SkewSSYT",
+          "identifier_from_decline_note": "SkewPartition",
+          "kind": "structure",
+          "lean_snippet": "structure SkewPartition (N : ℕ) where\n  /-- The outer partition λ -/\n  outer : NPartition N\n  /-- The inner partition μ -/\n  inner : NPartition N\n  /-- The containment condition μ ⊆ λ -/\n  contained : inner ≤ outer\n\nnamespace SkewPartition\n\nvariable {N : ℕ}\n\n/-- The size of a skew partition |Y(λ/μ)| = |λ| - |μ| -/",
+          "line": 616,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.SkewPartition",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.potentialVerticalStrips",
+          "identifier_from_decline_note": "verticalStripUpperBound",
+          "kind": "def",
+          "lean_snippet": "def verticalStripUpperBound (mu : NPartition N) (i : Fin N) : ℕ :=\n  mu.parts i + 1\n\n/-- A function from Fin N to ℕ that could potentially form a vertical n-strip with μ. -/",
+          "line": 1505,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.verticalStripUpperBound",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV1.LatticeStep.apply",
+          "identifier_from_decline_note": "LatticeStep",
+          "kind": "inductive",
+          "lean_snippet": "inductive LatticeStep : Type\n  | east : LatticeStep  -- (i,j) → (i+1,j)\n  | north : LatticeStep -- (i,j) → (i,j+1)\n  deriving DecidableEq, Repr, Fintype\n\n/-- Apply a step to a lattice point. -/",
+          "line": 241,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticeStep",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "LGV1.LatticeStep.apply",
+          "identifier_from_decline_note": "LatticePoint",
+          "kind": "abbrev",
+          "lean_snippet": "abbrev LatticePoint := ℤ × ℤ\n\n/-- The x-coordinate of a lattice point. -/",
+          "line": 109,
+          "match_kind": "dependency_local_name",
+          "name": "LGV1.LatticePoint",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "AlgebraicCombinatorics.SymmetricPolynomials.p",
+          "identifier_from_decline_note": "P",
+          "kind": "abbrev",
+          "lean_snippet": "abbrev P (K : Type*) [CommRing K] (N : ℕ) : Type _ := MvPolynomial (Fin N) K\n\n/-!\n## The Symmetric Group Action (Definition def.sf.PS (b))\n\nThe symmetric group S_N acts on P by permuting variables:\n  σ · f = f[x_{σ(1)}, x_{σ(2)}, ..., x_{σ(N)}]\n\nIn Mathlib, this is given by `MvPolynomial.rename σ f` where σ : Equiv.Perm (Fin N).\n-/\n\n/-- The action of a permutation on a polynomial by renaming variables.\n    This is σ · f = f[x_{σ(1)}, ..., x_{σ(N)}] in the source.\n    Label: def.sf.PS -/",
+          "line": 66,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.SymmetricPolynomials.P",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "PowerSeries.XnEquiv.sum",
+          "identifier_from_decline_note": "XnEquiv",
+          "kind": "def",
+          "lean_snippet": "def XnEquiv (n : ℕ) (f g : R⟦X⟧) : Prop :=\n  ∀ m ≤ n, coeff m f = coeff m g\n\n/-- Notation for x^n-equivalence: `f ≡[x^n] g` means `XnEquiv n f g`.\nThis notation is used throughout the limits and infinite products theory. -/\nnotation:50 f \" ≡[x^\" n \"] \" g => XnEquiv n f g\n\n/-! ### Basic properties: Equivalence relation (Theorem thm.fps.xneq.props (a)) -/\n\n/-- x^n-equivalence is reflexive. -/",
+          "line": 65,
+          "match_kind": "dependency_local_name",
+          "name": "PowerSeries.XnEquiv",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SSYT",
+          "identifier_from_decline_note": "YoungTableau",
+          "kind": "structure",
+          "lean_snippet": "structure YoungTableau {N : ℕ} [NeZero N] (lam : NPartition N) where\n  /-- The filling function -/\n  entry : Fin N × ℕ → Fin N\n  /-- The entry is only meaningful for cells in the diagram -/\n  support : ∀ c, c ∉ lam.youngDiagram → entry c = 0\n\nnamespace YoungTableau\n\nvariable {N : ℕ} [NeZero N] {lam : NPartition N}\n\n/-- Two Young tableaux are equal iff their entries agree. -/\n@[ext]",
+          "line": 290,
+          "match_kind": "exact_full_name",
+          "name": "YoungTableau",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SSYT",
+          "identifier_from_decline_note": "lam.youngDiagram",
+          "kind": "def",
+          "lean_snippet": "def youngDiagram (μ : NPartition N) : Finset (Fin N × ℕ) :=\n  Finset.univ.biUnion fun i => (Finset.range (μ.parts i)).map\n    ⟨fun j => (i, j), fun _ _ h => by simp at h; exact h⟩\n\n/-- Membership in a Young diagram: (i, j) ∈ Y(λ) iff j < λ_i.\n    This is the 0-indexed version of the textbook condition j ∈ [λ_i].\n    Definition def.sf.ydiag in the source. -/",
+          "line": 651,
+          "match_kind": "dependency_local_name",
+          "name": "NPartition.youngDiagram",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SSYT",
+          "identifier_from_decline_note": "ext",
+          "kind": "theorem",
+          "lean_snippet": "theorem ext {T₁ T₂ : YoungTableau lam} (h : ∀ c, T₁.entry c = T₂.entry c) : T₁ = T₂ := by\n  cases T₁; cases T₂\n  simp only [mk.injEq]\n  funext c\n  exact h c\n\n/-- Coercion to function, allowing T c notation. -/\ninstance : CoeFun (YoungTableau lam) (fun _ => Fin N × ℕ → Fin N) := ⟨entry⟩\n\n/-- Entry at row i, column j. -/",
+          "line": 302,
+          "match_kind": "dependency_local_name",
+          "name": "YoungTableau.ext",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.ssytFillingFinsetNonSkew",
+          "identifier_from_decline_note": "Filling",
+          "kind": "def",
+          "lean_snippet": "def Filling {N : ℕ} [NeZero N] (lam : NPartition N) : Type :=\n  { c // c ∈ lam.youngDiagram } → Fin N\n\n/-- Fillings are finite. -/",
+          "line": 615,
+          "match_kind": "exact_full_name",
+          "name": "Filling",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.ssytFillingFinsetNonSkew",
+          "identifier_from_decline_note": "isSSYTFillingNonSkew",
+          "kind": "def",
+          "lean_snippet": "def isSSYTFillingNonSkew (lam : NPartition N) (f : Filling lam) : Prop :=\n  isRowWeakFilling lam f ∧ isColStrictFilling lam f\n\n/-- Decidability of row-weak for non-skew fillings. -/",
+          "line": 1173,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.isSSYTFillingNonSkew",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.LatticePath",
+          "identifier_from_decline_note": "eastStepHeights.length",
+          "kind": "def",
+          "lean_snippet": "def length (σ : Perm (Fin n)) : ℕ := (inversions σ).card\n\n/-- Notation for length. -/\nscoped notation \"ℓ\" => length\n\n/-! ### Equivalence with Inversions1 definitions -/\n\n/-- `Equiv.Perm.inversions` equals `AlgebraicCombinatorics.Perm.inv`. -/\n@[simp]",
+          "line": 180,
+          "match_kind": "dependency_local_name",
+          "name": "Equiv.Perm.length",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "PowerSeries.XnEquiv",
+          "identifier_from_decline_note": "coeff",
+          "kind": "def",
+          "lean_snippet": "def coeff (f : DoublyInfinitePowerSeries K) (n : ℤ) : K := f n\n\n/-- Two doubly infinite power series are equal iff all their coefficients are equal -/\n@[ext]",
+          "line": 793,
+          "match_kind": "dependency_local_name",
+          "name": "AlgebraicCombinatorics.DoublyInfinitePowerSeries.coeff",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/LaurentSeries.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.isSSYTFillingNonSkew",
+          "identifier_from_decline_note": "isRowWeakFilling",
+          "kind": "def",
+          "lean_snippet": "def isRowWeakFilling (lam : NPartition N) (f : Filling lam) : Prop :=\n  ∀ i : Fin N, ∀ j k : Fin (lam.parts i), j ≤ k → f i j ≤ f i k\n\n/-- Column-strict predicate for fillings of non-skew shapes. -/",
+          "line": 1163,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.isRowWeakFilling",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "SymmetricFunctions.isSSYTFillingNonSkew",
+          "identifier_from_decline_note": "isColStrictFilling",
+          "kind": "def",
+          "lean_snippet": "def isColStrictFilling (lam : NPartition N) (f : Filling lam) : Prop :=\n  ∀ i : Fin N, ∀ hi : i.val + 1 < N, ∀ j : Fin (lam.parts i),\n    ∀ hj : j.val < (lam.parts ⟨i.val + 1, hi⟩),\n    f i j < f ⟨i.val + 1, hi⟩ ⟨j.val, hj⟩\n\n/-- Combined SSYT predicate for non-skew fillings. -/",
+          "line": 1167,
+          "match_kind": "dependency_local_name",
+          "name": "SymmetricFunctions.isColStrictFilling",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "proof_lane_decline_context_dependency_closure",
+          "dependency_of": "Equiv.Perm.length",
+          "identifier_from_decline_note": "inversions",
+          "kind": "def",
+          "lean_snippet": "def inversions (σ : Perm (Fin n)) : Finset (Fin n × Fin n) :=\n  Finset.filter (fun p => p.1 < p.2 ∧ σ p.2 < σ p.1) (Finset.univ)\n\n/-- The length of a permutation is the number of its inversions. -/",
+          "line": 176,
+          "match_kind": "dependency_local_name",
+          "name": "Equiv.Perm.inversions",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
+          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 86,
+          "name": "variable {N : ℕ}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 53,
+          "name": "variable {K : Type*} [CommRing K]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 54,
+          "name": "variable {N : ℕ}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 786,
+          "name": "variable [DecidableEq (Fin N)]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 56,
+          "name": "variable {R : Type*} [CommSemiring R]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 246,
+          "name": "variable {ι : Type*}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 47,
+          "name": "variable (N : ℕ) [NeZero N]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 139,
+          "name": "variable {R : Type*} [CommRing R]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 298,
+          "name": "variable {N : ℕ} [NeZero N] {lam : NPartition N}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 83,
+          "name": "variable {N : ℕ} {R : Type*} [CommRing R]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 123,
+          "name": "variable {N : ℕ}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 93,
+          "name": "variable {n : ℕ}",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        },
+        {
+          "context_source": "project_source_variable_context_for_dependency",
+          "kind": "variable",
+          "line": 786,
+          "name": "variable {K : Type*} [Semiring K]",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/LaurentSeries.lean",
+          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
+        }
+      ],
+      "selected_project_context_count": 51,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "thm.sf.jt-e"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e",
+      "unit_key": "unit-005"
+    },
+    {
+      "dependency_project_context_count": 0,
+      "excluded_hidden_candidate_count": 0,
+      "excluded_hidden_dependency_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 2,
+        "same_source_hidden_range_count": 2
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1",
+      "selected_project_context": [],
+      "selected_project_context_count": 0,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "lem.fps.prod.irlv.cong-div"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001"
+    },
+    {
+      "dependency_project_context_count": 0,
+      "excluded_hidden_candidate_count": 0,
+      "excluded_hidden_dependency_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 5,
+        "same_source_hidden_range_count": 5
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1",
+      "selected_project_context": [],
+      "selected_project_context_count": 0,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "prop.sf.Npar-as-par"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-005"
+    }
+  ]
+}
