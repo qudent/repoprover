@@ -177,6 +177,8 @@ def row_from_generation(root: Path) -> dict[str, Any]:
                 "verification_artifact": str(verification_path),
                 "compile_passed_units": verification_summary.get("compile_passed_units"),
                 "failure_class_counts": verification_summary.get("failure_class_counts") or {},
+                "verification_lean_call_count": verification_summary.get("lean_call_count"),
+                "verification_lean_elapsed_seconds": verification_summary.get("lean_elapsed_seconds"),
             }
         )
     if semantic := latest_semantic_summary(root):

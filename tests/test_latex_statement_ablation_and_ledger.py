@@ -140,6 +140,8 @@ def test_run_ledger_records_panel_generation_and_acceptance(tmp_path: Path) -> N
             {
                 "compile_passed_units": 1,
                 "failure_class_counts": {"compiled": 1},
+                "lean_call_count": 7,
+                "lean_elapsed_seconds": 12.5,
             }
         ),
         encoding="utf-8",
@@ -200,6 +202,8 @@ def test_run_ledger_records_panel_generation_and_acceptance(tmp_path: Path) -> N
     assert rows[1]["tokens"]["prompt_tokens"] == 70
     assert rows[1]["compile_passed_units"] == 1
     assert rows[1]["failure_class_counts"] == {"compiled": 1}
+    assert rows[1]["verification_lean_call_count"] == 7
+    assert rows[1]["verification_lean_elapsed_seconds"] == 12.5
     assert rows[1]["verification_artifact"].endswith("verification-results-360s.json")
     assert rows[1]["semantic_passed_units"] == 1
     assert rows[1]["semantic_artifact"].endswith("semantic-coverage-360s.json")

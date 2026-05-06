@@ -40,7 +40,13 @@
         "open PowerSeries",
         "open Nat Finset"
       ],
+      "lean_call_count": 15,
+      "lean_elapsed_seconds": 178.591,
       "materialize_visible_support": true,
+      "open_validation_stats": {
+        "elapsed_seconds": 37.496,
+        "lean_call_count": 3
+      },
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
@@ -72,6 +78,7 @@
             "fps_invertible_iff_constantCoeff_field"
           ],
           "failure_class": "compiled",
+          "lean_elapsed_seconds": 12.446,
           "lean_error_count": 0,
           "lean_returncode": 0,
           "messages": [],
@@ -103,8 +110,11 @@
             ],
             "accepted_count": 3,
             "candidate_count": 8,
+            "elapsed_seconds": 128.649,
+            "lean_call_count": 11,
             "rejected": [
               {
+                "elapsed_seconds": 12.48,
                 "kind": "def",
                 "lean_error_count": 1,
                 "lean_returncode": 1,
@@ -123,6 +133,7 @@
                 "stderr": ""
               },
               {
+                "elapsed_seconds": 11.753,
                 "kind": "theorem",
                 "lean_error_count": 5,
                 "lean_returncode": 1,
@@ -169,6 +180,7 @@
                 "stderr": ""
               },
               {
+                "elapsed_seconds": 11.954,
                 "kind": "theorem",
                 "lean_error_count": 6,
                 "lean_returncode": 1,
@@ -215,6 +227,7 @@
                 "stderr": ""
               },
               {
+                "elapsed_seconds": 12.636,
                 "kind": "theorem",
                 "lean_error_count": 2,
                 "lean_returncode": 1,
@@ -282,7 +295,13 @@
       "inferred_opens": [
         "open Finset BigOperators"
       ],
+      "lean_call_count": 13,
+      "lean_elapsed_seconds": 188.537,
       "materialize_visible_support": true,
+      "open_validation_stats": {
+        "elapsed_seconds": 12.569,
+        "lean_call_count": 1
+      },
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
@@ -310,6 +329,7 @@
             "cancel_all_even_l1"
           ],
           "failure_class": "compile_failure",
+          "lean_elapsed_seconds": 46.392,
           "lean_error_count": 7,
           "lean_returncode": 1,
           "messages": [
@@ -427,8 +447,11 @@
             ],
             "accepted_count": 9,
             "candidate_count": 10,
+            "elapsed_seconds": 129.576,
+            "lean_call_count": 11,
             "rejected": [
               {
+                "elapsed_seconds": 13.098,
                 "kind": "theorem",
                 "lean_error_count": 1,
                 "lean_returncode": 1,
@@ -462,9 +485,11 @@
     "compiled": 1
   },
   "filter_target_module_imports": true,
-  "generated_at": "2026-05-06T16:44:02.895576+00:00",
+  "generated_at": "2026-05-06T17:22:03.478016+00:00",
   "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-pro-highreason-units002-004",
   "infer_context": true,
+  "lean_call_count": 28,
+  "lean_elapsed_seconds": 367.128,
   "materialize_visible_support": true,
   "project_root": "algebraic-combinatorics",
   "schema_version": "repoprover.latex_statement_generation_verification.v1",

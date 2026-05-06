@@ -128,6 +128,11 @@ dev/fresh panels plus one-off diagnostics.
   as-is: unit 002 returned 10,264 reasoning tokens, null assistant content, no
   JSON, cost `$0.05606217`; unit 004 was interrupted after >35 min with no
   response. See the interruption audit in the run artifact.
+- Added verifier timing/counter instrumentation and a reusable failure overview
+  script. The timed DeepSeek-high two-unit verifier rerun used 28 Lean calls and
+  367.128s cumulative Lean elapsed; support checks alone used 22 calls and
+  258.225s. Current overview is
+  `reports/latex-statement-failure-overview-20260506T1715Z.md`.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and native session JSONL under
@@ -142,6 +147,6 @@ dev/fresh panels plus one-off diagnostics.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: speed up/batch Lean support checks, then route failures by
+- Next useful work: batch/cache Lean support checks, then route failures by
   class. Current failures are mostly clean declines or real proof/API errors,
   not no-sorry contract violations.

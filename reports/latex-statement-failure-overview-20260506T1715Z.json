@@ -1,0 +1,311 @@
+{
+  "generated_at": "2026-05-06T17:23:07.679990+00:00",
+  "runs": [
+    {
+      "compile_passed_units": 0,
+      "contract_violation_counts": {},
+      "failure_class_counts": {
+        "compile_failure": 1,
+        "declined_cannot_prove": 4
+      },
+      "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-pro",
+      "lean_call_count": null,
+      "lean_elapsed_seconds": null,
+      "lean_error_kind_counts": {
+        "lean.unknownIdentifier._namedError": 1
+      },
+      "lean_error_signature_counts": {
+        "Unknown identifier `isUnit_of_ne_zero`": 1
+      },
+      "placeholder_token_counts": {},
+      "reported_status_counts": {
+        "cannot_prove_from_visible_context": 4,
+        "generated": 1
+      },
+      "support_totals": {
+        "accepted_count": 29,
+        "candidate_count": 57,
+        "elapsed_seconds": 0.0,
+        "lean_call_count": 0,
+        "rejected_count": 26,
+        "skipped_count": 2
+      },
+      "unit_count": 5,
+      "units": [
+        {
+          "compile_passed": false,
+          "failure_class": "declined_cannot_prove",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 0,
+          "reported_status": "cannot_prove_from_visible_context",
+          "support": {
+            "accepted_count": 1,
+            "candidate_count": 12,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 11,
+            "skipped_count": 0
+          },
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "compile_failure",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 1,
+          "reported_status": "generated",
+          "support": {
+            "accepted_count": 3,
+            "candidate_count": 8,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 4,
+            "skipped_count": 1
+          },
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "declined_cannot_prove",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 0,
+          "reported_status": "cannot_prove_from_visible_context",
+          "support": {
+            "accepted_count": 7,
+            "candidate_count": 14,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 7,
+            "skipped_count": 0
+          },
+          "unit_key": "unit-003"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "declined_cannot_prove",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 0,
+          "reported_status": "cannot_prove_from_visible_context",
+          "support": {
+            "accepted_count": 9,
+            "candidate_count": 10,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 1,
+            "skipped_count": 0
+          },
+          "unit_key": "unit-004"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "declined_cannot_prove",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 0,
+          "reported_status": "cannot_prove_from_visible_context",
+          "support": {
+            "accepted_count": 9,
+            "candidate_count": 13,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 3,
+            "skipped_count": 1
+          },
+          "unit_key": "unit-005"
+        }
+      ],
+      "verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-pro/eval/verification-results-360s.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "contract_violation_counts": {},
+      "failure_class_counts": {
+        "compile_failure": 2,
+        "declined_cannot_prove": 3
+      },
+      "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
+      "lean_call_count": null,
+      "lean_elapsed_seconds": null,
+      "lean_error_kind_counts": {
+        "Tactic.unsolvedGoals": 1,
+        "[anonymous]": 2,
+        "lean.unknownIdentifier._namedError": 1
+      },
+      "lean_error_signature_counts": {
+        "Invalid rewrite argument: Expected an equality or iff proof or definition name, but `signProduct ?e": 1,
+        "Tactic `apply` failed: could not unify the conclusion of `@funext`": 1,
+        "Unknown identifier `fps_invertible_iff_constantCoeff`": 1,
+        "unsolved goals": 1
+      },
+      "placeholder_token_counts": {},
+      "reported_status_counts": {
+        "cannot_prove_from_visible_context": 3,
+        "generated": 2
+      },
+      "support_totals": {
+        "accepted_count": 29,
+        "candidate_count": 57,
+        "elapsed_seconds": 0.0,
+        "lean_call_count": 0,
+        "rejected_count": 26,
+        "skipped_count": 2
+      },
+      "unit_count": 5,
+      "units": [
+        {
+          "compile_passed": false,
+          "failure_class": "declined_cannot_prove",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 0,
+          "reported_status": "cannot_prove_from_visible_context",
+          "support": {
+            "accepted_count": 1,
+            "candidate_count": 12,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 11,
+            "skipped_count": 0
+          },
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "compile_failure",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 2,
+          "reported_status": "generated",
+          "support": {
+            "accepted_count": 3,
+            "candidate_count": 8,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 4,
+            "skipped_count": 1
+          },
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "declined_cannot_prove",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 0,
+          "reported_status": "cannot_prove_from_visible_context",
+          "support": {
+            "accepted_count": 7,
+            "candidate_count": 14,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 7,
+            "skipped_count": 0
+          },
+          "unit_key": "unit-003"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "compile_failure",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 2,
+          "reported_status": "generated",
+          "support": {
+            "accepted_count": 9,
+            "candidate_count": 10,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 1,
+            "skipped_count": 0
+          },
+          "unit_key": "unit-004"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "declined_cannot_prove",
+          "lean_elapsed_seconds": null,
+          "lean_error_count": 0,
+          "reported_status": "cannot_prove_from_visible_context",
+          "support": {
+            "accepted_count": 9,
+            "candidate_count": 13,
+            "elapsed_seconds": null,
+            "lean_call_count": null,
+            "rejected_count": 3,
+            "skipped_count": 1
+          },
+          "unit_key": "unit-005"
+        }
+      ],
+      "verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/verification-results-360s.json"
+    },
+    {
+      "compile_passed_units": 1,
+      "contract_violation_counts": {},
+      "failure_class_counts": {
+        "compile_failure": 1,
+        "compiled": 1
+      },
+      "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-pro-highreason-units002-004",
+      "lean_call_count": 28,
+      "lean_elapsed_seconds": 367.128,
+      "lean_error_kind_counts": {
+        "[anonymous]": 5,
+        "lean.unknownIdentifier._namedError": 1,
+        "runtime.maxHeartbeats": 1
+      },
+      "lean_error_signature_counts": {
+        "(deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached": 1,
+        "Application type mismatch: The argument": 1,
+        "Function expected at": 2,
+        "Tactic `rewrite` failed: Did not find an occurrence of the pattern": 1,
+        "Unknown constant `Fin.snoc_injective`": 1,
+        "unexpected token ','; expected '↦', '=>'": 1
+      },
+      "placeholder_token_counts": {},
+      "reported_status_counts": {
+        "generated": 2
+      },
+      "support_totals": {
+        "accepted_count": 12,
+        "candidate_count": 18,
+        "elapsed_seconds": 258.225,
+        "lean_call_count": 22,
+        "rejected_count": 5,
+        "skipped_count": 1
+      },
+      "unit_count": 2,
+      "units": [
+        {
+          "compile_passed": true,
+          "failure_class": "compiled",
+          "lean_elapsed_seconds": 12.446,
+          "lean_error_count": 0,
+          "reported_status": "generated",
+          "support": {
+            "accepted_count": 3,
+            "candidate_count": 8,
+            "elapsed_seconds": 128.649,
+            "lean_call_count": 11,
+            "rejected_count": 4,
+            "skipped_count": 1
+          },
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "failure_class": "compile_failure",
+          "lean_elapsed_seconds": 46.392,
+          "lean_error_count": 7,
+          "reported_status": "generated",
+          "support": {
+            "accepted_count": 9,
+            "candidate_count": 10,
+            "elapsed_seconds": 129.576,
+            "lean_call_count": 11,
+            "rejected_count": 1,
+            "skipped_count": 0
+          },
+          "unit_key": "unit-004"
+        }
+      ],
+      "verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-pro-highreason-units002-004/eval/verification-results-360s.json"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_failure_overview.v1"
+}

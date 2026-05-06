@@ -7,6 +7,7 @@ import argparse
 import json
 import re
 import subprocess
+import time
 from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
@@ -724,6 +725,8 @@ def validate_open_statements(
 ) -> dict[str, Any]:
     accepted: list[str] = []
     rejected: list[dict[str, Any]] = []
+    lean_call_count = 0
+    elapsed_seconds = 0.0
     for statement in open_statements:
         trial_opens = [*base_opens, *accepted, statement]
         result = run_lean_source(
@@ -731,6 +734,8 @@ def validate_open_statements(
             project_root=project_root,
             timeout_seconds=timeout_seconds,
         )
+        lean_call_count += 1
+        elapsed_seconds += float(result.get("elapsed_seconds") or 0.0)
         errors = lean_errors(result)
         if result["returncode"] == 0 and not errors:
             accepted.append(statement)
@@ -742,9 +747,15 @@ def validate_open_statements(
                 "lean_error_count": len(errors),
                 "messages": result["messages"][:5],
                 "stderr": result["stderr"],
+                "elapsed_seconds": result.get("elapsed_seconds"),
             }
         )
-    return {"accepted": accepted, "rejected": rejected}
+    return {
+        "accepted": accepted,
+        "rejected": rejected,
+        "lean_call_count": lean_call_count,
+        "elapsed_seconds": round(elapsed_seconds, 3),
+    }
 
 
 def declared_names_in_body(body: str) -> list[str]:
@@ -779,6 +790,7 @@ def run_lean_source(
     timeout_seconds: float,
 ) -> dict[str, Any]:
     command = ["lake", "env", "lean", "--stdin", "--json"]
+    started = time.monotonic()
     try:
         result = subprocess.run(
             command,
@@ -790,6 +802,7 @@ def run_lean_source(
             check=False,
         )
     except subprocess.TimeoutExpired as exc:
+        elapsed_seconds = round(time.monotonic() - started, 3)
         stdout = (
             exc.stdout.decode("utf-8", errors="replace")
             if isinstance(exc.stdout, bytes)
@@ -805,11 +818,13 @@ def run_lean_source(
             "returncode": 124,
             "messages": parse_lean_json(stdout),
             "stderr": f"{stderr}\n{timeout_message}".strip(),
+            "elapsed_seconds": elapsed_seconds,
         }
     return {
         "returncode": result.returncode,
         "messages": parse_lean_json(result.stdout),
         "stderr": result.stderr,
+        "elapsed_seconds": round(time.monotonic() - started, 3),
     }
 
 
@@ -832,6 +847,8 @@ def materialize_visible_support_context(
         seen_text.add(text)
         pending.append(candidate)
     final_rejections: dict[str, dict[str, Any]] = {}
+    lean_call_count = 0
+    elapsed_seconds = 0.0
     while pending:
         next_pending: list[dict[str, str]] = []
         progress = False
@@ -843,6 +860,8 @@ def materialize_visible_support_context(
                 project_root=project_root,
                 timeout_seconds=timeout_seconds,
             )
+            lean_call_count += 1
+            elapsed_seconds += float(result.get("elapsed_seconds") or 0.0)
             errors = [message for message in result["messages"] if message.get("severity") == "error"]
             if result["returncode"] == 0 and not errors:
                 support_context.append(text)
@@ -855,6 +874,7 @@ def materialize_visible_support_context(
                     "lean_error_count": len(errors),
                     "messages": result["messages"][:5],
                     "stderr": result["stderr"],
+                    "elapsed_seconds": result.get("elapsed_seconds"),
                 }
                 next_pending.append(candidate)
         if not progress:
@@ -866,6 +886,8 @@ def materialize_visible_support_context(
         "accepted": accepted,
         "rejected": rejected,
         "candidate_count": len(candidates),
+        "lean_call_count": lean_call_count,
+        "elapsed_seconds": round(elapsed_seconds, 3),
     }
 
 
@@ -897,6 +919,7 @@ def available_support_candidate_names(
         project_root=project_root,
         timeout_seconds=timeout_seconds,
     )
+    elapsed_seconds = result.get("elapsed_seconds")
     base_line_errors = [
         message
         for message in result["messages"]
@@ -986,7 +1009,8 @@ def verify_generation_output(
             "placeholder_tokens": placeholders,
             "contract_violations": contract_violations,
             "lean_returncode": lean_result["returncode"],
-                "lean_error_count": len(errors),
+            "lean_error_count": len(errors),
+            "lean_elapsed_seconds": lean_result.get("elapsed_seconds"),
             "compile_passed": compile_passed,
             "messages": lean_result["messages"],
             "stderr": lean_result["stderr"],
@@ -1016,6 +1040,22 @@ def failure_class_counts(units: list[dict[str, Any]]) -> dict[str, int]:
         failure_class = str(unit.get("failure_class") or "unclassified")
         counts[failure_class] = counts.get(failure_class, 0) + 1
     return dict(sorted(counts.items()))
+
+
+def support_audit_lean_call_count(support_audit_by_unit: dict[str, dict[str, Any]]) -> int:
+    return sum(int(audit.get("lean_call_count") or 0) for audit in support_audit_by_unit.values())
+
+
+def support_audit_elapsed_seconds(support_audit_by_unit: dict[str, dict[str, Any]]) -> float:
+    return sum(float(audit.get("elapsed_seconds") or 0.0) for audit in support_audit_by_unit.values())
+
+
+def unit_lean_call_count(units: list[dict[str, Any]]) -> int:
+    return sum(1 for unit in units if unit.get("lean_returncode") is not None)
+
+
+def unit_lean_elapsed_seconds(units: list[dict[str, Any]]) -> float:
+    return sum(float(unit.get("lean_elapsed_seconds") or 0.0) for unit in units)
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
@@ -1063,6 +1103,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         filtered_opens = [statement for statement in inferred["opens"] if statement not in inferred_opens]
         imports = unique_in_order([*args.imports, *inferred_imports])
         rejected_invalid_opens: list[dict[str, Any]] = []
+        open_validation_stats = {"lean_call_count": 0, "elapsed_seconds": 0.0}
         if getattr(args, "validate_inferred_opens", True) and inferred_opens:
             open_validation = validate_open_statements(
                 inferred_opens,
@@ -1073,6 +1114,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             )
             inferred_opens = open_validation["accepted"]
             rejected_invalid_opens = open_validation["rejected"]
+            open_validation_stats = {
+                "lean_call_count": open_validation["lean_call_count"],
+                "elapsed_seconds": open_validation["elapsed_seconds"],
+            }
         opens = unique_in_order([*args.opens, *inferred_opens])
         support_context_by_unit: dict[str, list[str]] = {}
         support_audit_by_unit: dict[str, dict[str, Any]] = {}
@@ -1120,6 +1165,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                         "accepted_count": len(support["accepted"]),
                         "rejected_count": len(support["rejected"]),
                         "skipped_count": len(skipped),
+                        "lean_call_count": support["lean_call_count"],
+                        "elapsed_seconds": support["elapsed_seconds"],
                         "support_mode": support_mode,
                         "accepted": support["accepted"],
                         "skipped": skipped,
@@ -1139,6 +1186,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     "accepted_count": len(support["accepted"]),
                     "rejected_count": len(support["rejected"]),
                     "skipped_count": 0,
+                    "lean_call_count": support["lean_call_count"],
+                    "elapsed_seconds": support["elapsed_seconds"],
                     "support_mode": support_mode,
                     "accepted": support["accepted"],
                     "skipped": [],
@@ -1167,12 +1216,24 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "hidden_target_namespaces": hidden_target_namespaces,
                 "filtered_target_namespace_opens": filtered_opens,
                 "filtered_invalid_inferred_opens": rejected_invalid_opens,
+                "open_validation_stats": open_validation_stats,
                 "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
                 "support_mode": str(getattr(args, "support_mode", "body") or "body"),
                 "units": units,
                 "compile_passed_units": sum(1 for unit in units if unit["compile_passed"]),
                 "failure_class_counts": failure_class_counts(units),
                 "unit_count": len(units),
+                "lean_call_count": (
+                    int(open_validation_stats["lean_call_count"])
+                    + support_audit_lean_call_count(support_audit_by_unit)
+                    + unit_lean_call_count(units)
+                ),
+                "lean_elapsed_seconds": round(
+                    float(open_validation_stats["elapsed_seconds"])
+                    + support_audit_elapsed_seconds(support_audit_by_unit)
+                    + unit_lean_elapsed_seconds(units),
+                    3,
+                ),
             }
         )
     summary = {
@@ -1193,6 +1254,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             [unit for batch in batches for unit in batch["units"]]
         ),
         "unit_count": sum(batch["unit_count"] for batch in batches),
+        "lean_call_count": sum(int(batch.get("lean_call_count") or 0) for batch in batches),
+        "lean_elapsed_seconds": round(
+            sum(float(batch.get("lean_elapsed_seconds") or 0.0) for batch in batches),
+            3,
+        ),
     }
     write_json(args.output, summary)
     return summary
