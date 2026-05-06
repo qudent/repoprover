@@ -3,7 +3,13 @@
 import argparse
 import json
 
-from scripts.verify_latex_statement_generation import build_lean_source, payload_context, run, verify_generation_output
+from scripts.verify_latex_statement_generation import (
+    build_lean_source,
+    payload_context,
+    run,
+    verify_generation_output,
+    visible_support_candidates_for_unit,
+)
 
 
 def test_build_lean_source_adds_imports_and_opens() -> None:
@@ -23,6 +29,42 @@ def test_build_lean_source_closes_support_namespaces_before_body() -> None:
 
     assert "namespace Box" in source
     assert source.index("end Box") < source.index("theorem demo")
+
+
+def test_visible_support_scopes_variables_to_matching_snippets() -> None:
+    candidates = visible_support_candidates_for_unit(
+        {
+            "local_file_context_candidates": [
+                {"kind": "variable", "name": "variable {K : Type*} [CommRing K]", "path": "A.lean"},
+                {"kind": "variable", "name": "variable {K : Type*} [Field K] [Algebra ℚ K]", "path": "B.lean"},
+                {"kind": "variable", "name": "variable (K) in", "path": "A.lean"},
+            ],
+            "planned_declarations": [
+                {
+                    "available_prior_project_context": [
+                        {
+                            "project_declarations": [
+                                {
+                                    "kind": "theorem",
+                                    "name": "A.helper",
+                                    "path": "A.lean",
+                                    "lean_snippet": "theorem helper {K : Type*} [CommRing K] : True := by\n  trivial",
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+        }
+    )
+
+    assert len(candidates) == 1
+    assert candidates[0]["name"] == "A.helper"
+    assert "variable {K : Type*} [CommRing K]" in candidates[0]["text"]
+    assert "[Algebra ℚ K]" not in candidates[0]["text"]
+    assert "variable (K) in" not in candidates[0]["text"]
+    assert candidates[0]["text"].startswith("section\n")
+    assert candidates[0]["text"].endswith("\nend")
 
 
 def test_verify_generation_output_classifies_placeholders(monkeypatch, tmp_path) -> None:

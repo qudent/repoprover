@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"fps_invertible_iff_constantCoeff_field\"\n      ],\n      \"lean_file_body\": \"theorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\\n  rw [fps_invertible_iff_constantCoeff, isUnit_iff_ne_zero]\",\n      \"notes\": [\n        \"Uses prior project lemma fps_invertible_iff_constantCoeff and the field fact that an element is a unit iff nonzero.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-002\",\n      \"used_context\": [\n        \"AlgebraicCombinatorics.fps_invertible_iff_constantCoeff\",\n        \"isUnit_iff_ne_zero (field property)\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778057776,
+  "id": "gen-1778057776-CrFeXMyeqfEMFZ3AagTW",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 210,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0010230136,
+    "cost_details": {
+      "upstream_inference_completions_cost": 5.88e-05,
+      "upstream_inference_cost": 0.0010230136,
+      "upstream_inference_prompt_cost": 0.0009642136
+    },
+    "is_byok": false,
+    "prompt_tokens": 7389,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 512,
+      "video_tokens": 0
+    },
+    "total_tokens": 7599
+  }
+}

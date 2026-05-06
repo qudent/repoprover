@@ -1,0 +1,751 @@
+{
+  "exact_identifier_count": 9,
+  "fallback_exact_identifier_count": 8,
+  "fallback_lean_check": {
+    "checked": {
+      "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum": {
+        "messages": [
+          {
+            "data": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum.{u, v, w} {α : Type u} {β : Type v} {M : Type w} [DecidableEq β]\n  {s : Finset α} {t : Finset β} {f : α → β} {w : α → M} {b : M} [AddCommMonoid M] [LinearOrder M]\n  [IsOrderedCancelAddMonoid M] (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) :\n  ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum.{u, v, w} {α : Type u} {β : Type v} {M : Type w} [DecidableEq β]\n  {s : Finset α} {t : Finset β} {f : α → β} {w : α → M} {b : M} [AddCommMonoid M] [LinearOrder M]\n  [IsOrderedCancelAddMonoid M] (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) :\n  ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x",
+        "status": "checked"
+      },
+      "Finset.piAntidiag": {
+        "messages": [
+          {
+            "data": "Finset.piAntidiag.{u_1, u_2} {ι : Type u_1} {μ : Type u_2} [DecidableEq ι] [AddCommMonoid μ] [HasAntidiagonal μ]\n  [DecidableEq μ] (s : Finset ι) (n : μ) : Finset (ι → μ)",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.piAntidiag.{u_1, u_2} {ι : Type u_1} {μ : Type u_2} [DecidableEq ι] [AddCommMonoid μ] [HasAntidiagonal μ]\n  [DecidableEq μ] (s : Finset ι) (n : μ) : Finset (ι → μ)",
+        "status": "checked"
+      },
+      "Finset.prod_sum": {
+        "messages": [
+          {
+            "data": "Finset.prod_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  (s : Finset ι) (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f (↑x) (p ↑x ⋯)",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.prod_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  (s : Finset ι) (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f (↑x) (p ↑x ⋯)",
+        "status": "checked"
+      },
+      "Finset.prod_univ_sum": {
+        "messages": [
+          {
+            "data": "Finset.prod_univ_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  [Fintype ι] (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ Fintype.piFinset t, ∏ i, f i (x i)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.prod_univ_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  [Fintype ι] (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ Fintype.piFinset t, ∏ i, f i (x i)",
+        "status": "checked"
+      },
+      "Finset.sum_pow'": {
+        "messages": [
+          {
+            "data": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) :\n  (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) :\n  (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+        "status": "checked"
+      },
+      "Finset.sum_prod_piFinset": {
+        "messages": [
+          {
+            "data": "Finset.sum_prod_piFinset.{u_1, u_2, u_4} {ι : Type u_1} {κ : Type u_2} {R : Type u_4} [CommSemiring R] [DecidableEq ι]\n  [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ Fintype.piFinset fun x => s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_prod_piFinset.{u_1, u_2, u_4} {ι : Type u_1} {κ : Type u_2} {R : Type u_4} [CommSemiring R] [DecidableEq ι]\n  [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ Fintype.piFinset fun x => s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j",
+        "status": "checked"
+      },
+      "Finset.untrop_sum": {
+        "messages": [
+          {
+            "data": "Finset.untrop_sum.{u_1, u_2} {R : Type u_1} {S : Type u_2} [ConditionallyCompleteLinearOrder R] (s : Finset S)\n  (f : S → Tropical (WithTop R)) : Tropical.untrop (∑ i ∈ s, f i) = ⨅ i, Tropical.untrop (f ↑i)",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.untrop_sum.{u_1, u_2} {R : Type u_1} {S : Type u_2} [ConditionallyCompleteLinearOrder R] (s : Finset S)\n  (f : S → Tropical (WithTop R)) : Tropical.untrop (∑ i ∈ s, f i) = ⨅ i, Tropical.untrop (f ↑i)",
+        "status": "checked"
+      },
+      "Finset.untrop_sum'": {
+        "messages": [
+          {
+            "data": "Finset.untrop_sum'.{u_1, u_2} {R : Type u_1} {S : Type u_2} [LinearOrder R] [OrderTop R] (s : Finset S)\n  (f : S → Tropical R) : Tropical.untrop (∑ i ∈ s, f i) = s.inf (Tropical.untrop ∘ f)",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.untrop_sum'.{u_1, u_2} {R : Type u_1} {S : Type u_2} [LinearOrder R] [OrderTop R] (s : Finset S)\n  (f : S → Tropical R) : Tropical.untrop (∑ i ∈ s, f i) = s.inf (Tropical.untrop ∘ f)",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "6edcf0fcd201e7ecdb0981e2683937729ce7f81cf821baecf2679452e9c631e1",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T08:56:00.526683+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det",
+      "expected_signature_or_shape": "Matrix (Fin k) (Fin k) ℤ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+        "status": "checked"
+      },
+      "query": "Matrix.det",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def det (M : Matrix n n R) : R :=",
+        "kind": "def",
+        "line_number": 59,
+        "name": "Matrix.det",
+        "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+        "source_snippet": "/-- The determinant of a matrix given by the Leibniz formula. -/\ndef det (M : Matrix n n R) : R :=\n  detRowAlternating M",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "determinant of a square matrix"
+    },
+    {
+      "exact_identifier": "Nat.catalan",
+      "expected_signature_or_shape": "Catalan numbers: ℕ → ℕ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Nat.catalan`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.catalan`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.catalan",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "definition of Catalan numbers"
+    },
+    {
+      "exact_identifier": "PowerSeries.isUnit_iff_constantCoeff",
+      "expected_signature_or_shape": "PowerSeries K where K is a field",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+        "status": "checked"
+      },
+      "query": "PowerSeries.isUnit_iff_constantCoeff",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem isUnit_iff_constantCoeff {φ : R⟦X⟧} :",
+        "kind": "theorem",
+        "line_number": 111,
+        "name": "PowerSeries.isUnit_iff_constantCoeff",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+        "source_snippet": "theorem isUnit_iff_constantCoeff {φ : R⟦X⟧} :\n    IsUnit φ ↔ IsUnit (constantCoeff φ) :=\n  MvPowerSeries.isUnit_iff_constantCoeff\n\n/-- Two ways of removing the constant coefficient of a power series are the same. -/",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "characterization of invertible power series"
+    },
+    {
+      "exact_identifier": "Ring.choose",
+      "expected_signature_or_shape": "Ring.choose : K → ℕ → K for a CommRing K with ℚ-algebra",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+        "status": "checked"
+      },
+      "query": "Ring.choose",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=",
+        "kind": "def",
+        "line_number": 380,
+        "name": "Ring.choose",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/Binomial.lean",
+        "source_snippet": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=\n  multichoose (r - n + 1) n\n\nvariable [NonAssocRing R] [Pow R ℕ] [BinomialRing R]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "generalized binomial coefficient"
+    },
+    {
+      "exact_identifier": "Finset.sum_range_succ",
+      "expected_signature_or_shape": "Sum over Finset.range (k+1)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :\n  ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :\n  ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n",
+        "status": "checked"
+      },
+      "query": "Finset.sum_range_succ",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "finite sum manipulation"
+    },
+    {
+      "exact_identifier": "Finset.pi",
+      "expected_signature_or_shape": "Finset (Fin d → ℤ) of functions with image in {1,-1}",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.pi.{u, u_1} {α : Type u_1} {β : α → Type u} [DecidableEq α] (s : Finset α) (t : (a : α) → Finset (β a)) :\n  Finset ((a : α) → a ∈ s → β a)",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.pi.{u, u_1} {α : Type u_1} {β : α → Type u} [DecidableEq α] (s : Finset α) (t : (a : α) → Finset (β a)) :\n  Finset ((a : α) → a ∈ s → β a)",
+        "status": "checked"
+      },
+      "query": "Finset.pi",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def pi (s : Finset α) (t : ∀ a, Finset (β a)) : Finset (∀ a ∈ s, β a) :=",
+        "kind": "def",
+        "line_number": 50,
+        "name": "Finset.pi",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Pi.lean",
+        "source_snippet": "def pi (s : Finset α) (t : ∀ a, Finset (β a)) : Finset (∀ a ∈ s, β a) :=\n  ⟨s.1.pi fun a => (t a).1, s.nodup.pi fun a _ => (t a).nodup⟩\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-004-task-1",
+      "unit_key": "unit-004",
+      "why_needed": "sum over all sign assignments"
+    },
+    {
+      "exact_identifier": "Finset.sum_pi",
+      "expected_signature_or_shape": "Finset.sum over Finset.univ of Fin d → ℤ",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "lemma prod_univ_sum {κ : ι → Type*} [Fintype ι] (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.prod_univ_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  [Fintype ι] (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ Fintype.piFinset t, ∏ i, f i (x i)",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.prod_univ_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  [Fintype ι] (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ Fintype.piFinset t, ∏ i, f i (x i)",
+            "status": "checked"
+          },
+          "line_number": 154,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "univ",
+            "fin"
+          ],
+          "name": "Finset.prod_univ_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+          "score": 31,
+          "search_excerpt": "lemma prod_univ_sum {κ : ι → Type*} [Fintype ι] (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) : ∏ i, ∑ j ∈ t i, f i j = ∑ x ∈ piFinset t, ∏ i, f i (x i) := by"
+        },
+        {
+          "declaration_line": "lemma prod_sum {κ : ι → Type*} (s : Finset ι) (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.prod_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  (s : Finset ι) (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f (↑x) (p ↑x ⋯)",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.prod_sum.{u_1, u_4, u_5} {ι : Type u_1} {R : Type u_4} [CommSemiring R] [DecidableEq ι] {κ : ι → Type u_5}\n  (s : Finset ι) (t : (i : ι) → Finset (κ i)) (f : (i : ι) → κ i → R) :\n  ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f (↑x) (p ↑x ⋯)",
+            "status": "checked"
+          },
+          "line_number": 121,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "fin"
+          ],
+          "name": "Finset.prod_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+          "score": 28,
+          "search_excerpt": "lemma prod_sum {κ : ι → Type*} (s : Finset ι) (t : ∀ i, Finset (κ i)) (f : ∀ i, κ i → R) : ∏ a ∈ s, ∑ b ∈ t a, f a b = ∑ p ∈ s.pi t, ∏ x ∈ s.attach, f x.1 (p x.1 x.2) := by"
+        },
+        {
+          "declaration_line": "lemma sum_prod_piFinset [Fintype ι] (s : Finset κ) (g : ι → κ → R) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.sum_prod_piFinset.{u_1, u_2, u_4} {ι : Type u_1} {κ : Type u_2} {R : Type u_4} [CommSemiring R] [DecidableEq ι]\n  [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ Fintype.piFinset fun x => s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.sum_prod_piFinset.{u_1, u_2, u_4} {ι : Type u_1} {κ : Type u_2} {R : Type u_4} [CommSemiring R] [DecidableEq ι]\n  [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ Fintype.piFinset fun x => s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j",
+            "status": "checked"
+          },
+          "line_number": 158,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "fin"
+          ],
+          "name": "Finset.sum_prod_piFinset",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+          "score": 28,
+          "search_excerpt": "lemma sum_prod_piFinset [Fintype ι] (s : Finset κ) (g : ι → κ → R) : ∑ f ∈ piFinset fun _ : ι ↦ s, ∏ i, g i (f i) = ∏ i, ∑ j ∈ s, g i j := by"
+        },
+        {
+          "declaration_line": "lemma sum_pow' (s : Finset κ) (f : κ → R) (n : ℕ) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) :\n  (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) :\n  (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+            "status": "checked"
+          },
+          "line_number": 162,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "fin"
+          ],
+          "name": "Finset.sum_pow'",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean",
+          "score": 28,
+          "search_excerpt": "lemma sum_pow' (s : Finset κ) (f : κ → R) (n : ℕ) : (∑ a ∈ s, f a) ^ n = ∑ p ∈ piFinset fun _i : Fin n ↦ s, ∏ i, f (p i) := by"
+        },
+        {
+          "declaration_line": "def piAntidiag (s : Finset ι) (n : μ) : Finset (ι → μ) := by",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.piAntidiag.{u_1, u_2} {ι : Type u_1} {μ : Type u_2} [DecidableEq ι] [AddCommMonoid μ] [HasAntidiagonal μ]\n  [DecidableEq μ] (s : Finset ι) (n : μ) : Finset (ι → μ)",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.piAntidiag.{u_1, u_2} {ι : Type u_1} {μ : Type u_2} [DecidableEq ι] [AddCommMonoid μ] [HasAntidiagonal μ]\n  [DecidableEq μ] (s : Finset ι) (n : μ) : Finset (ι → μ)",
+            "status": "checked"
+          },
+          "line_number": 113,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "fin"
+          ],
+          "name": "Finset.piAntidiag",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/Antidiag/Pi.lean",
+          "score": 28,
+          "search_excerpt": "/-- The finset of functions `ι → μ` with support contained in `s` and sum `n`. -/ def piAntidiag (s : Finset ι) (n : μ) : Finset (ι → μ) := by"
+        },
+        {
+          "declaration_line": "theorem Finset.untrop_sum' [LinearOrder R] [OrderTop R] (s : Finset S) (f : S → Tropical R) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.untrop_sum'.{u_1, u_2} {R : Type u_1} {S : Type u_2} [LinearOrder R] [OrderTop R] (s : Finset S)\n  (f : S → Tropical R) : Tropical.untrop (∑ i ∈ s, f i) = s.inf (Tropical.untrop ∘ f)",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.untrop_sum'.{u_1, u_2} {R : Type u_1} {S : Type u_2} [LinearOrder R] [OrderTop R] (s : Finset S)\n  (f : S → Tropical R) : Tropical.untrop (∑ i ∈ s, f i) = s.inf (Tropical.untrop ∘ f)",
+            "status": "checked"
+          },
+          "line_number": 107,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "fin"
+          ],
+          "name": "Finset.untrop_sum'",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Tropical/BigOperators.lean",
+          "score": 28,
+          "search_excerpt": "theorem Finset.untrop_sum' [LinearOrder R] [OrderTop R] (s : Finset S) (f : S → Tropical R) : untrop (∑ i ∈ s, f i) = s.inf (untrop ∘ f) := by"
+        },
+        {
+          "declaration_line": "theorem Finset.untrop_sum [ConditionallyCompleteLinearOrder R] (s : Finset S)",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.untrop_sum.{u_1, u_2} {R : Type u_1} {S : Type u_2} [ConditionallyCompleteLinearOrder R] (s : Finset S)\n  (f : S → Tropical (WithTop R)) : Tropical.untrop (∑ i ∈ s, f i) = ⨅ i, Tropical.untrop (f ↑i)",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.untrop_sum.{u_1, u_2} {R : Type u_1} {S : Type u_2} [ConditionallyCompleteLinearOrder R] (s : Finset S)\n  (f : S → Tropical (WithTop R)) : Tropical.untrop (∑ i ∈ s, f i) = ⨅ i, Tropical.untrop (f ↑i)",
+            "status": "checked"
+          },
+          "line_number": 124,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "fin"
+          ],
+          "name": "Finset.untrop_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Tropical/BigOperators.lean",
+          "score": 28,
+          "search_excerpt": "theorem Finset.untrop_sum [ConditionallyCompleteLinearOrder R] (s : Finset S) (f : S → Tropical (WithTop R)) : untrop (∑ i ∈ s, f i) = ⨅ i : s, untrop (f i) := by"
+        },
+        {
+          "declaration_line": "theorem exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum (hf : ∀ a ∈ s, f a ∈ t)",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum.{u, v, w} {α : Type u} {β : Type v} {M : Type w} [DecidableEq β]\n  {s : Finset α} {t : Finset β} {f : α → β} {w : α → M} {b : M} [AddCommMonoid M] [LinearOrder M]\n  [IsOrderedCancelAddMonoid M] (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) :\n  ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum.{u, v, w} {α : Type u} {β : Type v} {M : Type w} [DecidableEq β]\n  {s : Finset α} {t : Finset β} {f : α → β} {w : α → M} {b : M} [AddCommMonoid M] [LinearOrder M]\n  [IsOrderedCancelAddMonoid M] (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) :\n  ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x",
+            "status": "checked"
+          },
+          "line_number": 116,
+          "matched_tokens": [
+            "finset",
+            "sum",
+            "pi",
+            "fin"
+          ],
+          "name": "Finset.exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Combinatorics/Pigeonhole.lean",
+          "score": 28,
+          "search_excerpt": "theorem exists_lt_sum_fiber_of_maps_to_of_nsmul_lt_sum (hf : ∀ a ∈ s, f a ∈ t) (hb : #t • b < ∑ x ∈ s, w x) : ∃ y ∈ t, b < ∑ x ∈ s with f x = y, w x :="
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Finset.sum_pi`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.sum_pi`",
+            "line": 10,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Finset.sum_pi",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-004-task-1",
+      "unit_key": "unit-004",
+      "why_needed": "expand sum over tuples"
+    },
+    {
+      "exact_identifier": "NPartition.transpose",
+      "expected_signature_or_shape": "NPartition.transpose : NPartition N → NPartition (max part)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown identifier `NPartition.transpose`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.transpose`",
+            "line": 11,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "NPartition.transpose",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-005-task-1",
+      "unit_key": "unit-005",
+      "why_needed": "transpose of a partition"
+    },
+    {
+      "exact_identifier": "MvPolynomial.esymm",
+      "expected_signature_or_shape": "esymm : Finset (Fin N) → MvPolynomial (Fin N) R",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+        "status": "checked"
+      },
+      "query": "MvPolynomial.esymm",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "def esymm (n : ℕ) : MvPolynomial σ R :=",
+        "kind": "def",
+        "line_number": 194,
+        "name": "MvPolynomial.esymm",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+        "source_snippet": "def esymm (n : ℕ) : MvPolynomial σ R :=\n  ∑ t ∈ powersetCard n univ, ∏ i ∈ t, X i\n\n/--\n`esymmPart` is the product of the symmetric polynomials `esymm μᵢ`,\nwhere `μ = (μ₁, μ₂, ...)` is a partition.\n-/",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-005-task-1",
+      "unit_key": "unit-005",
+      "why_needed": "elementary symmetric functions"
+    },
+    {
+      "exact_identifier": "Matrix.det",
+      "expected_signature_or_shape": "Matrix.det of a matrix of MvPolynomial",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+        "status": "checked"
+      },
+      "query": "Matrix.det",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": {
+        "declaration_line": "def det (M : Matrix n n R) : R :=",
+        "kind": "def",
+        "line_number": 59,
+        "name": "Matrix.det",
+        "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+        "source_snippet": "/-- The determinant of a matrix given by the Leibniz formula. -/\ndef det (M : Matrix n n R) : R :=\n  detRowAlternating M",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-005-task-1",
+      "unit_key": "unit-005",
+      "why_needed": "determinant of Jacobi-Trudi matrix"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.pi": {
+        "messages": [
+          {
+            "data": "Finset.pi.{u, u_1} {α : Type u_1} {β : α → Type u} [DecidableEq α] (s : Finset α) (t : (a : α) → Finset (β a)) :\n  Finset ((a : α) → a ∈ s → β a)",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.pi.{u, u_1} {α : Type u_1} {β : α → Type u} [DecidableEq α] (s : Finset α) (t : (a : α) → Finset (β a)) :\n  Finset ((a : α) → a ∈ s → β a)",
+        "status": "checked"
+      },
+      "Finset.sum_pi": {
+        "error": "Unknown constant `Finset.sum_pi`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.sum_pi`",
+            "line": 10,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Finset.sum_range_succ": {
+        "messages": [
+          {
+            "data": "Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :\n  ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :\n  ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n",
+        "status": "checked"
+      },
+      "Matrix.det": {
+        "messages": [
+          {
+            "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+        "status": "checked"
+      },
+      "MvPolynomial.esymm": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+        "status": "checked"
+      },
+      "NPartition.transpose": {
+        "error": "Unknown identifier `NPartition.transpose`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.transpose`",
+            "line": 11,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.catalan": {
+        "error": "Unknown constant `Nat.catalan`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.catalan`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "PowerSeries.isUnit_iff_constantCoeff": {
+        "messages": [
+          {
+            "data": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+        "status": "checked"
+      },
+      "Ring.choose": {
+        "messages": [
+          {
+            "data": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "e1d34fb00bd197ea0f9c4fd4876e89321a196763fc97575d64c5b0082d0cc3e7",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 10,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

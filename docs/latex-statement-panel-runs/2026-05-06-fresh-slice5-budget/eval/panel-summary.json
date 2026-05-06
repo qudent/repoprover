@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-05-06T08:51:43.868685+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/generation",
+  "gold_comparison_results": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/eval/gold-comparison-results.json",
+  "metrics": {
+    "context_selection": {
+      "budget_only": true,
+      "cached_prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": 0.0,
+      "elapsed_seconds": null,
+      "paid_call_made": false,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/context-selection",
+      "prompt_tokens": null,
+      "reasoning_tokens": null,
+      "units_selected": 5,
+      "valid_json": false
+    },
+    "generation": null,
+    "gold_comparison": null,
+    "hydration": null,
+    "semantic_coverage": null,
+    "verification": null
+  },
+  "output_root": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget",
+  "panel": "docs/latex-statement-fresh-slice-2026-05-06.json",
+  "schema_version": "repoprover.latex_statement_panel_run.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/context-selection",
+  "semantic_coverage_results": null,
+  "stages": [
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/run_latex_statement_context_selection.py --output docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/context-selection --model deepseek/deepseek-v4-flash --base-url https://openrouter.ai/api/v1 --max-tokens 8192 --temperature 0.0 --unit-id AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0 --unit-id AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field --unit-id AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN --unit-id AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1 --unit-id AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e --reasoning-effort none --budget-only",
+      "elapsed_seconds": 1.353,
+      "exit_code": 0,
+      "stage": "context_selection",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/logs/context_selection.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/logs/context_selection.stdout.log",
+      "stdout_tail": "{\n  \"budget_only\": true,\n  \"generated_at\": \"2026-05-06T08:51:45.001955+00:00\",\n  \"model\": \"deepseek/deepseek-v4-flash\",\n  \"output_path\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/context-selection\",\n  \"paid_call_made\": false,\n  \"parse_error\": null,\n  \"reasoning_effort\": \"none\",\n  \"records_input\": 114,\n  \"schema_version\": \"repoprover.latex_statement_context_selection.v1\",\n  \"units_selected\": 5,\n  \"valid_json\": false\n}\n"
+    }
+  ],
+  "stop_reason": "budget_only_after_context_selection",
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+    "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+    "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+    "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+    "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e"
+  ],
+  "verification_results": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/eval/verification-results.json"
+}

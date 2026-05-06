@@ -1,0 +1,23 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "jacobiTrudiMatrixE",
+        "jacobiTrudi_e"
+      ],
+      "lean_file_body": "open Finset BigOperators Matrix MvPolynomial\n\nnamespace SymmetricFunctions\n\nvariable {N : ℕ} {R : Type*} [CommRing R]\n\nnoncomputable def jacobiTrudiMatrixE (lam mu : Fin N → ℕ) : Matrix (Fin N) (Fin N) (MvPolynomial (Fin N) R) :=\n  Matrix.of fun i j =>\n    esymm (Fin N) R ((lam i : ℤ) - (mu j : ℤ) - (i.val : ℤ) + (j.val : ℤ)).toNat\n\ntheorem jacobiTrudi_e (lam mu : NPartition N) :\n    schur lam = det (jacobiTrudiMatrixE lam.parts mu.parts) := by\n  sorry\n\nend SymmetricFunctions",
+      "notes": [
+        "The theorem statement is a placeholder; the proof is not provided. The definition of jacobiTrudiMatrixE uses esymm with a toNat conversion, assuming the exponent is nonnegative. The transpose of partitions is not used; the statement is simplified to avoid unavailable transpose API."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure",
+        "schur definition",
+        "esymm signature",
+        "Matrix.det signature",
+        "jacobiTrudiMatrixH definition as pattern"
+      ]
+    }
+  ]
+}

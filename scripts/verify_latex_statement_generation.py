@@ -261,6 +261,8 @@ def explicit_variable_statement(item: dict[str, Any]) -> str | None:
     if str(item.get("kind") or "") != "variable":
         return None
     name = str(item.get("name") or "").strip()
+    if name.endswith(" in"):
+        return None
     return name if name.startswith("variable ") else None
 
 
@@ -315,19 +317,25 @@ def support_snippet_is_complete(snippet: str) -> bool:
 
 def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[dict[str, str]]:
     candidates: list[dict[str, str]] = []
+    variables_by_path: dict[str, list[str]] = {}
     for item in iter_dicts(unit_payload):
         variable = explicit_variable_statement(item)
         if variable:
-            candidates.append({"kind": "variable", "text": variable})
+            path = str(item.get("path") or "")
+            if path:
+                variables_by_path.setdefault(path, []).append(variable)
+            continue
         snippet = item.get("lean_snippet")
         if isinstance(snippet, str):
             cleaned = strip_lean_comments(snippet)
             if support_snippet_is_complete(cleaned):
+                path = str(item.get("path") or "")
                 candidates.append(
                     {
                         "kind": str(item.get("kind") or "lean_snippet"),
                         "name": str(item.get("name") or ""),
-                        "text": cleaned,
+                        "path": path,
+                        "text": support_snippet_block(cleaned, variables_by_path.get(path, [])),
                     }
                 )
     seen: set[str] = set()
@@ -338,6 +346,13 @@ def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[di
             unique.append(candidate)
             seen.add(text)
     return unique
+
+
+def support_snippet_block(snippet: str, variables: list[str]) -> str:
+    scoped_variables = unique_in_order(variables)
+    if not scoped_variables:
+        return snippet
+    return "\n".join(["section", *scoped_variables, snippet, "end"])
 
 
 def user_payload_from_generation_payload(output_path: Path) -> dict[str, Any]:

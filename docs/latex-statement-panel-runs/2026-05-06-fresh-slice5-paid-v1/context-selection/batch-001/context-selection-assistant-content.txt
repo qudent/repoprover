@@ -1,0 +1,223 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Catalan numbers defined via binomial coefficients; determinant of Hankel matrix equals 1"
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact definition of catalanHankelMatrix in the project; whether it matches the matrix (c_{i+j-2})"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Matrix (Fin k) (Fin k) ℤ",
+              "name_or_query": "Matrix.det",
+              "why_needed": "determinant of a square matrix"
+            },
+            {
+              "expected_signature_or_shape": "Catalan numbers: ℕ → ℕ",
+              "name_or_query": "Nat.catalan",
+              "why_needed": "definition of Catalan numbers"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "catalanHankelMatrix",
+              "why_needed": "definition of the Hankel matrix of Catalan numbers"
+            }
+          ],
+          "needed_source_context": [
+            "Corollary cor.lgv.catalan-hankel-det-0: det((c_{i+j-2})_{1≤i,j≤k}) = 1"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any natural number k, the determinant of the k×k Hankel matrix of Catalan numbers (entry (i,j) = c_{i+j-2}) equals 1.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Catalan Hankel determinant equals 1",
+      "unit_key": "unit-001"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Field assumption needed for invertibility condition"
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact statement of fps_invertible_iff_constantCoeff; whether it already uses field condition"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "PowerSeries K where K is a field",
+              "name_or_query": "PowerSeries.isUnit_iff_constantCoeff",
+              "why_needed": "characterization of invertible power series"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+              "why_needed": "prior proposition for general commutative ring; this corollary specializes to field"
+            }
+          ],
+          "needed_source_context": [
+            "Corollary cor.fps.invertible.field: For a field K, a ∈ K⟦X⟧ is invertible iff constant term ≠ 0"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "If K is a field, then a power series a ∈ K⟦X⟧ is a unit iff its constant coefficient is nonzero.",
+          "task_id": "unit-002-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Invertibility of FPS over a field",
+      "unit_key": "unit-002"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Complex numbers ℂ used; need to work over a ℚ-algebra or field of characteristic 0"
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Definition of binomial coefficient Ring.choose for complex numbers; identity sum_{i=0}^k C(n+i-1,i) C(n,k-2i) = C(n+k-1,k)"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Ring.choose : K → ℕ → K for a CommRing K with ℚ-algebra",
+              "name_or_query": "Ring.choose",
+              "why_needed": "generalized binomial coefficient"
+            },
+            {
+              "expected_signature_or_shape": "Sum over Finset.range (k+1)",
+              "name_or_query": "Finset.sum_range_succ",
+              "why_needed": "finite sum manipulation"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+              "why_needed": "provides binomial series and coefficient formulas"
+            }
+          ],
+          "needed_source_context": [
+            "Proposition prop.binom.nCk-2i-qedmo.CN: ∑_{i=0}^k C(n+i-1,i) C(n,k-2i) = C(n+k-1,k)"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any n in a ℚ-algebra K and any natural k, the identity ∑_{i=0}^k Ring.choose (n+i-1) i * Ring.choose n (k-2i) = Ring.choose (n+k-1) k holds.",
+          "task_id": "unit-003-task-1"
+        }
+      ],
+      "selector_confidence": 0.85,
+      "source_focus_summary": "Binomial coefficient identity",
+      "unit_key": "unit-003"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Sum over all sign vectors (e_1,...,e_d) ∈ {1,-1}^d; need to encode as functions Fin d → ℤ"
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "lemma",
+          "missing_or_uncertain_context": [
+            "Encoding of sign vectors as Fin d → ℤ with values ±1; sum over all such functions"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Finset (Fin d → ℤ) of functions with image in {1,-1}",
+              "name_or_query": "Finset.pi",
+              "why_needed": "sum over all sign assignments"
+            },
+            {
+              "expected_signature_or_shape": "Finset.sum over Finset.univ of Fin d → ℤ",
+              "name_or_query": "Finset.sum_pi",
+              "why_needed": "expand sum over tuples"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+              "why_needed": "context for all-even tuples; lemma used in proof of allEven_count_formula"
+            }
+          ],
+          "needed_source_context": [
+            "Lemma lem.cancel.all-even.l1: ∑_{(e_1,...,e_d)∈{1,-1}^d} (e_1+...+e_d)^n = ∑_{x∈[d]^n} ∑_{e∈{1,-1}^d} e_{x_1}...e_{x_n}"
+          ],
+          "role": "same_unit_helper",
+          "source_part": "whole unit",
+          "target_statement_sketch": "For natural numbers n,d, the sum over all sign vectors e: Fin d → {±1} of (∑_k e_k)^n equals the sum over all tuples x: Fin n → Fin d of the sum over e of ∏_i e_{x_i}.",
+          "task_id": "unit-004-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Identity relating sum over signs to sum over tuples",
+      "unit_key": "unit-004"
+    },
+    {
+      "context_pack_size_risk": "medium",
+      "formalization_risks": [
+        "Transpose of partitions; extension to M-tuples; second Jacobi-Trudi formula using elementary symmetric functions"
+      ],
+      "planned_declarations": [
+        {
+          "depends_on_task_ids": [],
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Definition of transpose of an NPartition; extension to length M by padding zeros"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "NPartition.transpose : NPartition N → NPartition (max part)",
+              "name_or_query": "NPartition.transpose",
+              "why_needed": "transpose of a partition"
+            },
+            {
+              "expected_signature_or_shape": "esymm : Finset (Fin N) → MvPolynomial (Fin N) R",
+              "name_or_query": "MvPolynomial.esymm",
+              "why_needed": "elementary symmetric functions"
+            },
+            {
+              "expected_signature_or_shape": "Matrix.det of a matrix of MvPolynomial",
+              "name_or_query": "Matrix.det",
+              "why_needed": "determinant of Jacobi-Trudi matrix"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "SymmetricFunctions.jacobiTrudi_h",
+              "why_needed": "first Jacobi-Trudi formula; second formula can be derived via omega involution"
+            },
+            {
+              "name": "SymmetricFunctions.schur",
+              "why_needed": "definition of Schur polynomial s_{λ/μ}"
+            }
+          ],
+          "needed_source_context": [
+            "Theorem thm.sf.jt-e: s_{λ/μ} = det((e_{λ_i^t - μ_j^t - i + j})_{1≤i,j≤M})"
+          ],
+          "role": "main_claim",
+          "source_part": "whole unit",
+          "target_statement_sketch": "For partitions λ, μ and M large enough, the skew Schur polynomial s_{λ/μ} equals the determinant of the matrix whose (i,j) entry is the elementary symmetric function e_{λ_i^t - μ_j^t - i + j}.",
+          "task_id": "unit-005-task-1"
+        }
+      ],
+      "selector_confidence": 0.8,
+      "source_focus_summary": "Second Jacobi-Trudi formula using elementary symmetric functions",
+      "unit_key": "unit-005"
+    }
+  ]
+}

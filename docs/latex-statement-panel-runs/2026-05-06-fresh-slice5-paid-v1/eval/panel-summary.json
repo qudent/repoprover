@@ -1,0 +1,152 @@
+{
+  "generated_at": "2026-05-06T08:52:27.101922+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation",
+  "gold_comparison_results": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/gold-comparison-results.json",
+  "metrics": {
+    "context_selection": {
+      "budget_only": false,
+      "cached_prompt_tokens": 0,
+      "completion_tokens": 2431,
+      "cost": 0.0064647,
+      "elapsed_seconds": 151.406,
+      "paid_call_made": true,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection",
+      "prompt_tokens": 28677,
+      "reasoning_tokens": 0,
+      "units_selected": 5,
+      "valid_json": true
+    },
+    "generation": {
+      "batch_count": 5,
+      "budget_only": false,
+      "cached_prompt_tokens": 3072,
+      "completion_tokens": 2447,
+      "cost": 0.0062877416,
+      "elapsed_seconds": 43.746,
+      "normalized_unit_count": 3,
+      "paid_call_made": true,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation",
+      "prompt_tokens": 43029,
+      "reasoning_tokens": 0,
+      "valid_json": true
+    },
+    "gold_comparison": {
+      "compile_passed_units": 0,
+      "compiled_name_overlap_units": 0,
+      "compiled_needs_semantic_review_units": 0,
+      "coverage_status_counts": {
+        "compile_failure": 2,
+        "not_generated_cannot_prove": 3
+      },
+      "path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/gold-comparison-results.json",
+      "unit_count": 5
+    },
+    "hydration": {
+      "batch_count": 1,
+      "exact_identifier_count": 9,
+      "fallback_exact_identifier_count": 8,
+      "fallback_lean_check_statuses": [
+        "ok"
+      ],
+      "lean_check_statuses": [
+        "lean_errors"
+      ],
+      "path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection/eval/mathlib-hydration-summary.json",
+      "request_count": 10
+    },
+    "semantic_coverage": {
+      "all_aligned_gold_proved_units": 0,
+      "coverage_status_counts": {
+        "generated_not_compiled": 5
+      },
+      "path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/semantic-coverage-results.json",
+      "unit_count": 5
+    },
+    "verification": {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "compile_failure": 2,
+        "declined_cannot_prove": 3
+      },
+      "materialize_visible_support": true,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/verification-results.json",
+      "unit_count": 5
+    }
+  },
+  "output_root": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1",
+  "panel": "docs/latex-statement-fresh-slice-2026-05-06.json",
+  "schema_version": "repoprover.latex_statement_panel_run.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection",
+  "semantic_coverage_results": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/semantic-coverage-results.json",
+  "stages": [
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/run_latex_statement_context_selection.py --output docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection --model deepseek/deepseek-v4-flash --base-url https://openrouter.ai/api/v1 --max-tokens 8192 --temperature 0.0 --unit-id AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0 --unit-id AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field --unit-id AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN --unit-id AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1 --unit-id AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e --reasoning-effort none",
+      "elapsed_seconds": 152.808,
+      "exit_code": 0,
+      "stage": "context_selection",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/context_selection.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/context_selection.stdout.log",
+      "stdout_tail": "{\n  \"budget_only\": false,\n  \"cost_summary\": {\n    \"model\": \"deepseek/deepseek-v4-flash\",\n    \"openrouter_reported_cost\": 0.0064647,\n    \"usage\": {\n      \"completion_tokens\": 2431,\n      \"completion_tokens_details\": {\n        \"accepted_prediction_tokens\": null,\n        \"audio_tokens\": 0,\n        \"image_tokens\": 0,\n        \"reasoning_tokens\": 0,\n        \"rejected_prediction_tokens\": null\n      },\n      \"cost\": 0.0064647,\n      \"cost_details\": {\n        \"upstream_inference_completions_cost\": 0.0007293,\n        \"upstream_inference_cost\": 0.0064647,\n        \"upstream_inference_prompt_cost\": 0.0057354\n      },\n      \"is_byok\": false,\n      \"prompt_tokens\": 28677,\n      \"prompt_tokens_details\": {\n        \"audio_tokens\": 0,\n        \"cache_write_tokens\": 0,\n        \"cached_tokens\": 0,\n        \"video_tokens\": 0\n      },\n      \"total_tokens\": 31108\n    }\n  },\n  \"elapsed_seconds\": 151.406,\n  \"generated_at\": \"2026-05-06T08:52:28.140640+00:00\",\n  \"model\": \"deepseek/deepseek-v4-flash\",\n  \"output_path\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection\",\n  \"paid_call_made\": true,\n  \"parse_error\": null,\n  \"reasoning_effort\": \"none\",\n  \"records_input\": 114,\n  \"schema_version\": \"repoprover.latex_statement_context_selection.v1\",\n  \"units_selected\": 5,\n  \"valid_json\": true\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/hydrate_latex_statement_context.py --run docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection --project-root /home/name/repos/repoprover/algebraic-combinatorics --timeout-seconds 120.0 --summary docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection/eval/mathlib-hydration-summary.json",
+      "elapsed_seconds": 60.633,
+      "exit_code": 0,
+      "stage": "hydration",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/hydration.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/hydration.stdout.log",
+      "stdout_tail": "{\n  \"batches\": [\n    {\n      \"exact_identifier_count\": 9,\n      \"fallback_exact_identifier_count\": 8,\n      \"fallback_lean_check_status\": \"ok\",\n      \"hydrated_path\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection/batch-001/mathlib-lean-hydrated-context.json\",\n      \"lean_check_status\": \"lean_errors\",\n      \"output_path\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection/batch-001/context-selection-output.json\",\n      \"request_count\": 10\n    }\n  ],\n  \"generated_at\": \"2026-05-06T08:56:00.527737+00:00\",\n  \"run\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection\",\n  \"schema_version\": \"repoprover.latex_statement_context_hydration_run.v1\"\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/run_latex_statement_generation.py --selector-run docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection --output docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation --model deepseek/deepseek-v4-flash --base-url https://openrouter.ai/api/v1 --max-tokens 8192 --temperature 0.0 --max-units-per-call 1 --reasoning-effort none",
+      "elapsed_seconds": 45.001,
+      "exit_code": 0,
+      "stage": "generation",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/generation.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/generation.stdout.log",
+      "stdout_tail": "},\n          \"cost\": 0.0010230136,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 5.88e-05,\n            \"upstream_inference_cost\": 0.0010230136,\n            \"upstream_inference_prompt_cost\": 0.0009642136\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 7389,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 512,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 7599\n        }\n      },\n      {\n        \"model\": \"deepseek/deepseek-v4-flash\",\n        \"openrouter_reported_cost\": 0.0011838736,\n        \"usage\": {\n          \"completion_tokens\": 421,\n          \"completion_tokens_details\": {\n            \"accepted_prediction_tokens\": null,\n            \"audio_tokens\": 0,\n            \"image_tokens\": 0,\n            \"reasoning_tokens\": 0,\n            \"rejected_prediction_tokens\": null\n          },\n          \"cost\": 0.0011838736,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 0.00011788,\n            \"upstream_inference_cost\": 0.0011838736,\n            \"upstream_inference_prompt_cost\": 0.0010659936\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 8116,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 512,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 8537\n        }\n      },\n      {\n        \"model\": \"deepseek/deepseek-v4-flash\",\n        \"openrouter_reported_cost\": 0.0013499808,\n        \"usage\": {\n          \"completion_tokens\": 461,\n          \"completion_tokens_details\": {\n            \"accepted_prediction_tokens\": null,\n            \"audio_tokens\": 0,\n            \"image_tokens\": 0,\n            \"reasoning_tokens\": 0,\n            \"rejected_prediction_tokens\": null\n          },\n          \"cost\": 0.0013499808,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 0.00012908,\n            \"upstream_inference_cost\": 0.0013499808,\n            \"upstream_inference_prompt_cost\": 0.0012209008\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 10226,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 1536,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 10687\n        }\n      },\n      {\n        \"model\": \"deepseek/deepseek-v4-flash\",\n        \"openrouter_reported_cost\": 0.0012086536,\n        \"usage\": {\n          \"completion_tokens\": 373,\n          \"completion_tokens_details\": {\n            \"accepted_prediction_tokens\": null,\n            \"audio_tokens\": 0,\n            \"image_tokens\": 0,\n            \"reasoning_tokens\": 0,\n            \"rejected_prediction_tokens\": null\n          },\n          \"cost\": 0.0012086536,\n          \"cost_details\": {\n            \"upstream_inference_completions_cost\": 0.00010444,\n            \"upstream_inference_cost\": 0.0012086536,\n            \"upstream_inference_prompt_cost\": 0.0011042136\n          },\n          \"is_byok\": false,\n          \"prompt_tokens\": 8389,\n          \"prompt_tokens_details\": {\n            \"audio_tokens\": 0,\n            \"cache_write_tokens\": 0,\n            \"cached_tokens\": 512,\n            \"video_tokens\": 0\n          },\n          \"total_tokens\": 8762\n        }\n      }\n    ],\n    \"model\": \"deepseek/deepseek-v4-flash\",\n    \"openrouter_reported_cost\": 0.0062877416\n  },\n  \"elapsed_seconds\": 43.746,\n  \"generated_at\": \"2026-05-06T08:56:01.402939+00:00\",\n  \"max_units_per_call\": 1,\n  \"model\": \"deepseek/deepseek-v4-flash\",\n  \"output_path\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation\",\n  \"paid_call_made\": true,\n  \"parse_error\": null,\n  \"reasoning_effort\": \"none\",\n  \"schema_version\": \"repoprover.latex_statement_generation.v1\",\n  \"selector_run\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection\",\n  \"valid_json\": true\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/verify_latex_statement_generation.py --generation-run docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation --project-root /home/name/repos/repoprover/algebraic-combinatorics --timeout-seconds 120.0 --output docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/verification-results.json --materialize-visible-support --support-timeout-seconds 30.0",
+      "elapsed_seconds": 715.825,
+      "exit_code": 0,
+      "stage": "verification",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/verification.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/verification.stdout.log",
+      "stdout_tail": "te: Expected a function because this term is being applied to the argument\\n  \\u27e8\\u27e8lam, hlam\\u27e9, \\u27e8mu, hmu\\u27e9, fun i => hcontained i\\u27e9\\n\\nHint: The identifier `SkewSSYT` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.\",\n                    \"kind\": \"[anonymous]\",\n                    \"line\": 15,\n                    \"severity\": \"error\"\n                  },\n                  {\n                    \"column\": 12,\n                    \"data\": \"Invalid field notation: Type of\\n  np\\nis not known; cannot resolve field `weight`\\n\\nHint: Consider replacing the field projection with a call to one of the following:\\n  \\u2022 `Finsupp.weight`\\n  \\u2022 `RootPairingCat.weight`\\n  \\u2022 `Mathlib.MoveAdd.weight`\\n  \\u2022 `Quiver.Path.weight`\\n  \\u2022 `Lean.Firefox.SamplesTable.weight`\\n  \\u2022 `Lean.Meta.Rewrites.RewriteResult.weight`\",\n                    \"kind\": \"lean.invalidField._namedError\",\n                    \"line\": 17,\n                    \"severity\": \"error\"\n                  }\n                ],\n                \"name\": \"SymmetricFunctions.nipat_ssyt_bijection\",\n                \"stderr\": \"\"\n              },\n              {\n                \"kind\": \"structure\",\n                \"lean_error_count\": 1,\n                \"lean_returncode\": 1,\n                \"messages\": [\n                  {\n                    \"column\": 10,\n                    \"data\": \"`NPartition` has already been declared\",\n                    \"kind\": \"[anonymous]\",\n                    \"line\": 10,\n                    \"severity\": \"error\"\n                  }\n                ],\n                \"name\": \"NPartition\",\n                \"stderr\": \"\"\n              },\n              {\n                \"kind\": \"def\",\n                \"lean_error_count\": 2,\n                \"lean_returncode\": 1,\n                \"messages\": [\n                  {\n                    \"column\": 8,\n                    \"data\": \"Unknown identifier `ssytFinset`\",\n                    \"kind\": \"lean.unknownIdentifier._namedError\",\n                    \"line\": 11,\n                    \"severity\": \"error\"\n                  },\n                  {\n                    \"column\": 24,\n                    \"data\": \"Invalid field notation: Type of\\n  T\\nis not known; cannot resolve field `toMonomial`\",\n                    \"kind\": \"lean.invalidField._namedError\",\n                    \"line\": 11,\n                    \"severity\": \"error\"\n                  }\n                ],\n                \"name\": \"schur\",\n                \"stderr\": \"\"\n              },\n              {\n                \"kind\": \"def\",\n                \"lean_error_count\": 1,\n                \"lean_returncode\": 1,\n                \"messages\": [\n                  {\n                    \"column\": 3,\n                    \"data\": \"Unknown identifier `potentialVerticalStrips`\",\n                    \"kind\": \"lean.unknownIdentifier._namedError\",\n                    \"line\": 11,\n                    \"severity\": \"error\"\n                  }\n                ],\n                \"name\": \"verticalNStripPartitions\",\n                \"stderr\": \"\"\n              }\n            ],\n            \"rejected_count\": 5\n          }\n        }\n      ]\n    }\n  ],\n  \"compile_passed_units\": 0,\n  \"failure_class_counts\": {\n    \"compile_failure\": 2,\n    \"declined_cannot_prove\": 3\n  },\n  \"filter_target_module_imports\": true,\n  \"generated_at\": \"2026-05-06T09:08:41.337023+00:00\",\n  \"generation_run\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation\",\n  \"infer_context\": true,\n  \"materialize_visible_support\": true,\n  \"project_root\": \"/home/name/repos/repoprover/algebraic-combinatorics\",\n  \"schema_version\": \"repoprover.latex_statement_generation_verification.v1\",\n  \"unit_count\": 5,\n  \"validate_inferred_opens\": true\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/compare_latex_statement_generation_to_gold.py --selector-run docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection --generation-run docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation --verification-results docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/verification-results.json --output docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/gold-comparison-results.json",
+      "elapsed_seconds": 0.097,
+      "exit_code": 0,
+      "stage": "gold_comparison",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/gold_comparison.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/gold_comparison.stdout.log",
+      "stdout_tail": "{\n  \"caveat\": \"This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.\",\n  \"compile_passed_units\": 0,\n  \"compiled_name_overlap_units\": 0,\n  \"compiled_needs_semantic_review_units\": 0,\n  \"coverage_status_counts\": {\n    \"compile_failure\": 2,\n    \"not_generated_cannot_prove\": 3\n  },\n  \"generated_at\": \"2026-05-06T09:08:41.456887+00:00\",\n  \"generation_run\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation\",\n  \"schema_version\": \"repoprover.latex_statement_gold_comparison.v1\",\n  \"selector_run\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection\",\n  \"unit_count\": 5,\n  \"units\": [\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"not_generated_cannot_prove\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [],\n      \"gold_aligned_full_names\": [\n        \"LGV.catalan_hankel_det\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"catalan_hankel_det\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0\",\n      \"unit_key\": \"unit-001\",\n      \"verification_failure_class\": \"declined_cannot_prove\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"compile_failure\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"fps_invertible_iff_constantCoeff_field\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.fps_invertible_iff_constantCoeff_ne_zero\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"fps_invertible_iff_constantCoeff_ne_zero\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field\",\n      \"unit_key\": \"unit-002\",\n      \"verification_failure_class\": \"compile_failure\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"not_generated_cannot_prove\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.FPS.binomialIdentity\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"binomialIdentity\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN\",\n      \"unit_key\": \"unit-003\",\n      \"verification_failure_class\": \"declined_cannot_prove\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"compile_failure\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"sign_sum_pow_eq_sum_sign_product\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.SubtractiveMethods.sum_signSum_pow_eq_sum_signProduct\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"sum_signSum_pow_eq_sum_signProduct\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1\",\n      \"unit_key\": \"unit-004\",\n      \"verification_failure_class\": \"compile_failure\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"not_generated_cannot_prove\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [],\n      \"gold_aligned_full_names\": [\n        \"SymmetricFunctions.jacobiTrudi_e\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"jacobiTrudi_e\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e\",\n      \"unit_key\": \"unit-005\",\n      \"verification_failure_class\": \"declined_cannot_prove\"\n    }\n  ],\n  \"verification_failure_class_counts\": {\n    \"compile_failure\": 2,\n    \"declined_cannot_prove\": 3\n  }\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/verify_latex_statement_semantic_coverage.py --selector-run docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection --generation-run docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation --verification-results docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/verification-results.json --project-root /home/name/repos/repoprover/algebraic-combinatorics --timeout-seconds 120.0 --output docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/semantic-coverage-results.json",
+      "elapsed_seconds": 1.475,
+      "exit_code": 0,
+      "stage": "semantic_coverage",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/semantic_coverage.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/logs/semantic_coverage.stdout.log",
+      "stdout_tail": "{\n  \"all_aligned_gold_proved_units\": 0,\n  \"caveat\": \"This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.\",\n  \"coverage_status_counts\": {\n    \"generated_not_compiled\": 5\n  },\n  \"generated_at\": \"2026-05-06T09:08:42.761578+00:00\",\n  \"generated_not_compiled_units\": 5,\n  \"generation_run\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation\",\n  \"no_aligned_gold_proved_units\": 0,\n  \"no_aligned_gold_to_check_units\": 0,\n  \"partial_aligned_gold_proved_units\": 0,\n  \"project_root\": \"/home/name/repos/repoprover/algebraic-combinatorics\",\n  \"schema_version\": \"repoprover.latex_statement_semantic_coverage.v1\",\n  \"selector_run\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection\",\n  \"unit_count\": 5,\n  \"units\": [\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-001/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0\",\n      \"unit_key\": \"unit-001\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-002/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field\",\n      \"unit_key\": \"unit-002\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-003/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN\",\n      \"unit_key\": \"unit-003\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-004/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1\",\n      \"unit_key\": \"unit-004\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-005/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e\",\n      \"unit_key\": \"unit-005\"\n    }\n  ]\n}\n"
+    }
+  ],
+  "stop_reason": "completed",
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+    "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+    "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+    "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+    "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e"
+  ],
+  "verification_results": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/eval/verification-results.json"
+}

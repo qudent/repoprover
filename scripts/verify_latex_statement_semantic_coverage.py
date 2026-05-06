@@ -22,11 +22,11 @@ from typing import Any
 try:
     from scripts.materialize_minimal_context_smoke import declaration_body_marker_index
     from scripts.run_source_statement_live_eval import declaration_binder_names, generated_application_candidates
-    from scripts.verify_latex_statement_generation import parse_lean_json
+    from scripts.verify_latex_statement_generation import parse_lean_json, unique_in_order
 except ModuleNotFoundError:
     from materialize_minimal_context_smoke import declaration_body_marker_index
     from run_source_statement_live_eval import declaration_binder_names, generated_application_candidates
-    from verify_latex_statement_generation import parse_lean_json
+    from verify_latex_statement_generation import parse_lean_json, unique_in_order
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -78,6 +78,23 @@ def verification_results(run_dir: Path, path: Path | None = None) -> dict[str, d
             unit_key = str(unit.get("unit_key") or "")
             if unit_key:
                 rows[unit_key] = unit
+    return rows
+
+
+def verification_contexts_by_output(run_dir: Path, path: Path | None = None) -> dict[str, dict[str, Any]]:
+    if path is None:
+        path = run_dir / "eval" / "verification-results.json"
+    if not path.exists():
+        return {}
+    data = read_json(path)
+    rows: dict[str, dict[str, Any]] = {}
+    for batch in data.get("batches") or []:
+        output = str(batch.get("generation_output") or "")
+        if output:
+            rows[output] = {
+                "opens": [str(item) for item in batch.get("opens") or []],
+                "inferred_opens": [str(item) for item in batch.get("inferred_opens") or []],
+            }
     return rows
 
 
@@ -359,6 +376,7 @@ def build_semantic_check_source(
     aligned: dict[str, Any],
     generated_names: list[str],
     generated_body: str,
+    extra_opens: list[str] | None = None,
 ) -> str:
     _original, gold_head = renamed_gold_head(project_root, aligned)
     prefix = target_file_prefix(project_root, aligned)
@@ -373,6 +391,8 @@ def build_semantic_check_source(
         "set_option linter.style.nameCheck false",
         "set_option linter.unreachableTactic false",
         "set_option linter.unusedTactic false",
+        "",
+        *unique_in_order(extra_opens or []),
         "",
         "-- Generated declaration(s) under the original target file prefix context.",
         generated_body.strip(),
@@ -423,6 +443,7 @@ def check_aligned_declaration(
     aligned: dict[str, Any],
     generated_names: list[str],
     generated_body: str,
+    extra_opens: list[str],
     timeout_seconds: float,
 ) -> dict[str, Any]:
     if str(aligned.get("kind") or "") not in {"theorem", "lemma"}:
@@ -438,6 +459,7 @@ def check_aligned_declaration(
         aligned=aligned,
         generated_names=generated_names,
         generated_body=generated_body,
+        extra_opens=extra_opens,
     )
     lean_path = semantic_root / unit_key / f"gold-{aligned_index + 1:03d}.lean"
     lean_path.parent.mkdir(parents=True, exist_ok=True)
@@ -466,11 +488,13 @@ def check_aligned_declaration(
 def compare(args: argparse.Namespace) -> dict[str, Any]:
     selected_by_key = selected_units_by_key(args.selector_run)
     verification_by_key = verification_results(args.generation_run, args.verification_results)
+    verification_contexts = verification_contexts_by_output(args.generation_run, args.verification_results)
     units: list[dict[str, Any]] = []
 
     semantic_root = args.output.parent / "semantic-coverage"
     for output_path in generation_output_paths(args.generation_run):
         output = read_json(output_path)
+        extra_opens = verification_contexts.get(str(output_path), {}).get("opens") or []
         for generated in output.get("units") or []:
             unit_key = str(generated.get("unit_key") or "")
             selected = selected_by_key.get(unit_key, {})
@@ -490,6 +514,7 @@ def compare(args: argparse.Namespace) -> dict[str, Any]:
                             aligned=aligned,
                             generated_names=generated_names,
                             generated_body=generated_body,
+                            extra_opens=extra_opens,
                             timeout_seconds=args.timeout_seconds,
                         )
                     )

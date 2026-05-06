@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"sign_sum_pow_eq_sum_sign_product\"\n      ],\n      \"lean_file_body\": \"open Finset\\nopen BigOperators\\n\\nlemma sign_sum_pow_eq_sum_sign_product (n d : ℕ) :\\n    ∑ e : Fin d → ℤ, (∑ k : Fin d, e k) ^ n = ∑ x : Fin n → Fin d, ∑ e : Fin d → ℤ, ∏ i : Fin n, e (x i) := by\\n  calc\\n    ∑ e : Fin d → ℤ, (∑ k : Fin d, e k) ^ n = ∑ e : Fin d → ℤ, ∑ x : Fin n → Fin d, ∏ i : Fin n, e (x i) := by\\n      refine Finset.sum_congr rfl fun e _ => ?_\\n      rw [Finset.sum_pow' (Finset.univ : Finset (Fin d)) (fun k => e k) n]\\n      simp [Finset.sum_pow', Finset.univ, Finset.piFinset]\\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ℤ, ∏ i : Fin n, e (x i) := by\\n      rw [Finset.sum_comm]\\n\",\n      \"notes\": [\n        \"The proof uses Finset.sum_pow' to expand (∑ e_k)^n as sum over functions x: Fin n → Fin d of ∏ e_{x_i}, then swaps sums. The sum over e is over all functions Fin d → ℤ, not restricted to ±1; the source restricts to ±1 but the identity holds for any ring. The restriction to ±1 is handled in later lemmas.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-004\",\n      \"used_context\": [\n        \"Finset.sum_pow'\",\n        \"Finset.sum_comm\",\n        \"Finset.univ\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778057788,
+  "id": "gen-1778057788-VjpqFvaPVERaSTiUhuST",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 461,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0013499808,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00012908,
+      "upstream_inference_cost": 0.0013499808,
+      "upstream_inference_prompt_cost": 0.0012209008
+    },
+    "is_byok": false,
+    "prompt_tokens": 10226,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 1536,
+      "video_tokens": 0
+    },
+    "total_tokens": 10687
+  }
+}

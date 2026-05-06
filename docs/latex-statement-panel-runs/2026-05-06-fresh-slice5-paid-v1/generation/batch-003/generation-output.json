@@ -1,0 +1,35 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "sum_choose_identity"
+        ],
+        "raw_lean_file_body_characters": 318,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-003"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The statement is a combinatorial identity over a ℚ-algebra with binomial ring structure. The proof would require known identities for Ring.choose, possibly using polynomial identity trick or generating functions. The available context provides generalizedNewtonBinomial and related lemmas, but a complete proof is not yet constructed."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature from Mathlib",
+        "Finset.sum_range_succ",
+        "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial (prior project)",
+        "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow (prior project)",
+        "AlgebraicCombinatorics.FPS.polynomial_identity_trick (prior project)",
+        "local lemmas: fpsPow_mul, rescale_neg_one_one_sub_X, one_sub_X_pow_mul_invOneSubPow, one_add_X_pow_mul_rescale_invOneSubPow, one_sub_X_sq_pow, one_sub_X_sq_pow_mul_prod, key_product_identity'"
+      ]
+    }
+  ]
+}

@@ -46,6 +46,37 @@ def test_build_semantic_check_source_uses_gold_only_in_grader(tmp_path: Path) ->
     assert "generated (by simpa [Fintype.card_fin] using h)" in source
 
 
+def test_build_semantic_check_source_reuses_verified_opens(tmp_path: Path) -> None:
+    project = tmp_path / "project"
+    lean_file = project / "Demo.lean"
+    lean_file.parent.mkdir(parents=True)
+    lean_file.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "theorem gold : True := by",
+                "  trivial",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    aligned = {"path": "Demo.lean", "line_range": [3, 4], "kind": "theorem"}
+
+    source = build_semantic_check_source(
+        project_root=project,
+        aligned=aligned,
+        generated_names=["generated"],
+        generated_body="theorem generated : True := by\n  trivial",
+        extra_opens=["open Nat", "open Nat"],
+    )
+
+    assert source.count("open Nat") == 1
+    assert source.index("open Nat") < source.index("theorem generated")
+
+
 def test_candidates_with_pointwise_final_hypothesis_try_or_bridges() -> None:
     candidates = candidates_with_pointwise_final_hypothesis(
         "generated A hA",

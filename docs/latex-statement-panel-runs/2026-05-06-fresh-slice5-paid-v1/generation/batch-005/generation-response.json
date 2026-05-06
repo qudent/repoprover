@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"jacobiTrudiMatrixE\",\n        \"jacobiTrudi_e\"\n      ],\n      \"lean_file_body\": \"open Finset BigOperators Matrix MvPolynomial\\n\\nnamespace SymmetricFunctions\\n\\nvariable {N : ℕ} {R : Type*} [CommRing R]\\n\\nnoncomputable def jacobiTrudiMatrixE (lam mu : Fin N → ℕ) : Matrix (Fin N) (Fin N) (MvPolynomial (Fin N) R) :=\\n  Matrix.of fun i j =>\\n    esymm (Fin N) R ((lam i : ℤ) - (mu j : ℤ) - (i.val : ℤ) + (j.val : ℤ)).toNat\\n\\ntheorem jacobiTrudi_e (lam mu : NPartition N) :\\n    schur lam = det (jacobiTrudiMatrixE lam.parts mu.parts) := by\\n  sorry\\n\\nend SymmetricFunctions\",\n      \"notes\": [\n        \"The theorem statement is a placeholder; the proof is not provided. The definition of jacobiTrudiMatrixE uses esymm with a toNat conversion, assuming the exponent is nonnegative. The transpose of partitions is not used; the statement is simplified to avoid unavailable transpose API.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-005\",\n      \"used_context\": [\n        \"NPartition structure\",\n        \"schur definition\",\n        \"esymm signature\",\n        \"Matrix.det signature\",\n        \"jacobiTrudiMatrixH definition as pattern\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778057797,
+  "id": "gen-1778057797-MCSzA06lqErxf43uRw2H",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 373,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0012086536,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00010444,
+      "upstream_inference_cost": 0.0012086536,
+      "upstream_inference_prompt_cost": 0.0011042136
+    },
+    "is_byok": false,
+    "prompt_tokens": 8389,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 512,
+      "video_tokens": 0
+    },
+    "total_tokens": 8762
+  }
+}

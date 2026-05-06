@@ -30,8 +30,8 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - [x] Add a fixed five-unit dev panel for richer loop feedback.
 - [x] Add a one-command panel runner that performs selector -> hydration ->
   generation -> verification -> summary.
-- [ ] Run the next paid check as a panel or fresh-heldout slice, not another
-  single already-debugged theorem.
+- [x] Run the next paid check as a fresh slice, not another single
+  already-debugged theorem.
 - [x] Add bridge-aware semantic grading so equivalent source/gold surfaces do
   not look like failures.
 - [ ] Route cases with checked context but repeated clean declines to a proof
@@ -53,18 +53,7 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Scale snapshot: 462 LaTeX source units, 114 gold-candidate units, and 414
   aligned Lean declarations; elaborated direct deps over gold units have median
   44 Mathlib and 5 project constants per unit.
-- Attempt-level taxonomy across recorded theorem runs: 16 compiled / 73 unit
-  checks; deduplicated by source unit, 6/11 touched units have compiled at least
-  once.
-- Five-unit panel artifacts:
-  `docs/latex-statement-dev-panel-2026-05-06.json` and
-  `docs/latex-statement-dev-panel-2026-05-06-summary.md`.
-- Panel runner baseline: initial paid generation compiled `1/5`; visible
-  support rerun compiled `2/5` and semantically covered inverse uniqueness
-  `1/5`.
-- Vandermonde bridge retry proved the source range-sum theorem and the
-  bridge-aware semantic grader proved its aligned antidiagonal gold theorem.
-- Latest merged panel artifact:
+- Latest merged dev-panel artifact:
   `docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/`.
   Effective provider cost for the artifact path: `$0.0244708072`.
   Generated-only verification is `3/5` compiled with `2` clean declines and no
@@ -74,13 +63,13 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - A focused triangular source-shape repair probe cost `$0.00171864` and
   returned the same compiled theorem shape, confirming the prior failure was a
   semantic-grader false reject under theorem-implication grading.
-- Fixed repair-loop orchestration bugs: multi-unit repair outputs are split
-  back into per-unit batches, and each split batch carries the original
-  unit-specific generation payload so verifier import/support inference stays
-  target-blind but complete.
-- Added generic bridge-rewrite prompt guidance: when a source theorem exposes a
-  checked bridge lemma's left-hand side, rewrite with the source theorem first,
-  then apply the bridge rewrite.
+- Fresh five-unit slice:
+  `docs/latex-statement-fresh-slice-2026-05-06.json`; summary:
+  `docs/latex-statement-fresh-slice-2026-05-06-summary.md`. Paid selector plus
+  generation cost `$0.0127524416`. Raw verification was `0/5`, but two generic
+  verifier fixes (scoped visible-support variables and semantic reuse of
+  verified opens) reran no-cost to `1/5` generated-only compile and `1/5`
+  semantic coverage.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
@@ -91,5 +80,7 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
 - Next useful work: route remaining panel failures by class. FPS division and
-  NPartition need proof-synthesis/coding-agent lanes rather than more selector
-  prompt tuning. Use a fresh held-out slice for benchmark claims.
+  NPartition on the dev panel, plus signed-sum and normalized-`sorry` declines
+  on the fresh slice, need proof-synthesis/coding-agent lanes rather than more
+  selector prompt tuning. Use a new fresh slice for benchmark claims; the
+  current fresh slice is development evidence now.

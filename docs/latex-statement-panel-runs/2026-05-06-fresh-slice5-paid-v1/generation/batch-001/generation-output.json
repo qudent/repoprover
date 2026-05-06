@@ -1,0 +1,34 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "catalan_hankel_det_one"
+        ],
+        "raw_lean_file_body_characters": 1900,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-001"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof uses the equality catalanHankelMatrix_eq_pathWeightMatrix from the same file, then applies lgv_nonpermutable. The nipatWeightSum evaluation to 1 is not yet proved; a lemma nipatWeightSum_dyckUnitArcWeight_one is needed. The xDecreasing/yIncreasing conditions are trivially satisfied because the coordinates are linear in the index. The proof is incomplete due to the missing lemma."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix (same file predecessor)",
+        "lgv_nonpermutable (prior project declaration)",
+        "xDecreasing, yIncreasing predicates (from prior context)",
+        "nipatWeightSum (from prior context)",
+        "dyckDigraph_pathFinite, dyckUnitArcWeight (from prior context)"
+      ]
+    }
+  ]
+}

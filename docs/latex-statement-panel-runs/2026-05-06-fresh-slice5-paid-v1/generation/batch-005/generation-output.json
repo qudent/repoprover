@@ -1,0 +1,35 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "jacobiTrudiMatrixE",
+          "jacobiTrudi_e"
+        ],
+        "raw_lean_file_body_characters": 480,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-005"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The theorem statement is a placeholder; the proof is not provided. The definition of jacobiTrudiMatrixE uses esymm with a toNat conversion, assuming the exponent is nonnegative. The transpose of partitions is not used; the statement is simplified to avoid unavailable transpose API."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure",
+        "schur definition",
+        "esymm signature",
+        "Matrix.det signature",
+        "jacobiTrudiMatrixH definition as pattern"
+      ]
+    }
+  ]
+}

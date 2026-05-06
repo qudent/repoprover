@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "catalan_hankel_det_one"
+      ],
+      "lean_file_body": "open Finset BigOperators Matrix\n\nnamespace LGV\n\ntheorem catalan_hankel_det_one (k : ℕ) : (catalanHankelMatrix k).det = 1 := by\n  have h_eq : catalanHankelMatrix k = pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight\n      (fun i : Fin k => (-(2 * (i : ℤ)), 0)) (fun j : Fin k => (2 * (j : ℤ), 0)) := by\n    exact catalanHankelMatrix_eq_pathWeightMatrix k\n  rw [h_eq]\n  have h_nonperm : (pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight\n      (fun i : Fin k => (-(2 * (i : ℤ)), 0)) (fun j : Fin k => (2 * (j : ℤ), 0))).det = 1 := by\n    have hxdec : ∀ (i : Fin k), xDecreasing (fun i : Fin k => (-(2 * (i : ℤ)), 0)) := by\n      intro i; exact by\n        simp [xDecreasing, xCoord, Function.funext_iff]\n    have hyinc : ∀ (i : Fin k), yIncreasing (fun i : Fin k => (-(2 * (i : ℤ)), 0)) := by\n      intro i; exact by\n        simp [yIncreasing, yCoord, Function.funext_iff]\n    have hxdecB : ∀ (j : Fin k), xDecreasing (fun j : Fin k => (2 * (j : ℤ), 0)) := by\n      intro j; exact by\n        simp [xDecreasing, xCoord, Function.funext_iff]\n    have hyincB : ∀ (j : Fin k), yIncreasing (fun j : Fin k => (2 * (j : ℤ), 0)) := by\n      intro j; exact by\n        simp [yIncreasing, yCoord, Function.funext_iff]\n    have h_lgv := lgv_nonpermutable dyckUnitArcWeight\n      (fun i : Fin k => (-(2 * (i : ℤ)), 0)) (fun j : Fin k => (2 * (j : ℤ), 0))\n      (hxdec 0) (hyinc 0) (hxdecB 0) (hyincB 0)\n    -- h_lgv gives det = nipatWeightSum ...; we need to show that equals 1.\n    -- The nipatWeightSum for these source/target vertices is known to be 1.\n    -- We assume a lemma nipatWeightSum_dyckUnitArcWeight_one : nipatWeightSum ... = 1\n    have h_nipat_one : nipatWeightSum dyckDigraph_pathFinite dyckUnitArcWeight\n      (fun i : Fin k => (-(2 * (i : ℤ)), 0)) (fun j : Fin k => (2 * (j : ℤ), 0)) (Equiv.refl (Fin k)) = 1 := by\n      sorry\n    rw [h_lgv, h_nipat_one]\n  exact h_nonperm\n\nend LGV",
+      "notes": [
+        "The proof uses the equality catalanHankelMatrix_eq_pathWeightMatrix from the same file, then applies lgv_nonpermutable. The nipatWeightSum evaluation to 1 is not yet proved; a lemma nipatWeightSum_dyckUnitArcWeight_one is needed. The xDecreasing/yIncreasing conditions are trivially satisfied because the coordinates are linear in the index. The proof is incomplete due to the missing lemma."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix (same file predecessor)",
+        "lgv_nonpermutable (prior project declaration)",
+        "xDecreasing, yIncreasing predicates (from prior context)",
+        "nipatWeightSum (from prior context)",
+        "dyckDigraph_pathFinite, dyckUnitArcWeight (from prior context)"
+      ]
+    }
+  ]
+}

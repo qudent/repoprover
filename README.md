@@ -641,6 +641,20 @@ was `$0.0244708072`; the extra triangular probe is logged separately and did
 not change the effective generated artifact. This remains development-panel
 evidence, not a held-out benchmark.
 
+A fresh five-unit slice is recorded at
+`docs/latex-statement-fresh-slice-2026-05-06.json` with summary
+`docs/latex-statement-fresh-slice-2026-05-06-summary.md`. It excludes unit ids
+mentioned in prior run artifacts outside the base datasets. The first paid run
+used `deepseek/deepseek-v4-flash` with `reasoning_effort=none` for selector and
+generation. Total provider cost was `$0.0127524416`
+(`$0.0064647` selector, `$0.0062877416` generation). Raw verification compiled
+`0/5`, but exposed two generic verifier false-rejects: globally leaked visible
+support variables and semantic coverage not reusing verified open context. After
+no-cost verifier reruns with those fixes, generated-only compile is `1/5` and
+semantic coverage is `1/5`, proving `cor.fps.invertible.field`. The other four
+units are three normalized clean declines from raw `sorry` scratch and one real
+compile failure from an incorrect signed-tuple surface.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

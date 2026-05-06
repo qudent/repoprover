@@ -1,0 +1,13 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-06T08:51:45.001955+00:00",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-budget/context-selection",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "records_input": 114,
+  "schema_version": "repoprover.latex_statement_context_selection.v1",
+  "units_selected": 5,
+  "valid_json": false
+}

@@ -1,0 +1,104 @@
+{
+  "created_at": "2026-05-06T09:00:00Z",
+  "purpose": "Fresh five-unit LaTeX statement slice for checking whether the current pipeline improvements generalize beyond the already-debugged development panel.",
+  "selection_method": [
+    "Started from docs/latex-statement-gold-candidates.jsonl.",
+    "Excluded the existing five-unit development panel and unit ids found in prior run/report artifacts outside the base dataset files.",
+    "Chose one moderate-size gold-candidate unit from each of several source areas to expose Mathlib, project-context, combinatorial-sum, and symmetric-function surfaces."
+  ],
+  "benchmark_honesty": "This slice is fresh before the first run recorded from this file. Once used for debugging, it becomes development evidence, not held-out benchmark evidence.",
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+    "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+    "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+    "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+    "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e"
+  ],
+  "units": [
+    {
+      "id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+      "role": "determinant/LGV/Catalan context stress",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex",
+        "line_range": [
+          327,
+          343
+        ],
+        "environment": "corollary",
+        "labels": [
+          "cor.lgv.catalan-hankel-det-0"
+        ],
+        "estimated_tokens": 119,
+        "aligned_declarations": 1
+      }
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+      "role": "formal-power-series/project-context control",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex",
+        "line_range": [
+          312,
+          316
+        ],
+        "environment": "corollary",
+        "labels": [
+          "cor.fps.invertible.field"
+        ],
+        "estimated_tokens": 66,
+        "aligned_declarations": 1
+      }
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+      "role": "binomial/FPS identity context check",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex",
+        "line_range": [
+          601,
+          608
+        ],
+        "environment": "proposition",
+        "labels": [
+          "prop.binom.nCk-2i-qedmo.CN"
+        ],
+        "estimated_tokens": 49,
+        "aligned_declarations": 1
+      }
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+      "role": "finite signed-sum expansion check",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex",
+        "line_range": [
+          144,
+          154
+        ],
+        "environment": "lemma",
+        "labels": [
+          "lem.cancel.all-even.l1"
+        ],
+        "estimated_tokens": 110,
+        "aligned_declarations": 1
+      }
+    },
+    {
+      "id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e",
+      "role": "hard symmetric-function determinant theorem",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex",
+        "line_range": [
+          447,
+          461
+        ],
+        "environment": "theorem",
+        "labels": [
+          "thm.sf.jt-e"
+        ],
+        "estimated_tokens": 185,
+        "aligned_declarations": 1
+      }
+    }
+  ]
+}
