@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\"fps_invertible_iff_constantCoeff_field\"],\n      \"lean_file_body\": \"namespace AlgebraicCombinatorics\\n\\ntheorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\\n  rw [PowerSeries.isUnit_iff_constantCoeff, isUnit_iff_ne_zero]\",\n      \"notes\": [\"Uses PowerSeries.isUnit_iff_constantCoeff and isUnit_iff_ne_zero\"],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-002\",\n      \"used_context\": [\n        \"PowerSeries.isUnit_iff_constantCoeff\",\n        \"isUnit_iff_ne_zero\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778084544,
+  "id": "gen-1778084544-wJpnZW1IsVo3SihsfQTg",
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 5353,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 5160,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.008266015,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00465711,
+      "upstream_inference_cost": 0.008266015,
+      "upstream_inference_prompt_cost": 0.003608905
+    },
+    "is_byok": false,
+    "prompt_tokens": 8931,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 640,
+      "video_tokens": 0
+    },
+    "total_tokens": 14284
+  }
+}

@@ -1,0 +1,578 @@
+{
+  "exact_identifier_count": 13,
+  "fallback_exact_identifier_count": 0,
+  "fallback_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "fallback_lean_check_status": "no_exact_identifiers",
+  "generated_at": "2026-05-06T16:07:20.389893+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Finset.sum_singleton",
+      "expected_signature_or_shape": "∑ x ∈ {a}, f x = f a",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sum_singleton.{u_1, u_4} {ι : Type u_1} {M : Type u_4} [AddCommMonoid M] (f : ι → M) (a : ι) :\n  ∑ x ∈ {a}, f x = f a",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_singleton.{u_1, u_4} {ι : Type u_1} {M : Type u_4} [AddCommMonoid M] (f : ι → M) (a : ι) :\n  ∑ x ∈ {a}, f x = f a",
+        "status": "checked"
+      },
+      "query": "Finset.sum_singleton",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to evaluate nipatWeightSum over a singleton set"
+    },
+    {
+      "exact_identifier": "Equiv.refl",
+      "expected_signature_or_shape": "Equiv.refl α : α ≃ α",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Equiv.refl.{u_1} (α : Sort u_1) : α ≃ α",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Equiv.refl.{u_1} (α : Sort u_1) : α ≃ α",
+        "status": "checked"
+      },
+      "query": "Equiv.refl",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "identity permutation for lgv_nonpermutable"
+    },
+    {
+      "exact_identifier": "Ring.choose_natCast",
+      "expected_signature_or_shape": "Ring.choose (n : K) k = Nat.choose n k for n : ℕ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Ring.choose_natCast.{u_1} {R : Type u_1} [NonAssocRing R] [Pow R ℕ] [BinomialRing R] [NatPowAssoc R] (n k : ℕ) :\n  Ring.choose (↑n) k = ↑(n.choose k)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Ring.choose_natCast.{u_1} {R : Type u_1} [NonAssocRing R] [Pow R ℕ] [BinomialRing R] [NatPowAssoc R] (n k : ℕ) :\n  Ring.choose (↑n) k = ↑(n.choose k)",
+        "status": "checked"
+      },
+      "query": "Ring.choose_natCast",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem choose_natCast [NatPowAssoc R] (n k : ℕ) : choose (n : R) k = Nat.choose n k := by",
+        "kind": "theorem",
+        "line_number": 399,
+        "name": "Ring.choose_natCast",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/Binomial.lean",
+        "source_snippet": "theorem choose_natCast [NatPowAssoc R] (n k : ℕ) : choose (n : R) k = Nat.choose n k := by\n  rw [← nsmul_right_inj (Nat.factorial_ne_zero k),\n    ← descPochhammer_eq_factorial_smul_choose, nsmul_eq_mul, ← Nat.cast_mul,\n    ← Nat.descFactorial_eq_factorial_mul_choose, ← descPochhammer_smeval_eq_descFactorial]\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "connects Ring.choose to standard binomial coefficients"
+    },
+    {
+      "exact_identifier": "Nat.choose",
+      "expected_signature_or_shape": "Nat.choose : ℕ → ℕ → ℕ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.choose : ℕ → ℕ → ℕ",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose : ℕ → ℕ → ℕ",
+        "status": "checked"
+      },
+      "query": "Nat.choose",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "def choose : ℕ → ℕ → ℕ",
+        "kind": "def",
+        "line_number": 49,
+        "name": "Nat.choose",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+        "source_snippet": "def choose : ℕ → ℕ → ℕ\n  | _, 0 => 1\n  | 0, _ + 1 => 0\n  | n + 1, k + 1 => choose n k + choose n (k + 1)\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "standard binomial coefficient for natural numbers"
+    },
+    {
+      "exact_identifier": "coeff_mul",
+      "expected_signature_or_shape": "coeff n (f * g) = ∑ i ∈ range (n+1), coeff i f * coeff (n-i) g",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+        "status": "checked"
+      },
+      "query": "coeff_mul",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "convolution formula for product of power series"
+    },
+    {
+      "exact_identifier": "coeff_rescale",
+      "expected_signature_or_shape": "coeff n (rescale a f) = a^n * coeff n f",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_rescale.{u_1} {R : Type u_1} [CommSemiring R] (f : R⟦X⟧) (a : R) (n : ℕ) :\n  (coeff n) ((rescale a) f) = a ^ n * (coeff n) f",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_rescale.{u_1} {R : Type u_1} [CommSemiring R] (f : R⟦X⟧) (a : R) (n : ℕ) :\n  (coeff n) ((rescale a) f) = a ^ n * (coeff n) f",
+        "status": "checked"
+      },
+      "query": "coeff_rescale",
+      "related_mathlib_declarations": [],
+      "request_index": 4,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "coefficient extraction after rescaling by -1"
+    },
+    {
+      "exact_identifier": "Finset.sum_pow",
+      "expected_signature_or_shape": "(∑ a ∈ s, f a)^n = ∑ x ∈ s.sym n, ∏ i ∈ range n, f (x.getI i)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+        "status": "checked"
+      },
+      "query": "Finset.sum_pow",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem sum_pow (x : α → R) (n : ℕ) :",
+        "kind": "theorem",
+        "line_number": 306,
+        "name": "Finset.sum_pow",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Multinomial.lean",
+        "source_snippet": "theorem sum_pow (x : α → R) (n : ℕ) :\n    s.sum x ^ n = ∑ k ∈ s.sym n, k.val.multinomial * (k.val.map x).prod := by\n  conv_rhs => rw [← sum_coe_sort]\n  convert sum_pow_of_commute x s (fun _ _ _ _ _ ↦ Commute.all ..) n\n  rw [Multiset.noncommProd_eq_prod]\n\nend CommSemiring\nend Finset\n\nnamespace Nat\nvariable {ι : Type*} {s : Finset ι} {f : ι → ℕ}",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "expansion of power of sum - need to understand actual return type"
+    },
+    {
+      "exact_identifier": "Finset.sym",
+      "expected_signature_or_shape": "Finset.sym s n : Finset (Sym α n)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sym.{u_1} {α : Type u_1} [DecidableEq α] (s : Finset α) (n : ℕ) : Finset (Sym α n)",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sym.{u_1} {α : Type u_1} [DecidableEq α] (s : Finset α) (n : ℕ) : Finset (Sym α n)",
+        "status": "checked"
+      },
+      "query": "Finset.sym",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "protected def sym (s : Finset α) : ∀ n, Finset (Sym α n)",
+        "kind": "def",
+        "line_number": 169,
+        "name": "Finset.sym",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Sym.lean",
+        "source_snippet": "protected def sym (s : Finset α) : ∀ n, Finset (Sym α n)\n  | 0 => {∅}\n  | n + 1 => s.sup fun a ↦ Finset.image (Sym.cons a) (s.sym n)\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "multiset of size n from finset s"
+    },
+    {
+      "exact_identifier": "Sym",
+      "expected_signature_or_shape": "Sym α n = {s : Multiset α // Multiset.card s = n}",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Sym.{u_1} (α : Type u_1) (n : ℕ) : Type u_1",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "Sym.{u_1} (α : Type u_1) (n : ℕ) : Type u_1",
+        "status": "checked"
+      },
+      "query": "Sym",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": {
+        "declaration_line": "def Sym (α : Type*) (n : ℕ) :=",
+        "kind": "def",
+        "line_number": 43,
+        "name": "Sym",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Sym/Basic.lean",
+        "source_snippet": "def Sym (α : Type*) (n : ℕ) :=\n  { s : Multiset α // Multiset.card s = n }\nderiving [DecidableEq α] → DecidableEq _\n\n/-- The canonical map to `Multiset α` that forgets that `s` has length `n` -/\n@[coe] def Sym.toMultiset {α : Type*} {n : ℕ} (s : Sym α n) : Multiset α :=\n  s.1",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "understand the type returned by sum_pow"
+    },
+    {
+      "exact_identifier": "Fintype.piFinset",
+      "expected_signature_or_shape": "Fintype.piFinset t : Finset (∀ a, t a) for family of finsets",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Fintype.piFinset.{u_1, u_4} {α : Type u_1} [DecidableEq α] [Fintype α] {δ : α → Type u_4} (t : (a : α) → Finset (δ a)) :\n  Finset ((a : α) → δ a)",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.piFinset.{u_1, u_4} {α : Type u_1} [DecidableEq α] [Fintype α] {δ : α → Type u_4} (t : (a : α) → Finset (δ a)) :\n  Finset ((a : α) → δ a)",
+        "status": "checked"
+      },
+      "query": "Fintype.piFinset",
+      "related_mathlib_declarations": [],
+      "request_index": 4,
+      "source_declaration": {
+        "declaration_line": "def piFinset (t : ∀ a, Finset (δ a)) : Finset (∀ a, δ a) :=",
+        "kind": "def",
+        "line_number": 32,
+        "name": "Fintype.piFinset",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Fintype/Pi.lean",
+        "source_snippet": "def piFinset (t : ∀ a, Finset (δ a)) : Finset (∀ a, δ a) :=\n  (Finset.univ.pi t).map ⟨fun f a => f a (mem_univ a), fun _ _ =>\n    by simp +contextual [funext_iff]⟩\n\n@[simp, grind =]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "finite set of all functions into finite codomain"
+    },
+    {
+      "exact_identifier": "Finset.sum_map",
+      "expected_signature_or_shape": "∑ x ∈ s.map e, f x = ∑ x ∈ s, f (e x)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sum_map.{u_1, u_2, u_3} {ι : Type u_1} {κ : Type u_2} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (e : ι ↪ κ)\n  (f : κ → M) : ∑ x ∈ Finset.map e s, f x = ∑ x ∈ s, f (e x)",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_map.{u_1, u_2, u_3} {ι : Type u_1} {κ : Type u_2} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (e : ι ↪ κ)\n  (f : κ → M) : ∑ x ∈ Finset.map e s, f x = ∑ x ∈ s, f (e x)",
+        "status": "checked"
+      },
+      "query": "Finset.sum_map",
+      "related_mathlib_declarations": [],
+      "request_index": 5,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "convert between different index types for sums"
+    },
+    {
+      "exact_identifier": "MvPolynomial.esymm",
+      "expected_signature_or_shape": "MvPolynomial.esymm σ R n : MvPolynomial σ R for [Fintype σ]",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+        "status": "checked"
+      },
+      "query": "MvPolynomial.esymm",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def esymm (n : ℕ) : MvPolynomial σ R :=",
+        "kind": "def",
+        "line_number": 194,
+        "name": "MvPolynomial.esymm",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+        "source_snippet": "def esymm (n : ℕ) : MvPolynomial σ R :=\n  ∑ t ∈ powersetCard n univ, ∏ i ∈ t, X i\n\n/--\n`esymmPart` is the product of the symmetric polynomials `esymm μᵢ`,\nwhere `μ = (μ₁, μ₂, ...)` is a partition.\n-/",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "elementary symmetric function as multivariate polynomial"
+    },
+    {
+      "exact_identifier": "MvPolynomial.esymm_eq_sum_subtype",
+      "expected_signature_or_shape": "esymm σ R n = ∑ t, ∏ i ∈ ↑t, X i",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+        "status": "checked"
+      },
+      "query": "MvPolynomial.esymm_eq_sum_subtype",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "theorem esymm_eq_sum_subtype (n : ℕ) :",
+        "kind": "theorem",
+        "line_number": 213,
+        "name": "MvPolynomial.esymm_eq_sum_subtype",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+        "source_snippet": "/-- We can define `esymm σ R n` by summing over a subtype instead of over `powerset_len`. -/\ntheorem esymm_eq_sum_subtype (n : ℕ) :\n    esymm σ R n = ∑ t : {s : Finset σ // #s = n}, ∏ i ∈ (t : Finset σ), X i :=\n  sum_subtype _ (fun _ => mem_powersetCard_univ) _\n\n/-- We can define `esymm σ R n` as a sum over explicit monomials -/",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "explicit formula for elementary symmetric function"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Equiv.refl": {
+        "messages": [
+          {
+            "data": "Equiv.refl.{u_1} (α : Sort u_1) : α ≃ α",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Equiv.refl.{u_1} (α : Sort u_1) : α ≃ α",
+        "status": "checked"
+      },
+      "Finset.sum_map": {
+        "messages": [
+          {
+            "data": "Finset.sum_map.{u_1, u_2, u_3} {ι : Type u_1} {κ : Type u_2} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (e : ι ↪ κ)\n  (f : κ → M) : ∑ x ∈ Finset.map e s, f x = ∑ x ∈ s, f (e x)",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_map.{u_1, u_2, u_3} {ι : Type u_1} {κ : Type u_2} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (e : ι ↪ κ)\n  (f : κ → M) : ∑ x ∈ Finset.map e s, f x = ∑ x ∈ s, f (e x)",
+        "status": "checked"
+      },
+      "Finset.sum_pow": {
+        "messages": [
+          {
+            "data": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+        "status": "checked"
+      },
+      "Finset.sum_singleton": {
+        "messages": [
+          {
+            "data": "Finset.sum_singleton.{u_1, u_4} {ι : Type u_1} {M : Type u_4} [AddCommMonoid M] (f : ι → M) (a : ι) :\n  ∑ x ∈ {a}, f x = f a",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_singleton.{u_1, u_4} {ι : Type u_1} {M : Type u_4} [AddCommMonoid M] (f : ι → M) (a : ι) :\n  ∑ x ∈ {a}, f x = f a",
+        "status": "checked"
+      },
+      "Finset.sym": {
+        "messages": [
+          {
+            "data": "Finset.sym.{u_1} {α : Type u_1} [DecidableEq α] (s : Finset α) (n : ℕ) : Finset (Sym α n)",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sym.{u_1} {α : Type u_1} [DecidableEq α] (s : Finset α) (n : ℕ) : Finset (Sym α n)",
+        "status": "checked"
+      },
+      "Fintype.piFinset": {
+        "messages": [
+          {
+            "data": "Fintype.piFinset.{u_1, u_4} {α : Type u_1} [DecidableEq α] [Fintype α] {δ : α → Type u_4} (t : (a : α) → Finset (δ a)) :\n  Finset ((a : α) → δ a)",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.piFinset.{u_1, u_4} {α : Type u_1} [DecidableEq α] [Fintype α] {δ : α → Type u_4} (t : (a : α) → Finset (δ a)) :\n  Finset ((a : α) → δ a)",
+        "status": "checked"
+      },
+      "MvPolynomial.esymm": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+        "status": "checked"
+      },
+      "MvPolynomial.esymm_eq_sum_subtype": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+        "status": "checked"
+      },
+      "Nat.choose": {
+        "messages": [
+          {
+            "data": "Nat.choose : ℕ → ℕ → ℕ",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose : ℕ → ℕ → ℕ",
+        "status": "checked"
+      },
+      "Ring.choose_natCast": {
+        "messages": [
+          {
+            "data": "Ring.choose_natCast.{u_1} {R : Type u_1} [NonAssocRing R] [Pow R ℕ] [BinomialRing R] [NatPowAssoc R] (n k : ℕ) :\n  Ring.choose (↑n) k = ↑(n.choose k)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Ring.choose_natCast.{u_1} {R : Type u_1} [NonAssocRing R] [Pow R ℕ] [BinomialRing R] [NatPowAssoc R] (n k : ℕ) :\n  Ring.choose (↑n) k = ↑(n.choose k)",
+        "status": "checked"
+      },
+      "Sym": {
+        "messages": [
+          {
+            "data": "Sym.{u_1} (α : Type u_1) (n : ℕ) : Type u_1",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "Sym.{u_1} (α : Type u_1) (n : ℕ) : Type u_1",
+        "status": "checked"
+      },
+      "coeff_mul": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+        "status": "checked"
+      },
+      "coeff_rescale": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_rescale.{u_1} {R : Type u_1} [CommSemiring R] (f : R⟦X⟧) (a : R) (n : ℕ) :\n  (coeff n) ((rescale a) f) = a ^ n * (coeff n) f",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_rescale.{u_1} {R : Type u_1} [CommSemiring R] (f : R⟦X⟧) (a : R) (n : ℕ) :\n  (coeff n) ((rescale a) f) = a ^ n * (coeff n) f",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "6b2e204f9257751d551ffaff9a9d9ea2765755be78119e58761adbeb44a6e4e8",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 13,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

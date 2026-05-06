@@ -39,7 +39,7 @@ dev/fresh panels plus one-off diagnostics.
 - [x] Add bounded transitive local predecessor dependency collection; Catalan
   budget payload now includes private `translateVertex`/`dyckDigraph_arc_translate`.
 - [x] Validate transitive local predecessor context on a fresh multi-unit slice.
-- [ ] Run a fixed model/context ablation on the same theorem-level panel:
+- [x] Run a fixed model/context ablation on the same theorem-level panel:
   DeepSeek V4 Flash vs DeepSeek V4 Pro vs Kimi K2.6 vs GPT-5.5, with identical
   hidden-target context packs and acceptance metrics.
 - [ ] Keep a run ledger row for each paid or acceptance-bearing theorem-level
@@ -66,6 +66,9 @@ dev/fresh panels plus one-off diagnostics.
   necessary.
 - One-unit model probes need verifier timeouts above the import-stack baseline:
   the same proof attempts that timed out at 120s compiled at 360s.
+- Lean verification is currently too slow because each open/support/final check
+  starts a fresh `lake env lean --stdin --json`; measured cold `import Mathlib`
+  was about 25s and a warmed project-import check about 15s.
 
 ## Recent Results
 - Scale snapshot: 462 LaTeX source units, 114 gold-candidate units, 414 aligned
@@ -107,18 +110,24 @@ dev/fresh panels plus one-off diagnostics.
   history checks, frozen panels, model ablations, budget gates, run ledgers, and
   stop/reroute rules; the ablation config/command builder and ledger writer are
   under `configs/` and `scripts/`.
-- Same-task proof-lane model probe on unit 002: Kimi K2.6, GPT-5.5 default, and
-  GPT-5.5 high-reasoning/32k all compile when verified with a 360s timeout;
-  the earlier 120s failures were verifier-budget false negatives. A harder
-  unit 004 GPT-5.5 high-reasoning/32k probe produced a substantive proof
-  attempt but failed with one unsolved finite-sum/multinomial goal, so stronger
-  reasoning helps but does not yet solve broad theorem units automatically.
-- Full fresh-slice open-model proof-lane ablation is logged in
-  `docs/latex-statement-run-ledger.jsonl`: DeepSeek V4 Pro no-reasoning cost
-  `$0.016758781` and reached `0/5` compile/semantic; Kimi K2.6 no-reasoning
-  with a 32k retry cost `$0.10070847` total and reached `1/5` compile plus
-  `1/5` semantic. Kimi's first unit-003 attempt truncated at 8k tokens; the
-  retry-cost audit preserves that paid failed attempt.
+- Older one-unit proof-lane probes need to be read cautiously unless rerun with
+  selector-derived hidden-target filtering and checked support assumptions. GPT
+  and DeepSeek high reasoning can solve the easy FPS unit; hard unit 004 still
+  fails despite stronger proof attempts.
+- Benchmark honesty correction: proof-lane runs now inherit the selector path
+  from `proof-lane-summary.json`, so target-module imports are filtered. After
+  this and support-assumption checking, full fresh-slice open-model proof-lane
+  scores are honest `0/5` compile/semantic for both DeepSeek V4 Pro
+  no-reasoning (`$0.016758781`) and Kimi K2.6 no-reasoning (`$0.10070847`,
+  including the logged truncated retry).
+- DeepSeek V4 Pro high-reasoning/32k on units 002+004 cost `$0.018949238` and
+  used 16,293 reasoning tokens. It reached `1/2` compile and `1/2` semantic:
+  unit 002 FPS passed the hidden gold grader; unit 004 still failed on concrete
+  Lean proof/API errors (`Fin.snoc_injective`, sum-product rewrite, heartbeat).
+- Kimi K2.6 high-reasoning/32k is not usable through the tested OpenRouter route
+  as-is: unit 002 returned 10,264 reasoning tokens, null assistant content, no
+  JSON, cost `$0.05606217`; unit 004 was interrupted after >35 min with no
+  response. See the interruption audit in the run artifact.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and native session JSONL under
@@ -133,6 +142,6 @@ dev/fresh panels plus one-off diagnostics.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: route the remaining fresh-slice failures by class. Kimi now
-  proves the easy FPS unit; the hard units need proof repair/context search
-  rather than another same-prompt no-reasoning open-model retry.
+- Next useful work: speed up/batch Lean support checks, then route failures by
+  class. Current failures are mostly clean declines or real proof/API errors,
+  not no-sorry contract violations.

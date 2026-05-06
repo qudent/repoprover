@@ -1,0 +1,114 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "∑ x ∈ {a}, f x = f a",
+              "name_or_query": "Finset.sum_singleton",
+              "why_needed": "to evaluate nipatWeightSum over a singleton set"
+            },
+            {
+              "expected_signature_or_shape": "Equiv.refl α : α ≃ α",
+              "name_or_query": "Equiv.refl",
+              "why_needed": "identity permutation for lgv_nonpermutable"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Ring.choose (n : K) k = Nat.choose n k for n : ℕ",
+              "name_or_query": "Ring.choose_natCast",
+              "why_needed": "connects Ring.choose to standard binomial coefficients"
+            },
+            {
+              "expected_signature_or_shape": "Nat.choose : ℕ → ℕ → ℕ",
+              "name_or_query": "Nat.choose",
+              "why_needed": "standard binomial coefficient for natural numbers"
+            },
+            {
+              "expected_signature_or_shape": "coeff n (f * g) = ∑ i ∈ range (n+1), coeff i f * coeff (n-i) g",
+              "name_or_query": "coeff_mul",
+              "why_needed": "convolution formula for product of power series"
+            },
+            {
+              "expected_signature_or_shape": "coeff n (rescale a f) = a^n * coeff n f",
+              "name_or_query": "coeff_rescale",
+              "why_needed": "coefficient extraction after rescaling by -1"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-003-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-003"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "(∑ a ∈ s, f a)^n = ∑ x ∈ s.sym n, ∏ i ∈ range n, f (x.getI i)",
+              "name_or_query": "Finset.sum_pow",
+              "why_needed": "expansion of power of sum - need to understand actual return type"
+            },
+            {
+              "expected_signature_or_shape": "Finset.sym s n : Finset (Sym α n)",
+              "name_or_query": "Finset.sym",
+              "why_needed": "multiset of size n from finset s"
+            },
+            {
+              "expected_signature_or_shape": "Sym α n = {s : Multiset α // Multiset.card s = n}",
+              "name_or_query": "Sym",
+              "why_needed": "understand the type returned by sum_pow"
+            },
+            {
+              "expected_signature_or_shape": "Fintype.piFinset t : Finset (∀ a, t a) for family of finsets",
+              "name_or_query": "Fintype.piFinset",
+              "why_needed": "finite set of all functions into finite codomain"
+            },
+            {
+              "expected_signature_or_shape": "∑ x ∈ s.map e, f x = ∑ x ∈ s, f (e x)",
+              "name_or_query": "Finset.sum_map",
+              "why_needed": "convert between different index types for sums"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-004-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-004"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "MvPolynomial.esymm σ R n : MvPolynomial σ R for [Fintype σ]",
+              "name_or_query": "MvPolynomial.esymm",
+              "why_needed": "elementary symmetric function as multivariate polynomial"
+            },
+            {
+              "expected_signature_or_shape": "esymm σ R n = ∑ t, ∏ i ∈ ↑t, X i",
+              "name_or_query": "MvPolynomial.esymm_eq_sum_subtype",
+              "why_needed": "explicit formula for elementary symmetric function"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-005-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-005"
+    }
+  ]
+}

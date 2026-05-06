@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"sum_pow_eq_sum_finset\",\n        \"cancel_all_even_l1\"\n      ],\n      \"lean_file_body\": \"open Finset BigOperators\\n\\nnamespace AlgebraicCombinatorics.SubtractiveMethods\\n\\nlemma sum_pow_eq_sum_finset {ι : Type*} [Fintype ι] [DecidableEq ι] {n : ℕ} (f : ι → ℤ) : \\n    (∑ k : ι, f k) ^ n = ∑ (x : Fin n → ι), ∏ i : Fin n, f (x i) := by\\n  induction' n with m ih\\n  · simp\\n  · rw [pow_succ, ih]\\n    have hprod_sum : (∑ (x : Fin m → ι), ∏ i : Fin m, f (x i)) * (∑ k : ι, f k) =\\n        ∑ p : ((Fin m → ι) × ι), (∏ i : Fin m, f (p.1 i)) * f p.2 := by\\n      rw [Finset.sum_mul, Finset.sum_congr rfl (λ x hx => by rw [Finset.mul_sum]), Finset.sum_product]\\n    rw [hprod_sum]\\n    have hinj : Function.Injective (λ (p : (Fin m → ι) × ι) => Fin.snoc p.1 p.2) :=\\n      Fin.snoc_injective\\n    have hsurj : Function.Surjective (λ (p : (Fin m → ι) × ι) => Fin.snoc p.1 p.2) := by\\n      intro y\\n      refine ⟨(λ i => y (Fin.castSucc i), y (Fin.last m)), ?_⟩\\n      ext i\\n      refine Fin.cases ?_ ?_ i\\n      · simp\\n      · simp\\n    have hprod : ∀ (p : (Fin m → ι) × ι), (∏ i : Fin m, f (p.1 i)) * f p.2 = \\n        ∏ i : Fin (m+1), f ((Fin.snoc p.1 p.2) i) := by\\n      intro p; rw [Fin.prod_univ_snoc]\\n    have h_mem : ∀ (p : (Fin m → ι) × ι), p ∈ (Finset.univ : Finset ((Fin m → ι) × ι)) := by\\n      intro p; exact Finset.mem_univ _\\n    exact (Finset.sum_bij (λ p _, Fin.snoc p.1 p.2) h_mem hinj ?_ ?_).symm\\n    · intro p₁ hp₁ p₂ hp₂ h_eq; exact hinj h_eq\\n    · intro y hy\\n      obtain ⟨p, hp⟩ := hsurj y\\n      use p\\n      apply Finset.mem_univ\\n    · intro p hp; exact hprod p\\n\\nlemma cancel_all_even_l1 (n d : ℕ) : (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) = \\n    (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x) := by\\n  calc\\n    (∑ e, (∑ k, toSign (e k)) ^ n) = ∑ e, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i)) := by\\n      refine Finset.sum_congr rfl (λ e he => ?_)\\n      rw [sum_pow_eq_sum_finset (λ k => toSign (e k))]\\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i)) := by\\n      rw [Finset.sum_comm]\\n    _ = ∑ x, ∑ e, signProduct e x := by\\n      rfl\\n\\nend AlgebraicCombinatorics.SubtractiveMethods\",\n      \"notes\": [\n        \"Proved equality via expansion of power using sum_pow_eq_sum_finset and interchange of sums.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-004\",\n      \"used_context\": [\n        \"Finset.sum\",\n        \"toSign\",\n        \"signProduct\",\n        \"Finset.sum_comm\",\n        \"Fin.snoc_injective\",\n        \"Fin.prod_univ_snoc\",\n        \"Finset.sum_product\",\n        \"Fintype\",\n        \"Finset.mem_univ\",\n        \"Finset.sum_mul\",\n        \"Finset.mul_sum\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778084708,
+  "id": "gen-1778084708-oqLIhNVTuJA52FxWNFLu",
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 12214,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 11133,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.010683223,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.01062618,
+      "upstream_inference_cost": 0.010683223,
+      "upstream_inference_prompt_cost": 5.7043e-05
+    },
+    "is_byok": false,
+    "prompt_tokens": 6097,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 6016,
+      "video_tokens": 0
+    },
+    "total_tokens": 18311
+  }
+}

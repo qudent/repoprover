@@ -234,6 +234,19 @@ def selector_run_for_generation_run(generation_run: Path) -> Path | None:
     except (OSError, json.JSONDecodeError):
         return None
     selector_run = str(results.get("selector_run") or "")
+    if selector_run:
+        return Path(selector_run)
+    proof_lane_task_dir = str(results.get("proof_lane_task_dir") or "")
+    if not proof_lane_task_dir:
+        return None
+    summary_path = Path(proof_lane_task_dir) / "proof-lane-summary.json"
+    if not summary_path.exists():
+        return None
+    try:
+        proof_lane_summary = read_json(summary_path)
+    except (OSError, json.JSONDecodeError):
+        return None
+    selector_run = str(proof_lane_summary.get("selector_run") or "")
     return Path(selector_run) if selector_run else None
 
 
@@ -1094,19 +1107,23 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                         for candidate in sorted_candidates
                         if not available_names.get(str(candidate.get("name") or ""), False)
                     ]
-                    support_context_by_unit[unit_key] = [candidate["text"] for candidate in accepted_candidates]
+                    support = materialize_visible_support_context(
+                        accepted_candidates,
+                        project_root=args.project_root,
+                        imports=imports,
+                        opens=opens,
+                        timeout_seconds=getattr(args, "support_timeout_seconds", args.timeout_seconds),
+                    )
+                    support_context_by_unit[unit_key] = support["support_context"]
                     support_audit_by_unit[unit_key] = {
                         "candidate_count": len(sorted_candidates),
-                        "accepted_count": len(accepted_candidates),
-                        "rejected_count": 0,
+                        "accepted_count": len(support["accepted"]),
+                        "rejected_count": len(support["rejected"]),
                         "skipped_count": len(skipped),
                         "support_mode": support_mode,
-                        "accepted": [
-                            {key: value for key, value in candidate.items() if key != "text"}
-                            for candidate in accepted_candidates
-                        ],
+                        "accepted": support["accepted"],
                         "skipped": skipped,
-                        "rejected": [],
+                        "rejected": support["rejected"],
                     }
                     continue
                 support = materialize_visible_support_context(

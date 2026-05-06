@@ -94,6 +94,10 @@ rather than only summarizing them:
   contract normalization, preserve the previous paid attempt and its cost. Do
   not let a successful retry overwrite the only durable record of money already
   spent.
+- Use an explicit provider request timeout for high-reasoning or large-token
+  OpenRouter calls. If a provider returns reasoning-only/null content or hangs,
+  log the paid response/interruption as an artifact before retrying with changed
+  settings.
 - After two attempts on the same unit with the same failure class and adequate
   checked context, stop prompt/context tuning and route the case to a different
   lane: stronger-model ablation, manual Lean lemma development, Mathlib/project

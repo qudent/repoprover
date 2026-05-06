@@ -1,12 +1,11 @@
 {
-  "all_aligned_gold_proved_units": 1,
+  "all_aligned_gold_proved_units": 0,
   "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
   "coverage_status_counts": {
-    "all_aligned_gold_proved": 1,
-    "generated_not_compiled": 4
+    "generated_not_compiled": 5
   },
-  "generated_at": "2026-05-06T15:56:56.738868+00:00",
-  "generated_not_compiled_units": 4,
+  "generated_at": "2026-05-06T17:08:00.101252+00:00",
+  "generated_not_compiled_units": 5,
   "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
   "no_aligned_gold_proved_units": 0,
   "no_aligned_gold_to_check_units": 0,
@@ -29,33 +28,12 @@
     },
     {
       "aligned_gold_declaration_count": 1,
-      "checks": [
-        {
-          "coverage_status": "semantic_grader_passed",
-          "failure_class": "semantic_covered",
-          "generated_declaration_names": [
-            "fps_invertible_iff_constantCoeff_field"
-          ],
-          "gold_full_name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff_ne_zero",
-          "gold_kind": "theorem",
-          "gold_line_range": [
-            199,
-            210
-          ],
-          "gold_path": "AlgebraicCombinatorics/DividingFPS.lean",
-          "lean_error_count": 0,
-          "lean_returncode": 0,
-          "lean_source_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/semantic-coverage/unit-002/gold-001.lean",
-          "messages": [],
-          "semantic_check_passed": true,
-          "stderr": ""
-        }
-      ],
+      "checks": [],
       "compile_gate_bypassed": false,
-      "compile_passed": true,
-      "coverage_status": "all_aligned_gold_proved",
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
       "generation_output": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-002/generation-output.json",
-      "semantic_passed_gold_declarations": 1,
+      "semantic_passed_gold_declarations": 0,
       "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
       "unit_key": "unit-002"
     },

@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof strategy is to use the generating function identity (1-X^2)^{-n} = (1-X)^{-n} * (1+X)^{-n} and compare coefficients. The generalizedNewtonBinomial theorem gives the power series expansion of (1+X)^c for any c in K. The coefficient of X^k in (1-X^2)^{-n} can be computed directly, while the product on the right gives a convolution. However, several key combinatorial identities about Ring.choose with negative upper arguments are needed: (1) Ring.choose (-n) k * (-1)^k = Ring.choose (n+k-1) k (negated upper index), and (2) the connection between Ring.choose (n+i-1) i and the coefficients of (1-X)^{-n}. These identities are standard binomial coefficient identities but are not available in the visible context. The proof also needs careful handling of the parity condition: the coefficient of X^{k-i} in (1+X)^{-n} when k-i is odd vs even, which relates to the k-2i in the original sum. Without checked lemmas for these specific binomial coefficient identities, the proof cannot be completed from visible context alone."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "generalizedNewtonBinomial",
+        "fpsPow_mul",
+        "fpsPow_one_add_smul_X'",
+        "coeff_mul",
+        "coeff_rescale",
+        "binomialSeries_coeff",
+        "Ring.choose signature"
+      ]
+    }
+  ]
+}

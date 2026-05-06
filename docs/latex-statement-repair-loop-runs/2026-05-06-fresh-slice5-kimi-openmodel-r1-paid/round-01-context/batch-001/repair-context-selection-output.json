@@ -1,0 +1,295 @@
+{
+  "units": [
+    {
+      "do_not_use_identifiers": [],
+      "failure_analysis": "Cannot prove: missing lemmas that the only non-intersecting path tuple for the Dyck endpoints is identity-matched, and that each such path has weight 1.",
+      "missing_or_uncertain_context": [
+        "Definition of nipatWeightSum and its computation for singleton sets",
+        "PathTuple.IsNonIntersecting predicate definition",
+        "dyckUnitArcWeight definition and pathWeight computation"
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "∑ x ∈ {a}, f x = f a",
+          "name_or_query": "Finset.sum_singleton",
+          "why_needed": "to evaluate nipatWeightSum over a singleton set"
+        },
+        {
+          "expected_signature_or_shape": "Equiv.refl α : α ≃ α",
+          "name_or_query": "Equiv.refl",
+          "why_needed": "identity permutation for lgv_nonpermutable"
+        }
+      ],
+      "repair_strategy_note": "Use lgv_nonpermutable + catalanHankelMatrix_eq_pathWeightMatrix, then prove a same-unit helper that nipatWeightSum equals 1 by showing the non-intersecting set is a singleton of identity paths with unit weight.",
+      "same_unit_helper_plan": [
+        {
+          "depends_on": [
+            "LGV.lgv_nonpermutable",
+            "LGV.dyckDigraph",
+            "LGV.translatePath_injective"
+          ],
+          "fresh_name_hint": "nipat_identity_unique",
+          "needed_checked_ingredients": [
+            "SimpleDigraph.Path.start",
+            "SimpleDigraph.Path.finish",
+            "PathTuple.IsNonIntersecting",
+            "nipatWeightSum"
+          ],
+          "role": "lemma",
+          "statement_sketch": "For the source vertices A_i = (-2i,0) and target vertices B_j = (2j,0), the only non-intersecting path tuple is the identity tuple where path i goes from A_i to B_i.",
+          "why_needed": "needed to show nipatWeightSum is a singleton sum"
+        },
+        {
+          "depends_on": [
+            "LGV.dyckUnitArcWeight"
+          ],
+          "fresh_name_hint": "dyck_path_unit_weight",
+          "needed_checked_ingredients": [
+            "ArcWeight",
+            "pathWeight",
+            "dyckUnitArcWeight"
+          ],
+          "role": "lemma",
+          "statement_sketch": "For any Dyck path p in dyckDigraph, the weight under dyckUnitArcWeight equals 1.",
+          "why_needed": "each path in the identity tuple has weight 1, so the product is 1"
+        }
+      ],
+      "selected_visible_context": [
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "LGV.catalanHankelMatrix_eq_pathWeightMatrix",
+          "why_needed": "converts Hankel det to path-weight matrix det"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "LGV.lgv_nonpermutable",
+          "why_needed": "reduces det to nipatWeightSum for x-decreasing/y-increasing endpoints"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "LGV.dyck_paths_shifted_eq_catalan",
+          "why_needed": "relates shifted Dyck paths to Catalan numbers"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "LGV.translatePath_injective",
+          "why_needed": "injectivity may help show uniqueness of paths"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "unit_key": "unit-001"
+    },
+    {
+      "do_not_use_identifiers": [],
+      "failure_analysis": "Cannot prove: missing binomial coefficient identities for negative upper arguments (Ring.choose (-n) k * (-1)^k = Ring.choose (n+k-1) k) and connection to (1-X)^{-n} coefficients.",
+      "missing_or_uncertain_context": [
+        "fpsPow_one_add_smul_X' lemma statement and conditions",
+        "binomialSeries_coeff for direct coefficient extraction",
+        "Ring.choose properties for negative first argument"
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "Ring.choose (n : K) k = Nat.choose n k for n : ℕ",
+          "name_or_query": "Ring.choose_natCast",
+          "why_needed": "connects Ring.choose to standard binomial coefficients"
+        },
+        {
+          "expected_signature_or_shape": "Nat.choose : ℕ → ℕ → ℕ",
+          "name_or_query": "Nat.choose",
+          "why_needed": "standard binomial coefficient for natural numbers"
+        },
+        {
+          "expected_signature_or_shape": "coeff n (f * g) = ∑ i ∈ range (n+1), coeff i f * coeff (n-i) g",
+          "name_or_query": "coeff_mul",
+          "why_needed": "convolution formula for product of power series"
+        },
+        {
+          "expected_signature_or_shape": "coeff n (rescale a f) = a^n * coeff n f",
+          "name_or_query": "coeff_rescale",
+          "why_needed": "coefficient extraction after rescaling by -1"
+        }
+      ],
+      "repair_strategy_note": "Use key_product_identity' which already proves (1-X^2)^{-n} = rescale (-1) (binomialSeries K (-n)), then extract coefficients and use known project lemmas for the convolution. Need Ring.choose negation identity and parity handling.",
+      "same_unit_helper_plan": [
+        {
+          "depends_on": [
+            "Ring.choose"
+          ],
+          "fresh_name_hint": "Ring_choose_neg_mul_neg_one_pow",
+          "needed_checked_ingredients": [
+            "Ring.choose",
+            "Nat.choose",
+            "neg_add",
+            "sub_eq_add_neg"
+          ],
+          "role": "lemma",
+          "statement_sketch": "For n in K with appropriate typeclasses, Ring.choose (-n) k * (-1)^k = Ring.choose (n + k - 1) k",
+          "why_needed": "connects negative upper index to standard binomial coefficient"
+        },
+        {
+          "depends_on": [
+            "fpsPow_one_add_smul_X'",
+            "generalizedNewtonBinomial",
+            "coeff_rescale",
+            "Ring_choose_neg_mul_neg_one_pow"
+          ],
+          "fresh_name_hint": "coeff_one_sub_X_pow_neg",
+          "needed_checked_ingredients": [
+            "coeff_rescale",
+            "fpsPow_one_add_smul_X'"
+          ],
+          "role": "lemma",
+          "statement_sketch": "coeff k ((1 - X : K⟦X⟧) ^ᶠ (-n)) = Ring.choose (n + k - 1) k",
+          "why_needed": "gives explicit coefficient for (1-X)^{-n} expansion"
+        }
+      ],
+      "selected_visible_context": [
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.FPS.key_product_identity'",
+          "why_needed": "already proves the generating function identity needed"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+          "why_needed": "expansion of (1+X)^c"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow",
+          "why_needed": "coefficient extraction for binomial series"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "AlgebraicCombinatorics.FPS.rescale_neg_one_one_sub_X",
+          "why_needed": "relates (1-X) to rescale (-1) (1+X)"
+        }
+      ],
+      "selector_confidence": 0.8,
+      "unit_key": "unit-003"
+    },
+    {
+      "do_not_use_identifiers": [],
+      "failure_analysis": "Compile failure: Finset.sum_pow expands to sum over Sym (Fin d) n, not Fin n → Fin d. The generated code incorrectly used congr with funext expecting Sym = function type.",
+      "missing_or_uncertain_context": [
+        "Exact statement of Finset.sum_pow and its return type",
+        "Whether Sym (Fin d) n is equivalent to Fin n → Fin d for the purpose of this sum",
+        "Fintype instance for Fin d → ZMod 2 or similar finite function spaces"
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "(∑ a ∈ s, f a)^n = ∑ x ∈ s.sym n, ∏ i ∈ range n, f (x.getI i)",
+          "name_or_query": "Finset.sum_pow",
+          "why_needed": "expansion of power of sum - need to understand actual return type"
+        },
+        {
+          "expected_signature_or_shape": "Finset.sym s n : Finset (Sym α n)",
+          "name_or_query": "Finset.sym",
+          "why_needed": "multiset of size n from finset s"
+        },
+        {
+          "expected_signature_or_shape": "Sym α n = {s : Multiset α // Multiset.card s = n}",
+          "name_or_query": "Sym",
+          "why_needed": "understand the type returned by sum_pow"
+        },
+        {
+          "expected_signature_or_shape": "Fintype.piFinset t : Finset (∀ a, t a) for family of finsets",
+          "name_or_query": "Fintype.piFinset",
+          "why_needed": "finite set of all functions into finite codomain"
+        },
+        {
+          "expected_signature_or_shape": "∑ x ∈ s.map e, f x = ∑ x ∈ s, f (e x)",
+          "name_or_query": "Finset.sum_map",
+          "why_needed": "convert between different index types for sums"
+        }
+      ],
+      "repair_strategy_note": "Use the correct return type of Finset.sum_pow: it expands (∑ a ∈ s, f a)^n = ∑ x ∈ s.sym n, ∏ i ∈ range n, f (x.getI i). Need to relate s.sym n to Fin n → s via a bijection, or use a different expansion lemma.",
+      "same_unit_helper_plan": [
+        {
+          "depends_on": [
+            "Finset.sum_pow",
+            "Fintype.piFinset"
+          ],
+          "fresh_name_hint": "sum_pow_to_fun_fin",
+          "needed_checked_ingredients": [
+            "Finset.sum_pow",
+            "Fintype.piFinset",
+            "Finset.sum_map",
+            "Function.Embedding"
+          ],
+          "role": "lemma",
+          "statement_sketch": "For a finite type α and f : α → ℤ, (∑ a : α, f a)^n = ∑ x : Fin n → α, ∏ i : Fin n, f (x i)",
+          "why_needed": "correct expansion of power of sum to functions, avoiding Sym type"
+        }
+      ],
+      "selected_visible_context": [
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+          "why_needed": "sign function used in the sum"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+          "why_needed": "product of signs in the goal"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.signProduct_eq_prod_pow",
+          "why_needed": "relates signProduct to product of powers"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "unit_key": "unit-004"
+    },
+    {
+      "do_not_use_identifiers": [],
+      "failure_analysis": "Cannot prove: missing definitions for partition transpose, elementary symmetric function e_n as MvPolynomial, skew Schur function s_{λ/μ}, and the first Jacobi-Trudi theorem. The esymm fallback candidates exist in Mathlib but the exact project-specific wrapper is not visible.",
+      "missing_or_uncertain_context": [
+        "Definition of NPartition transpose operation",
+        "Definition of esymmExt analogous to hsymmExt",
+        "Definition of skew Schur function s_{λ/μ}",
+        "Statement of first Jacobi-Trudi theorem jacobiTrudi_h",
+        "Any duality/omega involution relating h_n and e_n via transpose"
+      ],
+      "needed_mathlib_context": [
+        {
+          "expected_signature_or_shape": "MvPolynomial.esymm σ R n : MvPolynomial σ R for [Fintype σ]",
+          "name_or_query": "MvPolynomial.esymm",
+          "why_needed": "elementary symmetric function as multivariate polynomial"
+        },
+        {
+          "expected_signature_or_shape": "esymm σ R n = ∑ t, ∏ i ∈ ↑t, X i",
+          "name_or_query": "MvPolynomial.esymm_eq_sum_subtype",
+          "why_needed": "explicit formula for elementary symmetric function"
+        }
+      ],
+      "repair_strategy_note": "The visible context has hsymmExt for h_n but no esymmExt for e_n, no transpose operation on NPartition, and no skew Schur definition. These are fundamental missing pieces, not just bridge lemmas.",
+      "same_unit_helper_plan": [],
+      "selected_visible_context": [
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "SymmetricFunctions.hsymmExt",
+          "why_needed": "shows pattern for extending symmetric function to negative indices"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "SymmetricFunctions.jacobiTrudiMatrixH",
+          "why_needed": "matrix construction pattern for first Jacobi-Trudi"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "SymmetricFunctions.schur",
+          "why_needed": "Schur function definition"
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "SymmetricFunctions.NPartition",
+          "why_needed": "partition type"
+        }
+      ],
+      "selector_confidence": 0.85,
+      "unit_key": "unit-005"
+    }
+  ]
+}

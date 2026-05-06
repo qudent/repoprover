@@ -1,0 +1,14 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-06T16:03:14.289979+00:00",
+  "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
+  "model": "moonshotai/kimi-k2.6",
+  "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-budget/round-01-context",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+  "valid_json": false,
+  "verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/verification-results-360s.json"
+}

@@ -1,0 +1,23 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "AlgebraicCombinatorics.SubtractiveMethods.lem_cancel_all_even_l1"
+      ],
+      "lean_file_body": "open Finset BigOperators\n\nnamespace AlgebraicCombinatorics.SubtractiveMethods\n\nlemma lem_cancel_all_even_l1 (n d : ℕ) :\n    ∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n\n    = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\n  calc\n    ∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n\n        = ∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i)) := by\n      congr; funext e\n      rw [Finset.sum_pow]\n      congr; funext x\n      rw [← Finset.prod_const]\n      rfl\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i)) := by\n      rw [Finset.sum_comm]\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\n      congr; funext x\n      congr; funext e\n      rw [signProduct]\n\nend AlgebraicCombinatorics.SubtractiveMethods",
+      "notes": [
+        "Proof uses Finset.sum_pow to expand (∑ toSign (e k))^n as a sum over functions x : Fin n → Fin d of products ∏ toSign (e (x i)). Then Finset.sum_comm swaps the order of summation. Finally unfold signProduct to match the goal."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum",
+        "Finset.sum_pow",
+        "Finset.sum_comm",
+        "toSign",
+        "signProduct",
+        "signProduct_eq_prod_pow"
+      ]
+    }
+  ]
+}

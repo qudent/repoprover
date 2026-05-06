@@ -1,0 +1,47 @@
+{
+  "attached_decline_context_pack_count": 0,
+  "batch_count": 2,
+  "batches": [
+    {
+      "batch_index": 1,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/budget/fresh-proof-lane-kimi-k2-6-highreason-units002-004/batch-001/generation-payload.json",
+      "task_unit_keys": [
+        "unit-002"
+      ],
+      "valid_json": false
+    },
+    {
+      "batch_index": 2,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/budget/fresh-proof-lane-kimi-k2-6-highreason-units002-004/batch-002/generation-payload.json",
+      "task_unit_keys": [
+        "unit-004"
+      ],
+      "valid_json": false
+    }
+  ],
+  "budget_only": true,
+  "cost_summary": null,
+  "decline_context_pack": null,
+  "generated_at": "2026-05-06T16:21:50.919789+00:00",
+  "max_tasks_per_call": 1,
+  "max_tokens": 32768,
+  "model": "moonshotai/kimi-k2.6",
+  "output_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/budget/fresh-proof-lane-kimi-k2-6-highreason-units002-004",
+  "paid_call_made": false,
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption",
+  "provider_error_count": 0,
+  "reasoning_effort": "high",
+  "resume_existing": false,
+  "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
+  "task_unit_keys": [
+    "unit-002",
+    "unit-004"
+  ],
+  "temperature": 0.0
+}

@@ -335,6 +335,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 opens=args.verification_opens,
                 infer_context=True,
                 materialize_visible_support=args.materialize_visible_support,
+                support_mode=getattr(args, "support_mode", "body"),
                 timeout_seconds=args.timeout_seconds,
                 output=verification_path,
             )
@@ -399,6 +400,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "budget_only": args.budget_only,
         "semantic_coverage": args.semantic_coverage,
         "materialize_visible_support": args.materialize_visible_support,
+        "support_mode": getattr(args, "support_mode", "body"),
         "stop_reason": stop_reason,
         "final_generation_run": str(current_generation_run),
         "final_verification_results": str(current_verification_results),
@@ -442,6 +444,7 @@ def main() -> None:
             "project/local support snippets before the repaired generated body."
         ),
     )
+    parser.add_argument("--support-mode", choices=["body", "assumption"], default="body")
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
     parser.add_argument("--semantic-coverage", action="store_true")
     parser.add_argument("--budget-only", action="store_true")

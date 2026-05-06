@@ -281,6 +281,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "temperature": args.temperature,
         "max_tokens": args.max_tokens,
         "max_tasks_per_call": args.max_tasks_per_call,
+        "request_timeout_seconds": getattr(args, "request_timeout_seconds", None),
         "budget_only": args.budget_only,
         "resume_existing": bool(getattr(args, "resume_existing", False)),
         "paid_call_made": False,
@@ -339,7 +340,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url=args.base_url)
         started = time.monotonic()
         try:
-            response = client.chat.completions.create(**request_payload)
+            request_timeout = getattr(args, "request_timeout_seconds", None)
+            if request_timeout and request_timeout > 0:
+                response = client.chat.completions.create(**request_payload, timeout=request_timeout)
+            else:
+                response = client.chat.completions.create(**request_payload)
         except Exception as exc:  # noqa: BLE001 - provider/client failures must be logged and resumable.
             error_text = "".join(traceback.format_exception(exc))
             (batch_dir / "provider-error.txt").write_text(error_text, encoding="utf-8")
@@ -400,6 +405,11 @@ def main() -> None:
     )
     parser.add_argument("--max-tasks-per-call", type=int, default=1)
     parser.add_argument("--decline-context-pack", type=Path)
+    parser.add_argument(
+        "--request-timeout-seconds",
+        type=float,
+        help="Abort a provider request after this many seconds; omitted uses the SDK default.",
+    )
     parser.add_argument("--budget-only", action="store_true")
     parser.add_argument(
         "--resume-existing",

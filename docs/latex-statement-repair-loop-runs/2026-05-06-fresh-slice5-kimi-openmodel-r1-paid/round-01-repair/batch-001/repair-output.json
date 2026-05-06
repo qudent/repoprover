@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof strategy is: (1) use catalanHankelMatrix_eq_pathWeightMatrix to convert the Hankel determinant to a path weight matrix determinant, (2) apply lgv_nonpermutable with the appropriate x-decreasing/y-increasing conditions on the source and target vertices, (3) show that the only non-intersecting path tuple is the identity tuple with each path being a Dyck path from (-2i,0) to (2i,0), (4) since dyckUnitArcWeight assigns weight 1 to each arc, each path has weight 1 and the nipat weight sum equals 1.",
+        "Missing checked facts needed to complete: (a) a lemma that for the specific source vertices A_i = (-2i, 0) and target vertices B_j = (2j, 0), the only non-intersecting path tuple is the identity-matched tuple where path i goes from A_i to B_i; (b) a lemma that each such Dyck path has weight 1 under dyckUnitArcWeight (or that the product of path weights equals 1); (c) the cardinality of the set of non-intersecting path tuples equals 1. These are geometric facts about Dyck paths in the dyckDigraph that are not yet visible in the checked project context. The sorry placeholders indicate where these gaps remain; without formalized versions of these facts, the proof cannot be completed from visible context alone."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "LGV.catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable",
+        "LGV.dyckDigraph",
+        "LGV.dyckUnitArcWeight",
+        "LGV.PathTuple.ext"
+      ]
+    }
+  ]
+}

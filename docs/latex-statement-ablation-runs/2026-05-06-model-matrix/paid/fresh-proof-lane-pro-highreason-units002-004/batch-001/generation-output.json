@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "namespace AlgebraicCombinatorics\n\ntheorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [PowerSeries.isUnit_iff_constantCoeff, isUnit_iff_ne_zero]",
+      "notes": [
+        "Uses PowerSeries.isUnit_iff_constantCoeff and isUnit_iff_ne_zero"
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "PowerSeries.isUnit_iff_constantCoeff",
+        "isUnit_iff_ne_zero"
+      ]
+    }
+  ]
+}

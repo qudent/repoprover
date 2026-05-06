@@ -1,0 +1,43 @@
+{
+  "schema_version": "repoprover.provider_interruption_audit.v1",
+  "generated_at": "2026-05-06T17:07:00Z",
+  "artifact_root": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6-highreason-units002-004",
+  "model": "moonshotai/kimi-k2.6",
+  "reasoning_effort": "high",
+  "max_tokens": 32768,
+  "task_unit_keys": [
+    "unit-002",
+    "unit-004"
+  ],
+  "completed_paid_batches": [
+    {
+      "batch_index": 1,
+      "unit_key": "unit-002",
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6-highreason-units002-004/batch-001/generation-payload.json",
+      "response_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6-highreason-units002-004/batch-001/generation-response.json",
+      "assistant_content_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6-highreason-units002-004/batch-001/generation-assistant-content.txt",
+      "valid_json": false,
+      "failure": "provider returned null assistant content; all completion tokens were reasoning tokens",
+      "openrouter_reported_cost": 0.05606217,
+      "prompt_tokens": 9745,
+      "completion_tokens": 10264,
+      "reasoning_tokens": 10264,
+      "cached_prompt_tokens": 0
+    }
+  ],
+  "interrupted_batches": [
+    {
+      "batch_index": 2,
+      "unit_key": "unit-004",
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6-highreason-units002-004/batch-002/generation-payload.json",
+      "response_path": null,
+      "known_openrouter_reported_cost": null,
+      "reason": "local process interrupted after more than 35 minutes without a response; no response body was available to log"
+    }
+  ],
+  "notes": [
+    "This run should not be counted as a valid Kimi high-reasoning proof-lane attempt.",
+    "The first paid call is recoverable in git and shows Kimi high reasoning via this OpenRouter route did not return JSON content with reasoning excluded.",
+    "Future provider calls should use --request-timeout-seconds to avoid unbounded hangs."
+  ]
+}

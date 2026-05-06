@@ -1,0 +1,1143 @@
+{
+  "budget_only": false,
+  "final_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair",
+  "final_verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/eval/verification-results.json",
+  "generated_at": "2026-05-06T16:11:54.792996+00:00",
+  "initial_generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
+  "initial_semantic_coverage_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/semantic-coverage-360s.json",
+  "initial_verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/verification-results-360s.json",
+  "materialize_visible_support": true,
+  "max_rounds": 1,
+  "model": "moonshotai/kimi-k2.6",
+  "output_root": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid",
+  "reasoning_effort": "none",
+  "rounds": [
+    {
+      "checked_repair_context": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-context/checked-repair-context.json",
+      "checked_repair_context_summary": {
+        "checked_signature_count": 13,
+        "failed_or_unchecked_context_request_count": 0,
+        "fallback_bridge_note_count": 0,
+        "fallback_resolved_context_request_count": 0,
+        "output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-context/checked-repair-context.json",
+        "schema_version": "repoprover.latex_statement_checked_repair_context_build.v1"
+      },
+      "context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-context",
+      "context_selection": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "moonshotai/kimi-k2.6",
+          "openrouter_reported_cost": 0.0387374,
+          "usage": {
+            "completion_tokens": 2386,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.0387374,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.008351,
+              "upstream_inference_cost": 0.0387374,
+              "upstream_inference_prompt_cost": 0.0303864
+            },
+            "is_byok": false,
+            "prompt_tokens": 37983,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 40369
+          }
+        },
+        "elapsed_seconds": 130.077,
+        "generated_at": "2026-05-06T16:04:43.580836+00:00",
+        "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
+        "model": "moonshotai/kimi-k2.6",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-context",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+        "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/verification-results-360s.json"
+      },
+      "hydration": {
+        "batches": [
+          {
+            "exact_identifier_count": 13,
+            "fallback_exact_identifier_count": 0,
+            "fallback_lean_check_status": "no_exact_identifiers",
+            "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+            "lean_check_status": "ok",
+            "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-context/batch-001/context-selection-output.json",
+            "request_count": 13
+          }
+        ],
+        "generated_at": "2026-05-06T16:07:20.391334+00:00",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-context",
+        "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+      },
+      "input_generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
+      "input_verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/verification-results-360s.json",
+      "preserve_compile_clean_units": {
+        "carried_forward_unit_keys": [
+          "unit-001",
+          "unit-003",
+          "unit-004",
+          "unit-005"
+        ],
+        "preserved_unit_keys": [
+          "unit-002"
+        ],
+        "split_payload_sources": [
+          {
+            "payload_source": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-001/generation-payload.json",
+            "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-001/generation-payload.json",
+            "unit_key": "unit-001"
+          },
+          {
+            "payload_source": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-002/generation-payload.json",
+            "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-002/generation-payload.json",
+            "unit_key": "unit-002"
+          },
+          {
+            "payload_source": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-003/generation-payload.json",
+            "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-003/generation-payload.json",
+            "unit_key": "unit-003"
+          },
+          {
+            "payload_source": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-004/generation-payload.json",
+            "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-004/generation-payload.json",
+            "unit_key": "unit-004"
+          },
+          {
+            "payload_source": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-005/generation-payload.json",
+            "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-005/generation-payload.json",
+            "unit_key": "unit-005"
+          }
+        ],
+        "updated_paths": [
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/eval/merged-generation-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-001/generation-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-001/repair-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-001/generation-payload.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-002/generation-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-002/repair-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-002/generation-payload.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-003/generation-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-003/repair-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-003/generation-payload.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-004/generation-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-004/repair-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-004/generation-payload.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-005/generation-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-005/repair-output.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-005/generation-payload.json",
+          "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/eval/split-generation-payload-sources.json"
+        ]
+      },
+      "repair": {
+        "budget_only": false,
+        "contract_enforcement": {
+          "normalized_unit_count": 0,
+          "normalized_units": []
+        },
+        "cost_summary": {
+          "model": "moonshotai/kimi-k2.6",
+          "openrouter_reported_cost": 0.0411586,
+          "usage": {
+            "completion_tokens": 4,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.0411586,
+            "cost_details": {
+              "upstream_inference_completions_cost": 1.6e-05,
+              "upstream_inference_cost": 0.0411586,
+              "upstream_inference_prompt_cost": 0.0411426
+            },
+            "is_byok": false,
+            "prompt_tokens": 45714,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 45718
+          }
+        },
+        "elapsed_seconds": 26.023,
+        "generated_at": "2026-05-06T16:07:20.415172+00:00",
+        "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
+        "model": "moonshotai/kimi-k2.6",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_generation_repair.v1",
+        "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/eval/verification-results-360s.json"
+      },
+      "repair_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair",
+      "repair_unit_keys": [
+        "unit-001",
+        "unit-003",
+        "unit-004",
+        "unit-005"
+      ],
+      "round": 1,
+      "verification": {
+        "base_imports": [
+          "Mathlib"
+        ],
+        "base_opens": [
+          "open scoped Polynomial BigOperators",
+          "open PowerSeries Finset"
+        ],
+        "batches": [
+          {
+            "compile_passed_units": 0,
+            "failure_class_counts": {
+              "declined_cannot_prove": 1
+            },
+            "filtered_invalid_inferred_opens": [
+              {
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 5,
+                    "data": "unknown namespace `SymmetricFunctions`",
+                    "kind": "[anonymous]",
+                    "line": 6,
+                    "severity": "error"
+                  }
+                ],
+                "open_statement": "open SymmetricFunctions",
+                "stderr": ""
+              }
+            ],
+            "filtered_target_module_imports": [
+              "AlgebraicCombinatorics.Determinants.LGV2"
+            ],
+            "filtered_target_namespace_opens": [
+              "open LGV"
+            ],
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-001/generation-output.json",
+            "hidden_target_modules": [
+              "AlgebraicCombinatorics.Determinants.LGV2"
+            ],
+            "hidden_target_namespaces": [
+              "LGV"
+            ],
+            "imports": [
+              "Mathlib"
+            ],
+            "inferred_imports": [],
+            "inferred_opens": [
+              "open Finset BigOperators Matrix",
+              "open Finset BigOperators Matrix MvPolynomial"
+            ],
+            "materialize_visible_support": true,
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open Finset BigOperators Matrix",
+              "open Finset BigOperators Matrix MvPolynomial"
+            ],
+            "support_mode": "assumption",
+            "unfiltered_inferred_imports": [
+              "AlgebraicCombinatorics.Determinants.LGV2"
+            ],
+            "unfiltered_inferred_opens": [
+              "open Finset BigOperators Matrix",
+              "open LGV",
+              "open Finset BigOperators Matrix MvPolynomial",
+              "open SymmetricFunctions"
+            ],
+            "unit_count": 1,
+            "units": [
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "failure_class": "declined_cannot_prove",
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-001",
+                "visible_support_context": {
+                  "accepted": [
+                    {
+                      "kind": "lemma",
+                      "line": "714",
+                      "name": "LGV.PathTuple.ext",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "4264",
+                      "name": "LGV.lgv_nonpermutable",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "5222",
+                      "name": "LGV.dyckDigraph",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "5943",
+                      "name": "LGV.translateVertex",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "5946",
+                      "name": "LGV.dyckDigraph_arc_translate",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "5961",
+                      "name": "LGV.translatePath",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "5982",
+                      "name": "LGV.translatePath_start",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "5987",
+                      "name": "LGV.translatePath_finish",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "5992",
+                      "name": "LGV.translatePath_neg",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "6004",
+                      "name": "LGV.translatePath_injective",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "6013",
+                      "name": "LGV.dyck_paths_shifted_eq_catalan",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "6059",
+                      "name": "LGV.catalanHankelMatrix_eq_pathWeightMatrix",
+                      "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+                    }
+                  ],
+                  "accepted_count": 12,
+                  "candidate_count": 12,
+                  "rejected": [],
+                  "rejected_count": 0,
+                  "skipped": [],
+                  "skipped_count": 0,
+                  "support_mode": "assumption"
+                }
+              }
+            ]
+          },
+          {
+            "compile_passed_units": 0,
+            "failure_class_counts": {
+              "compile_failure": 1
+            },
+            "filtered_invalid_inferred_opens": [],
+            "filtered_target_module_imports": [
+              "AlgebraicCombinatorics.DividingFPS"
+            ],
+            "filtered_target_namespace_opens": [
+              "open AlgebraicCombinatorics"
+            ],
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-002/generation-output.json",
+            "hidden_target_modules": [
+              "AlgebraicCombinatorics.DividingFPS"
+            ],
+            "hidden_target_namespaces": [
+              "AlgebraicCombinatorics"
+            ],
+            "imports": [
+              "Mathlib",
+              "AlgebraicCombinatorics.FPS.ExpLog",
+              "AlgebraicCombinatorics.FPS.InfiniteProducts"
+            ],
+            "inferred_imports": [
+              "AlgebraicCombinatorics.FPS.ExpLog",
+              "AlgebraicCombinatorics.FPS.InfiniteProducts"
+            ],
+            "inferred_opens": [
+              "open scoped BigOperators",
+              "open PowerSeries",
+              "open Nat Finset"
+            ],
+            "materialize_visible_support": true,
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open scoped BigOperators",
+              "open PowerSeries",
+              "open Nat Finset"
+            ],
+            "support_mode": "assumption",
+            "unfiltered_inferred_imports": [
+              "AlgebraicCombinatorics.DividingFPS",
+              "AlgebraicCombinatorics.FPS.ExpLog",
+              "AlgebraicCombinatorics.FPS.InfiniteProducts"
+            ],
+            "unfiltered_inferred_opens": [
+              "open scoped BigOperators",
+              "open AlgebraicCombinatorics",
+              "open PowerSeries",
+              "open Nat Finset"
+            ],
+            "unit_count": 1,
+            "units": [
+              {
+                "body_declaration_names": [
+                  "fps_invertible_iff_constantCoeff_field"
+                ],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [
+                  "fps_invertible_iff_constantCoeff_field"
+                ],
+                "failure_class": "compile_failure",
+                "lean_error_count": 16,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 29,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 12,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 32,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 18,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 32,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 18,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 8,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 19,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 19,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 19,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 55,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 19,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 32,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 25,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 32,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 25,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 8,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 26,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 19,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 26,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 35,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 26,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 27,
+                    "data": "failed to synthesize instance of type class\n  HMul L L ?m.21\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 26,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 29,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 32,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 8,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 33,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 6,
+                    "data": "Unknown identifier `fps_invertible_iff_constantCoeff`",
+                    "kind": "lean.unknownIdentifier._namedError",
+                    "line": 62,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 38,
+                    "data": "unsolved goals\nK : Type u_1\ninst✝ : Field K\na : K⟦X⟧\n⊢ IsUnit a ↔ constantCoeff a ≠ 0",
+                    "kind": "Tactic.unsolvedGoals",
+                    "line": 61,
+                    "severity": "error"
+                  }
+                ],
+                "placeholder_tokens": [],
+                "reported_status": "generated",
+                "skipped_reason": null,
+                "stderr": "",
+                "unit_key": "unit-002",
+                "visible_support_context": {
+                  "accepted": [
+                    {
+                      "kind": "def",
+                      "line": "140",
+                      "name": "AlgebraicCombinatorics.divByUnit",
+                      "path": "AlgebraicCombinatorics/DividingFPS.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "146",
+                      "name": "AlgebraicCombinatorics.fracs1_div_add_div",
+                      "path": "AlgebraicCombinatorics/DividingFPS.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "160",
+                      "name": "AlgebraicCombinatorics.fracs1_div_mul_div",
+                      "path": "AlgebraicCombinatorics/DividingFPS.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "167",
+                      "name": "AlgebraicCombinatorics.fracs1_div_eq_iff",
+                      "path": "AlgebraicCombinatorics/DividingFPS.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "193",
+                      "name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+                      "path": "AlgebraicCombinatorics/DividingFPS.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "318",
+                      "name": "AlgebraicCombinatorics.fps_onePlusX_isUnit",
+                      "path": "AlgebraicCombinatorics/DividingFPS.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "325",
+                      "name": "AlgebraicCombinatorics.fps_onePlusX_inv",
+                      "path": "AlgebraicCombinatorics/DividingFPS.lean"
+                    }
+                  ],
+                  "accepted_count": 7,
+                  "candidate_count": 8,
+                  "rejected": [],
+                  "rejected_count": 0,
+                  "skipped": [
+                    {
+                      "kind": "theorem",
+                      "line": "935",
+                      "name": "PowerSeries.isUnit_of_constantCoeff_eq_one",
+                      "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+                      "reason": "already_available_from_imports"
+                    }
+                  ],
+                  "skipped_count": 1,
+                  "support_mode": "assumption"
+                }
+              }
+            ]
+          },
+          {
+            "compile_passed_units": 0,
+            "failure_class_counts": {
+              "declined_cannot_prove": 1
+            },
+            "filtered_invalid_inferred_opens": [
+              {
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 5,
+                    "data": "unknown namespace `AlgebraicCombinatorics`",
+                    "kind": "[anonymous]",
+                    "line": 7,
+                    "severity": "error"
+                  }
+                ],
+                "open_statement": "open AlgebraicCombinatorics",
+                "stderr": ""
+              }
+            ],
+            "filtered_target_module_imports": [
+              "AlgebraicCombinatorics.FPS.NonIntegerPowers"
+            ],
+            "filtered_target_namespace_opens": [
+              "open FPS"
+            ],
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-003/generation-output.json",
+            "hidden_target_modules": [
+              "AlgebraicCombinatorics.FPS.NonIntegerPowers"
+            ],
+            "hidden_target_namespaces": [
+              "AlgebraicCombinatorics.FPS"
+            ],
+            "imports": [
+              "Mathlib",
+              "AlgebraicCombinatorics.FPS.ExpLog"
+            ],
+            "inferred_imports": [
+              "AlgebraicCombinatorics.FPS.ExpLog"
+            ],
+            "inferred_opens": [
+              "open scoped Polynomial",
+              "open PowerSeries Finset"
+            ],
+            "materialize_visible_support": true,
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open scoped Polynomial"
+            ],
+            "support_mode": "assumption",
+            "unfiltered_inferred_imports": [
+              "AlgebraicCombinatorics.FPS.NonIntegerPowers",
+              "AlgebraicCombinatorics.FPS.ExpLog"
+            ],
+            "unfiltered_inferred_opens": [
+              "open scoped Polynomial",
+              "open PowerSeries Finset",
+              "open AlgebraicCombinatorics",
+              "open FPS"
+            ],
+            "unit_count": 1,
+            "units": [
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "failure_class": "declined_cannot_prove",
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-003",
+                "visible_support_context": {
+                  "accepted": [
+                    {
+                      "kind": "theorem",
+                      "line": "203",
+                      "name": "AlgebraicCombinatorics.FPS.constantCoeff_fpsLog",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "295",
+                      "name": "AlgebraicCombinatorics.FPS.fpsExp_add",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "445",
+                      "name": "AlgebraicCombinatorics.FPS.fpsLog_mul",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "514",
+                      "name": "AlgebraicCombinatorics.FPS.fpsPow",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "565",
+                      "name": "AlgebraicCombinatorics.FPS.fpsPow_mul",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "1102",
+                      "name": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "1230",
+                      "name": "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "1783",
+                      "name": "AlgebraicCombinatorics.FPS.rescale_neg_one_one_sub_X",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "1795",
+                      "name": "AlgebraicCombinatorics.FPS.one_sub_X_pow_mul_invOneSubPow",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "1803",
+                      "name": "AlgebraicCombinatorics.FPS.one_add_X_pow_mul_rescale_invOneSubPow",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "1814",
+                      "name": "AlgebraicCombinatorics.FPS.one_sub_X_sq_pow",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "1821",
+                      "name": "AlgebraicCombinatorics.FPS.one_sub_X_sq_pow_mul_prod",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "1838",
+                      "name": "AlgebraicCombinatorics.FPS.key_product_identity'",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "2346",
+                      "name": "AlgebraicCombinatorics.FPS.polynomial_identity_trick",
+                      "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+                    }
+                  ],
+                  "accepted_count": 14,
+                  "candidate_count": 14,
+                  "rejected": [],
+                  "rejected_count": 0,
+                  "skipped": [],
+                  "skipped_count": 0,
+                  "support_mode": "assumption"
+                }
+              }
+            ]
+          },
+          {
+            "compile_passed_units": 0,
+            "failure_class_counts": {
+              "compile_failure": 1
+            },
+            "filtered_invalid_inferred_opens": [],
+            "filtered_target_module_imports": [
+              "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+            ],
+            "filtered_target_namespace_opens": [
+              "open AlgebraicCombinatorics.SubtractiveMethods"
+            ],
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-004/generation-output.json",
+            "hidden_target_modules": [
+              "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+            ],
+            "hidden_target_namespaces": [
+              "AlgebraicCombinatorics.SubtractiveMethods"
+            ],
+            "imports": [
+              "Mathlib"
+            ],
+            "inferred_imports": [],
+            "inferred_opens": [
+              "open Finset BigOperators"
+            ],
+            "materialize_visible_support": true,
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open Finset BigOperators"
+            ],
+            "support_mode": "assumption",
+            "unfiltered_inferred_imports": [
+              "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+            ],
+            "unfiltered_inferred_opens": [
+              "open Finset BigOperators",
+              "open AlgebraicCombinatorics.SubtractiveMethods"
+            ],
+            "unit_count": 1,
+            "units": [
+              {
+                "body_declaration_names": [
+                  "lem_cancel_all_even_l1"
+                ],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [
+                  "AlgebraicCombinatorics.SubtractiveMethods.lem_cancel_all_even_l1"
+                ],
+                "failure_class": "compile_failure",
+                "lean_error_count": 3,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 6,
+                    "data": "Function expected at\n  allEvenTuples\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  n\n\nHint: The identifier `allEvenTuples` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+                    "kind": "[anonymous]",
+                    "line": 35,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 13,
+                    "data": "Tactic `apply` failed: could not unify the conclusion of `@funext`\n  ?f = ?g\nwith the goal\n  Sym (Fin d) n = (Fin n → Fin d)\n\nNote: The full type of `@funext` is\n  ∀ {α : Sort ?u.12527} {β : α → Sort ?u.12526} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g\n\ncase e_f.h.h.e_1\nn d : ℕ\ne : Fin d → ZMod 2\n⊢ Sym (Fin d) n = (Fin n → Fin d)",
+                    "kind": "[anonymous]",
+                    "line": 49,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 10,
+                    "data": "Invalid rewrite argument: Expected an equality or iff proof or definition name, but `signProduct ?e\n  ?x` is a value of type\n  ℤ",
+                    "kind": "[anonymous]",
+                    "line": 57,
+                    "severity": "error"
+                  }
+                ],
+                "placeholder_tokens": [],
+                "reported_status": "generated",
+                "skipped_reason": null,
+                "stderr": "",
+                "unit_key": "unit-004",
+                "visible_support_context": {
+                  "accepted": [
+                    {
+                      "kind": "def",
+                      "line": "55",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "64",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.multiplicity",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "83",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "93",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "99",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_sq",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "111",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_pow_odd",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "lemma",
+                      "line": "119",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_add_one",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "126",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct_eq_prod_pow",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "155",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "445",
+                      "name": "AlgebraicCombinatorics.SubtractiveMethods.allEven_count_formula",
+                      "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+                    }
+                  ],
+                  "accepted_count": 10,
+                  "candidate_count": 10,
+                  "rejected": [],
+                  "rejected_count": 0,
+                  "skipped": [],
+                  "skipped_count": 0,
+                  "support_mode": "assumption"
+                }
+              }
+            ]
+          },
+          {
+            "compile_passed_units": 0,
+            "failure_class_counts": {
+              "declined_cannot_prove": 1
+            },
+            "filtered_invalid_inferred_opens": [],
+            "filtered_target_module_imports": [
+              "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+            ],
+            "filtered_target_namespace_opens": [
+              "open SymmetricFunctions"
+            ],
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/batch-005/generation-output.json",
+            "hidden_target_modules": [
+              "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+            ],
+            "hidden_target_namespaces": [
+              "SymmetricFunctions"
+            ],
+            "imports": [
+              "Mathlib",
+              "AlgebraicCombinatorics.Determinants.LGV2",
+              "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+              "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+            ],
+            "inferred_imports": [
+              "AlgebraicCombinatorics.Determinants.LGV2",
+              "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+              "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+            ],
+            "inferred_opens": [
+              "open Finset BigOperators Matrix MvPolynomial"
+            ],
+            "materialize_visible_support": true,
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open Finset BigOperators Matrix MvPolynomial"
+            ],
+            "support_mode": "assumption",
+            "unfiltered_inferred_imports": [
+              "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+              "AlgebraicCombinatorics.Determinants.LGV2",
+              "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+              "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+            ],
+            "unfiltered_inferred_opens": [
+              "open Finset BigOperators Matrix MvPolynomial",
+              "open SymmetricFunctions"
+            ],
+            "unit_count": 1,
+            "units": [
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "failure_class": "declined_cannot_prove",
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-005",
+                "visible_support_context": {
+                  "accepted": [
+                    {
+                      "kind": "structure",
+                      "line": "115",
+                      "name": "SymmetricFunctions.NPartition",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "1276",
+                      "name": "SymmetricFunctions.schur",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "1447",
+                      "name": "SymmetricFunctions.hasSizeDiff",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "1470",
+                      "name": "SymmetricFunctions.isVerticalStripFun",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "1484",
+                      "name": "SymmetricFunctions.toNPartition",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "1509",
+                      "name": "SymmetricFunctions.potentialVerticalStrips",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "1520",
+                      "name": "SymmetricFunctions.verticalNStripPartitions",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "2645",
+                      "name": "SymmetricFunctions.hsymmExt",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "2649",
+                      "name": "SymmetricFunctions.hsymmExt_isSymmetric",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "def",
+                      "line": "2657",
+                      "name": "SymmetricFunctions.jacobiTrudiMatrixH",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "2846",
+                      "name": "SymmetricFunctions.pathWeightSum_eq_hsymm",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    },
+                    {
+                      "kind": "theorem",
+                      "line": "3121",
+                      "name": "SymmetricFunctions.nipat_ssyt_bijection",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+                    }
+                  ],
+                  "accepted_count": 12,
+                  "candidate_count": 13,
+                  "rejected": [],
+                  "rejected_count": 0,
+                  "skipped": [
+                    {
+                      "kind": "theorem",
+                      "line": "126",
+                      "name": "ext",
+                      "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+                      "reason": "already_available_from_imports"
+                    }
+                  ],
+                  "skipped_count": 1,
+                  "support_mode": "assumption"
+                }
+              }
+            ]
+          }
+        ],
+        "compile_passed_units": 0,
+        "failure_class_counts": {
+          "compile_failure": 2,
+          "declined_cannot_prove": 3
+        },
+        "filter_target_module_imports": true,
+        "generated_at": "2026-05-06T16:11:54.751184+00:00",
+        "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair",
+        "infer_context": true,
+        "materialize_visible_support": true,
+        "project_root": "algebraic-combinatorics",
+        "schema_version": "repoprover.latex_statement_generation_verification.v1",
+        "support_mode": "assumption",
+        "unit_count": 5,
+        "validate_inferred_opens": true
+      },
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-kimi-openmodel-r1-paid/round-01-repair/eval/verification-results.json"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_repair_loop.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+  "semantic_coverage": true,
+  "stop_reason": "max_rounds_reached",
+  "support_mode": "assumption"
+}

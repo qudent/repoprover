@@ -1,0 +1,29 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "sum_pow_eq_sum_finset",
+        "cancel_all_even_l1"
+      ],
+      "lean_file_body": "open Finset BigOperators\n\nnamespace AlgebraicCombinatorics.SubtractiveMethods\n\nlemma sum_pow_eq_sum_finset {ι : Type*} [Fintype ι] [DecidableEq ι] {n : ℕ} (f : ι → ℤ) : \n    (∑ k : ι, f k) ^ n = ∑ (x : Fin n → ι), ∏ i : Fin n, f (x i) := by\n  induction' n with m ih\n  · simp\n  · rw [pow_succ, ih]\n    have hprod_sum : (∑ (x : Fin m → ι), ∏ i : Fin m, f (x i)) * (∑ k : ι, f k) =\n        ∑ p : ((Fin m → ι) × ι), (∏ i : Fin m, f (p.1 i)) * f p.2 := by\n      rw [Finset.sum_mul, Finset.sum_congr rfl (λ x hx => by rw [Finset.mul_sum]), Finset.sum_product]\n    rw [hprod_sum]\n    have hinj : Function.Injective (λ (p : (Fin m → ι) × ι) => Fin.snoc p.1 p.2) :=\n      Fin.snoc_injective\n    have hsurj : Function.Surjective (λ (p : (Fin m → ι) × ι) => Fin.snoc p.1 p.2) := by\n      intro y\n      refine ⟨(λ i => y (Fin.castSucc i), y (Fin.last m)), ?_⟩\n      ext i\n      refine Fin.cases ?_ ?_ i\n      · simp\n      · simp\n    have hprod : ∀ (p : (Fin m → ι) × ι), (∏ i : Fin m, f (p.1 i)) * f p.2 = \n        ∏ i : Fin (m+1), f ((Fin.snoc p.1 p.2) i) := by\n      intro p; rw [Fin.prod_univ_snoc]\n    have h_mem : ∀ (p : (Fin m → ι) × ι), p ∈ (Finset.univ : Finset ((Fin m → ι) × ι)) := by\n      intro p; exact Finset.mem_univ _\n    exact (Finset.sum_bij (λ p _, Fin.snoc p.1 p.2) h_mem hinj ?_ ?_).symm\n    · intro p₁ hp₁ p₂ hp₂ h_eq; exact hinj h_eq\n    · intro y hy\n      obtain ⟨p, hp⟩ := hsurj y\n      use p\n      apply Finset.mem_univ\n    · intro p hp; exact hprod p\n\nlemma cancel_all_even_l1 (n d : ℕ) : (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) = \n    (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x) := by\n  calc\n    (∑ e, (∑ k, toSign (e k)) ^ n) = ∑ e, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i)) := by\n      refine Finset.sum_congr rfl (λ e he => ?_)\n      rw [sum_pow_eq_sum_finset (λ k => toSign (e k))]\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i)) := by\n      rw [Finset.sum_comm]\n    _ = ∑ x, ∑ e, signProduct e x := by\n      rfl\n\nend AlgebraicCombinatorics.SubtractiveMethods",
+      "notes": [
+        "Proved equality via expansion of power using sum_pow_eq_sum_finset and interchange of sums."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum",
+        "toSign",
+        "signProduct",
+        "Finset.sum_comm",
+        "Fin.snoc_injective",
+        "Fin.prod_univ_snoc",
+        "Finset.sum_product",
+        "Fintype",
+        "Finset.mem_univ",
+        "Finset.sum_mul",
+        "Finset.mul_sum"
+      ]
+    }
+  ]
+}
