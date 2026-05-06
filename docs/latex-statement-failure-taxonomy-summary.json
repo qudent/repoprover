@@ -1,0 +1,2270 @@
+{
+  "best_source_error_pattern_counts": {
+    "application_type_mismatch": 1,
+    "compiled": 6,
+    "contract_violation": 1,
+    "declined_cannot_prove": 3
+  },
+  "best_source_failure_class_counts": {
+    "compile_failure": 1,
+    "compiled": 6,
+    "contract_violation": 1,
+    "declined_cannot_prove": 3
+  },
+  "best_sources": [
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid",
+      "compile_passed": false,
+      "error_pattern": "application_type_mismatch",
+      "failure_class": "compile_failure",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+      "compile_passed": true,
+      "error_pattern": "compiled",
+      "failure_class": "compiled",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+      "unit_key": "unit-003"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid",
+      "compile_passed": true,
+      "error_pattern": "compiled",
+      "failure_class": "compiled",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.detAB",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid",
+      "compile_passed": true,
+      "error_pattern": "compiled",
+      "failure_class": "compiled",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+      "compile_passed": true,
+      "error_pattern": "compiled",
+      "failure_class": "compiled",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+      "unit_key": "unit-002"
+    },
+    {
+      "best_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+      "compile_passed": false,
+      "error_pattern": "declined_cannot_prove",
+      "failure_class": "declined_cannot_prove",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid",
+      "compile_passed": true,
+      "error_pattern": "compiled",
+      "failure_class": "compiled",
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+      "compile_passed": false,
+      "error_pattern": "declined_cannot_prove",
+      "failure_class": "declined_cannot_prove",
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+      "unit_key": "unit-002"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+      "compile_passed": false,
+      "error_pattern": "contract_violation",
+      "failure_class": "contract_violation",
+      "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+      "unit_key": "unit-003"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid",
+      "compile_passed": true,
+      "error_pattern": "compiled",
+      "failure_class": "compiled",
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5b-contract-paid",
+      "compile_passed": false,
+      "error_pattern": "declined_cannot_prove",
+      "failure_class": "declined_cannot_prove",
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-001"
+    }
+  ],
+  "compile_passed_units": 16,
+  "coverage_status_counts": {
+    "not_generated_cannot_prove": 1
+  },
+  "error_pattern_counts": {
+    "ambiguous_namespace_or_notation": 1,
+    "application_type_mismatch": 1,
+    "compiled": 16,
+    "contract_violation": 20,
+    "declined_cannot_prove": 9,
+    "missing_typeclass_or_binder": 5,
+    "unknown_constant": 3
+  },
+  "examples_by_class": {
+    "compile_failure": [
+      {
+        "contract_violations": [],
+        "error_pattern": "application_type_mismatch",
+        "first_error": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+        "lean_error_count": 11,
+        "lean_returncode": 1,
+        "reported_status": null,
+        "run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "missing_typeclass_or_binder",
+        "first_error": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "lean_error_count": 3,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-binderfix-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "missing_typeclass_or_binder",
+        "first_error": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "lean_error_count": 3,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "unknown_constant",
+        "first_error": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+        "lean_error_count": 2,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "unknown_constant",
+        "first_error": "Unknown constant `Finset.eq_empty_of_not_nonempty`",
+        "lean_error_count": 2,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "unknown_constant",
+        "first_error": "Unknown constant `Finset.card_fintype`",
+        "lean_error_count": 1,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair7-autocontext-v3-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "missing_typeclass_or_binder",
+        "first_error": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "lean_error_count": 2,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "missing_typeclass_or_binder",
+        "first_error": "failed to synthesize instance of type class\n  Zero K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "lean_error_count": 3,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+        "unit_key": "unit-002"
+      }
+    ],
+    "compiled": [
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.detAB",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "compiled",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+        "unit_key": "unit-002"
+      }
+    ],
+    "contract_violation": [
+      {
+        "contract_violations": [
+          "cannot_prove_output_must_have_empty_lean_file_body",
+          "generated_lean_contains_placeholder"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": 0,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-002"
+      },
+      {
+        "contract_violations": [
+          "cannot_prove_output_must_have_empty_lean_file_body"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": "unexpected end of input",
+        "lean_error_count": 10,
+        "lean_returncode": 1,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-v2-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [
+          "cannot_prove_output_must_have_empty_lean_file_body",
+          "cannot_prove_output_must_have_empty_declaration_names"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+        "lean_error_count": 2,
+        "lean_returncode": 1,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [
+          "generated_lean_must_not_include_comments"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": "Unknown constant `Finset.card_fintype`",
+        "lean_error_count": 3,
+        "lean_returncode": 1,
+        "reported_status": "generated",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair6-autocontext-v3-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [
+          "cannot_prove_output_must_have_empty_lean_file_body",
+          "cannot_prove_output_must_have_empty_declaration_names",
+          "generated_lean_contains_placeholder"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": "Application type mismatch: The argument\n  μ.toPartition\nhas type\n  (NPartition.size μ).Partition\nbut is expected to have type\n  n.Partition\nin the application\n  Subtype.mk μ.toPartition",
+        "lean_error_count": 3,
+        "lean_returncode": 1,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-scrubbed-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+        "unit_key": "unit-004"
+      },
+      {
+        "contract_violations": [
+          "cannot_prove_output_must_have_empty_lean_file_body",
+          "cannot_prove_output_must_have_empty_declaration_names",
+          "generated_lean_contains_placeholder"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": "unsolved goals\ncase pos\nn : ℕ\nh1 : n.choose 0 ^ 2 = n.choose 0 * n.choose 0\n⊢ n ≤ 1",
+        "lean_error_count": 3,
+        "lean_returncode": 1,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [
+          "cannot_prove_output_must_have_empty_lean_file_body",
+          "cannot_prove_output_must_have_empty_declaration_names",
+          "generated_lean_contains_placeholder"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": "unexpected token 'in'; expected ','",
+        "lean_error_count": 1,
+        "lean_returncode": 1,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+        "unit_key": "unit-002"
+      },
+      {
+        "contract_violations": [
+          "cannot_prove_output_must_have_empty_lean_file_body",
+          "cannot_prove_output_must_have_empty_declaration_names",
+          "generated_lean_contains_placeholder"
+        ],
+        "error_pattern": "contract_violation",
+        "first_error": "unexpected token 'in'; expected ','",
+        "lean_error_count": 1,
+        "lean_returncode": 1,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+        "unit_key": "unit-003"
+      }
+    ],
+    "declined_cannot_prove": [
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5b-contract-paid",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+        "unit_key": "unit-002"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+        "unit_key": "unit-004"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+        "unit_key": "unit-001"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+        "unit_key": "unit-002"
+      },
+      {
+        "contract_violations": [],
+        "error_pattern": "declined_cannot_prove",
+        "first_error": null,
+        "lean_error_count": 0,
+        "lean_returncode": null,
+        "reported_status": "cannot_prove_from_visible_context",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+        "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+        "unit_key": "unit-004"
+      }
+    ]
+  },
+  "failure_class_counts": {
+    "compile_failure": 10,
+    "compiled": 16,
+    "contract_violation": 20,
+    "declined_cannot_prove": 9
+  },
+  "generated_at": "2026-05-06T02:54:59.509609+00:00",
+  "roots": [
+    "docs/latex-statement-generation-runs",
+    "docs/latex-statement-repair-loop-runs"
+  ],
+  "runs": [
+    {
+      "compile_passed_units": 1,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 1,
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.detAB",
+            "unit_key": "unit-001"
+          }
+        ],
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-002"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 1,
+        "contract_violation": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.detAB",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-002"
+        }
+      ],
+      "unit_count": 2,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-batch2-selected-localctx-v4-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "application_type_mismatch": 1
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "application_type_mismatch",
+            "first_error": "Application type mismatch: The argument\n  K\nhas type\n  Type u_1\nof sort `Type (u_1 + 1)` but is expected to have type\n  ℕ\nof sort `Type` in the application\n  coeff K",
+            "lean_error_count": 11,
+            "lean_returncode": 1,
+            "reported_status": null,
+            "run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "application_type_mismatch",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected end of input",
+            "lean_error_count": 10,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-v2-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-v2-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-v2-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 1,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 1
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-det-transp-localctx-v4-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "missing_typeclass_or_binder": 1
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "missing_typeclass_or_binder",
+            "first_error": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-binderfix-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-binderfix-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "missing_typeclass_or_binder",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-binderfix-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "missing_typeclass_or_binder": 1
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "missing_typeclass_or_binder",
+            "first_error": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "missing_typeclass_or_binder",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-det-transp-v3-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 1,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 1
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-deepseek-v4-flash-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 1,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 1
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-inverse-unique-prior-project-v3-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "unknown_constant": 1
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "unknown_constant",
+            "first_error": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+            "lean_error_count": 2,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "unknown_constant",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Unknown constant `MvPolynomial.esymm_eq_zero_of_lt`",
+            "lean_error_count": 2,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "declined_cannot_prove": 1
+      },
+      "examples_by_class": {
+        "declined_cannot_prove": [
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair1-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 1,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 1
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair3-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "unknown_constant": 1
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "unknown_constant",
+            "first_error": "Unknown constant `Finset.eq_empty_of_not_nonempty`",
+            "lean_error_count": 2,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "unknown_constant",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair5-autocontext-v2-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "generated_lean_must_not_include_comments"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Unknown constant `Finset.card_fintype`",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair6-autocontext-v3-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair6-autocontext-v3-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair6-autocontext-v3-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "unknown_constant": 1
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "unknown_constant",
+            "first_error": "Unknown constant `Finset.card_fintype`",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair7-autocontext-v3-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair7-autocontext-v3-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "unknown_constant",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair7-autocontext-v3-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 1,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 1
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/Definitions.tex:prop.sf.en=0",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-05-symmetric-local-predecessor-v5b-repair8-autocontext-v4-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "missing_typeclass_or_binder": 3
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "missing_typeclass_or_binder",
+            "first_error": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+            "lean_error_count": 2,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "missing_typeclass_or_binder",
+            "first_error": "failed to synthesize instance of type class\n  Zero K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "missing_typeclass_or_binder",
+            "first_error": "failed to synthesize instance of type class\n  CommRing K\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+            "lean_error_count": 8,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+            "unit_key": "unit-003"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 3
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "missing_typeclass_or_binder",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "missing_typeclass_or_binder",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "missing_typeclass_or_binder",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+          "unit_key": "unit-003"
+        }
+      ],
+      "unit_count": 3,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-det-mixed3-v1-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "ambiguous_namespace_or_notation": 1
+      },
+      "examples_by_class": {
+        "compile_failure": [
+          {
+            "contract_violations": [],
+            "error_pattern": "ambiguous_namespace_or_notation",
+            "first_error": "Ambiguous term\n  NPartition\nPossible interpretations:\n  _root_.NPartition N : Type\n  \n  AlgebraicCombinatorics.SymmetricFunctions.NPartition N : Type",
+            "lean_error_count": 4,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-redacted-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-004"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-redacted-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "ambiguous_namespace_or_notation",
+          "failure_class": "compile_failure",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-004"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-redacted-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Application type mismatch: The argument\n  μ.toPartition\nhas type\n  (NPartition.size μ).Partition\nbut is expected to have type\n  n.Partition\nin the application\n  Subtype.mk μ.toPartition",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-scrubbed-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-004"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-scrubbed-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-004"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-scrubbed-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 4
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unsolved goals\ncase pos\nn : ℕ\nh1 : n.choose 0 ^ 2 = n.choose 0 * n.choose 0\n⊢ n ≤ 1",
+            "lean_error_count": 3,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected token 'in'; expected ','",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected token 'in'; expected ','",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+            "unit_key": "unit-003"
+          },
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Ambiguous term\n  NPartition\nPossible interpretations:\n  _root_.NPartition N : Type\n  \n  AlgebraicCombinatorics.SymmetricFunctions.NPartition N : Type",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-004"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 4
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+          "unit_key": "unit-003"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-004"
+        }
+      ],
+      "unit_count": 4,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 4
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected end of input",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unknown namespace `AlgebraicCombinatorics`",
+            "lean_error_count": 2,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [
+              "generated_lean_must_not_include_comments"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected token 'in'; expected ','",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+            "unit_key": "unit-003"
+          },
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean e",
+            "lean_error_count": 8,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-004"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 4
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+          "unit_key": "unit-003"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-004"
+        }
+      ],
+      "unit_count": 4,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unknown namespace `NPartition`",
+            "lean_error_count": 5,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v1-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v1-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Unknown constant `Nat.Partition.length`",
+            "lean_error_count": 4,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Invalid field `length`: The environment does not contain `Nat.Partition.length`, so it is not possible to project the field `length` from an expression\n  p\nof type `n.Partition`",
+            "lean_error_count": 7,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v4-structure-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v4-structure-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v4-structure-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "cannot_prove_output_must_have_empty_lean_file_body",
+              "cannot_prove_output_must_have_empty_declaration_names",
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected token 'λ'; expected '_' or identifier",
+            "lean_error_count": 4,
+            "lean_returncode": 1,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5-attrs-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5-attrs-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5-attrs-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {
+        "not_generated_cannot_prove": 1
+      },
+      "error_pattern_counts": {
+        "declined_cannot_prove": 1
+      },
+      "examples_by_class": {
+        "declined_cannot_prove": [
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5b-contract-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "gold_comparison": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5b-contract-paid/eval/gold-comparison.json",
+      "run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5b-contract-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5b-contract-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "declaration_names_must_match_lean_file_body_declarations"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Application type mismatch: The argument\n  n\nhas type\n  ℕ\nof sort `Type` but is expected to have type\n  Type ?u.1130\nof sort `Type (?u.1130 + 1)` in the application\n  nᵒᵈ",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-generation-runs/2026-05-06-triangular-v1-paid",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-generation-runs/2026-05-06-triangular-v1-paid",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-generation-runs/2026-05-06-triangular-v1-paid/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 3,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 3
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+            "unit_key": "unit-003"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 3
+      },
+      "gold_comparison": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/eval/gold-comparison.json",
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+          "unit_key": "unit-003"
+        }
+      ],
+      "unit_count": 3,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-loop-v1-paid/round-01-repair/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 3,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 3
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+            "unit_key": "unit-003"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 3
+      },
+      "gold_comparison": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-01-repair/eval/gold-comparison.json",
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-01-repair",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+          "unit_key": "unit-003"
+        }
+      ],
+      "unit_count": 3,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-01-repair/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 3,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 3
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+            "unit_key": "unit-003"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 3
+      },
+      "gold_comparison": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/eval/gold-comparison.json",
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.transp",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:cor.det.sig-row-col",
+          "unit_key": "unit-003"
+        }
+      ],
+      "unit_count": 3,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1,
+        "declined_cannot_prove": 3
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected token 'in'; expected ','",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+            "unit_key": "unit-003"
+          }
+        ],
+        "declined_cannot_prove": [
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-004"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1,
+        "declined_cannot_prove": 3
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+          "unit_key": "unit-003"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-004"
+        }
+      ],
+      "unit_count": 4,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "contract_violation": 1,
+        "declined_cannot_prove": 3
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "generated_lean_contains_placeholder"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "unexpected token 'in'; expected ','",
+            "lean_error_count": 1,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+            "unit_key": "unit-003"
+          }
+        ],
+        "declined_cannot_prove": [
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+            "unit_key": "unit-001"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+            "unit_key": "unit-002"
+          },
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-004"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1,
+        "declined_cannot_prove": 3
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+          "unit_key": "unit-001"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+          "unit_key": "unit-002"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+          "unit_key": "unit-003"
+        },
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-004"
+        }
+      ],
+      "unit_count": 4,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "declined_cannot_prove": 1
+      },
+      "examples_by_class": {
+        "declined_cannot_prove": [
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "gold_comparison": null,
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 1,
+      "coverage_status_counts": {},
+      "error_pattern_counts": {
+        "compiled": 1
+      },
+      "examples_by_class": {
+        "compiled": [
+          {
+            "contract_violations": [],
+            "error_pattern": "compiled",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": 0,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "gold_comparison": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-repair/eval/gold-comparison.json",
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-repair",
+      "source_units": [
+        {
+          "compile_passed": true,
+          "error_pattern": "compiled",
+          "failure_class": "compiled",
+          "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-repair/eval/verification-results.json"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_failure_taxonomy_summary.v1",
+  "source_unit_count": 11,
+  "unit_count": 55,
+  "verification_result_count": 34
+}

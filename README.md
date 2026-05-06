@@ -298,6 +298,23 @@ counts. Rechecking the normalized v5b artifact gives
 `not_generated_cannot_prove` for the partition unit, rather than lumping it
 into generic `not_compiled`.
 
+`docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
+theorem-level verification artifacts without rerunning Lean. Across 34
+verification-result files and 55 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 9 clean cannot-prove declines.
+The largest old bucket is therefore contract pollution from pre-normalization
+runs. The 10 real compile failures break down as 5 missing typeclass/binder
+errors, 3 unknown constants, 1 application type mismatch, and 1
+namespace/notation ambiguity, so the next generic prompt/context target is
+ambient binder/typeclass recovery.
+
+Those are attempt-level counts. The same summary also deduplicates by source
+unit using selector/gold metadata: among 11 unique source units touched by these
+theorem-level runs, 6 have compiled at least once. Best observed unresolved
+statuses are 3 clean cannot-prove declines, 1 old contract violation, and 1
+compile failure. So the source-unit frontier is dominated by honest context/proof
+insufficiency, not by the superseded typeclass errors from earlier attempts.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

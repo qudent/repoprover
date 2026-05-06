@@ -544,6 +544,21 @@ Broader diverse4 negative probe:
   `{"declined_cannot_prove": 1}` and compares against gold as
   `not_generated_cannot_prove`, making the current result a clean model-decline
   rather than a bad Lean proof attempt.
+- historical summary:
+  `docs/latex-statement-failure-taxonomy-summary.json` currently covers 34
+  theorem-level verification result files / 55 unit checks: 16 compiled, 20
+  contract violations, 10 compile failures, and 9 clean cannot-prove declines.
+  The old contract-violation bucket mostly predates deterministic
+  normalization. The true compile failures group into 5 missing
+  typeclass/binder errors, 3 unknown constants, 1 application type mismatch,
+  and 1 namespace/notation ambiguity, so binder/typeclass context is the next
+  generic target.
+- source-unit frontier:
+  the attempt-level compile-failure pattern is partly stale. Deduplicating by
+  source unit, 6 of 11 touched theorem units have compiled at least once. The
+  best unresolved statuses are 3 clean cannot-prove declines, 1 old contract
+  violation, and 1 compile failure. The frontier therefore points back to
+  context/proof selection for the broad diverse4/NPartition-style units.
 
 ## Lean Dependency Accounting
 

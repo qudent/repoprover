@@ -712,6 +712,22 @@ Diverse4 broader-batch probe:
   `not_generated_cannot_prove` instead of generic `not_compiled`. This keeps
   proof failures, model refusals, and schema/transport violations separate in
   benchmark summaries.
+- historical taxonomy summary:
+  `docs/latex-statement-failure-taxonomy-summary.json` scans existing
+  theorem-level verification artifacts without rerunning Lean. Current totals
+  across 34 result files / 55 unit checks are 16 compiled, 20 contract
+  violations, 10 compile failures, and 9 clean cannot-prove declines. Because
+  many contract violations are old pre-normalization artifacts, the next
+  context-selection iteration should focus on the 10 true compile failures:
+  5 missing typeclass/binder errors, 3 unknown constants, 1 application type
+  mismatch, and 1 namespace/notation ambiguity.
+- source-unit frontier caveat:
+  the counts above are attempt-level and include superseded failures. The same
+  summary deduplicates by source unit: among 11 source units touched by
+  theorem-level runs, 6 have compiled at least once. Best unresolved statuses
+  are 3 clean cannot-prove declines, 1 old contract violation, and 1 compile
+  failure. This means the current frontier is mainly context/proof insufficiency
+  on broader units, not the older binder/typeclass transport errors.
 
 ### Generation and Verification Counts
 

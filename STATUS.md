@@ -130,7 +130,15 @@ honest handling of cannot-prove outputs on broader theorem units.
 - Rechecking the normalized v5b artifact now gives verifier
   `failure_class_counts = {"declined_cannot_prove": 1}` and gold-comparison
   `coverage_status_counts = {"not_generated_cannot_prove": 1}`.
-- Focused theorem-level suite passed: 70 pytest tests plus `py_compile` over
+- `docs/latex-statement-failure-taxonomy-summary.json` now scans 34 existing
+  theorem-level verification files / 55 unit checks: 16 compiled, 20 contract
+  violations, 10 compile failures, and 9 clean cannot-prove declines.
+  Compile-failure patterns are 5 missing typeclass/binder, 3 unknown constants,
+  1 application type mismatch, and 1 namespace/notation ambiguity.
+  Deduplicated by source unit, 6/11 touched theorem units have compiled at
+  least once; best unresolved statuses are 3 clean cannot-prove declines, 1 old
+  contract violation, and 1 compile failure.
+- Focused theorem-level suite passed: 73 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes
@@ -139,6 +147,6 @@ honest handling of cannot-prove outputs on broader theorem units.
 - Focused tests should cover theorem selector payload hiding/compaction,
   context hydration, generation prompts, verifier classification, semantic
   coverage, context graph generation, and elaborated dependency summary.
-- Next experiment: apply the failure taxonomy across older runs, then choose the
-  largest remaining non-transport failure class for the next context-selection
-  iteration.
+- Next experiment: target the source-unit frontier, especially the clean
+  cannot-prove declines on broad diverse4/NPartition-style units where context
+  or proof selection remains insufficient.
