@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "vandermonde_nat"
+      ],
+      "lean_file_body": "open Finset\nopen Nat\n\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k in range (n + 1), (a.choose k) * (b.choose (n - k)) := by\n  rw [Nat.add_choose_eq, Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]",
+      "notes": [
+        "Uses Nat.add_choose_eq (Vandermonde identity via antidiagonal) and Finset.Nat.sum_antidiagonal_eq_sum_range_succ to rewrite to the desired sum over range (n+1)."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Nat.add_choose_eq (checked signature)",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)"
+      ]
+    }
+  ]
+}

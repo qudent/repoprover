@@ -168,6 +168,7 @@ def build_repair_messages(
             "Respect do_not_use_identifiers and failed_or_unchecked_context_requests from additional_checked_repair_context.",
             "If additional_checked_repair_context contains discarded_do_not_use_items, treat them as schema sanitation notes only; they are not forbidden Lean identifiers.",
             "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context checked_signatures or selected_visible_context.",
+            "For finite sums and products over a Finset, use Lean's membership-binder notation `∑ x ∈ s, f x` and `∏ x ∈ s, f x`; Lean v4.28 does not accept `∑ x in s, ...` or `∏ x in s, ...`.",
             "If raw_invalid_generation_output is present, treat it as unverified prior scratchpad only: use it to understand the attempted route, but do not copy identifiers or proof steps unless visible context and Lean-checked signatures justify them.",
             "If notes describe a simpler corrected proof, implement that proof in lean_file_body instead of saying it will be adjusted later.",
             "If status is cannot_prove_from_visible_context, lean_file_body must be exactly empty and declaration_names must be an empty list.",

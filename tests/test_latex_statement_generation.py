@@ -168,6 +168,7 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "Every identifier used in a theorem statement must be introduced" in prompt
     assert "you may include the needed commands in lean_file_body" in prompt
     assert "you may reuse those exact helper names" in prompt
+    assert "Lean's membership-binder notation `∑ x ∈ s, f x`" in prompt
     assert "selector_unchecked_statement_sketch" in prompt
     assert "do not copy its Lean syntax verbatim" in prompt
     assert "cannot_prove_from_visible_context" in prompt

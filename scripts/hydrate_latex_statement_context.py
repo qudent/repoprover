@@ -390,6 +390,37 @@ def fallback_mathlib_candidates(
     return candidates[:limit]
 
 
+def checked_exact_bridge_candidates(request: ContextRequest, check_result: dict[str, Any]) -> list[dict[str, Any]]:
+    """Add small bridge facts when a checked theorem has the wrong data shape.
+
+    Exact identifier hydration can still be insufficient: the selector may find
+    the right theorem but expect a different surface shape than Mathlib states.
+    Only use the explicit bridge table here, not broad fallback search, so a
+    checked exact request does not accumulate noisy unrelated candidates.
+    """
+
+    if check_result.get("status") != "checked":
+        return []
+    diagnostic_text = "\n".join(
+        part
+        for part in [
+            request.why_needed,
+            str(check_result.get("signature") or ""),
+            str(check_result.get("error") or ""),
+        ]
+        if part
+    )
+    candidates = forced_bridge_fallback_candidates(
+        request.query,
+        expected_signature_or_shape=request.expected_signature_or_shape,
+        diagnostic_text=diagnostic_text,
+    )
+    exact = request.exact_identifier
+    if not any(str(candidate.get("name") or "") != exact for candidate in candidates):
+        return []
+    return candidates
+
+
 def declaration_snippet_lines(lines: list[str], *, start_line: int, end_line: int, max_lines: int = 40) -> str:
     """Return a compact source snippet for a declaration span."""
 
@@ -687,6 +718,11 @@ def hydrate_output(
                 fallback_candidates = scoped_candidates
             request_fallbacks[id(request)] = fallback_candidates
             fallback_names.extend(str(candidate["name"]) for candidate in fallback_candidates if candidate.get("name"))
+        else:
+            bridge_candidates = checked_exact_bridge_candidates(request, check_result)
+            if bridge_candidates:
+                request_fallbacks[id(request)] = bridge_candidates
+                fallback_names.extend(str(candidate["name"]) for candidate in bridge_candidates if candidate.get("name"))
 
     fallback_check = lean_check_names(
         fallback_names,

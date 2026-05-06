@@ -302,6 +302,98 @@ def test_run_uses_inferred_context(monkeypatch, tmp_path) -> None:
     assert summary["batches"][0]["inferred_opens"] == ["open Demo"]
 
 
+def test_run_filters_inferred_open_statements_that_do_not_compile(monkeypatch, tmp_path) -> None:
+    run_dir = tmp_path / "run"
+    batch = run_dir / "batch-001"
+    batch.mkdir(parents=True)
+    (batch / "generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "generated",
+                        "declaration_names": ["demo"],
+                        "lean_file_body": "theorem demo : True := by\n  trivial",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (batch / "generation-payload.json").write_text(
+        json.dumps(
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": json.dumps(
+                            {
+                                "units": [
+                                    {
+                                        "planned_declarations": [
+                                            {
+                                                "local_file_context_candidates": [
+                                                    {"kind": "namespace", "name": "Demo.Missing"},
+                                                    {"kind": "namespace", "name": "Demo.Valid"},
+                                                ],
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ),
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    checked_sources: list[str] = []
+
+    def fake_run_lean_source(source, *, project_root, timeout_seconds):
+        checked_sources.append(source)
+        if "open Demo.Missing" in source:
+            return {
+                "returncode": 1,
+                "messages": [
+                    {
+                        "severity": "error",
+                        "data": "unknown namespace `Demo.Missing`",
+                        "line": 1,
+                        "column": 0,
+                    }
+                ],
+                "stderr": "",
+            }
+        return {"returncode": 0, "messages": [], "stderr": ""}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
+    summary = run(
+        argparse.Namespace(
+            generation_run=run_dir,
+            project_root=tmp_path,
+            imports=["Mathlib"],
+            opens=[],
+            infer_context=True,
+            filter_target_module_imports=True,
+            materialize_visible_support=False,
+            timeout_seconds=1.0,
+            output=run_dir / "eval/verification-results.json",
+        )
+    )
+
+    final_source = checked_sources[-1]
+    assert "open Demo.Missing" not in final_source
+    assert "open Demo.Valid" in final_source
+    batch_summary = summary["batches"][0]
+    assert batch_summary["inferred_opens"] == ["open Demo.Valid"]
+    assert [
+        row["open_statement"] for row in batch_summary["filtered_invalid_inferred_opens"]
+    ] == ["open Demo.Missing"]
+    assert summary["compile_passed_units"] == 1
+
+
 def test_run_summarizes_cannot_prove_failure_class(monkeypatch, tmp_path) -> None:
     run_dir = tmp_path / "run"
     batch = run_dir / "batch-001"

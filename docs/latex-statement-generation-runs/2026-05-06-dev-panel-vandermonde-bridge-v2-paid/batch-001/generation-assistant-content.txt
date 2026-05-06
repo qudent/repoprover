@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "vandermonde_nat"
+      ],
+      "lean_file_body": "open Finset\nopen Nat\n\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k ∈ range (n + 1), (a.choose k) * (b.choose (n - k)) := by\n  calc\n    (a + b).choose n = ∑ ij ∈ antidiagonal n, a.choose ij.1 * b.choose ij.2 := by\n      rw [Nat.add_choose_eq]\n    _ = ∑ k ∈ range (n + 1), a.choose k * b.choose (n - k) := by\n      rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]",
+      "notes": [
+        "Uses Nat.add_choose_eq (checked) and Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked) to rewrite the antidiagonal sum into the desired range sum. The proof is complete from visible context."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Nat.add_choose_eq (checked signature)",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)",
+        "source proposition text: Vandermonde identity for natural numbers a,b,n"
+      ]
+    }
+  ]
+}

@@ -30,11 +30,12 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - [x] Add a fixed five-unit dev panel for richer loop feedback.
 - [x] Add a one-command panel runner that performs selector -> hydration ->
   generation -> verification -> summary.
-- [ ] Use the panel runner for the next paid generation/verification pass, not
-  another hand-steered single-theorem retry.
+- [ ] Run the next paid check as a panel or fresh-heldout slice, not another
+  single already-debugged theorem.
+- [ ] Add bridge-aware semantic grading so equivalent source/gold surfaces do
+  not look like failures.
 - [ ] Route cases with checked context but repeated clean declines to a proof
   synthesis/coding-agent lane instead of more selector prompt tuning.
-- [ ] Validate generic prompt/context changes on fresh held-out LaTeX units.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -43,8 +44,10 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   `prop.sf.Npar-as-par` remains the hard dev case.
 - Selectors still invent Mathlib/project API names; Lean hydration catches many
   and can recover some bridge facts, but not all project-specific context.
-- Generators can fail to use checked bridge facts, as in Vandermonde, or can
-  sketch incomplete helper proofs, as in NPartition.
+- Semantic grading can false-reject equivalent theorem surfaces: Vandermonde
+  now compiles as the source range-sum theorem, while the aligned gold theorem
+  is Mathlib's antidiagonal shape.
+- Generators can still sketch incomplete helper proofs, as in NPartition.
 - Full elaborated dependency extraction is useful but heavy on this 8 GB
   machine; reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is
   necessary.
@@ -59,9 +62,6 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - NPartition context work fixed many generic issues (field/projection context,
   list/sort/cardinality bridges, representation control, placeholder
   normalization) but still ends in clean declines or incomplete helper skeletons.
-- Vandermonde hydration now finds checked `Nat.add_choose_eq` and antidiagonal
-  to range bridge facts, but generation still cleanly declines; current blocker
-  is proof/rewrite planning over visible checked facts.
 - Five-unit panel artifacts:
   `docs/latex-statement-dev-panel-2026-05-06.json` and
   `docs/latex-statement-dev-panel-2026-05-06-summary.md`.
@@ -85,6 +85,13 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   No provider calls; local verification took 508.903s. Compile improved to 2/5
   and semantic coverage to 1/5: inverse uniqueness is a true win once visible
   project definitions are materialized.
+- Vandermonde bridge retry:
+  `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/`.
+  Cost `$0.0013226`; generated-only verification compiled `1/1` after generic
+  Finset binder-syntax guidance and inferred-open validation. Post-hoc semantic
+  coverage remains `0/1` because gold is antidiagonal while the generated theorem
+  is the LaTeX range-sum form; this is a grader-surface caveat, not missing
+  context.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
@@ -94,7 +101,6 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
-- Next useful work: route the paid panel failures by class. The shortest generic
-  fixes look like syntax/namespace repair for Vandermonde and stronger
-  target-shape planning for the compiled triangular theorem. FPS division and
-  NPartition remain honest insufficient-context/proof-synthesis cases.
+- Next useful work: route remaining panel failures by class. Vandermonde needs
+  bridge-aware semantic grading; triangular needs stronger target-shape
+  planning; FPS division and NPartition remain proof/context synthesis cases.

@@ -2,6 +2,7 @@
 
 from scripts.hydrate_latex_statement_context import (
     build_check_source,
+    checked_exact_bridge_candidates,
     checked_parent_identifier,
     declaration_search_excerpt,
     fallback_mathlib_candidates,
@@ -155,6 +156,70 @@ def test_fallback_mathlib_candidates_ranks_multiline_statement_matches(tmp_path)
         "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
         "Nat.add_choose",
     ]
+
+
+def test_hydrate_output_adds_bridge_candidates_for_checked_vandermonde(monkeypatch, tmp_path) -> None:
+    def fake_check_names(names, *, project_root, imports, opens, timeout_seconds):
+        checked = {}
+        for name in names:
+            if name == "Nat.add_choose_eq":
+                checked[name] = {
+                    "status": "checked",
+                    "signature": (
+                        "Nat.add_choose_eq (m n k : ℕ) : "
+                        "(m + n).choose k = ∑ ij ∈ antidiagonal k, "
+                        "m.choose ij.1 * n.choose ij.2"
+                    ),
+                }
+            elif name in {
+                "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+                "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
+            }:
+                checked[name] = {"status": "checked", "signature": f"{name} : bridge"}
+            else:
+                checked[name] = {"status": "error", "error": f"Unknown constant `{name}`"}
+        return {"status": "ok", "checked": checked}
+
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.lean_check_names", fake_check_names)
+
+    hydrated = hydrate_output(
+        {
+            "units": [
+                {
+                    "unit_key": "unit-001",
+                    "planned_declarations": [
+                        {
+                            "task_id": "unit-001-task-1",
+                            "source_part": "whole unit",
+                            "needed_mathlib_context": [
+                                {
+                                    "name_or_query": "Nat.add_choose_eq",
+                                    "expected_signature_or_shape": (
+                                        "(a + b).choose n = ∑ k in range (n + 1), "
+                                        "a.choose k * b.choose (n - k)"
+                                    ),
+                                    "why_needed": "Vandermonde identity in range-sum form.",
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ]
+        },
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        opens=[],
+        timeout_seconds=1,
+    )
+
+    row = hydrated["hydrated_mathlib_context"][0]
+    assert row["lean_check"]["status"] == "checked"
+    assert [candidate["name"] for candidate in row["fallback_mathlib_candidates"]] == [
+        "Nat.add_choose_eq",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
+    ]
+    assert row["fallback_mathlib_candidates"][1]["lean_check"]["status"] == "checked"
 
 
 def test_hydrate_output_lean_checks_fallback_candidates(monkeypatch, tmp_path) -> None:

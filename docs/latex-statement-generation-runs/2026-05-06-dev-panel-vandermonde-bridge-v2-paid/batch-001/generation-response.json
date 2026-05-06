@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"vandermonde_nat\"\n      ],\n      \"lean_file_body\": \"open Finset\\nopen Nat\\n\\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k ∈ range (n + 1), (a.choose k) * (b.choose (n - k)) := by\\n  calc\\n    (a + b).choose n = ∑ ij ∈ antidiagonal n, a.choose ij.1 * b.choose ij.2 := by\\n      rw [Nat.add_choose_eq]\\n    _ = ∑ k ∈ range (n + 1), a.choose k * b.choose (n - k) := by\\n      rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]\",\n      \"notes\": [\n        \"Uses Nat.add_choose_eq (checked) and Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked) to rewrite the antidiagonal sum into the desired range sum. The proof is complete from visible context.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-004\",\n      \"used_context\": [\n        \"Nat.add_choose_eq (checked signature)\",\n        \"Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)\",\n        \"source proposition text: Vandermonde identity for natural numbers a,b,n\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778050101,
+  "id": "gen-1778050101-WSGMDCxLUg344Naa0KjB",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AkashML",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 350,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0013226,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.000105,
+      "upstream_inference_cost": 0.0013226,
+      "upstream_inference_prompt_cost": 0.0012176
+    },
+    "is_byok": false,
+    "prompt_tokens": 6088,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 6438
+  }
+}

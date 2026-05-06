@@ -305,6 +305,7 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "fallback_bridge_notes" in prompt
     assert "generic checked-fallback rewrite/application routes" in prompt
     assert "schema sanitation notes only" in prompt
+    assert "Lean's membership-binder notation `∑ x ∈ s, f x`" in prompt
     assert "theorem bad" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt

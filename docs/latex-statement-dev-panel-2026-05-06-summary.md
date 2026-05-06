@@ -154,6 +154,42 @@ luxury: without it, the benchmark can false-reject valid generated code that
 uses project definitions visible in the prompt but hidden by target-blind import
 filtering.
 
+### Vandermonde Bridge Retry V2
+
+Artifacts:
+
+- Context:
+  `docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated/`
+- Budget prompt:
+  `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-budget/`
+- Paid generation:
+  `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/`
+
+This focused retry did not use hidden target Lean in the selector or generator.
+It tested two generic fixes from the v1 failure:
+
+- hydration adds checked antidiagonal-to-range bridge facts when an exact
+  checked theorem has the right high-level identity but a different surface
+  shape;
+- generation/repair prompts now state Lean's Finset big-operator syntax:
+  `∑ x ∈ s, f x` / `∏ x ∈ s, f x`, not `∑ x in s, ...` /
+  `∏ x in s, ...`.
+
+Paid generation cost `$0.0013226` with 6,088 prompt tokens and 350 completion
+tokens. Generated-only verification compiled `1/1`. The verifier also now
+Lean-checks inferred `open` statements and recorded that
+`open AlgebraicCombinatorics` was invalid after target-module filtering.
+
+Post-hoc semantic coverage is still `0/1`, but the failure is diagnostic rather
+than a generated-proof failure. The generated theorem proves the LaTeX
+range-sum Vandermonde statement. The aligned gold theorem is the Mathlib
+antidiagonal statement
+`AlgebraicCombinatorics.FPS.vandermonde_nat`, and the current semantic grader
+only tries `simpa using`. A bridge-aware grader should be able to prove the
+gold surface from the generated theorem plus the checked
+`Finset.Nat.sum_antidiagonal_eq_sum_range_succ` bridge; until that exists,
+semantic coverage undercounts this case.
+
 ## What This Shows
 
 The five-unit panel gives richer data immediately. The single NPartition loop
@@ -177,9 +213,10 @@ generic or NPartition-shaped. The panel shows:
   compile failures from namespace/import/syntax/context issues; 1/5 compiles
   but misses the semantic shape of the gold theorems.
 - With visible support enabled, inverse uniqueness becomes a true semantic win.
-  The remaining easy-looking fix is Vandermonde syntax/namespace repair; the
-  determinant issue is target-shape planning; FPS division and NPartition remain
-  honest insufficient-context/proof-synthesis cases.
+  The Vandermonde focused retry now compiles after generic syntax/open-context
+  fixes, but it exposes a bridge-aware semantic-grader gap. The determinant
+  issue is target-shape planning; FPS division and NPartition remain honest
+  insufficient-context/proof-synthesis cases.
 
 ## Recommendations
 

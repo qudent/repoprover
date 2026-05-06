@@ -411,6 +411,43 @@ def build_lean_source(
     return "\n".join(lines) + "\n"
 
 
+def lean_errors(result: dict[str, Any]) -> list[dict[str, Any]]:
+    return [message for message in result["messages"] if message.get("severity") == "error"]
+
+
+def validate_open_statements(
+    open_statements: list[str],
+    *,
+    project_root: Path,
+    imports: list[str],
+    base_opens: list[str],
+    timeout_seconds: float,
+) -> dict[str, Any]:
+    accepted: list[str] = []
+    rejected: list[dict[str, Any]] = []
+    for statement in open_statements:
+        trial_opens = [*base_opens, *accepted, statement]
+        result = run_lean_source(
+            build_lean_source("", imports=imports, opens=trial_opens),
+            project_root=project_root,
+            timeout_seconds=timeout_seconds,
+        )
+        errors = lean_errors(result)
+        if result["returncode"] == 0 and not errors:
+            accepted.append(statement)
+            continue
+        rejected.append(
+            {
+                "open_statement": statement,
+                "lean_returncode": result["returncode"],
+                "lean_error_count": len(errors),
+                "messages": result["messages"][:5],
+                "stderr": result["stderr"],
+            }
+        )
+    return {"accepted": accepted, "rejected": rejected}
+
+
 def declared_names_in_body(body: str) -> list[str]:
     return unique_in_order([match.group(1) for match in LEAN_DECL_RE.finditer(body)])
 
@@ -541,7 +578,7 @@ def verify_generation_output(
                 support_context=(support_context_by_unit or {}).get(unit_key, []),
             )
             lean_result = run_lean_source(source, project_root=project_root, timeout_seconds=timeout_seconds)
-        errors = [message for message in lean_result["messages"] if message.get("severity") == "error"]
+        errors = lean_errors(lean_result)
         compile_passed = (
             status == "generated"
             and lean_result["returncode"] == 0
@@ -556,7 +593,7 @@ def verify_generation_output(
             "placeholder_tokens": placeholders,
             "contract_violations": contract_violations,
             "lean_returncode": lean_result["returncode"],
-            "lean_error_count": len(errors),
+                "lean_error_count": len(errors),
             "compile_passed": compile_passed,
             "messages": lean_result["messages"],
             "stderr": lean_result["stderr"],
@@ -632,6 +669,17 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         ]
         filtered_opens = [statement for statement in inferred["opens"] if statement not in inferred_opens]
         imports = unique_in_order([*args.imports, *inferred_imports])
+        rejected_invalid_opens: list[dict[str, Any]] = []
+        if getattr(args, "validate_inferred_opens", True) and inferred_opens:
+            open_validation = validate_open_statements(
+                inferred_opens,
+                project_root=args.project_root,
+                imports=imports,
+                base_opens=args.opens,
+                timeout_seconds=getattr(args, "open_timeout_seconds", args.timeout_seconds),
+            )
+            inferred_opens = open_validation["accepted"]
+            rejected_invalid_opens = open_validation["rejected"]
         opens = unique_in_order([*args.opens, *inferred_opens])
         support_context_by_unit: dict[str, list[str]] = {}
         support_audit_by_unit: dict[str, dict[str, Any]] = {}
@@ -675,6 +723,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "unfiltered_inferred_opens": inferred["opens"],
                 "hidden_target_namespaces": hidden_target_namespaces,
                 "filtered_target_namespace_opens": filtered_opens,
+                "filtered_invalid_inferred_opens": rejected_invalid_opens,
                 "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
                 "units": units,
                 "compile_passed_units": sum(1 for unit in units if unit["compile_passed"]),
@@ -691,6 +740,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "base_opens": args.opens,
         "infer_context": args.infer_context,
         "filter_target_module_imports": filter_target_module_imports,
+        "validate_inferred_opens": bool(getattr(args, "validate_inferred_opens", True)),
         "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
         "batches": batches,
         "compile_passed_units": sum(batch["compile_passed_units"] for batch in batches),
@@ -726,7 +776,15 @@ def main() -> None:
         ),
     )
     parser.set_defaults(filter_target_module_imports=True)
+    parser.add_argument(
+        "--no-validate-inferred-opens",
+        dest="validate_inferred_opens",
+        action="store_false",
+        help="Do not Lean-check inferred open statements before generated declaration verification.",
+    )
+    parser.set_defaults(validate_inferred_opens=True)
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
+    parser.add_argument("--open-timeout-seconds", type=float, default=30.0)
     parser.add_argument(
         "--materialize-visible-support",
         action="store_true",
