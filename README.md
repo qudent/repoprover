@@ -205,6 +205,11 @@ generated-only compile `3/3`, semantic coverage `3/3` units and `5/5` aligned
 gold declarations. Total paid cost for the mixed batch was `$0.03507336`
 (`$0.00630896` initial selector/generation, `$0.00967302` compile repair loop,
 and `$0.01909138` semantic-aware resume).
+The generated-only verifier now removes inferred imports and opens that would
+directly or transitively expose hidden aligned target modules. Rerunning the
+final mixed repair output under this stricter target-blind policy still gives
+generated-only compile `3/3` and semantic coverage `3/3` units / `5/5`
+aligned declarations.
 
 A broader diverse4 probe then selected `cor.lgv.binom-unimod`,
 `prop.binom.vandermonde.NN`, `thm.pie.moeb`, and `prop.sf.Npar-as-par`. This
@@ -225,6 +230,9 @@ context. With filtering plus per-unit generation, the same diverse4 selector
 returned valid generation JSON for all four units at `$0.00394616`, but Lean
 coverage remained `0/4`; the remaining blocker is selecting genuinely sufficient
 project/Mathlib proof context, not JSON transport.
+The stricter target-blind verifier also reran on this split generation artifact:
+it filtered target-bearing imports/opens, including a transitive
+`MonomialSymmetric -> NPartition` exposure, and the result remained `0/4`.
 
 ### Imported Lean surface and likely context needs
 

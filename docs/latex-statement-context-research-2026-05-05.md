@@ -494,6 +494,11 @@ Broader diverse4 negative probe:
   coverage was still `0/4`. The next blocker is not batching transport; it is
   selecting enough real proof context for nontrivial FPS/LGV/Möbius/partition
   statements.
+- verifier-honesty follow-up:
+  generated-only verification now removes inferred imports/opens that expose
+  hidden aligned target modules, including local modules whose import closure
+  reaches a hidden target. The diverse4 split artifact remains compile `0/4`
+  under this stricter policy.
 
 ## Lean Dependency Accounting
 

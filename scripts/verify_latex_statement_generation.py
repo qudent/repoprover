@@ -17,6 +17,7 @@ DEFAULT_IMPORTS = ["Mathlib"]
 DEFAULT_OPENS = ["open scoped Polynomial BigOperators", "open PowerSeries Finset"]
 PLACEHOLDER_RE = re.compile(r"\b(sorry|admit|aesop\?)\b")
 LEAN_COMMENT_RE = re.compile(r"(^|\n)\s*(--|/-)")
+LEAN_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*$")
 LEAN_DOTTED_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)+$")
 LEAN_DECL_RE = re.compile(
     r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
@@ -26,6 +27,19 @@ LEAN_DECL_RE = re.compile(
 
 def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with path.open(encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            if not line.strip():
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"{path}:{line_number}: invalid JSON: {exc}") from exc
+    return rows
 
 
 def write_json(path: Path, data: Any) -> None:
@@ -47,6 +61,141 @@ def unique_in_order(values: list[str]) -> list[str]:
             out.append(value)
             seen.add(value)
     return out
+
+
+def lean_module_from_path(path_text: str) -> str | None:
+    if not path_text:
+        return None
+    path = Path(path_text)
+    if path.suffix == ".lean":
+        path = path.with_suffix("")
+    parts = [part for part in path.parts if part and part not in {".", ".."}]
+    if not parts:
+        return None
+    module = ".".join(parts)
+    return module if LEAN_DOTTED_NAME_RE.fullmatch(module) else None
+
+
+def lean_module_path(module: str) -> Path | None:
+    if not LEAN_DOTTED_NAME_RE.fullmatch(module):
+        return None
+    return Path(*module.split(".")).with_suffix(".lean")
+
+
+def import_modules_from_lean(path: Path) -> list[str]:
+    modules: list[str] = []
+    if not path.exists():
+        return modules
+    for line in path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("import "):
+            continue
+        modules.extend(part for part in stripped.removeprefix("import ").split() if part)
+    return modules
+
+
+def import_reaches_hidden_target_module(project_root: Path, module: str, hidden_modules: set[str]) -> bool:
+    stack = [module]
+    seen: set[str] = set()
+    while stack:
+        current = stack.pop()
+        if current in seen:
+            continue
+        seen.add(current)
+        if current in hidden_modules:
+            return True
+        rel_path = lean_module_path(current)
+        if rel_path is None:
+            continue
+        source = project_root / rel_path
+        for imported in import_modules_from_lean(source):
+            if imported not in seen:
+                stack.append(imported)
+    return False
+
+
+def selector_run_for_generation_run(generation_run: Path) -> Path | None:
+    if generation_run.is_file():
+        return None
+    results_path = generation_run / "eval" / "generation-results.json"
+    if not results_path.exists():
+        return None
+    try:
+        results = read_json(results_path)
+    except (OSError, json.JSONDecodeError):
+        return None
+    selector_run = str(results.get("selector_run") or "")
+    return Path(selector_run) if selector_run else None
+
+
+def selected_units_by_key(selector_run: Path | None) -> dict[str, dict[str, Any]]:
+    if selector_run is None:
+        return {}
+    selected_path = selector_run / "eval" / "selected-units.jsonl"
+    if not selected_path.exists():
+        return {}
+    rows = read_jsonl(selected_path)
+    return {f"unit-{index + 1:03d}": row for index, row in enumerate(rows)}
+
+
+def unit_keys_in_generation_output(output_json: dict[str, Any]) -> list[str]:
+    return unique_in_order([str(unit.get("unit_key") or "") for unit in output_json.get("units") or []])
+
+
+def hidden_target_modules_for_units(
+    selected_by_key: dict[str, dict[str, Any]], unit_keys: list[str]
+) -> list[str]:
+    modules: list[str] = []
+    for unit_key in unit_keys:
+        selected = selected_by_key.get(unit_key) or {}
+        aligned_rows = selected.get("posthoc_lean_alignment", {}).get("aligned_lean_declarations", [])
+        for aligned in aligned_rows:
+            module = str(aligned.get("module") or "") or (lean_module_from_path(str(aligned.get("path") or "")) or "")
+            if module and LEAN_DOTTED_NAME_RE.fullmatch(module):
+                modules.append(module)
+    return unique_in_order(modules)
+
+
+def hidden_target_namespaces_for_units(
+    selected_by_key: dict[str, dict[str, Any]], unit_keys: list[str]
+) -> list[str]:
+    namespaces: list[str] = []
+    for unit_key in unit_keys:
+        selected = selected_by_key.get(unit_key) or {}
+        aligned_rows = selected.get("posthoc_lean_alignment", {}).get("aligned_lean_declarations", [])
+        for aligned in aligned_rows:
+            namespace = maybe_namespace(str(aligned.get("full_name") or ""))
+            if namespace:
+                namespaces.append(namespace)
+    return unique_in_order(namespaces)
+
+
+def open_namespaces(open_statement: str) -> list[str]:
+    parts = open_statement.split()
+    if len(parts) < 2 or parts[0] != "open" or parts[1] == "scoped":
+        return []
+    return [part for part in parts[1:] if LEAN_NAME_RE.fullmatch(part)]
+
+
+def module_under_namespace(module: str, namespace: str) -> bool:
+    return module == namespace or module.startswith(f"{namespace}.")
+
+
+def should_filter_open_statement(
+    open_statement: str,
+    *,
+    hidden_namespaces: set[str],
+    filtered_imports: list[str],
+    kept_imports: list[str],
+) -> bool:
+    for namespace in open_namespaces(open_statement):
+        if namespace in hidden_namespaces:
+            return True
+        removed_namespace_imports = [module for module in filtered_imports if module_under_namespace(module, namespace)]
+        kept_namespace_imports = [module for module in kept_imports if module_under_namespace(module, namespace)]
+        if removed_namespace_imports and not kept_namespace_imports:
+            return True
+    return False
 
 
 def maybe_namespace(name: str) -> str | None:
@@ -231,13 +380,49 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     output_paths = generation_output_paths(args.generation_run)
     if not output_paths:
         raise FileNotFoundError(f"no generation-output.json files found under {args.generation_run}")
+    filter_target_module_imports = bool(getattr(args, "filter_target_module_imports", True))
+    selected_by_key = (
+        selected_units_by_key(selector_run_for_generation_run(args.generation_run))
+        if filter_target_module_imports
+        else {}
+    )
     batches: list[dict[str, Any]] = []
     for output_path in output_paths:
+        output_json = read_json(output_path)
         inferred = payload_context(output_path) if args.infer_context else {"imports": [], "opens": []}
-        imports = unique_in_order([*args.imports, *inferred["imports"]])
-        opens = unique_in_order([*args.opens, *inferred["opens"]])
+        hidden_target_modules = (
+            hidden_target_modules_for_units(selected_by_key, unit_keys_in_generation_output(output_json))
+            if filter_target_module_imports
+            else []
+        )
+        hidden_target_namespaces = (
+            hidden_target_namespaces_for_units(selected_by_key, unit_keys_in_generation_output(output_json))
+            if filter_target_module_imports
+            else []
+        )
+        hidden_module_set = set(hidden_target_modules)
+        inferred_imports = [
+            name
+            for name in inferred["imports"]
+            if not import_reaches_hidden_target_module(args.project_root, name, hidden_module_set)
+        ]
+        filtered_imports = [name for name in inferred["imports"] if name not in inferred_imports]
+        hidden_namespace_set = set(hidden_target_namespaces)
+        inferred_opens = [
+            statement
+            for statement in inferred["opens"]
+            if not should_filter_open_statement(
+                statement,
+                hidden_namespaces=hidden_namespace_set,
+                filtered_imports=filtered_imports,
+                kept_imports=inferred_imports,
+            )
+        ]
+        filtered_opens = [statement for statement in inferred["opens"] if statement not in inferred_opens]
+        imports = unique_in_order([*args.imports, *inferred_imports])
+        opens = unique_in_order([*args.opens, *inferred_opens])
         units = verify_generation_output(
-            read_json(output_path),
+            output_json,
             project_root=args.project_root,
             imports=imports,
             opens=opens,
@@ -248,8 +433,14 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "generation_output": str(output_path),
                 "imports": imports,
                 "opens": opens,
-                "inferred_imports": inferred["imports"],
-                "inferred_opens": inferred["opens"],
+                "inferred_imports": inferred_imports,
+                "unfiltered_inferred_imports": inferred["imports"],
+                "hidden_target_modules": hidden_target_modules,
+                "filtered_target_module_imports": filtered_imports,
+                "inferred_opens": inferred_opens,
+                "unfiltered_inferred_opens": inferred["opens"],
+                "hidden_target_namespaces": hidden_target_namespaces,
+                "filtered_target_namespace_opens": filtered_opens,
                 "units": units,
                 "compile_passed_units": sum(1 for unit in units if unit["compile_passed"]),
                 "unit_count": len(units),
@@ -263,6 +454,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "base_imports": args.imports,
         "base_opens": args.opens,
         "infer_context": args.infer_context,
+        "filter_target_module_imports": filter_target_module_imports,
         "batches": batches,
         "compile_passed_units": sum(batch["compile_passed_units"] for batch in batches),
         "unit_count": sum(batch["unit_count"] for batch in batches),
@@ -284,6 +476,16 @@ def main() -> None:
         help="Disable imports/opens inferred from generation-payload project context.",
     )
     parser.set_defaults(infer_context=True)
+    parser.add_argument(
+        "--allow-target-module-imports",
+        dest="filter_target_module_imports",
+        action="store_false",
+        help=(
+            "Do not remove inferred imports for modules containing hidden aligned target declarations. "
+            "Default keeps generated-only verification target-blind."
+        ),
+    )
+    parser.set_defaults(filter_target_module_imports=True)
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()

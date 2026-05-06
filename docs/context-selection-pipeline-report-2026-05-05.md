@@ -596,6 +596,11 @@ Mixed theorem-level determinant batch:
   coverage `all_aligned_gold_proved` for all `3/3` source units and `5/5`
   aligned gold declarations. Total paid cost for the mixed batch was
   `$0.03507336`.
+- verifier-honesty rerun: `scripts/verify_latex_statement_generation.py` now
+  filters inferred imports/opens that would directly or transitively expose a
+  hidden aligned target module. The mixed final output still compiles `3/3`
+  after removing `AlgebraicCombinatorics.DeterminantsBasic` and
+  `open AlgebraicCombinatorics.Det` from generated-only verification.
 
 Diverse4 broader-batch probe:
 
@@ -635,6 +640,11 @@ Diverse4 broader-batch probe:
   returned valid JSON for `4/4` units at `$0.00394616`, avoiding the prior
   one-call token-cap/invalid-JSON failure. Lean compile remained `0/4`, so this
   is a transport/context-hygiene improvement, not a theorem coverage win.
+- target-blind verifier rerun: the same split generation artifact remains
+  compile `0/4` after filtering target-bearing imports/opens. This removed
+  direct hidden target modules such as `LGV1`/`FPSDefinition`, and also removed
+  transitive exposures such as `MonomialSymmetric` because it imports the
+  hidden `NPartition` target module.
 
 ### Generation and Verification Counts
 

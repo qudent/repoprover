@@ -4,13 +4,13 @@
   "coverage_status_counts": {
     "all_aligned_gold_proved": 3
   },
-  "generated_at": "2026-05-06T00:32:01.327006+00:00",
+  "generated_at": "2026-05-06T01:15:38.600615+00:00",
   "generated_not_compiled_units": 0,
   "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
   "no_aligned_gold_proved_units": 0,
   "no_aligned_gold_to_check_units": 0,
   "partial_aligned_gold_proved_units": 0,
-  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "project_root": "algebraic-combinatorics",
   "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
   "selector_run": "docs/latex-statement-context-runs/2026-05-06-det-mixed3-v1-paid",
   "unit_count": 3,

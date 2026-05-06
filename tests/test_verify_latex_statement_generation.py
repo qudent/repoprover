@@ -275,3 +275,124 @@ def test_run_uses_inferred_context(monkeypatch, tmp_path) -> None:
     assert summary["compile_passed_units"] == 1
     assert summary["batches"][0]["inferred_imports"] == ["Demo.Module"]
     assert summary["batches"][0]["inferred_opens"] == ["open Demo"]
+
+
+def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None:
+    selector_run = tmp_path / "selector"
+    (selector_run / "eval").mkdir(parents=True)
+    (selector_run / "eval/selected-units.jsonl").write_text(
+        json.dumps(
+            {
+                "id": "Demo.tex:target",
+                "posthoc_lean_alignment": {
+                    "aligned_lean_declarations": [
+                        {
+                            "full_name": "Demo.TargetModule.hidden_target",
+                            "module": "Demo.TargetModule",
+                            "path": "Demo/TargetModule.lean",
+                        }
+                    ]
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    run_dir = tmp_path / "run"
+    batch = run_dir / "batch-001"
+    batch.mkdir(parents=True)
+    wrapper = tmp_path / "Demo/Wrapper.lean"
+    wrapper.parent.mkdir()
+    wrapper.write_text("import Demo.TargetModule\n", encoding="utf-8")
+    (run_dir / "eval").mkdir()
+    (run_dir / "eval/generation-results.json").write_text(
+        json.dumps({"selector_run": str(selector_run)}),
+        encoding="utf-8",
+    )
+    (batch / "generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "generated",
+                        "declaration_names": ["demo"],
+                        "lean_file_body": "theorem demo : True := by\n  trivial",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (batch / "generation-payload.json").write_text(
+        json.dumps(
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": json.dumps(
+                            {
+                                "units": [
+                                    {
+                                        "planned_declarations": [
+                                            {
+                                                "available_prior_project_context": [
+                                                    {
+                                                        "project_declarations": [
+                                                            {
+                                                                "name": "Demo.TargetModule.hidden_target",
+                                                                "module": "Demo.TargetModule",
+                                                            },
+                                                            {
+                                                                "name": "Demo.Wrapper.allowed_looking",
+                                                                "module": "Demo.Wrapper",
+                                                            },
+                                                            {
+                                                                "name": "Demo.Prior.helper",
+                                                                "module": "Demo.Prior",
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ),
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def fake_run_lean_source(source, *, project_root, timeout_seconds):
+        assert "import Demo.Prior" in source
+        assert "import Demo.TargetModule" not in source
+        assert "import Demo.Wrapper" not in source
+        assert "open Demo.TargetModule" not in source
+        return {"returncode": 0, "messages": [], "stderr": ""}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
+    summary = run(
+        argparse.Namespace(
+            generation_run=run_dir,
+            project_root=tmp_path,
+            imports=["Mathlib"],
+            opens=[],
+            infer_context=True,
+            timeout_seconds=1.0,
+            output=run_dir / "eval/verification-results.json",
+        )
+    )
+
+    batch_summary = summary["batches"][0]
+    assert batch_summary["unfiltered_inferred_imports"] == ["Demo.TargetModule", "Demo.Wrapper", "Demo.Prior"]
+    assert batch_summary["inferred_imports"] == ["Demo.Prior"]
+    assert batch_summary["hidden_target_modules"] == ["Demo.TargetModule"]
+    assert batch_summary["filtered_target_module_imports"] == ["Demo.TargetModule", "Demo.Wrapper"]
+    assert batch_summary["hidden_target_namespaces"] == ["Demo.TargetModule"]
+    assert batch_summary["filtered_target_namespace_opens"] == ["open Demo.TargetModule", "open Demo.Wrapper"]
+    assert summary["compile_passed_units"] == 1

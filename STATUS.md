@@ -44,6 +44,8 @@ are preserved at `checkpoint/before-per-latex-statement-dataset`.
   splitting after the diverse4 batch exposed context/noise and JSON-cap issues.
 - [x] Strip Lean comments from project/local snippets and redact failed exact
   identifiers before generation prompts to avoid future-label/name leakage.
+- [x] Make generated-only verification filter direct/transitive hidden target
+  module imports and derived opens.
 
 ## Blockers
 - Previous-project context is the strongest signal, but it must stay
@@ -80,14 +82,17 @@ are preserved at `checkpoint/before-per-latex-statement-dataset`.
   `cor.det.sig-row-col`): initial generation compiled `0/3`; compile repair
   reached `3/3`; semantic-aware repair plus grader redeclaration fix now gives
   generated-only compile `3/3` and semantic coverage `3/3` source units with
-  `5/5` aligned gold declarations proved. Total paid cost `$0.03507336`.
+  `5/5` aligned gold declarations proved. This survives the stricter
+  target-blind verifier after filtering the hidden target module import/open.
+  Total paid cost `$0.03507336`.
 - Diverse4 broader batch (`cor.lgv.binom-unimod`, Vandermonde NN, Boolean
   Möbius, partition bijection): selector valid JSON, but `4/4` exact Mathlib
   guesses failed. Initial generation and two repair rounds compiled `0/4`.
   Fallback filtering cut candidates from 32 to 10; split generation returned
-  valid JSON for all four one-unit calls but still compiled `0/4`. Total paid
-  diverse4 diagnostic spend so far is about `$0.03718`.
-- Focused theorem-level suite passed: 61 pytest tests plus `py_compile` over
+  valid JSON for all four one-unit calls but still compiled `0/4`, also under
+  the stricter target-blind verifier. Total paid diverse4 diagnostic spend so
+  far is about `$0.03718`.
+- Focused theorem-level suite passed: 62 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes

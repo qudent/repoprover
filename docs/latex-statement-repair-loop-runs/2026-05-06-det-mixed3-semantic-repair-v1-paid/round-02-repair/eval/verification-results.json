@@ -9,17 +9,25 @@
   "batches": [
     {
       "compile_passed_units": 3,
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics.Det"
+      ],
       "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.Det"
+      ],
       "imports": [
-        "Mathlib",
-        "AlgebraicCombinatorics.DeterminantsBasic"
+        "Mathlib"
       ],
-      "inferred_imports": [
-        "AlgebraicCombinatorics.DeterminantsBasic"
-      ],
+      "inferred_imports": [],
       "inferred_opens": [
         "open Matrix",
-        "open AlgebraicCombinatorics.Det",
         "open Matrix.BlockTriangular",
         "open Matrix.GeneralLinearGroup",
         "open Subgroup.HasDetPlusMinusOne",
@@ -28,6 +36,16 @@
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
+        "open Matrix",
+        "open Matrix.BlockTriangular",
+        "open Matrix.GeneralLinearGroup",
+        "open Subgroup.HasDetPlusMinusOne",
+        "open Matrix.TransvectionStruct"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "unfiltered_inferred_opens": [
         "open Matrix",
         "open AlgebraicCombinatorics.Det",
         "open Matrix.BlockTriangular",
@@ -53,7 +71,7 @@
               "column": 2,
               "data": "try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`",
               "kind": "linter.unnecessarySimpa",
-              "line": 16,
+              "line": 14,
               "severity": "warning"
             }
           ],
@@ -107,10 +125,11 @@
     }
   ],
   "compile_passed_units": 3,
-  "generated_at": "2026-05-06T00:26:10.209076+00:00",
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T01:21:03.400093+00:00",
   "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
   "infer_context": true,
-  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "project_root": "algebraic-combinatorics",
   "schema_version": "repoprover.latex_statement_generation_verification.v1",
   "unit_count": 3
 }
