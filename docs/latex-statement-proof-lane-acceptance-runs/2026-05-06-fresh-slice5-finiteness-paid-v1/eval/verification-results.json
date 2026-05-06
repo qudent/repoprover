@@ -1,0 +1,577 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+      ],
+      "filtered_target_namespace_opens": [
+        "open LGV"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ],
+      "hidden_target_namespaces": [
+        "LGV"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_opens": [
+        "open Finset BigOperators Matrix",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators Matrix",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Finset BigOperators Matrix",
+        "open LGV",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": null
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 1,
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-002/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "inferred_opens": [
+        "open scoped BigOperators",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped BigOperators",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.DividingFPS",
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped BigOperators",
+        "open AlgebraicCombinatorics",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "fps_invertible_iff_constantCoeff_field"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "fps_invertible_iff_constantCoeff_field"
+          ],
+          "failure_class": "compiled",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-002",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "theorem",
+                "name": "fps_invertible_iff_constantCoeff",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              }
+            ],
+            "accepted_count": 1,
+            "candidate_count": 5,
+            "rejected": [
+              {
+                "kind": "def",
+                "lean_error_count": 5,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 27,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 11,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 49,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 11,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 0,
+                    "data": "Scoped attributes must be used inside namespaces",
+                    "kind": "[anonymous]",
+                    "line": 13,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 0,
+                    "data": "invalid syntax node kind `«term_/ᵤ_»`",
+                    "kind": "[anonymous]",
+                    "line": 13,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 0,
+                    "data": "Scoped attributes must be used inside namespaces",
+                    "kind": "[anonymous]",
+                    "line": 13,
+                    "severity": "error"
+                  }
+                ],
+                "name": "divByUnit",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "stderr": ""
+              },
+              {
+                "kind": "theorem",
+                "lean_error_count": 6,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 34,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 11,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 34,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 11,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 8,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 12,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 19,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 12,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 55,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 12,
+                    "severity": "error"
+                  }
+                ],
+                "name": "fracs1_div_add_div",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "stderr": ""
+              },
+              {
+                "kind": "theorem",
+                "lean_error_count": 7,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 34,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 11,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 34,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 11,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 8,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 12,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 19,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 12,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 35,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 12,
+                    "severity": "error"
+                  }
+                ],
+                "name": "fracs1_div_mul_div",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "stderr": ""
+              },
+              {
+                "kind": "theorem",
+                "lean_error_count": 4,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 31,
+                    "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+                    "kind": "lean.synthInstanceFailed._namedError",
+                    "line": 11,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 8,
+                    "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+                    "kind": "[anonymous]",
+                    "line": 12,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 9,
+                    "data": "Unknown identifier `divByUnit`",
+                    "kind": "lean.unknownIdentifier._namedError",
+                    "line": 13,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 0,
+                    "data": "Unexpected name `PropCommringFracs1` after `end`: The current section is unnamed\n\nHint: Delete the name `PropCommringFracs1` to end the current unnamed scope; outer named scopes can then be closed using additional `end` command(s):\n  end ̵P̵r̵o̵p̵C̵o̵m̵m̵r̵i̵n̵g̵F̵r̵a̵c̵s̵1̵",
+                    "kind": "[anonymous]",
+                    "line": 27,
+                    "severity": "error"
+                  }
+                ],
+                "name": "fracs1_div_eq_iff",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "stderr": ""
+              }
+            ],
+            "rejected_count": 4
+          }
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [
+        {
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `AlgebraicCombinatorics`",
+              "kind": "[anonymous]",
+              "line": 7,
+              "severity": "error"
+            }
+          ],
+          "open_statement": "open AlgebraicCombinatorics",
+          "stderr": ""
+        }
+      ],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.FPS.NonIntegerPowers"
+      ],
+      "filtered_target_namespace_opens": [
+        "open FPS"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-003/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.FPS.NonIntegerPowers"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.FPS"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.FPS.ExpLog"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.FPS.ExpLog"
+      ],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open PowerSeries Finset"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.FPS.NonIntegerPowers",
+        "AlgebraicCombinatorics.FPS.ExpLog"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics",
+        "open FPS"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-003",
+          "visible_support_context": null
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-004/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Finset BigOperators",
+        "open AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-004",
+          "visible_support_context": null
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+      ],
+      "filtered_target_namespace_opens": [
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-005/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+      ],
+      "hidden_target_namespaces": [
+        "SymmetricFunctions"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_opens": [
+        "open Finset BigOperators Matrix MvPolynomial"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators Matrix MvPolynomial"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-005",
+          "visible_support_context": null
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 1,
+  "failure_class_counts": {
+    "compiled": 1,
+    "declined_cannot_prove": 4
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T11:16:03.281666+00:00",
+  "generation_run": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+  "infer_context": true,
+  "materialize_visible_support": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 5,
+  "validate_inferred_opens": true
+}

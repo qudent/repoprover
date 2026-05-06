@@ -1,0 +1,25 @@
+{
+  "base_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged",
+  "overlay_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path. Cannot prove without project definitions."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix (same file predecessor, but fails to compile)",
+        "lgv_nonpermutable (prior project declaration, but depends on missing definitions)",
+        "xDecreasing, yIncreasing predicates (from prior context, but not defined in visible context)",
+        "nipatWeightSum (from prior context, but not defined in visible context)",
+        "dyckDigraph_pathFinite, dyckUnitArcWeight (from prior context, but not defined in visible context)"
+      ]
+    }
+  ]
+}

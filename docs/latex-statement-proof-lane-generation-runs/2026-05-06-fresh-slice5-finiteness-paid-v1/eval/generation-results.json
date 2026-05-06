@@ -1,0 +1,324 @@
+{
+  "batch_count": 4,
+  "batches": [
+    {
+      "batch_index": 1,
+      "budget_only": false,
+      "contract_enforcement": {
+        "normalized_unit_count": 0,
+        "normalized_units": []
+      },
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.0016947,
+        "usage": {
+          "completion_tokens": 235,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.0016947,
+          "cost_details": {
+            "upstream_inference_completions_cost": 6.58e-05,
+            "upstream_inference_cost": 0.0016947,
+            "upstream_inference_prompt_cost": 0.0016289
+          },
+          "is_byok": false,
+          "prompt_tokens": 11635,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 11870
+        }
+      },
+      "elapsed_seconds": 10.615,
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-001/generation-payload.json",
+      "task_unit_keys": [
+        "unit-001"
+      ],
+      "valid_json": true
+    },
+    {
+      "batch_index": 2,
+      "budget_only": false,
+      "contract_enforcement": {
+        "normalized_unit_count": 0,
+        "normalized_units": []
+      },
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.002122,
+        "usage": {
+          "completion_tokens": 378,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.002122,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0001134,
+            "upstream_inference_cost": 0.002122,
+            "upstream_inference_prompt_cost": 0.0020086
+          },
+          "is_byok": false,
+          "prompt_tokens": 10043,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 10421
+        }
+      },
+      "elapsed_seconds": 17.138,
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-002/generation-payload.json",
+      "task_unit_keys": [
+        "unit-003"
+      ],
+      "valid_json": true
+    },
+    {
+      "batch_index": 3,
+      "budget_only": false,
+      "contract_enforcement": {
+        "normalized_unit_count": 0,
+        "normalized_units": []
+      },
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.00161616,
+        "usage": {
+          "completion_tokens": 367,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.00161616,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.00010276,
+            "upstream_inference_cost": 0.00161616,
+            "upstream_inference_prompt_cost": 0.0015134
+          },
+          "is_byok": false,
+          "prompt_tokens": 10810,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 11177
+        }
+      },
+      "elapsed_seconds": 17.862,
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-003/generation-payload.json",
+      "task_unit_keys": [
+        "unit-004"
+      ],
+      "valid_json": true
+    },
+    {
+      "batch_index": 4,
+      "budget_only": false,
+      "contract_enforcement": {
+        "normalized_unit_count": 0,
+        "normalized_units": []
+      },
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.00144102,
+        "usage": {
+          "completion_tokens": 195,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.00144102,
+          "cost_details": {
+            "upstream_inference_completions_cost": 5.46e-05,
+            "upstream_inference_cost": 0.00144102,
+            "upstream_inference_prompt_cost": 0.00138642
+          },
+          "is_byok": false,
+          "prompt_tokens": 9903,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 10098
+        }
+      },
+      "elapsed_seconds": 4.243,
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/batch-004/generation-payload.json",
+      "task_unit_keys": [
+        "unit-005"
+      ],
+      "valid_json": true
+    }
+  ],
+  "budget_only": false,
+  "cost_summary": {
+    "batches": [
+      {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.0016947,
+        "usage": {
+          "completion_tokens": 235,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.0016947,
+          "cost_details": {
+            "upstream_inference_completions_cost": 6.58e-05,
+            "upstream_inference_cost": 0.0016947,
+            "upstream_inference_prompt_cost": 0.0016289
+          },
+          "is_byok": false,
+          "prompt_tokens": 11635,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 11870
+        }
+      },
+      {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.002122,
+        "usage": {
+          "completion_tokens": 378,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.002122,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0001134,
+            "upstream_inference_cost": 0.002122,
+            "upstream_inference_prompt_cost": 0.0020086
+          },
+          "is_byok": false,
+          "prompt_tokens": 10043,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 10421
+        }
+      },
+      {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.00161616,
+        "usage": {
+          "completion_tokens": 367,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.00161616,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.00010276,
+            "upstream_inference_cost": 0.00161616,
+            "upstream_inference_prompt_cost": 0.0015134
+          },
+          "is_byok": false,
+          "prompt_tokens": 10810,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 11177
+        }
+      },
+      {
+        "model": "deepseek/deepseek-v4-flash",
+        "openrouter_reported_cost": 0.00144102,
+        "usage": {
+          "completion_tokens": 195,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.00144102,
+          "cost_details": {
+            "upstream_inference_completions_cost": 5.46e-05,
+            "upstream_inference_cost": 0.00144102,
+            "upstream_inference_prompt_cost": 0.00138642
+          },
+          "is_byok": false,
+          "prompt_tokens": 9903,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 10098
+        }
+      }
+    ],
+    "model": "deepseek/deepseek-v4-flash",
+    "openrouter_reported_cost": 0.006873880000000001
+  },
+  "generated_at": "2026-05-06T11:10:09.860869+00:00",
+  "max_tasks_per_call": 1,
+  "max_tokens": 8192,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+  "paid_call_made": true,
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-finiteness-merged",
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
+  "task_unit_keys": [
+    "unit-001",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "temperature": 0.0
+}

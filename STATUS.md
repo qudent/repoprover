@@ -118,6 +118,12 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   binders and fell to `2/5`. A generic missing-typeclass-binder instruction plus
   one focused paid retry cost `$0.00144802` and restored triangular determinant:
   current dev-panel acceptance is `3/5` compiled and `3/5` semantic coverage.
+- Paid proof-lane generation on the four fresh-slice clean declines cost
+  `$0.00687388` and produced four contract-clean declines. Acceptance artifact:
+  `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/`.
+  The fresh slice remains `1/5` compiled and `1/5` semantic coverage; the
+  blockers are missing project definitions/bridges, not JSON or verifier
+  transport.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a

@@ -733,6 +733,17 @@ restores the current dev panel to generated-only verification `3/5` and
 semantic coverage `3/5`. The two unsolved dev-panel units remain clean
 `cannot_prove_from_visible_context` declines.
 
+The same proof-lane generator was run on all four fresh-slice clean declines at
+`docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/`.
+It cost `$0.00687388` and returned contract-clean declines for Catalan Hankel,
+the binomial identity, signed-sum cancellation, and Jacobi-Trudi-e. Acceptance
+at
+`docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-finiteness-paid-v1/`
+preserved the prior fresh-slice result: generated-only verification `1/5` and
+semantic coverage `1/5`. The useful signal is negative but clean: this cheap
+proof lane can recognize missing project definitions/bridges without emitting
+bad Lean, but it did not solve those four hard fresh-slice units.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad
