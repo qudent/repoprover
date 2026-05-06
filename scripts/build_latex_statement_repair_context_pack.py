@@ -107,6 +107,34 @@ def fallback_bridge_note(record: dict[str, Any], checked_fallback_names: list[st
                 "single library theorem for the whole padded function."
             ),
         }
+    if "Nat.add_choose_eq" in names and (
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ" in names
+        or "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk" in names
+    ):
+        return {
+            "unit_key": record.get("unit_key"),
+            "task_id": record.get("task_id"),
+            "bridge_kind": "vandermonde_antidiagonal_to_range_sum",
+            "unavailable_direct_request": record.get("exact_identifier") or record.get("name_or_query"),
+            "checked_fallback_candidates": [
+                name
+                for name in checked_fallback_names
+                if name
+                in {
+                    "Nat.add_choose_eq",
+                    "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+                    "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
+                }
+            ],
+            "proof_guidance": (
+                "`Nat.add_choose_eq` is Vandermonde's identity in antidiagonal form. "
+                "When the source statement uses a range/Icc sum over `k` with term "
+                "`a.choose k * b.choose (n - k)`, rewrite the antidiagonal sum with "
+                "`Finset.Nat.sum_antidiagonal_eq_sum_range_succ` or the `_mk` variant, "
+                "then adjust `range n.succ` versus `Icc 0 n` by finite-set extensionality "
+                "or simp-normalization."
+            ),
+        }
     return None
 
 

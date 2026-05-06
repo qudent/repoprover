@@ -137,7 +137,11 @@ def filter_fallback_candidates_for_query(query: str, candidates: list[dict[str, 
 
     root = query_namespace_root(query)
     if root:
-        candidates = [candidate for candidate in candidates if candidate_name_root(candidate) == root]
+        candidates = [
+            candidate
+            for candidate in candidates
+            if candidate.get("kind") == "bridge" or candidate_name_root(candidate) == root
+        ]
     local_tokens = query_local_tokens(query)
     if local_tokens:
         bridge_candidates = [candidate for candidate in candidates if candidate.get("kind") == "bridge"]
@@ -236,6 +240,16 @@ def forced_bridge_fallback_candidates(
                 "List.Pairwise.rel_get_of_le",
                 "List.Pairwise.rel_get_of_lt",
                 "List.sortedGE_iff_antitone_get",
+            ]
+        )
+    if root == "Nat" and "choose" in tokens and (
+        "antidiagonal" in tokens or any(token.startswith("vandermonde") for token in tokens)
+    ):
+        names.extend(
+            [
+                "Nat.add_choose_eq",
+                "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+                "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
             ]
         )
 

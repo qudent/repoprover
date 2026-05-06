@@ -1,0 +1,17 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides fallback candidates (Nat.add_choose_eq, Nat.succ_mul_choose_eq, Nat.Prime.emultiplicity_le_emultiplicity_choose_add, Nat.choose_eq_choose_pred_add) but none of them directly state Vandermonde's identity. The checked signatures are not sufficient to prove the identity (a+b choose n) = ∑_{k=0}^n (a choose k)(b choose n-k). The failed generation attempted a polynomial ring approach which is not supported by the visible context. Therefore, cannot_prove_from_visible_context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-002",
+      "used_context": [
+        "source: prop.binom.vandermonde.NN",
+        "checked_signatures: Nat.add_choose_eq, Nat.succ_mul_choose_eq, Nat.Prime.emultiplicity_le_emultiplicity_choose_add, Nat.choose_eq_choose_pred_add"
+      ]
+    }
+  ]
+}

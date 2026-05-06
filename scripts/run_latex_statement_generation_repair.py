@@ -73,6 +73,30 @@ def load_extra_context(paths: list[Path] | None) -> list[Any]:
     return contexts
 
 
+def filter_unit_keyed_lists(value: Any, unit_keys: set[str] | None) -> Any:
+    """Filter nested context-pack lists whose items carry public unit keys."""
+
+    if not unit_keys:
+        return value
+    if isinstance(value, dict):
+        return {key: filter_unit_keyed_lists(item, unit_keys) for key, item in value.items()}
+    if isinstance(value, list):
+        has_unit_keyed_items = any(isinstance(item, dict) and "unit_key" in item for item in value)
+        items = value
+        if has_unit_keyed_items:
+            items = [
+                item
+                for item in value
+                if not isinstance(item, dict) or str(item.get("unit_key") or "") in unit_keys
+            ]
+        return [filter_unit_keyed_lists(item, unit_keys) for item in items]
+    return value
+
+
+def load_filtered_extra_context(paths: list[Path] | None, unit_keys: set[str] | None) -> list[Any]:
+    return [filter_unit_keyed_lists(context, unit_keys) for context in load_extra_context(paths)]
+
+
 def flatten_verification_units(verification: dict[str, Any]) -> list[dict[str, Any]]:
     units: list[dict[str, Any]] = []
     for batch in verification.get("batches") or []:
@@ -81,18 +105,31 @@ def flatten_verification_units(verification: dict[str, Any]) -> list[dict[str, A
     return units
 
 
+def filter_units_by_key(units: list[dict[str, Any]], unit_keys: set[str] | None) -> list[dict[str, Any]]:
+    if not unit_keys:
+        return units
+    return [unit for unit in units if str(unit.get("unit_key") or "") in unit_keys]
+
+
 def build_repair_messages(
     *,
     selector_run: Path,
     generation_run: Path,
     verification_results: Path,
     extra_context_paths: list[Path] | None = None,
+    unit_keys: set[str] | None = None,
 ) -> list[dict[str, str]]:
     generation_messages = build_generation_messages(selector_run)
     generation_user = next(message for message in generation_messages if message["role"] == "user")
     generation_payload = json.loads(generation_user["content"])
     failed_output = load_generation_output(generation_run)
     verification = load_verification_results(verification_results)
+    generation_payload["units"] = filter_units_by_key(generation_payload.get("units") or [], unit_keys)
+    failed_output = {
+        **failed_output,
+        "units": filter_units_by_key(failed_output.get("units") or [], unit_keys),
+    }
+    verification_units = filter_units_by_key(flatten_verification_units(verification), unit_keys)
 
     system = (
         "You are a Lean 4 autoformalization repair agent. Repair failed Lean "
@@ -140,11 +177,11 @@ def build_repair_messages(
         "original_generation_task": generation_payload,
         "failed_generation_output": failed_output,
         "verification_results": {
-            "compile_passed_units": verification.get("compile_passed_units"),
-            "unit_count": verification.get("unit_count"),
-            "units": flatten_verification_units(verification),
+            "compile_passed_units": sum(1 for unit in verification_units if unit.get("compile_passed")),
+            "unit_count": len(verification_units),
+            "units": verification_units,
         },
-        "additional_checked_repair_context": load_extra_context(extra_context_paths),
+        "additional_checked_repair_context": load_filtered_extra_context(extra_context_paths, unit_keys),
         "raw_invalid_generation_output": load_raw_invalid_generation_output(generation_run),
         "benchmark_policy": {
             "target_lean_available_to_repair": False,
@@ -167,6 +204,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         generation_run=args.generation_run,
         verification_results=args.verification_results,
         extra_context_paths=args.extra_context,
+        unit_keys=set(getattr(args, "unit_key", None) or []) or None,
     )
     request_payload = {
         "model": args.model,
@@ -233,6 +271,7 @@ def main() -> None:
     parser.add_argument("--selector-run", type=Path, required=True)
     parser.add_argument("--generation-run", type=Path, required=True)
     parser.add_argument("--verification-results", type=Path, required=True)
+    parser.add_argument("--unit-key", action="append", help="Repair only the selected public unit key; may be repeated.")
     parser.add_argument(
         "--extra-context",
         type=Path,

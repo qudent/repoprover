@@ -149,6 +149,107 @@ def _write_failed_run(tmp_path: Path) -> tuple[Path, Path, Path]:
     return selector_run, generation_run, verification_path
 
 
+def _add_second_failed_unit(selector_run: Path, generation_run: Path, verification_path: Path) -> None:
+    selected_path = selector_run / "eval/selected-units.jsonl"
+    selected_path.write_text(
+        selected_path.read_text(encoding="utf-8")
+        + json.dumps(
+            {
+                "id": "source:demo.other",
+                "source_unit": {
+                    "environment": "lemma",
+                    "path": "Demo.tex",
+                    "line_range": [4, 6],
+                    "labels": ["demo.other"],
+                    "referenced_labels": [],
+                    "part_markers": [],
+                    "parse_warnings": [],
+                    "source_text": "\\begin{lemma}\\label{demo.other}For all n, n = n.\\end{lemma}",
+                },
+                "posthoc_lean_alignment": {
+                    "aligned_lean_declarations": [{"full_name": "Demo.hidden_other", "name": "hidden_other"}]
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    selector_output = json.loads((selector_run / "batch-001/context-selection-output.json").read_text())
+    selector_output["units"].append(
+        {
+            "unit_key": "unit-002",
+            "source_focus_summary": "reflexivity",
+            "formalization_risks": [],
+            "planned_declarations": [
+                {
+                    "task_id": "unit-002-task-1",
+                    "kind": "theorem",
+                    "source_part": "whole unit",
+                    "target_statement_sketch": "forall n, n = n",
+                    "needed_source_context": ["demo.other"],
+                    "needed_project_context": [],
+                    "missing_or_uncertain_context": [],
+                }
+            ],
+        }
+    )
+    (selector_run / "batch-001/context-selection-output.json").write_text(json.dumps(selector_output), encoding="utf-8")
+
+    payload = json.loads((selector_run / "batch-001/context-selection-payload.json").read_text())
+    user_payload = json.loads(payload["messages"][0]["content"])
+    user_payload["units"].append(
+        {
+            "unit_key": "unit-002",
+            "previous_source_context": [],
+            "local_file_context_candidates": [],
+            "local_file_predecessor_declarations": [
+                {
+                    "name": "Demo.other_helper",
+                    "kind": "theorem",
+                    "lean_snippet": "theorem other_helper (n : Nat) : n = n",
+                }
+            ],
+            "prior_project_context": [],
+        }
+    )
+    payload["messages"][0]["content"] = json.dumps(user_payload)
+    (selector_run / "batch-001/context-selection-payload.json").write_text(json.dumps(payload), encoding="utf-8")
+
+    hydration = json.loads((selector_run / "batch-001/mathlib-lean-hydrated-context.json").read_text())
+    hydration["hydrated_mathlib_context"].append(
+        {
+            "unit_key": "unit-002",
+            "task_id": "unit-002-task-1",
+            "query": "Nat.eq_refl",
+            "exact_identifier": "Nat.eq_refl",
+            "lean_check": {"status": "checked", "signature": "Nat.eq_refl (n : Nat) : n = n"},
+        }
+    )
+    (selector_run / "batch-001/mathlib-lean-hydrated-context.json").write_text(json.dumps(hydration), encoding="utf-8")
+
+    generation = json.loads((generation_run / "batch-001/generation-output.json").read_text())
+    generation["units"].append(
+        {
+            "unit_key": "unit-002",
+            "status": "generated",
+            "declaration_names": ["bad_other"],
+            "lean_file_body": "theorem bad_other : True := by\n  exact Demo.other_bad_guess",
+        }
+    )
+    (generation_run / "batch-001/generation-output.json").write_text(json.dumps(generation), encoding="utf-8")
+
+    verification = json.loads(verification_path.read_text())
+    verification["unit_count"] = 2
+    verification["batches"][0]["units"].append(
+        {
+            "unit_key": "unit-002",
+            "compile_passed": False,
+            "messages": [{"severity": "error", "data": "Unknown constant `Demo.other_bad_guess`"}],
+        }
+    )
+    verification_path.write_text(json.dumps(verification), encoding="utf-8")
+
+
 def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Path) -> None:
     selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
     extra_context = tmp_path / "extra.json"
@@ -207,6 +308,42 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "theorem bad" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt
+
+
+def test_repair_prompt_filters_by_unit_key(tmp_path: Path) -> None:
+    selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
+    _add_second_failed_unit(selector_run, generation_run, verification_path)
+    extra_context = tmp_path / "extra.json"
+    extra_context.write_text(
+        json.dumps(
+            {
+                "checked_signatures": [
+                    {"unit_key": "unit-001", "name": "Nat.add_zero", "signature": "n + 0 = n"},
+                    {"unit_key": "unit-002", "name": "Nat.eq_refl", "signature": "n = n"},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    messages = build_repair_messages(
+        selector_run=selector_run,
+        generation_run=generation_run,
+        verification_results=verification_path,
+        extra_context_paths=[extra_context],
+        unit_keys={"unit-002"},
+    )
+    user_payload = json.loads(messages[1]["content"])
+    prompt = json.dumps(user_payload, ensure_ascii=False)
+
+    assert [unit["unit_key"] for unit in user_payload["original_generation_task"]["units"]] == ["unit-002"]
+    assert [unit["unit_key"] for unit in user_payload["failed_generation_output"]["units"]] == ["unit-002"]
+    assert [unit["unit_key"] for unit in user_payload["verification_results"]["units"]] == ["unit-002"]
+    assert user_payload["verification_results"]["unit_count"] == 1
+    assert "Nat.eq_refl" in prompt
+    assert "Unknown constant `Demo.other_bad_guess`" in prompt
+    assert "Nat.add_zero" not in prompt
+    assert "Unknown constant `Demo.bad_guess`" not in prompt
 
 
 def test_repair_prompt_includes_raw_invalid_generation_output_as_unchecked(tmp_path: Path) -> None:

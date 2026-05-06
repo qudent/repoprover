@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The visible context provides fallback candidates (Nat.add_choose_eq, Nat.succ_mul_choose_eq, Nat.Prime.emultiplicity_le_emultiplicity_choose_add, Nat.choose_eq_choose_pred_add) but none of them directly state Vandermonde's identity. The checked signatures are not sufficient to prove the identity (a+b choose n) = ∑_{k=0}^n (a choose k)(b choose n-k). The failed generation attempted a polynomial ring approach which is not supported by the visible context. Therefore, cannot_prove_from_visible_context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-002\",\n      \"used_context\": [\n        \"source: prop.binom.vandermonde.NN\",\n        \"checked_signatures: Nat.add_choose_eq, Nat.succ_mul_choose_eq, Nat.Prime.emultiplicity_le_emultiplicity_choose_add, Nat.choose_eq_choose_pred_add\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778046449,
+  "id": "gen-1778046449-HfehsV1YfOxoU69wOf71",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 247,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0012026,
+    "cost_details": {
+      "upstream_inference_completions_cost": 6.916e-05,
+      "upstream_inference_cost": 0.0012026,
+      "upstream_inference_prompt_cost": 0.00113344
+    },
+    "is_byok": false,
+    "prompt_tokens": 8096,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 8343
+  }
+}

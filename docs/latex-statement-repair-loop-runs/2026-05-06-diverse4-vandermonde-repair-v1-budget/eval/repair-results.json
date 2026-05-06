@@ -1,0 +1,14 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-06T05:46:52.456850+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-vandermonde-repair-v1-budget",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_generation_repair.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid",
+  "valid_json": false,
+  "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair/eval/verification-results.json"
+}

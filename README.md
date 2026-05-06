@@ -242,8 +242,15 @@ rehydration artifact at
 `docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-round2-rehydrated/`
 resolves the failed guessed `Nat.choose_add_eq_choose_add_choose` request to a
 Lean-checked `Nat.add_choose_eq` signature for `prop.binom.vandermonde.NN`.
-This is a context-selection improvement, not yet a proof success: no new paid
-generation retry has been run from this rehydrated context.
+The first paid Vandermonde-only repair from that context cost `$0.0012026` and
+cleanly declined: the model saw `Nat.add_choose_eq`, but did not recognize that
+it is sufficient after rewriting the antidiagonal sum into the source's range
+sum. A second generic hydration bridge now adds checked
+`Finset.Nat.sum_antidiagonal_eq_sum_range_succ` and
+`Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk` plus a bridge note; the
+follow-up paid retry cost `$0.00125524` and still cleanly declined. This is now
+evidence of weak proof-use/rewrite planning by the generator, not missing
+Mathlib signature hydration for the central theorem.
 An optional verifier mode can now incrementally materialize Lean snippets that
 were visible in the generation prompt and compile under the target-blind import
 policy. On the diverse4 split run it still compiled `0/4`, but the diagnostic

@@ -465,6 +465,65 @@ def test_checked_context_pack_adds_generic_fallback_bridge_notes() -> None:
     assert "congrArg Multiset.sum" in pack["fallback_bridge_notes"][0]["proof_guidance"]
 
 
+def test_checked_context_pack_adds_vandermonde_range_bridge_notes() -> None:
+    selection = {
+        "units": [
+            {
+                "unit_key": "unit-001",
+                "failure_analysis": "Vandermonde theorem found in the wrong sum shape",
+                "repair_strategy_note": "rewrite antidiagonal Vandermonde to a range sum",
+                "needed_mathlib_context": [
+                    {
+                        "name_or_query": "Nat.choose_add_eq_choose_add_choose",
+                        "expected_signature_or_shape": "(a+b).choose n = ∑ k in range n.succ, a.choose k * b.choose (n-k)",
+                        "why_needed": "Direct statement of Vandermonde's identity.",
+                    }
+                ],
+            }
+        ]
+    }
+    hydration = {
+        "hydrated_mathlib_context": [
+            {
+                "unit_key": "unit-001",
+                "task_id": "unit-001-repair-context-1",
+                "request_index": 1,
+                "query": "Nat.choose_add_eq_choose_add_choose",
+                "exact_identifier": "Nat.choose_add_eq_choose_add_choose",
+                "expected_signature_or_shape": "(a+b).choose n = ∑ k in range n.succ, a.choose k * b.choose (n-k)",
+                "why_needed": "Direct statement of Vandermonde's identity.",
+                "lean_check": {"status": "error", "error": "Unknown constant"},
+                "fallback_mathlib_candidates": [
+                    {
+                        "name": "Nat.add_choose_eq",
+                        "lean_check": {
+                            "status": "checked",
+                            "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+                        },
+                    },
+                    {
+                        "name": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+                        "lean_check": {
+                            "status": "checked",
+                            "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (f : ℕ → ℕ → M) (n : ℕ) : ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n-k)",
+                        },
+                    },
+                ],
+            }
+        ]
+    }
+
+    pack = build_context_pack(selection=selection, hydration=hydration)
+
+    assert pack["failed_or_unchecked_context_requests"] == []
+    assert pack["fallback_bridge_notes"][0]["bridge_kind"] == "vandermonde_antidiagonal_to_range_sum"
+    assert pack["fallback_bridge_notes"][0]["checked_fallback_candidates"] == [
+        "Nat.add_choose_eq",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+    ]
+    assert "antidiagonal form" in pack["fallback_bridge_notes"][0]["proof_guidance"]
+
+
 def test_repair_context_budget_payload(tmp_path: Path) -> None:
     selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
     output = tmp_path / "repair-context"

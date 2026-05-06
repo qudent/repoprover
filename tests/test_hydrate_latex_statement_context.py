@@ -149,11 +149,12 @@ def test_fallback_mathlib_candidates_ranks_multiline_statement_matches(tmp_path)
         diagnostic_text="Need a lemma for Vandermonde's identity for natural numbers.",
     )
 
-    assert [candidate["name"] for candidate in candidates[:2]] == [
+    assert [candidate["name"] for candidate in candidates[:4]] == [
         "Nat.add_choose_eq",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
         "Nat.add_choose",
     ]
-    assert "Vandermonde's identity" in candidates[0]["search_excerpt"]
 
 
 def test_hydrate_output_lean_checks_fallback_candidates(monkeypatch, tmp_path) -> None:

@@ -42,8 +42,9 @@ same-unit helper planning, Mathlib hydration, and clean
 - [x] Enforce honest decline when the model can sketch helpers but cannot
   complete them without placeholders.
 - [x] Add a no-cost normalizer for existing placeholder/comment skeleton runs.
-- [x] Improve generic Mathlib fallback ranking so multiline theorem statements
-  and docstrings can beat weaker one-line name matches.
+- [x] Improve generic Mathlib fallback ranking so multiline theorem statements,
+  docstrings, and antidiagonal/range bridge facts can beat weaker one-line name
+  matches.
 - [ ] Decide whether to route the checked helper skeleton to a coding
   agent/manual diagnostic lane or continue open-model prompt retries.
 - [ ] Reclassify old strict-grader mismatches into actionable buckets.
@@ -60,6 +61,8 @@ same-unit helper planning, Mathlib hydration, and clean
   plans for fresh helpers.
 - Fallback search can now recover some missed Mathlib facts, but it still needs
   better filtering so rehydrated packs do not include noisy checked neighbors.
+- Even with central checked facts present, generators can still fail to use
+  short rewrite bridges, as in the Vandermonde antidiagonal-to-range retry.
 - Full elaborated dependency extraction is useful but heavy on this 8 GB
   machine; reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is
   necessary. "Rows" there means one compiled Lean declaration/dependency record,
@@ -110,8 +113,13 @@ same-unit helper planning, Mathlib hydration, and clean
   below weaker one-line binomial lemmas. The hydrator now ranks with compact
   declaration/doc/path excerpts and selector `why_needed` text; a no-cost
   rehydration artifact resolves the failed `Nat.choose_add_eq_choose_add_choose`
-  request to a checked `Nat.add_choose_eq` signature. No paid retry has used
-  that improved context yet.
+  request to a checked `Nat.add_choose_eq` signature.
+- Vandermonde-only paid retry from the rehydrated context cost `$0.0012026` and
+  cleanly declined. A generic bridge hydration then added checked
+  `Finset.Nat.sum_antidiagonal_eq_sum_range_succ(_mk)` and a bridge note; the
+  follow-up paid retry cost `$0.00125524` and still cleanly declined. This
+  shifts that unit's current blocker from Mathlib lookup to proof/rewrite
+  planning over visible checked facts.
 - Current NPartition blocker: generation discipline/proof synthesis. The model
   can now sketch the right helper structure, but cannot complete the hard
   same-unit proofs honestly under the no-placeholder benchmark contract.
@@ -124,6 +132,6 @@ same-unit helper planning, Mathlib hydration, and clean
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: run a small paid repair retry for the diverse4 Vandermonde
-  unit from the rehydrated checked context, and separately route the NPartition
-  helper skeleton to a coding-agent/manual diagnostic lane.
+- Next useful work: test whether a stronger/agentic prover can use the checked
+  Vandermonde bridge context, and separately route the NPartition helper
+  skeleton to a coding-agent/manual diagnostic lane.
