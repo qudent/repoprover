@@ -46,6 +46,8 @@ are preserved at `checkpoint/before-per-latex-statement-dataset`.
   identifiers before generation prompts to avoid future-label/name leakage.
 - [x] Make generated-only verification filter direct/transitive hidden target
   module imports and derived opens.
+- [x] Add optional verifier materialization for prompt-visible support snippets
+  and expand same-file local predecessor context with shallow dependencies.
 
 ## Blockers
 - Previous-project context is the strongest signal, but it must stay
@@ -92,7 +94,12 @@ are preserved at `checkpoint/before-per-latex-statement-dataset`.
   valid JSON for all four one-unit calls but still compiled `0/4`, also under
   the stricter target-blind verifier. Total paid diverse4 diagnostic spend so
   far is about `$0.03718`.
-- Focused theorem-level suite passed: 62 pytest tests plus `py_compile` over
+- Visible-support diagnostic on diverse4 remained compile `0/4`, but identified
+  missing same-file local API for the partition unit. The no-cost
+  `2026-05-06-diverse4-localdeps-budget` payload now adds `NPartition`,
+  `size`, `length`, and `part` before `part_eq_parts`/`ofPartition`/
+  `toPartition`.
+- Focused theorem-level suite passed: 64 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes

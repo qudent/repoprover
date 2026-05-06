@@ -499,6 +499,13 @@ Broader diverse4 negative probe:
   hidden aligned target modules, including local modules whose import closure
   reaches a hidden target. The diverse4 split artifact remains compile `0/4`
   under this stricter policy.
+- visible-context follow-up:
+  optional verifier support materialization showed that unit004 had selected
+  useful local snippets but not enough of their same-file dependencies. Context
+  selection now expands local predecessors with shallow same-file dependencies
+  referenced by the selected snippets; the no-cost
+  `2026-05-06-diverse4-localdeps-budget` payload adds `NPartition`, `size`,
+  `length`, and `part` before the partition conversion declarations.
 
 ## Lean Dependency Accounting
 

@@ -645,6 +645,19 @@ Diverse4 broader-batch probe:
   direct hidden target modules such as `LGV1`/`FPSDefinition`, and also removed
   transitive exposures such as `MonomialSymmetric` because it imports the
   hidden `NPartition` target module.
+- visible-support diagnostic: optional verifier mode
+  `--materialize-visible-support` incrementally checks Lean snippets shown in
+  the prompt before adding them to generated-only verification. On diverse4 it
+  still compiles `0/4`, but it separates missing support context from wrong
+  generated code: unit004 could materialize the visible `NPartition` structure
+  and `ofPartition`, but rejected `part_eq_parts`/`toPartition` because earlier
+  same-file API such as `part` and `size` was absent.
+- context-selection fix: `local_file_predecessor_declarations` now adds shallow
+  same-file dependencies whose local names are referenced by the selected local
+  predecessor snippets. A no-cost refreshed payload at
+  `docs/latex-statement-context-runs/2026-05-06-diverse4-localdeps-budget/`
+  adds `NPartition`, `size`, `length`, and `part` for the partition-bijection
+  unit before the four nearest predecessor declarations.
 
 ### Generation and Verification Counts
 

@@ -17,11 +17,17 @@ DEFAULT_IMPORTS = ["Mathlib"]
 DEFAULT_OPENS = ["open scoped Polynomial BigOperators", "open PowerSeries Finset"]
 PLACEHOLDER_RE = re.compile(r"\b(sorry|admit|aesop\?)\b")
 LEAN_COMMENT_RE = re.compile(r"(^|\n)\s*(--|/-)")
+LEAN_BLOCK_COMMENT_RE = re.compile(r"/-.*?-/", re.DOTALL)
+LEAN_LINE_COMMENT_RE = re.compile(r"--.*$")
 LEAN_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*$")
 LEAN_DOTTED_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)+$")
+LEAN_DECL_KIND_RE = re.compile(
+    r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
+    r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+"
+)
 LEAN_DECL_RE = re.compile(
     r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
-    r"(?:theorem|lemma|def|abbrev|instance)\s+([^\s:\{\(\[]+)"
+    r"(?:theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([^\s:\{\(\[]+)"
 )
 
 
@@ -181,6 +187,10 @@ def module_under_namespace(module: str, namespace: str) -> bool:
     return module == namespace or module.startswith(f"{namespace}.")
 
 
+def module_contains_namespace_segment(module: str, namespace: str) -> bool:
+    return namespace in module.split(".")
+
+
 def namespace_matches_hidden(namespace: str, hidden_namespaces: set[str]) -> bool:
     return namespace in hidden_namespaces or any(hidden.endswith(f".{namespace}") for hidden in hidden_namespaces)
 
@@ -198,6 +208,10 @@ def should_filter_open_statement(
         removed_namespace_imports = [module for module in filtered_imports if module_under_namespace(module, namespace)]
         kept_namespace_imports = [module for module in kept_imports if module_under_namespace(module, namespace)]
         if removed_namespace_imports and not kept_namespace_imports:
+            return True
+        removed_segment_imports = [module for module in filtered_imports if module_contains_namespace_segment(module, namespace)]
+        kept_segment_imports = [module for module in kept_imports if module_contains_namespace_segment(module, namespace)]
+        if removed_segment_imports and not kept_segment_imports:
             return True
     return False
 
@@ -243,18 +257,108 @@ def explicit_open_statement(item: dict[str, Any]) -> str | None:
     return None
 
 
-def payload_context(output_path: Path) -> dict[str, list[str]]:
+def explicit_variable_statement(item: dict[str, Any]) -> str | None:
+    if str(item.get("kind") or "") != "variable":
+        return None
+    name = str(item.get("name") or "").strip()
+    return name if name.startswith("variable ") else None
+
+
+def strip_lean_comments(source: str) -> str:
+    without_blocks = LEAN_BLOCK_COMMENT_RE.sub("", source)
+    lines: list[str] = []
+    for line in without_blocks.splitlines():
+        lines.append(LEAN_LINE_COMMENT_RE.sub("", line).rstrip())
+    compact: list[str] = []
+    previous_blank = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("namespace ") or stripped == "end" or stripped.startswith("end "):
+            continue
+        blank = not stripped
+        if blank and previous_blank:
+            continue
+        compact.append(line)
+        previous_blank = blank
+    return "\n".join(compact).strip()
+
+
+def support_snippet_is_complete(snippet: str) -> bool:
+    if not snippet or PLACEHOLDER_RE.search(snippet) or not LEAN_DECL_RE.search(snippet):
+        return False
+    kinds = set(LEAN_DECL_KIND_RE.findall(snippet))
+    if kinds <= {"theorem", "lemma"}:
+        return ":=" in snippet
+    if kinds & {"structure", "class", "inductive"}:
+        return " where" in snippet or "\nwhere" in snippet or ":=" in snippet
+    return ":=" in snippet or " where" in snippet or "\nwhere" in snippet
+
+
+def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[dict[str, str]]:
+    candidates: list[dict[str, str]] = []
+    for item in iter_dicts(unit_payload):
+        variable = explicit_variable_statement(item)
+        if variable:
+            candidates.append({"kind": "variable", "text": variable})
+        snippet = item.get("lean_snippet")
+        if isinstance(snippet, str):
+            cleaned = strip_lean_comments(snippet)
+            if support_snippet_is_complete(cleaned):
+                candidates.append(
+                    {
+                        "kind": str(item.get("kind") or "lean_snippet"),
+                        "name": str(item.get("name") or ""),
+                        "text": cleaned,
+                    }
+                )
+    seen: set[str] = set()
+    unique: list[dict[str, str]] = []
+    for candidate in candidates:
+        text = candidate["text"]
+        if text not in seen:
+            unique.append(candidate)
+            seen.add(text)
+    return unique
+
+
+def user_payload_from_generation_payload(output_path: Path) -> dict[str, Any]:
     payload_path = output_path.with_name("generation-payload.json")
     if not payload_path.exists():
-        return {"imports": [], "opens": []}
+        return {}
     payload = read_json(payload_path)
     messages = payload.get("messages") or []
     user_message = next((message for message in messages if message.get("role") == "user"), None)
     if not user_message:
-        return {"imports": [], "opens": []}
+        return {}
     try:
         user_payload = json.loads(str(user_message.get("content") or ""))
     except json.JSONDecodeError:
+        return {}
+    return user_payload if isinstance(user_payload, dict) else {}
+
+
+def generation_prompt_units(user_payload: dict[str, Any]) -> list[dict[str, Any]]:
+    units = user_payload.get("units")
+    if isinstance(units, list):
+        return [unit for unit in units if isinstance(unit, dict)]
+    original_task = user_payload.get("original_generation_task")
+    if isinstance(original_task, dict) and isinstance(original_task.get("units"), list):
+        return [unit for unit in original_task["units"] if isinstance(unit, dict)]
+    return []
+
+
+def visible_support_candidates_by_unit(output_path: Path) -> dict[str, list[dict[str, str]]]:
+    units = generation_prompt_units(user_payload_from_generation_payload(output_path))
+    return {
+        str(unit.get("unit_key") or ""): visible_support_candidates_for_unit(unit)
+        for unit in units
+        if unit.get("unit_key")
+    }
+
+
+def payload_context(output_path: Path) -> dict[str, list[str]]:
+    user_payload = user_payload_from_generation_payload(output_path)
+    if not user_payload:
         return {"imports": [], "opens": []}
 
     imports: list[str] = []
@@ -276,9 +380,13 @@ def payload_context(output_path: Path) -> dict[str, list[str]]:
     }
 
 
-def build_lean_source(body: str, *, imports: list[str], opens: list[str]) -> str:
+def build_lean_source(
+    body: str, *, imports: list[str], opens: list[str], support_context: list[str] | None = None
+) -> str:
     lines = [f"import {name}" for name in imports]
     lines.extend(opens)
+    if support_context:
+        lines.extend(item.rstrip() for item in support_context if item.strip())
     lines.append(body.rstrip())
     return "\n".join(lines) + "\n"
 
@@ -330,16 +438,59 @@ def run_lean_source(
     }
 
 
+def materialize_visible_support_context(
+    candidates: list[dict[str, str]],
+    *,
+    project_root: Path,
+    imports: list[str],
+    opens: list[str],
+    timeout_seconds: float,
+) -> dict[str, Any]:
+    accepted: list[dict[str, str]] = []
+    rejected: list[dict[str, Any]] = []
+    support_context: list[str] = []
+    for candidate in candidates:
+        trial_context = [*support_context, candidate["text"]]
+        result = run_lean_source(
+            build_lean_source("", imports=imports, opens=opens, support_context=trial_context),
+            project_root=project_root,
+            timeout_seconds=timeout_seconds,
+        )
+        errors = [message for message in result["messages"] if message.get("severity") == "error"]
+        if result["returncode"] == 0 and not errors:
+            support_context.append(candidate["text"])
+            accepted.append({key: value for key, value in candidate.items() if key != "text"})
+        else:
+            rejected.append(
+                {
+                    **{key: value for key, value in candidate.items() if key != "text"},
+                    "lean_returncode": result["returncode"],
+                    "lean_error_count": len(errors),
+                    "messages": result["messages"][:5],
+                    "stderr": result["stderr"],
+                }
+            )
+    return {
+        "support_context": support_context,
+        "accepted": accepted,
+        "rejected": rejected,
+        "candidate_count": len(candidates),
+    }
+
+
 def verify_generation_output(
     output_json: dict[str, Any],
     *,
     project_root: Path,
     imports: list[str],
     opens: list[str],
+    support_context_by_unit: dict[str, list[str]] | None = None,
+    support_audit_by_unit: dict[str, dict[str, Any]] | None = None,
     timeout_seconds: float,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for unit in output_json.get("units") or []:
+        unit_key = str(unit.get("unit_key") or "")
         body = str(unit.get("lean_file_body") or "")
         status = str(unit.get("status") or "generated")
         declaration_names = unit.get("declaration_names", [])
@@ -363,7 +514,12 @@ def verify_generation_output(
         if status == "cannot_prove_from_visible_context" and not body.strip():
             lean_result = {"returncode": None, "messages": [], "stderr": "", "skipped_reason": status}
         else:
-            source = build_lean_source(body, imports=imports, opens=opens)
+            source = build_lean_source(
+                body,
+                imports=imports,
+                opens=opens,
+                support_context=(support_context_by_unit or {}).get(unit_key, []),
+            )
             lean_result = run_lean_source(source, project_root=project_root, timeout_seconds=timeout_seconds)
         errors = [message for message in lean_result["messages"] if message.get("severity") == "error"]
         rows.append(
@@ -385,6 +541,7 @@ def verify_generation_output(
                 "messages": lean_result["messages"],
                 "stderr": lean_result["stderr"],
                 "skipped_reason": lean_result.get("skipped_reason"),
+                "visible_support_context": (support_audit_by_unit or {}).get(unit_key),
             }
         )
     return rows
@@ -435,11 +592,33 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         filtered_opens = [statement for statement in inferred["opens"] if statement not in inferred_opens]
         imports = unique_in_order([*args.imports, *inferred_imports])
         opens = unique_in_order([*args.opens, *inferred_opens])
+        support_context_by_unit: dict[str, list[str]] = {}
+        support_audit_by_unit: dict[str, dict[str, Any]] = {}
+        if getattr(args, "materialize_visible_support", False):
+            support_candidates = visible_support_candidates_by_unit(output_path)
+            for unit_key, candidates in support_candidates.items():
+                support = materialize_visible_support_context(
+                    candidates,
+                    project_root=args.project_root,
+                    imports=imports,
+                    opens=opens,
+                    timeout_seconds=getattr(args, "support_timeout_seconds", args.timeout_seconds),
+                )
+                support_context_by_unit[unit_key] = support["support_context"]
+                support_audit_by_unit[unit_key] = {
+                    "candidate_count": support["candidate_count"],
+                    "accepted_count": len(support["accepted"]),
+                    "rejected_count": len(support["rejected"]),
+                    "accepted": support["accepted"],
+                    "rejected": support["rejected"],
+                }
         units = verify_generation_output(
             output_json,
             project_root=args.project_root,
             imports=imports,
             opens=opens,
+            support_context_by_unit=support_context_by_unit,
+            support_audit_by_unit=support_audit_by_unit,
             timeout_seconds=args.timeout_seconds,
         )
         batches.append(
@@ -455,6 +634,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "unfiltered_inferred_opens": inferred["opens"],
                 "hidden_target_namespaces": hidden_target_namespaces,
                 "filtered_target_namespace_opens": filtered_opens,
+                "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
                 "units": units,
                 "compile_passed_units": sum(1 for unit in units if unit["compile_passed"]),
                 "unit_count": len(units),
@@ -469,6 +649,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "base_opens": args.opens,
         "infer_context": args.infer_context,
         "filter_target_module_imports": filter_target_module_imports,
+        "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
         "batches": batches,
         "compile_passed_units": sum(batch["compile_passed_units"] for batch in batches),
         "unit_count": sum(batch["unit_count"] for batch in batches),
@@ -501,6 +682,15 @@ def main() -> None:
     )
     parser.set_defaults(filter_target_module_imports=True)
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
+    parser.add_argument(
+        "--materialize-visible-support",
+        action="store_true",
+        help=(
+            "Before checking generated declarations, incrementally materialize Lean snippets "
+            "that were visible in the generation prompt and compile under the target-blind import policy."
+        ),
+    )
+    parser.add_argument("--support-timeout-seconds", type=float, default=30.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     print(json.dumps(run(args), indent=2, sort_keys=True))

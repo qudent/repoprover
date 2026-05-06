@@ -30,6 +30,7 @@
       "inferred_opens": [
         "open Matrix Finset BigOperators"
       ],
+      "materialize_visible_support": false,
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
@@ -69,7 +70,8 @@
           "reported_status": "generated",
           "skipped_reason": null,
           "stderr": "",
-          "unit_key": "unit-001"
+          "unit_key": "unit-001",
+          "visible_support_context": null
         },
         {
           "body_declaration_names": [
@@ -89,7 +91,8 @@
           "reported_status": "generated",
           "skipped_reason": null,
           "stderr": "",
-          "unit_key": "unit-002"
+          "unit_key": "unit-002",
+          "visible_support_context": null
         },
         {
           "body_declaration_names": [
@@ -109,16 +112,18 @@
           "reported_status": "generated",
           "skipped_reason": null,
           "stderr": "",
-          "unit_key": "unit-003"
+          "unit_key": "unit-003",
+          "visible_support_context": null
         }
       ]
     }
   ],
   "compile_passed_units": 3,
   "filter_target_module_imports": true,
-  "generated_at": "2026-05-06T01:28:28.814363+00:00",
+  "generated_at": "2026-05-06T01:40:43.400035+00:00",
   "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-det-mixed3-semantic-repair-v1-paid/round-02-repair",
   "infer_context": true,
+  "materialize_visible_support": false,
   "project_root": "algebraic-combinatorics",
   "schema_version": "repoprover.latex_statement_generation_verification.v1",
   "unit_count": 3

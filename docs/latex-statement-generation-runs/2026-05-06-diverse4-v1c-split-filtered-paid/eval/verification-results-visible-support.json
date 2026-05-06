@@ -33,7 +33,7 @@
         "open Finset BigOperators Matrix",
         "open LGV"
       ],
-      "materialize_visible_support": false,
+      "materialize_visible_support": true,
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
@@ -70,7 +70,7 @@
               "column": 0,
               "data": "unexpected end of input",
               "kind": "[anonymous]",
-              "line": 9,
+              "line": 11,
               "severity": "error"
             }
           ],
@@ -79,7 +79,20 @@
           "skipped_reason": null,
           "stderr": "",
           "unit_key": "unit-001",
-          "visible_support_context": null
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "variable"
+              },
+              {
+                "kind": "variable"
+              }
+            ],
+            "accepted_count": 2,
+            "candidate_count": 2,
+            "rejected": [],
+            "rejected_count": 0
+          }
         }
       ]
     },
@@ -110,7 +123,7 @@
         "open PowerSeries Finset",
         "open AlgebraicCombinatorics"
       ],
-      "materialize_visible_support": false,
+      "materialize_visible_support": true,
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
@@ -164,7 +177,29 @@
           "skipped_reason": null,
           "stderr": "",
           "unit_key": "unit-002",
-          "visible_support_context": null
+          "visible_support_context": {
+            "accepted": [],
+            "accepted_count": 0,
+            "candidate_count": 1,
+            "rejected": [
+              {
+                "kind": "variable",
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 5,
+                    "data": "unknown namespace `AlgebraicCombinatorics`",
+                    "kind": "[anonymous]",
+                    "line": 6,
+                    "severity": "error"
+                  }
+                ],
+                "stderr": ""
+              }
+            ],
+            "rejected_count": 1
+          }
         }
       ]
     },
@@ -184,7 +219,7 @@
       ],
       "inferred_imports": [],
       "inferred_opens": [],
-      "materialize_visible_support": false,
+      "materialize_visible_support": true,
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset"
@@ -220,7 +255,13 @@
           "skipped_reason": null,
           "stderr": "",
           "unit_key": "unit-003",
-          "visible_support_context": null
+          "visible_support_context": {
+            "accepted": [],
+            "accepted_count": 0,
+            "candidate_count": 0,
+            "rejected": [],
+            "rejected_count": 0
+          }
         }
       ]
     },
@@ -250,7 +291,7 @@
         "open MvPolynomial Finset Equiv",
         "open Finset BigOperators"
       ],
-      "materialize_visible_support": false,
+      "materialize_visible_support": true,
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
@@ -288,80 +329,80 @@
           "lean_returncode": 1,
           "messages": [
             {
-              "column": 57,
-              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
-              "kind": "[anonymous]",
-              "line": 23,
-              "severity": "error"
-            },
-            {
               "column": 24,
-              "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝¹` which does not have the necessary form.",
-              "kind": "lean.invalidField._namedError",
-              "line": 24,
+              "data": "Unknown constant `NPartition.ofPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 51,
               "severity": "error"
             },
             {
               "column": 13,
-              "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
-              "kind": "lean.invalidField._namedError",
-              "line": 26,
+              "data": "Unknown constant `NPartition.toPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 53,
               "severity": "error"
             },
             {
               "column": 34,
-              "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
-              "kind": "lean.invalidField._namedError",
-              "line": 29,
+              "data": "Unknown constant `NPartition.toPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 56,
               "severity": "error"
             },
             {
               "column": 8,
-              "data": "unsolved goals\nR : Type u_1\ninst✝ : CommSemiring R\nN : ℕ\nx✝ : Sort ?u.41\nNPartition : x✝\nn : ℕ\nμ : sorry\np : n.Partition := sorry\n⊢ p.parts.card ≤ N",
+              "data": "unsolved goals\nR✝ : Type u_1\ninst✝¹ : CommSemiring R✝\nN✝¹ N✝ : ℕ\nR : Type u_2\ninst✝ : CommSemiring R\nN n : ℕ\nμ : NPartition N\np : n.Partition := sorry\n⊢ p.parts.card ≤ N",
               "kind": "Tactic.unsolvedGoals",
-              "line": 27,
+              "line": 54,
               "severity": "error"
             },
             {
               "column": 10,
-              "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
-              "kind": "lean.invalidField._namedError",
-              "line": 40,
+              "data": "Unknown constant `NPartition.toPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 67,
               "severity": "error"
             },
             {
               "column": 34,
-              "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
-              "kind": "lean.invalidField._namedError",
-              "line": 40,
+              "data": "Unknown constant `NPartition.ofPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 67,
               "severity": "error"
             },
             {
               "column": 58,
               "data": "Unknown constant `Multiset.map_filter`",
               "kind": "lean.unknownIdentifier._namedError",
-              "line": 40,
+              "line": 67,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "No applicable extensionality theorem found for type\n  NPartition N\n\nNote: Extensionality theorems can be registered by marking them with the `[ext]` attribute",
+              "kind": "[anonymous]",
+              "line": 75,
               "severity": "error"
             },
             {
               "column": 79,
               "data": "This simp argument is unused:\n  Multiset.filter_map\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.toPartition, NPartition.ofPartition, Multiset.map_filter, M̵u̵l̵t̵i̵s̵e̵t̵.̵f̵i̵l̵t̵e̵r̵_̵m̵a̵p̵,̵Multiset.map_map,\n        Function.comp]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
               "kind": "linter.unusedSimpArgs",
-              "line": 40,
+              "line": 67,
               "severity": "warning"
             },
             {
               "column": 6,
               "data": "This simp argument is unused:\n  Multiset.map_map\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.toPartition, NPartition.ofPartition, Multiset.map_filter, Multiset.filter_map,\n        M̵u̵l̵t̵i̵s̵e̵t̵.̵m̵a̵p̵_̵m̵a̵p̵,̵ ̵Function.comp]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
               "kind": "linter.unusedSimpArgs",
-              "line": 41,
+              "line": 68,
               "severity": "warning"
             },
             {
               "column": 24,
               "data": "This simp argument is unused:\n  Function.comp\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.toPartition, NPartition.ofPartition, Multiset.map_filter, Multiset.filter_map,\n        Multiset.map_map,̵ ̵F̵u̵n̵c̵t̵i̵o̵n̵.̵c̵o̵m̵p̵]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
               "kind": "linter.unusedSimpArgs",
-              "line": 41,
+              "line": 68,
               "severity": "warning"
             }
           ],
@@ -372,17 +413,101 @@
           "skipped_reason": null,
           "stderr": "",
           "unit_key": "unit-004",
-          "visible_support_context": null
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "variable"
+              },
+              {
+                "kind": "variable"
+              },
+              {
+                "kind": "structure",
+                "name": "NPartition"
+              },
+              {
+                "kind": "def",
+                "name": "ofPartition"
+              }
+            ],
+            "accepted_count": 4,
+            "candidate_count": 7,
+            "rejected": [
+              {
+                "kind": "abbrev",
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 29,
+                    "data": "Unknown identifier `_root_.NPartition`",
+                    "kind": "lean.unknownIdentifier._namedError",
+                    "line": 9,
+                    "severity": "error"
+                  }
+                ],
+                "name": "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                "stderr": ""
+              },
+              {
+                "kind": "theorem",
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 57,
+                    "data": "Invalid field `part`: The environment does not contain `NPartition.part`, so it is not possible to project the field `part` from an expression\n  μ\nof type `NPartition N`",
+                    "kind": "lean.invalidField._namedError",
+                    "line": 16,
+                    "severity": "error"
+                  }
+                ],
+                "name": "part_eq_parts",
+                "stderr": ""
+              },
+              {
+                "kind": "def",
+                "lean_error_count": 3,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 53,
+                    "data": "Invalid field `size`: The environment does not contain `NPartition.size`, so it is not possible to project the field `size` from an expression\n  μ\nof type `NPartition N`",
+                    "kind": "lean.invalidField._namedError",
+                    "line": 34,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 15,
+                    "data": "Unknown identifier `size`",
+                    "kind": "lean.unknownIdentifier._namedError",
+                    "line": 42,
+                    "severity": "error"
+                  },
+                  {
+                    "column": 4,
+                    "data": "`simp` made no progress",
+                    "kind": "[anonymous]",
+                    "line": 42,
+                    "severity": "error"
+                  }
+                ],
+                "name": "toPartition",
+                "stderr": ""
+              }
+            ],
+            "rejected_count": 3
+          }
         }
       ]
     }
   ],
   "compile_passed_units": 0,
   "filter_target_module_imports": true,
-  "generated_at": "2026-05-06T01:41:36.859557+00:00",
+  "generated_at": "2026-05-06T01:44:24.777380+00:00",
   "generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
   "infer_context": true,
-  "materialize_visible_support": false,
+  "materialize_visible_support": true,
   "project_root": "algebraic-combinatorics",
   "schema_version": "repoprover.latex_statement_generation_verification.v1",
   "unit_count": 4

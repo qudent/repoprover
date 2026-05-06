@@ -224,6 +224,51 @@ def test_local_file_predecessors_omit_hidden_target(tmp_path: Path) -> None:
     assert "hidden_target" not in messages[1]["content"]
 
 
+def test_local_file_predecessors_include_shallow_same_file_dependencies(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
+    lean_path.parent.mkdir(parents=True)
+    lean_path.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "theorem zero_le : 0 ≤ (0 : Nat) := Nat.zero_le 0",
+                "def support : Nat := 1",
+                "def unrelated : Nat := 2",
+                "def nearby : 0 ≤ support := Nat.zero_le support",
+                "theorem hidden_target : support = support := by",
+                "  rfl",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    target = _unit(
+        unit_id="target",
+        label="lem.target",
+        source_text="\\begin{lemma}\\label{lem.target}Target.\\end{lemma}",
+        aligned_name="Demo.hidden_target",
+    )
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [7, 8]
+
+    messages = build_messages(
+        [SelectedUnit(public_key="unit-001", row=target)],
+        [target],
+        source_units=[target],
+        project_root=project_root,
+        local_predecessor_declarations=1,
+        local_predecessor_dependency_declarations=1,
+    )
+    payload = json.loads(messages[1]["content"])
+    predecessors = payload["units"][0]["local_file_predecessor_declarations"]
+
+    assert [row["name"] for row in predecessors] == ["support", "nearby"]
+    assert predecessors[0]["context_source"] == "same_file_dependency_of_local_predecessor"
+    assert "zero_le" not in [row["name"] for row in predecessors]
+    assert "unrelated" not in messages[1]["content"]
+    assert "hidden_target" not in messages[1]["content"]
+
+
 def test_select_units_supports_offset_and_exact_id() -> None:
     rows = [
         {**_unit(unit_id="u1", label="l1", source_text="one"), "selection": {"status": "gold_candidate"}},

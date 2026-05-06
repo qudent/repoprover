@@ -350,6 +350,7 @@ def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None
                                                     {"kind": "namespace", "name": "Demo.TargetModule"},
                                                     {"kind": "namespace", "name": "TargetModule"},
                                                     {"kind": "namespace", "name": "Demo.Wrapper"},
+                                                    {"kind": "namespace", "name": "Wrapper"},
                                                     {"kind": "namespace", "name": "Demo.Prior"},
                                                 ],
                                                 "available_prior_project_context": [
@@ -390,6 +391,7 @@ def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None
         assert "open Demo.TargetModule" not in source
         assert "open TargetModule" not in source
         assert "open Demo.Wrapper" not in source
+        assert "open Wrapper" not in source
         assert "open Demo.Prior" in source
         return {"returncode": 0, "messages": [], "stderr": ""}
 
@@ -416,6 +418,99 @@ def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None
         "open Demo.TargetModule",
         "open TargetModule",
         "open Demo.Wrapper",
+        "open Wrapper",
     ]
     assert batch_summary["inferred_opens"] == ["open Demo.Prior"]
     assert summary["compile_passed_units"] == 1
+
+
+def test_run_can_materialize_visible_support_snippets(monkeypatch, tmp_path) -> None:
+    run_dir = tmp_path / "run"
+    batch = run_dir / "batch-001"
+    batch.mkdir(parents=True)
+    (batch / "generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "generated",
+                        "declaration_names": ["generated"],
+                        "lean_file_body": "theorem generated : True := prior_helper",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (batch / "generation-payload.json").write_text(
+        json.dumps(
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": json.dumps(
+                            {
+                                "units": [
+                                    {
+                                        "unit_key": "unit-001",
+                                        "planned_declarations": [
+                                            {
+                                                "available_prior_project_context": [
+                                                    {
+                                                        "project_declarations": [
+                                                            {
+                                                                "kind": "theorem",
+                                                                "name": "prior_helper",
+                                                                "lean_snippet": "theorem prior_helper : True := by\n  trivial",
+                                                            },
+                                                            {
+                                                                "kind": "lemma",
+                                                                "name": "partial_helper",
+                                                                "lean_snippet": "lemma partial_helper : True",
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                    }
+                                ]
+                            }
+                        ),
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    calls: list[str] = []
+
+    def fake_run_lean_source(source, *, project_root, timeout_seconds):
+        calls.append(source)
+        return {"returncode": 0, "messages": [], "stderr": ""}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
+    summary = run(
+        argparse.Namespace(
+            generation_run=run_dir,
+            project_root=tmp_path,
+            imports=["Mathlib"],
+            opens=[],
+            infer_context=True,
+            filter_target_module_imports=True,
+            materialize_visible_support=True,
+            support_timeout_seconds=1.0,
+            timeout_seconds=1.0,
+            output=run_dir / "eval/verification-results.json",
+        )
+    )
+
+    final_source = calls[-1]
+    assert "theorem prior_helper : True" in final_source
+    assert final_source.index("theorem prior_helper") < final_source.index("theorem generated")
+    assert "partial_helper" not in final_source
+    support = summary["batches"][0]["units"][0]["visible_support_context"]
+    assert support["candidate_count"] == 1
+    assert support["accepted_count"] == 1
+    assert support["rejected_count"] == 0

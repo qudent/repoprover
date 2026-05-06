@@ -34,6 +34,30 @@ LEAN_DECL_RE = re.compile(
     r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)\s+"
     r"(?P<name>[^\s:\{\(\[]+)"
 )
+LEAN_IDENTIFIER_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_']*")
+COMMON_LOCAL_DEPENDENCY_NAMES = {
+    "by",
+    "fun",
+    "if",
+    "then",
+    "else",
+    "let",
+    "in",
+    "where",
+    "match",
+    "with",
+    "intro",
+    "exact",
+    "simp",
+    "rw",
+    "have",
+    "show",
+    "calc",
+    "Type",
+    "Prop",
+    "Nat",
+    "Fin",
+}
 
 
 @dataclass(frozen=True)
@@ -190,11 +214,67 @@ def local_declaration_spans(lines: list[str]) -> list[dict[str, Any]]:
     return spans
 
 
+def local_declaration_name(name: str) -> str:
+    return name.split(".")[-1]
+
+
+def local_dependency_tokens(snippets: list[str]) -> set[str]:
+    tokens: set[str] = set()
+    for snippet in snippets:
+        tokens.update(LEAN_IDENTIFIER_RE.findall(snippet))
+    return {token for token in tokens if token not in COMMON_LOCAL_DEPENDENCY_NAMES}
+
+
+def local_name_referenced_by_snippets(snippets: list[str], name: str) -> bool:
+    local = local_declaration_name(name)
+    if local in COMMON_LOCAL_DEPENDENCY_NAMES:
+        return False
+    pattern = re.compile(rf"\b{re.escape(local)}\b")
+    for snippet in snippets:
+        for match in pattern.finditer(snippet):
+            if match.start() > 0 and snippet[match.start() - 1] == ".":
+                prefix = snippet[: match.start() - 1]
+                qualifier_match = re.search(r"([A-Za-z_][A-Za-z0-9_']*)\s*$", prefix)
+                qualifier = qualifier_match.group(1) if qualifier_match else ""
+                if qualifier and qualifier[0].isupper():
+                    continue
+            return True
+    return False
+
+
+def local_predecessor_row(
+    *,
+    lines: list[str],
+    span: dict[str, Any],
+    relative_path: str,
+    end_limit: int,
+    context_source: str,
+) -> dict[str, Any]:
+    start = int(span["start"])
+    end = min(int(span["end"]), end_limit)
+    declaration_text = "\n".join(lines[start - 1 : min(end, start + 39)]).rstrip()
+    snippet = compact_declaration_text(declaration_text, kind=str(span["kind"]))
+    return {
+        "name": span["name"],
+        "kind": span["kind"],
+        "path": relative_path,
+        "line_range": [start, end],
+        "lean_snippet": snippet[:3000],
+        "snippet_truncated": end - start + 1 > 40 or len(snippet) > 3000,
+        "context_source": context_source,
+        "benchmark_honesty": (
+            "Uses post-hoc target file/line placement only to select earlier declarations; "
+            "the hidden target declaration itself is omitted."
+        ),
+    }
+
+
 def target_file_predecessor_declarations(
     row: dict[str, Any],
     *,
     project_root: Path | None,
     limit: int = 4,
+    dependency_limit: int = 4,
 ) -> list[dict[str, Any]]:
     """Collect same-file declarations before the hidden target declaration.
 
@@ -221,27 +301,44 @@ def target_file_predecessor_declarations(
             continue
         lines = path.read_text(encoding="utf-8").splitlines()
         spans = [span for span in local_declaration_spans(lines) if int(span["start"]) < target_start]
-        for span in spans[-limit:]:
-            start = int(span["start"])
-            end = min(int(span["end"]), target_start - 1)
-            declaration_text = "\n".join(lines[start - 1 : min(end, start + 39)]).rstrip()
-            snippet = compact_declaration_text(declaration_text, kind=str(span["kind"]))
-            predecessors.append(
-                {
-                    "name": span["name"],
-                    "kind": span["kind"],
-                    "path": relative_path,
-                    "line_range": [start, end],
-                    "lean_snippet": snippet[:3000],
-                    "snippet_truncated": end - start + 1 > 40 or len(snippet) > 3000,
-                    "context_source": "same_file_before_selected_unit_line",
-                    "benchmark_honesty": (
-                        "Uses post-hoc target file/line placement only to select earlier declarations; "
-                        "the hidden target declaration itself is omitted."
-                    ),
-                }
+        selected_spans = spans[-limit:]
+        selected_names = {str(span["name"]) for span in selected_spans}
+        selected_snippets = [
+            local_predecessor_row(
+                lines=lines,
+                span=span,
+                relative_path=relative_path,
+                end_limit=target_start - 1,
+                context_source="same_file_before_selected_unit_line",
             )
-    return predecessors[-limit:]
+            for span in selected_spans
+        ]
+        selected_snippet_texts = [row["lean_snippet"] for row in selected_snippets]
+        dependency_tokens = local_dependency_tokens(selected_snippet_texts)
+        dependency_spans: list[dict[str, Any]] = []
+        if dependency_limit > 0 and dependency_tokens:
+            for span in spans:
+                name = str(span["name"])
+                if name in selected_names:
+                    continue
+                if local_name_referenced_by_snippets(selected_snippet_texts, name):
+                    dependency_spans.append(span)
+            dependency_spans = dependency_spans[-dependency_limit:]
+        for span in [*dependency_spans, *selected_spans]:
+            predecessors.append(
+                local_predecessor_row(
+                    lines=lines,
+                    span=span,
+                    relative_path=relative_path,
+                    end_limit=target_start - 1,
+                    context_source=(
+                        "same_file_dependency_of_local_predecessor"
+                        if span in dependency_spans
+                        else "same_file_before_selected_unit_line"
+                    ),
+                )
+            )
+    return predecessors[-(limit + max(dependency_limit, 0)) :]
 
 
 def project_declarations_for_prior(
@@ -398,6 +495,7 @@ def build_messages(
     max_previous_same_file: int | None = 2,
     declarations_per_prior_unit: int = 4,
     local_predecessor_declarations: int = 4,
+    local_predecessor_dependency_declarations: int = 4,
 ) -> list[dict[str, str]]:
     source_rows_by_id = unit_index(source_units or all_rows)
     system = (
@@ -499,13 +597,15 @@ def build_messages(
                     row,
                     project_root=project_root,
                     limit=local_predecessor_declarations,
+                    dependency_limit=local_predecessor_dependency_declarations,
                 ),
                 "benchmark_policy": {
                     "target_lean_available_to_selector": False,
                     "posthoc_alignment_hidden": True,
                     "local_file_context_source": "prior_project_declarations_only",
                     "local_file_predecessor_declaration_source": (
-                        "same Lean file declarations before selected unit placement line; benchmark-only "
+                        "same Lean file declarations before selected unit placement line, plus shallow "
+                        "same-file dependencies referenced by those predecessor snippets; benchmark-only "
                         "placement metadata, target declaration omitted"
                     ),
                 },
@@ -563,6 +663,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         max_previous_same_file=args.max_previous_same_file_context,
         declarations_per_prior_unit=args.prior_project_declarations_per_unit,
         local_predecessor_declarations=args.local_predecessor_declarations,
+        local_predecessor_dependency_declarations=args.local_predecessor_dependency_declarations,
     )
     run_dir = args.output
     batch_dir = run_dir / "batch-001"
@@ -648,6 +749,15 @@ def main() -> None:
         help=(
             "Maximum same-Lean-file declarations before the hidden target line to expose as local "
             "predecessor context. Uses post-hoc placement metadata but omits the target declaration."
+        ),
+    )
+    parser.add_argument(
+        "--local-predecessor-dependency-declarations",
+        type=int,
+        default=4,
+        help=(
+            "Maximum earlier same-file declarations to add when their names are referenced by selected "
+            "local predecessor snippets. Uses the same target-blind placement cut as local predecessors."
         ),
     )
     parser.add_argument("--model", default=DEFAULT_MODEL)

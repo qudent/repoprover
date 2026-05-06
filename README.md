@@ -233,6 +233,17 @@ project/Mathlib proof context, not JSON transport.
 The stricter target-blind verifier also reran on this split generation artifact:
 it filtered target-bearing imports/opens, including a transitive
 `MonomialSymmetric -> NPartition` exposure, and the result remained `0/4`.
+An optional verifier mode can now incrementally materialize Lean snippets that
+were visible in the generation prompt and compile under the target-blind import
+policy. On the diverse4 split run it still compiled `0/4`, but the diagnostic
+showed why the partition unit was under-contexted: visible support could compile
+the `NPartition` structure and `ofPartition`, while `part_eq_parts` and
+`toPartition` needed earlier same-file API such as `part` and `size`. Context
+selection now adds shallow same-file dependencies of selected local predecessor
+snippets. A no-cost refreshed diverse4 payload at
+`docs/latex-statement-context-runs/2026-05-06-diverse4-localdeps-budget/`
+includes `NPartition`, `size`, `length`, and `part` before the local
+`part_eq_parts` / `ofPartition` / `toPartition` context.
 
 ### Imported Lean surface and likely context needs
 
