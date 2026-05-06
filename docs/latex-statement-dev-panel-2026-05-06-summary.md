@@ -180,15 +180,14 @@ tokens. Generated-only verification compiled `1/1`. The verifier also now
 Lean-checks inferred `open` statements and recorded that
 `open AlgebraicCombinatorics` was invalid after target-module filtering.
 
-Post-hoc semantic coverage is still `0/1`, but the failure is diagnostic rather
-than a generated-proof failure. The generated theorem proves the LaTeX
-range-sum Vandermonde statement. The aligned gold theorem is the Mathlib
-antidiagonal statement
-`AlgebraicCombinatorics.FPS.vandermonde_nat`, and the current semantic grader
-only tries `simpa using`. A bridge-aware grader should be able to prove the
-gold surface from the generated theorem plus the checked
-`Finset.Nat.sum_antidiagonal_eq_sum_range_succ` bridge; until that exists,
-semantic coverage undercounts this case.
+The first post-hoc semantic coverage run was `0/1`, but the failure was
+diagnostic rather than a generated-proof failure. The generated theorem proved
+the LaTeX range-sum Vandermonde statement, while the aligned gold theorem is the
+Mathlib antidiagonal statement
+`AlgebraicCombinatorics.FPS.vandermonde_nat`. The semantic grader now extracts
+generated-side rewrite terms and tries bridge-aware `convert ...; rw [...]`
+branches after the plain `simpa using` checks. Rerunning semantic coverage on
+this artifact proves the aligned gold theorem `1/1`.
 
 The post-hoc diagnostic file
 `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/eval/vandermonde-bridge-diagnostic.lean`
@@ -218,10 +217,10 @@ generic or NPartition-shaped. The panel shows:
   compile failures from namespace/import/syntax/context issues; 1/5 compiles
   but misses the semantic shape of the gold theorems.
 - With visible support enabled, inverse uniqueness becomes a true semantic win.
-  The Vandermonde focused retry now compiles after generic syntax/open-context
-  fixes, but it exposes a bridge-aware semantic-grader gap. The determinant
-  issue is target-shape planning; FPS division and NPartition remain honest
-  insufficient-context/proof-synthesis cases.
+  The Vandermonde focused retry now compiles and semantically covers the
+  aligned gold theorem after generic syntax/open-context and bridge-aware grader
+  fixes. The determinant issue is target-shape planning; FPS division and
+  NPartition remain honest insufficient-context/proof-synthesis cases.
 
 ## Recommendations
 

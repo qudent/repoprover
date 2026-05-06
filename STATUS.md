@@ -32,7 +32,7 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   generation -> verification -> summary.
 - [ ] Run the next paid check as a panel or fresh-heldout slice, not another
   single already-debugged theorem.
-- [ ] Add bridge-aware semantic grading so equivalent source/gold surfaces do
+- [x] Add bridge-aware semantic grading so equivalent source/gold surfaces do
   not look like failures.
 - [ ] Route cases with checked context but repeated clean declines to a proof
   synthesis/coding-agent lane instead of more selector prompt tuning.
@@ -44,9 +44,6 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   `prop.sf.Npar-as-par` remains the hard dev case.
 - Selectors still invent Mathlib/project API names; Lean hydration catches many
   and can recover some bridge facts, but not all project-specific context.
-- Semantic grading can false-reject equivalent theorem surfaces: Vandermonde
-  now compiles as the source range-sum theorem, while the aligned gold theorem
-  is Mathlib's antidiagonal shape.
 - Generators can still sketch incomplete helper proofs, as in NPartition.
 - Full elaborated dependency extraction is useful but heavy on this 8 GB
   machine; reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is
@@ -88,10 +85,9 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Vandermonde bridge retry:
   `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/`.
   Cost `$0.0013226`; generated-only verification compiled `1/1` after generic
-  Finset binder-syntax guidance and inferred-open validation. Post-hoc semantic
-  coverage remains `0/1` because gold is antidiagonal while the generated theorem
-  is the LaTeX range-sum form; this is a grader-surface caveat, not missing
-  context.
+  Finset binder-syntax guidance and inferred-open validation. Bridge-aware
+  semantic grading now proves the aligned antidiagonal gold theorem `1/1` from
+  the generated source range-sum theorem using generated-side rewrite terms.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
@@ -101,6 +97,7 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
-- Next useful work: route remaining panel failures by class. Vandermonde needs
-  bridge-aware semantic grading; triangular needs stronger target-shape
-  planning; FPS division and NPartition remain proof/context synthesis cases.
+- Next useful work: route remaining panel failures by class. Triangular needs
+  stronger target-shape planning; FPS division and NPartition remain
+  proof/context synthesis cases. Validate the bridge-aware grader on a broader
+  panel or fresh-heldout slice before treating it as a benchmark-level fix.

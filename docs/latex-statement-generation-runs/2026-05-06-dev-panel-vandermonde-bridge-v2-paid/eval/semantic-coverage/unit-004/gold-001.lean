@@ -797,6 +797,10 @@ For a, b, n ∈ ℕ: C(a+b, n) = ∑_{k=0}^n C(a,k) C(b, n-k)
 /-! RepoProver post-hoc semantic coverage check.
 The aligned gold statement below is grader-only and was not shown to generation. -/
 
+set_option linter.style.nameCheck false
+set_option linter.unreachableTactic false
+set_option linter.unusedTactic false
+
 -- Generated declaration(s) under the original target file prefix context.
 open Finset
 open Nat
@@ -816,7 +820,43 @@ theorem __repoprover_latex_statement_check (a b n : ℕ) :
   first
   | simpa using vandermonde_nat a b n
   | simpa [Fintype.card_fin] using vandermonde_nat a b n
+  | convert vandermonde_nat a b n using 1
+    rw [Nat.add_choose_eq]
+    done
+  | convert vandermonde_nat a b n using 1
+    rw [← Nat.add_choose_eq]
+    done
+  | convert vandermonde_nat a b n using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b n using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
   | simpa using vandermonde_nat a b (by simpa [Fintype.card_fin] using n)
   | simpa [Fintype.card_fin] using vandermonde_nat a b (by simpa [Fintype.card_fin] using n)
+  | convert vandermonde_nat a b (by simpa [Fintype.card_fin] using n) using 1
+    rw [Nat.add_choose_eq]
+    done
+  | convert vandermonde_nat a b (by simpa [Fintype.card_fin] using n) using 1
+    rw [← Nat.add_choose_eq]
+    done
+  | convert vandermonde_nat a b (by simpa [Fintype.card_fin] using n) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by simpa [Fintype.card_fin] using n) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
   | simpa using vandermonde_nat
   | simpa [Fintype.card_fin] using vandermonde_nat
+  | convert vandermonde_nat using 1
+    rw [Nat.add_choose_eq]
+    done
+  | convert vandermonde_nat using 1
+    rw [← Nat.add_choose_eq]
+    done
+  | convert vandermonde_nat using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done

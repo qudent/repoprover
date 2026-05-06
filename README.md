@@ -255,16 +255,17 @@ finite sums/products over a `Finset` use `∑ x ∈ s, ...` / `∏ x ∈ s, ...`
 bridge context, a Vandermonde-only retry at
 `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/`
 cost `$0.0013226`, generated the source range-sum theorem, and compiled `1/1`.
-Post-hoc semantic coverage still reports `0/1`, but the failure is now a
-benchmark-surface mismatch: the aligned gold theorem is the Mathlib
-antidiagonal form, while the generated theorem proves the LaTeX range-sum form.
-The current semantic grader only tries `simpa using`, so it false-rejects this
-equivalent surface unless it learns bridge-aware gold checks. The post-hoc
-diagnostic
+The original post-hoc semantic grader reported `0/1` because the aligned gold
+theorem is the Mathlib antidiagonal form, while the generated theorem proves
+the LaTeX range-sum form. The semantic grader now extracts generated-side
+rewrite terms and tries bridge-aware `convert ...; rw [...]` branches after the
+plain `simpa using` checks. Rerunning semantic coverage on the Vandermonde v2
+artifact proves the aligned gold theorem `1/1`, with no model-facing gold
+context. The post-hoc diagnostic
 `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/eval/vandermonde-bridge-diagnostic.lean`
 proves the antidiagonal gold surface from the generated range-sum theorem plus
-the checked bridge fact; this is diagnostic-only, not model-facing benchmark
-context.
+the checked bridge fact; this remains diagnostic-only, not model-facing
+benchmark context.
 An optional verifier mode can now incrementally materialize Lean snippets that
 were visible in the generation prompt and compile under the target-blind import
 policy. On the diverse4 split run it still compiled `0/4`, but the diagnostic
@@ -613,11 +614,11 @@ then improved generated-only compile to `2/5` and semantic coverage to `1/5`.
 The recovered success is inverse uniqueness: the generated theorem was valid
 once visible project definitions from the prompt were materialized under the
 target-blind verifier. The remaining panel failures are now better separated:
-Vandermonde now compiles in the focused bridge retry after generic syntax and
-open-validation fixes, but the post-hoc gold grader still needs a bridge-aware
-semantic check for range-sum versus antidiagonal theorem surfaces. Triangular
-determinant is a target-shape planning case, and FPS division plus NPartition
-remain honest insufficient-context/proof-synthesis cases.
+Vandermonde now compiles and semantically covers its aligned gold theorem in the
+focused bridge retry after generic syntax, open-validation, and bridge-aware
+semantic-grader fixes. Triangular determinant is a target-shape planning case,
+and FPS division plus NPartition remain honest
+insufficient-context/proof-synthesis cases.
 
 ### Imported Lean surface and likely context needs
 

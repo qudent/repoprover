@@ -37,6 +37,7 @@ DECL_START_RE = re.compile(
     r"^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
     r"(?:theorem|lemma|def|abbrev|instance)\s+([^\s:\{\(\[]+)"
 )
+REWRITE_TACTIC_RE = re.compile(r"\b(?:rw|simp|simp only)\s*\[")
 
 
 def read_json(path: Path) -> Any:
@@ -214,6 +215,57 @@ def declaration_head_for_name(body: str, name: str) -> str:
     return chunk[:marker].rstrip()
 
 
+def split_top_level_commas(text: str) -> list[str]:
+    items: list[str] = []
+    start = 0
+    nested = 0
+    for index, char in enumerate(text):
+        if char in "([{":
+            nested += 1
+        elif char in ")]}" and nested > 0:
+            nested -= 1
+        elif char == "," and nested == 0:
+            items.append(text[start:index].strip())
+            start = index + 1
+    items.append(text[start:].strip())
+    return [item for item in items if item]
+
+
+def bracket_payloads_after_tactic(source: str) -> list[str]:
+    payloads: list[str] = []
+    for match in REWRITE_TACTIC_RE.finditer(source):
+        index = match.end()
+        nested = 1
+        start = index
+        while index < len(source):
+            char = source[index]
+            if char == "[":
+                nested += 1
+            elif char == "]":
+                nested -= 1
+                if nested == 0:
+                    payloads.append(source[start:index])
+                    break
+            index += 1
+    return payloads
+
+
+def generated_rewrite_terms(body: str, *, max_terms: int = 12) -> list[str]:
+    terms: list[str] = []
+    for payload in bracket_payloads_after_tactic(body):
+        for item in split_top_level_commas(payload):
+            term = item.strip()
+            if not term or any(marker in term for marker in ("?", ":=", "by ")):
+                continue
+            if term.startswith("←"):
+                term = term[1:].strip()
+            if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_'.]*(?:\s+.*)?", term) and term not in terms:
+                terms.append(term)
+                if len(terms) >= max_terms:
+                    return terms
+    return terms
+
+
 def gold_check_declaration(
     *,
     generated_names: list[str],
@@ -221,6 +273,7 @@ def gold_check_declaration(
     gold_head: str,
 ) -> str:
     candidates: list[str] = []
+    rewrite_terms = generated_rewrite_terms(generated_body)
     for name in generated_names:
         generated_head = declaration_head_for_name(generated_body, name)
         for candidate_head in (generated_head, gold_head):
@@ -243,6 +296,9 @@ def gold_check_declaration(
         for candidate in candidates:
             branches.append(f"  | simpa using {candidate}")
             branches.append(f"  | simpa [Fintype.card_fin] using {candidate}")
+            for term in rewrite_terms:
+                branches.append(f"  | convert {candidate} using 1\n    rw [{term}]\n    done")
+                branches.append(f"  | convert {candidate} using 1\n    rw [← {term}]\n    done")
         tactic = "\n".join(["  first", *branches])
     return gold_head + " := by\n" + tactic + "\n"
 
@@ -270,6 +326,10 @@ def build_semantic_check_source(
         "",
         "/-! RepoProver post-hoc semantic coverage check.",
         "The aligned gold statement below is grader-only and was not shown to generation. -/",
+        "",
+        "set_option linter.style.nameCheck false",
+        "set_option linter.unreachableTactic false",
+        "set_option linter.unusedTactic false",
         "",
         "-- Generated declaration(s) under the original target file prefix context.",
         generated_body.strip(),

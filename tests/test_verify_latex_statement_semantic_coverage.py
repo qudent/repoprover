@@ -3,7 +3,11 @@
 from argparse import Namespace
 from pathlib import Path
 
-from scripts.verify_latex_statement_semantic_coverage import build_semantic_check_source, compare
+from scripts.verify_latex_statement_semantic_coverage import (
+    build_semantic_check_source,
+    compare,
+    generated_rewrite_terms,
+)
 
 
 def test_build_semantic_check_source_uses_gold_only_in_grader(tmp_path: Path) -> None:
@@ -35,6 +39,7 @@ def test_build_semantic_check_source_uses_gold_only_in_grader(tmp_path: Path) ->
 
     assert "theorem gold" not in source
     assert "theorem __repoprover_latex_statement_check" in source
+    assert "set_option linter.unreachableTactic false" in source
     assert "simpa using generated h" in source
     assert "simpa [Fintype.card_fin] using generated h" in source
     assert "generated (by simpa [Fintype.card_fin] using h)" in source
@@ -107,6 +112,47 @@ def test_build_semantic_check_source_drops_generated_declarations_already_in_pre
     assert "theorem generated_col {p : Prop}" in source
     assert "theorem __repoprover_latex_statement_check" in source
     assert "simpa using generated_col h" in source
+
+
+def test_build_semantic_check_source_tries_generated_rewrite_terms(tmp_path: Path) -> None:
+    project = tmp_path / "project"
+    lean_file = project / "Demo.lean"
+    lean_file.parent.mkdir(parents=True)
+    lean_file.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "theorem gold (a b n : Nat) : True := by",
+                "  trivial",
+                "end Demo",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    aligned = {"path": "Demo.lean", "line_range": [3, 4], "kind": "theorem"}
+    generated_body = (
+        "theorem generated (a b n : Nat) : True := by\n"
+        "  rw [Demo.bridge (fun i j => a + b + i + j) n, Nat.add_comm]\n"
+        "  trivial"
+    )
+
+    source = build_semantic_check_source(
+        project_root=project,
+        aligned=aligned,
+        generated_names=["generated"],
+        generated_body=generated_body,
+    )
+
+    assert generated_rewrite_terms(generated_body) == [
+        "Demo.bridge (fun i j => a + b + i + j) n",
+        "Nat.add_comm",
+    ]
+    assert "convert generated a b n using 1" in source
+    assert "rw [Demo.bridge (fun i j => a + b + i + j) n]" in source
+    assert "rw [← Demo.bridge (fun i j => a + b + i + j) n]" in source
+    assert "    done" in source
 
 
 def test_compare_records_semantic_failure(monkeypatch, tmp_path: Path) -> None:
