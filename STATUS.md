@@ -42,9 +42,9 @@ context acquisition, model ablations, proof-lane repair, and verifier speed.
   target declarations must stay hidden.
 - Selectors still invent or miss APIs; hydration catches many gaps but proof
   synthesis still fails on some real Lean proof shapes.
-- Lean verification is still slow because checks repeatedly start
-  `lake env lean --stdin --json`; batching reduced this but did not remove the
-  import/startup cost.
+- Lean verification is still slow. Batching reduced cold-process calls, but the
+  first `lake exe repl` backend was worse end-to-end because inferred-open
+  validation timed out and the process used too much memory on this 8 GB box.
 - One-off hard-theorem retries are a known antipattern; use frozen panels and
   ledger rows for new claims.
 
@@ -70,10 +70,17 @@ context acquisition, model ablations, proof-lane repair, and verifier speed.
   but still failed on proof shape (`rw [signSum, ..., signProduct]`).
 - The interrupted unit004 repair attempt is logged as a paid repair-context
   selection row; repair generation did not complete before the user redirected.
+- Persistent REPL verifier experiment is implemented behind `--lean-backend
+  repl`, but not production-ready. On the two-unit DeepSeek-high artifact it
+  made final warmed checks fast (`0.436s` for unit002, `32.454s` for unit004)
+  but total time was `1020.859s` because open validation timed out. Report:
+  `reports/EXPERIMENT-TIMING-20260506T220222Z.md`.
 
 ## Agent Notes
 - Current `main` is far ahead of `origin/main`; do not assume remote is current.
-- Do not kill existing Lean/lake/Codex checks unless explicitly asked.
+- Do not kill existing Lean/lake/Codex checks unless explicitly asked. If a
+  verifier run you started times out and leaves orphan `lean --stdin` children,
+  clean up only those child processes and record it.
 - Latest Codex-log audit used the current rollout JSONL:
   `/home/name/.codex/sessions/2026/05/04/rollout-2026-05-04T23-33-24-019df556-de1a-7422-9dde-2d68226a1c96.jsonl`.
 - Next useful work: a fresh fixed-panel run with the current context/dependency

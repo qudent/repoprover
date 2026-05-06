@@ -4,11 +4,15 @@ import argparse
 import json
 
 from scripts.verify_latex_statement_generation import (
+    active_lean_runner,
     available_support_candidate_names,
     build_lean_source,
+    lean_repl_body_line_offset,
     payload_context,
+    repl_messages_to_cli_messages,
     run,
     run_lean_source,
+    validate_open_statements,
     verify_generation_output,
     visible_support_candidates_by_unit,
     visible_support_candidates_for_unit,
@@ -37,21 +41,109 @@ def test_build_lean_source_closes_support_namespaces_before_body() -> None:
 def test_run_lean_source_returns_structured_timeout(monkeypatch, tmp_path) -> None:
     import subprocess
 
-    def fake_run(*args, **kwargs):
-        raise subprocess.TimeoutExpired(
-            cmd=["lake", "env", "lean", "--stdin", "--json"],
-            timeout=kwargs["timeout"],
-            output="",
-            stderr="partial stderr",
-        )
+    class FakePopen:
+        returncode = None
+        pid = 12345
 
-    monkeypatch.setattr("scripts.verify_latex_statement_generation.subprocess.run", fake_run)
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+
+        def communicate(self, input=None, timeout=None):
+            if timeout is not None:
+                raise subprocess.TimeoutExpired(
+                    cmd=["lake", "env", "lean", "--stdin", "--json"],
+                    timeout=timeout,
+                    output="",
+                    stderr="partial stderr",
+                )
+            self.returncode = -9
+            return "", "partial stderr"
+
+        def kill(self) -> None:
+            self.returncode = -9
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.subprocess.Popen", FakePopen)
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.os.getpgid", lambda pid: pid)
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.os.killpg", lambda pgid, sig: None)
 
     result = run_lean_source("theorem demo : True := by trivial", project_root=tmp_path, timeout_seconds=0.01)
 
     assert result["returncode"] == 124
     assert result["messages"] == []
     assert "Lean command timed out after 0.01 seconds" in result["stderr"]
+
+
+def test_repl_message_lines_are_mapped_to_original_source_lines() -> None:
+    source = "import Mathlib\nimport Demo\n\nopen Nat\n#check missingThing\n"
+    raw_response = {
+        "messages": [
+            {
+                "severity": "error",
+                "pos": {"line": 2, "column": 7},
+                "data": "Unknown identifier `missingThing`",
+            }
+        ]
+    }
+
+    messages = repl_messages_to_cli_messages(
+        raw_response,
+        line_offset=lean_repl_body_line_offset(source),
+    )
+
+    assert messages == [
+        {
+            "severity": "error",
+            "kind": None,
+            "data": "Unknown identifier `missingThing`",
+            "line": 5,
+            "column": 7,
+        }
+    ]
+
+
+def test_run_lean_source_uses_active_warmed_runner(tmp_path) -> None:
+    class DummyRunner:
+        def run(self, source, *, timeout_seconds):
+            return {
+                "returncode": 0,
+                "messages": [{"severity": "info", "line": 1, "column": 0, "data": source}],
+                "stderr": "",
+                "elapsed_seconds": timeout_seconds,
+                "backend": "repl",
+            }
+
+    with active_lean_runner(DummyRunner()):  # type: ignore[arg-type]
+        result = run_lean_source("theorem demo : True := by trivial", project_root=tmp_path, timeout_seconds=3)
+
+    assert result["backend"] == "repl"
+    assert result["elapsed_seconds"] == 3
+
+
+def test_validate_open_statements_can_force_cold_backend(monkeypatch, tmp_path) -> None:
+    calls: list[str] = []
+
+    def active_runner(*args, **kwargs):
+        raise AssertionError("active runner should not be used")
+
+    def cold_runner(source, *, project_root, timeout_seconds):
+        calls.append(source)
+        return {"returncode": 0, "messages": [], "stderr": "", "elapsed_seconds": 1.25}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", active_runner)
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source_cold", cold_runner)
+
+    result = validate_open_statements(
+        ["open Nat"],
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        base_opens=[],
+        timeout_seconds=1,
+        use_cold_backend=True,
+    )
+
+    assert calls
+    assert result["accepted"] == ["open Nat"]
+    assert result["validation_strategy"] == "batched_cold_open_validation"
 
 
 def test_visible_support_scopes_variables_to_matching_snippets() -> None:
