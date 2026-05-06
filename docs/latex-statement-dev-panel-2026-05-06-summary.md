@@ -194,6 +194,12 @@ The post-hoc diagnostic file
 proves that bridge implication in Lean. It is not model-facing context and is
 not counted as benchmark success by the current semantic grader.
 
+Rerunning the broader five-unit visible-support semantic check with the updated
+grader made no provider calls and stayed at `1/5`. It preserved the
+inverse-uniqueness pass and did not change triangular determinant, where the
+generated theorem has a raw entrywise-zero hypothesis but the aligned gold
+statements use `BlockTriangular` hypotheses.
+
 ## What This Shows
 
 The five-unit panel gives richer data immediately. The single NPartition loop

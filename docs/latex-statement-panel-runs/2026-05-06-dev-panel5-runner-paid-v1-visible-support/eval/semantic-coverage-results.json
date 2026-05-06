@@ -6,13 +6,13 @@
     "generated_not_compiled": 3,
     "no_aligned_gold_proved": 1
   },
-  "generated_at": "2026-05-06T06:35:49.737903+00:00",
+  "generated_at": "2026-05-06T07:04:52.210425+00:00",
   "generated_not_compiled_units": 3,
   "generation_run": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation",
   "no_aligned_gold_proved_units": 1,
   "no_aligned_gold_to_check_units": 0,
   "partial_aligned_gold_proved_units": 0,
-  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "project_root": "algebraic-combinatorics",
   "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
   "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid",
   "unit_count": 5,
@@ -52,7 +52,7 @@
               "column": 59,
               "data": "Type mismatch: After simplification, term\n  hA\n has type\n  ∀ (i j : Fin n), j < i → A i j = 0\nbut is expected to have type\n  A.BlockTriangular id ∨ A.BlockTriangular ⇑OrderDual.toDual",
               "kind": "[anonymous]",
-              "line": 463,
+              "line": 467,
               "severity": "error"
             }
           ],
@@ -80,7 +80,7 @@
               "column": 59,
               "data": "Type mismatch: After simplification, term\n  hA\n has type\n  ∀ (i j : Fin n), i < j → A i j = 0\nbut is expected to have type\n  A.BlockTriangular id ∨ A.BlockTriangular ⇑OrderDual.toDual",
               "kind": "[anonymous]",
-              "line": 470,
+              "line": 474,
               "severity": "error"
             }
           ],
@@ -115,169 +115,7 @@
           "lean_error_count": 0,
           "lean_returncode": 0,
           "lean_source_path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/semantic-coverage/unit-003/gold-001.lean",
-          "messages": [
-            {
-              "column": 40,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 506,
-              "severity": "warning"
-            },
-            {
-              "column": 59,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 507,
-              "severity": "warning"
-            },
-            {
-              "column": 48,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 510,
-              "severity": "warning"
-            },
-            {
-              "column": 67,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 511,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 515,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 516,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 517,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 518,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 519,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 520,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`",
-              "kind": "linter.unreachableTactic",
-              "line": 521,
-              "severity": "warning"
-            },
-            {
-              "column": 40,
-              "data": "'simpa [Fintype.card_fin] using hc' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 506,
-              "severity": "warning"
-            },
-            {
-              "column": 59,
-              "data": "'simpa [Fintype.card_fin] using hc' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 507,
-              "severity": "warning"
-            },
-            {
-              "column": 48,
-              "data": "'simpa [Fintype.card_fin] using hc' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 510,
-              "severity": "warning"
-            },
-            {
-              "column": 67,
-              "data": "'simpa [Fintype.card_fin] using hc' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 511,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "'simpa [Fintype.card_fin] using isInverse_unique hab hac' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 515,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "'simpa using isInverse_unique hab (by simpa [Fintype.card_fin] using hac)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 516,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "'simpa [Fintype.card_fin] using isInverse_unique hab (by simpa [Fintype.card_fin] using hac)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 517,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "'simpa using isInverse_unique a b c hab hac' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 518,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "'simpa [Fintype.card_fin] using isInverse_unique a b c hab hac' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 519,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "'simpa using isInverse_unique a b c hab (by simpa [Fintype.card_fin] using hac)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 520,
-              "severity": "warning"
-            },
-            {
-              "column": 4,
-              "data": "'simpa [Fintype.card_fin] using isInverse_unique a b c hab (by simpa [Fintype.card_fin] using hac)' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`",
-              "kind": "linter.unusedTactic",
-              "line": 521,
-              "severity": "warning"
-            },
-            {
-              "column": 8,
-              "data": "The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\n\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`",
-              "kind": "linter.style.nameCheck",
-              "line": 502,
-              "severity": "warning"
-            }
-          ],
+          "messages": [],
           "semantic_check_passed": true,
           "stderr": ""
         }

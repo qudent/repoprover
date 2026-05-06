@@ -441,6 +441,10 @@ theorem det_upperTriangular (A : Matrix (Fin n) (Fin n) K)
 /-! RepoProver post-hoc semantic coverage check.
 The aligned gold statement below is grader-only and was not shown to generation. -/
 
+set_option linter.style.nameCheck false
+set_option linter.unreachableTactic false
+set_option linter.unusedTactic false
+
 -- Generated declaration(s) under the original target file prefix context.
 open Matrix
 

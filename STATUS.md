@@ -88,6 +88,10 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   Finset binder-syntax guidance and inferred-open validation. Bridge-aware
   semantic grading now proves the aligned antidiagonal gold theorem `1/1` from
   the generated source range-sum theorem using generated-side rewrite terms.
+- Re-running semantic coverage on the broader five-unit visible-support panel
+  with the bridge-aware grader made no provider calls and stayed at `1/5`; it
+  preserved the inverse-uniqueness success and did not convert triangular,
+  whose generated statement still has the wrong hypothesis shape.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
