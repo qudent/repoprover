@@ -259,7 +259,12 @@ Post-hoc semantic coverage still reports `0/1`, but the failure is now a
 benchmark-surface mismatch: the aligned gold theorem is the Mathlib
 antidiagonal form, while the generated theorem proves the LaTeX range-sum form.
 The current semantic grader only tries `simpa using`, so it false-rejects this
-equivalent surface unless it learns bridge-aware gold checks.
+equivalent surface unless it learns bridge-aware gold checks. The post-hoc
+diagnostic
+`docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/eval/vandermonde-bridge-diagnostic.lean`
+proves the antidiagonal gold surface from the generated range-sum theorem plus
+the checked bridge fact; this is diagnostic-only, not model-facing benchmark
+context.
 An optional verifier mode can now incrementally materialize Lean snippets that
 were visible in the generation prompt and compile under the target-blind import
 policy. On the diverse4 split run it still compiled `0/4`, but the diagnostic

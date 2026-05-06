@@ -190,6 +190,11 @@ gold surface from the generated theorem plus the checked
 `Finset.Nat.sum_antidiagonal_eq_sum_range_succ` bridge; until that exists,
 semantic coverage undercounts this case.
 
+The post-hoc diagnostic file
+`docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/eval/vandermonde-bridge-diagnostic.lean`
+proves that bridge implication in Lean. It is not model-facing context and is
+not counted as benchmark success by the current semantic grader.
+
 ## What This Shows
 
 The five-unit panel gives richer data immediately. The single NPartition loop
