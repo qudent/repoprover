@@ -419,13 +419,14 @@ def test_run_filters_inferred_open_statements_that_do_not_compile(monkeypatch, t
     def fake_run_lean_source(source, *, project_root, timeout_seconds):
         checked_sources.append(source)
         if "open Demo.Missing" in source:
+            line_number = source.splitlines().index("open Demo.Missing") + 1
             return {
                 "returncode": 1,
                 "messages": [
                     {
                         "severity": "error",
                         "data": "unknown namespace `Demo.Missing`",
-                        "line": 1,
+                        "line": line_number,
                         "column": 0,
                     }
                 ],
@@ -456,6 +457,8 @@ def test_run_filters_inferred_open_statements_that_do_not_compile(monkeypatch, t
     assert [
         row["open_statement"] for row in batch_summary["filtered_invalid_inferred_opens"]
     ] == ["open Demo.Missing"]
+    assert batch_summary["open_validation_stats"]["validation_strategy"] == "batched"
+    assert batch_summary["open_validation_stats"]["lean_call_count"] == 2
     assert summary["compile_passed_units"] == 1
 
 

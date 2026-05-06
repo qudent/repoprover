@@ -715,7 +715,26 @@ def lean_errors(result: dict[str, Any]) -> list[dict[str, Any]]:
     return [message for message in result["messages"] if message.get("severity") == "error"]
 
 
-def validate_open_statements(
+def open_trial_source_and_ranges(
+    open_statements: list[str],
+    *,
+    imports: list[str],
+    base_opens: list[str],
+    accepted_opens: list[str],
+) -> tuple[str, dict[str, tuple[int, int]]]:
+    lines = [f"import {name}" for name in imports]
+    lines.extend(base_opens)
+    lines.extend(accepted_opens)
+    ranges: dict[str, tuple[int, int]] = {}
+    for statement in open_statements:
+        start_line = len(lines) + 1
+        lines.append(statement)
+        ranges[statement] = (start_line, start_line)
+    lines.append("")
+    return "\n".join(lines) + "\n", ranges
+
+
+def validate_open_statements_sequential(
     open_statements: list[str],
     *,
     project_root: Path,
@@ -755,6 +774,86 @@ def validate_open_statements(
         "rejected": rejected,
         "lean_call_count": lean_call_count,
         "elapsed_seconds": round(elapsed_seconds, 3),
+        "validation_strategy": "sequential",
+    }
+
+
+def validate_open_statements(
+    open_statements: list[str],
+    *,
+    project_root: Path,
+    imports: list[str],
+    base_opens: list[str],
+    timeout_seconds: float,
+) -> dict[str, Any]:
+    accepted: list[str] = []
+    pending = list(open_statements)
+    rejected_by_statement: dict[str, dict[str, Any]] = {}
+    lean_call_count = 0
+    elapsed_seconds = 0.0
+    while pending:
+        source, ranges = open_trial_source_and_ranges(
+            pending,
+            imports=imports,
+            base_opens=base_opens,
+            accepted_opens=accepted,
+        )
+        result = run_lean_source(source, project_root=project_root, timeout_seconds=timeout_seconds)
+        lean_call_count += 1
+        elapsed_seconds += float(result.get("elapsed_seconds") or 0.0)
+        errors = [message for message in result["messages"] if message.get("severity") == "error"]
+        if result["returncode"] != 0 and (not errors or errors_outside_ranges(result["messages"], ranges)):
+            fallback = validate_open_statements_sequential(
+                open_statements,
+                project_root=project_root,
+                imports=imports,
+                base_opens=base_opens,
+                timeout_seconds=timeout_seconds,
+            )
+            fallback["lean_call_count"] = int(fallback.get("lean_call_count") or 0) + lean_call_count
+            fallback["elapsed_seconds"] = round(
+                float(fallback.get("elapsed_seconds") or 0.0) + elapsed_seconds,
+                3,
+            )
+            fallback["validation_strategy"] = "sequential_fallback"
+            return fallback
+        if result["returncode"] == 0 and not errors:
+            accepted.extend(pending)
+            pending = []
+            break
+
+        next_pending: list[str] = []
+        progress = False
+        for statement in pending:
+            start_line, end_line = ranges[statement]
+            statement_errors = [
+                message
+                for message in messages_in_line_range(result["messages"], start_line, end_line)
+                if message.get("severity") == "error"
+            ]
+            if not statement_errors:
+                accepted.append(statement)
+                progress = True
+                continue
+            rejected_by_statement[statement] = {
+                "open_statement": statement,
+                "lean_returncode": result["returncode"],
+                "lean_error_count": len(statement_errors),
+                "messages": statement_errors[:5],
+                "stderr": result["stderr"],
+                "elapsed_seconds": result.get("elapsed_seconds"),
+            }
+            next_pending.append(statement)
+        if not progress:
+            break
+        pending = next_pending
+    rejected = [rejected_by_statement[statement] for statement in pending if statement in rejected_by_statement]
+    return {
+        "accepted": accepted,
+        "rejected": rejected,
+        "lean_call_count": lean_call_count,
+        "elapsed_seconds": round(elapsed_seconds, 3),
+        "validation_strategy": "batched",
     }
 
 
@@ -1272,7 +1371,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         filtered_opens = [statement for statement in inferred["opens"] if statement not in inferred_opens]
         imports = unique_in_order([*args.imports, *inferred_imports])
         rejected_invalid_opens: list[dict[str, Any]] = []
-        open_validation_stats = {"lean_call_count": 0, "elapsed_seconds": 0.0}
+        open_validation_stats = {"lean_call_count": 0, "elapsed_seconds": 0.0, "validation_strategy": None}
         if getattr(args, "validate_inferred_opens", True) and inferred_opens:
             open_validation = validate_open_statements(
                 inferred_opens,
@@ -1286,6 +1385,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             open_validation_stats = {
                 "lean_call_count": open_validation["lean_call_count"],
                 "elapsed_seconds": open_validation["elapsed_seconds"],
+                "validation_strategy": open_validation.get("validation_strategy"),
             }
         opens = unique_in_order([*args.opens, *inferred_opens])
         support_context_by_unit: dict[str, list[str]] = {}
