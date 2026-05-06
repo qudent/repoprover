@@ -2,136 +2,80 @@
 ## Overall Direction
 Build a cheap, reproducible source-LaTeX-to-Lean autoformalization pipeline for
 Algebraic Combinatorics. The production unit is one LaTeX theorem/environment,
-planned into one or more Lean declarations with selected source/project/local
-and Mathlib context, then checked by Lean plus post-hoc semantic coverage.
+planned into one or more Lean declarations with selected source, previous
+book/source, previous project, local file/import/style, and Mathlib context,
+then checked by Lean plus post-hoc semantic coverage.
 
 -------
 
 ## Current State
-The repo has pivoted from declaration-level rows to theorem-level LaTeX
-statement rows. Main datasets are `docs/latex-statement-units.jsonl` and
+The repo has pivoted from declaration rows to theorem-level LaTeX statement
+rows. Main datasets are `docs/latex-statement-units.jsonl` and
 `docs/latex-statement-gold-candidates.jsonl`; old declaration-level artifacts
-are preserved at `checkpoint/before-per-latex-statement-dataset`. Current work
-is testing target-blind context selection, visible-support materialization,
-same-unit helper planning, Mathlib hydration, and clean
-`cannot_prove_from_visible_context` handling on broader theorem units.
+are preserved at `checkpoint/before-per-latex-statement-dataset`. The active
+development loop is now a fixed five-unit panel rather than a single theorem.
 
 ## Active Goals
 - [ ] Use LaTeX statement units as the main planning and benchmark surface.
 - [ ] Keep paid selector/generation outputs recoverable before verification.
-- [ ] Select source text, previous book/source statements, previous project
-  declarations, local file/import/style context, and Mathlib APIs separately.
-- [ ] Make theorem-level semantic coverage and repair loops reliable on broader
-  batches without benchmark leakage or theorem-specific hints.
+- [ ] Select source/project/local/Mathlib context separately and hydrate
+  Mathlib requests with Lean tooling before generation.
+- [ ] Make repair loops reliable on broader batches without theorem-specific
+  prompt hints or hidden target leakage.
 
 ## TODO Plan
 - [x] Generate theorem-level source units and gold-candidate rows.
-- [x] Add target-blind context selection, Mathlib hydration, generation,
-  generated-only verification, gold comparison, semantic grading, and bounded
-  repair loops.
-- [x] Add visible-support materialization, same-unit helper planning, failure
-  taxonomies, and context-gap diagnostics.
-- [x] Fix NPartition API/context issues found so far: `Nat.Partition` fields,
-  list/sort bridge hydration, `do_not_use_identifiers` sanitation, cardinality
-  request rules, representation control, and unordered-data canonicalization.
-- [x] Add generic composite-proof bridge notes for checked fallback facts such
-  as `Multiset.sort_eq` + `Multiset.sum_coe`, then retry NPartition without
-  theorem-specific prompt hints.
-- [x] Add and evaluate a generic same-unit proof-planning stage for
-  zero-padding monotonicity and inverse/`Equiv` helper structure.
-- [x] Enforce honest decline when the model can sketch helpers but cannot
-  complete them without placeholders.
-- [x] Add a no-cost normalizer for existing placeholder/comment skeleton runs.
-- [x] Improve generic Mathlib fallback ranking so multiline theorem statements,
-  docstrings, and antidiagonal/range bridge facts can beat weaker one-line name
-  matches.
-- [ ] Decide whether to route the checked helper skeleton to a coding
-  agent/manual diagnostic lane or continue open-model prompt retries.
-- [ ] Reclassify old strict-grader mismatches into actionable buckets.
-- [ ] Scale beyond determinant/symmetric probes and reduce noisy fallback
-  context.
+- [x] Add target-blind selector, hydrator, generator, verifier, gold comparison,
+  semantic grading, repair loops, failure taxonomy, and contract normalization.
+- [x] Add a fixed five-unit dev panel for richer loop feedback.
+- [ ] Add a one-command panel runner that performs selector -> hydration ->
+  generation -> verification -> summary.
+- [ ] Route cases with checked context but repeated clean declines to a proof
+  synthesis/coding-agent lane instead of more selector prompt tuning.
+- [ ] Validate generic prompt/context changes on fresh held-out LaTeX units.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
   declarations for the selected source unit must remain hidden.
-- Broad theorem units can require new same-unit helper definitions, not just a
-  final theorem. `prop.sf.Npar-as-par` is the current hard case.
-- Selectors/generators still miss Lean shapes: nonexistent Mathlib names,
-  omitted binders/typeclasses, extensionality paths, proof APIs, and proof
-  plans for fresh helpers.
-- Fallback search can now recover some missed Mathlib facts, but it still needs
-  better filtering so rehydrated packs do not include noisy checked neighbors.
-- Even with central checked facts present, generators can still fail to use
-  short rewrite bridges, as in the Vandermonde antidiagonal-to-range retry.
+- Broad theorem units can require new same-unit helper definitions and proofs;
+  `prop.sf.Npar-as-par` remains the hard dev case.
+- Selectors still invent Mathlib/project API names; Lean hydration catches many
+  and can recover some bridge facts, but not all project-specific context.
+- Generators can fail to use checked bridge facts, as in Vandermonde, or can
+  sketch incomplete helper proofs, as in NPartition.
 - Full elaborated dependency extraction is useful but heavy on this 8 GB
   machine; reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is
-  necessary. "Rows" there means one compiled Lean declaration/dependency record,
-  not one LaTeX theorem unit.
+  necessary.
 
 ## Recent Results
 - Scale snapshot: 462 LaTeX source units, 114 gold-candidate units, and 414
   aligned Lean declarations; elaborated direct deps over gold units have median
   44 Mathlib and 5 project constants per unit.
-- Proven positives: inverse uniqueness, determinant transpose, triangular
-  determinant, mixed determinant batch, and symmetric `e_n = 0` can reach
-  semantic coverage with target-blind context plus repair loops.
-- Failure summary across 52 verification files / 73 unit checks: 16 compiled,
-  21 old/new contract violations, 10 compile failures, and 26 clean cannot-prove
-  declines. Deduplicated by source unit, 6/11 touched theorem units have
-  compiled at least once.
-- Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
-  missing project context, and 1 same-source-intermediate case
-  (`prop.sf.Npar-as-par`).
-- NPartition retries progressively fixed generic issues: helper planning,
-  `Nat.Partition` neighborhood hydration, list/sort bridge fallback,
-  do-not-use sanitation, cardinality bridge requests, and representation
-  control, and unordered-data canonicalization. Latest bridge hydration
-  resolved guessed `Multiset.sum_sort` and `List.sum_of_sorted_antitone`
-  requests to 13 checked signatures, 2 fallback-resolved requests, and 0
-  failed/unchecked requests.
-- Bridge-note context now adds 2 generic fallback composition notes over the 13
-  checked signatures, with 0 failed/unchecked context requests. Latest paid
-  NPartition retry cost `$0.00355558`; it still cleanly declined with gold
-  comparison `not_generated_cannot_prove`.
-- Zero-padding planner retry cost `$0.00436282`, hydrated 19 checked signatures
-  with 0 failed requests, and fixed the guessed `Multiset.card_filter_le` shape
-  to `Multiset.filter_le` + `Multiset.card_le_card`. Repair cost `$0.00398090`
-  and generated the intended helper skeleton, but with `sorry`, comments, and
-  ellipses, so verification is `contract_violation`.
-- Contract enforcement now normalizes future placeholder/comment/ellipsis
-  `generated` outputs to empty `cannot_prove_from_visible_context` while
-  preserving raw model text for diagnostics.
-- No-cost normalizer applied to the zero-padding skeleton preserves the raw
-  4,380-character helper body but verifies the consumer-facing copy as clean
-  `declined_cannot_prove` with gold comparison `not_generated_cannot_prove`.
-- Kimi K2.6 (`moonshotai/kimi-k2.6`, looked up from OpenRouter) retry cost
-  `$0.030156`. It produced a larger 5,767-character helper skeleton but still
-  used placeholders for inverse lemmas; the normalizer converted the
-  consumer-facing result to clean `declined_cannot_prove`.
-- Diverse4 rehydration found a generic fallback-search bug: the real
-  multiline/docstringed Vandermonde theorem `Nat.add_choose_eq` was ranked
-  below weaker one-line binomial lemmas. The hydrator now ranks with compact
-  declaration/doc/path excerpts and selector `why_needed` text; a no-cost
-  rehydration artifact resolves the failed `Nat.choose_add_eq_choose_add_choose`
-  request to a checked `Nat.add_choose_eq` signature.
-- Vandermonde-only paid retry from the rehydrated context cost `$0.0012026` and
-  cleanly declined. A generic bridge hydration then added checked
-  `Finset.Nat.sum_antidiagonal_eq_sum_range_succ(_mk)` and a bridge note; the
-  follow-up paid retry cost `$0.00125524` and still cleanly declined. This
-  shifts that unit's current blocker from Mathlib lookup to proof/rewrite
-  planning over visible checked facts.
-- Current NPartition blocker: generation discipline/proof synthesis. The model
-  can now sketch the right helper structure, but cannot complete the hard
-  same-unit proofs honestly under the no-placeholder benchmark contract.
-- Test suite last passed: `uv run pytest tests` (`476 passed`) plus
-  `py_compile` over selector/generator/repair/verifier scripts. Full
-  `uv run pytest` still has one unrelated blueprint fixture failure because
-  `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is absent.
+- Attempt-level taxonomy across recorded theorem runs: 16 compiled / 73 unit
+  checks; deduplicated by source unit, 6/11 touched units have compiled at least
+  once.
+- NPartition context work fixed many generic issues (field/projection context,
+  list/sort/cardinality bridges, representation control, placeholder
+  normalization) but still ends in clean declines or incomplete helper skeletons.
+- Vandermonde hydration now finds checked `Nat.add_choose_eq` and antidiagonal
+  to range bridge facts, but generation still cleanly declines; current blocker
+  is proof/rewrite planning over visible checked facts.
+- Five-unit panel artifacts:
+  `docs/latex-statement-dev-panel-2026-05-06.json` and
+  `docs/latex-statement-dev-panel-2026-05-06-summary.md`.
+- Five-unit selector comparison:
+  default DeepSeek V4 Flash returned valid JSON in 115.186s for `$0.003094084`
+  with 6,914 reasoning tokens; no-reasoning returned valid JSON in 33.785s for
+  `$0.00300286` but had worse exact API recall. Hydration confirms no-reasoning
+  is useful for cheap triage, while failed/high-risk units should be escalated.
+- Codex-log audit for the previous eight-hour report is committed at
+  `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
+  stop single-theorem loops once the failure class stops changing and run a
+  panel/default summary instead.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
-- Do not kill existing Lean/lake checks. Monitor passively and let them finish.
-- A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: test whether a stronger/agentic prover can use the checked
-  Vandermonde bridge context, and separately route the NPartition helper
-  skeleton to a coding-agent/manual diagnostic lane.
+- Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
+  diagnostic Codex/Lean task is still expected to be left alone.
+- Next useful work: implement the panel runner and use it as the default loop
+  gate before any new paid single-theorem retry.
