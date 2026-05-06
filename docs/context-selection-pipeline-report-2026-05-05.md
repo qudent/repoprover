@@ -728,6 +728,21 @@ Diverse4 broader-batch probe:
   are 3 clean cannot-prove declines, 1 old contract violation, and 1 compile
   failure. This means the current frontier is mainly context/proof insufficiency
   on broader units, not the older binder/typeclass transport errors.
+- post-hoc context-gap diagnostic:
+  `docs/latex-statement-context-gap-summary.json` compares the 5 unresolved
+  source units to gold direct dependencies. It is explicitly diagnostic-only:
+  gold declarations and elaborated deps are not prompt context. The current
+  frontier classifies as 3 missing Mathlib-context cases, 1 missing
+  project-context case, and 1 same-source-intermediate-declaration case. The
+  same-source case is generic evidence that one LaTeX theorem unit may require
+  the planner to create intermediate declarations inside the unit instead of
+  only retrieving previous context.
+- same-unit helper contract:
+  selector/generator prompts now make that generic path explicit with
+  `role = main_claim|same_unit_helper` and `depends_on_task_ids`; the generator
+  must emit helper declarations before dependent main claims and use fresh
+  non-gold names. The no-cost NPartition prompt payload is
+  `docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-budget/`.
 
 ### Generation and Verification Counts
 
@@ -1130,8 +1145,12 @@ You are a Lean 4/Mathlib context-planning agent. Prepare a compact context pack 
           {
             "task_id": "unit-001-task-1",
             "kind": "def|theorem|lemma|instance|notation|unknown",
+            "role": "main_claim|same_unit_helper",
             "source_part": "whole unit or part marker",
             "target_statement_sketch": "prose mathematical target sketch; do not write exact Lean syntax, declaration names, or guessed API argument order",
+            "depends_on_task_ids": [
+              "earlier same-unit helper task ids that this task should use"
+            ],
             "needed_source_context": [
               "source labels/statements"
             ],
@@ -1162,6 +1181,8 @@ You are a Lean 4/Mathlib context-planning agent. Prepare a compact context pack 
     "Do not infer or reveal hidden target Lean declaration names for the selected unit.",
     "Do not write theorem/lemma Lean code in target_statement_sketch; exact API syntax belongs in needed_mathlib_context and will be hydrated by tools.",
     "Do not bundle all source parts into one conjunction unless the source unit itself requires that shape.",
+    "If a broad source unit needs a construction or auxiliary lemma before the main claim can be stated/proved, split it into ordered planned_declarations with role same_unit_helper followed by role main_claim and explicit depends_on_task_ids.",
+    "Same-unit helper tasks are declarations for the later generator to create from the selected source unit, not prior context. Do not use hidden aligned/referencing Lean names for them.",
     "Use previous project declarations only if they are shown under prior_project_context.",
     "Do not treat Mathlib as the only context; enumerate source/project/local/Mathlib context separately.",
     "Prefer exact Mathlib names when known; otherwise give a narrow query plus expected signature shape.",
@@ -1225,6 +1246,9 @@ You are a Lean 4 autoformalization agent. Generate a small ordered sequence of L
     "Do not invent project helper names that are not shown in available_prior_project_context, needed_project_context, or source context.",
     "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",
     "When local_file_predecessor_declarations contains same-file helper declarations, you may reuse those exact helper names and statement shapes; do not infer any hidden target declaration from their file position.",
+    "When planned_declarations contains role same_unit_helper, generate that helper declaration before any main_claim that lists it in depends_on_task_ids.",
+    "Same-unit helper declarations are new declarations to create from the visible source unit. You may choose fresh descriptive names for them, but do not reuse or guess hidden aligned Lean names.",
+    "Do not use a fresh helper name as a fact until the helper has already been defined earlier in lean_file_body.",
     "Prefer a narrow declaration sequence over a broad bundled conjunction when the source unit decomposes into multiple Lean declarations.",
     "Keep theorem-local assumptions explicit rather than relying on unavailable global variables.",
     "If local_file_context_candidates show useful namespace, open, notation, or variable commands, you may include the needed commands in lean_file_body before the declarations.",

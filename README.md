@@ -315,6 +315,21 @@ statuses are 3 clean cannot-prove declines, 1 old contract violation, and 1
 compile failure. So the source-unit frontier is dominated by honest context/proof
 insufficiency, not by the superseded typeclass errors from earlier attempts.
 
+`docs/latex-statement-context-gap-summary.json` compares those 5 unresolved
+source units against post-hoc gold direct dependencies. This is diagnostic-only
+and must not be used as prompt context. It classifies 3 units as missing Mathlib
+context against gold direct deps, 1 as missing project context, and 1
+(`prop.sf.Npar-as-par`) as using same-source intermediate declarations in the
+gold implementation. That last case supports a generic pipeline change:
+theorem-level planning sometimes has to create intermediate declarations for a
+single LaTeX theorem unit, not merely select prior context.
+The selector schema now exposes `role = main_claim|same_unit_helper` and
+`depends_on_task_ids`, and the generator prompt requires same-unit helpers to be
+emitted before dependent main claims with fresh non-gold names. A no-cost
+NPartition payload at
+`docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-budget/`
+records that contract.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

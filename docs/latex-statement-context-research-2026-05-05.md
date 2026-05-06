@@ -559,6 +559,21 @@ Broader diverse4 negative probe:
   best unresolved statuses are 3 clean cannot-prove declines, 1 old contract
   violation, and 1 compile failure. The frontier therefore points back to
   context/proof selection for the broad diverse4/NPartition-style units.
+- context-gap diagnostic:
+  `docs/latex-statement-context-gap-summary.json` is a post-hoc gold-dependency
+  comparison for the 5 unresolved source units. It classifies 3 as missing
+  Mathlib context, 1 as missing project context, and 1 as depending on
+  same-source intermediate declarations. The practical prompt/pipeline lesson is
+  generic: first-round planning should be able to propose helper declarations
+  within the same LaTeX theorem unit when the source theorem is too broad for a
+  single direct declaration.
+- same-unit helper contract:
+  the selector schema now includes `role = main_claim|same_unit_helper` and
+  `depends_on_task_ids`. The generator prompt must emit same-unit helpers before
+  dependent main claims, using fresh descriptive names rather than hidden gold
+  names. The no-cost
+  `docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-budget/`
+  payload records the updated prompt contract.
 
 ## Lean Dependency Accounting
 

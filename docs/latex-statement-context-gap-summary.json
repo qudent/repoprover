@@ -1,0 +1,560 @@
+{
+  "benchmark_honesty_caveat": "This artifact intentionally uses post-hoc gold declarations and elaborated dependency scans only to diagnose context-selection failures. It must not be used as model-facing context for source-only benchmark runs.",
+  "failure_summary": "docs/latex-statement-failure-taxonomy-summary.json",
+  "gap_class_counts": {
+    "gold_uses_same_source_intermediate_declarations": 1,
+    "missing_mathlib_context_against_gold_direct_deps": 3,
+    "missing_project_context_against_gold_direct_deps": 1
+  },
+  "generated_at": "2026-05-06T03:01:28.901907+00:00",
+  "gold_candidates": "docs/latex-statement-gold-candidates.jsonl",
+  "include_compiled": false,
+  "scan_jsonl": "docs/lean-elaborated-direct-deps.jsonl",
+  "schema_version": "repoprover.latex_statement_context_gap_summary.v1",
+  "source_unit_count": 5,
+  "sources": [
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-05-deepseek-v4-flash-noreason-paid",
+      "diagnostic_caveat": "Post-hoc diagnostic only. Gold declarations and elaborated direct dependencies are not available to source-only selector/generator prompts, and direct dependency sets include implementation details rather than a minimal necessary context proof.",
+      "error_pattern": "application_type_mismatch",
+      "failure_class": "compile_failure",
+      "gap_class": "missing_project_context_against_gold_direct_deps",
+      "gold_context": {
+        "aligned_declaration_names": [
+          "AlgebraicCombinatorics.FPS.xnEquiv_div"
+        ],
+        "aligned_mathlib_dep_count": 18,
+        "aligned_missing_scan_rows": [],
+        "aligned_project_dep_count": 3,
+        "aligned_salient_project_dep_count": 3,
+        "referencing_declaration_names": [
+          "PowerSeries.coeff_div_eq_of_coeff_eq"
+        ]
+      },
+      "overlap": {
+        "all_lean": {
+          "exact_overlap": [
+            "IsUnit"
+          ],
+          "gold_count": 21,
+          "gold_missing_exact_sample": [
+            "CommRing",
+            "CommRing.toCommSemiring",
+            "CommRing.toRing",
+            "CommSemiring.toSemiring",
+            "DFunLike.coe",
+            "IsUnit.unit",
+            "IsUnit.unit_spec",
+            "MonoidWithZero.toMonoid",
+            "MvPowerSeries.instMul",
+            "PowerSeries",
+            "PowerSeries.XnEquiv",
+            "PowerSeries.XnEquiv.invOfUnit",
+            "PowerSeries.XnEquiv.mul",
+            "PowerSeries.constantCoeff",
+            "PowerSeries.instSemiring",
+            "PowerSeries.invOfUnit",
+            "RingHom",
+            "RingHom.instFunLike",
+            "Semiring.toMonoidWithZero",
+            "Semiring.toNonAssocSemiring"
+          ],
+          "local_name_overlap": [
+            "IsUnit"
+          ],
+          "selected_count": 4
+        },
+        "mathlib": {
+          "exact_overlap": [
+            "IsUnit"
+          ],
+          "gold_count": 18,
+          "gold_missing_exact_sample": [
+            "CommRing",
+            "CommRing.toCommSemiring",
+            "CommRing.toRing",
+            "CommSemiring.toSemiring",
+            "DFunLike.coe",
+            "IsUnit.unit",
+            "IsUnit.unit_spec",
+            "MonoidWithZero.toMonoid",
+            "MvPowerSeries.instMul",
+            "PowerSeries",
+            "PowerSeries.constantCoeff",
+            "PowerSeries.instSemiring",
+            "PowerSeries.invOfUnit",
+            "RingHom",
+            "RingHom.instFunLike",
+            "Semiring.toMonoidWithZero",
+            "Semiring.toNonAssocSemiring"
+          ],
+          "local_name_overlap": [
+            "IsUnit"
+          ],
+          "selected_count": 4
+        },
+        "project": {
+          "exact_overlap": [],
+          "gold_count": 3,
+          "gold_missing_exact_sample": [
+            "PowerSeries.XnEquiv",
+            "PowerSeries.XnEquiv.invOfUnit",
+            "PowerSeries.XnEquiv.mul"
+          ],
+          "local_name_overlap": [],
+          "selected_count": 0
+        }
+      },
+      "selected_context": {
+        "local_predecessor_count": 0,
+        "local_predecessor_names": [],
+        "mathlib_checked_count": 4,
+        "mathlib_checked_names": [
+          "IsUnit",
+          "PowerSeries.coeff",
+          "PowerSeries.coeff_mul",
+          "PowerSeries.inv"
+        ],
+        "project_context_count": 0,
+        "project_context_names": [],
+        "repair_checked_count": 0,
+        "repair_checked_names": [],
+        "source_context_ref_count": 0
+      },
+      "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+      "diagnostic_caveat": "Post-hoc diagnostic only. Gold declarations and elaborated direct dependencies are not available to source-only selector/generator prompts, and direct dependency sets include implementation details rather than a minimal necessary context proof.",
+      "error_pattern": "declined_cannot_prove",
+      "failure_class": "declined_cannot_prove",
+      "gap_class": "missing_mathlib_context_against_gold_direct_deps",
+      "gold_context": {
+        "aligned_declaration_names": [
+          "LGV1.binom_log_concave"
+        ],
+        "aligned_mathlib_dep_count": 128,
+        "aligned_missing_scan_rows": [],
+        "aligned_project_dep_count": 1,
+        "aligned_salient_project_dep_count": 0,
+        "referencing_declaration_names": []
+      },
+      "overlap": {
+        "all_lean": {
+          "exact_overlap": [],
+          "gold_count": 129,
+          "gold_missing_exact_sample": [
+            "AddCommGroup.toDivisionAddCommMonoid",
+            "AddCommMonoidWithOne.toAddMonoidWithOne",
+            "AddGroup.toSubNegMonoid",
+            "AddGroupWithOne.toAddGroup",
+            "AddGroupWithOne.toAddMonoidWithOne",
+            "AddMonoid.toAddSemigroup",
+            "AddMonoid.toAddZeroClass",
+            "AddMonoidWithOne.toAddMonoid",
+            "AddMonoidWithOne.toNatCast",
+            "AddMonoidWithOne.toOne",
+            "AddSemigroup.toAdd",
+            "CommRing.toRing",
+            "CommSemiring.toSemiring",
+            "Distrib.toAdd",
+            "Distrib.toMul",
+            "Int.instAddCommGroup",
+            "Int.instAddMonoid",
+            "Int.instCharZero",
+            "Int.instCommRing",
+            "Int.instCommSemiring"
+          ],
+          "local_name_overlap": [],
+          "selected_count": 10
+        },
+        "mathlib": {
+          "exact_overlap": [],
+          "gold_count": 128,
+          "gold_missing_exact_sample": [
+            "AddCommGroup.toDivisionAddCommMonoid",
+            "AddCommMonoidWithOne.toAddMonoidWithOne",
+            "AddGroup.toSubNegMonoid",
+            "AddGroupWithOne.toAddGroup",
+            "AddGroupWithOne.toAddMonoidWithOne",
+            "AddMonoid.toAddSemigroup",
+            "AddMonoid.toAddZeroClass",
+            "AddMonoidWithOne.toAddMonoid",
+            "AddMonoidWithOne.toNatCast",
+            "AddMonoidWithOne.toOne",
+            "AddSemigroup.toAdd",
+            "CommRing.toRing",
+            "CommSemiring.toSemiring",
+            "Distrib.toAdd",
+            "Distrib.toMul",
+            "Int.instAddCommGroup",
+            "Int.instAddMonoid",
+            "Int.instCharZero",
+            "Int.instCommRing",
+            "Int.instCommSemiring"
+          ],
+          "local_name_overlap": [],
+          "selected_count": 3
+        },
+        "project": {
+          "exact_overlap": [],
+          "gold_count": 1,
+          "gold_missing_exact_sample": [
+            "LGV1.binom_log_concave._proof_1_1"
+          ],
+          "local_name_overlap": [],
+          "selected_count": 7
+        }
+      },
+      "selected_context": {
+        "local_predecessor_count": 4,
+        "local_predecessor_names": [
+          "baby_jordan_curve",
+          "mem_vertices_cons",
+          "no_nipats_under_nw",
+          "vertices_cons_subset"
+        ],
+        "mathlib_checked_count": 0,
+        "mathlib_checked_names": [],
+        "project_context_count": 3,
+        "project_context_names": [
+          "LGV.baby_jordan",
+          "LGV1.baby_jordan_curve",
+          "LGV1.no_nipats_under_nw"
+        ],
+        "repair_checked_count": 3,
+        "repair_checked_names": [
+          "Nat.choose_mul_succ_eq",
+          "Nat.choose_succ_succ",
+          "Nat.succ_mul_choose_eq"
+        ],
+        "source_context_ref_count": 2
+      },
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV1.tex:cor.lgv.binom-unimod",
+      "unit_key": "unit-001"
+    },
+    {
+      "best_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+      "diagnostic_caveat": "Post-hoc diagnostic only. Gold declarations and elaborated direct dependencies are not available to source-only selector/generator prompts, and direct dependency sets include implementation details rather than a minimal necessary context proof.",
+      "error_pattern": "declined_cannot_prove",
+      "failure_class": "declined_cannot_prove",
+      "gap_class": "missing_mathlib_context_against_gold_direct_deps",
+      "gold_context": {
+        "aligned_declaration_names": [
+          "AlgebraicCombinatorics.FPS.vandermonde_nat"
+        ],
+        "aligned_mathlib_dep_count": 7,
+        "aligned_missing_scan_rows": [],
+        "aligned_project_dep_count": 0,
+        "aligned_salient_project_dep_count": 0,
+        "referencing_declaration_names": []
+      },
+      "overlap": {
+        "all_lean": {
+          "exact_overlap": [],
+          "gold_count": 7,
+          "gold_missing_exact_sample": [
+            "Finset.HasAntidiagonal.antidiagonal",
+            "Finset.Nat.instHasAntidiagonal",
+            "Finset.sum",
+            "Nat.add_choose_eq",
+            "Nat.choose",
+            "Nat.instAddCommMonoid",
+            "Nat.instAddMonoid"
+          ],
+          "local_name_overlap": [],
+          "selected_count": 10
+        },
+        "mathlib": {
+          "exact_overlap": [],
+          "gold_count": 7,
+          "gold_missing_exact_sample": [
+            "Finset.HasAntidiagonal.antidiagonal",
+            "Finset.Nat.instHasAntidiagonal",
+            "Finset.sum",
+            "Nat.add_choose_eq",
+            "Nat.choose",
+            "Nat.instAddCommMonoid",
+            "Nat.instAddMonoid"
+          ],
+          "local_name_overlap": [],
+          "selected_count": 4
+        },
+        "project": {
+          "exact_overlap": [],
+          "gold_count": 0,
+          "gold_missing_exact_sample": [],
+          "local_name_overlap": [],
+          "selected_count": 6
+        }
+      },
+      "selected_context": {
+        "local_predecessor_count": 4,
+        "local_predecessor_names": [
+          "generatingFunction_neg",
+          "generatingFunction_one",
+          "generatingFunction_smul",
+          "generatingFunction_sub"
+        ],
+        "mathlib_checked_count": 0,
+        "mathlib_checked_names": [],
+        "project_context_count": 2,
+        "project_context_names": [
+          "AlgebraicCombinatorics.FPS.X_pow_coeff",
+          "AlgebraicCombinatorics.FPS.fps_eq_tsum_coeff"
+        ],
+        "repair_checked_count": 4,
+        "repair_checked_names": [
+          "Nat.add_choose",
+          "Nat.add_one_mul_choose_eq",
+          "Nat.choose_eq_choose_pred_add",
+          "Nat.choose_symm_of_eq_add"
+        ],
+        "source_context_ref_count": 2
+      },
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+      "unit_key": "unit-002"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+      "diagnostic_caveat": "Post-hoc diagnostic only. Gold declarations and elaborated direct dependencies are not available to source-only selector/generator prompts, and direct dependency sets include implementation details rather than a minimal necessary context proof.",
+      "error_pattern": "contract_violation",
+      "failure_class": "contract_violation",
+      "gap_class": "missing_mathlib_context_against_gold_direct_deps",
+      "gold_context": {
+        "aligned_declaration_names": [
+          "BooleanMobius.booleanMobiusInversion"
+        ],
+        "aligned_mathlib_dep_count": 58,
+        "aligned_missing_scan_rows": [],
+        "aligned_project_dep_count": 2,
+        "aligned_salient_project_dep_count": 2,
+        "referencing_declaration_names": []
+      },
+      "overlap": {
+        "all_lean": {
+          "exact_overlap": [],
+          "gold_count": 60,
+          "gold_missing_exact_sample": [
+            "AddCommGroup",
+            "AddCommGroup.toAddCommMonoid",
+            "AddCommGroup.toAddGroup",
+            "AddCommGroup.toDivisionAddCommMonoid",
+            "AddCommGroup.toIntModule",
+            "AddCommMonoid.toAddMonoid",
+            "AddGroup.toSubNegMonoid",
+            "AddMonoid.toAddZeroClass",
+            "AddZero.toZero",
+            "AddZeroClass.toAddZero",
+            "BooleanMobius.alternatingSum_superset_eq_iverson_b",
+            "BooleanMobius.sum_powerset_powerset_swap",
+            "DistribMulAction.toDistribSMul",
+            "DistribSMul.toSMulZeroClass",
+            "Finset",
+            "Finset.Subset.refl",
+            "Finset.card",
+            "Finset.decidableEq",
+            "Finset.filter",
+            "Finset.instDecidableRelSubset"
+          ],
+          "local_name_overlap": [
+            "alternatingSum_superset_eq_iverson_b",
+            "sum_powerset_powerset_swap"
+          ],
+          "selected_count": 3
+        },
+        "mathlib": {
+          "exact_overlap": [],
+          "gold_count": 58,
+          "gold_missing_exact_sample": [
+            "AddCommGroup",
+            "AddCommGroup.toAddCommMonoid",
+            "AddCommGroup.toAddGroup",
+            "AddCommGroup.toDivisionAddCommMonoid",
+            "AddCommGroup.toIntModule",
+            "AddCommMonoid.toAddMonoid",
+            "AddGroup.toSubNegMonoid",
+            "AddMonoid.toAddZeroClass",
+            "AddZero.toZero",
+            "AddZeroClass.toAddZero",
+            "DistribMulAction.toDistribSMul",
+            "DistribSMul.toSMulZeroClass",
+            "Finset",
+            "Finset.Subset.refl",
+            "Finset.card",
+            "Finset.decidableEq",
+            "Finset.filter",
+            "Finset.instDecidableRelSubset",
+            "Finset.instHasSubset",
+            "Finset.instIsTransSubset"
+          ],
+          "local_name_overlap": [],
+          "selected_count": 0
+        },
+        "project": {
+          "exact_overlap": [],
+          "gold_count": 2,
+          "gold_missing_exact_sample": [
+            "BooleanMobius.alternatingSum_superset_eq_iverson_b",
+            "BooleanMobius.sum_powerset_powerset_swap"
+          ],
+          "local_name_overlap": [
+            "alternatingSum_superset_eq_iverson_b",
+            "sum_powerset_powerset_swap"
+          ],
+          "selected_count": 3
+        }
+      },
+      "selected_context": {
+        "local_predecessor_count": 3,
+        "local_predecessor_names": [
+          "alternatingSum_superset_eq_iverson_a",
+          "alternatingSum_superset_eq_iverson_b",
+          "sum_powerset_powerset_swap"
+        ],
+        "mathlib_checked_count": 0,
+        "mathlib_checked_names": [],
+        "project_context_count": 0,
+        "project_context_names": [],
+        "repair_checked_count": 0,
+        "repair_checked_names": [],
+        "source_context_ref_count": 0
+      },
+      "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/InclusionExclusion2.tex:thm.pie.moeb",
+      "unit_key": "unit-003"
+    },
+    {
+      "best_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v5b-contract-paid",
+      "diagnostic_caveat": "Post-hoc diagnostic only. Gold declarations and elaborated direct dependencies are not available to source-only selector/generator prompts, and direct dependency sets include implementation details rather than a minimal necessary context proof.",
+      "error_pattern": "declined_cannot_prove",
+      "failure_class": "declined_cannot_prove",
+      "gap_class": "gold_uses_same_source_intermediate_declarations",
+      "gold_context": {
+        "aligned_declaration_names": [
+          "NPartition.ofPartition_size"
+        ],
+        "aligned_mathlib_dep_count": 48,
+        "aligned_missing_scan_rows": [],
+        "aligned_project_dep_count": 6,
+        "aligned_salient_project_dep_count": 3,
+        "referencing_declaration_names": [
+          "AlgebraicCombinatorics.SymmetricFunctions.NPartition.equivPartition",
+          "AlgebraicCombinatorics.SymmetricFunctions.NPartition.bijection_partition",
+          "NPartition.ofPartition",
+          "NPartition.toPartition_card_le"
+        ]
+      },
+      "overlap": {
+        "all_lean": {
+          "exact_overlap": [
+            "Nat.Partition"
+          ],
+          "gold_count": 54,
+          "gold_missing_exact_sample": [
+            "AddCommMonoid",
+            "AddCommMonoid.toAddMonoid",
+            "AddMonoid.toAddZeroClass",
+            "AddZero.toAdd",
+            "AddZero.toZero",
+            "AddZeroClass.toAddZero",
+            "DFunLike.coe",
+            "Fin.fintype",
+            "Finset",
+            "Finset.disjoint_sdiff",
+            "Finset.instMembership",
+            "Finset.instSDiff",
+            "Finset.instUnion",
+            "Finset.map",
+            "Finset.subset_univ",
+            "Finset.sum",
+            "Finset.sum_congr",
+            "Finset.sum_eq_zero",
+            "Finset.sum_map",
+            "Finset.sum_union"
+          ],
+          "local_name_overlap": [
+            "Partition",
+            "size"
+          ],
+          "selected_count": 10
+        },
+        "mathlib": {
+          "exact_overlap": [
+            "Nat.Partition"
+          ],
+          "gold_count": 48,
+          "gold_missing_exact_sample": [
+            "AddCommMonoid",
+            "AddCommMonoid.toAddMonoid",
+            "AddMonoid.toAddZeroClass",
+            "AddZero.toAdd",
+            "AddZero.toZero",
+            "AddZeroClass.toAddZero",
+            "DFunLike.coe",
+            "Fin.fintype",
+            "Finset",
+            "Finset.disjoint_sdiff",
+            "Finset.instMembership",
+            "Finset.instSDiff",
+            "Finset.instUnion",
+            "Finset.map",
+            "Finset.subset_univ",
+            "Finset.sum",
+            "Finset.sum_congr",
+            "Finset.sum_eq_zero",
+            "Finset.sum_map",
+            "Finset.sum_union"
+          ],
+          "local_name_overlap": [
+            "Partition"
+          ],
+          "selected_count": 1
+        },
+        "project": {
+          "exact_overlap": [],
+          "gold_count": 6,
+          "gold_missing_exact_sample": [
+            "NPartition.ofPartition",
+            "NPartition.ofPartition_size._simp_1_3",
+            "NPartition.ofPartition_size._simp_1_4",
+            "NPartition.parts",
+            "NPartition.size",
+            "NPartition.toPartition._simp_3"
+          ],
+          "local_name_overlap": [
+            "size"
+          ],
+          "selected_count": 9
+        }
+      },
+      "selected_context": {
+        "local_predecessor_count": 8,
+        "local_predecessor_names": [
+          "NPartition",
+          "ext",
+          "ext'",
+          "filter_ne_zero_sum",
+          "part",
+          "part_eq_parts",
+          "size",
+          "toPartition"
+        ],
+        "mathlib_checked_count": 1,
+        "mathlib_checked_names": [
+          "Nat.Partition"
+        ],
+        "project_context_count": 2,
+        "project_context_names": [
+          "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+          "NPartition"
+        ],
+        "repair_checked_count": 0,
+        "repair_checked_names": [],
+        "source_context_ref_count": 1
+      },
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-001"
+    }
+  ]
+}

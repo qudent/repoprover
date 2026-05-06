@@ -192,7 +192,9 @@ def build_generation_units_payload(selector_run: Path) -> list[dict[str, Any]]:
                 {
                     "task_id": task_id,
                     "kind": task.get("kind"),
+                    "role": task.get("role", "main_claim"),
                     "source_part": task.get("source_part"),
+                    "depends_on_task_ids": task.get("depends_on_task_ids", []),
                     "selector_unchecked_statement_sketch": task.get("target_statement_sketch"),
                     "selector_sketch_warning": (
                         "This selector sketch is mathematical intent only. Do not copy its Lean syntax "
@@ -276,6 +278,9 @@ def build_generation_messages(
             "Do not invent project helper names that are not shown in available_prior_project_context, needed_project_context, or source context.",
             "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",
             "When local_file_predecessor_declarations contains same-file helper declarations, you may reuse those exact helper names and statement shapes; do not infer any hidden target declaration from their file position.",
+            "When planned_declarations contains role same_unit_helper, generate that helper declaration before any main_claim that lists it in depends_on_task_ids.",
+            "Same-unit helper declarations are new declarations to create from the visible source unit. You may choose fresh descriptive names for them, but do not reuse or guess hidden aligned Lean names.",
+            "Do not use a fresh helper name as a fact until the helper has already been defined earlier in lean_file_body.",
             "Prefer a narrow declaration sequence over a broad bundled conjunction when the source unit decomposes into multiple Lean declarations.",
             "Keep theorem-local assumptions explicit rather than relying on unavailable global variables.",
             "If local_file_context_candidates show useful namespace, open, notation, or variable commands, you may include the needed commands in lean_file_body before the declarations.",

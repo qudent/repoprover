@@ -617,11 +617,15 @@ def build_messages(
                         {
                             "task_id": "unit-001-task-1",
                             "kind": "def|theorem|lemma|instance|notation|unknown",
+                            "role": "main_claim|same_unit_helper",
                             "source_part": "whole unit or part marker",
                             "target_statement_sketch": (
                                 "prose mathematical target sketch; do not write exact Lean syntax, "
                                 "declaration names, or guessed API argument order"
                             ),
+                            "depends_on_task_ids": [
+                                "earlier same-unit helper task ids that this task should use"
+                            ],
                             "needed_source_context": ["source labels/statements"],
                             "needed_project_context": [
                                 {
@@ -648,7 +652,9 @@ def build_messages(
             "Do not infer or reveal hidden target Lean declaration names for the selected unit.",
             "Do not write theorem/lemma Lean code in target_statement_sketch; exact API syntax belongs in needed_mathlib_context and will be hydrated by tools.",
             "Do not bundle all source parts into one conjunction unless the source unit itself requires that shape.",
-            "Use previous project declarations only if they are shown under prior_project_context.",
+            "If a broad source unit needs a construction or auxiliary lemma before the main claim can be stated/proved, split it into ordered planned_declarations with role same_unit_helper followed by role main_claim and explicit depends_on_task_ids.",
+            "Same-unit helper tasks are declarations for the later generator to create from the selected source unit, not prior context. Do not use hidden aligned/referencing Lean names for them.",
+	            "Use previous project declarations only if they are shown under prior_project_context.",
             "Use local_file_predecessor_declarations only as same-file helper/style context; the selected unit's aligned/referencing target declarations are omitted.",
             "Do not treat Mathlib as the only context; enumerate source/project/local/Mathlib context separately.",
             "Prefer exact Mathlib names when known; otherwise give a narrow query plus expected signature shape.",

@@ -138,7 +138,14 @@ honest handling of cannot-prove outputs on broader theorem units.
   Deduplicated by source unit, 6/11 touched theorem units have compiled at
   least once; best unresolved statuses are 3 clean cannot-prove declines, 1 old
   contract violation, and 1 compile failure.
-- Focused theorem-level suite passed: 73 pytest tests plus `py_compile` over
+- `docs/latex-statement-context-gap-summary.json` now compares the 5 unresolved
+  source units to post-hoc gold direct dependencies: 3 missing Mathlib-context
+  cases, 1 missing project-context case, and 1 same-source-intermediate case.
+- Selector/generator prompts now support same-unit helper planning with
+  `role = main_claim|same_unit_helper` and `depends_on_task_ids`; the no-cost
+  `2026-05-06-npartition-helper-contract-budget` payload records the updated
+  NPartition prompt contract.
+- Focused theorem-level suite passed: 76 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes
@@ -147,6 +154,6 @@ honest handling of cannot-prove outputs on broader theorem units.
 - Focused tests should cover theorem selector payload hiding/compaction,
   context hydration, generation prompts, verifier classification, semantic
   coverage, context graph generation, and elaborated dependency summary.
-- Next experiment: target the source-unit frontier, especially the clean
-  cannot-prove declines on broad diverse4/NPartition-style units where context
-  or proof selection remains insufficient.
+- Next experiment: run a paid NPartition-style selector/generator retry under
+  the same-unit helper contract, then verify whether it plans useful helpers or
+  still cleanly declines.

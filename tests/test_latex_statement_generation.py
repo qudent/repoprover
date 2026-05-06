@@ -177,6 +177,26 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "posthoc_lean_alignment" not in prompt
 
 
+def test_generation_prompt_preserves_same_unit_helper_planning(tmp_path: Path) -> None:
+    run_dir = _write_selector_run(tmp_path)
+    selector_output_path = run_dir / "batch-001/context-selection-output.json"
+    selector_output = json.loads(selector_output_path.read_text(encoding="utf-8"))
+    task = selector_output["units"][0]["planned_declarations"][0]
+    task["role"] = "same_unit_helper"
+    task["depends_on_task_ids"] = ["unit-001-task-prior"]
+    selector_output_path.write_text(json.dumps(selector_output), encoding="utf-8")
+
+    messages = build_generation_messages(run_dir)
+    prompt = json.dumps(messages, ensure_ascii=False)
+    user_payload = json.loads(messages[1]["content"])
+    planned = user_payload["units"][0]["planned_declarations"][0]
+
+    assert planned["role"] == "same_unit_helper"
+    assert planned["depends_on_task_ids"] == ["unit-001-task-prior"]
+    assert "generate that helper declaration before any main_claim" in prompt
+    assert "fresh descriptive names" in prompt
+
+
 def test_generation_budget_payload_disables_reasoning(tmp_path: Path) -> None:
     run_dir = _write_selector_run(tmp_path)
     output = tmp_path / "generation"

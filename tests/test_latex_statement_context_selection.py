@@ -111,6 +111,10 @@ def test_theorem_level_selector_hides_target_alignment_but_keeps_prior_context()
     assert "local_file_context_candidates" in prompt
     assert "variable {K : Type*} [CommRing K]" in prompt
     assert "Do not write theorem/lemma Lean code in target_statement_sketch" in prompt
+    assert "role" in prompt
+    assert "same_unit_helper" in prompt
+    assert "depends_on_task_ids" in prompt
+    assert "Same-unit helper tasks are declarations for the later generator to create" in prompt
 
 
 def test_theorem_level_selector_uses_source_unit_only_referencing_declarations() -> None:
