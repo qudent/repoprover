@@ -638,6 +638,19 @@ Broader diverse4 negative probe:
   cost `$0.00357308` and still declined cleanly, with the remaining blocker
   unchanged: prove the padded construction, `toPartition` length bound, and
   inverse lemmas from visible context.
+- sanitized end-to-end retry:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-sanitized-v2-paid/`
+  reruns context selection, hydration, repair, and verification with the
+  sanitation rules in force. It cost `$0.00606130` total (`$0.00276080`
+  context selection and `$0.00330050` repair), selected 12 checked signatures,
+  and still declined cleanly. The new selector avoided prose
+  `do_not_use_identifiers`, but failed to request the `List.Pairwise.rel_get_*`
+  bridge facts it later described as missing and guessed unavailable cardinality
+  names (`Multiset.length_map`, `Multiset.filter_ne_zero`). The next generic
+  selector improvement is to request pointwise bridge lemmas for
+  `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality facts such
+  as `Multiset.card_map`, `Multiset.filter_le`, `Multiset.card_le_card`,
+  `Finset.card_univ`, and `Fintype.card_fin` for filtered-map bounds.
 
 ## Lean Dependency Accounting
 

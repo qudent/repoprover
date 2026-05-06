@@ -1,0 +1,24 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition, Nat.Partition, Multiset.card, Multiset.sort, Multiset.sort_sorted, List.get, and the local helper toPartition. However, the antitone proof for fromPartition' requires a lemma that the sorted list of parts is decreasing, which Multiset.sort_sorted gives as List.Pairwise (· ≥ ·). To convert this to Antitone on Fin N, we need to relate the i-th element of the sorted list to the (i+1)-th element. This is not directly available from the checked signatures: Multiset.sort_sorted returns List.Pairwise r, but Antitone on Fin N requires a function from Fin N to ℕ. The padding with zeros also requires a case analysis on whether i is less than the length of the sorted list. The proof that the resulting function is antitone would need to use the pairwise property and the fact that zeros are ≤ any natural number. While this is mathematically straightforward, the Lean proof requires lemmas about List.Pairwise and List.get that are not provided in the checked context. The toNPartition' direction reuses toPartition, but proving that Multiset.card (toPartition μ).parts ≤ N requires a lemma that the number of nonzero entries in an N-tuple is at most N. This is true because there are only N positions, but the checked context does not provide a lemma like 'Multiset.card (Multiset.filter (· ≠ 0) (Finset.univ.val.map μ.parts)) ≤ N'. The filter_ne_zero_sum lemma only deals with sums, not cardinalities. Without these lemmas, the bijection cannot be fully proved. Therefore, the visible context is insufficient to produce a complete Lean-compiling proof.",
+        "The same_unit_helper_plan suggests defining lengthLE, fromPartition', toNPartition', and bijection_equiv. However, the proof of antitone in fromPartition' and the cardinality bound in toNPartition' are not provable from the checked signatures alone. The checked signatures do not include a lemma that List.Pairwise (· ≥ ·) implies Antitone on the function defined by List.get, nor a lemma that the number of nonzero entries in a Fin N → ℕ is ≤ N. These are nontrivial missing ingredients. Hence cannot_prove_from_visible_context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "Multiset.sort and Multiset.sort_sorted",
+        "List.get",
+        "NPartition.toPartition",
+        "NPartition.ext",
+        "filter_ne_zero_sum"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.card (s : Multiset α) : ℕ",
+              "name_or_query": "Multiset.card",
+              "why_needed": "To define length of a partition as Multiset.card p.parts."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sort_sorted (r : α → α → Prop) [DecidableRel r] (s : Multiset α) : (Multiset.sort r s).Sorted r",
+              "name_or_query": "Multiset.sort_sorted",
+              "why_needed": "To prove that the sorted list of parts is decreasing, needed for antitone."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sort (r : α → α → Prop) [DecidableRel r] (s : Multiset α) : List α",
+              "name_or_query": "Multiset.sort",
+              "why_needed": "To get a sorted list of parts for padding."
+            },
+            {
+              "expected_signature_or_shape": "List.get (l : List α) (i : Fin l.length) : α",
+              "name_or_query": "List.get",
+              "why_needed": "To index into the sorted list."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card (Multiset.map f s) = Multiset.card s",
+              "name_or_query": "Multiset.length_map",
+              "why_needed": "To relate length of mapped multiset to original length."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.filter (λ x => x ≠ 0) (Multiset.map ...) ...",
+              "name_or_query": "Multiset.filter_ne_zero",
+              "why_needed": "To drop zeros when converting back from NPartition to Nat.Partition."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

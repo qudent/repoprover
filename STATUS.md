@@ -74,8 +74,8 @@ handling on broader theorem units.
 - Diverse4 remains the negative frontier: after transport fixes, split
   generation, visible-support materialization, and two repair rounds, coverage
   stayed `0/4`; the blocker is missing useful project/Mathlib proof context.
-- Failure summary across 41 verification files / 62 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 16 clean cannot-prove
+- Failure summary across 42 verification files / 63 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 17 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -127,13 +127,22 @@ handling on broader theorem units.
   `discarded_do_not_use_items`. This removed the false prohibition on
   `Multiset.card p.parts ≤ N`; sanitized paid retry cost `$0.00357308` and
   still cleanly declined.
-- Focused theorem-level suite last passed: 84 pytest tests plus `py_compile`
-  over selector/generator/repair/verifier scripts.
+- Sanitized end-to-end retry cost `$0.00606130`, selected 12 checked
+  signatures, and still cleanly declined. The selector avoided prose
+  `do_not_use_identifiers` but missed `List.Pairwise.rel_get_*` bridge facts
+  and guessed unavailable cardinality names (`Multiset.length_map`,
+  `Multiset.filter_ne_zero`).
+- Test suite last passed: `uv run pytest tests` (`476 passed`) plus
+  `py_compile` over selector/generator/repair/verifier scripts. Full
+  `uv run pytest` still has one unrelated blueprint fixture failure because
+  `../docbuild/.lake/build/doc/declarations/declaration-data.bmp` is absent.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: make the helper planner produce/prove a concrete
-  `toPartition` cardinality bound and inverse lemmas from visible same-unit
-  context, or choose a construction that avoids sorted-list indexing.
+- Next useful work: make the selector request pointwise bridge lemmas for
+  `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality facts like
+  `Multiset.card_map`, `Multiset.filter_le`, `Multiset.card_le_card`,
+  `Finset.card_univ`, and `Fintype.card_fin`; then retry NPartition proof
+  planning or choose a construction that avoids sorted-list indexing.

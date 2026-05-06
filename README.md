@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 41
-verification-result files and 62 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 16 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 42
+verification-result files and 63 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 17 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -405,6 +405,18 @@ and moves prose to `discarded_do_not_use_items`; the sanitized paid retry cost
 the false do-not-use prohibition are fixed; the remaining NPartition blocker is
 the construction and proof plan itself, especially the `toPartition` length
 bound and inverse proofs from visible same-unit helpers.
+
+A full one-round retry with the sanitized context-selector prompt is recorded
+at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-sanitized-v2-paid/`.
+It cost `$0.00606130` total (`$0.00276080` context selection and `$0.00330050`
+repair), selected 12 checked signatures, and still declined cleanly. The new
+selector avoided the prose `do_not_use_identifiers` bug, but did not request the
+`List.Pairwise.rel_get_*` bridge facts it later said were missing; it also
+requested unavailable cardinality names (`Multiset.length_map`,
+`Multiset.filter_ne_zero`) while the likely useful generic facts are
+`Multiset.card_map`, `Multiset.filter_le`, `Multiset.card_le_card`,
+`Finset.card_univ`, and `Fintype.card_fin`.
 
 ### Imported Lean surface and likely context needs
 

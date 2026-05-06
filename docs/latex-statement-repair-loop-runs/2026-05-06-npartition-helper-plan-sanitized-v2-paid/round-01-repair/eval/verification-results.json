@@ -1,0 +1,153 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-sanitized-v2-paid/round-01-repair/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "hidden_target_namespaces": [
+        "NPartition"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "variable"
+              },
+              {
+                "kind": "variable"
+              },
+              {
+                "kind": "structure",
+                "name": "NPartition"
+              },
+              {
+                "kind": "def",
+                "name": "size"
+              },
+              {
+                "kind": "theorem",
+                "name": "ext"
+              },
+              {
+                "kind": "theorem",
+                "name": "ext'"
+              },
+              {
+                "kind": "def",
+                "name": "part"
+              },
+              {
+                "kind": "theorem",
+                "name": "part_eq_parts"
+              },
+              {
+                "kind": "lemma",
+                "name": "filter_ne_zero_sum"
+              },
+              {
+                "kind": "def",
+                "name": "toPartition"
+              }
+            ],
+            "accepted_count": 10,
+            "candidate_count": 11,
+            "rejected": [
+              {
+                "kind": "abbrev",
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 29,
+                    "data": "Unknown identifier `_root_.NPartition`",
+                    "kind": "lean.unknownIdentifier._namedError",
+                    "line": 9,
+                    "severity": "error"
+                  }
+                ],
+                "name": "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                "stderr": ""
+              }
+            ],
+            "rejected_count": 1
+          }
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "failure_class_counts": {
+    "declined_cannot_prove": 1
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T04:08:19.176504+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-sanitized-v2-paid/round-01-repair",
+  "infer_context": true,
+  "materialize_visible_support": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}
