@@ -41,6 +41,8 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   errors, fallback Mathlib candidates, and local predecessor context.
 - [x] Add autonomous context-repair selection for checked proof ingredients
   before relying on agent-selected repair packs.
+- [x] Add a bounded repair-loop runner to reproduce context-selection,
+  hydration, repair, verification, and optional semantic grading rounds.
 - [ ] Generalize the autonomous repair-context loop beyond one symmetric unit
   and reduce noisy fallback-context candidates.
 
@@ -121,6 +123,11 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   `e_eq_sum_prod_subsets`, `Finset.powersetCard_eq_empty` via checked fallback,
   `Finset.card_powersetCard`, `Nat.choose_eq_zero_of_lt`, and
   `Finset.card_univ`.
+- Loop runner smoke:
+  `scripts/run_latex_statement_repair_loop.py` now orchestrates bounded repair
+  rounds. Budget-only smoke
+  `docs/latex-statement-repair-loop-runs/2026-05-05-symmetric-loop-budget/`
+  wrote the round-01 context-selection payload without a paid call.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.

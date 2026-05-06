@@ -527,6 +527,17 @@ declarations, but not yet cheaply enough. The model did not get all bridge
 lemmas in the first autonomous selector round; Lean errors and checked fallback
 hydration were needed to make wrongness decrease over rounds.
 
+Reproducible runner:
+
+- `scripts/run_latex_statement_repair_loop.py` now orchestrates the bounded
+  sequence: repair-context selection, Mathlib hydration, checked context-pack
+  construction, repair generation, Lean verification, and optional post-hoc
+  gold/semantic grading.
+- budget-only smoke:
+  `docs/latex-statement-repair-loop-runs/2026-05-05-symmetric-loop-budget/`
+  writes the first context-selection payload for the symmetric failure and
+  stops before any paid call.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

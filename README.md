@@ -169,6 +169,13 @@ cost/latency rather than benchmark leakage: this one hard unit needed four
 autonomous context-selection rounds and several repair calls, costing
 `$0.02180284` beyond the earlier manual-pack probe.
 
+`scripts/run_latex_statement_repair_loop.py` now makes that sequence
+reproducible as a bounded loop: repair-context selection, hydration, checked
+context-pack construction, repair generation, verification, and optional
+post-hoc gold/semantic grading. The budget-only smoke artifact
+`docs/latex-statement-repair-loop-runs/2026-05-05-symmetric-loop-budget/`
+records the round-01 payload without another paid call.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

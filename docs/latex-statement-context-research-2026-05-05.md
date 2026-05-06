@@ -407,6 +407,15 @@ several repair calls. The main research question shifts from "can selected
 context make it pass?" to "how quickly can the selector find bridge lemmas and
 avoid noisy fallback candidates across a larger batch?"
 
+Reproducibility update:
+
+- `scripts/run_latex_statement_repair_loop.py` turns the manual repair loop into
+  one bounded runner with optional post-hoc semantic grading.
+- budget-only smoke:
+  `docs/latex-statement-repair-loop-runs/2026-05-05-symmetric-loop-budget/`
+  records the round-01 context-selection request without spending another paid
+  call.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:
