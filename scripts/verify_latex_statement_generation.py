@@ -181,6 +181,10 @@ def module_under_namespace(module: str, namespace: str) -> bool:
     return module == namespace or module.startswith(f"{namespace}.")
 
 
+def namespace_matches_hidden(namespace: str, hidden_namespaces: set[str]) -> bool:
+    return namespace in hidden_namespaces or any(hidden.endswith(f".{namespace}") for hidden in hidden_namespaces)
+
+
 def should_filter_open_statement(
     open_statement: str,
     *,
@@ -189,7 +193,7 @@ def should_filter_open_statement(
     kept_imports: list[str],
 ) -> bool:
     for namespace in open_namespaces(open_statement):
-        if namespace in hidden_namespaces:
+        if namespace_matches_hidden(namespace, hidden_namespaces):
             return True
         removed_namespace_imports = [module for module in filtered_imports if module_under_namespace(module, namespace)]
         kept_namespace_imports = [module for module in kept_imports if module_under_namespace(module, namespace)]
@@ -224,6 +228,21 @@ def iter_dicts(value: Any) -> list[dict[str, Any]]:
     return found
 
 
+def explicit_open_statement(item: dict[str, Any]) -> str | None:
+    kind = str(item.get("kind") or "")
+    name = str(item.get("name") or "").strip()
+    if not name:
+        return None
+    if kind == "namespace" and LEAN_NAME_RE.fullmatch(name):
+        return f"open {name}"
+    if kind == "open":
+        if name.startswith("open "):
+            return name
+        if LEAN_NAME_RE.fullmatch(name):
+            return f"open {name}"
+    return None
+
+
 def payload_context(output_path: Path) -> dict[str, list[str]]:
     payload_path = output_path.with_name("generation-payload.json")
     if not payload_path.exists():
@@ -239,7 +258,7 @@ def payload_context(output_path: Path) -> dict[str, list[str]]:
         return {"imports": [], "opens": []}
 
     imports: list[str] = []
-    namespaces: list[str] = []
+    opens: list[str] = []
     for item in iter_dicts(user_payload):
         module = str(item.get("module") or "")
         if module and LEAN_DOTTED_NAME_RE.fullmatch(module):
@@ -248,17 +267,12 @@ def payload_context(output_path: Path) -> dict[str, list[str]]:
             imported_text = str(imported)
             if imported_text and LEAN_DOTTED_NAME_RE.fullmatch(imported_text):
                 imports.append(imported_text)
-        if str(item.get("kind") or "") == "namespace":
-            namespace = str(item.get("name") or "")
-            if namespace and LEAN_DOTTED_NAME_RE.fullmatch(namespace):
-                namespaces.append(namespace)
-        name = str(item.get("name") or "")
-        namespace = maybe_namespace(name)
-        if namespace:
-            namespaces.append(namespace)
+        open_statement = explicit_open_statement(item)
+        if open_statement:
+            opens.append(open_statement)
     return {
         "imports": unique_in_order(imports),
-        "opens": [f"open {namespace}" for namespace in unique_in_order(namespaces)],
+        "opens": unique_in_order(opens),
     }
 
 

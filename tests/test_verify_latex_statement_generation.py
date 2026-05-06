@@ -179,7 +179,13 @@ def test_payload_context_infers_project_imports_and_opens(tmp_path) -> None:
                                                             }
                                                         ]
                                                     }
-                                                ]
+                                                ],
+                                                "local_file_context_candidates": [
+                                                    {
+                                                        "kind": "namespace",
+                                                        "name": "AlgebraicCombinatorics.FPS",
+                                                    }
+                                                ],
                                             }
                                         ]
                                     }
@@ -240,7 +246,10 @@ def test_run_uses_inferred_context(monkeypatch, tmp_path) -> None:
                                                             }
                                                         ]
                                                     }
-                                                ]
+                                                ],
+                                                "local_file_context_candidates": [
+                                                    {"kind": "namespace", "name": "Demo"}
+                                                ],
                                             }
                                         ]
                                     }
@@ -337,6 +346,12 @@ def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None
                                     {
                                         "planned_declarations": [
                                             {
+                                                "local_file_context_candidates": [
+                                                    {"kind": "namespace", "name": "Demo.TargetModule"},
+                                                    {"kind": "namespace", "name": "TargetModule"},
+                                                    {"kind": "namespace", "name": "Demo.Wrapper"},
+                                                    {"kind": "namespace", "name": "Demo.Prior"},
+                                                ],
                                                 "available_prior_project_context": [
                                                     {
                                                         "project_declarations": [
@@ -373,6 +388,9 @@ def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None
         assert "import Demo.TargetModule" not in source
         assert "import Demo.Wrapper" not in source
         assert "open Demo.TargetModule" not in source
+        assert "open TargetModule" not in source
+        assert "open Demo.Wrapper" not in source
+        assert "open Demo.Prior" in source
         return {"returncode": 0, "messages": [], "stderr": ""}
 
     monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
@@ -394,5 +412,10 @@ def test_run_filters_hidden_target_module_imports(monkeypatch, tmp_path) -> None
     assert batch_summary["hidden_target_modules"] == ["Demo.TargetModule"]
     assert batch_summary["filtered_target_module_imports"] == ["Demo.TargetModule", "Demo.Wrapper"]
     assert batch_summary["hidden_target_namespaces"] == ["Demo.TargetModule"]
-    assert batch_summary["filtered_target_namespace_opens"] == ["open Demo.TargetModule", "open Demo.Wrapper"]
+    assert batch_summary["filtered_target_namespace_opens"] == [
+        "open Demo.TargetModule",
+        "open TargetModule",
+        "open Demo.Wrapper",
+    ]
+    assert batch_summary["inferred_opens"] == ["open Demo.Prior"]
     assert summary["compile_passed_units"] == 1

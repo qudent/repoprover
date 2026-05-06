@@ -30,23 +30,23 @@
         "AlgebraicCombinatorics.Determinants.LGV2"
       ],
       "inferred_opens": [
-        "open LGV",
-        "open Nat"
+        "open Finset BigOperators Matrix",
+        "open LGV"
       ],
       "opens": [
         "open scoped Polynomial BigOperators",
         "open PowerSeries Finset",
-        "open LGV",
-        "open Nat"
+        "open Finset BigOperators Matrix",
+        "open LGV"
       ],
       "unfiltered_inferred_imports": [
         "AlgebraicCombinatorics.Determinants.LGV1",
         "AlgebraicCombinatorics.Determinants.LGV2"
       ],
       "unfiltered_inferred_opens": [
+        "open Finset BigOperators Matrix",
         "open LGV1",
-        "open LGV",
-        "open Nat"
+        "open LGV"
       ],
       "unit_count": 1,
       "units": [
@@ -87,7 +87,7 @@
         "AlgebraicCombinatorics.FPSDefinition"
       ],
       "filtered_target_namespace_opens": [
-        "open AlgebraicCombinatorics.FPS"
+        "open FPS"
       ],
       "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/batch-002/generation-output.json",
       "hidden_target_modules": [
@@ -103,17 +103,26 @@
       "inferred_imports": [
         "AlgebraicCombinatorics.FPS.InfiniteProducts2"
       ],
-      "inferred_opens": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics"
+      ],
       "opens": [
         "open scoped Polynomial BigOperators",
-        "open PowerSeries Finset"
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open AlgebraicCombinatorics"
       ],
       "unfiltered_inferred_imports": [
         "AlgebraicCombinatorics.FPSDefinition",
         "AlgebraicCombinatorics.FPS.InfiniteProducts2"
       ],
       "unfiltered_inferred_opens": [
-        "open AlgebraicCombinatorics.FPS"
+        "open scoped Polynomial",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics",
+        "open FPS"
       ],
       "unit_count": 1,
       "units": [
@@ -129,14 +138,21 @@
           "declaration_names": [
             "vandermonde"
           ],
-          "lean_error_count": 1,
+          "lean_error_count": 2,
           "lean_returncode": 1,
           "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `AlgebraicCombinatorics`",
+              "kind": "[anonymous]",
+              "line": 6,
+              "severity": "error"
+            },
             {
               "column": 56,
               "data": "unexpected token 'in'; expected ','",
               "kind": "[anonymous]",
-              "line": 8,
+              "line": 10,
               "severity": "error"
             }
           ],
@@ -163,18 +179,13 @@
         "Mathlib"
       ],
       "inferred_imports": [],
-      "inferred_opens": [
-        "open Finset"
-      ],
+      "inferred_opens": [],
       "opens": [
         "open scoped Polynomial BigOperators",
-        "open PowerSeries Finset",
-        "open Finset"
+        "open PowerSeries Finset"
       ],
       "unfiltered_inferred_imports": [],
-      "unfiltered_inferred_opens": [
-        "open Finset"
-      ],
+      "unfiltered_inferred_opens": [],
       "unit_count": 1,
       "units": [
         {
@@ -195,7 +206,7 @@
               "column": 31,
               "data": "unexpected token 'in'; expected ','",
               "kind": "[anonymous]",
-              "line": 10,
+              "line": 9,
               "severity": "error"
             }
           ],
@@ -214,7 +225,7 @@
         "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
       ],
       "filtered_target_namespace_opens": [
-        "open AlgebraicCombinatorics.SymmetricFunctions"
+        "open AlgebraicCombinatorics"
       ],
       "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/batch-004/generation-output.json",
       "hidden_target_modules": [
@@ -227,17 +238,30 @@
         "Mathlib"
       ],
       "inferred_imports": [],
-      "inferred_opens": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
+      ],
       "opens": [
         "open scoped Polynomial BigOperators",
-        "open PowerSeries Finset"
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
       ],
       "unfiltered_inferred_imports": [
         "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
         "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
       ],
       "unfiltered_inferred_opens": [
-        "open AlgebraicCombinatorics.SymmetricFunctions"
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
       ],
       "unit_count": 1,
       "units": [
@@ -254,84 +278,91 @@
           "declaration_names": [
             "NPartition.equivPartition"
           ],
-          "lean_error_count": 8,
+          "lean_error_count": 9,
           "lean_returncode": 1,
           "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `SymmetricFunctions`",
+              "kind": "[anonymous]",
+              "line": 6,
+              "severity": "error"
+            },
             {
               "column": 57,
               "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
               "kind": "[anonymous]",
-              "line": 20,
+              "line": 24,
               "severity": "error"
             },
             {
               "column": 24,
               "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝¹` which does not have the necessary form.",
               "kind": "lean.invalidField._namedError",
-              "line": 21,
+              "line": 25,
               "severity": "error"
             },
             {
               "column": 13,
               "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
               "kind": "lean.invalidField._namedError",
-              "line": 23,
+              "line": 27,
               "severity": "error"
             },
             {
               "column": 34,
               "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
               "kind": "lean.invalidField._namedError",
-              "line": 26,
+              "line": 30,
               "severity": "error"
             },
             {
               "column": 8,
               "data": "unsolved goals\nR : Type u_1\ninst✝ : CommSemiring R\nN : ℕ\nx✝ : Sort ?u.41\nNPartition : x✝\nn : ℕ\nμ : sorry\np : n.Partition := sorry\n⊢ p.parts.card ≤ N",
               "kind": "Tactic.unsolvedGoals",
-              "line": 24,
+              "line": 28,
               "severity": "error"
             },
             {
               "column": 10,
               "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
               "kind": "lean.invalidField._namedError",
-              "line": 37,
+              "line": 41,
               "severity": "error"
             },
             {
               "column": 34,
               "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝` which does not have the necessary form.",
               "kind": "lean.invalidField._namedError",
-              "line": 37,
+              "line": 41,
               "severity": "error"
             },
             {
               "column": 58,
               "data": "Unknown constant `Multiset.map_filter`",
               "kind": "lean.unknownIdentifier._namedError",
-              "line": 37,
+              "line": 41,
               "severity": "error"
             },
             {
               "column": 79,
               "data": "This simp argument is unused:\n  Multiset.filter_map\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.toPartition, NPartition.ofPartition, Multiset.map_filter, M̵u̵l̵t̵i̵s̵e̵t̵.̵f̵i̵l̵t̵e̵r̵_̵m̵a̵p̵,̵Multiset.map_map,\n        Function.comp]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
               "kind": "linter.unusedSimpArgs",
-              "line": 37,
+              "line": 41,
               "severity": "warning"
             },
             {
               "column": 6,
               "data": "This simp argument is unused:\n  Multiset.map_map\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.toPartition, NPartition.ofPartition, Multiset.map_filter, Multiset.filter_map,\n        M̵u̵l̵t̵i̵s̵e̵t̵.̵m̵a̵p̵_̵m̵a̵p̵,̵ ̵Function.comp]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
               "kind": "linter.unusedSimpArgs",
-              "line": 38,
+              "line": 42,
               "severity": "warning"
             },
             {
               "column": 24,
               "data": "This simp argument is unused:\n  Function.comp\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.toPartition, NPartition.ofPartition, Multiset.map_filter, Multiset.filter_map,\n        Multiset.map_map,̵ ̵F̵u̵n̵c̵t̵i̵o̵n̵.̵c̵o̵m̵p̵]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
               "kind": "linter.unusedSimpArgs",
-              "line": 38,
+              "line": 42,
               "severity": "warning"
             }
           ],
@@ -348,7 +379,7 @@
   ],
   "compile_passed_units": 0,
   "filter_target_module_imports": true,
-  "generated_at": "2026-05-06T01:21:59.460123+00:00",
+  "generated_at": "2026-05-06T01:29:26.117845+00:00",
   "generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
   "infer_context": true,
   "project_root": "algebraic-combinatorics",
