@@ -39,9 +39,10 @@ same-unit helper planning, Mathlib hydration, and clean
   theorem-specific prompt hints.
 - [x] Add and evaluate a generic same-unit proof-planning stage for
   zero-padding monotonicity and inverse/`Equiv` helper structure.
-- [ ] Decide how to enforce honest decline when the model can sketch helpers
-  but cannot complete them without placeholders, or hand the helper skeleton to
-  a coding agent/manual diagnostic lane.
+- [x] Enforce honest decline when the model can sketch helpers but cannot
+  complete them without placeholders.
+- [ ] Decide whether to route the checked helper skeleton to a coding
+  agent/manual diagnostic lane or continue open-model prompt retries.
 - [ ] Reclassify old strict-grader mismatches into actionable buckets.
 - [ ] Scale beyond determinant/symmetric probes and reduce noisy fallback
   context.
@@ -89,6 +90,9 @@ same-unit helper planning, Mathlib hydration, and clean
   to `Multiset.filter_le` + `Multiset.card_le_card`. Repair cost `$0.00398090`
   and generated the intended helper skeleton, but with `sorry`, comments, and
   ellipses, so verification is `contract_violation`.
+- Contract enforcement now normalizes future placeholder/comment/ellipsis
+  `generated` outputs to empty `cannot_prove_from_visible_context` while
+  preserving raw model text for diagnostics.
 - Current NPartition blocker: generation discipline/proof synthesis. The model
   can now sketch the right helper structure, but cannot complete the hard
   same-unit proofs honestly under the no-placeholder benchmark contract.
@@ -101,6 +105,6 @@ same-unit helper planning, Mathlib hydration, and clean
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: either add a stricter repair contract that converts
-  placeholder skeletons back to `cannot_prove_from_visible_context`, or route
-  the checked helper skeleton to a coding-agent/manual diagnostic lane.
+- Next useful work: route the checked helper skeleton to a coding-agent/manual
+  diagnostic lane, or try another open-model repair under the stricter
+  normalizer to measure whether it cleanly declines.

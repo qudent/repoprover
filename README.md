@@ -513,6 +513,12 @@ benchmark contract with `sorry`, comments, and ellipses, so verification is
 `contract_violation`. This is progress on task decomposition, not a formalized
 success.
 
+After that failure mode, generation contract enforcement was tightened: future
+`generated` outputs containing proof placeholders, Lean comments, or ellipsis
+scratchpads are normalized to the empty `cannot_prove_from_visible_context`
+contract while the raw model response is preserved. This avoids turning
+incomplete helper skeletons into noisy Lean/verification attempts.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

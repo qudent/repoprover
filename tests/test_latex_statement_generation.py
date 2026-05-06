@@ -235,16 +235,30 @@ def test_enforce_generation_contracts_preserves_raw_needed_data() -> None:
                 "lean_file_body": "theorem ok : True := by\n  trivial",
                 "declaration_names": ["ok"],
             },
+            {
+                "unit_key": "unit-003",
+                "status": "generated",
+                "lean_file_body": "theorem bad : True := by\n  -- incomplete\n  sorry",
+                "declaration_names": ["bad"],
+            },
         ]
     }
 
     normalized, report = enforce_generation_contracts(raw)
 
-    assert report["normalized_unit_count"] == 1
+    assert report["normalized_unit_count"] == 2
     assert normalized["units"][0]["lean_file_body"] == ""
     assert normalized["units"][0]["declaration_names"] == []
     assert normalized["units"][1]["declaration_names"] == ["ok"]
+    assert normalized["units"][2]["status"] == "cannot_prove_from_visible_context"
+    assert normalized["units"][2]["lean_file_body"] == ""
+    assert normalized["units"][2]["declaration_names"] == []
+    assert report["normalized_units"][1]["contract_violations"] == [
+        "generated_lean_contains_placeholder",
+        "generated_lean_must_not_include_comments",
+    ]
     assert raw["units"][0]["lean_file_body"].startswith("theorem scratch")
+    assert raw["units"][2]["lean_file_body"].startswith("theorem bad")
     assert "contract_enforcement" in normalized
 
 

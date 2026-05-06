@@ -21,6 +21,7 @@ DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
 LEAN_BLOCK_COMMENT_RE = re.compile(r"/-.*?-/", re.DOTALL)
 LEAN_LINE_COMMENT_RE = re.compile(r"(?m)^\s*--.*(?:\n|$)")
+LEAN_PLACEHOLDER_RE = re.compile(r"\b(sorry|admit|aesop\?)\b|(?<!\.)\.\.\.(?!\.)")
 
 
 def read_json(path: Path) -> Any:
@@ -359,7 +360,7 @@ def summarize_costs(batch_summaries: list[dict[str, Any]], model: str) -> dict[s
 
 
 def enforce_generation_contracts(output: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Normalize invalid cannot-prove units while preserving raw output elsewhere."""
+    """Normalize invalid model outputs while preserving raw output elsewhere."""
 
     normalized = copy.deepcopy(output)
     normalized_units: list[dict[str, Any]] = []
@@ -367,7 +368,26 @@ def enforce_generation_contracts(output: dict[str, Any]) -> tuple[dict[str, Any]
         status = str(unit.get("status") or "")
         body = str(unit.get("lean_file_body") or "")
         names = unit.get("declaration_names") or []
+        contract_violations: list[str] = []
+        if LEAN_PLACEHOLDER_RE.search(body):
+            contract_violations.append("generated_lean_contains_placeholder")
+        if LEAN_BLOCK_COMMENT_RE.search(body) or LEAN_LINE_COMMENT_RE.search(body):
+            contract_violations.append("generated_lean_must_not_include_comments")
+
         if status != "cannot_prove_from_visible_context":
+            if status == "generated" and contract_violations:
+                normalized_units.append(
+                    {
+                        "unit_key": str(unit.get("unit_key") or ""),
+                        "reason": "generated_output_contains_incomplete_or_forbidden_lean",
+                        "raw_lean_file_body_characters": len(body),
+                        "raw_declaration_names": names,
+                        "contract_violations": contract_violations,
+                    }
+                )
+                unit["status"] = "cannot_prove_from_visible_context"
+                unit["lean_file_body"] = ""
+                unit["declaration_names"] = []
             continue
         if not body.strip() and not names:
             continue
@@ -389,9 +409,10 @@ def enforce_generation_contracts(output: dict[str, Any]) -> tuple[dict[str, Any]
     if normalized_units:
         normalized["contract_enforcement"] = {
             "policy": (
-                "Runner normalized cannot_prove_from_visible_context units to the "
-                "declared empty-output contract. See raw-generation-output.json "
-                "or raw-repair-output.json for original model text."
+                "Runner normalized invalid model units to the declared "
+                "empty-output cannot-prove contract. This preserves benchmark "
+                "honesty while keeping the raw model text in "
+                "raw-generation-output.json or raw-repair-output.json."
             ),
             **report,
         }

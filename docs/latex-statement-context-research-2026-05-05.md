@@ -738,6 +738,9 @@ Broader diverse4 negative probe:
   violated the benchmark contract by emitting `sorry`, comments, and ellipses.
   Verification is `contract_violation`, so this run is task-decomposition
   evidence, not coverage.
+  The runner now deterministically normalizes future `generated` outputs that
+  contain proof placeholders, comments, or ellipsis scratchpads to the empty
+  `cannot_prove_from_visible_context` contract while preserving raw model text.
 
 ## Lean Dependency Accounting
 
