@@ -5,9 +5,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+LEAN_IDENTIFIER_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*")
 
 
 def read_json(path: Path) -> Any:
@@ -40,6 +44,13 @@ def mathlib_request_index(selection: dict[str, Any]) -> dict[tuple[str, int], di
         for request_index, request in enumerate(unit.get("needed_mathlib_context") or [], start=1):
             index[(unit_key, request_index)] = request
     return index
+
+
+def clean_identifier(value: Any) -> str | None:
+    text = str(value or "").strip().strip("`")
+    if LEAN_IDENTIFIER_RE.fullmatch(text):
+        return text
+    return None
 
 
 def build_context_pack(
@@ -120,6 +131,7 @@ def build_context_pack(
     same_unit_helper_plan: list[dict[str, Any]] = []
     selected_visible_context: list[dict[str, Any]] = []
     do_not_use_identifiers: list[str] = []
+    discarded_do_not_use_items: list[dict[str, Any]] = []
     missing_or_uncertain_context: list[dict[str, Any]] = []
     for unit in selection.get("units") or []:
         unit_key = str(unit.get("unit_key") or "")
@@ -136,8 +148,18 @@ def build_context_pack(
         for item in unit.get("same_unit_helper_plan") or []:
             same_unit_helper_plan.append({"unit_key": unit_key, **item})
         for name in unit.get("do_not_use_identifiers") or []:
-            if name not in do_not_use_identifiers:
-                do_not_use_identifiers.append(name)
+            cleaned = clean_identifier(name)
+            if cleaned:
+                if cleaned not in do_not_use_identifiers:
+                    do_not_use_identifiers.append(cleaned)
+            else:
+                discarded_do_not_use_items.append(
+                    {
+                        "unit_key": unit_key,
+                        "item": name,
+                        "reason": "not_an_exact_lean_identifier",
+                    }
+                )
         for item in unit.get("missing_or_uncertain_context") or []:
             missing_or_uncertain_context.append({"unit_key": unit_key, "item": item})
 
@@ -156,6 +178,7 @@ def build_context_pack(
         "checked_signatures": checked_signatures,
         "failed_or_unchecked_context_requests": failed_or_unchecked,
         "do_not_use_identifiers": do_not_use_identifiers,
+        "discarded_do_not_use_items": discarded_do_not_use_items,
         "missing_or_uncertain_context": missing_or_uncertain_context,
         "raw_selection_output": selection,
     }

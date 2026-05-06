@@ -1,0 +1,23 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition structure, Nat.Partition structure, and helper definitions (size, toPartition, filter_ne_zero_sum, ext). However, the source proposition requires a bijection between partitions of length ≤ N and N-partitions. The length of a partition is not available as a field of Nat.Partition; it must be defined as Multiset.card p.parts. The forward direction (padding with zeros) requires constructing an NPartition from a partition with a length condition, which involves sorting the parts multiset and proving antitone. The checked signatures show Multiset.sort_sorted and List.Pairwise.rel_get_of_lt, but the antitone proof for the padded function is nontrivial and the visible context does not provide a lemma to relate the sorted list order to the antitone condition on Fin N. The reverse direction (truncating zeros) is already provided by NPartition.toPartition, but the length condition (Multiset.card (toPartition μ).parts ≤ N) is not proven in the visible context. The bijection statement as an Equiv between a sigma type and NPartition N is not supported by the visible helper lemmas. The proof_strategy_notes suggest a plan but the required lemmas (e.g., that the sorted list of parts is antitone when padded with zeros) are not available as checked facts. Therefore, the visible context is insufficient to produce a complete Lean-compiling proof."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "Multiset.sort_sorted",
+        "List.Pairwise.rel_get_of_lt",
+        "NPartition.toPartition",
+        "filter_ne_zero_sum",
+        "NPartition.ext"
+      ]
+    }
+  ]
+}

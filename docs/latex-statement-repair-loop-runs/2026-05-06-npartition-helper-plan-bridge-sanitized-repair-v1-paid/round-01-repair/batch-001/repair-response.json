@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The visible context provides NPartition structure, Nat.Partition structure, and helper definitions (size, toPartition, filter_ne_zero_sum, ext). However, the source proposition requires a bijection between partitions of length ≤ N and N-partitions. The length of a partition is not available as a field of Nat.Partition; it must be defined as Multiset.card p.parts. The forward direction (padding with zeros) requires constructing an NPartition from a partition with a length condition, which involves sorting the parts multiset and proving antitone. The checked signatures show Multiset.sort_sorted and List.Pairwise.rel_get_of_lt, but the antitone proof for the padded function is nontrivial and the visible context does not provide a lemma to relate the sorted list order to the antitone condition on Fin N. The reverse direction (truncating zeros) is already provided by NPartition.toPartition, but the length condition (Multiset.card (toPartition μ).parts ≤ N) is not proven in the visible context. The bijection statement as an Equiv between a sigma type and NPartition N is not supported by the visible helper lemmas. The proof_strategy_notes suggest a plan but the required lemmas (e.g., that the sorted list of parts is antitone when padded with zeros) are not available as checked facts. Therefore, the visible context is insufficient to produce a complete Lean-compiling proof.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure with parts and antitone\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum\",\n        \"Multiset.card for length\",\n        \"Multiset.sort_sorted\",\n        \"List.Pairwise.rel_get_of_lt\",\n        \"NPartition.toPartition\",\n        \"filter_ne_zero_sum\",\n        \"NPartition.ext\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778039979,
+  "id": "gen-1778039979-OHU52xfv3lnEjlheEJy2",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 447,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00357308,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00012516,
+      "upstream_inference_cost": 0.00357308,
+      "upstream_inference_prompt_cost": 0.00344792
+    },
+    "is_byok": false,
+    "prompt_tokens": 24628,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 25075
+  }
+}

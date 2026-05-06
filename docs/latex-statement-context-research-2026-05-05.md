@@ -626,6 +626,18 @@ Broader diverse4 negative probe:
   selection problem is mostly fixed for this case; the remaining blocker is
   proof-planning/helper synthesis for the padded construction, the
   `toPartition` length bound, and inverse proofs.
+- do-not-use sanitation:
+  the bridge repair payload exposed that `do_not_use_identifiers` had accepted
+  prose (`Multiset.card p.parts as length`), and the generator interpreted it
+  as forbidding the valid `Multiset.card p.parts ≤ N` expression. The checked
+  context pack now retains only exact Lean identifiers in `do_not_use_identifiers`
+  and records invalid items under `discarded_do_not_use_items`; the repair
+  prompt treats those discarded items as sanitation notes only. A sanitized paid
+  retry at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-bridge-sanitized-repair-v1-paid/`
+  cost `$0.00357308` and still declined cleanly, with the remaining blocker
+  unchanged: prove the padded construction, `toPartition` length bound, and
+  inverse lemmas from visible context.
 
 ## Lean Dependency Accounting
 

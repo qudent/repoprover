@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 40
-verification-result files and 61 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 15 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 41
+verification-result files and 62 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 16 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -396,10 +396,15 @@ text, and simple Mathlib `alias` declarations. It now Lean-checks 18 signatures,
 including `List.Sorted.rel_get_of_lt`, `List.Sorted.rel_get_of_le`,
 `List.Pairwise.rel_get_of_lt`, and `List.Pairwise.rel_get_of_le`. A paid repair
 retry against this improved context cost `$0.00357280` and still made a clean
-`cannot_prove_from_visible_context` decision. So the list/sort bridge context is
-now selected correctly; the remaining NPartition blocker is the construction
-and proof plan itself, especially the `toPartition` length bound and inverse
-proofs from visible same-unit helpers.
+`cannot_prove_from_visible_context` decision. The retry also exposed a generic
+schema bug: the selector had put prose (`Multiset.card p.parts as length`) in
+`do_not_use_identifiers`, which made the generator treat a valid expression as
+forbidden. The checked context pack now keeps only exact Lean identifiers there
+and moves prose to `discarded_do_not_use_items`; the sanitized paid retry cost
+`$0.00357308` and still declined cleanly. So the list/sort bridge context and
+the false do-not-use prohibition are fixed; the remaining NPartition blocker is
+the construction and proof plan itself, especially the `toPartition` length
+bound and inverse proofs from visible same-unit helpers.
 
 ### Imported Lean surface and likely context needs
 

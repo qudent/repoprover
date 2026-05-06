@@ -47,6 +47,8 @@ handling on broader theorem units.
   NPartition.
 - [x] Improve NPartition fallback hydration enough to select checked list/sort
   bridge facts for stale `List.Sorted` requests.
+- [x] Sanitize repair `do_not_use_identifiers` so prose/expression warnings do
+  not forbid valid Lean expressions.
 - [ ] Resolve the remaining NPartition blocker by synthesizing the padded
   construction/length-bound helper proof or switching away from sorted-list
   indexing.
@@ -72,8 +74,8 @@ handling on broader theorem units.
 - Diverse4 remains the negative frontier: after transport fixes, split
   generation, visible-support materialization, and two repair rounds, coverage
   stayed `0/4`; the blocker is missing useful project/Mathlib proof context.
-- Failure summary across 40 verification files / 61 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 15 clean cannot-prove
+- Failure summary across 41 verification files / 62 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 16 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -120,6 +122,11 @@ handling on broader theorem units.
   retry cost `$0.00357280` and still cleanly declined, so the remaining blocker
   is proof synthesis for the padded construction, `toPartition` length bound,
   and inverse proofs rather than missing list/sort bridge API context.
+- Repair context packs now retain only exact Lean identifiers in
+  `do_not_use_identifiers` and preserve prose/expression items under
+  `discarded_do_not_use_items`. This removed the false prohibition on
+  `Multiset.card p.parts ≤ N`; sanitized paid retry cost `$0.00357308` and
+  still cleanly declined.
 - Focused theorem-level suite last passed: 84 pytest tests plus `py_compile`
   over selector/generator/repair/verifier scripts.
 

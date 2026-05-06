@@ -156,6 +156,9 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
         json.dumps(
             {
                 "checked_signatures": [{"name": "Nat.add_zero", "signature": "n + 0 = n"}],
+                "discarded_do_not_use_items": [
+                    {"unit_key": "unit-001", "item": "Nat.add_zero as a rewrite"}
+                ],
                 "same_unit_helper_plan": [
                     {
                         "unit_key": "unit-001",
@@ -187,6 +190,7 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "same_unit_helper_plan" in prompt
     assert "helper_add_zero" in prompt
     assert "newly introduced declarations" in prompt
+    assert "schema sanitation notes only" in prompt
     assert "theorem bad" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt

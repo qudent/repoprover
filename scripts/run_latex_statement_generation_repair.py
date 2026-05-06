@@ -123,6 +123,7 @@ def build_repair_messages(
             "Use fresh descriptive helper names from same_unit_helper_plan only as newly introduced declarations; do not treat them as preexisting project facts.",
             "Treat checked_signatures in additional_checked_repair_context as authoritative only when their source says they were hydrated with Lean #check or are checked fallback candidates.",
             "Respect do_not_use_identifiers and failed_or_unchecked_context_requests from additional_checked_repair_context.",
+            "If additional_checked_repair_context contains discarded_do_not_use_items, treat them as schema sanitation notes only; they are not forbidden Lean identifiers.",
             "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context checked_signatures or selected_visible_context.",
             "If raw_invalid_generation_output is present, treat it as unverified prior scratchpad only: use it to understand the attempted route, but do not copy identifiers or proof steps unless visible context and Lean-checked signatures justify them.",
             "If notes describe a simpler corrected proof, implement that proof in lean_file_body instead of saying it will be adjusted later.",

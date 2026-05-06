@@ -156,6 +156,7 @@ def test_repair_context_prompt_selects_context_without_hidden_target(tmp_path: P
     assert "Do not stop at a missing direct theorem" in prompt
     assert "same_unit_helper_plan" in prompt
     assert "fresh descriptive names" in prompt
+    assert "do_not_use_identifiers must contain exact Lean identifiers only" in prompt
     assert "prior_helper" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt
@@ -302,7 +303,7 @@ def test_checked_context_pack_records_hydrated_signatures() -> None:
                         "why_needed": "close the proof",
                     }
                 ],
-                "do_not_use_identifiers": ["Demo.bad_guess"],
+                "do_not_use_identifiers": ["Demo.bad_guess", "Demo.bad_guess as a rewrite"],
                 "missing_or_uncertain_context": [],
                 "selector_confidence": 0.8,
             }
@@ -338,6 +339,13 @@ def test_checked_context_pack_records_hydrated_signatures() -> None:
     assert pack["same_unit_helper_plan"][0]["fresh_name_hint"] == "prior_helper_zero"
     assert pack["selected_visible_context"][0]["name_or_label"] == "prior_helper"
     assert pack["do_not_use_identifiers"] == ["Demo.bad_guess"]
+    assert pack["discarded_do_not_use_items"] == [
+        {
+            "unit_key": "unit-001",
+            "item": "Demo.bad_guess as a rewrite",
+            "reason": "not_an_exact_lean_identifier",
+        }
+    ]
 
 
 def test_checked_context_pack_promotes_checked_fallback_candidates() -> None:

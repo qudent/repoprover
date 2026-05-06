@@ -1,0 +1,35 @@
+{
+  "caveat": "This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.",
+  "compile_passed_units": 0,
+  "compiled_name_overlap_units": 0,
+  "compiled_needs_semantic_review_units": 0,
+  "coverage_status_counts": {
+    "not_generated_cannot_prove": 1
+  },
+  "generated_at": "2026-05-06T04:02:44.831325+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-bridge-sanitized-repair-v1-paid/round-01-repair",
+  "schema_version": "repoprover.latex_statement_gold_comparison.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-v1-paid",
+  "unit_count": 1,
+  "units": [
+    {
+      "compile_passed": false,
+      "coverage_status": "not_generated_cannot_prove",
+      "full_name_overlap": [],
+      "generated_declaration_names": [],
+      "gold_aligned_full_names": [
+        "NPartition.ofPartition_size"
+      ],
+      "gold_aligned_local_names": [
+        "ofPartition_size"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-001",
+      "verification_failure_class": "declined_cannot_prove"
+    }
+  ],
+  "verification_failure_class_counts": {
+    "declined_cannot_prove": 1
+  }
+}

@@ -172,9 +172,15 @@
       "why_needed": "Checked related declaration for selected Equiv: To state the bijection as an `Equiv` between the subtype of partitions with length ≤ N and `NPartition N`."
     }
   ],
+  "discarded_do_not_use_items": [
+    {
+      "item": "Multiset.card p.parts as length",
+      "reason": "not_an_exact_lean_identifier",
+      "unit_key": "unit-001"
+    }
+  ],
   "do_not_use_identifiers": [
-    "Nat.Partition.length",
-    "Multiset.card p.parts as length"
+    "Nat.Partition.length"
   ],
   "failed_or_unchecked_context_requests": [
     {
@@ -240,7 +246,7 @@
       "why_needed": "To show that filtering out zeros does not change the sum; this is essentially `filter_ne_zero_sum` already in local context."
     }
   ],
-  "generated_at": "2026-05-06T03:50:23.527430+00:00",
+  "generated_at": "2026-05-06T03:59:26.367250+00:00",
   "missing_or_uncertain_context": [
     {
       "item": "There is no `Nat.Partition.length` in Mathlib. The length of a partition must be defined as `Multiset.card p.parts`. This is available from `Nat.Partition.parts` being a `Multiset ℕ`.",
