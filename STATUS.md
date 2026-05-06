@@ -80,6 +80,11 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   Generation cost `$0.0051861712` for 35,188 prompt tokens and 2,057 completion
   tokens. Verification compiled 1/5 units; failures were 2 compile failures and
   2 clean declines. Semantic coverage proved 0/5 aligned gold units.
+- Visible-support rerun of the same paid generation:
+  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/`.
+  No provider calls; local verification took 508.903s. Compile improved to 2/5
+  and semantic coverage to 1/5: inverse uniqueness is a true win once visible
+  project definitions are materialized.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
@@ -90,6 +95,6 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
 - Next useful work: route the paid panel failures by class. The shortest generic
-  fixes look like project/local context import recovery for inverse uniqueness,
-  syntax/namespace repair for Vandermonde, and stronger target-shape planning
-  for the compiled triangular theorem.
+  fixes look like syntax/namespace repair for Vandermonde and stronger
+  target-shape planning for the compiled triangular theorem. FPS division and
+  NPartition remain honest insufficient-context/proof-synthesis cases.

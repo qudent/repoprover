@@ -270,3 +270,62 @@ def test_panel_full_flow_writes_summary(monkeypatch, tmp_path: Path) -> None:
     assert metrics["gold_comparison"]["compiled_needs_semantic_review_units"] == 1
     assert metrics["semantic_coverage"]["all_aligned_gold_proved_units"] == 1
     assert (args.output / "eval" / "panel-summary.md").exists()
+
+
+def test_panel_can_reuse_existing_generation_run(monkeypatch, tmp_path: Path) -> None:
+    selector = tmp_path / "selector"
+    selector_eval = selector / "eval"
+    selector_eval.mkdir(parents=True)
+    (selector_eval / "context-selection-results.json").write_text(
+        json.dumps({"valid_json": True, "paid_call_made": True, "units_selected": 2}),
+        encoding="utf-8",
+    )
+    generation = tmp_path / "existing-generation"
+    generation_eval = generation / "eval"
+    generation_eval.mkdir(parents=True)
+    (generation_eval / "generation-results.json").write_text(
+        json.dumps({"valid_json": True, "paid_call_made": True, "batch_count": 2, "batches": []}),
+        encoding="utf-8",
+    )
+    args = _base_args(
+        tmp_path,
+        selector_run=selector,
+        generation_run=generation,
+        skip_hydration=True,
+        skip_generation=True,
+        materialize_visible_support=True,
+    )
+    calls: list[str] = []
+
+    def output_arg(command: list[str]) -> Path:
+        return Path(command[command.index("--output") + 1])
+
+    def fake_run_command(stage: str, command: list[str], *, output_root: Path) -> dict[str, object]:
+        calls.append(stage)
+        path = output_arg(command)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if stage == "verification":
+            assert "--materialize-visible-support" in command
+            path.write_text(
+                json.dumps({"unit_count": 2, "compile_passed_units": 2, "failure_class_counts": {"compiled": 2}}),
+                encoding="utf-8",
+            )
+        elif stage == "gold_comparison":
+            path.write_text(json.dumps({"unit_count": 2, "compile_passed_units": 2}), encoding="utf-8")
+        return _success(stage, command)
+
+    monkeypatch.setattr("scripts.run_latex_statement_panel.run_command", fake_run_command)
+
+    summary = run(args)
+
+    assert summary["stop_reason"] == "completed"
+    assert calls == ["verification", "gold_comparison"]
+    assert [stage["stage"] for stage in summary["stages"]] == [
+        "context_selection",
+        "generation",
+        "verification",
+        "gold_comparison",
+    ]
+    assert summary["stages"][1]["command"] == "reuse existing generation run"
+    assert summary["metrics"]["generation"]["path"] == str(generation)
+    assert summary["metrics"]["verification"]["compile_passed_units"] == 2

@@ -131,6 +131,29 @@ Per-unit outcome:
 | `unit-004` | `prop.binom.vandermonde.NN` | generated `vandermonde_nat`, but failed on namespace/syntax around `AlgebraicCombinatorics` and range-sum syntax |
 | `unit-005` | `prop.sf.Npar-as-par` | clean `cannot_prove_from_visible_context` |
 
+### Paid Panel Runner V1 With Visible Support
+
+Artifact:
+`docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/`
+
+This run reused the same paid generation output, made no provider calls, and
+reran verification/gold/semantic checks with `--materialize-visible-support`.
+The local Lean check took 508.903 seconds.
+
+- Generated-only verification improved from 1/5 to 2/5 compiled units.
+- Exact/local-name gold comparison improved from 0 to 1 name-overlap unit.
+- Semantic coverage improved from 0/5 to 1/5: inverse uniqueness
+  (`thm.commring.inverse-uni`) proves its aligned gold theorem once visible
+  project support is materialized.
+- Remaining failures: 1 Vandermonde compile failure, 2 clean cannot-prove
+  declines, and 1 compiled triangular theorem whose statement is too broad to
+  imply the two aligned gold triangular theorems.
+
+This shows that visible-support materialization is not just a diagnostic
+luxury: without it, the benchmark can false-reject valid generated code that
+uses project definitions visible in the prompt but hidden by target-blind import
+filtering.
+
 ## What This Shows
 
 The five-unit panel gives richer data immediately. The single NPartition loop
@@ -153,6 +176,10 @@ generic or NPartition-shaped. The panel shows:
   the late one-theorem loop: only 2/5 are clean declines; 2/5 are ordinary
   compile failures from namespace/import/syntax/context issues; 1/5 compiles
   but misses the semantic shape of the gold theorems.
+- With visible support enabled, inverse uniqueness becomes a true semantic win.
+  The remaining easy-looking fix is Vandermonde syntax/namespace repair; the
+  determinant issue is target-shape planning; FPS division and NPartition remain
+  honest insufficient-context/proof-synthesis cases.
 
 ## Recommendations
 

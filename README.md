@@ -593,6 +593,15 @@ units were clean cannot-prove declines, two were compile failures, and the
 compiled triangular theorem used a statement shape that did not imply either
 aligned gold theorem. This is the intended panel signal: multiple failure
 classes at once, instead of another single-theorem loop.
+A no-provider visible-support rerun at
+`docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/`
+then improved generated-only compile to `2/5` and semantic coverage to `1/5`.
+The recovered success is inverse uniqueness: the generated theorem was valid
+once visible project definitions from the prompt were materialized under the
+target-blind verifier. The remaining panel failures are now better separated:
+Vandermonde is a syntax/namespace repair case, triangular determinant is a
+target-shape planning case, and FPS division plus NPartition remain honest
+insufficient-context/proof-synthesis cases.
 
 ### Imported Lean surface and likely context needs
 

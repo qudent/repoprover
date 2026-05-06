@@ -1,0 +1,147 @@
+{
+  "generated_at": "2026-05-06T06:26:31.368129+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation",
+  "gold_comparison_results": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/gold-comparison-results.json",
+  "metrics": {
+    "context_selection": {
+      "budget_only": false,
+      "cached_prompt_tokens": 16768,
+      "completion_tokens": 9219,
+      "cost": 0.003094084,
+      "elapsed_seconds": 115.186,
+      "paid_call_made": true,
+      "path": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid",
+      "prompt_tokens": 17077,
+      "reasoning_tokens": 6914,
+      "units_selected": 5,
+      "valid_json": true
+    },
+    "generation": {
+      "batch_count": 5,
+      "budget_only": false,
+      "cached_prompt_tokens": 2304,
+      "completion_tokens": 2057,
+      "cost": 0.0051861712,
+      "elapsed_seconds": 37.115,
+      "normalized_unit_count": 2,
+      "paid_call_made": true,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation",
+      "prompt_tokens": 35188,
+      "reasoning_tokens": 0,
+      "valid_json": true
+    },
+    "gold_comparison": {
+      "compile_passed_units": 2,
+      "compiled_name_overlap_units": 1,
+      "compiled_needs_semantic_review_units": 1,
+      "coverage_status_counts": {
+        "compile_failure": 1,
+        "compiled_name_overlap": 1,
+        "compiled_needs_semantic_review": 1,
+        "not_generated_cannot_prove": 2
+      },
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/gold-comparison-results.json",
+      "unit_count": 5
+    },
+    "hydration": {
+      "batch_count": 1,
+      "exact_identifier_count": 6,
+      "fallback_exact_identifier_count": 24,
+      "fallback_lean_check_statuses": [
+        "ok"
+      ],
+      "lean_check_statuses": [
+        "lean_errors"
+      ],
+      "path": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid/eval/mathlib-hydration-summary.json",
+      "request_count": 7
+    },
+    "semantic_coverage": {
+      "all_aligned_gold_proved_units": 1,
+      "coverage_status_counts": {
+        "all_aligned_gold_proved": 1,
+        "generated_not_compiled": 3,
+        "no_aligned_gold_proved": 1
+      },
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/semantic-coverage-results.json",
+      "unit_count": 5
+    },
+    "verification": {
+      "compile_passed_units": 2,
+      "failure_class_counts": {
+        "compile_failure": 1,
+        "compiled": 2,
+        "declined_cannot_prove": 2
+      },
+      "materialize_visible_support": true,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/verification-results.json",
+      "unit_count": 5
+    }
+  },
+  "output_root": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support",
+  "panel": "/home/name/repos/repoprover/docs/latex-statement-dev-panel-2026-05-06.json",
+  "schema_version": "repoprover.latex_statement_panel_run.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid",
+  "semantic_coverage_results": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/semantic-coverage-results.json",
+  "stages": [
+    {
+      "command": "reuse existing selector run",
+      "elapsed_seconds": 0.0,
+      "exit_code": 0,
+      "stage": "context_selection",
+      "stderr_log": null,
+      "stderr_tail": "",
+      "stdout_log": null,
+      "stdout_tail": ""
+    },
+    {
+      "command": "reuse existing generation run",
+      "elapsed_seconds": 0.0,
+      "exit_code": 0,
+      "stage": "generation",
+      "stderr_log": null,
+      "stderr_tail": "",
+      "stdout_log": null,
+      "stdout_tail": ""
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/verify_latex_statement_generation.py --generation-run docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation --project-root /home/name/repos/repoprover/algebraic-combinatorics --timeout-seconds 120.0 --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/verification-results.json --materialize-visible-support --support-timeout-seconds 30.0",
+      "elapsed_seconds": 508.903,
+      "exit_code": 0,
+      "stage": "verification",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/logs/verification.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/logs/verification.stdout.log",
+      "stdout_tail": "      \"hidden_target_modules\": [\n        \"AlgebraicCombinatorics.SymmetricFunctions.NPartition\"\n      ],\n      \"hidden_target_namespaces\": [\n        \"NPartition\"\n      ],\n      \"imports\": [\n        \"Mathlib\"\n      ],\n      \"inferred_imports\": [],\n      \"inferred_opens\": [\n        \"open scoped Polynomial\",\n        \"open MvPolynomial Finset Equiv\",\n        \"open Finset BigOperators\"\n      ],\n      \"materialize_visible_support\": true,\n      \"opens\": [\n        \"open scoped Polynomial BigOperators\",\n        \"open PowerSeries Finset\",\n        \"open scoped Polynomial\",\n        \"open MvPolynomial Finset Equiv\",\n        \"open Finset BigOperators\"\n      ],\n      \"unfiltered_inferred_imports\": [\n        \"AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric\",\n        \"AlgebraicCombinatorics.SymmetricFunctions.NPartition\"\n      ],\n      \"unfiltered_inferred_opens\": [\n        \"open scoped Polynomial\",\n        \"open MvPolynomial Finset Equiv\",\n        \"open AlgebraicCombinatorics\",\n        \"open SymmetricFunctions\",\n        \"open Finset BigOperators\"\n      ],\n      \"unit_count\": 1,\n      \"units\": [\n        {\n          \"body_declaration_names\": [],\n          \"compile_passed\": false,\n          \"contract_violations\": [],\n          \"declaration_names\": [],\n          \"failure_class\": \"declined_cannot_prove\",\n          \"lean_error_count\": 0,\n          \"lean_returncode\": null,\n          \"messages\": [],\n          \"placeholder_tokens\": [],\n          \"reported_status\": \"cannot_prove_from_visible_context\",\n          \"skipped_reason\": \"cannot_prove_from_visible_context\",\n          \"stderr\": \"\",\n          \"unit_key\": \"unit-005\",\n          \"visible_support_context\": {\n            \"accepted\": [\n              {\n                \"kind\": \"variable\"\n              },\n              {\n                \"kind\": \"variable\"\n              },\n              {\n                \"kind\": \"structure\",\n                \"name\": \"NPartition\"\n              },\n              {\n                \"kind\": \"def\",\n                \"name\": \"size\"\n              },\n              {\n                \"kind\": \"theorem\",\n                \"name\": \"ext\"\n              },\n              {\n                \"kind\": \"theorem\",\n                \"name\": \"ext'\"\n              },\n              {\n                \"kind\": \"def\",\n                \"name\": \"part\"\n              },\n              {\n                \"kind\": \"theorem\",\n                \"name\": \"part_eq_parts\"\n              },\n              {\n                \"kind\": \"lemma\",\n                \"name\": \"filter_ne_zero_sum\"\n              },\n              {\n                \"kind\": \"def\",\n                \"name\": \"toPartition\"\n              }\n            ],\n            \"accepted_count\": 10,\n            \"candidate_count\": 11,\n            \"rejected\": [\n              {\n                \"kind\": \"abbrev\",\n                \"lean_error_count\": 1,\n                \"lean_returncode\": 1,\n                \"messages\": [\n                  {\n                    \"column\": 29,\n                    \"data\": \"Unknown identifier `_root_.NPartition`\",\n                    \"kind\": \"lean.unknownIdentifier._namedError\",\n                    \"line\": 9,\n                    \"severity\": \"error\"\n                  }\n                ],\n                \"name\": \"AlgebraicCombinatorics.SymmetricFunctions.NPartition\",\n                \"stderr\": \"\"\n              }\n            ],\n            \"rejected_count\": 1\n          }\n        }\n      ]\n    }\n  ],\n  \"compile_passed_units\": 2,\n  \"failure_class_counts\": {\n    \"compile_failure\": 1,\n    \"compiled\": 2,\n    \"declined_cannot_prove\": 2\n  },\n  \"filter_target_module_imports\": true,\n  \"generated_at\": \"2026-05-06T06:35:00.008041+00:00\",\n  \"generation_run\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation\",\n  \"infer_context\": true,\n  \"materialize_visible_support\": true,\n  \"project_root\": \"/home/name/repos/repoprover/algebraic-combinatorics\",\n  \"schema_version\": \"repoprover.latex_statement_generation_verification.v1\",\n  \"unit_count\": 5\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/compare_latex_statement_generation_to_gold.py --selector-run docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid --generation-run docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation --verification-results docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/verification-results.json --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/gold-comparison-results.json",
+      "elapsed_seconds": 0.138,
+      "exit_code": 0,
+      "stage": "gold_comparison",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/logs/gold_comparison.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/logs/gold_comparison.stdout.log",
+      "stdout_tail": "{\n  \"caveat\": \"This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.\",\n  \"compile_passed_units\": 2,\n  \"compiled_name_overlap_units\": 1,\n  \"compiled_needs_semantic_review_units\": 1,\n  \"coverage_status_counts\": {\n    \"compile_failure\": 1,\n    \"compiled_name_overlap\": 1,\n    \"compiled_needs_semantic_review\": 1,\n    \"not_generated_cannot_prove\": 2\n  },\n  \"generated_at\": \"2026-05-06T06:35:00.438719+00:00\",\n  \"generation_run\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation\",\n  \"schema_version\": \"repoprover.latex_statement_gold_comparison.v1\",\n  \"selector_run\": \"docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid\",\n  \"unit_count\": 5,\n  \"units\": [\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"not_generated_cannot_prove\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.FPS.xnEquiv_div\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"xnEquiv_div\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div\",\n      \"unit_key\": \"unit-001\",\n      \"verification_failure_class\": \"declined_cannot_prove\"\n    },\n    {\n      \"compile_passed\": true,\n      \"coverage_status\": \"compiled_needs_semantic_review\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"det_of_triangular\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.Det.det_upperTriangular\",\n        \"AlgebraicCombinatorics.Det.det_lowerTriangular\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"det_upperTriangular\",\n        \"det_lowerTriangular\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang\",\n      \"unit_key\": \"unit-002\",\n      \"verification_failure_class\": \"compiled\"\n    },\n    {\n      \"compile_passed\": true,\n      \"coverage_status\": \"compiled_name_overlap\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"isInverse_unique\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.FPS.isInverse_unique\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"isInverse_unique\"\n      ],\n      \"local_name_overlap\": [\n        \"isInverse_unique\"\n      ],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni\",\n      \"unit_key\": \"unit-003\",\n      \"verification_failure_class\": \"compiled\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"compile_failure\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [\n        \"vandermonde_nat\"\n      ],\n      \"gold_aligned_full_names\": [\n        \"AlgebraicCombinatorics.FPS.vandermonde_nat\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"vandermonde_nat\"\n      ],\n      \"local_name_overlap\": [\n        \"vandermonde_nat\"\n      ],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN\",\n      \"unit_key\": \"unit-004\",\n      \"verification_failure_class\": \"compile_failure\"\n    },\n    {\n      \"compile_passed\": false,\n      \"coverage_status\": \"not_generated_cannot_prove\",\n      \"full_name_overlap\": [],\n      \"generated_declaration_names\": [],\n      \"gold_aligned_full_names\": [\n        \"NPartition.ofPartition_size\"\n      ],\n      \"gold_aligned_local_names\": [\n        \"ofPartition_size\"\n      ],\n      \"local_name_overlap\": [],\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par\",\n      \"unit_key\": \"unit-005\",\n      \"verification_failure_class\": \"declined_cannot_prove\"\n    }\n  ],\n  \"verification_failure_class_counts\": {\n    \"compile_failure\": 1,\n    \"compiled\": 2,\n    \"declined_cannot_prove\": 2\n  }\n}\n"
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/verify_latex_statement_semantic_coverage.py --selector-run docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid --generation-run docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation --verification-results docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/verification-results.json --project-root /home/name/repos/repoprover/algebraic-combinatorics --timeout-seconds 120.0 --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/semantic-coverage-results.json",
+      "elapsed_seconds": 49.525,
+      "exit_code": 0,
+      "stage": "semantic_coverage",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/logs/semantic_coverage.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/logs/semantic_coverage.stdout.log",
+      "stdout_tail": "tic false`\",\n              \"kind\": \"linter.unusedTactic\",\n              \"line\": 516,\n              \"severity\": \"warning\"\n            },\n            {\n              \"column\": 4,\n              \"data\": \"'simpa [Fintype.card_fin] using isInverse_unique hab (by simpa [Fintype.card_fin] using hac)' tactic does nothing\\n\\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\",\n              \"kind\": \"linter.unusedTactic\",\n              \"line\": 517,\n              \"severity\": \"warning\"\n            },\n            {\n              \"column\": 4,\n              \"data\": \"'simpa using isInverse_unique a b c hab hac' tactic does nothing\\n\\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\",\n              \"kind\": \"linter.unusedTactic\",\n              \"line\": 518,\n              \"severity\": \"warning\"\n            },\n            {\n              \"column\": 4,\n              \"data\": \"'simpa [Fintype.card_fin] using isInverse_unique a b c hab hac' tactic does nothing\\n\\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\",\n              \"kind\": \"linter.unusedTactic\",\n              \"line\": 519,\n              \"severity\": \"warning\"\n            },\n            {\n              \"column\": 4,\n              \"data\": \"'simpa using isInverse_unique a b c hab (by simpa [Fintype.card_fin] using hac)' tactic does nothing\\n\\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\",\n              \"kind\": \"linter.unusedTactic\",\n              \"line\": 520,\n              \"severity\": \"warning\"\n            },\n            {\n              \"column\": 4,\n              \"data\": \"'simpa [Fintype.card_fin] using isInverse_unique a b c hab (by simpa [Fintype.card_fin] using hac)' tactic does nothing\\n\\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\",\n              \"kind\": \"linter.unusedTactic\",\n              \"line\": 521,\n              \"severity\": \"warning\"\n            },\n            {\n              \"column\": 8,\n              \"data\": \"The declaration '__repoprover_latex_statement_check' contains '__', which does not follow the mathlib naming conventions. Consider using single underscores instead.\\n\\nNote: This linter can be disabled with `set_option linter.style.nameCheck false`\",\n              \"kind\": \"linter.style.nameCheck\",\n              \"line\": 502,\n              \"severity\": \"warning\"\n            }\n          ],\n          \"semantic_check_passed\": true,\n          \"stderr\": \"\"\n        }\n      ],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": true,\n      \"coverage_status\": \"all_aligned_gold_proved\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-003/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 1,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni\",\n      \"unit_key\": \"unit-003\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-004/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN\",\n      \"unit_key\": \"unit-004\"\n    },\n    {\n      \"aligned_gold_declaration_count\": 1,\n      \"checks\": [],\n      \"compile_gate_bypassed\": false,\n      \"compile_passed\": false,\n      \"coverage_status\": \"generated_not_compiled\",\n      \"generation_output\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation/batch-005/generation-output.json\",\n      \"semantic_passed_gold_declarations\": 0,\n      \"source_unit_id\": \"AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par\",\n      \"unit_key\": \"unit-005\"\n    }\n  ]\n}\n"
+    }
+  ],
+  "stop_reason": "completed",
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+    "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+    "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+    "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+    "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par"
+  ],
+  "verification_results": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/eval/verification-results.json"
+}

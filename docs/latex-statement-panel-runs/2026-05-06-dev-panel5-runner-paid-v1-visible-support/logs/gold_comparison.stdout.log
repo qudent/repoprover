@@ -1,0 +1,116 @@
+{
+  "caveat": "This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.",
+  "compile_passed_units": 2,
+  "compiled_name_overlap_units": 1,
+  "compiled_needs_semantic_review_units": 1,
+  "coverage_status_counts": {
+    "compile_failure": 1,
+    "compiled_name_overlap": 1,
+    "compiled_needs_semantic_review": 1,
+    "not_generated_cannot_prove": 2
+  },
+  "generated_at": "2026-05-06T06:35:00.438719+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/generation",
+  "schema_version": "repoprover.latex_statement_gold_comparison.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid",
+  "unit_count": 5,
+  "units": [
+    {
+      "compile_passed": false,
+      "coverage_status": "not_generated_cannot_prove",
+      "full_name_overlap": [],
+      "generated_declaration_names": [],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.FPS.xnEquiv_div"
+      ],
+      "gold_aligned_local_names": [
+        "xnEquiv_div"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001",
+      "verification_failure_class": "declined_cannot_prove"
+    },
+    {
+      "compile_passed": true,
+      "coverage_status": "compiled_needs_semantic_review",
+      "full_name_overlap": [],
+      "generated_declaration_names": [
+        "det_of_triangular"
+      ],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.Det.det_upperTriangular",
+        "AlgebraicCombinatorics.Det.det_lowerTriangular"
+      ],
+      "gold_aligned_local_names": [
+        "det_upperTriangular",
+        "det_lowerTriangular"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+      "unit_key": "unit-002",
+      "verification_failure_class": "compiled"
+    },
+    {
+      "compile_passed": true,
+      "coverage_status": "compiled_name_overlap",
+      "full_name_overlap": [],
+      "generated_declaration_names": [
+        "isInverse_unique"
+      ],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.FPS.isInverse_unique"
+      ],
+      "gold_aligned_local_names": [
+        "isInverse_unique"
+      ],
+      "local_name_overlap": [
+        "isInverse_unique"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+      "unit_key": "unit-003",
+      "verification_failure_class": "compiled"
+    },
+    {
+      "compile_passed": false,
+      "coverage_status": "compile_failure",
+      "full_name_overlap": [],
+      "generated_declaration_names": [
+        "vandermonde_nat"
+      ],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.FPS.vandermonde_nat"
+      ],
+      "gold_aligned_local_names": [
+        "vandermonde_nat"
+      ],
+      "local_name_overlap": [
+        "vandermonde_nat"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+      "unit_key": "unit-004",
+      "verification_failure_class": "compile_failure"
+    },
+    {
+      "compile_passed": false,
+      "coverage_status": "not_generated_cannot_prove",
+      "full_name_overlap": [],
+      "generated_declaration_names": [],
+      "gold_aligned_full_names": [
+        "NPartition.ofPartition_size"
+      ],
+      "gold_aligned_local_names": [
+        "ofPartition_size"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-005",
+      "verification_failure_class": "declined_cannot_prove"
+    }
+  ],
+  "verification_failure_class_counts": {
+    "compile_failure": 1,
+    "compiled": 2,
+    "declined_cannot_prove": 2
+  }
+}

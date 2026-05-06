@@ -472,24 +472,37 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             return summary
 
     if args.skip_generation:
-        summary["stop_reason"] = "stopped_before_generation"
-        summary["generation_run"] = None
-        summary["verification_results"] = None
-        summary["gold_comparison_results"] = None
-        summary["semantic_coverage_results"] = None
-        write_summary(output_root, summary)
-        return summary
-
-    if not run_stage(summary, "generation", build_generation_command(args, selector_run, generation_run), output_root):
-        write_summary(output_root, summary)
-        return summary
-    if args.generation_budget_only:
-        summary["stop_reason"] = "budget_only_after_generation"
-        summary["verification_results"] = None
-        summary["gold_comparison_results"] = None
-        summary["semantic_coverage_results"] = None
-        write_summary(output_root, summary)
-        return summary
+        if args.generation_run is None:
+            summary["stop_reason"] = "stopped_before_generation"
+            summary["generation_run"] = None
+            summary["verification_results"] = None
+            summary["gold_comparison_results"] = None
+            summary["semantic_coverage_results"] = None
+            write_summary(output_root, summary)
+            return summary
+        summary["stages"].append(
+            {
+                "stage": "generation",
+                "command": "reuse existing generation run",
+                "exit_code": 0,
+                "elapsed_seconds": 0.0,
+                "stdout_log": None,
+                "stderr_log": None,
+                "stdout_tail": "",
+                "stderr_tail": "",
+            }
+        )
+    else:
+        if not run_stage(summary, "generation", build_generation_command(args, selector_run, generation_run), output_root):
+            write_summary(output_root, summary)
+            return summary
+        if args.generation_budget_only:
+            summary["stop_reason"] = "budget_only_after_generation"
+            summary["verification_results"] = None
+            summary["gold_comparison_results"] = None
+            summary["semantic_coverage_results"] = None
+            write_summary(output_root, summary)
+            return summary
 
     if not args.skip_verification:
         if not run_stage(
@@ -535,7 +548,11 @@ def main() -> None:
     parser.add_argument("--panel", type=Path, default=DEFAULT_PANEL)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--selector-run", type=Path, help="Reuse an existing selector run instead of running selection.")
-    parser.add_argument("--generation-run", type=Path, help="Output directory for generation; defaults under --output.")
+    parser.add_argument(
+        "--generation-run",
+        type=Path,
+        help="Generation directory to create, or an existing generation directory when used with --skip-generation.",
+    )
     parser.add_argument("--project-root", type=Path, default=REPO_ROOT / "algebraic-combinatorics")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--selector-model", default=DEFAULT_MODEL)
