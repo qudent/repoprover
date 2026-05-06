@@ -32,6 +32,45 @@ def message_signature(message: dict[str, Any]) -> str:
     return first_line[:180]
 
 
+def error_route(message: dict[str, Any]) -> str:
+    data = str(message.get("data") or "")
+    kind = str(message.get("kind") or "")
+    lower = data.lower()
+    if "unknown identifier" in lower or "unknown constant" in lower or "unknown namespace" in lower:
+        return "missing_context_or_api"
+    if "identifier" in lower and "unknown" in lower:
+        return "missing_context_or_api"
+    if "failed to synthesize instance" in lower:
+        return "typeclass_or_type_context"
+    if "application type mismatch" in lower or "function expected" in lower or "unexpected token" in lower:
+        return "ill_typed_generated_term"
+    if "tactic `rewrite` failed" in lower or "invalid rewrite argument" in lower:
+        return "proof_tactic_shape"
+    if "tactic `apply` failed" in lower or "unsolved goals" in lower:
+        return "proof_tactic_shape"
+    if kind == "runtime.maxHeartbeats" or "timed out" in lower or "timeout" in lower:
+        return "resource_or_search_timeout"
+    return "other_lean_error"
+
+
+def unit_routes(unit: dict[str, Any]) -> list[str]:
+    failure_class = str(unit.get("failure_class") or "")
+    if failure_class == "compiled":
+        return ["compiled"]
+    if unit.get("contract_violations"):
+        return ["contract_violation"]
+    if unit.get("placeholder_tokens"):
+        return ["placeholder_body"]
+    if failure_class == "declined_cannot_prove":
+        return ["clean_decline"]
+    routes = {
+        error_route(message)
+        for message in unit.get("messages") or []
+        if message.get("severity") == "error"
+    }
+    return sorted(routes) if routes else ["compile_failure_without_error"]
+
+
 def unit_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for batch in summary.get("batches") or []:
@@ -49,6 +88,8 @@ def summarize_one(path: Path) -> dict[str, Any]:
     placeholder_tokens: Counter[str] = Counter()
     error_kinds: Counter[str] = Counter()
     error_signatures: Counter[str] = Counter()
+    route_counts: Counter[str] = Counter()
+    support_rejection_route_counts: Counter[str] = Counter()
     support_candidate_count = 0
     support_accepted_count = 0
     support_rejected_count = 0
@@ -67,7 +108,18 @@ def summarize_one(path: Path) -> dict[str, Any]:
                 continue
             error_kinds[str(message.get("kind") or "unknown")] += 1
             error_signatures[message_signature(message)] += 1
+        routes = unit_routes(unit)
+        for route in routes:
+            route_counts[route] += 1
         support = unit.get("visible_support_context") or {}
+        for rejection in support.get("rejected") or []:
+            rejection_routes = {
+                error_route(message)
+                for message in rejection.get("messages") or []
+                if message.get("severity") == "error"
+            }
+            for route in sorted(rejection_routes):
+                support_rejection_route_counts[route] += 1
         support_candidate_count += int(support.get("candidate_count") or 0)
         support_accepted_count += int(support.get("accepted_count") or 0)
         support_rejected_count += int(support.get("rejected_count") or 0)
@@ -82,6 +134,7 @@ def summarize_one(path: Path) -> dict[str, Any]:
                 "compile_passed": unit.get("compile_passed"),
                 "lean_error_count": unit.get("lean_error_count"),
                 "lean_elapsed_seconds": unit.get("lean_elapsed_seconds"),
+                "routes": routes,
                 "support": {
                     "candidate_count": support.get("candidate_count"),
                     "accepted_count": support.get("accepted_count"),
@@ -102,6 +155,8 @@ def summarize_one(path: Path) -> dict[str, Any]:
         "reported_status_counts": dict(sorted(reported_statuses.items())),
         "contract_violation_counts": dict(sorted(contract_violations.items())),
         "placeholder_token_counts": dict(sorted(placeholder_tokens.items())),
+        "route_counts": dict(sorted(route_counts.items())),
+        "support_rejection_route_counts": dict(sorted(support_rejection_route_counts.items())),
         "lean_error_kind_counts": dict(error_kinds.most_common(20)),
         "lean_error_signature_counts": dict(error_signatures.most_common(20)),
         "support_totals": {
@@ -136,6 +191,8 @@ def render_markdown(report: dict[str, Any]) -> str:
                 f"- Reported statuses: `{json.dumps(run['reported_status_counts'], sort_keys=True)}`",
                 f"- Contract violations: `{json.dumps(run['contract_violation_counts'], sort_keys=True)}`",
                 f"- Placeholder tokens: `{json.dumps(run['placeholder_token_counts'], sort_keys=True)}`",
+                f"- Route counts: `{json.dumps(run['route_counts'], sort_keys=True)}`",
+                f"- Support rejection routes: `{json.dumps(run['support_rejection_route_counts'], sort_keys=True)}`",
                 f"- Support totals: `{json.dumps(run['support_totals'], sort_keys=True)}`",
             ]
         )
@@ -157,6 +214,7 @@ def render_markdown(report: dict[str, Any]) -> str:
                 "- "
                 f"`{unit['unit_key']}` {unit['failure_class']} status={unit['reported_status']} "
                 f"errors={unit['lean_error_count']} "
+                f"routes={','.join(unit.get('routes') or [])} "
                 f"support={support.get('accepted_count')}/{support.get('candidate_count')} accepted"
             )
         lines.append("")

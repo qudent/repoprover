@@ -136,7 +136,10 @@ dev/fresh panels plus one-off diagnostics.
   and 258.225s. Batching support plus inferred-open validation kept the result
   at `1/2` compile/semantic but reduced verification to 10 Lean calls and
   154.669s; support work is now 6 calls and 72.65s, and inferred-open
-  validation is 2 calls. Current overview is
+  validation is 2 calls. Current overview includes route counts; latest
+  open-model failures are clean declines plus missing API/context or proof
+  tactic/ill-typed generated terms, with no placeholder contract failures.
+  Current overview is
   `reports/latex-statement-failure-overview-20260506T1740Z.md`.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used

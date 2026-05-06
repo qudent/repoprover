@@ -55,6 +55,17 @@ def test_summarize_one_counts_failures_and_support(tmp_path: Path) -> None:
                                     "skipped_count": 0,
                                     "lean_call_count": 3,
                                     "elapsed_seconds": 12.0,
+                                    "rejected": [
+                                        {
+                                            "messages": [
+                                                {
+                                                    "severity": "error",
+                                                    "kind": "lean.unknownIdentifier",
+                                                    "data": "Unknown identifier `Support.missing`",
+                                                }
+                                            ]
+                                        }
+                                    ],
                                 },
                             },
                         ]
@@ -70,6 +81,8 @@ def test_summarize_one_counts_failures_and_support(tmp_path: Path) -> None:
     assert summary["failure_class_counts"] == {"compile_failure": 1, "compiled": 1}
     assert summary["contract_violation_counts"] == {"generated_lean_contains_placeholder": 1}
     assert summary["placeholder_token_counts"] == {"sorry": 1}
+    assert summary["route_counts"] == {"compiled": 1, "contract_violation": 1}
+    assert summary["support_rejection_route_counts"] == {"missing_context_or_api": 1}
     assert summary["lean_error_signature_counts"] == {"Unknown constant `Demo.missing`": 1}
     assert summary["support_totals"] == {
         "accepted_count": 3,
@@ -94,6 +107,8 @@ def test_render_markdown_includes_unit_rows(tmp_path: Path) -> None:
                 "reported_status_counts": {"cannot_prove_from_visible_context": 1},
                 "contract_violation_counts": {},
                 "placeholder_token_counts": {},
+                "route_counts": {"clean_decline": 1},
+                "support_rejection_route_counts": {},
                 "support_totals": {
                     "candidate_count": 0,
                     "accepted_count": 0,
@@ -111,6 +126,7 @@ def test_render_markdown_includes_unit_rows(tmp_path: Path) -> None:
                         "failure_class": "declined_cannot_prove",
                         "reported_status": "cannot_prove_from_visible_context",
                         "lean_error_count": 0,
+                        "routes": ["clean_decline"],
                         "support": {"accepted_count": 0, "candidate_count": 0},
                     }
                 ],
@@ -122,3 +138,5 @@ def test_render_markdown_includes_unit_rows(tmp_path: Path) -> None:
 
     assert "run/root" in markdown
     assert "`unit-001` declined_cannot_prove" in markdown
+    assert "Route counts" in markdown
+    assert "routes=clean_decline" in markdown
