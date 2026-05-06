@@ -780,6 +780,20 @@ which is consistent with the miner: the remaining dev-panel blockers are either
 already-selected project context plus hard proof synthesis, or absent Mathlib
 lookup.
 
+The packed fresh-slice payload then ran as a paid proof-lane retry on those
+three context-bearing units:
+`docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/`.
+The run used the repo-default `deepseek/deepseek-v4-flash` model after checking
+that the model id was present in the current OpenRouter model list. It cost
+`$0.00568302`, returned valid JSON for all three calls, and still produced only
+contract-clean `cannot_prove_from_visible_context` declines. Acceptance at
+`docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/`
+had an empty task-leakage scan and preserved the fresh-slice score:
+generated-only verification `1/5`, semantic coverage `1/5`. The result is a
+negative but sharper diagnosis: for these examples, just copying the missing
+project declarations into context did not overcome the proof-synthesis or
+Mathlib-bridge gap.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

@@ -32,8 +32,8 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   no-provider acceptance, and overlay verification.
 - [x] Mine clean proof-lane declines against source-visible project declarations.
 - [x] Turn decline-context mining into prompt-safe context acquisition packs.
-- [ ] Run the packed fresh-slice proof-lane payload as a paid/checked experiment
-  only if the payload review looks target-clean.
+- [x] Run the packed fresh-slice proof-lane payload as a paid/checked experiment
+  after the target-clean gate passed.
 - [ ] Validate the next generic context/proof-lane change on a fresh slice, not
   only on NPartition or one already-debugged theorem.
 
@@ -70,6 +70,12 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   gold only as an exclusion filter, selected 18 extra project-context snippets,
   and generated no-provider proof-lane payloads. Fresh-slice payloads attach
   context to 3/4 tasks; dev-panel payloads attach 0/2.
+- Packed-context paid fresh-slice retry:
+  `docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/`
+  cost `$0.00568302` for 3 context-bearing units. Acceptance at
+  `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/`
+  stayed `1/5` compiled and `1/5` semantic with 3 clean declines and no task
+  leakage matches.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -80,5 +86,6 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: review the packed fresh-slice budget payload for target
-  cleanliness, then run a small paid proof-lane retry if clean.
+- Next useful work: stop spending on the same packed-context proof lane until
+  the generator prompt explicitly forces use of acquired project snippets or a
+  stronger proof-synthesis lane is tried.

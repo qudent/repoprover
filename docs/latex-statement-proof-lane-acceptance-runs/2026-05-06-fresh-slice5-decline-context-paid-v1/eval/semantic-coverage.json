@@ -1,0 +1,96 @@
+{
+  "all_aligned_gold_proved_units": 1,
+  "caveat": "This is post-hoc oracle verification. Gold declarations are read only by the grader, after generation, and are not source-only prompt context.",
+  "coverage_status_counts": {
+    "all_aligned_gold_proved": 1,
+    "generated_not_compiled": 4
+  },
+  "generated_at": "2026-05-06T11:45:02.809812+00:00",
+  "generated_not_compiled_units": 4,
+  "generation_run": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1",
+  "no_aligned_gold_proved_units": 0,
+  "no_aligned_gold_to_check_units": 0,
+  "partial_aligned_gold_proved_units": 0,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_semantic_coverage.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection",
+  "unit_count": 5,
+  "units": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/batch-001/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+      "unit_key": "unit-001"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [
+        {
+          "coverage_status": "semantic_grader_passed",
+          "failure_class": "semantic_covered",
+          "generated_declaration_names": [
+            "fps_invertible_iff_constantCoeff_field"
+          ],
+          "gold_full_name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff_ne_zero",
+          "gold_kind": "theorem",
+          "gold_line_range": [
+            199,
+            210
+          ],
+          "gold_path": "AlgebraicCombinatorics/DividingFPS.lean",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "lean_source_path": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/eval/semantic-coverage/unit-002/gold-001.lean",
+          "messages": [],
+          "semantic_check_passed": true,
+          "stderr": ""
+        }
+      ],
+      "compile_gate_bypassed": false,
+      "compile_passed": true,
+      "coverage_status": "all_aligned_gold_proved",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/batch-002/generation-output.json",
+      "semantic_passed_gold_declarations": 1,
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+      "unit_key": "unit-002"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/batch-003/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+      "unit_key": "unit-003"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/batch-004/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+      "unit_key": "unit-004"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "checks": [],
+      "compile_gate_bypassed": false,
+      "compile_passed": false,
+      "coverage_status": "generated_not_compiled",
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/batch-005/generation-output.json",
+      "semantic_passed_gold_declarations": 0,
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e",
+      "unit_key": "unit-005"
+    }
+  ]
+}

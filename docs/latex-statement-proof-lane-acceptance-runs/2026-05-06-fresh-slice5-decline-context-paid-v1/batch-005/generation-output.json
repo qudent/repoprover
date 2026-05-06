@@ -1,0 +1,26 @@
+{
+  "base_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged",
+  "overlay_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-decline-context-paid-v1"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: NPartition.transpose (with signature for extending to M-tuples), ssytFinset, Nipat, SkewSSYT, potentialVerticalStrips. Local file predecessors fail to compile due to missing identifiers. Cannot prove second Jacobi-Trudi without transpose API and the full nipat-SSYT bijection infrastructure."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure (fails to compile due to duplicate declaration)",
+        "schur definition (fails to compile due to missing ssytFinset)",
+        "esymm signature (checked)",
+        "Matrix.det signature (checked)",
+        "jacobiTrudiMatrixH definition as pattern (checked)",
+        "hsymmExt definition (checked)"
+      ]
+    }
+  ]
+}

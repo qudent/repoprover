@@ -1,0 +1,60 @@
+{
+  "schema_version": "repoprover.latex_statement_proof_lane_generation_aggregated.v1",
+  "unit_keys": [
+    "unit-001",
+    "unit-003",
+    "unit-005"
+  ],
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path. Cannot prove without project definitions."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix (same file predecessor, but fails to compile)",
+        "lgv_nonpermutable (prior project declaration, but depends on missing definitions)",
+        "xDecreasing, yIncreasing predicates (from prior context, but not defined in visible context)",
+        "nipatWeightSum (from prior context, but not defined in visible context)",
+        "dyckDigraph_pathFinite, dyckUnitArcWeight (from prior context, but not defined in visible context)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The statement is a combinatorial identity over a ℚ-algebra with binomial ring structure. The proof would require known identities for Ring.choose, possibly using polynomial identity trick or generating functions. The available context provides generalizedNewtonBinomial and related lemmas, but a complete proof is not yet constructed. The checked fallback candidates for Ring.choose_add (Ring.add_choose_eq, Ring.choose, Ring.multichoose_neg_add, Ring.choose_add_smul_choose) are insufficient to directly prove the identity. The prior project lemmas fpsPow_mul, generalizedNewtonBinomial, and key_product_identity' fail to compile due to missing HasConstantTermOne and fpsPow notation. Cannot prove from visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature from Mathlib",
+        "Finset.sum_range_succ",
+        "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial (prior project, fails to compile)",
+        "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow (prior project)",
+        "AlgebraicCombinatorics.FPS.polynomial_identity_trick (prior project)",
+        "local lemmas: fpsPow_mul, rescale_neg_one_one_sub_X, one_sub_X_pow_mul_invOneSubPow, one_add_X_pow_mul_rescale_invOneSubPow, one_sub_X_sq_pow, one_sub_X_sq_pow_mul_prod, key_product_identity' (all fail to compile)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: NPartition.transpose (with signature for extending to M-tuples), ssytFinset, Nipat, SkewSSYT, potentialVerticalStrips. Local file predecessors fail to compile due to missing identifiers. Cannot prove second Jacobi-Trudi without transpose API and the full nipat-SSYT bijection infrastructure."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure (fails to compile due to duplicate declaration)",
+        "schur definition (fails to compile due to missing ssytFinset)",
+        "esymm signature (checked)",
+        "Matrix.det signature (checked)",
+        "jacobiTrudiMatrixH definition as pattern (checked)",
+        "hsymmExt definition (checked)"
+      ]
+    }
+  ]
+}
