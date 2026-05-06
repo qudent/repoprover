@@ -1,0 +1,30 @@
+{
+  "base_generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/generation",
+  "overlay_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [
+        "cancel_all_even_l1"
+      ],
+      "lean_file_body": "open Finset\nopen BigOperators\n\nlemma cancel_all_even_l1 (n d : ℕ) :\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) =\n    (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i))) := by\n  calc\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) =\n        (∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i))) := by\n      refine Finset.sum_congr rfl fun e _ => ?_\n      rw [Finset.sum_pow]\n      simp [Finset.card_fin, Finset.sum_finset_product]\n    _ = (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i))) := by\n      rw [Finset.sum_comm]\n",
+      "notes": [
+        "The proof uses the identity (∑ a_i)^n = ∑_{x∈[d]^n} ∏ a_{x_i} via sum_pow and card_fin. The sum over e is then commuted. The statement matches the source lemma."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum",
+        "Finset.sum_pow",
+        "Finset.card_fin",
+        "Finset.sum_comm",
+        "Finset.sum_congr",
+        "Finset.sum_finset_product",
+        "toSign",
+        "ZMod 2"
+      ]
+    }
+  ]
+}

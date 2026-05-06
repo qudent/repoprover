@@ -1064,8 +1064,51 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         support_context_by_unit: dict[str, list[str]] = {}
         support_audit_by_unit: dict[str, dict[str, Any]] = {}
         if getattr(args, "materialize_visible_support", False):
-            support_candidates = visible_support_candidates_by_unit(output_path, project_root=args.project_root)
+            support_mode = str(getattr(args, "support_mode", "body") or "body")
+            assumption_mode = support_mode == "assumption"
+            support_candidates = visible_support_candidates_by_unit(
+                output_path,
+                assumption_mode=assumption_mode,
+                project_root=args.project_root,
+            )
             for unit_key, candidates in support_candidates.items():
+                if assumption_mode:
+                    sorted_candidates = unique_support_candidates(candidates)
+                    available_names = available_support_candidate_names(
+                        sorted_candidates,
+                        project_root=args.project_root,
+                        imports=imports,
+                        opens=opens,
+                        timeout_seconds=getattr(args, "support_timeout_seconds", args.timeout_seconds),
+                    )
+                    skipped = [
+                        {
+                            **{key: value for key, value in candidate.items() if key != "text"},
+                            "reason": "already_available_from_imports",
+                        }
+                        for candidate in sorted_candidates
+                        if available_names.get(str(candidate.get("name") or ""), False)
+                    ]
+                    accepted_candidates = [
+                        candidate
+                        for candidate in sorted_candidates
+                        if not available_names.get(str(candidate.get("name") or ""), False)
+                    ]
+                    support_context_by_unit[unit_key] = [candidate["text"] for candidate in accepted_candidates]
+                    support_audit_by_unit[unit_key] = {
+                        "candidate_count": len(sorted_candidates),
+                        "accepted_count": len(accepted_candidates),
+                        "rejected_count": 0,
+                        "skipped_count": len(skipped),
+                        "support_mode": support_mode,
+                        "accepted": [
+                            {key: value for key, value in candidate.items() if key != "text"}
+                            for candidate in accepted_candidates
+                        ],
+                        "skipped": skipped,
+                        "rejected": [],
+                    }
+                    continue
                 support = materialize_visible_support_context(
                     candidates,
                     project_root=args.project_root,
@@ -1078,7 +1121,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     "candidate_count": support["candidate_count"],
                     "accepted_count": len(support["accepted"]),
                     "rejected_count": len(support["rejected"]),
+                    "skipped_count": 0,
+                    "support_mode": support_mode,
                     "accepted": support["accepted"],
+                    "skipped": [],
                     "rejected": support["rejected"],
                 }
         units = verify_generation_output(
@@ -1105,6 +1151,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "filtered_target_namespace_opens": filtered_opens,
                 "filtered_invalid_inferred_opens": rejected_invalid_opens,
                 "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
+                "support_mode": str(getattr(args, "support_mode", "body") or "body"),
                 "units": units,
                 "compile_passed_units": sum(1 for unit in units if unit["compile_passed"]),
                 "failure_class_counts": failure_class_counts(units),
@@ -1122,6 +1169,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "filter_target_module_imports": filter_target_module_imports,
         "validate_inferred_opens": bool(getattr(args, "validate_inferred_opens", True)),
         "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
+        "support_mode": str(getattr(args, "support_mode", "body") or "body"),
         "batches": batches,
         "compile_passed_units": sum(batch["compile_passed_units"] for batch in batches),
         "failure_class_counts": failure_class_counts(
@@ -1174,6 +1222,15 @@ def main() -> None:
         ),
     )
     parser.add_argument("--support-timeout-seconds", type=float, default=30.0)
+    parser.add_argument(
+        "--support-mode",
+        choices=["body", "assumption"],
+        default="body",
+        help=(
+            "How to materialize visible prompt support. `body` incrementally Lean-checks copied snippets; "
+            "`assumption` inserts statement/signature axioms and skips names already available from imports."
+        ),
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     print(json.dumps(run(args), indent=2, sort_keys=True))

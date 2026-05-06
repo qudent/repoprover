@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"jacobiTrudiMatrixE\",\n        \"jacobiTrudi_e\"\n      ],\n      \"lean_file_body\": \"open Finset BigOperators Matrix MvPolynomial\\n\\nnamespace SymmetricFunctions\\n\\nvariable {N : ℕ} {R : Type*} [CommRing R]\\n\\nnoncomputable def jacobiTrudiMatrixE (lam mu : Fin N → ℕ) : Matrix (Fin N) (Fin N) (MvPolynomial (Fin N) R) :=\\n  Matrix.of fun i j =>\\n    esymm (Fin N) R ((lam i : ℤ) - (mu j : ℤ) - (i.val : ℤ) + (j.val : ℤ)).toNat\\n\\ntheorem jacobiTrudi_e (lam mu : Fin N → ℕ) (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)\\n    (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i) (hcontained : ∀ i, mu i ≤ lam i) :\\n    schur (NPartition.toNPartition lam hlam) (R := R) =\\n    Matrix.det (jacobiTrudiMatrixE lam mu) := by\\n  sorry\\n\\nend SymmetricFunctions\",\n      \"notes\": [\n        \"The theorem statement is incomplete; the proof is missing. The definition of jacobiTrudiMatrixE uses esymm with a nonnegative index via .toNat, assuming the index is nonnegative. The selector sketch mentions transpose partitions, but the current formalization uses lam, mu directly; the transpose aspect is not captured. The proof would likely use the first Jacobi-Trudi formula and the omega involution.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-005\",\n      \"used_context\": [\n        \"Matrix.det\",\n        \"MvPolynomial.esymm\",\n        \"SymmetricFunctions.schur\",\n        \"NPartition.toNPartition\",\n        \"SymmetricFunctions.jacobiTrudiMatrixH (for analogy)\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778076975,
+  "id": "gen-1778076975-2ehjxAgsvFrn3v0ETpAi",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 487,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00182462,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00013636,
+      "upstream_inference_cost": 0.00182462,
+      "upstream_inference_prompt_cost": 0.00168826
+    },
+    "is_byok": false,
+    "prompt_tokens": 12059,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 12546
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof requires a lemma that the nipat sum for the specific source/target vertices (x-decreasing, y-increasing) equals 1. This is a known combinatorial fact (Catalan Hankel determinant equals 1) but not yet formalized in the visible context. The visible context provides the LGV lemma (lgv_nonpermutable) and the equality of the Catalan Hankel matrix to the path weight matrix (catalanHankelMatrix_eq_pathWeightMatrix), but no lemma that the nipat weight sum for these vertices equals 1. Without that lemma, the proof cannot be completed."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable"
+      ]
+    }
+  ]
+}

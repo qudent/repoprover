@@ -1,0 +1,1359 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [
+        {
+          "lean_error_count": 0,
+          "lean_returncode": 124,
+          "messages": [],
+          "open_statement": "open Finset BigOperators Matrix",
+          "stderr": "Lean command timed out after 30.0 seconds"
+        },
+        {
+          "lean_error_count": 0,
+          "lean_returncode": 124,
+          "messages": [],
+          "open_statement": "open Finset BigOperators Matrix MvPolynomial",
+          "stderr": "Lean command timed out after 30.0 seconds"
+        },
+        {
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `SymmetricFunctions`",
+              "kind": "[anonymous]",
+              "line": 4,
+              "severity": "error"
+            }
+          ],
+          "open_statement": "open SymmetricFunctions",
+          "stderr": ""
+        }
+      ],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ],
+      "filtered_target_namespace_opens": [
+        "open LGV"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ],
+      "hidden_target_namespaces": [
+        "LGV"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset"
+      ],
+      "support_mode": "assumption",
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Finset BigOperators Matrix",
+        "open LGV",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "abbrev",
+                "line": "109",
+                "name": "LGV1.LatticePoint",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "inductive",
+                "line": "241",
+                "name": "LGV1.LatticeStep",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "def",
+                "line": "247",
+                "name": "LGV1.LatticeStep.apply",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "abbrev",
+                "line": "266",
+                "name": "LGV1.LatticePath",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "def",
+                "line": "346",
+                "name": "LGV1.LatticePath.vertices",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "85",
+                "name": "LGV.SimpleDigraph",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "97",
+                "name": "LGV.SimpleDigraph.Path",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "107",
+                "name": "LGV.SimpleDigraph.Path.start",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "111",
+                "name": "LGV.SimpleDigraph.Path.finish",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "130",
+                "name": "LGV.SimpleDigraph.IsPathFinite",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "540",
+                "name": "LGV.ArcWeight",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "546",
+                "name": "LGV.pathWeightAux",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "569",
+                "name": "LGV.pathWeight",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "683",
+                "name": "LGV.pathTupleWeight",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "abbrev",
+                "line": "696",
+                "name": "LGV.kVertex",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "705",
+                "name": "LGV.PathTuple",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "714",
+                "name": "LGV.PathTuple.ext",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "747",
+                "name": "LGV.pathsFromTo",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "753",
+                "name": "LGV.pathWeightSum",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "758",
+                "name": "LGV.pathWeightMatrix",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "771",
+                "name": "LGV.nipatSet",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "776",
+                "name": "LGV.nipatSetFinite",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "802",
+                "name": "LGV.nipatFinset",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "818",
+                "name": "LGV.nipatWeightSum",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "3852",
+                "name": "LGV.xCoord",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "3855",
+                "name": "LGV.yCoord",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "3858",
+                "name": "LGV.xDecreasing",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "3862",
+                "name": "LGV.yIncreasing",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "4264",
+                "name": "LGV.lgv_nonpermutable",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "5147",
+                "name": "LGV.catalanHankelMatrix",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "5222",
+                "name": "LGV.dyckDigraph",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "5305",
+                "name": "LGV.dyckDigraph_pathFinite",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "5426",
+                "name": "LGV.dyckUnitArcWeight",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "5943",
+                "name": "LGV.translateVertex",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "5946",
+                "name": "LGV.dyckDigraph_arc_translate",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "5961",
+                "name": "LGV.translatePath",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "5982",
+                "name": "LGV.translatePath_start",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "5987",
+                "name": "LGV.translatePath_finish",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "5992",
+                "name": "LGV.translatePath_neg",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "6004",
+                "name": "LGV.translatePath_injective",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "6013",
+                "name": "LGV.dyck_paths_shifted_eq_catalan",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "6059",
+                "name": "LGV.catalanHankelMatrix_eq_pathWeightMatrix",
+                "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+              },
+              {
+                "kind": "def",
+                "line": "520",
+                "name": "AlgebraicCombinatorics.FPS.catalan",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NotationsExamples.lean"
+              }
+            ],
+            "accepted_count": 43,
+            "candidate_count": 43,
+            "rejected": [],
+            "rejected_count": 0,
+            "skipped": [],
+            "skipped_count": 0,
+            "support_mode": "assumption"
+          }
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-002/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.DividingFPS"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "inferred_opens": [
+        "open scoped BigOperators",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped BigOperators",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "support_mode": "assumption",
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.DividingFPS",
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped BigOperators",
+        "open AlgebraicCombinatorics",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "fps_invertible_iff_constantCoeff_field"
+          ],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [
+            "fps_invertible_iff_constantCoeff_field"
+          ],
+          "failure_class": "compile_failure",
+          "lean_error_count": 15,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 29,
+              "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 12,
+              "severity": "error"
+            },
+            {
+              "column": 32,
+              "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 18,
+              "severity": "error"
+            },
+            {
+              "column": 32,
+              "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 18,
+              "severity": "error"
+            },
+            {
+              "column": 8,
+              "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+              "kind": "[anonymous]",
+              "line": 19,
+              "severity": "error"
+            },
+            {
+              "column": 19,
+              "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+              "kind": "[anonymous]",
+              "line": 19,
+              "severity": "error"
+            },
+            {
+              "column": 55,
+              "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+              "kind": "[anonymous]",
+              "line": 19,
+              "severity": "error"
+            },
+            {
+              "column": 32,
+              "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 25,
+              "severity": "error"
+            },
+            {
+              "column": 32,
+              "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 25,
+              "severity": "error"
+            },
+            {
+              "column": 8,
+              "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+              "kind": "[anonymous]",
+              "line": 26,
+              "severity": "error"
+            },
+            {
+              "column": 19,
+              "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+              "kind": "[anonymous]",
+              "line": 26,
+              "severity": "error"
+            },
+            {
+              "column": 35,
+              "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+              "kind": "[anonymous]",
+              "line": 26,
+              "severity": "error"
+            },
+            {
+              "column": 27,
+              "data": "failed to synthesize instance of type class\n  HMul L L ?m.21\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 26,
+              "severity": "error"
+            },
+            {
+              "column": 29,
+              "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+              "kind": "lean.synthInstanceFailed._namedError",
+              "line": 32,
+              "severity": "error"
+            },
+            {
+              "column": 8,
+              "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+              "kind": "[anonymous]",
+              "line": 33,
+              "severity": "error"
+            },
+            {
+              "column": 12,
+              "data": "Unknown constant `IsUnit.mk`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 64,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-002",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "def",
+                "line": "140",
+                "name": "AlgebraicCombinatorics.divByUnit",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "146",
+                "name": "AlgebraicCombinatorics.fracs1_div_add_div",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "160",
+                "name": "AlgebraicCombinatorics.fracs1_div_mul_div",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "167",
+                "name": "AlgebraicCombinatorics.fracs1_div_eq_iff",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "193",
+                "name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "318",
+                "name": "AlgebraicCombinatorics.fps_onePlusX_isUnit",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "325",
+                "name": "AlgebraicCombinatorics.fps_onePlusX_inv",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean"
+              }
+            ],
+            "accepted_count": 7,
+            "candidate_count": 8,
+            "rejected": [],
+            "rejected_count": 0,
+            "skipped": [
+              {
+                "kind": "theorem",
+                "line": "935",
+                "name": "PowerSeries.isUnit_of_constantCoeff_eq_one",
+                "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+                "reason": "already_available_from_imports"
+              }
+            ],
+            "skipped_count": 1,
+            "support_mode": "assumption"
+          }
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [
+        {
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `AlgebraicCombinatorics`",
+              "kind": "[anonymous]",
+              "line": 7,
+              "severity": "error"
+            }
+          ],
+          "open_statement": "open AlgebraicCombinatorics",
+          "stderr": ""
+        }
+      ],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.FPS.NonIntegerPowers"
+      ],
+      "filtered_target_namespace_opens": [
+        "open FPS"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-003/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.FPS.NonIntegerPowers"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.FPS"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.FPS.ExpLog"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.FPS.ExpLog"
+      ],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open PowerSeries Finset"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial"
+      ],
+      "support_mode": "assumption",
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.FPS.NonIntegerPowers",
+        "AlgebraicCombinatorics.FPS.ExpLog"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics",
+        "open FPS"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-003",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "def",
+                "line": "62",
+                "name": "AlgebraicCombinatorics.FPS.logSeries",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "def",
+                "line": "115",
+                "name": "AlgebraicCombinatorics.FPS.HasConstantTermOne",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "def",
+                "line": "177",
+                "name": "AlgebraicCombinatorics.FPS.fpsLog",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "203",
+                "name": "AlgebraicCombinatorics.FPS.constantCoeff_fpsLog",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "def",
+                "line": "221",
+                "name": "AlgebraicCombinatorics.FPS.fpsExp",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "295",
+                "name": "AlgebraicCombinatorics.FPS.fpsExp_add",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "445",
+                "name": "AlgebraicCombinatorics.FPS.fpsLog_mul",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "def",
+                "line": "514",
+                "name": "AlgebraicCombinatorics.FPS.fpsPow",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "565",
+                "name": "AlgebraicCombinatorics.FPS.fpsPow_mul",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "1102",
+                "name": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "1230",
+                "name": "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "1783",
+                "name": "AlgebraicCombinatorics.FPS.rescale_neg_one_one_sub_X",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "1795",
+                "name": "AlgebraicCombinatorics.FPS.one_sub_X_pow_mul_invOneSubPow",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "1803",
+                "name": "AlgebraicCombinatorics.FPS.one_add_X_pow_mul_rescale_invOneSubPow",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "1814",
+                "name": "AlgebraicCombinatorics.FPS.one_sub_X_sq_pow",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "1821",
+                "name": "AlgebraicCombinatorics.FPS.one_sub_X_sq_pow_mul_prod",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "1838",
+                "name": "AlgebraicCombinatorics.FPS.key_product_identity'",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "2346",
+                "name": "AlgebraicCombinatorics.FPS.polynomial_identity_trick",
+                "path": "AlgebraicCombinatorics/FPS/NonIntegerPowers.lean"
+              }
+            ],
+            "accepted_count": 18,
+            "candidate_count": 18,
+            "rejected": [],
+            "rejected_count": 0,
+            "skipped": [],
+            "skipped_count": 0,
+            "support_mode": "assumption"
+          }
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-004/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators"
+      ],
+      "support_mode": "assumption",
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Finset BigOperators",
+        "open AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "cancel_all_even_l1"
+          ],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [
+            "cancel_all_even_l1"
+          ],
+          "failure_class": "compile_failure",
+          "lean_error_count": 9,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 6,
+              "data": "Function expected at\n  allEvenTuples\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  n\n\nHint: The identifier `allEvenTuples` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 35,
+              "severity": "error"
+            },
+            {
+              "column": 41,
+              "data": "Function expected at\n  toSign\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  (e k)\n\nHint: The identifier `toSign` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 41,
+              "severity": "error"
+            },
+            {
+              "column": 61,
+              "data": "Function expected at\n  toSign\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  (e (x i))\n\nHint: The identifier `toSign` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 42,
+              "severity": "error"
+            },
+            {
+              "column": 41,
+              "data": "Function expected at\n  toSign\nbut this term has type\n  x✝\n\nNote: Expected a function because this term is being applied to the argument\n  (e k)",
+              "kind": "[anonymous]",
+              "line": 44,
+              "severity": "error"
+            },
+            {
+              "column": 65,
+              "data": "Function expected at\n  toSign\nbut this term has type\n  x✝\n\nNote: Expected a function because this term is being applied to the argument\n  (e (x i))",
+              "kind": "[anonymous]",
+              "line": 45,
+              "severity": "error"
+            },
+            {
+              "column": 65,
+              "data": "Function expected at\n  toSign\nbut this term has type\n  x✝\n\nNote: Expected a function because this term is being applied to the argument\n  (e (x i))",
+              "kind": "[anonymous]",
+              "line": 49,
+              "severity": "error"
+            },
+            {
+              "column": 86,
+              "data": "unsolved goals\nx✝ : Sort u_1\ntoSign : x✝\nn d : ℕ\n⊢ ∑ e, (∑ k, sorry) ^ n = ∑ e, ∑ x, ∏ i, sorry",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 45,
+              "severity": "error"
+            },
+            {
+              "column": 86,
+              "data": "unsolved goals\nx✝ : Sort u_1\ntoSign : x✝\nn d : ℕ\n⊢ Type ?u.5933809",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 49,
+              "severity": "error"
+            },
+            {
+              "column": 2,
+              "data": "(deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached\n\nNote: Use `set_option maxHeartbeats <num>` to set the limit.\n\nHint: Additional diagnostic information may be available using the `set_option diagnostics true` command.",
+              "kind": "runtime.maxHeartbeats",
+              "line": 43,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-004",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "def",
+                "line": "55",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "64",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.multiplicity",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "83",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "93",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "99",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_sq",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "111",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_pow_odd",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "119",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_add_one",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "126",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct_eq_prod_pow",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "155",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "445",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.allEven_count_formula",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              }
+            ],
+            "accepted_count": 10,
+            "candidate_count": 10,
+            "rejected": [],
+            "rejected_count": 0,
+            "skipped": [],
+            "skipped_count": 0,
+            "support_mode": "assumption"
+          }
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+      ],
+      "filtered_target_namespace_opens": [
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-005/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+      ],
+      "hidden_target_namespaces": [
+        "SymmetricFunctions"
+      ],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_opens": [
+        "open Finset BigOperators Matrix MvPolynomial"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators Matrix MvPolynomial"
+      ],
+      "support_mode": "assumption",
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-005",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "abbrev",
+                "line": "109",
+                "name": "LGV1.LatticePoint",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "inductive",
+                "line": "241",
+                "name": "LGV1.LatticeStep",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "def",
+                "line": "247",
+                "name": "LGV1.LatticeStep.apply",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "567",
+                "name": "Nat.Partition.sum_filter_card_eq_sum",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "601",
+                "name": "Nat.Partition.sum_filter_positive",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1721",
+                "name": "Nat.Partition.transpose",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "115",
+                "name": "SymmetricFunctions.NPartition",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "159",
+                "name": "SymmetricFunctions.NPartition.transpose",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "616",
+                "name": "SymmetricFunctions.SkewPartition",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "926",
+                "name": "SymmetricFunctions.SkewSSYT",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1163",
+                "name": "SymmetricFunctions.isRowWeakFilling",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1167",
+                "name": "SymmetricFunctions.isColStrictFilling",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1173",
+                "name": "SymmetricFunctions.isSSYTFillingNonSkew",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1189",
+                "name": "SymmetricFunctions.ssytFillingFinsetNonSkew",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1193",
+                "name": "SymmetricFunctions.fillingToSSYT",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1211",
+                "name": "SymmetricFunctions.ssytFinset",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1276",
+                "name": "SymmetricFunctions.schur",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1447",
+                "name": "SymmetricFunctions.hasSizeDiff",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1470",
+                "name": "SymmetricFunctions.isVerticalStripFun",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1484",
+                "name": "SymmetricFunctions.toNPartition",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1505",
+                "name": "SymmetricFunctions.verticalStripUpperBound",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1509",
+                "name": "SymmetricFunctions.potentialVerticalStrips",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1520",
+                "name": "SymmetricFunctions.verticalNStripPartitions",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "2645",
+                "name": "SymmetricFunctions.hsymmExt",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "2649",
+                "name": "SymmetricFunctions.hsymmExt_isSymmetric",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "def",
+                "line": "2657",
+                "name": "SymmetricFunctions.jacobiTrudiMatrixH",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "2769",
+                "name": "SymmetricFunctions.LatticePath",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "2846",
+                "name": "SymmetricFunctions.pathWeightSum_eq_hsymm",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "2872",
+                "name": "SymmetricFunctions.Nipat",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "3121",
+                "name": "SymmetricFunctions.nipat_ssyt_bijection",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "290",
+                "name": "YoungTableau",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "302",
+                "name": "YoungTableau.ext",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "385",
+                "name": "SSYT",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean"
+              },
+              {
+                "kind": "def",
+                "line": "615",
+                "name": "Filling",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean"
+              },
+              {
+                "kind": "def",
+                "line": "1797",
+                "name": "skewYoungDiagram",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "1875",
+                "name": "SkewYoungTableau",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean"
+              },
+              {
+                "kind": "structure",
+                "line": "1960",
+                "name": "SkewSSYT",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean"
+              }
+            ],
+            "accepted_count": 37,
+            "candidate_count": 41,
+            "rejected": [],
+            "rejected_count": 0,
+            "skipped": [
+              {
+                "kind": "structure",
+                "line": "132",
+                "name": "NPartition",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "151",
+                "name": "NPartition.weaklyDecreasing",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "def",
+                "line": "1057",
+                "name": "NPartition.transpose",
+                "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "126",
+                "name": "ext",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+                "reason": "already_available_from_imports"
+              }
+            ],
+            "skipped_count": 4,
+            "support_mode": "assumption"
+          }
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "failure_class_counts": {
+    "compile_failure": 2,
+    "declined_cannot_prove": 3
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T15:05:38.155474+00:00",
+  "generation_run": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1",
+  "infer_context": true,
+  "materialize_visible_support": true,
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "support_mode": "assumption",
+  "unit_count": 5,
+  "validate_inferred_opens": true
+}

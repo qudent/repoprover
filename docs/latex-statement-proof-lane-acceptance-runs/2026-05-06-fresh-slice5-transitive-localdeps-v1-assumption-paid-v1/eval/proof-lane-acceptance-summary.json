@@ -1,0 +1,118 @@
+{
+  "base_generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/generation",
+  "generated_at": "2026-05-06T15:05:38.247150+00:00",
+  "gold_comparison": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/eval/gold-comparison.json",
+  "gold_comparison_summary": {
+    "compiled_name_overlap_units": 0,
+    "compiled_needs_semantic_review_units": 0,
+    "coverage_status_counts": {
+      "compile_failure": 2,
+      "not_generated_cannot_prove": 3
+    }
+  },
+  "merge_summary": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/eval/merge-summary.json",
+  "no_paid_call_made": true,
+  "output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1",
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption",
+  "proof_lane_task_unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_acceptance.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+  "semantic_coverage": {
+    "all_aligned_gold_proved_units": 0,
+    "coverage_status_counts": {
+      "generated_not_compiled": 5
+    },
+    "unit_count": 5
+  },
+  "semantic_coverage_results": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/eval/semantic-coverage.json",
+  "solution_failure_class_counts": {
+    "compile_failure": 2,
+    "declined_cannot_prove": 3
+  },
+  "solution_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1"
+  ],
+  "solution_semantic_status_counts": {
+    "generated_not_compiled": 5
+  },
+  "solution_unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "solution_unit_results": [
+    {
+      "aligned_gold_declaration_count": 1,
+      "compile_passed": false,
+      "failure_class": "declined_cannot_prove",
+      "reported_status": "cannot_prove_from_visible_context",
+      "semantic_coverage_status": "generated_not_compiled",
+      "semantic_passed_gold_declarations": 0,
+      "unit_key": "unit-001"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "compile_passed": false,
+      "failure_class": "compile_failure",
+      "reported_status": "generated",
+      "semantic_coverage_status": "generated_not_compiled",
+      "semantic_passed_gold_declarations": 0,
+      "unit_key": "unit-002"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "compile_passed": false,
+      "failure_class": "declined_cannot_prove",
+      "reported_status": "cannot_prove_from_visible_context",
+      "semantic_coverage_status": "generated_not_compiled",
+      "semantic_passed_gold_declarations": 0,
+      "unit_key": "unit-003"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "compile_passed": false,
+      "failure_class": "compile_failure",
+      "reported_status": "generated",
+      "semantic_coverage_status": "generated_not_compiled",
+      "semantic_passed_gold_declarations": 0,
+      "unit_key": "unit-004"
+    },
+    {
+      "aligned_gold_declaration_count": 1,
+      "compile_passed": false,
+      "failure_class": "declined_cannot_prove",
+      "reported_status": "cannot_prove_from_visible_context",
+      "semantic_coverage_status": "generated_not_compiled",
+      "semantic_passed_gold_declarations": 0,
+      "unit_key": "unit-005"
+    }
+  ],
+  "task_leakage_scan": {
+    "enabled": true,
+    "forbidden_patterns": [
+      "posthoc_lean_alignment",
+      "aligned_lean",
+      "aligned_gold",
+      "semantic_passed_gold",
+      "gold_full_name"
+    ],
+    "matches": []
+  },
+  "verification": {
+    "compile_passed_units": 0,
+    "failure_class_counts": {
+      "compile_failure": 2,
+      "declined_cannot_prove": 3
+    },
+    "unit_count": 5
+  },
+  "verification_results": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/eval/verification-results.json"
+}

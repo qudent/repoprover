@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The proof requires a lemma that the nipat sum for the specific source/target vertices (x-decreasing, y-increasing) equals 1. This is a known combinatorial fact (Catalan Hankel determinant equals 1) but not yet formalized in the visible context. The visible context provides the LGV lemma (lgv_nonpermutable) and the equality of the Catalan Hankel matrix to the path weight matrix (catalanHankelMatrix_eq_pathWeightMatrix), but no lemma that the nipat weight sum for these vertices equals 1. Without that lemma, the proof cannot be completed.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"catalanHankelMatrix_eq_pathWeightMatrix\",\n        \"LGV.lgv_nonpermutable\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778079504,
+  "id": "gen-1778079504-VajwLmtJlKvaZjko8Onq",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 214,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00254758,
+    "cost_details": {
+      "upstream_inference_completions_cost": 5.992e-05,
+      "upstream_inference_cost": 0.00254758,
+      "upstream_inference_prompt_cost": 0.00248766
+    },
+    "is_byok": false,
+    "prompt_tokens": 17769,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 17983
+  }
+}

@@ -230,6 +230,46 @@ def test_local_file_predecessors_omit_hidden_target(tmp_path: Path) -> None:
     assert "hidden_target" not in messages[1]["content"]
 
 
+def test_local_file_predecessors_redact_placeholder_theorem_body(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
+    lean_path.parent.mkdir(parents=True)
+    lean_path.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "theorem prior_placeholder (x : Nat) : x = x := by",
+                "  sorry",
+                "theorem hidden_target (x : Nat) : x = x := by",
+                "  rfl",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    target = _unit(
+        unit_id="target",
+        label="lem.target",
+        source_text="\\begin{lemma}\\label{lem.target}Target.\\end{lemma}",
+        aligned_name="Demo.hidden_target",
+    )
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [5, 6]
+
+    messages = build_messages(
+        [SelectedUnit(public_key="unit-001", row=target)],
+        [target],
+        source_units=[target],
+        project_root=project_root,
+        local_predecessor_declarations=2,
+    )
+    payload = json.loads(messages[1]["content"])
+    predecessors = payload["units"][0]["local_file_predecessor_declarations"]
+
+    assert predecessors == []
+    assert "prior_placeholder" not in messages[1]["content"]
+    assert "sorry" not in messages[1]["content"]
+
+
 def test_local_file_predecessors_include_shallow_same_file_dependencies(tmp_path: Path) -> None:
     project_root = tmp_path / "project"
     lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"

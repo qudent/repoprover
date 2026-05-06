@@ -742,6 +742,103 @@ def test_run_can_materialize_visible_support_snippets(monkeypatch, tmp_path) -> 
     assert support["rejected_count"] == 0
 
 
+def test_run_can_materialize_visible_support_as_assumptions(monkeypatch, tmp_path) -> None:
+    run_dir = tmp_path / "run"
+    batch = run_dir / "batch-001"
+    batch.mkdir(parents=True)
+    (batch / "generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-001",
+                        "status": "generated",
+                        "declaration_names": ["generated"],
+                        "lean_file_body": "theorem generated : True := helper_missing",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    (batch / "generation-payload.json").write_text(
+        json.dumps(
+            {
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": json.dumps(
+                            {
+                                "units": [
+                                    {
+                                        "unit_key": "unit-001",
+                                        "planned_declarations": [
+                                            {
+                                                "available_prior_project_context": [
+                                                    {
+                                                        "project_declarations": [
+                                                            {
+                                                                "kind": "theorem",
+                                                                "name": "helper_missing",
+                                                                "lean_snippet": "theorem helper_missing : True := by\n  trivial",
+                                                            },
+                                                            {
+                                                                "kind": "theorem",
+                                                                "name": "helper_available",
+                                                                "lean_snippet": "theorem helper_available : True := by\n  trivial",
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                    }
+                                ]
+                            }
+                        ),
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    calls: list[str] = []
+
+    def fake_run_lean_source(source, *, project_root, timeout_seconds):
+        calls.append(source)
+        messages = []
+        for line_number, line in enumerate(source.splitlines(), start=1):
+            if line == "#check helper_missing":
+                messages.append({"severity": "error", "line": line_number, "data": "unknown helper_missing"})
+        return {"returncode": 1 if messages else 0, "messages": messages, "stderr": ""}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
+    summary = run(
+        argparse.Namespace(
+            generation_run=run_dir,
+            project_root=tmp_path,
+            imports=["Mathlib"],
+            opens=[],
+            infer_context=True,
+            filter_target_module_imports=True,
+            materialize_visible_support=True,
+            support_mode="assumption",
+            support_timeout_seconds=1.0,
+            timeout_seconds=1.0,
+            output=run_dir / "eval/verification-results.json",
+        )
+    )
+
+    final_source = calls[-1]
+    assert "axiom helper_missing : True" in final_source
+    assert "helper_available" not in final_source
+    support = summary["batches"][0]["units"][0]["visible_support_context"]
+    assert support["support_mode"] == "assumption"
+    assert support["candidate_count"] == 2
+    assert support["accepted_count"] == 1
+    assert support["skipped_count"] == 1
+
+
 def test_visible_support_candidates_read_proof_lane_tasks(tmp_path) -> None:
     batch = tmp_path / "run/batch-001"
     batch.mkdir(parents=True)

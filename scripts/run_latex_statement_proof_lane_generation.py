@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -21,10 +22,12 @@ if str(REPO_ROOT) not in sys.path:
 from scripts.run_latex_statement_generation import (  # noqa: E402
     DEFAULT_BASE_URL,
     DEFAULT_MODEL,
+    completed_generation_batch_summary,
     enforce_generation_contracts,
     extract_message_content,
     maybe_parse_json,
     response_cost_summary,
+    scrub_lean_snippet_comments,
     summarize_costs,
     write_json,
 )
@@ -169,7 +172,7 @@ def build_messages(tasks: list[dict[str, Any]]) -> list[dict[str, str]]:
             "posthoc_alignment_hidden": True,
             "gold_comparison_is_posthoc_only": True,
         },
-        "proof_lane_tasks": tasks,
+        "proof_lane_tasks": scrub_lean_snippet_comments(tasks),
     }
     return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(user, indent=2, sort_keys=True, ensure_ascii=False)}]
 
@@ -208,6 +211,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "max_tokens": args.max_tokens,
         "max_tasks_per_call": args.max_tasks_per_call,
         "budget_only": args.budget_only,
+        "resume_existing": bool(getattr(args, "resume_existing", False)),
         "paid_call_made": False,
         "task_unit_keys": [str(task.get("unit_key") or "") for task in selected_tasks],
         "decline_context_pack": str(decline_context_pack) if decline_context_pack else None,
@@ -218,10 +222,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 
     output_paths: list[Path] = []
     client: OpenAI | None = None
-    if not args.budget_only:
-        if not os.getenv("OPENROUTER_API_KEY"):
-            raise RuntimeError("OPENROUTER_API_KEY is not set")
-        client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url=args.base_url)
 
     for batch_index, batch_tasks in enumerate(task_chunks, start=1):
         batch_dir = run_dir / f"batch-{batch_index:03d}"
@@ -249,10 +249,31 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if args.budget_only:
             summary["batches"].append(batch_summary)
             continue
+        if getattr(args, "resume_existing", False):
+            completed = completed_generation_batch_summary(batch_dir, args.model)
+            if completed is not None:
+                batch_summary.update(completed)
+                output_paths.append(batch_dir / "generation-output.json")
+                summary["batches"].append(batch_summary)
+                continue
 
-        assert client is not None
+        if client is None:
+            if not os.getenv("OPENROUTER_API_KEY"):
+                raise RuntimeError("OPENROUTER_API_KEY is not set")
+            client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url=args.base_url)
         started = time.monotonic()
-        response = client.chat.completions.create(**request_payload)
+        try:
+            response = client.chat.completions.create(**request_payload)
+        except Exception as exc:  # noqa: BLE001 - provider/client failures must be logged and resumable.
+            error_text = "".join(traceback.format_exception(exc))
+            (batch_dir / "provider-error.txt").write_text(error_text, encoding="utf-8")
+            batch_summary["provider_error"] = {
+                "type": type(exc).__name__,
+                "message": str(exc),
+                "traceback_path": str(batch_dir / "provider-error.txt"),
+            }
+            summary["batches"].append(batch_summary)
+            continue
         batch_summary["elapsed_seconds"] = round(time.monotonic() - started, 3)
         batch_summary["paid_call_made"] = True
         summary["paid_call_made"] = True
@@ -278,6 +299,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if aggregated is not None:
             write_json(eval_dir / "merged-generation-output.json", aggregated)
     summary["cost_summary"] = summarize_costs(summary["batches"], args.model)
+    provider_errors = [row.get("provider_error") for row in summary["batches"] if row.get("provider_error")]
+    summary["provider_error_count"] = len(provider_errors)
+    if provider_errors:
+        summary["provider_errors"] = provider_errors
     write_json(eval_dir / "generation-results.json", summary)
     write_json(eval_dir / "proof-lane-generation-results.json", summary)
     return summary
@@ -300,8 +325,16 @@ def main() -> None:
     parser.add_argument("--max-tasks-per-call", type=int, default=1)
     parser.add_argument("--decline-context-pack", type=Path)
     parser.add_argument("--budget-only", action="store_true")
+    parser.add_argument(
+        "--resume-existing",
+        action="store_true",
+        help="Reuse completed batch generation-output.json files and call the provider only for missing batches.",
+    )
     args = parser.parse_args()
-    print(json.dumps(run(args), indent=2, sort_keys=True))
+    summary = run(args)
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    if summary.get("provider_error_count"):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

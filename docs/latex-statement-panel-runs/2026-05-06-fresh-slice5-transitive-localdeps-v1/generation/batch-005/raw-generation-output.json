@@ -1,0 +1,23 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "jacobiTrudiMatrixE",
+        "jacobiTrudi_e"
+      ],
+      "lean_file_body": "open Finset BigOperators Matrix MvPolynomial\n\nnamespace SymmetricFunctions\n\nvariable {N : ℕ} {R : Type*} [CommRing R]\n\nnoncomputable def jacobiTrudiMatrixE (lam mu : Fin N → ℕ) : Matrix (Fin N) (Fin N) (MvPolynomial (Fin N) R) :=\n  Matrix.of fun i j =>\n    esymm (Fin N) R ((lam i : ℤ) - (mu j : ℤ) - (i.val : ℤ) + (j.val : ℤ)).toNat\n\ntheorem jacobiTrudi_e (lam mu : Fin N → ℕ) (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)\n    (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i) (hcontained : ∀ i, mu i ≤ lam i) :\n    schur (NPartition.toNPartition lam hlam) (R := R) =\n    Matrix.det (jacobiTrudiMatrixE lam mu) := by\n  sorry\n\nend SymmetricFunctions",
+      "notes": [
+        "The theorem statement is incomplete; the proof is missing. The definition of jacobiTrudiMatrixE uses esymm with a nonnegative index via .toNat, assuming the index is nonnegative. The selector sketch mentions transpose partitions, but the current formalization uses lam, mu directly; the transpose aspect is not captured. The proof would likely use the first Jacobi-Trudi formula and the omega involution."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "Matrix.det",
+        "MvPolynomial.esymm",
+        "SymmetricFunctions.schur",
+        "NPartition.toNPartition",
+        "SymmetricFunctions.jacobiTrudiMatrixH (for analogy)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,589 @@
+{
+  "exact_identifier_count": 5,
+  "fallback_exact_identifier_count": 8,
+  "fallback_lean_check": {
+    "checked": {
+      "Multiset._root_.Finset.esymm_map_val": {
+        "error": "Unknown constant `Multiset._root_.Finset.esymm_map_val`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset._root_.Finset.esymm_map_val`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Multiset.esymm": {
+        "messages": [
+          {
+            "data": "Multiset.esymm.{u_1} {R : Type u_1} [CommSemiring R] (s : Multiset R) (n : ℕ) : R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.esymm.{u_1} {R : Type u_1} [CommSemiring R] (s : Multiset R) (n : ℕ) : R",
+        "status": "checked"
+      },
+      "MvPolynomial.degrees_esymm": {
+        "messages": [
+          {
+            "data": "MvPolynomial.degrees_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [Nontrivial R] {n : ℕ}\n  (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (MvPolynomial.esymm σ R n).degrees = univ.val",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.degrees_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [Nontrivial R] {n : ℕ}\n  (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (MvPolynomial.esymm σ R n).degrees = univ.val",
+        "status": "checked"
+      },
+      "MvPolynomial.esymm": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+        "status": "checked"
+      },
+      "MvPolynomial.esymm_eq_sum_subtype": {
+        "messages": [
+          {
+            "data": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+        "status": "checked"
+      },
+      "MvPolynomial.support_esymm": {
+        "messages": [
+          {
+            "data": "MvPolynomial.support_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = image (fun t => ∑ i ∈ t, fun₀ | i => 1) (powersetCard n univ)",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.support_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = image (fun t => ∑ i ∈ t, fun₀ | i => 1) (powersetCard n univ)",
+        "status": "checked"
+      },
+      "MvPolynomial.support_esymm'": {
+        "messages": [
+          {
+            "data": "MvPolynomial.support_esymm'.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = (powersetCard n univ).biUnion fun t => {∑ i ∈ t, fun₀ | i => 1}",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.support_esymm'.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = (powersetCard n univ).biUnion fun t => {∑ i ∈ t, fun₀ | i => 1}",
+        "status": "checked"
+      },
+      "MvPolynomial.support_esymm''": {
+        "messages": [
+          {
+            "data": "MvPolynomial.support_esymm''.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support =\n    (powersetCard n univ).biUnion fun t => (fun₀ | ∑ i ∈ t, fun₀ | i => 1 => 1).support",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "MvPolynomial.support_esymm''.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support =\n    (powersetCard n univ).biUnion fun t => (fun₀ | ∑ i ∈ t, fun₀ | i => 1 => 1).support",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "44a2f2946a39ef0b933df05b7b5507c17a49e7f2f7167a3c0cc61cc2c274c521",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "lean_errors",
+  "generated_at": "2026-05-06T14:17:24.878633+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det",
+      "expected_signature_or_shape": "det : Matrix (Fin k) (Fin k) R → R",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+        "status": "checked"
+      },
+      "query": "Matrix.det",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def det (M : Matrix n n R) : R :=",
+        "kind": "def",
+        "line_number": 59,
+        "name": "Matrix.det",
+        "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+        "source_snippet": "/-- The determinant of a matrix given by the Leibniz formula. -/\ndef det (M : Matrix n n R) : R :=\n  detRowAlternating M",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "determinant of matrix"
+    },
+    {
+      "exact_identifier": "PowerSeries.isUnit_iff_constantCoeff",
+      "expected_signature_or_shape": "IsUnit a ↔ IsUnit (constantCoeff a)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+        "status": "checked"
+      },
+      "query": "PowerSeries.isUnit_iff_constantCoeff",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem isUnit_iff_constantCoeff {φ : R⟦X⟧} :",
+        "kind": "theorem",
+        "line_number": 111,
+        "name": "PowerSeries.isUnit_iff_constantCoeff",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+        "source_snippet": "theorem isUnit_iff_constantCoeff {φ : R⟦X⟧} :\n    IsUnit φ ↔ IsUnit (constantCoeff φ) :=\n  MvPowerSeries.isUnit_iff_constantCoeff\n\n/-- Two ways of removing the constant coefficient of a power series are the same. -/",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "characterization of invertible power series"
+    },
+    {
+      "exact_identifier": "Ring.choose",
+      "expected_signature_or_shape": "Ring.choose : K → ℕ → K",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+        "status": "checked"
+      },
+      "query": "Ring.choose",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=",
+        "kind": "def",
+        "line_number": 380,
+        "name": "Ring.choose",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/Binomial.lean",
+        "source_snippet": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=\n  multichoose (r - n + 1) n\n\nvariable [NonAssocRing R] [Pow R ℕ] [BinomialRing R]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "generalized binomial coefficient"
+    },
+    {
+      "exact_identifier": "Finset.sum",
+      "expected_signature_or_shape": "Finset.sum : Finset α → (α → β) → β",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sum.{u_1, u_3} {ι : Type u_1} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (f : ι → M) : M",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum.{u_1, u_3} {ι : Type u_1} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (f : ι → M) : M",
+        "status": "checked"
+      },
+      "query": "Finset.sum",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-004-task-1",
+      "unit_key": "unit-004",
+      "why_needed": "sum over finite sets"
+    },
+    {
+      "exact_identifier": "Matrix.det",
+      "expected_signature_or_shape": "Matrix.det : Matrix (Fin M) (Fin M) R → R",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+        "status": "checked"
+      },
+      "query": "Matrix.det",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "def det (M : Matrix n n R) : R :=",
+        "kind": "def",
+        "line_number": 59,
+        "name": "Matrix.det",
+        "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+        "source_snippet": "/-- The determinant of a matrix given by the Leibniz formula. -/\ndef det (M : Matrix n n R) : R :=\n  detRowAlternating M",
+        "source_snippet_truncated": false
+      },
+      "source_part": "whole unit",
+      "task_id": "unit-005-task-1",
+      "unit_key": "unit-005",
+      "why_needed": "determinant"
+    },
+    {
+      "exact_identifier": "esymm",
+      "expected_signature_or_shape": "esymm : Finset σ → R → MvPolynomial σ R",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "def esymm (s : Multiset R) (n : ℕ) : R :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.esymm.{u_1} {R : Type u_1} [CommSemiring R] (s : Multiset R) (n : ℕ) : R",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.esymm.{u_1} {R : Type u_1} [CommSemiring R] (s : Multiset R) (n : ℕ) : R",
+            "status": "checked"
+          },
+          "line_number": 70,
+          "matched_tokens": [
+            "esymm",
+            "mvpolynomial",
+            "elementary",
+            "symmetric"
+          ],
+          "name": "Multiset.esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 22,
+          "search_excerpt": "/-- The `n`th elementary symmetric function evaluated at the elements of `s` -/ def esymm (s : Multiset R) (n : ℕ) : R :="
+        },
+        {
+          "declaration_line": "def esymm (n : ℕ) : MvPolynomial σ R :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+            "status": "checked"
+          },
+          "line_number": 194,
+          "matched_tokens": [
+            "esymm",
+            "mvpolynomial",
+            "symmetric"
+          ],
+          "name": "MvPolynomial.esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 17,
+          "search_excerpt": "def esymm (n : ℕ) : MvPolynomial σ R :="
+        },
+        {
+          "declaration_line": "theorem _root_.Finset.esymm_map_val {σ} (f : σ → R) (s : Finset σ) (n : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "error": "Unknown constant `Multiset._root_.Finset.esymm_map_val`",
+            "messages": [
+              {
+                "data": "Unknown constant `Multiset._root_.Finset.esymm_map_val`",
+                "line": 6,
+                "severity": "error"
+              }
+            ],
+            "status": "error"
+          },
+          "line_number": 73,
+          "matched_tokens": [
+            "esymm",
+            "finset",
+            "mvpolynomial",
+            "symmetric"
+          ],
+          "name": "Multiset._root_.Finset.esymm_map_val",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 16,
+          "search_excerpt": "theorem _root_.Finset.esymm_map_val {σ} (f : σ → R) (s : Finset σ) (n : ℕ) : (s.val.map f).esymm n = (s.powersetCard n).sum fun t => t.prod f := by"
+        },
+        {
+          "declaration_line": "theorem esymm_eq_sum_subtype (n : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+            "status": "checked"
+          },
+          "line_number": 213,
+          "matched_tokens": [
+            "esymm",
+            "finset",
+            "mvpolynomial",
+            "symmetric"
+          ],
+          "name": "MvPolynomial.esymm_eq_sum_subtype",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 16,
+          "search_excerpt": "/-- We can define `esymm σ R n` by summing over a subtype instead of over `powerset_len`. -/ theorem esymm_eq_sum_subtype (n : ℕ) : esymm σ R n = ∑ t : {s : Finset σ // #s = n}, ∏ i ∈ (t : Finset σ), X i :="
+        },
+        {
+          "declaration_line": "theorem support_esymm'' [DecidableEq σ] [Nontrivial R] (n : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "MvPolynomial.support_esymm''.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support =\n    (powersetCard n univ).biUnion fun t => (fun₀ | ∑ i ∈ t, fun₀ | i => 1 => 1).support",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "MvPolynomial.support_esymm''.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support =\n    (powersetCard n univ).biUnion fun t => (fun₀ | ∑ i ∈ t, fun₀ | i => 1 => 1).support",
+            "status": "checked"
+          },
+          "line_number": 250,
+          "matched_tokens": [
+            "esymm",
+            "finset",
+            "mvpolynomial",
+            "symmetric"
+          ],
+          "name": "MvPolynomial.support_esymm''",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 16,
+          "search_excerpt": "theorem support_esymm'' [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support = (powersetCard n (univ : Finset σ)).biUnion fun t => (Finsupp.single (∑ i ∈ t, Finsupp.single i 1) (1 : R)).support := by"
+        },
+        {
+          "declaration_line": "theorem support_esymm' [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support =",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "MvPolynomial.support_esymm'.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = (powersetCard n univ).biUnion fun t => {∑ i ∈ t, fun₀ | i => 1}",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "MvPolynomial.support_esymm'.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = (powersetCard n univ).biUnion fun t => {∑ i ∈ t, fun₀ | i => 1}",
+            "status": "checked"
+          },
+          "line_number": 274,
+          "matched_tokens": [
+            "esymm",
+            "finset",
+            "mvpolynomial",
+            "symmetric"
+          ],
+          "name": "MvPolynomial.support_esymm'",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 16,
+          "search_excerpt": "theorem support_esymm' [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support = (powersetCard n (univ : Finset σ)).biUnion fun t => {∑ i ∈ t, Finsupp.single i 1} := by"
+        },
+        {
+          "declaration_line": "theorem support_esymm [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support =",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "MvPolynomial.support_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = image (fun t => ∑ i ∈ t, fun₀ | i => 1) (powersetCard n univ)",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "MvPolynomial.support_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = image (fun t => ∑ i ∈ t, fun₀ | i => 1) (powersetCard n univ)",
+            "status": "checked"
+          },
+          "line_number": 281,
+          "matched_tokens": [
+            "esymm",
+            "finset",
+            "mvpolynomial",
+            "symmetric"
+          ],
+          "name": "MvPolynomial.support_esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 16,
+          "search_excerpt": "theorem support_esymm [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support = (powersetCard n (univ : Finset σ)).image fun t => ∑ i ∈ t, Finsupp.single i 1 := by"
+        },
+        {
+          "declaration_line": "theorem degrees_esymm [Nontrivial R] {n : ℕ} (hpos : 0 < n) (hn : n ≤ Fintype.card σ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "MvPolynomial.degrees_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [Nontrivial R] {n : ℕ}\n  (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (MvPolynomial.esymm σ R n).degrees = univ.val",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "MvPolynomial.degrees_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [Nontrivial R] {n : ℕ}\n  (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (MvPolynomial.esymm σ R n).degrees = univ.val",
+            "status": "checked"
+          },
+          "line_number": 286,
+          "matched_tokens": [
+            "esymm",
+            "finset",
+            "mvpolynomial",
+            "symmetric"
+          ],
+          "name": "MvPolynomial.degrees_esymm",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+          "score": 16,
+          "search_excerpt": "theorem degrees_esymm [Nontrivial R] {n : ℕ} (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (esymm σ R n).degrees = (univ : Finset σ).val := by"
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown identifier `esymm`",
+        "messages": [
+          {
+            "data": "Unknown identifier `esymm`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "esymm",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "whole unit",
+      "task_id": "unit-005-task-1",
+      "unit_key": "unit-005",
+      "why_needed": "elementary symmetric functions"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.sum": {
+        "messages": [
+          {
+            "data": "Finset.sum.{u_1, u_3} {ι : Type u_1} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (f : ι → M) : M",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum.{u_1, u_3} {ι : Type u_1} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (f : ι → M) : M",
+        "status": "checked"
+      },
+      "Matrix.det": {
+        "messages": [
+          {
+            "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+        "status": "checked"
+      },
+      "PowerSeries.isUnit_iff_constantCoeff": {
+        "messages": [
+          {
+            "data": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+        "status": "checked"
+      },
+      "Ring.choose": {
+        "messages": [
+          {
+            "data": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+        "status": "checked"
+      },
+      "esymm": {
+        "error": "Unknown identifier `esymm`",
+        "messages": [
+          {
+            "data": "Unknown identifier `esymm`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "725a4f7f16275d099ed7af013163a2300ea1be062e7de9ca31f1434ed4124c16",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 6,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

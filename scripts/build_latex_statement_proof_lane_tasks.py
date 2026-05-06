@@ -14,7 +14,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from scripts.run_latex_statement_generation import write_json  # noqa: E402
+from scripts.run_latex_statement_generation import scrub_lean_snippet_comments, write_json  # noqa: E402
 from scripts.run_latex_statement_generation_repair import load_generation_output  # noqa: E402
 
 
@@ -177,7 +177,9 @@ def selected_context_from_prompt_unit(unit: dict[str, Any]) -> dict[str, Any]:
                 "needed_source_context": task.get("needed_source_context", []),
                 "needed_project_context": task.get("needed_project_context", []),
                 "available_prior_project_context": task.get("available_prior_project_context", []),
-                "local_file_predecessor_declarations": task.get("local_file_predecessor_declarations", []),
+                "local_file_predecessor_declarations": scrub_lean_snippet_comments(
+                    task.get("local_file_predecessor_declarations", [])
+                ),
                 "hydrated_mathlib_context": task.get("hydrated_mathlib_context", []),
                 "missing_or_uncertain_context": task.get("missing_or_uncertain_context", []),
             }

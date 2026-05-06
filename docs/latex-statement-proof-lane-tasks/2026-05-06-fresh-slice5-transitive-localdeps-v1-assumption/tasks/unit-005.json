@@ -1,0 +1,777 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [],
+    "lean_file_body": "",
+    "notes": [
+      "The theorem statement is incomplete; the proof is missing. The definition of jacobiTrudiMatrixE uses esymm with a nonnegative index via .toNat, assuming the index is nonnegative. The selector sketch mentions transpose partitions, but the current formalization uses lam, mu directly; the transpose aspect is not captured. The proof would likely use the first Jacobi-Trudi formula and the omega involution."
+    ],
+    "status": "cannot_prove_from_visible_context",
+    "unit_key": "unit-005",
+    "used_context": [
+      "Matrix.det",
+      "MvPolynomial.esymm",
+      "SymmetricFunctions.schur",
+      "NPartition.toNPartition",
+      "SymmetricFunctions.jacobiTrudiMatrixH (for analogy)"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e",
+    "unit_key": "unit-005"
+  },
+  "source_unit": {
+    "environment": "theorem",
+    "id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e",
+    "labels": [
+      "thm.sf.jt-e"
+    ],
+    "line_range": [
+      447,
+      461
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{theorem}\n[Second Jacobi--Trudi formula]\\label{thm.sf.jt-e}Let $\\lambda$ and $\\mu$ be\ntwo partitions. Let $\\lambda^{t}$ and $\\mu^{t}$ be the transposes of $\\lambda$\nand $\\mu$. Let $M\\in\\mathbb{N}$ be such that both $\\lambda^{t}$ and $\\mu^{t}$\nhave length $\\leq M$. We extend the partitions $\\lambda^{t}$ and $\\mu^{t}$ to\n$M$-tuples (by inserting zeroes at the end). Write these $M$-tuples\n$\\lambda^{t}$ and $\\mu^{t}$ as $\\lambda^{t}=\\left(  \\lambda_{1}^{t}%\n,\\lambda_{2}^{t},\\ldots,\\lambda_{M}^{t}\\right)  $ and $\\mu=\\left(  \\mu_{1}%\n^{t},\\mu_{2}^{t},\\ldots,\\mu_{M}^{t}\\right)  $. Then,%\n\\[\ns_{\\lambda/\\mu}=\\det\\left(  \\left(  e_{\\lambda_{i}^{t}-\\mu_{j}^{t}%\n-i+j}\\right)  _{1\\leq i\\leq M,\\ 1\\leq j\\leq M}\\right)  .\n\\]\n\n\\end{theorem}"
+  },
+  "unit_key": "unit-005",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "declined_cannot_prove",
+    "messages": [],
+    "reported_status": "cannot_prove_from_visible_context",
+    "skipped_reason": "cannot_prove_from_visible_context",
+    "unit_key": "unit-005",
+    "visible_support_context": {
+      "accepted": [
+        {
+          "kind": "structure",
+          "line": "115",
+          "name": "SymmetricFunctions.NPartition",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "1276",
+          "name": "SymmetricFunctions.schur",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "1447",
+          "name": "SymmetricFunctions.hasSizeDiff",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "1470",
+          "name": "SymmetricFunctions.isVerticalStripFun",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "1484",
+          "name": "SymmetricFunctions.toNPartition",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "1509",
+          "name": "SymmetricFunctions.potentialVerticalStrips",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "1520",
+          "name": "SymmetricFunctions.verticalNStripPartitions",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "2645",
+          "name": "SymmetricFunctions.hsymmExt",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "2649",
+          "name": "SymmetricFunctions.hsymmExt_isSymmetric",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "def",
+          "line": "2657",
+          "name": "SymmetricFunctions.jacobiTrudiMatrixH",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "2846",
+          "name": "SymmetricFunctions.pathWeightSum_eq_hsymm",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "3121",
+          "name": "SymmetricFunctions.nipat_ssyt_bijection",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean"
+        }
+      ],
+      "accepted_count": 12,
+      "candidate_count": 13,
+      "rejected": [],
+      "rejected_count": 0,
+      "skipped": [
+        {
+          "kind": "theorem",
+          "line": "126",
+          "name": "ext",
+          "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "reason": "already_available_from_imports"
+        }
+      ],
+      "skipped_count": 1,
+      "support_mode": "assumption"
+    }
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "transpose partition",
+      "second Jacobi-Trudi formula"
+    ],
+    "local_file_context_candidates": [
+      {
+        "kind": "open",
+        "line_range": [
+          79,
+          79
+        ],
+        "name": "open Finset BigOperators Matrix MvPolynomial",
+        "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          81,
+          81
+        ],
+        "name": "SymmetricFunctions",
+        "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          83,
+          83
+        ],
+        "name": "variable {N : ℕ} {R : Type*} [CommRing R]",
+        "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      }
+    ],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.sf.jt-h"
+                ],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.Determinants.LGV2",
+                  "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+                  "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                  "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "/-- First Jacobi-Trudi formula (Theorem thm.sf.jt-h)\n    Label: thm.sf.jt-h\n\n    s_{λ/μ} = det((h_{λᵢ - μⱼ - i + j})_{1 ≤ i,j ≤ M})\n\n    The proof uses the Lindström-Gessel-Viennot lemma with appropriate\n    source and target vertices in the integer lattice ℤ².\n\n    ## Proof Strategy\n\n    **Step 1: Set up the LGV framework**\n    Define source vertices Aᵢ = (μᵢ - i, 1) and target vertices Bⱼ = (λⱼ - j, N) in ℤ².\n    The path weight matrix M_{i,j} = ∑_{p : Aᵢ → Bⱼ} w(p) where w(p) is the product\n    of x_h for each east-step at height h.\n\n    **Step 2: Identify M with the Jacobi-Trudi matrix**\n    By `pathWeightSum_eq_hsymm`, M_{i,j} = h_{λⱼ - μᵢ - j + i} = h_{λⱼ - μᵢ - (j - i)}.\n    Note: The textbook uses 1-indexed notation; our Lean formalization uses 0-indexed.\n    The matrix entry (i,j) is h_{λᵢ - μⱼ - i + j} in the textbook convention.\n\n    **Step 3: Apply the LGV lemma**\n    By `lgv_nonpermutable` (Corollary cor.lgv.kpaths.wt-np), since the source and\n    target vertices satisfy the sorting conditions (x-decreasing, y-increasing),\n    we have:\n      det(M) = ∑_{nipats from 𝐀 to 𝐁} w(nipat)\n    where the sum is only over non-intersecting path tuples (nipats).\n\n    **Step 4: Establish the nipat-SSYT bijection**\n    By `nipat_ssyt_bijection`, there is a weight-preserving bijection between\n    nipats from 𝐀 to 𝐁 and SSYT of skew shape λ/μ:\n    - The nipat (p₁, ..., pₖ) maps to the tableau T where row i contains\n      the heights of east-steps in path pᵢ (in weakly increasing order).\n    - Non-intersection of paths ensures column-strictness of the tableau.\n    - The weight w(nipat) = ∏ᵢ w(pᵢ) equals the monomial x^T.\n\n    **Step 5: Conclude**\n    det(M) = ∑_{nipats} w(nipat) = ∑_{SSYT T of shape λ/μ} x^T = s_{λ/μ}\n\n    ## Key Lemmas Required",
+                "line_range": [
+                  8001,
+                  8066
+                ],
+                "module": "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+                "name": "SymmetricFunctions.jacobiTrudi_h",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+                "referenced_source_labels": [
+                  "cor.lgv.kpaths.wt-np"
+                ],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": true
+              },
+              {
+                "context_source": "referencing_prior_declaration",
+                "declared_source_labels": [],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.Determinants.LGV2",
+                  "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+                  "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                  "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem pathWeightSum_eq_hsymm (a c : ℤ) :\n    ∑ p ∈ latticePathFinset (N := N) a c, p.weight (R := R) = hsymmExt (N := N) (R := R) (c - a)",
+                "line_range": [
+                  2846,
+                  2868
+                ],
+                "module": "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+                "name": "SymmetricFunctions.pathWeightSum_eq_hsymm",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+                "referenced_source_labels": [
+                  "thm.sf.jt-h",
+                  "prop.lgv.1-paths.ct"
+                ],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "referencing_prior_declaration",
+                "declared_source_labels": [],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.Determinants.LGV2",
+                  "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+                  "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                  "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem nipat_ssyt_bijection (lam mu : Fin N → ℕ)\n    (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)\n    (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)\n    (hcontained : ∀ i, mu i ≤ lam i) :\n    ∃ f : Nipat lam mu hlam hmu hcontained →\n        SkewSSYT ⟨⟨lam, hlam⟩, ⟨mu, hmu⟩, fun i => hcontained i⟩,\n      Function.Bijective f ∧\n      ∀ np, np.weight (R := R) = (f np).toMonomial",
+                "line_range": [
+                  3121,
+                  3154
+                ],
+                "module": "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+                "name": "SymmetricFunctions.nipat_ssyt_bijection",
+                "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+                "referenced_source_labels": [
+                  "thm.sf.jt-h"
+                ],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "thm.sf.jt-h"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-h"
+          }
+        ],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": "Matrix.det",
+            "expected_signature_or_shape": "Matrix.det : Matrix (Fin M) (Fin M) R → R",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+                  "line": 4,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Matrix.det.{v, u_2} {n : Type u_2} [DecidableEq n] [Fintype n] {R : Type v} [CommRing R] (M : Matrix n n R) : R",
+              "status": "checked"
+            },
+            "query": "Matrix.det",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": {
+              "declaration_line": "def det (M : Matrix n n R) : R :=",
+              "kind": "def",
+              "line_number": 59,
+              "name": "Matrix.det",
+              "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+              "source_snippet": "/-- The determinant of a matrix given by the Leibniz formula. -/\ndef det (M : Matrix n n R) : R :=\n  detRowAlternating M",
+              "source_snippet_truncated": false
+            },
+            "source_part": "whole unit",
+            "task_id": "unit-005-task-1",
+            "unit_key": "unit-005",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "determinant"
+          },
+          {
+            "exact_identifier": null,
+            "expected_signature_or_shape": "esymm : Finset σ → R → MvPolynomial σ R",
+            "fallback_mathlib_candidates": [
+              {
+                "declaration_line": "def esymm (s : Multiset R) (n : ℕ) : R :=",
+                "kind": "def",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "Multiset.esymm.{u_1} {R : Type u_1} [CommSemiring R] (s : Multiset R) (n : ℕ) : R",
+                      "line": 4,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "Multiset.esymm.{u_1} {R : Type u_1} [CommSemiring R] (s : Multiset R) (n : ℕ) : R",
+                  "status": "checked"
+                },
+                "line_number": 70,
+                "matched_tokens": [
+                  "esymm",
+                  "mvpolynomial",
+                  "elementary",
+                  "symmetric"
+                ],
+                "name": "Multiset.esymm",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 22,
+                "search_excerpt": "/-- The `n`th elementary symmetric function evaluated at the elements of `s` -/ def esymm (s : Multiset R) (n : ℕ) : R :="
+              },
+              {
+                "declaration_line": "def esymm (n : ℕ) : MvPolynomial σ R :=",
+                "kind": "def",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+                      "line": 5,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "MvPolynomial.esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) : MvPolynomial σ R",
+                  "status": "checked"
+                },
+                "line_number": 194,
+                "matched_tokens": [
+                  "esymm",
+                  "mvpolynomial",
+                  "symmetric"
+                ],
+                "name": "MvPolynomial.esymm",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 17,
+                "search_excerpt": "def esymm (n : ℕ) : MvPolynomial σ R :="
+              },
+              {
+                "declaration_line": "theorem _root_.Finset.esymm_map_val {σ} (f : σ → R) (s : Finset σ) (n : ℕ) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "error": "Unknown constant `Multiset._root_.Finset.esymm_map_val`",
+                  "messages": [
+                    {
+                      "data": "Unknown constant `Multiset._root_.Finset.esymm_map_val`",
+                      "line": 6,
+                      "severity": "error"
+                    }
+                  ],
+                  "status": "error"
+                },
+                "line_number": 73,
+                "matched_tokens": [
+                  "esymm",
+                  "finset",
+                  "mvpolynomial",
+                  "symmetric"
+                ],
+                "name": "Multiset._root_.Finset.esymm_map_val",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 16,
+                "search_excerpt": "theorem _root_.Finset.esymm_map_val {σ} (f : σ → R) (s : Finset σ) (n : ℕ) : (s.val.map f).esymm n = (s.powersetCard n).sum fun t => t.prod f := by"
+              },
+              {
+                "declaration_line": "theorem esymm_eq_sum_subtype (n : ℕ) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+                      "line": 7,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "MvPolynomial.esymm_eq_sum_subtype.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] (n : ℕ) :\n  MvPolynomial.esymm σ R n = ∑ t, ∏ i ∈ ↑t, MvPolynomial.X i",
+                  "status": "checked"
+                },
+                "line_number": 213,
+                "matched_tokens": [
+                  "esymm",
+                  "finset",
+                  "mvpolynomial",
+                  "symmetric"
+                ],
+                "name": "MvPolynomial.esymm_eq_sum_subtype",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 16,
+                "search_excerpt": "/-- We can define `esymm σ R n` by summing over a subtype instead of over `powerset_len`. -/ theorem esymm_eq_sum_subtype (n : ℕ) : esymm σ R n = ∑ t : {s : Finset σ // #s = n}, ∏ i ∈ (t : Finset σ), X i :="
+              },
+              {
+                "declaration_line": "theorem support_esymm'' [DecidableEq σ] [Nontrivial R] (n : ℕ) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "MvPolynomial.support_esymm''.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support =\n    (powersetCard n univ).biUnion fun t => (fun₀ | ∑ i ∈ t, fun₀ | i => 1 => 1).support",
+                      "line": 8,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "MvPolynomial.support_esymm''.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support =\n    (powersetCard n univ).biUnion fun t => (fun₀ | ∑ i ∈ t, fun₀ | i => 1 => 1).support",
+                  "status": "checked"
+                },
+                "line_number": 250,
+                "matched_tokens": [
+                  "esymm",
+                  "finset",
+                  "mvpolynomial",
+                  "symmetric"
+                ],
+                "name": "MvPolynomial.support_esymm''",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 16,
+                "search_excerpt": "theorem support_esymm'' [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support = (powersetCard n (univ : Finset σ)).biUnion fun t => (Finsupp.single (∑ i ∈ t, Finsupp.single i 1) (1 : R)).support := by"
+              },
+              {
+                "declaration_line": "theorem support_esymm' [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support =",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "MvPolynomial.support_esymm'.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = (powersetCard n univ).biUnion fun t => {∑ i ∈ t, fun₀ | i => 1}",
+                      "line": 9,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "MvPolynomial.support_esymm'.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = (powersetCard n univ).biUnion fun t => {∑ i ∈ t, fun₀ | i => 1}",
+                  "status": "checked"
+                },
+                "line_number": 274,
+                "matched_tokens": [
+                  "esymm",
+                  "finset",
+                  "mvpolynomial",
+                  "symmetric"
+                ],
+                "name": "MvPolynomial.support_esymm'",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 16,
+                "search_excerpt": "theorem support_esymm' [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support = (powersetCard n (univ : Finset σ)).biUnion fun t => {∑ i ∈ t, Finsupp.single i 1} := by"
+              },
+              {
+                "declaration_line": "theorem support_esymm [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support =",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "MvPolynomial.support_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = image (fun t => ∑ i ∈ t, fun₀ | i => 1) (powersetCard n univ)",
+                      "line": 10,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "MvPolynomial.support_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [DecidableEq σ]\n  [Nontrivial R] (n : ℕ) :\n  (MvPolynomial.esymm σ R n).support = image (fun t => ∑ i ∈ t, fun₀ | i => 1) (powersetCard n univ)",
+                  "status": "checked"
+                },
+                "line_number": 281,
+                "matched_tokens": [
+                  "esymm",
+                  "finset",
+                  "mvpolynomial",
+                  "symmetric"
+                ],
+                "name": "MvPolynomial.support_esymm",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 16,
+                "search_excerpt": "theorem support_esymm [DecidableEq σ] [Nontrivial R] (n : ℕ) : (esymm σ R n).support = (powersetCard n (univ : Finset σ)).image fun t => ∑ i ∈ t, Finsupp.single i 1 := by"
+              },
+              {
+                "declaration_line": "theorem degrees_esymm [Nontrivial R] {n : ℕ} (hpos : 0 < n) (hn : n ≤ Fintype.card σ) :",
+                "kind": "theorem",
+                "lean_check": {
+                  "messages": [
+                    {
+                      "data": "MvPolynomial.degrees_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [Nontrivial R] {n : ℕ}\n  (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (MvPolynomial.esymm σ R n).degrees = univ.val",
+                      "line": 11,
+                      "severity": "information"
+                    }
+                  ],
+                  "signature": "MvPolynomial.degrees_esymm.{u_5, u_6} (σ : Type u_5) (R : Type u_6) [CommSemiring R] [Fintype σ] [Nontrivial R] {n : ℕ}\n  (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (MvPolynomial.esymm σ R n).degrees = univ.val",
+                  "status": "checked"
+                },
+                "line_number": 286,
+                "matched_tokens": [
+                  "esymm",
+                  "finset",
+                  "mvpolynomial",
+                  "symmetric"
+                ],
+                "name": "MvPolynomial.degrees_esymm",
+                "path": ".lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean",
+                "score": 16,
+                "search_excerpt": "theorem degrees_esymm [Nontrivial R] {n : ℕ} (hpos : 0 < n) (hn : n ≤ Fintype.card σ) : (esymm σ R n).degrees = (univ : Finset σ).val := by"
+              }
+            ],
+            "fallback_suppression": null,
+            "lean_check": {
+              "error": "Exact identifier failed Lean check and was redacted from the generation prompt.",
+              "status": "error"
+            },
+            "query": "<redacted failed exact identifier>",
+            "related_mathlib_declarations": [],
+            "request_index": 2,
+            "source_declaration": null,
+            "source_part": "whole unit",
+            "task_id": "unit-005-task-1",
+            "unavailable_exact_identifier_redacted": true,
+            "unit_key": "unit-005",
+            "usage_policy": "exact_identifier_failed_lean_check_redacted_do_not_use; fallback_mathlib_candidates are search hints, not checked facts",
+            "why_needed": "elementary symmetric functions"
+          }
+        ],
+        "kind": "theorem",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "structure",
+            "lean_snippet": "structure NPartition (N : ℕ) where\n\n  parts : Fin N → ℕ\n\n  weaklyDecreasing : ∀ i j : Fin N, i ≤ j → parts j ≤ parts i\n\nnamespace NPartition\n\nvariable {N : ℕ}",
+            "line_range": [
+              115,
+              126
+            ],
+            "name": "NPartition",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "noncomputable def schur (lam : NPartition N) : MvPolynomial (Fin N) R :=\n  ∑ T ∈ ssytFinset lam, T.toMonomial",
+            "line_range": [
+              1276,
+              1285
+            ],
+            "name": "schur",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def hasSizeDiff (mu lam : Fin N → ℕ) (n : ℕ) : Prop :=\n  (∑ i, lam i) = (∑ i, mu i) + n\n\ninstance (mu lam : Fin N → ℕ) (n : ℕ) : Decidable (hasSizeDiff mu lam n) :=\n  inferInstanceAs (Decidable (_ = _))",
+            "line_range": [
+              1447,
+              1459
+            ],
+            "name": "hasSizeDiff",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def isVerticalStripFun (lam mu : Fin N → ℕ) : Prop :=\n  ∀ i : Fin N, lam i ≤ mu i + 1",
+            "line_range": [
+              1470,
+              1473
+            ],
+            "name": "isVerticalStripFun",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def toNPartition (f : Fin N → ℕ) (hf : isWeaklyDecreasing f) : NPartition N where\n  parts := f\n  weaklyDecreasing := hf",
+            "line_range": [
+              1484,
+              1495
+            ],
+            "name": "toNPartition",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def potentialVerticalStrips (mu : NPartition N) : Finset (Fin N → ℕ) :=\n  Fintype.piFinset (fun i => Finset.Icc (mu.parts i) (verticalStripUpperBound mu i))",
+            "line_range": [
+              1509,
+              1519
+            ],
+            "name": "potentialVerticalStrips",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def verticalNStripPartitions (mu : NPartition N) (n : ℕ) : Finset (NPartition N) :=\n  (potentialVerticalStrips mu).filter (fun f =>\n    isWeaklyDecreasing f ∧ isVerticalStripFun f mu.parts ∧ hasSizeDiff mu.parts f n\n  ) |>.attach.image (fun ⟨f, hf⟩ =>\n    let hf' := Finset.mem_filter.mp hf\n    toNPartition f hf'.2.1)",
+            "line_range": [
+              1520,
+              1531
+            ],
+            "name": "verticalNStripPartitions",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_structure_support",
+            "kind": "theorem",
+            "lean_snippet": "@[ext]\ntheorem ext {lam mu : NPartition N} (h : lam.parts = mu.parts) : lam = mu := by\n  cases lam; cases mu; simp_all",
+            "line_range": [
+              126,
+              130
+            ],
+            "name": "ext",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "def",
+            "lean_snippet": "noncomputable def hsymmExt (n : ℤ) : MvPolynomial (Fin N) R :=\n  if 0 ≤ n then hsymm (Fin N) R n.toNat else 0",
+            "line_range": [
+              2645,
+              2648
+            ],
+            "name": "hsymmExt",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem hsymmExt_isSymmetric (n : ℤ) : (hsymmExt (N := N) (R := R) n).IsSymmetric := by\n  unfold hsymmExt\n  split_ifs with h\n  · exact hsymm_isSymmetric (Fin N) R n.toNat\n  · exact IsSymmetric.zero",
+            "line_range": [
+              2649,
+              2656
+            ],
+            "name": "hsymmExt_isSymmetric",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "def",
+            "lean_snippet": "noncomputable def jacobiTrudiMatrixH (lam mu : Fin N → ℕ) :\n    Matrix (Fin N) (Fin N) (MvPolynomial (Fin N) R) :=\n  Matrix.of fun i j =>\n    hsymmExt ((lam i : ℤ) - (mu j : ℤ) - (i.val : ℤ) + (j.val : ℤ))",
+            "line_range": [
+              2657,
+              2661
+            ],
+            "name": "jacobiTrudiMatrixH",
+            "path": "AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+            "snippet_truncated": false
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "transpose of partition",
+          "definition of e_{...}",
+          "skew Schur function"
+        ],
+        "needed_project_context": [
+          {
+            "name": "SymmetricFunctions.jacobiTrudi_h",
+            "why_needed": "first Jacobi-Trudi formula for context"
+          },
+          {
+            "name": "SymmetricFunctions.schur",
+            "why_needed": "Schur function definition"
+          }
+        ],
+        "needed_source_context": [
+          "thm.sf.jt-e"
+        ],
+        "role": "main_claim",
+        "selector_unchecked_statement_sketch": "For partitions λ, μ, with λ^t, μ^t extended to M-tuples, s_{λ/μ} = det( e_{λ^t_i - μ^t_j - i + j} )_{i,j}.",
+        "source_part": "whole unit",
+        "task_id": "unit-005-task-1"
+      }
+    ],
+    "previous_source_context": [
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "theorem",
+          "id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.pieri",
+          "labels": [
+            "thm.sf.pieri"
+          ],
+          "line_range": [
+            117,
+            134
+          ],
+          "parse_warnings": [],
+          "part_markers": [
+            {
+              "line": 121,
+              "marker": "\\textbf{(a)}",
+              "part": "a"
+            },
+            {
+              "line": 128,
+              "marker": "\\textbf{(b)}",
+              "part": "b"
+            }
+          ],
+          "path": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{theorem}\n[Pieri rules]\\label{thm.sf.pieri}Let $n\\in\\mathbb{N}$. Let $\\mu$ be an\n$N$-partition. Then: \\medskip\n\n\\textbf{(a)} We have%\n\\[\nh_{n}s_{\\mu}=\\sum_{\\substack{\\lambda\\text{ is an }N\\text{-partition;}%\n\\\\\\lambda/\\mu\\text{ is a horizontal }n\\text{-strip}}}s_{\\lambda}.\n\\]\n\n\n\\textbf{(b)} We have%\n\\[\ne_{n}s_{\\mu}=\\sum_{\\substack{\\lambda\\text{ is an }N\\text{-partition;}%\n\\\\\\lambda/\\mu\\text{ is a vertical }n\\text{-strip}}}s_{\\lambda}.\n\\]\n\n\\end{theorem}"
+        }
+      },
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "theorem",
+          "id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-h",
+          "labels": [
+            "thm.sf.jt-h"
+          ],
+          "line_range": [
+            192,
+            208
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex",
+          "referenced_labels": [
+            "def.sf.skew-schur",
+            "rmk.sf.N-par-vs-M-par"
+          ],
+          "source_text": "\\begin{theorem}\n[First Jacobi--Trudi formula]\\label{thm.sf.jt-h}Let $M\\in\\mathbb{N}$. Let\n$\\lambda=\\left(  \\lambda_{1},\\lambda_{2},\\ldots,\\lambda_{M}\\right)  $ and\n$\\mu=\\left(  \\mu_{1},\\mu_{2},\\ldots,\\mu_{M}\\right)  $ be two $M$-partitions\n(i.e., weakly decreasing $M$-tuples of nonnegative integers). Then,%\n\\[\ns_{\\lambda/\\mu}=\\det\\left(  \\left(  h_{\\lambda_{i}-\\mu_{j}-i+j}\\right)\n_{1\\leq i\\leq M,\\ 1\\leq j\\leq M}\\right)  .\n\\]\n(Here, $s_{\\lambda/\\mu}$ is defined as in Definition \\ref{def.sf.skew-schur},\nwhere the semistandard tableaux of shape $\\lambda/\\mu$ are defined as certain\nfillings of $Y\\left(  \\lambda/\\mu\\right)  :=\\left\\{  \\left(  i,j\\right)\n\\ \\mid\\ i\\in\\left[  M\\right]  \\text{ and }j\\in\\left[  \\lambda_{i}\\right]\n\\setminus\\left[  \\mu_{i}\\right]  \\right\\}  $, but their entries are still\nsupposed to be elements of $\\left[  N\\right]  $. Compare with Remark\n\\ref{rmk.sf.N-par-vs-M-par}.)\n\\end{theorem}"
+        }
+      }
+    ],
+    "source_focus_summary": "Second Jacobi-Trudi formula"
+  }
+}

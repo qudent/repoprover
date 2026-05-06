@@ -1,0 +1,402 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [],
+    "lean_file_body": "",
+    "notes": [
+      "The proof is incomplete; the first equality step is not fully justified from visible context. The statement is generated as intended, but the proof sketch is insufficient."
+    ],
+    "status": "cannot_prove_from_visible_context",
+    "unit_key": "unit-004",
+    "used_context": [
+      "Finset.sum",
+      "toSign",
+      "signProduct",
+      "Finset.sum_comm",
+      "Finset.sum_pow",
+      "Finset.card_fin"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+    "unit_key": "unit-004"
+  },
+  "source_unit": {
+    "environment": "lemma",
+    "id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+    "labels": [
+      "lem.cancel.all-even.l1"
+    ],
+    "line_range": [
+      144,
+      154
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{lemma}\n\\label{lem.cancel.all-even.l1}Let $n,d\\in\\mathbb{N}$. Then,%\n\\begin{align*}\n&  \\sum_{\\left(  e_{1},e_{2},\\ldots,e_{d}\\right)  \\in\\left\\{  1,-1\\right\\}\n^{d}}\\left(  e_{1}+e_{2}+\\cdots+e_{d}\\right)  ^{n}\\\\\n&  =\\sum_{\\left(  x_{1},x_{2},\\ldots,x_{n}\\right)  \\in\\left[  d\\right]  ^{n}%\n}\\ \\ \\sum_{\\left(  e_{1},e_{2},\\ldots,e_{d}\\right)  \\in\\left\\{  1,-1\\right\\}\n^{d}}e_{x_{1}}e_{x_{2}}\\cdots e_{x_{n}}.\n\\end{align*}\n\n\\end{lemma}"
+  },
+  "unit_key": "unit-004",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "declined_cannot_prove",
+    "messages": [],
+    "reported_status": "cannot_prove_from_visible_context",
+    "skipped_reason": "cannot_prove_from_visible_context",
+    "unit_key": "unit-004",
+    "visible_support_context": {
+      "accepted": [
+        {
+          "kind": "def",
+          "line": "55",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "def",
+          "line": "64",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.multiplicity",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "def",
+          "line": "83",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "def",
+          "line": "93",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "lemma",
+          "line": "99",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_sq",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "lemma",
+          "line": "111",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_pow_odd",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "lemma",
+          "line": "119",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_add_one",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "126",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct_eq_prod_pow",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "def",
+          "line": "155",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "445",
+          "name": "AlgebraicCombinatorics.SubtractiveMethods.allEven_count_formula",
+          "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+        }
+      ],
+      "accepted_count": 10,
+      "candidate_count": 10,
+      "rejected": [],
+      "rejected_count": 0,
+      "skipped": [],
+      "skipped_count": 0,
+      "support_mode": "assumption"
+    }
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "sum over signs",
+      "equality of sums"
+    ],
+    "local_file_context_candidates": [
+      {
+        "kind": "open",
+        "line_range": [
+          45,
+          45
+        ],
+        "name": "open Finset BigOperators",
+        "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          47,
+          47
+        ],
+        "name": "AlgebraicCombinatorics.SubtractiveMethods",
+        "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      }
+    ],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.cancel.all-even"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "def",
+                "lean_snippet": "def IsAllEven {n d : ℕ} (x : Fin n → Fin d) : Prop :=\n  ∀ k : Fin d, Even ((univ.filter fun i => x i = k).card)",
+                "line_range": [
+                  55,
+                  61
+                ],
+                "module": "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "thm.cancel.all-even"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem allEven_count_formula (n d : ℕ) :\n    ((allEvenTuples n d).card : ℤ) * 2^d = ∑ k ∈ range (d + 1), d.choose k * (d - 2*k : ℤ)^n",
+                "line_range": [
+                  445,
+                  460
+                ],
+                "module": "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.allEven_count_formula",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "thm.cancel.all-even"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:thm.cancel.all-even"
+          }
+        ],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": "Finset.sum",
+            "expected_signature_or_shape": "Finset.sum : Finset α → (α → β) → β",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "Finset.sum.{u_1, u_3} {ι : Type u_1} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (f : ι → M) : M",
+                  "line": 7,
+                  "severity": "information"
+                }
+              ],
+              "signature": "Finset.sum.{u_1, u_3} {ι : Type u_1} {M : Type u_3} [AddCommMonoid M] (s : Finset ι) (f : ι → M) : M",
+              "status": "checked"
+            },
+            "query": "Finset.sum",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": null,
+            "source_part": "whole unit",
+            "task_id": "unit-004-task-1",
+            "unit_key": "unit-004",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "sum over finite sets"
+          }
+        ],
+        "kind": "theorem",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def multiplicity {n d : ℕ} (x : Fin n → Fin d) (k : Fin d) : ℕ :=\n  (univ.filter fun i => x i = k).card",
+            "line_range": [
+              64,
+              67
+            ],
+            "name": "multiplicity",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def toSign (b : ZMod 2) : ℤ := if b = 0 then 1 else -1",
+            "line_range": [
+              83,
+              85
+            ],
+            "name": "toSign",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def signProduct {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) : ℤ :=\n  ∏ i : Fin n, toSign (e (x i))",
+            "line_range": [
+              93,
+              98
+            ],
+            "name": "signProduct",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "lemma",
+            "lean_snippet": "lemma toSign_sq (b : ZMod 2) : toSign b ^ 2 = 1 := by\n  fin_cases b <;> simp [toSign]",
+            "line_range": [
+              99,
+              102
+            ],
+            "name": "toSign_sq",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "lemma toSign_pow_odd (b : ZMod 2) (m : ℕ) (hm : Odd m) : toSign b ^ m = toSign b := by\n  obtain ⟨k, hk⟩ := hm\n  calc toSign b ^ m = toSign b ^ (2 * k + 1) := by rw [hk, two_mul]\n    _ = (toSign b ^ 2) ^ k * toSign b := by ring\n    _ = 1 ^ k * toSign b := by rw [toSign_sq]\n    _ = toSign b := by ring",
+            "line_range": [
+              111,
+              118
+            ],
+            "name": "toSign_pow_odd",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "lemma",
+            "lean_snippet": "lemma toSign_add_one (b : ZMod 2) : toSign (b + 1) = -toSign b := by\n  fin_cases b <;> decide",
+            "line_range": [
+              119,
+              125
+            ],
+            "name": "toSign_add_one",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem signProduct_eq_prod_pow {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) :\n    signProduct e x = ∏ k : Fin d, (toSign (e k)) ^ (multiplicity x k) := by\n  unfold signProduct multiplicity\n  rw [← Finset.prod_fiberwise Finset.univ x (fun i => toSign (e (x i)))]\n  congr 1\n  ext k\n  simp only [prod_filter]\n  have h1 : ∏ a : Fin n, (if x a = k then toSign (e (x a)) else 1) =\n            ∏ a : Fin n, (if x a = k then toSign (e k) else 1) := by\n    apply Finset.prod_congr rfl\n    intro a _\n    split_ifs with h\n    · rw [h]\n    · rfl\n  rw [h1]\n  rw [Finset.prod_ite]\n  simp only [prod_const_one, mul_one]\n  rw [Finset.prod_const]",
+            "line_range": [
+              126,
+              154
+            ],
+            "name": "signProduct_eq_prod_pow",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "def",
+            "lean_snippet": "def signSum {d : ℕ} (e : Fin d → ZMod 2) : ℤ :=\n  ∑ k : Fin d, toSign (e k)",
+            "line_range": [
+              155,
+              157
+            ],
+            "name": "signSum",
+            "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+            "snippet_truncated": false
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "definition of toSign",
+          "signProduct"
+        ],
+        "needed_project_context": [
+          {
+            "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+            "why_needed": "sign function from ZMod 2 to ℤ"
+          },
+          {
+            "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+            "why_needed": "product of signs"
+          }
+        ],
+        "needed_source_context": [
+          "lem.cancel.all-even.l1"
+        ],
+        "role": "main_claim",
+        "selector_unchecked_statement_sketch": "For n,d in ℕ, sum_{(e_1,...,e_d)∈{±1}^d} (e_1+...+e_d)^n = sum_{x∈[d]^n} sum_{e∈{±1}^d} e_{x_1}...e_{x_n}.",
+        "source_part": "whole unit",
+        "task_id": "unit-004-task-1"
+      }
+    ],
+    "previous_source_context": [
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "theorem",
+          "id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:thm.cancel.all-even",
+          "labels": [
+            "thm.cancel.all-even"
+          ],
+          "line_range": [
+            25,
+            42
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{theorem}\n\\label{thm.cancel.all-even}Let $n\\in\\mathbb{N}$ and $d\\in\\mathbb{N}$. An\n$n$-tuple $\\left(  x_{1},x_{2},\\ldots,x_{n}\\right)  \\in\\left[  d\\right]  ^{n}$\nis said to be \\emph{all-even} if each element of $\\left[  d\\right]  $ occurs\nan even number of times in this $n$-tuple (i.e., if for each $k\\in\\left[\nd\\right]  $, the number of all $i\\in\\left[  n\\right]  $ satisfying $x_{i}=k$\nis even). For example, the $4$-tuple $\\left(  1,4,4,1\\right)  $ and the\n$6$-tuples $\\left(  1,3,3,5,1,5\\right)  $ and $\\left(  2,4,2,4,3,3\\right)  $\nare all-even, while the $4$-tuples $\\left(  1,2,2,4\\right)  $ and $\\left(\n2,4,6,4\\right)  $ are not.\n\nThen, the number of all all-even $n$-tuples $\\left(  x_{1},x_{2},\\ldots\n,x_{n}\\right)  \\in\\left[  d\\right]  ^{n}$ is\n\\[\n\\dfrac{1}{2^{d}}\\sum_{k=0}^{d}\\dbinom{d}{k}\\left(  d-2k\\right)  ^{n}.\n\\]\n\n\\end{theorem}"
+        }
+      }
+    ],
+    "source_focus_summary": "Equality of sums over signs"
+  }
+}

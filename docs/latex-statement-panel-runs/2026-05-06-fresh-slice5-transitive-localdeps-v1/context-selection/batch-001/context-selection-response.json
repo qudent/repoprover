@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Catalan number definition\",\n        \"Hankel matrix determinant equals 1\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"depends_on_task_ids\": [],\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Catalan number definition in project\",\n            \"Hankel matrix definition\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"det : Matrix (Fin k) (Fin k) R → R\",\n              \"name_or_query\": \"Matrix.det\",\n              \"why_needed\": \"determinant of matrix\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"catalanHankelMatrix\",\n              \"why_needed\": \"definition of Catalan Hankel matrix\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"cor.lgv.catalan-hankel-det-0\"\n          ],\n          \"role\": \"main_claim\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For any k : ℕ, the determinant of the k×k Catalan Hankel matrix (c_{i+j-2})_{i,j} equals 1.\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Catalan Hankel determinant equals 1\",\n      \"unit_key\": \"unit-001\"\n    },\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"field assumption\",\n        \"constant term nonzero\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"depends_on_task_ids\": [],\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"exact statement of fps_invertible_iff_constantCoeff\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"IsUnit a ↔ IsUnit (constantCoeff a)\",\n              \"name_or_query\": \"PowerSeries.isUnit_iff_constantCoeff\",\n              \"why_needed\": \"characterization of invertible power series\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"AlgebraicCombinatorics.fps_invertible_iff_constantCoeff\",\n              \"why_needed\": \"prior proposition prop.fps.invertible\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"cor.fps.invertible.field\"\n          ],\n          \"role\": \"main_claim\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"If K is a field, then a power series a over K is invertible iff its constant term is nonzero.\",\n          \"task_id\": \"unit-002-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.95,\n      \"source_focus_summary\": \"Invertibility of FPS over a field\",\n      \"unit_key\": \"unit-002\"\n    },\n    {\n      \"context_pack_size_risk\": \"medium\",\n      \"formalization_risks\": [\n        \"binomial coefficient with complex n\",\n        \"summation identity\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"depends_on_task_ids\": [],\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Ring.choose for complex numbers\",\n            \"binomial coefficient definition for complex n\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Ring.choose : K → ℕ → K\",\n              \"name_or_query\": \"Ring.choose\",\n              \"why_needed\": \"generalized binomial coefficient\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"AlgebraicCombinatorics.FPS.generalizedNewtonBinomial\",\n              \"why_needed\": \"generalized Newton binomial formula\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"prop.binom.nCk-2i-qedmo.CN\"\n          ],\n          \"role\": \"main_claim\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For n in ℂ and k in ℕ, sum_{i=0}^k C(n+i-1, i) * C(n, k-2i) = C(n+k-1, k).\",\n          \"task_id\": \"unit-003-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.8,\n      \"source_focus_summary\": \"Binomial coefficient identity\",\n      \"unit_key\": \"unit-003\"\n    },\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"sum over signs\",\n        \"equality of sums\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"depends_on_task_ids\": [],\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"definition of toSign\",\n            \"signProduct\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Finset.sum : Finset α → (α → β) → β\",\n              \"name_or_query\": \"Finset.sum\",\n              \"why_needed\": \"sum over finite sets\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"AlgebraicCombinatorics.SubtractiveMethods.toSign\",\n              \"why_needed\": \"sign function from ZMod 2 to ℤ\"\n            },\n            {\n              \"name\": \"AlgebraicCombinatorics.SubtractiveMethods.signProduct\",\n              \"why_needed\": \"product of signs\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"lem.cancel.all-even.l1\"\n          ],\n          \"role\": \"main_claim\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For n,d in ℕ, sum_{(e_1,...,e_d)∈{±1}^d} (e_1+...+e_d)^n = sum_{x∈[d]^n} sum_{e∈{±1}^d} e_{x_1}...e_{x_n}.\",\n          \"task_id\": \"unit-004-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Equality of sums over signs\",\n      \"unit_key\": \"unit-004\"\n    },\n    {\n      \"context_pack_size_risk\": \"medium\",\n      \"formalization_risks\": [\n        \"transpose partition\",\n        \"second Jacobi-Trudi formula\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"depends_on_task_ids\": [],\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"transpose of partition\",\n            \"definition of e_{...}\",\n            \"skew Schur function\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Matrix.det : Matrix (Fin M) (Fin M) R → R\",\n              \"name_or_query\": \"Matrix.det\",\n              \"why_needed\": \"determinant\"\n            },\n            {\n              \"expected_signature_or_shape\": \"esymm : Finset σ → R → MvPolynomial σ R\",\n              \"name_or_query\": \"esymm\",\n              \"why_needed\": \"elementary symmetric functions\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"SymmetricFunctions.jacobiTrudi_h\",\n              \"why_needed\": \"first Jacobi-Trudi formula for context\"\n            },\n            {\n              \"name\": \"SymmetricFunctions.schur\",\n              \"why_needed\": \"Schur function definition\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"thm.sf.jt-e\"\n          ],\n          \"role\": \"main_claim\",\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For partitions λ, μ, with λ^t, μ^t extended to M-tuples, s_{λ/μ} = det( e_{λ^t_i - μ^t_j - i + j} )_{i,j}.\",\n          \"task_id\": \"unit-005-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.85,\n      \"source_focus_summary\": \"Second Jacobi-Trudi formula\",\n      \"unit_key\": \"unit-005\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778076635,
+  "id": "gen-1778076635-cflgvPITrkuTm5WoOuXE",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 1916,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00502572,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00053648,
+      "upstream_inference_cost": 0.00502572,
+      "upstream_inference_prompt_cost": 0.00448924
+    },
+    "is_byok": false,
+    "prompt_tokens": 32066,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 33982
+  }
+}

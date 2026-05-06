@@ -1,0 +1,103 @@
+{
+  "caveat": "This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.",
+  "compile_passed_units": 0,
+  "compiled_name_overlap_units": 0,
+  "compiled_needs_semantic_review_units": 0,
+  "coverage_status_counts": {
+    "compile_failure": 1,
+    "not_generated_cannot_prove": 4
+  },
+  "generated_at": "2026-05-06T14:36:43.808132+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/generation",
+  "schema_version": "repoprover.latex_statement_gold_comparison.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+  "unit_count": 5,
+  "units": [
+    {
+      "compile_passed": false,
+      "coverage_status": "not_generated_cannot_prove",
+      "full_name_overlap": [],
+      "generated_declaration_names": [],
+      "gold_aligned_full_names": [
+        "LGV.catalan_hankel_det"
+      ],
+      "gold_aligned_local_names": [
+        "catalan_hankel_det"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+      "unit_key": "unit-001",
+      "verification_failure_class": "declined_cannot_prove"
+    },
+    {
+      "compile_passed": false,
+      "coverage_status": "compile_failure",
+      "full_name_overlap": [],
+      "generated_declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff_ne_zero"
+      ],
+      "gold_aligned_local_names": [
+        "fps_invertible_iff_constantCoeff_ne_zero"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+      "unit_key": "unit-002",
+      "verification_failure_class": "compile_failure"
+    },
+    {
+      "compile_passed": false,
+      "coverage_status": "not_generated_cannot_prove",
+      "full_name_overlap": [],
+      "generated_declaration_names": [],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.FPS.binomialIdentity"
+      ],
+      "gold_aligned_local_names": [
+        "binomialIdentity"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+      "unit_key": "unit-003",
+      "verification_failure_class": "declined_cannot_prove"
+    },
+    {
+      "compile_passed": false,
+      "coverage_status": "not_generated_cannot_prove",
+      "full_name_overlap": [],
+      "generated_declaration_names": [],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.SubtractiveMethods.sum_signSum_pow_eq_sum_signProduct"
+      ],
+      "gold_aligned_local_names": [
+        "sum_signSum_pow_eq_sum_signProduct"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+      "unit_key": "unit-004",
+      "verification_failure_class": "declined_cannot_prove"
+    },
+    {
+      "compile_passed": false,
+      "coverage_status": "not_generated_cannot_prove",
+      "full_name_overlap": [],
+      "generated_declaration_names": [],
+      "gold_aligned_full_names": [
+        "SymmetricFunctions.jacobiTrudi_e"
+      ],
+      "gold_aligned_local_names": [
+        "jacobiTrudi_e"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e",
+      "unit_key": "unit-005",
+      "verification_failure_class": "declined_cannot_prove"
+    }
+  ],
+  "verification_failure_class_counts": {
+    "compile_failure": 1,
+    "declined_cannot_prove": 4
+  }
+}

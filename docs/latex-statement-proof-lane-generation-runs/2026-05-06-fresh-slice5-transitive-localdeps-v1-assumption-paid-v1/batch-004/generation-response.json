@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"cancel_all_even_l1\"\n      ],\n      \"lean_file_body\": \"open Finset\\nopen BigOperators\\n\\nlemma cancel_all_even_l1 (n d : ℕ) :\\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) =\\n    (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i))) := by\\n  calc\\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) =\\n        (∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i))) := by\\n      refine Finset.sum_congr rfl fun e _ => ?_\\n      rw [Finset.sum_pow]\\n      simp [Finset.card_fin, Finset.sum_finset_product]\\n    _ = (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i))) := by\\n      rw [Finset.sum_comm]\\n\",\n      \"notes\": [\n        \"The proof uses the identity (∑ a_i)^n = ∑_{x∈[d]^n} ∏ a_{x_i} via sum_pow and card_fin. The sum over e is then commuted. The statement matches the source lemma.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-004\",\n      \"used_context\": [\n        \"Finset.sum\",\n        \"Finset.sum_pow\",\n        \"Finset.card_fin\",\n        \"Finset.sum_comm\",\n        \"Finset.sum_congr\",\n        \"Finset.sum_finset_product\",\n        \"toSign\",\n        \"ZMod 2\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778079521,
+  "id": "gen-1778079521-0So14XkBRAvOPBr2ccuV",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 472,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.000897932,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00013216,
+      "upstream_inference_cost": 0.000897932,
+      "upstream_inference_prompt_cost": 0.000765772
+    },
+    "is_byok": false,
+    "prompt_tokens": 6097,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 640,
+      "video_tokens": 0
+    },
+    "total_tokens": 6569
+  }
+}

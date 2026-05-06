@@ -1,0 +1,94 @@
+{
+  "base_generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/generation",
+  "overlay_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof requires a lemma that the nipat sum for the specific source/target vertices (x-decreasing, y-increasing) equals 1. This is a known combinatorial fact (Catalan Hankel determinant equals 1) but not yet formalized in the visible context. The visible context provides the LGV lemma (lgv_nonpermutable) and the equality of the Catalan Hankel matrix to the path weight matrix (catalanHankelMatrix_eq_pathWeightMatrix), but no lemma that the nipat weight sum for these vertices equals 1. Without that lemma, the proof cannot be completed."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable"
+      ]
+    },
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "theorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [PowerSeries.isUnit_iff_constantCoeff]\n  constructor\n  · intro h\n    exact Units.ne_zero (IsUnit.unit h)\n  · intro h\n    have : IsUnit (constantCoeff a) := by\n      apply IsUnit.mk (Units.mk0 (constantCoeff a) h)\n    exact this",
+      "notes": [
+        "Uses PowerSeries.isUnit_iff_constantCoeff from Mathlib; the field condition is used to convert nonzero constant term to IsUnit via Units.mk0."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "PowerSeries.isUnit_iff_constantCoeff",
+        "Field K",
+        "Units.ne_zero",
+        "Units.mk0",
+        "IsUnit.unit",
+        "IsUnit.mk"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The identity involves binomial coefficients Ring.choose n (k-2*i) where n is of type K (a ℚ-algebra) and k, i are ℕ. The sum is over i from 0 to k. The proof would require combinatorial identities not available from the visible context. The visible context provides generalizedNewtonBinomial and coeff_one_add_X_fpsPow, but these relate to (1+X)^c, not to the specific sum. The identity is a known combinatorial identity (e.g., a variant of the Chu-Vandermonde identity), but no lemma in the visible context directly supports it. The polynomial_identity_trick could be used if we could express the identity as a polynomial identity in n, but the sum involves Ring.choose n (k-2*i) which is not polynomial in n for fixed k (it is a polynomial of degree k-2*i, but the sum is over i). Moreover, the identity is for all n in K, so one could try to prove it for all n in ℕ and then use polynomial_identity_trick, but the sum involves Ring.choose n (k-2*i) which for n in ℕ is the usual binomial coefficient, and the identity reduces to a known identity for binomial coefficients. However, the visible context does not provide the necessary combinatorial lemmas (e.g., Chu-Vandermonde identity for binomial coefficients). Therefore, the proof cannot be completed from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature",
+        "generalizedNewtonBinomial",
+        "coeff_one_add_X_fpsPow",
+        "polynomial_identity_trick",
+        "Algebra ℚ K, BinomialRing K, CharZero K assumptions"
+      ]
+    },
+    {
+      "declaration_names": [
+        "cancel_all_even_l1"
+      ],
+      "lean_file_body": "open Finset\nopen BigOperators\n\nlemma cancel_all_even_l1 (n d : ℕ) :\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) =\n    (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i))) := by\n  calc\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) =\n        (∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i))) := by\n      refine Finset.sum_congr rfl fun e _ => ?_\n      rw [Finset.sum_pow]\n      simp [Finset.card_fin, Finset.sum_finset_product]\n    _ = (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i))) := by\n      rw [Finset.sum_comm]\n",
+      "notes": [
+        "The proof uses the identity (∑ a_i)^n = ∑_{x∈[d]^n} ∏ a_{x_i} via sum_pow and card_fin. The sum over e is then commuted. The statement matches the source lemma."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum",
+        "Finset.sum_pow",
+        "Finset.card_fin",
+        "Finset.sum_comm",
+        "Finset.sum_congr",
+        "Finset.sum_finset_product",
+        "toSign",
+        "ZMod 2"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The theorem statement requires the second Jacobi-Trudi formula using elementary symmetric functions and transpose partitions. The visible context provides definitions for NPartition, schur, jacobiTrudiMatrixH (using hsymmExt), and related lemmas, but lacks: (1) a definition of the elementary symmetric function esymm in the same polynomial ring MvPolynomial (Fin N) R (the Mathlib MvPolynomial.esymm exists but requires Fintype σ, which Fin N satisfies; however, the index in the formula is λ^t_i - μ^t_j - i + j, which may be negative, so an extension esymmExt analogous to hsymmExt is needed), (2) a definition of the transpose of an NPartition (the project has NPartition.transpose but it is defined in a different file and may not be imported; the visible context does not include it), (3) a definition of the skew Schur function s_{λ/μ} (the visible context has schur for non-skew shapes only; the source references def.sf.skew-schur but it is not in the visible context), (4) the first Jacobi-Trudi formula (jacobiTrudi_h) which would be used as a lemma, but it is not present in the visible context (only jacobiTrudiMatrixH is defined, but the theorem stating the determinant equals the skew Schur is missing). Without these definitions and theorems, the proof cannot be completed from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition",
+        "schur",
+        "jacobiTrudiMatrixH",
+        "hsymmExt",
+        "hsymmExt_isSymmetric"
+      ]
+    }
+  ]
+}

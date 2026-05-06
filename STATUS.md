@@ -36,8 +36,10 @@ dev/fresh panels plus one-off diagnostics.
   diagnostics, and duplicate/already-imported support filtering.
 - [x] Add bounded transitive local predecessor dependency collection; Catalan
   budget payload now includes private `translateVertex`/`dyckDigraph_arc_translate`.
-- [ ] Validate the next proof/context change on a fresh multi-unit slice, not
-  only on NPartition or one already-debugged theorem.
+- [x] Validate transitive local predecessor context on a fresh multi-unit slice.
+- [ ] Run a fixed model/context ablation on the same theorem-level panel:
+  DeepSeek V4 Flash vs DeepSeek V4 Pro vs Kimi K2.6, with identical hidden-target
+  context packs and acceptance metrics.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -48,6 +50,9 @@ dev/fresh panels plus one-off diagnostics.
   many but not all such gaps.
 - Some remaining failures are now real proof-shape issues after context improves,
   for example raw Catalan proof tactics treating predicates as binders.
+- Flash-heavy generation is not yet justified as an optimizer strategy; it is
+  only the cheap baseline. Need same-panel model ablations before concluding
+  whether Flash, Pro, or Kimi should own selector/generator/proof-lane stages.
 - Full elaborated dependency extraction is useful but heavy on this 8 GB
   machine; reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is
   necessary.
@@ -56,9 +61,11 @@ dev/fresh panels plus one-off diagnostics.
 - Scale snapshot: 462 LaTeX source units, 114 gold-candidate units, 414 aligned
   Lean declarations. Elaborated direct deps over gold units have median 44
   Mathlib and 5 project constants per unit.
-- Current dev-panel proof-lane acceptance is `3/5` compiled and `3/5` semantic;
-  current fresh-slice acceptance is `1/5` compiled and `1/5` semantic. Recent
-  paid proof-lane spend was under two cents total across the recorded probes.
+- Current dev-panel proof-lane acceptance is `3/5` compiled and `3/5` semantic.
+  The new fresh-slice transitive-localdeps run regressed to `0/5` compiled and
+  `0/5` semantic after ordinary generation. Selector cost was `$0.00502572`,
+  ordinary generation cost was `$0.006082748`, and proof-lane generation cost
+  was `$0.009473072`.
 - Decline-context mining scanned 5,677 project declarations across 53 project
   Lean files. It found source-visible project declarations the model mentioned
   but had not selected, then packed them with gold used only as an exclusion
@@ -73,16 +80,29 @@ dev/fresh panels plus one-off diagnostics.
   proves the local predecessor collector now exposes `translateVertex`,
   `dyckDigraph_arc_translate`, and the `translatePath_*` family in source order
   before the Catalan target line.
+- Fresh-slice proof-lane acceptance at
+  `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/`
+  made no paid calls itself, found no leakage-scan matches, and ended at `0/5`:
+  3 clean declines and 2 compile failures. Unit 002 still used bad `IsUnit`
+  construction/subscript notation; unit 004 referenced missing `toSign` and
+  `allEvenTuples` context and hit a heartbeat timeout.
+- Generic honesty fixes landed: placeholder-bodied local predecessor snippets
+  are dropped from prompt/support context, proof-lane generation can resume
+  completed batches, and provider exceptions are logged per batch.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and native session JSONL under
   `/home/name/.codex/sessions`.
+- Follow-up validation report is in
+  `reports/REPORT-20260506T0615Z-codex-log-audit-followup.md`; it confirms the
+  prior audit used native Codex logs, refines the missing-main-JSONL caveat, and
+  did not run provider calls or Lean verification.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: rerun a small fresh proof-lane payload with the transitive
-  local predecessor context, then route surviving errors to proof repair rather
-  than another unchanged ordinary generation call.
+- Next useful work: run the fixed model/context ablation panel, then route
+  failures by class. Avoid another Flash-only loop unless it is a cheap dry-run
+  gate before a stronger model comparison.

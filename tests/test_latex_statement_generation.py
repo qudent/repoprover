@@ -186,6 +186,27 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "posthoc_lean_alignment" not in prompt
 
 
+def test_generation_prompt_redacts_placeholder_local_context(tmp_path: Path) -> None:
+    run_dir = _write_selector_run(tmp_path)
+    payload_path = run_dir / "batch-001/context-selection-payload.json"
+    payload = json.loads(payload_path.read_text(encoding="utf-8"))
+    user_payload = json.loads(payload["messages"][0]["content"])
+    user_payload["units"][0]["local_file_predecessor_declarations"][0]["lean_snippet"] = (
+        "theorem prior_helper (n : Nat) : n + 0 = n := by\n  sorry"
+    )
+    user_payload["units"][0]["local_file_predecessor_declarations"][0]["kind"] = "theorem"
+    payload["messages"][0]["content"] = json.dumps(user_payload)
+    payload_path.write_text(json.dumps(payload), encoding="utf-8")
+
+    messages = build_generation_messages(run_dir)
+    prompt = json.dumps(messages, ensure_ascii=False)
+    generated_payload = json.loads(messages[1]["content"])
+    predecessors = generated_payload["units"][0]["planned_declarations"][0]["local_file_predecessor_declarations"]
+
+    assert predecessors == []
+    assert "theorem prior_helper (n : Nat) : n + 0 = n := by" not in prompt
+
+
 def test_generation_prompt_preserves_same_unit_helper_planning(tmp_path: Path) -> None:
     run_dir = _write_selector_run(tmp_path)
     selector_output_path = run_dir / "batch-001/context-selection-output.json"
@@ -351,3 +372,62 @@ def test_generation_budget_payload_can_filter_unit_keys(tmp_path: Path) -> None:
     payload = json.loads((output / "batch-001/generation-payload.json").read_text(encoding="utf-8"))
     user_payload = json.loads(payload["messages"][1]["content"])
     assert [unit["unit_key"] for unit in user_payload["units"]] == ["unit-002"]
+
+
+def test_generation_resume_existing_logs_provider_errors(monkeypatch, tmp_path: Path) -> None:
+    run_dir = _write_selector_run(tmp_path)
+    selected_path = run_dir / "eval/selected-units.jsonl"
+    first_selected = json.loads(selected_path.read_text(encoding="utf-8").strip())
+    second_selected = dict(first_selected)
+    second_selected["id"] = "source:demo.second"
+    selected_path.write_text(
+        "\n".join(json.dumps(row) for row in [first_selected, second_selected]) + "\n",
+        encoding="utf-8",
+    )
+    selector_output_path = run_dir / "batch-001/context-selection-output.json"
+    selector_output = json.loads(selector_output_path.read_text(encoding="utf-8"))
+    selector_output["units"].append(dict(selector_output["units"][0], unit_key="unit-002"))
+    selector_output_path.write_text(json.dumps(selector_output), encoding="utf-8")
+
+    output = tmp_path / "generation"
+    (output / "batch-001").mkdir(parents=True)
+    (output / "batch-001/generation-output.json").write_text('{"units": []}\n', encoding="utf-8")
+    (output / "batch-001/generation-response.json").write_text(
+        json.dumps({"usage": {"cost": 0.001, "prompt_tokens": 1, "completion_tokens": 1}}),
+        encoding="utf-8",
+    )
+
+    class FailingCompletions:
+        def create(self, **_payload):
+            raise RuntimeError("upstream returned non-json")
+
+    class FailingChat:
+        completions = FailingCompletions()
+
+    class FailingClient:
+        chat = FailingChat()
+
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
+    monkeypatch.setattr("scripts.run_latex_statement_generation.OpenAI", lambda **_kwargs: FailingClient())
+
+    summary = run(
+        argparse.Namespace(
+            selector_run=run_dir,
+            output=output,
+            unit_key=None,
+            model="deepseek/deepseek-v4-flash",
+            base_url="https://openrouter.ai/api/v1",
+            max_tokens=256,
+            max_units_per_call=1,
+            temperature=0.0,
+            reasoning_effort="none",
+            budget_only=False,
+            resume_existing=True,
+        )
+    )
+
+    assert summary["batches"][0]["resumed_existing"] is True
+    assert summary["batches"][0]["valid_json"] is True
+    assert summary["provider_error_count"] == 1
+    assert summary["batches"][1]["provider_error"]["type"] == "RuntimeError"
+    assert (output / "batch-002/provider-error.txt").exists()

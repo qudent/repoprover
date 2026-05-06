@@ -1,0 +1,662 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "current_generation": {
+    "declaration_names": [
+      "fps_invertible_iff_constantCoeff_field"
+    ],
+    "lean_file_body": "theorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [PowerSeries.isUnit_iff_constantCoeff]\n  constructor\n  · intro h\n    exact Units.ne_zero h\n  · intro h\n    exact IsUnit.mk (Units.mk0 (constantCoeff a) h)",
+    "notes": [
+      "Uses PowerSeries.isUnit_iff_constantCoeff from Mathlib; the field condition is used to convert IsUnit (constantCoeff a) to constantCoeff a ≠ 0 via Units.ne_zero and Units.mk0."
+    ],
+    "status": "generated",
+    "unit_key": "unit-002",
+    "used_context": [
+      "PowerSeries.isUnit_iff_constantCoeff",
+      "Field K",
+      "Units.ne_zero",
+      "Units.mk0"
+    ]
+  },
+  "instructions": [
+    "Do not inspect hidden aligned target Lean declarations or post-hoc gold metadata.",
+    "Use source text, previous source/project/local context, checked Mathlib signatures, and verifier-visible support only.",
+    "If a proof succeeds, output a normal generation-output.json unit that can be overlaid with scripts/merge_latex_statement_generation_units.py.",
+    "If proof still fails, report the missing checked project/local/Mathlib facts precisely."
+  ],
+  "schema_version": "repoprover.latex_statement_proof_lane_task.v1",
+  "semantic_coverage": {
+    "compile_gate_bypassed": false,
+    "compile_passed": false,
+    "coverage_status": "generated_not_compiled",
+    "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+    "unit_key": "unit-002"
+  },
+  "source_unit": {
+    "environment": "corollary",
+    "id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:cor.fps.invertible.field",
+    "labels": [
+      "cor.fps.invertible.field"
+    ],
+    "line_range": [
+      312,
+      316
+    ],
+    "parse_warnings": [],
+    "part_markers": [],
+    "path": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex",
+    "referenced_labels": [],
+    "source_text": "\\begin{corollary}\n\\label{cor.fps.invertible.field}Assume that $K$ is a field. Let $a\\in K\\left[\n\\left[  x\\right]  \\right]  $. Then, the FPS $a$ is invertible in $K\\left[\n\\left[  x\\right]  \\right]  $ if and only if $\\left[  x^{0}\\right]  a\\neq0$.\n\\end{corollary}"
+  },
+  "unit_key": "unit-002",
+  "verification": {
+    "compile_passed": false,
+    "contract_violations": [],
+    "failure_class": "compile_failure",
+    "messages": [
+      {
+        "column": 29,
+        "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 12,
+        "severity": "error"
+      },
+      {
+        "column": 32,
+        "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 18,
+        "severity": "error"
+      },
+      {
+        "column": 32,
+        "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 18,
+        "severity": "error"
+      },
+      {
+        "column": 8,
+        "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+        "kind": "[anonymous]",
+        "line": 19,
+        "severity": "error"
+      },
+      {
+        "column": 19,
+        "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+        "kind": "[anonymous]",
+        "line": 19,
+        "severity": "error"
+      },
+      {
+        "column": 55,
+        "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+        "kind": "[anonymous]",
+        "line": 19,
+        "severity": "error"
+      },
+      {
+        "column": 32,
+        "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 25,
+        "severity": "error"
+      },
+      {
+        "column": 32,
+        "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 25,
+        "severity": "error"
+      },
+      {
+        "column": 8,
+        "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+        "kind": "[anonymous]",
+        "line": 26,
+        "severity": "error"
+      },
+      {
+        "column": 19,
+        "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+        "kind": "[anonymous]",
+        "line": 26,
+        "severity": "error"
+      },
+      {
+        "column": 35,
+        "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+        "kind": "[anonymous]",
+        "line": 26,
+        "severity": "error"
+      },
+      {
+        "column": 27,
+        "data": "failed to synthesize instance of type class\n  HMul L L ?m.21\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 26,
+        "severity": "error"
+      },
+      {
+        "column": 29,
+        "data": "failed to synthesize instance of type class\n  Monoid L\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+        "kind": "lean.synthInstanceFailed._namedError",
+        "line": 32,
+        "severity": "error"
+      },
+      {
+        "column": 8,
+        "data": "elaboration function for `Mathlib.Tactic.subscriptTerm` has not been implemented\n  ᵤ",
+        "kind": "[anonymous]",
+        "line": 33,
+        "severity": "error"
+      },
+      {
+        "column": 24,
+        "data": "Application type mismatch: The argument\n  h\nhas type\n  IsUnit (constantCoeff a)\nof sort `Prop` but is expected to have type\n  ?m.20ˣ\nof sort `Type ?u.25370` in the application\n  Units.ne_zero h",
+        "kind": "[anonymous]",
+        "line": 61,
+        "severity": "error"
+      },
+      {
+        "column": 10,
+        "data": "Unknown constant `IsUnit.mk`",
+        "kind": "lean.unknownIdentifier._namedError",
+        "line": 63,
+        "severity": "error"
+      }
+    ],
+    "reported_status": "generated",
+    "skipped_reason": null,
+    "unit_key": "unit-002",
+    "visible_support_context": {
+      "accepted": [
+        {
+          "kind": "def",
+          "line": "140",
+          "name": "AlgebraicCombinatorics.divByUnit",
+          "path": "AlgebraicCombinatorics/DividingFPS.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "146",
+          "name": "AlgebraicCombinatorics.fracs1_div_add_div",
+          "path": "AlgebraicCombinatorics/DividingFPS.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "160",
+          "name": "AlgebraicCombinatorics.fracs1_div_mul_div",
+          "path": "AlgebraicCombinatorics/DividingFPS.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "167",
+          "name": "AlgebraicCombinatorics.fracs1_div_eq_iff",
+          "path": "AlgebraicCombinatorics/DividingFPS.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "193",
+          "name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+          "path": "AlgebraicCombinatorics/DividingFPS.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "318",
+          "name": "AlgebraicCombinatorics.fps_onePlusX_isUnit",
+          "path": "AlgebraicCombinatorics/DividingFPS.lean"
+        },
+        {
+          "kind": "theorem",
+          "line": "325",
+          "name": "AlgebraicCombinatorics.fps_onePlusX_inv",
+          "path": "AlgebraicCombinatorics/DividingFPS.lean"
+        }
+      ],
+      "accepted_count": 7,
+      "candidate_count": 8,
+      "rejected": [],
+      "rejected_count": 0,
+      "skipped": [
+        {
+          "kind": "theorem",
+          "line": "935",
+          "name": "PowerSeries.isUnit_of_constantCoeff_eq_one",
+          "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+          "reason": "already_available_from_imports"
+        }
+      ],
+      "skipped_count": 1,
+      "support_mode": "assumption"
+    }
+  },
+  "visible_prompt_context": {
+    "additional_checked_repair_context": [],
+    "formalization_risks": [
+      "field assumption",
+      "constant term nonzero"
+    ],
+    "local_file_context_candidates": [
+      {
+        "kind": "section",
+        "line_range": [
+          39,
+          39
+        ],
+        "name": "",
+        "path": "AlgebraicCombinatorics/DividingFPS.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "open",
+        "line_range": [
+          41,
+          41
+        ],
+        "name": "open scoped BigOperators",
+        "path": "AlgebraicCombinatorics/DividingFPS.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          43,
+          43
+        ],
+        "name": "AlgebraicCombinatorics",
+        "path": "AlgebraicCombinatorics/DividingFPS.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          51,
+          51
+        ],
+        "name": "variable {K : Type*} [CommRing K]",
+        "path": "AlgebraicCombinatorics/DividingFPS.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "namespace",
+        "line_range": [
+          59,
+          59
+        ],
+        "name": "PowerSeries",
+        "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "open",
+        "line_range": [
+          61,
+          61
+        ],
+        "name": "open Nat Finset",
+        "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          63,
+          63
+        ],
+        "name": "variable (K : Type*) [CommRing K] [Algebra ℚ K]",
+        "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          76,
+          76
+        ],
+        "name": "variable {K}",
+        "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          144,
+          144
+        ],
+        "name": "variable (K) in",
+        "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "section",
+        "line_range": [
+          902,
+          902
+        ],
+        "name": "LogarithmicDerivative",
+        "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      },
+      {
+        "kind": "variable",
+        "line_range": [
+          904,
+          904
+        ],
+        "name": "variable {R : Type*} [Field R]",
+        "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+        "reason": "Local Lean context observed around safe prior project declarations. Use as placement/style guidance; do not assume hidden target declarations.",
+        "source": "file_context_from_prior_project_declaration"
+      }
+    ],
+    "planned_declarations": [
+      {
+        "available_prior_project_context": [
+          {
+            "project_declarations": [
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "prop.fps.invertible"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem fps_invertible_iff_constantCoeff (a : PowerSeries K) :\n    IsUnit a ↔ IsUnit (a.constantCoeff)",
+                "line_range": [
+                  193,
+                  197
+                ],
+                "module": "AlgebraicCombinatorics.DividingFPS",
+                "name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "prop.fps.invertible.1+x"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem fps_onePlusX_isUnit : IsUnit (1 + PowerSeries.X : PowerSeries K)",
+                "line_range": [
+                  318,
+                  323
+                ],
+                "module": "AlgebraicCombinatorics.DividingFPS",
+                "name": "AlgebraicCombinatorics.fps_onePlusX_isUnit",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "aligned_prior_declaration",
+                "declared_source_labels": [
+                  "prop.fps.invertible.1+x"
+                ],
+                "imports": [
+                  "Mathlib"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem fps_onePlusX_inv {F : Type*} [Field F] :\n    (1 + PowerSeries.X : PowerSeries F)⁻¹ = PowerSeries.mk fun n => (-1 : F) ^ n",
+                "line_range": [
+                  325,
+                  361
+                ],
+                "module": "AlgebraicCombinatorics.DividingFPS",
+                "name": "AlgebraicCombinatorics.fps_onePlusX_inv",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "referenced_source_labels": [],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              },
+              {
+                "context_source": "referencing_prior_declaration",
+                "declared_source_labels": [],
+                "imports": [
+                  "Mathlib",
+                  "AlgebraicCombinatorics.FPS.InfiniteProducts"
+                ],
+                "kind": "theorem",
+                "lean_snippet": "theorem isUnit_of_constantCoeff_eq_one {f : R⟦X⟧} (hf : constantCoeff f = 1) : IsUnit f",
+                "line_range": [
+                  935,
+                  944
+                ],
+                "module": "AlgebraicCombinatorics.FPS.ExpLog",
+                "name": "PowerSeries.isUnit_of_constantCoeff_eq_one",
+                "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+                "referenced_source_labels": [
+                  "def.fps.loder.1",
+                  "prop.fps.invertible"
+                ],
+                "snippet_policy": "statement_or_definition_body_only",
+                "snippet_truncated": false
+              }
+            ],
+            "reason": "Earlier or explicitly referenced source unit with project declarations. These declarations are prior context, not aligned target declarations for the selected unit.",
+            "source_labels": [
+              "prop.fps.invertible"
+            ],
+            "source_unit_id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:prop.fps.invertible"
+          }
+        ],
+        "depends_on_task_ids": [],
+        "hydrated_mathlib_context": [
+          {
+            "exact_identifier": "PowerSeries.isUnit_iff_constantCoeff",
+            "expected_signature_or_shape": "IsUnit a ↔ IsUnit (constantCoeff a)",
+            "fallback_mathlib_candidates": [],
+            "fallback_suppression": null,
+            "lean_check": {
+              "messages": [
+                {
+                  "data": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+                  "line": 5,
+                  "severity": "information"
+                }
+              ],
+              "signature": "PowerSeries.isUnit_iff_constantCoeff.{u_1} {R : Type u_1} [Ring R] {φ : R⟦X⟧} : IsUnit φ ↔ IsUnit (constantCoeff φ)",
+              "status": "checked"
+            },
+            "query": "PowerSeries.isUnit_iff_constantCoeff",
+            "related_mathlib_declarations": [],
+            "request_index": 1,
+            "source_declaration": {
+              "declaration_line": "theorem isUnit_iff_constantCoeff {φ : R⟦X⟧} :",
+              "kind": "theorem",
+              "line_number": 111,
+              "name": "PowerSeries.isUnit_iff_constantCoeff",
+              "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+              "source_snippet": "theorem isUnit_iff_constantCoeff {φ : R⟦X⟧} :\n    IsUnit φ ↔ IsUnit (constantCoeff φ) :=\n  MvPowerSeries.isUnit_iff_constantCoeff\n\n/-- Two ways of removing the constant coefficient of a power series are the same. -/",
+              "source_snippet_truncated": false
+            },
+            "source_part": "whole unit",
+            "task_id": "unit-002-task-1",
+            "unit_key": "unit-002",
+            "usage_policy": "checked_signature_authoritative",
+            "why_needed": "characterization of invertible power series"
+          }
+        ],
+        "kind": "theorem",
+        "local_file_predecessor_declarations": [
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_dependency_of_local_predecessor",
+            "kind": "def",
+            "lean_snippet": "def divByUnit (b : L) (a : Lˣ) : L := b * (a⁻¹ : Lˣ)\n\nscoped notation:70 b \" /ᵤ \" a => divByUnit b a",
+            "line_range": [
+              140,
+              145
+            ],
+            "name": "divByUnit",
+            "path": "AlgebraicCombinatorics/DividingFPS.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem fracs1_div_add_div (a c : Lˣ) (b d : L) :\n    (b /ᵤ a) + (d /ᵤ c) = (b * (c : L) + (a : L) * d) /ᵤ (a * c) := by\n  unfold divByUnit\n  simp only [Units.val_mul, mul_inv_rev]\n  have ha : (↑a⁻¹ : L) * (↑a : L) = 1 := by simp\n  have hc : (↑c⁻¹ : L) * (↑c : L) = 1 := by simp\n  have hcomm : (↑a⁻¹ : L) * (↑c⁻¹ : L) = (↑c⁻¹ : L) * (↑a⁻¹ : L) := by ring\n  calc b * ↑a⁻¹ + d * ↑c⁻¹\n      = b * ↑a⁻¹ * (↑c⁻¹ * ↑c) + (↑a⁻¹ * ↑a) * d * ↑c⁻¹ := by rw [ha, hc]; ring\n    _ = b * (↑a⁻¹ * ↑c⁻¹) * ↑c + ↑a * d * (↑a⁻¹ * ↑c⁻¹) := by ring\n    _ = (b * ↑c + ↑a * d) * (↑a⁻¹ * ↑c⁻¹) := by ring\n    _ = (b * ↑c + ↑a * d) * (↑c⁻¹ * ↑a⁻¹) := by rw [hcomm]",
+            "line_range": [
+              146,
+              159
+            ],
+            "name": "fracs1_div_add_div",
+            "path": "AlgebraicCombinatorics/DividingFPS.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem fracs1_div_mul_div (a c : Lˣ) (b d : L) :\n    (b /ᵤ a) * (d /ᵤ c) = (b * d) /ᵤ (a * c) := by\n  unfold divByUnit\n  simp only [Units.val_mul, mul_inv_rev]\n  ring",
+            "line_range": [
+              160,
+              166
+            ],
+            "name": "fracs1_div_mul_div",
+            "path": "AlgebraicCombinatorics/DividingFPS.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem fracs1_div_eq_iff (a : Lˣ) (b c : L) :\n    (c /ᵤ a) = b ↔ c = (a : L) * b := by\n  unfold divByUnit\n  constructor\n  · intro h\n    calc c = c * (↑a⁻¹ * ↑a) := by simp\n         _ = (c * ↑a⁻¹) * ↑a := by ring\n         _ = b * ↑a := by rw [h]\n         _ = ↑a * b := by ring\n  · intro h\n    rw [h]\n    have : (↑a : L) * (↑a⁻¹ : L) = 1 := by simp\n    calc ↑a * b * ↑a⁻¹ = b * (↑a * ↑a⁻¹) := by ring\n                     _ = b * 1 := by rw [this]\n                     _ = b := by ring\n\nend PropCommringFracs1",
+            "line_range": [
+              167,
+              194
+            ],
+            "name": "fracs1_div_eq_iff",
+            "path": "AlgebraicCombinatorics/DividingFPS.lean",
+            "snippet_truncated": false
+          },
+          {
+            "benchmark_honesty": "Uses post-hoc target file/line placement only to select earlier declarations; current-unit aligned/referencing declarations are omitted.",
+            "context_source": "same_file_before_selected_unit_line",
+            "kind": "theorem",
+            "lean_snippet": "theorem fps_invertible_iff_constantCoeff (a : PowerSeries K) :\n    IsUnit a ↔ IsUnit (a.constantCoeff) :=\n  PowerSeries.isUnit_iff_constantCoeff",
+            "line_range": [
+              195,
+              198
+            ],
+            "name": "fps_invertible_iff_constantCoeff",
+            "path": "AlgebraicCombinatorics/DividingFPS.lean",
+            "snippet_truncated": false
+          }
+        ],
+        "missing_or_uncertain_context": [
+          "exact statement of fps_invertible_iff_constantCoeff"
+        ],
+        "needed_project_context": [
+          {
+            "name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+            "why_needed": "prior proposition prop.fps.invertible"
+          }
+        ],
+        "needed_source_context": [
+          "cor.fps.invertible.field"
+        ],
+        "role": "main_claim",
+        "selector_unchecked_statement_sketch": "If K is a field, then a power series a over K is invertible iff its constant term is nonzero.",
+        "source_part": "whole unit",
+        "task_id": "unit-002-task-1"
+      }
+    ],
+    "previous_source_context": [
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "proposition",
+          "id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:prop.commring.fracs.1",
+          "labels": [
+            "prop.commring.fracs.1"
+          ],
+          "line_range": [
+            108,
+            143
+          ],
+          "parse_warnings": [],
+          "part_markers": [
+            {
+              "line": 111,
+              "marker": "\\textbf{(a)}",
+              "part": "a"
+            },
+            {
+              "line": 113,
+              "marker": "\\textbf{(b)}",
+              "part": "b"
+            },
+            {
+              "line": 117,
+              "marker": "\\textbf{(c)}",
+              "part": "c"
+            },
+            {
+              "line": 121,
+              "marker": "\\textbf{(d)}",
+              "part": "d"
+            },
+            {
+              "line": 132,
+              "marker": "\\textbf{(e)}",
+              "part": "e"
+            },
+            {
+              "line": 140,
+              "marker": "\\textbf{(f)}",
+              "part": "f"
+            }
+          ],
+          "path": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{proposition}\n\\label{prop.commring.fracs.1}Let $L$ be a commutative ring. Then: \\medskip\n\n\\textbf{(a)} Any invertible element $a\\in L$ satisfies $a^{-1}=1/a$. \\medskip\n\n\\textbf{(b)} For any invertible elements $a,b\\in L$, the element $ab$ is\ninvertible as well, and satisfies $\\left(  ab\\right)  ^{-1}=b^{-1}%\na^{-1}=a^{-1}b^{-1}$. \\medskip\n\n\\textbf{(c)} If $a\\in L$ is invertible, and if $n\\in\\mathbb{Z}$ is arbitrary,\nthen $a^{-n}=\\left(  a^{-1}\\right)  ^{n}=\\left(  a^{n}\\right)  ^{-1}$.\n\\medskip\n\n\\textbf{(d)} Laws of exponents hold for negative exponents as well: If $a$ and\n$b$ are invertible elements of $L$, then%\n\\begin{align*}\na^{n+m}  &  =a^{n}a^{m}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{for all }n,m\\in\\mathbb{Z};\\\\\n\\left(  ab\\right)  ^{n}  &  =a^{n}b^{n}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{for all }%\nn\\in\\mathbb{Z};\\\\\n\\left(  a^{n}\\right)  ^{m}  &  =a^{nm}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{for all\n}n,m\\in\\mathbb{Z}.\n\\end{align*}\n\n\n\\textbf{(e)} Laws of fractions hold: If $a$ and $c$ are two invertible\nelements of $L$, and if $b$ and $d$ are any two elements of $L$, then\n\\[\n\\dfrac{b}{a}+\\dfrac{d}{c}=\\dfrac{bc+ad}{ac}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\text{and}%\n\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\dfrac{b}{a}\\cdot\\dfrac{d}{c}=\\dfrac{bd}{ac}.\n\\]\n\n\n\\textbf{(f)} Division undoes multiplication: If $a,b,c$ are three elements of\n$L$ with $a$ being invertible, then the equality $\\dfrac{c}{a}=b$ is\nequivalent to $c=ab$.\n\\end{proposition}"
+        }
+      },
+      {
+        "reason": "Earlier or explicitly referenced source theorem-like unit.",
+        "source_unit": {
+          "environment": "proposition",
+          "id": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:prop.fps.invertible",
+          "labels": [
+            "prop.fps.invertible"
+          ],
+          "line_range": [
+            171,
+            175
+          ],
+          "parse_warnings": [],
+          "part_markers": [],
+          "path": "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex",
+          "referenced_labels": [],
+          "source_text": "\\begin{proposition}\n\\label{prop.fps.invertible}Let $a\\in K\\left[  \\left[  x\\right]  \\right]  $.\nThen, the FPS $a$ is invertible in $K\\left[  \\left[  x\\right]  \\right]  $ if\nand only if its constant term $\\left[  x^{0}\\right]  a$ is invertible in $K$.\n\\end{proposition}"
+        }
+      }
+    ],
+    "source_focus_summary": "Invertibility of FPS over a field"
+  }
+}

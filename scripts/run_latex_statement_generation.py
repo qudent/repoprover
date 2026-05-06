@@ -9,6 +9,7 @@ import json
 import os
 import re
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -68,14 +69,39 @@ def strip_lean_comments(source: str) -> str:
     return "\n".join(compact).strip()
 
 
+def sanitize_lean_snippet_for_prompt(snippet: str, *, kind: str = "") -> tuple[str, bool]:
+    stripped = strip_lean_comments(snippet)
+    if not LEAN_PLACEHOLDER_RE.search(stripped):
+        return stripped, False
+    return "", True
+
+
 def scrub_lean_snippet_comments(value: Any) -> Any:
     if isinstance(value, dict):
-        return {
-            key: strip_lean_comments(item) if key == "lean_snippet" and isinstance(item, str) else scrub_lean_snippet_comments(item)
-            for key, item in value.items()
-        }
+        scrubbed: dict[str, Any] = {}
+        placeholder_redacted = False
+        kind = str(value.get("kind") or "")
+        for key, item in value.items():
+            if key == "lean_snippet" and isinstance(item, str):
+                snippet, placeholder_redacted = sanitize_lean_snippet_for_prompt(item, kind=kind)
+                scrubbed[key] = snippet
+            else:
+                scrubbed[key] = scrub_lean_snippet_comments(item)
+        if placeholder_redacted:
+            scrubbed["snippet_placeholder_redacted"] = True
+            scrubbed["snippet_policy"] = "placeholder_body_removed_statement_only"
+        return scrubbed
     if isinstance(value, list):
-        return [scrub_lean_snippet_comments(item) for item in value]
+        scrubbed_items = [scrub_lean_snippet_comments(item) for item in value]
+        return [
+            item
+            for item in scrubbed_items
+            if not (
+                isinstance(item, dict)
+                and item.get("snippet_placeholder_redacted")
+                and not str(item.get("lean_snippet") or "").strip()
+            )
+        ]
     return value
 
 
@@ -348,6 +374,40 @@ def response_cost_summary(response: Any, model: str) -> dict[str, Any]:
     }
 
 
+def response_file_cost_summary(path: Path, model: str) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    try:
+        payload = read_json(path)
+    except (OSError, json.JSONDecodeError):
+        return None
+    usage = payload.get("usage")
+    if not isinstance(usage, dict):
+        return None
+    return {
+        "model": model,
+        "usage": usage,
+        "openrouter_reported_cost": usage.get("cost"),
+    }
+
+
+def completed_generation_batch_summary(batch_dir: Path, model: str) -> dict[str, Any] | None:
+    if not (batch_dir / "generation-output.json").exists():
+        return None
+    summary: dict[str, Any] = {
+        "valid_json": True,
+        "parse_error": None,
+        "paid_call_made": (batch_dir / "generation-response.json").exists(),
+        "resumed_existing": True,
+    }
+    cost_summary = response_file_cost_summary(batch_dir / "generation-response.json", model)
+    if cost_summary:
+        summary["cost_summary"] = cost_summary
+    if (batch_dir / "raw-generation-output.json").exists():
+        summary["raw_generation_output"] = str(batch_dir / "raw-generation-output.json")
+    return summary
+
+
 def unit_chunks(units: list[dict[str, Any]], max_units_per_call: int | None) -> list[list[dict[str, Any]]]:
     if not max_units_per_call or max_units_per_call <= 0 or max_units_per_call >= len(units):
         return [units]
@@ -491,7 +551,22 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     for batch_summary in summary["batches"]:
         batch_dir = Path(batch_summary["batch_dir"])
         request_payload = read_json(batch_dir / "generation-payload.json")
-        response = client.chat.completions.create(**request_payload)
+        if getattr(args, "resume_existing", False):
+            completed = completed_generation_batch_summary(batch_dir, args.model)
+            if completed is not None:
+                batch_summary.update(completed)
+                continue
+        try:
+            response = client.chat.completions.create(**request_payload)
+        except Exception as exc:  # noqa: BLE001 - provider/client failures must be logged and resumable.
+            error_text = "".join(traceback.format_exception(exc))
+            (batch_dir / "provider-error.txt").write_text(error_text, encoding="utf-8")
+            batch_summary["provider_error"] = {
+                "type": type(exc).__name__,
+                "message": str(exc),
+                "traceback_path": str(batch_dir / "provider-error.txt"),
+            }
+            continue
         batch_summary["paid_call_made"] = True
         write_json(batch_dir / "generation-response.json", response.model_dump())
         content = extract_message_content(response)
@@ -511,6 +586,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     summary["valid_json"] = all(bool(row.get("valid_json")) for row in summary["batches"])
     parse_errors = [row.get("parse_error") for row in summary["batches"] if row.get("parse_error")]
     summary["parse_error"] = "; ".join(str(error) for error in parse_errors) if parse_errors else None
+    provider_errors = [row.get("provider_error") for row in summary["batches"] if row.get("provider_error")]
+    summary["provider_error_count"] = len(provider_errors)
+    if provider_errors:
+        summary["provider_errors"] = provider_errors
     cost_summary = summarize_costs(summary["batches"], args.model)
     if cost_summary:
         summary["cost_summary"] = cost_summary
@@ -538,9 +617,17 @@ def main() -> None:
         default="none",
         help="OpenRouter reasoning effort override; use 'none' for schema-bound JSON generation.",
     )
+    parser.add_argument(
+        "--resume-existing",
+        action="store_true",
+        help="Reuse completed batch generation-output.json files in the output directory and call the provider only for missing batches.",
+    )
     parser.add_argument("--budget-only", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(run(args), indent=2, sort_keys=True))
+    summary = run(args)
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    if summary.get("provider_error_count"):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

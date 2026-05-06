@@ -36,6 +36,7 @@ LEAN_DECL_RE = re.compile(
     r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)\s+"
     r"(?P<name>[^\s:\{\(\[]+)"
 )
+LEAN_PLACEHOLDER_RE = re.compile(r"\b(sorry|admit|aesop\?)\b|(?<!\.)\.\.\.(?!\.)")
 LEAN_IDENTIFIER_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_']*")
 COMMON_LOCAL_DEPENDENCY_NAMES = {
     "by",
@@ -203,6 +204,20 @@ def compact_declaration_text(text: str, *, kind: str) -> str:
     return trim_trailing_attributes("\n".join(kept).rstrip())
 
 
+def sanitize_placeholder_lean_snippet(snippet: str, *, kind: str) -> tuple[str, bool]:
+    """Remove placeholder proof bodies from visible context snippets.
+
+    Project context is useful only when it represents checked declarations. A
+    preceding theorem whose body is just `sorry` should not teach the proof
+    model a fake fact, even as a statement it could cite. Drop such snippets
+    from visible predecessor context.
+    """
+
+    if not LEAN_PLACEHOLDER_RE.search(snippet):
+        return snippet, False
+    return "", True
+
+
 def strip_lean_comments(text: str) -> str:
     without_blocks = LEAN_BLOCK_COMMENT_RE.sub("", text)
     lines = [LEAN_LINE_COMMENT_RE.sub("", line).rstrip() for line in without_blocks.splitlines()]
@@ -320,14 +335,18 @@ def local_predecessor_row(
     relative_path: str,
     end_limit: int,
     context_source: str,
-) -> dict[str, Any]:
+) -> dict[str, Any] | None:
     start = int(span["start"])
     snippet_start = declaration_start_with_attributes(lines, start)
     end = min(int(span["end"]), end_limit)
+    kind = str(span["kind"])
     snippet = local_predecessor_snippet(lines, span, end_limit=end_limit)
-    return {
+    snippet, placeholder_redacted = sanitize_placeholder_lean_snippet(snippet, kind=kind)
+    if not snippet:
+        return None
+    row = {
         "name": span["name"],
-        "kind": span["kind"],
+        "kind": kind,
         "path": relative_path,
         "line_range": [snippet_start, end],
         "lean_snippet": snippet[:3000],
@@ -338,6 +357,10 @@ def local_predecessor_row(
             "current-unit aligned/referencing declarations are omitted."
         ),
     }
+    if placeholder_redacted:
+        row["snippet_placeholder_redacted"] = True
+        row["snippet_policy"] = "placeholder_body_removed_statement_only"
+    return row
 
 
 def same_file_dependency_spans(
@@ -433,16 +456,17 @@ def target_file_predecessor_declarations(
             if int(span["start"]) < target_start and local_declaration_name(str(span["name"])) not in withheld_names
         ]
         selected_spans = spans[-limit:]
-        selected_snippets = [
-            local_predecessor_row(
+        selected_snippets = []
+        for span in selected_spans:
+            row = local_predecessor_row(
                 lines=lines,
                 span=span,
                 relative_path=relative_path,
                 end_limit=target_start - 1,
                 context_source="same_file_before_selected_unit_line",
             )
-            for span in selected_spans
-        ]
+            if row is not None:
+                selected_snippets.append(row)
         selected_snippet_texts = [row["lean_snippet"] for row in selected_snippets]
         dependency_tokens = local_dependency_tokens(selected_snippet_texts)
         dependency_spans: list[dict[str, Any]] = []
@@ -464,21 +488,21 @@ def target_file_predecessor_declarations(
         )
         ordered_dependency_spans = sorted(dependency_spans, key=lambda span: int(span["start"]))
         for span in [*ordered_dependency_spans, *support_spans, *selected_spans]:
-            predecessors.append(
-                local_predecessor_row(
-                    lines=lines,
-                    span=span,
-                    relative_path=relative_path,
-                    end_limit=target_start - 1,
-                    context_source=(
-                        "same_file_dependency_of_local_predecessor"
-                        if span in ordered_dependency_spans
-                        else "same_file_structure_support"
-                        if span in support_spans
-                        else "same_file_before_selected_unit_line"
-                    ),
-                )
+            row = local_predecessor_row(
+                lines=lines,
+                span=span,
+                relative_path=relative_path,
+                end_limit=target_start - 1,
+                context_source=(
+                    "same_file_dependency_of_local_predecessor"
+                    if span in ordered_dependency_spans
+                    else "same_file_structure_support"
+                    if span in support_spans
+                    else "same_file_before_selected_unit_line"
+                ),
             )
+            if row is not None:
+                predecessors.append(row)
     max_dependency_rows = max(dependency_limit, 0) * max(dependency_depth, 0)
     return predecessors[-(limit + max_dependency_rows + max(structure_support_limit, 0)) :]
 

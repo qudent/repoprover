@@ -45,6 +45,7 @@ def _base_args(tmp_path: Path, **overrides: object) -> argparse.Namespace:
         "hydration_timeout_seconds": 2.0,
         "verification_timeout_seconds": 3.0,
         "support_timeout_seconds": 4.0,
+        "support_mode": "body",
         "semantic_timeout_seconds": 5.0,
         "budget_only": False,
         "selector_budget_only": False,
@@ -216,6 +217,7 @@ def test_panel_full_flow_writes_summary(monkeypatch, tmp_path: Path) -> None:
                 encoding="utf-8",
             )
             assert "--materialize-visible-support" in command
+            assert command[command.index("--support-mode") + 1] == "body"
         elif stage == "gold_comparison":
             path = output_arg(command)
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -306,6 +308,7 @@ def test_panel_can_reuse_existing_generation_run(monkeypatch, tmp_path: Path) ->
         path.parent.mkdir(parents=True, exist_ok=True)
         if stage == "verification":
             assert "--materialize-visible-support" in command
+            assert command[command.index("--support-mode") + 1] == "body"
             path.write_text(
                 json.dumps({"unit_count": 2, "compile_passed_units": 2, "failure_class_counts": {"compiled": 2}}),
                 encoding="utf-8",

@@ -1,0 +1,53 @@
+Traceback (most recent call last):
+  File "/home/name/repos/repoprover/scripts/run_latex_statement_generation.py", line 547, in <module>
+    main()
+    ~~~~^^
+  File "/home/name/repos/repoprover/scripts/run_latex_statement_generation.py", line 543, in main
+    print(json.dumps(run(args), indent=2, sort_keys=True))
+                     ~~~^^^^^^
+  File "/home/name/repos/repoprover/scripts/run_latex_statement_generation.py", line 494, in run
+    response = client.chat.completions.create(**request_payload)
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/openai/resources/chat/completions/completions.py", line 1211, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1314, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1092, in request
+    return self._process_response(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        cast_to=cast_to,
+        ^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        retries_taken=retries_taken,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1181, in _process_response
+    return api_response.parse()
+           ~~~~~~~~~~~~~~~~~~^^
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/openai/_response.py", line 326, in parse
+    parsed = self._parse(to=to)
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/openai/_response.py", line 268, in _parse
+    data = response.json()
+  File "/home/name/repos/repoprover/.venv/lib/python3.13/site-packages/httpx/_models.py", line 832, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/name/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/home/name/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/name/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 339 column 1 (char 1859)

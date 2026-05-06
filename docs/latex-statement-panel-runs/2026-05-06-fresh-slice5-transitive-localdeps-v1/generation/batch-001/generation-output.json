@@ -1,0 +1,31 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "catalan_hankel_det_one"
+        ],
+        "raw_lean_file_body_characters": 1355,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-001"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof is incomplete; we need a lemma that the nipat sum for these source/target vertices equals 1. This is a known result but not yet formalized in the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable"
+      ]
+    }
+  ]
+}

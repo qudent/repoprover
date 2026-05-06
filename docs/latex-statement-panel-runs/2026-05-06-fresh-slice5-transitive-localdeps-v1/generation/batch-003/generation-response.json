@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"sum_binom_identity\"\n      ],\n      \"lean_file_body\": \"open scoped Polynomial\\nopen PowerSeries Finset\\n\\nnamespace AlgebraicCombinatorics\\n\\nnamespace FPS\\n\\nvariable {K : Type*} [CommRing K] [Algebra ℚ K] [BinomialRing K] [CharZero K]\\n\\ntheorem sum_binom_identity (n : K) (k : ℕ) :\\n    ∑ i ∈ Finset.range (k + 1), Ring.choose (n + (i : K) - 1) i * Ring.choose n (k - 2 * i) = Ring.choose (n + (k : K) - 1) k := by\\n  sorry\\n\\nend FPS\\n\\nend AlgebraicCombinatorics\",\n      \"notes\": [\n        \"The statement is a placeholder; the proof requires combinatorial identities not available from the visible context. The theorem is stated with the correct type for n (K) and k (ℕ), using Ring.choose as per the hydrated Mathlib signature. The sum is over i from 0 to k, but the binomial coefficient Ring.choose n (k - 2*i) is defined for ℕ arguments; note that k - 2*i may be negative for large i, but the sum only goes to k, so the subtraction is natural. The proof is not provided due to missing context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-003\",\n      \"used_context\": [\n        \"Ring.choose signature from Mathlib\",\n        \"generalizedNewtonBinomial from prior project context\",\n        \"Finset.range\",\n        \"Algebra ℚ K, BinomialRing K, CharZero K assumptions\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778076734,
+  "id": "gen-1778076734-fivEDbYYlcLaZeoMzNiH",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 400,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0014371,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.000112,
+      "upstream_inference_cost": 0.0014371,
+      "upstream_inference_prompt_cost": 0.0013251
+    },
+    "is_byok": false,
+    "prompt_tokens": 9465,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 9865
+  }
+}

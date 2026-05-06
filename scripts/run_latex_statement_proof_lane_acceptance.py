@@ -240,6 +240,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             timeout_seconds=args.timeout_seconds,
             open_timeout_seconds=args.open_timeout_seconds,
             materialize_visible_support=args.materialize_visible_support,
+            support_mode=getattr(args, "support_mode", "body"),
             support_timeout_seconds=args.support_timeout_seconds,
             output=verification_path,
         )
@@ -347,6 +348,7 @@ def main() -> None:
     parser.add_argument("--no-materialize-visible-support", dest="materialize_visible_support", action="store_false")
     parser.set_defaults(materialize_visible_support=True)
     parser.add_argument("--support-timeout-seconds", type=float, default=30.0)
+    parser.add_argument("--support-mode", choices=["body", "assumption"], default="body")
     parser.add_argument("--no-semantic-coverage", dest="semantic_coverage", action="store_false")
     parser.set_defaults(semantic_coverage=True)
     parser.add_argument(

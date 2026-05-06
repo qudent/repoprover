@@ -69,6 +69,45 @@ def test_budget_only_writes_reviewable_payload(tmp_path: Path) -> None:
     assert "Nat.add_zero" in json.dumps(user_payload, ensure_ascii=False)
 
 
+def test_budget_payload_redacts_placeholder_local_context(tmp_path: Path) -> None:
+    task_dir = tmp_path / "proof-lane"
+    _write_task(task_dir)
+    task_path = task_dir / "tasks/unit-002.json"
+    task = json.loads(task_path.read_text(encoding="utf-8"))
+    task["visible_prompt_context"]["planned_declarations"][0]["local_file_predecessor_declarations"] = [
+        {
+            "name": "prior_placeholder",
+            "kind": "theorem",
+            "lean_snippet": "theorem prior_placeholder : True := by\n  sorry",
+        }
+    ]
+    task_path.write_text(json.dumps(task), encoding="utf-8")
+    output = tmp_path / "run"
+
+    run(
+        argparse.Namespace(
+            proof_lane_task_dir=task_dir,
+            unit_key=None,
+            output=output,
+            model="model/id",
+            base_url="https://example.invalid",
+            max_tokens=1234,
+            temperature=0.0,
+            reasoning_effort="none",
+            max_tasks_per_call=1,
+            budget_only=True,
+        )
+    )
+
+    payload = json.loads((output / "batch-001/generation-payload.json").read_text(encoding="utf-8"))
+    user_payload = json.loads(payload["messages"][1]["content"])
+    predecessors = user_payload["proof_lane_tasks"][0]["visible_prompt_context"]["planned_declarations"][0][
+        "local_file_predecessor_declarations"
+    ]
+
+    assert predecessors == []
+
+
 def test_budget_only_filters_requested_unit_key(tmp_path: Path) -> None:
     task_dir = tmp_path / "proof-lane"
     _write_task(task_dir, unit_key="unit-001")
@@ -92,6 +131,40 @@ def test_budget_only_filters_requested_unit_key(tmp_path: Path) -> None:
 
     assert summary["task_unit_keys"] == ["unit-002"]
     assert summary["batch_count"] == 1
+
+
+def test_resume_existing_reuses_completed_batches_without_provider_key(tmp_path: Path) -> None:
+    task_dir = tmp_path / "proof-lane"
+    _write_task(task_dir)
+    output = tmp_path / "run"
+    batch_dir = output / "batch-001"
+    batch_dir.mkdir(parents=True)
+    (batch_dir / "generation-output.json").write_text(json.dumps({"units": []}), encoding="utf-8")
+    (batch_dir / "generation-response.json").write_text(
+        json.dumps({"usage": {"cost": 0.125}}),
+        encoding="utf-8",
+    )
+
+    summary = run(
+        argparse.Namespace(
+            proof_lane_task_dir=task_dir,
+            unit_key=None,
+            output=output,
+            model="model/id",
+            base_url="https://example.invalid",
+            max_tokens=1234,
+            temperature=0.0,
+            reasoning_effort="none",
+            max_tasks_per_call=1,
+            decline_context_pack=None,
+            budget_only=False,
+            resume_existing=True,
+        )
+    )
+
+    assert summary["provider_error_count"] == 0
+    assert summary["batches"][0]["resumed_existing"] is True
+    assert summary["batches"][0]["cost_summary"]["openrouter_reported_cost"] == 0.125
 
 
 def test_budget_only_attaches_decline_context_pack(tmp_path: Path) -> None:

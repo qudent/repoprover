@@ -1,0 +1,83 @@
+{
+  "attached_decline_context_pack_count": 3,
+  "batch_count": 5,
+  "batches": [
+    {
+      "batch_index": 1,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-budget/batch-001/generation-payload.json",
+      "task_unit_keys": [
+        "unit-001"
+      ],
+      "valid_json": false
+    },
+    {
+      "batch_index": 2,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-budget/batch-002/generation-payload.json",
+      "task_unit_keys": [
+        "unit-002"
+      ],
+      "valid_json": false
+    },
+    {
+      "batch_index": 3,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-budget/batch-003/generation-payload.json",
+      "task_unit_keys": [
+        "unit-003"
+      ],
+      "valid_json": false
+    },
+    {
+      "batch_index": 4,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-budget/batch-004/generation-payload.json",
+      "task_unit_keys": [
+        "unit-004"
+      ],
+      "valid_json": false
+    },
+    {
+      "batch_index": 5,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-budget/batch-005/generation-payload.json",
+      "task_unit_keys": [
+        "unit-005"
+      ],
+      "valid_json": false
+    }
+  ],
+  "budget_only": true,
+  "cost_summary": null,
+  "decline_context_pack": "docs/latex-statement-proof-lane-decline-context-pack-closure-d3-2026-05-06.json",
+  "generated_at": "2026-05-06T14:58:07.581041+00:00",
+  "max_tasks_per_call": 1,
+  "max_tokens": 8192,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-budget",
+  "paid_call_made": false,
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption",
+  "provider_error_count": 0,
+  "reasoning_effort": "none",
+  "resume_existing": false,
+  "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
+  "task_unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "temperature": 0.0
+}

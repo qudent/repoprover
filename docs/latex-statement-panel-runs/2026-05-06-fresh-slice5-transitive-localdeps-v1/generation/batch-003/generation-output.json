@@ -1,0 +1,33 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "sum_binom_identity"
+        ],
+        "raw_lean_file_body_characters": 397,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-003"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The statement is a placeholder; the proof requires combinatorial identities not available from the visible context. The theorem is stated with the correct type for n (K) and k (ℕ), using Ring.choose as per the hydrated Mathlib signature. The sum is over i from 0 to k, but the binomial coefficient Ring.choose n (k - 2*i) is defined for ℕ arguments; note that k - 2*i may be negative for large i, but the sum only goes to k, so the subtraction is natural. The proof is not provided due to missing context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature from Mathlib",
+        "generalizedNewtonBinomial from prior project context",
+        "Finset.range",
+        "Algebra ℚ K, BinomialRing K, CharZero K assumptions"
+      ]
+    }
+  ]
+}

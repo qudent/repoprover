@@ -328,6 +328,7 @@ def build_verification_command(args: argparse.Namespace, generation_run: Path, o
     if args.materialize_visible_support:
         command.append("--materialize-visible-support")
         command.extend(["--support-timeout-seconds", str(args.support_timeout_seconds)])
+        command.extend(["--support-mode", args.support_mode])
     return command
 
 
@@ -575,6 +576,7 @@ def main() -> None:
     parser.add_argument("--hydration-timeout-seconds", type=float, default=120.0)
     parser.add_argument("--verification-timeout-seconds", type=float, default=120.0)
     parser.add_argument("--support-timeout-seconds", type=float, default=30.0)
+    parser.add_argument("--support-mode", choices=["body", "assumption"], default="body")
     parser.add_argument("--semantic-timeout-seconds", type=float, default=120.0)
     parser.add_argument("--budget-only", action="store_true", help="Stop after a no-cost selector payload.")
     parser.add_argument("--selector-budget-only", action="store_true", help="Stop after selector budget output.")

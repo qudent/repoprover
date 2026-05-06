@@ -1,0 +1,49 @@
+{
+  "base_generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/generation",
+  "generated_at": "2026-05-06T15:00:35.994830+00:00",
+  "merged_generation_output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/eval/merged-generation-output.json",
+  "model": "deepseek/deepseek-v4-flash",
+  "output": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1",
+  "overlay_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1"
+  ],
+  "overlay_unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "paid_call_made": false,
+  "payload_sources": [
+    {
+      "payload_source": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-001/generation-payload.json",
+      "payload_target": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-001/generation-payload.json",
+      "unit_key": "unit-001"
+    },
+    {
+      "payload_source": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-002/generation-payload.json",
+      "payload_target": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-002/generation-payload.json",
+      "unit_key": "unit-002"
+    },
+    {
+      "payload_source": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-003/generation-payload.json",
+      "payload_target": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-003/generation-payload.json",
+      "unit_key": "unit-003"
+    },
+    {
+      "payload_source": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-004/generation-payload.json",
+      "payload_target": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-004/generation-payload.json",
+      "unit_key": "unit-004"
+    },
+    {
+      "payload_source": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-005/generation-payload.json",
+      "payload_target": "docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1/batch-005/generation-payload.json",
+      "unit_key": "unit-005"
+    }
+  ],
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_generation_overlay_run.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+  "unit_count": 5
+}

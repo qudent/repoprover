@@ -1,0 +1,25 @@
+{
+  "base_generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/generation",
+  "overlay_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption-paid-v1"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The identity involves binomial coefficients Ring.choose n (k-2*i) where n is of type K (a ℚ-algebra) and k, i are ℕ. The sum is over i from 0 to k. The proof would require combinatorial identities not available from the visible context. The visible context provides generalizedNewtonBinomial and coeff_one_add_X_fpsPow, but these relate to (1+X)^c, not to the specific sum. The identity is a known combinatorial identity (e.g., a variant of the Chu-Vandermonde identity), but no lemma in the visible context directly supports it. The polynomial_identity_trick could be used if we could express the identity as a polynomial identity in n, but the sum involves Ring.choose n (k-2*i) which is not polynomial in n for fixed k (it is a polynomial of degree k-2*i, but the sum is over i). Moreover, the identity is for all n in K, so one could try to prove it for all n in ℕ and then use polynomial_identity_trick, but the sum involves Ring.choose n (k-2*i) which for n in ℕ is the usual binomial coefficient, and the identity reduces to a known identity for binomial coefficients. However, the visible context does not provide the necessary combinatorial lemmas (e.g., Chu-Vandermonde identity for binomial coefficients). Therefore, the proof cannot be completed from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature",
+        "generalizedNewtonBinomial",
+        "coeff_one_add_X_fpsPow",
+        "polynomial_identity_trick",
+        "Algebra ℚ K, BinomialRing K, CharZero K assumptions"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "jacobiTrudiMatrixE",
+          "jacobiTrudi_e"
+        ],
+        "raw_lean_file_body_characters": 642,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-005"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The theorem statement is incomplete; the proof is missing. The definition of jacobiTrudiMatrixE uses esymm with a nonnegative index via .toNat, assuming the index is nonnegative. The selector sketch mentions transpose partitions, but the current formalization uses lam, mu directly; the transpose aspect is not captured. The proof would likely use the first Jacobi-Trudi formula and the omega involution."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "Matrix.det",
+        "MvPolynomial.esymm",
+        "SymmetricFunctions.schur",
+        "NPartition.toNPartition",
+        "SymmetricFunctions.jacobiTrudiMatrixH (for analogy)"
+      ]
+    }
+  ]
+}

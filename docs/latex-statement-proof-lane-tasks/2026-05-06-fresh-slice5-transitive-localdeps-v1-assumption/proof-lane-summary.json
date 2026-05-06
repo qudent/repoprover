@@ -1,0 +1,25 @@
+{
+  "benchmark_policy": {
+    "gold_comparison_is_posthoc_only": true,
+    "posthoc_alignment_hidden": true,
+    "target_lean_available_to_proof_lane": false
+  },
+  "failure_classes": [
+    "declined_cannot_prove",
+    "compile_failure"
+  ],
+  "generated_at": "2026-05-06T14:56:08.616161+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/generation",
+  "schema_version": "repoprover.latex_statement_proof_lane_tasks.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection",
+  "semantic_coverage": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/eval/semantic-coverage-results.json",
+  "unit_count": 5,
+  "unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "verification_results": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/eval/verification-results-assumption.json"
+}
