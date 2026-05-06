@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\"lemma_cancel_all_even_l1\"],\n      \"lean_file_body\": \"namespace AlgebraicCombinatorics.SubtractiveMethods\\n\\nopen Finset BigOperators\\n\\ntheorem lemma_cancel_all_even_l1 (n d : ℕ) : (∑ e : Fin d → ZMod 2, (signSum e)^n) = (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x) := by\\n  have h1 (e : Fin d → ZMod 2) : (signSum e)^n = ∑ x : Fin n → Fin d, signProduct e x := by\\n    rw [signSum, Fintype.sum_pow (λ k => toSign (e k)) n, signProduct]\\n  calc\\n    (∑ e : Fin d → ZMod 2, (signSum e)^n) = (∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, signProduct e x) := by\\n      simp_rw [h1]\\n    _ = (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x) := by\\n      rw [Finset.sum_comm]\",\n      \"notes\": [\n        \"Uses Fintype.sum_pow (Mathlib) to expand (∑ toSign)^n, and Finset.sum_comm to swap sums.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"project definitions: signSum, signProduct, toSign\",\n        \"Mathlib lemmas: Fintype.sum_pow, Finset.sum_comm\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778089956,
+  "id": "gen-1778089956-dkn5XmxUeSME7O51BMLN",
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 7326,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 6924,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.01084977,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00637362,
+      "upstream_inference_cost": 0.01084977,
+      "upstream_inference_prompt_cost": 0.00447615
+    },
+    "is_byok": false,
+    "prompt_tokens": 10290,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 17616
+  }
+}

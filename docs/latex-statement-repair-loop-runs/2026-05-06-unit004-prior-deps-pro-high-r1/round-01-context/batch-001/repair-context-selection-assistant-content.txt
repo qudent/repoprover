@@ -1,0 +1,44 @@
+{
+  "units": [
+    {
+      "unit_key": "unit-001",
+      "failure_analysis": "rw [signSum] fails because signSum is a term, not an equality. Fintype.sum_pow does not exist. Missing the lemma that expands a sum raised to a power into a sum over products.",
+      "missing_or_uncertain_context": [
+        "Exact lemma for expanding a sum power; likely Finset.sum_pow but need to ensure its statement covers Finset.univ for Fin d."
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "Finset.sum_pow",
+          "expected_signature_or_shape": "(∑ i ∈ s, f i) ^ n = ∑ t : (Fin n) → s, ∏ j : Fin n, f (t j)",
+          "why_needed": "to expand (∑ k : Fin d, toSign (e k))^n into the double sum"
+        }
+      ],
+      "repair_strategy_note": "dsimp signSum, apply Finset.sum_pow, simp [signProduct] to match the RHS sum over Fin n → Fin d, use Finset.sum_comm.",
+      "same_unit_helper_plan": [],
+      "selected_visible_context": [
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+          "why_needed": "definition of sum of signs"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+          "why_needed": "definition of product of signs indexed by tuple"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+          "why_needed": "conversion from ZMod 2 to ℤ"
+        },
+        {
+          "context_kind": "other",
+          "name_or_label": "Finset.sum_comm",
+          "why_needed": "checked Mathlib lemma to swap sums"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "do_not_use_identifiers": ["Fintype.sum_pow"]
+    }
+  ]
+}

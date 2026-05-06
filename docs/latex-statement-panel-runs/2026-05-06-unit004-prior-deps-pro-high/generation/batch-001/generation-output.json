@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "lemma_cancel_all_even_l1"
+      ],
+      "lean_file_body": "namespace AlgebraicCombinatorics.SubtractiveMethods\n\nopen Finset BigOperators\n\ntheorem lemma_cancel_all_even_l1 (n d : ℕ) : (∑ e : Fin d → ZMod 2, (signSum e)^n) = (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x) := by\n  have h1 (e : Fin d → ZMod 2) : (signSum e)^n = ∑ x : Fin n → Fin d, signProduct e x := by\n    rw [signSum, Fintype.sum_pow (λ k => toSign (e k)) n, signProduct]\n  calc\n    (∑ e : Fin d → ZMod 2, (signSum e)^n) = (∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, signProduct e x) := by\n      simp_rw [h1]\n    _ = (∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x) := by\n      rw [Finset.sum_comm]",
+      "notes": [
+        "Uses Fintype.sum_pow (Mathlib) to expand (∑ toSign)^n, and Finset.sum_comm to swap sums."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "project definitions: signSum, signProduct, toSign",
+        "Mathlib lemmas: Fintype.sum_pow, Finset.sum_comm"
+      ]
+    }
+  ]
+}

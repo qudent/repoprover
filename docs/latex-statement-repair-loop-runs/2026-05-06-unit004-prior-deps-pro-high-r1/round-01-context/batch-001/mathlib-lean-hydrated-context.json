@@ -1,0 +1,90 @@
+{
+  "exact_identifier_count": 1,
+  "fallback_exact_identifier_count": 0,
+  "fallback_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "fallback_lean_check_status": "no_exact_identifiers",
+  "generated_at": "2026-05-06T18:00:40.409065+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Finset.sum_pow",
+      "expected_signature_or_shape": "(∑ i ∈ s, f i) ^ n = ∑ t : (Fin n) → s, ∏ j : Fin n, f (t j)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+        "status": "checked"
+      },
+      "query": "Finset.sum_pow",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem sum_pow (x : α → R) (n : ℕ) :",
+        "kind": "theorem",
+        "line_number": 306,
+        "name": "Finset.sum_pow",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Multinomial.lean",
+        "source_snippet": "theorem sum_pow (x : α → R) (n : ℕ) :\n    s.sum x ^ n = ∑ k ∈ s.sym n, k.val.multinomial * (k.val.map x).prod := by\n  conv_rhs => rw [← sum_coe_sort]\n  convert sum_pow_of_commute x s (fun _ _ _ _ _ ↦ Commute.all ..) n\n  rw [Multiset.noncommProd_eq_prod]\n\nend CommSemiring\nend Finset\n\nnamespace Nat\nvariable {ι : Type*} {s : Finset ι} {f : ι → ℕ}",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to expand (∑ k : Fin d, toSign (e k))^n into the double sum"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.sum_pow": {
+        "messages": [
+          {
+            "data": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sum_pow.{u_1, u_2} {α : Type u_1} {R : Type u_2} [DecidableEq α] [CommSemiring R] {s : Finset α} (x : α → R)\n  (n : ℕ) : s.sum x ^ n = ∑ k ∈ s.sym n, ↑(↑k).multinomial * (Multiset.map x ↑k).prod",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "4453ca21e5296b7ce36ae6aa193391593f11e80ce5159f6bb946c94cb5ebbd36",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "lean_check_status": "ok",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 1,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

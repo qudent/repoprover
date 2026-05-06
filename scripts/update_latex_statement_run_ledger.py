@@ -281,9 +281,48 @@ def row_from_acceptance(root: Path) -> dict[str, Any]:
     }
 
 
+def row_from_repair_context(root: Path) -> dict[str, Any]:
+    summary = read_json(root / "round-01-context" / "eval" / "repair-context-selection-results.json")
+    verification_path = summary.get("verification_results")
+    verification = read_json(Path(verification_path)) if verification_path and Path(verification_path).exists() else {}
+    unit_ids = verification.get("unit_keys") or verification.get("unit_ids") or []
+    if not unit_ids:
+        unit_ids = [
+            unit.get("unit_key")
+            for batch in verification.get("batches") or []
+            for unit in batch.get("units") or []
+            if unit.get("unit_key")
+        ]
+    return {
+        "schema_version": "repoprover.latex_statement_run_ledger_row.v1",
+        "artifact_root": str(root),
+        "run_type": "repair_context_selection",
+        "generated_at": summary.get("generated_at"),
+        "unit_ids": unit_ids,
+        "models": {
+            "model": summary.get("model"),
+            "reasoning_effort": summary.get("reasoning_effort"),
+        },
+        "cost": cost_value(summary),
+        "tokens": usage_totals_from_cost_summary(summary.get("cost_summary") or {}),
+        "paid_call_made": summary.get("paid_call_made"),
+        "valid_json": summary.get("valid_json"),
+        "parse_error": summary.get("parse_error"),
+        "selector_run": summary.get("selector_run"),
+        "generation_run": summary.get("generation_run"),
+        "verification_artifact": verification_path,
+        "compile_passed_units": verification.get("compile_passed_units"),
+        "failure_class_counts": verification.get("failure_class_counts") or {},
+        "verification_lean_call_count": verification.get("lean_call_count"),
+        "verification_lean_elapsed_seconds": verification.get("lean_elapsed_seconds"),
+    }
+
+
 def row_from_artifact_root(root: Path) -> dict[str, Any]:
     if (root / "eval" / "panel-summary.json").exists():
         return row_from_panel(root)
+    if (root / "round-01-context" / "eval" / "repair-context-selection-results.json").exists():
+        return row_from_repair_context(root)
     if (root / "eval" / "proof-lane-acceptance-summary.json").exists():
         return row_from_acceptance(root)
     if (root / "eval" / "generation-results.json").exists():

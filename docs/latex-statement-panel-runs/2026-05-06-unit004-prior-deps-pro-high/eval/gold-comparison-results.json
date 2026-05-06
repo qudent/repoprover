@@ -1,0 +1,37 @@
+{
+  "caveat": "This is a post-hoc exact-name overlap check, not a semantic theorem-equivalence proof. Compiled outputs without name overlap may still be useful source-theorem formalizations.",
+  "compile_passed_units": 0,
+  "compiled_name_overlap_units": 0,
+  "compiled_needs_semantic_review_units": 0,
+  "coverage_status_counts": {
+    "compile_failure": 1
+  },
+  "generated_at": "2026-05-06T17:56:30.020052+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-unit004-prior-deps-pro-high/generation",
+  "schema_version": "repoprover.latex_statement_gold_comparison.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-unit004-prior-deps-pro-high/context-selection",
+  "unit_count": 1,
+  "units": [
+    {
+      "compile_passed": false,
+      "coverage_status": "compile_failure",
+      "full_name_overlap": [],
+      "generated_declaration_names": [
+        "lemma_cancel_all_even_l1"
+      ],
+      "gold_aligned_full_names": [
+        "AlgebraicCombinatorics.SubtractiveMethods.sum_signSum_pow_eq_sum_signProduct"
+      ],
+      "gold_aligned_local_names": [
+        "sum_signSum_pow_eq_sum_signProduct"
+      ],
+      "local_name_overlap": [],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+      "unit_key": "unit-001",
+      "verification_failure_class": "compile_failure"
+    }
+  ],
+  "verification_failure_class_counts": {
+    "compile_failure": 1
+  }
+}

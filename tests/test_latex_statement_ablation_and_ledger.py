@@ -142,6 +142,7 @@ def test_run_ledger_records_panel_generation_and_acceptance(tmp_path: Path) -> N
                 "failure_class_counts": {"compiled": 1},
                 "lean_call_count": 7,
                 "lean_elapsed_seconds": 12.5,
+                "batches": [{"units": [{"unit_key": "u2"}]}],
             }
         ),
         encoding="utf-8",
@@ -189,10 +190,43 @@ def test_run_ledger_records_panel_generation_and_acceptance(tmp_path: Path) -> N
         encoding="utf-8",
     )
 
-    ledger = tmp_path / "ledger.jsonl"
-    rows = update_ledger(ledger, [panel_root, proof_root, acceptance_root], notes="test")
+    repair_root = tmp_path / "repair"
+    (repair_root / "round-01-context/eval").mkdir(parents=True)
+    (repair_root / "round-01-context/eval/repair-context-selection-results.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+                "generated_at": "2026-05-06T00:03:00+00:00",
+                "selector_run": str(panel_root / "context-selection"),
+                "generation_run": str(proof_root),
+                "verification_results": str(proof_root / "eval/verification-results-360s.json"),
+                "model": "deepseek/deepseek-v4-pro",
+                "reasoning_effort": "high",
+                "paid_call_made": True,
+                "valid_json": True,
+                "parse_error": None,
+                "cost_summary": {
+                    "openrouter_reported_cost": 0.05,
+                    "usage": {
+                        "prompt_tokens": 50,
+                        "completion_tokens": 10,
+                        "completion_tokens_details": {"reasoning_tokens": 9},
+                    },
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
 
-    assert [row["run_type"] for row in rows] == ["panel", "proof_lane_generation", "proof_lane_acceptance"]
+    ledger = tmp_path / "ledger.jsonl"
+    rows = update_ledger(ledger, [panel_root, proof_root, acceptance_root, repair_root], notes="test")
+
+    assert [row["run_type"] for row in rows] == [
+        "panel",
+        "proof_lane_generation",
+        "proof_lane_acceptance",
+        "repair_context_selection",
+    ]
     assert rows[0]["cost"] == 0.03
     assert rows[0]["tokens"]["prompt_tokens"] == 30
     assert rows[0]["checked_context_count"] == 2
@@ -210,7 +244,13 @@ def test_run_ledger_records_panel_generation_and_acceptance(tmp_path: Path) -> N
     assert len(rows[1]["manual_cost_adjustments"]) == 1
     assert rows[2]["cost"] == 0.07
     assert rows[2]["leakage_match_count"] == 0
-    assert len(ledger.read_text(encoding="utf-8").splitlines()) == 3
+    assert rows[3]["models"]["reasoning_effort"] == "high"
+    assert rows[3]["cost"] == 0.05
+    assert rows[3]["tokens"]["reasoning_tokens"] == 9
+    assert rows[3]["unit_ids"] == ["u2"]
+    assert rows[3]["compile_passed_units"] == 1
+    assert rows[3]["verification_artifact"].endswith("verification-results-360s.json")
+    assert len(ledger.read_text(encoding="utf-8").splitlines()) == 4
 
     update_ledger(ledger, [panel_root], notes="replacement")
-    assert len(ledger.read_text(encoding="utf-8").splitlines()) == 3
+    assert len(ledger.read_text(encoding="utf-8").splitlines()) == 4

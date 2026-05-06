@@ -1,0 +1,190 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "compile_failure": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "generation_output": "docs/latex-statement-panel-runs/2026-05-06-unit004-prior-deps-pro-high/generation/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "hidden_target_namespaces": [
+        "AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open Finset BigOperators"
+      ],
+      "lean_call_count": 4,
+      "lean_elapsed_seconds": 55.913,
+      "materialize_visible_support": true,
+      "open_validation_stats": {
+        "elapsed_seconds": 15.692,
+        "lean_call_count": 1,
+        "validation_strategy": "batched"
+      },
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators"
+      ],
+      "support_mode": "assumption",
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SignedCounting.SubtractiveMethods"
+      ],
+      "unfiltered_inferred_opens": [
+        "open Finset BigOperators",
+        "open AlgebraicCombinatorics.SubtractiveMethods"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "lemma_cancel_all_even_l1"
+          ],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [
+            "lemma_cancel_all_even_l1"
+          ],
+          "failure_class": "compile_failure",
+          "lean_elapsed_seconds": 14.076,
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 8,
+              "data": "Invalid rewrite argument: Expected an equality or iff proof or definition name, but `signSum ?e` is a value of type\n  \u2124",
+              "kind": "[anonymous]",
+              "line": 46,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": {
+            "accepted": [
+              {
+                "kind": "def",
+                "line": "55",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "64",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.multiplicity",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "83",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "93",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "99",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_sq",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "111",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_pow_odd",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "lemma",
+                "line": "119",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign_add_one",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "126",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct_eq_prod_pow",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "155",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "def",
+                "line": "307",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.allEvenTuples",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              },
+              {
+                "kind": "theorem",
+                "line": "445",
+                "name": "AlgebraicCombinatorics.SubtractiveMethods.allEven_count_formula",
+                "path": "AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean"
+              }
+            ],
+            "accepted_count": 11,
+            "availability_elapsed_seconds": 13.306,
+            "availability_lean_call_count": 1,
+            "candidate_count": 11,
+            "elapsed_seconds": 26.145,
+            "lean_call_count": 2,
+            "materialization_elapsed_seconds": 12.839,
+            "materialization_lean_call_count": 1,
+            "materialization_strategy": "batched",
+            "rejected": [],
+            "rejected_count": 0,
+            "skipped": [],
+            "skipped_count": 0,
+            "support_mode": "assumption"
+          }
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "failure_class_counts": {
+    "compile_failure": 1
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T17:56:29.911566+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-unit004-prior-deps-pro-high/generation",
+  "infer_context": true,
+  "lean_call_count": 4,
+  "lean_elapsed_seconds": 55.913,
+  "materialize_visible_support": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "support_mode": "assumption",
+  "unit_count": 1,
+  "validate_inferred_opens": true
+}

@@ -1,0 +1,27 @@
+{
+  "created_at": "2026-05-06T17:50:00Z",
+  "purpose": "One-unit development panel to validate the generic prior-project dependency-context fix on the signed-sum lemma that previously missed allEvenTuples support.",
+  "benchmark_honesty": "This is a targeted dev-contaminated diagnostic, not a held-out benchmark. Use only to check whether the generic context fix changes the failure route.",
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1"
+  ],
+  "units": [
+    {
+      "id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+      "role": "prior-project-dependency-context diagnostic",
+      "source": {
+        "path": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex",
+        "line_range": [
+          144,
+          154
+        ],
+        "environment": "lemma",
+        "labels": [
+          "lem.cancel.all-even.l1"
+        ],
+        "estimated_tokens": 110,
+        "aligned_declarations": 1
+      }
+    }
+  ]
+}
