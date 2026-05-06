@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 47
-verification-result files and 59 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 13 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 48
+verification-result files and 60 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 14 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -381,6 +381,13 @@ helpers before the main declaration when visible context and checked signatures
 support them, without treating the fresh names as preexisting project facts. The
 no-cost NPartition prompt artifact is
 `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-budget/`.
+A paid helper-plan loop cost `$0.00638078` and did make the selector propose
+fresh helpers (`partitionLength`, `fromPartition'`, `toNPartition'`, and an
+`Equiv` theorem). It selected 17 checked signatures, but repair still declined:
+the remaining missing ingredients are now concrete list/sort/order bridge facts
+such as an available replacement for `List.Sorted.rel_of_lt`, plus a proof that
+the visible `toPartition` output has at most `N` nonzero parts. That is a
+smaller, sharper blocker than the original nonexistent `Nat.Partition.length`.
 
 ### Imported Lean surface and likely context needs
 

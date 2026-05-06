@@ -604,6 +604,15 @@ Broader diverse4 negative probe:
   checked signatures support them. The no-cost NPartition prompt artifact at
   `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-budget/`
   records this contract without another paid call.
+- paid helper-plan retry:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-v1-paid/`
+  cost `$0.00638078`. The selector did use `same_unit_helper_plan`, proposing
+  fresh helpers `partitionLength`, `fromPartition'`, `toNPartition'`, and an
+  `Equiv` theorem, and the pack hydrated 17 checked signatures. Repair still
+  declined. The remaining gap is now concrete list/sort/order bridge facts
+  (`List.Sorted.rel_of_lt` was unavailable) plus a proof that visible
+  `toPartition` has length at most `N`; this is a narrower proof-planning
+  blocker than the earlier type-signature hallucination.
 
 ## Lean Dependency Accounting
 

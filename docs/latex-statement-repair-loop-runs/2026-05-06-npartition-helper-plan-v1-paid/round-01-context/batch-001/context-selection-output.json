@@ -1,0 +1,51 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.card {α : Type u_1} (s : Multiset α) : ℕ",
+              "name_or_query": "Multiset.card",
+              "why_needed": "To define the length of a partition as `Multiset.card p.parts`."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.get {α : Type u_1} (s : Multiset α) (h : s.Nodup) (i : Fin (Multiset.card s)) : α",
+              "name_or_query": "Multiset.get",
+              "why_needed": "To extract the i-th element of a sorted multiset. However, `Multiset.sort` returns a `List`, so `List.get` may be more appropriate."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sort_sorted (r : α → α → Prop) [DecidableRel r] (s : Multiset α) : (Multiset.sort r s).Sorted r",
+              "name_or_query": "Multiset.sort_sorted",
+              "why_needed": "To prove that the sorted list is antitone (nonincreasing)."
+            },
+            {
+              "expected_signature_or_shape": "List.Sorted.rel_of_lt {α : Type u_1} {r : α → α → Prop} {l : List α} (h : List.Sorted r l) {i j : ℕ} (hi : i < j) (hij : j < l.length) : r (l.get ⟨i, by omega⟩) (l.get ⟨j, hij⟩)",
+              "name_or_query": "List.Sorted.rel_of_lt",
+              "why_needed": "To deduce the antitone condition from sortedness."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.mem_of_mem_filter {α : Type u_1} {a : α} {s : Multiset α} {p : α → Prop} [DecidablePred p] (h : a ∈ Multiset.filter p s) : a ∈ s",
+              "name_or_query": "Multiset.mem_of_mem_filter",
+              "why_needed": "To extract positivity from filtered parts in `toPartition`."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sum_filter_ne_zero (s : Multiset ℕ) : (s.filter (· ≠ 0)).sum = s.sum",
+              "name_or_query": "Multiset.sum_filter_ne_zero",
+              "why_needed": "To show that filtering out zeros does not change the sum; this is essentially `filter_ne_zero_sum` already in local context."
+            },
+            {
+              "expected_signature_or_shape": "Equiv (α : Type u_1) (β : Type u_2) : Type (max u_1 u_2)",
+              "name_or_query": "Equiv",
+              "why_needed": "To state the bijection as an `Equiv` between the subtype of partitions with length ≤ N and `NPartition N`."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

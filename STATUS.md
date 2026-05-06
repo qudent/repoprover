@@ -43,8 +43,10 @@ handling on broader theorem units.
   report.
 - [x] Add a source-only proof-planning/helper-synthesis contract for same-unit
   lemmas.
-- [ ] Run a paid helper-plan repair-context retry and generation repair, then
-  retest NPartition or another broad theorem unit.
+- [x] Run a paid helper-plan repair-context retry and generation repair on
+  NPartition.
+- [ ] Resolve the remaining NPartition blocker by selecting concrete list/sort
+  bridge facts or by switching the helper plan away from sorted-list indexing.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -67,8 +69,8 @@ handling on broader theorem units.
 - Diverse4 remains the negative frontier: after transport fixes, split
   generation, visible-support materialization, and two repair rounds, coverage
   stayed `0/4`; the blocker is missing useful project/Mathlib proof context.
-- Failure summary across 47 verification files / 59 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 13 clean cannot-prove
+- Failure summary across 48 verification files / 60 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 14 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -103,6 +105,11 @@ handling on broader theorem units.
   introduce those helpers before the main declaration when checked context
   supports them. No-cost NPartition prompt artifact:
   `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-budget/`.
+- Paid helper-plan loop cost `$0.00638078`. The selector proposed
+  `partitionLength`, `fromPartition'`, `toNPartition'`, and an `Equiv` theorem
+  as fresh same-unit helpers and hydrated 17 checked signatures. Repair still
+  declined because `List.Sorted.rel_of_lt` was unavailable and the proof that
+  visible `toPartition` has length at most `N` is still missing.
 - Focused theorem-level suite last passed: 84 pytest tests plus `py_compile`
   over selector/generator/repair/verifier scripts.
 
@@ -110,6 +117,6 @@ handling on broader theorem units.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: implement a generic same-unit proof-planning stage that can
-  propose helper lemmas like inverse/padding facts before generation, without
-  exposing same-source gold declarations to future model prompts.
+- Next useful work: improve helper-context search for list/sort/order bridge
+  lemmas, or make the helper planner choose a construction that avoids
+  sorted-list indexing when source-only context cannot support that proof.

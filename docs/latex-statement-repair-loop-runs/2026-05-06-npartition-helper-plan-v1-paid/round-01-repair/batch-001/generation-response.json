@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The visible context lacks a checked `Multiset.sort_sorted` signature that matches the required `Antitone` proof. The `List.Sorted.rel_of_lt` is unavailable. The `NPartition` structure requires `Antitone parts` which is a property on `Fin N → ℕ`, but the sorted list from `Multiset.sort` is a `List ℕ`, not a `Fin N → ℕ`. The `fromPartition` construction would need to map `Fin N` to the sorted list elements, but the antitone condition on `Fin N` is not directly deducible from `List.Pairwise (· ≥ ·)` without additional lemmas. The `toNPartition` direction requires proving `Multiset.card p.parts ≤ N` for the resulting partition, which is not straightforward from `NPartition.toPartition` because `toPartition` returns a `Nat.Partition μ.size` and we need to bound its length by `N`. The `filter_ne_zero_sum` lemma is private and cannot be used. Overall, the visible context is insufficient to produce a complete proof.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure with parts and antitone\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum\",\n        \"Multiset.card for length\",\n        \"Multiset.sort_sorted (checked signature but not sufficient for Antitone on Fin N)\",\n        \"NPartition.ext\",\n        \"NPartition.toPartition (but private filter_ne_zero_sum blocks reuse)\",\n        \"filter_ne_zero_sum is private\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778038774,
+  "id": "gen-1778038774-ZO2djS6q2EPF4QLxVn7u",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 391,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00351666,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00010948,
+      "upstream_inference_cost": 0.00351666,
+      "upstream_inference_prompt_cost": 0.00340718
+    },
+    "is_byok": false,
+    "prompt_tokens": 24337,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 24728
+  }
+}

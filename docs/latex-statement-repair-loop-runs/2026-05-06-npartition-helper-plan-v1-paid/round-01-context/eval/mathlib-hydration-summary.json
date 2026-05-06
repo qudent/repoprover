@@ -1,0 +1,16 @@
+{
+  "batches": [
+    {
+      "exact_identifier_count": 7,
+      "fallback_exact_identifier_count": 24,
+      "fallback_lean_check_status": "lean_errors",
+      "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-v1-paid/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+      "lean_check_status": "lean_errors",
+      "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-v1-paid/round-01-context/batch-001/context-selection-output.json",
+      "request_count": 7
+    }
+  ],
+  "generated_at": "2026-05-06T03:39:33.994696+00:00",
+  "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-v1-paid/round-01-context",
+  "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+}

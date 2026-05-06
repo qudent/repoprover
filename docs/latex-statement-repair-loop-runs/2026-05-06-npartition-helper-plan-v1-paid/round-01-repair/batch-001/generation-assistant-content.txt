@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context lacks a checked `Multiset.sort_sorted` signature that matches the required `Antitone` proof. The `List.Sorted.rel_of_lt` is unavailable. The `NPartition` structure requires `Antitone parts` which is a property on `Fin N → ℕ`, but the sorted list from `Multiset.sort` is a `List ℕ`, not a `Fin N → ℕ`. The `fromPartition` construction would need to map `Fin N` to the sorted list elements, but the antitone condition on `Fin N` is not directly deducible from `List.Pairwise (· ≥ ·)` without additional lemmas. The `toNPartition` direction requires proving `Multiset.card p.parts ≤ N` for the resulting partition, which is not straightforward from `NPartition.toPartition` because `toPartition` returns a `Nat.Partition μ.size` and we need to bound its length by `N`. The `filter_ne_zero_sum` lemma is private and cannot be used. Overall, the visible context is insufficient to produce a complete proof."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "Multiset.sort_sorted (checked signature but not sufficient for Antitone on Fin N)",
+        "NPartition.ext",
+        "NPartition.toPartition (but private filter_ne_zero_sum blocks reuse)",
+        "filter_ne_zero_sum is private"
+      ]
+    }
+  ]
+}
