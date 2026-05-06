@@ -514,6 +514,14 @@ Broader diverse4 negative probe:
   `toPartition`. Compile still remained `0/1` because the model emitted `sorry`
   code despite `cannot_prove_from_visible_context`, guessed nonexistent
   `Nat.Partition.length`, and had no extensionality proof for `NPartition`.
+- repair-loop and honesty follow-up:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/`
+  cost `$0.00473298`, selected 21 checked signatures, and returned a
+  contract-clean `cannot_prove_from_visible_context`; compile/semantic coverage
+  remained `0/1`. The context selector now excludes current-unit aligned and
+  referencing Lean declarations from local predecessor snippets. The no-cost
+  `2026-05-06-npartition-localdeps-v3-honest-budget` payload demonstrates this
+  by removing same-source `ofPartition` from the predecessor context.
 
 ## Lean Dependency Accounting
 

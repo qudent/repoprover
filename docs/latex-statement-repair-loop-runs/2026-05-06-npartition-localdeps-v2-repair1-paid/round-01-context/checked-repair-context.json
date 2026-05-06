@@ -1,0 +1,458 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "Nat.Partition.parts",
+      "signature": "Nat.Partition.parts {n : ℕ} (self : n.Partition) : Multiset ℕ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To access the multiset of parts of a partition."
+    },
+    {
+      "name": "Nat.Partition.parts_sum",
+      "signature": "Nat.Partition.parts_sum {n : ℕ} (self : n.Partition) : self.parts.sum = n",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To relate the sum of parts to the integer n."
+    },
+    {
+      "declaration_line": "theorem card_le_card_toFinset_add_one_iff [DecidableEq α] {m : Multiset α} :",
+      "fallback_for_query": "Multiset.card_filter_ne_zero",
+      "name": "Multiset.card_le_card_toFinset_add_one_iff",
+      "signature": "Multiset.card_le_card_toFinset_add_one_iff.{u_2} {α : Type u_2} [DecidableEq α] {m : Multiset α} :\n  m.card ≤ #m.toFinset + 1 ↔\n    ∀ (x y : α), 1 < Multiset.count x m → 1 < Multiset.count y m → x = y ∧ Multiset.count x m = 2",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_filter_ne_zero: To bound the number of nonzero parts by the total number of parts; used in the forward direction to show that the length condition implies the number of nonzero parts is ≤ N."
+    },
+    {
+      "declaration_line": "lemma toFinset_card_eq_one_iff (s : Multiset α) :",
+      "fallback_for_query": "Multiset.card_filter_ne_zero",
+      "name": "Multiset.toFinset_card_eq_one_iff",
+      "signature": "Multiset.toFinset_card_eq_one_iff.{u_1} {α : Type u_1} [DecidableEq α] (s : Multiset α) :\n  #s.toFinset = 1 ↔ s.card ≠ 0 ∧ ∃ a, s = s.card • {a}",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_filter_ne_zero: To bound the number of nonzero parts by the total number of parts; used in the forward direction to show that the length condition implies the number of nonzero parts is ≤ N."
+    },
+    {
+      "declaration_line": "theorem card_erase_add_one {a : α} {s : Multiset α} : a ∈ s → card (s.erase a) + 1 = card s :=",
+      "fallback_for_query": "Multiset.card_filter_ne_zero",
+      "name": "Multiset.card_erase_add_one",
+      "signature": "Multiset.card_erase_add_one.{u_1} {α : Type u_1} [DecidableEq α] {a : α} {s : Multiset α} :\n  a ∈ s → (s.erase a).card + 1 = s.card",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_filter_ne_zero: To bound the number of nonzero parts by the total number of parts; used in the forward direction to show that the length condition implies the number of nonzero parts is ≤ N."
+    },
+    {
+      "declaration_line": "theorem card_mono : Monotone (@card α) := fun _a _b => card_le_card",
+      "fallback_for_query": "Multiset.card_filter_ne_zero",
+      "name": "Multiset.card_mono",
+      "signature": "Multiset.card_mono.{u_1} {α : Type u_1} : Monotone Multiset.card",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_filter_ne_zero: To bound the number of nonzero parts by the total number of parts; used in the forward direction to show that the length condition implies the number of nonzero parts is ≤ N."
+    },
+    {
+      "name": "Multiset.card_map",
+      "signature": "Multiset.card_map.{v, u_1} {α : Type u_1} {β : Type v} (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To relate the cardinality of the multiset of parts of an NPartition (which is N) to the number of nonzero parts."
+    },
+    {
+      "name": "Finset.card_univ",
+      "signature": "Finset.card_univ.{u_1} {α : Type u_1} [Fintype α] : #univ = Fintype.card α",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To know that the total number of parts in an NPartition is N."
+    },
+    {
+      "declaration_line": "lemma card_filter (p) [DecidablePred p] (s : Finset ι) :",
+      "fallback_for_query": "Finset.card_filter_le_card",
+      "name": "Finset.card_filter",
+      "signature": "Finset.card_filter.{u_1} {ι : Type u_1} (p : ι → Prop) [DecidablePred p] (s : Finset ι) :\n  #({i ∈ s | p i}) = ∑ i ∈ s, if p i then 1 else 0",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.card_filter_le_card: To bound the number of nonzero parts of an NPartition by N."
+    },
+    {
+      "declaration_line": "theorem card_filter_le (s : Finset α) (p : α → Prop) [DecidablePred p] :",
+      "fallback_for_query": "Finset.card_filter_le_card",
+      "name": "Finset.card_filter_le",
+      "signature": "Finset.card_filter_le.{u_1} {α : Type u_1} (s : Finset α) (p : α → Prop) [DecidablePred p] : #(filter p s) ≤ #s",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.card_filter_le_card: To bound the number of nonzero parts of an NPartition by N."
+    },
+    {
+      "declaration_line": "lemma sum_card_fiberwise_eq_card_filter {κ : Type*} [DecidableEq κ] (s : Finset ι) (t : Finset κ)",
+      "fallback_for_query": "Finset.card_filter_le_card",
+      "name": "Finset.sum_card_fiberwise_eq_card_filter",
+      "signature": "Finset.sum_card_fiberwise_eq_card_filter.{u_1, u_5} {ι : Type u_1} {κ : Type u_5} [DecidableEq κ] (s : Finset ι)\n  (t : Finset κ) (g : ι → κ) : ∑ j ∈ t, #({i ∈ s | g i = j}) = #({i ∈ s | g i ∈ t})",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.card_filter_le_card: To bound the number of nonzero parts of an NPartition by N."
+    },
+    {
+      "declaration_line": "lemma natCast_card_filter (p) [DecidablePred p] (s : Finset ι) :",
+      "fallback_for_query": "Finset.card_filter_le_card",
+      "name": "Finset.natCast_card_filter",
+      "signature": "Finset.natCast_card_filter.{u_1, u_4} {ι : Type u_1} {R : Type u_4} [AddCommMonoidWithOne R] (p : ι → Prop)\n  [DecidablePred p] (s : Finset ι) : ↑(#({x ∈ s | p x})) = ∑ a ∈ s, if p a then 1 else 0",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Finset.card_filter_le_card: To bound the number of nonzero parts of an NPartition by N."
+    },
+    {
+      "declaration_line": "theorem multinomial_filter_ne [DecidableEq α] (a : α) (m : Multiset α) :",
+      "fallback_for_query": "Multiset.sum_filter_ne_zero_eq_sum",
+      "name": "Multiset.multinomial_filter_ne",
+      "signature": "Multiset.multinomial_filter_ne.{u_1} {α : Type u_1} [DecidableEq α] (a : α) (m : Multiset α) :\n  m.multinomial = m.card.choose (Multiset.count a m) * (Multiset.filter (fun x => a ≠ x) m).multinomial",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sum_filter_ne_zero_eq_sum: To show that the sum of nonzero parts equals the total sum; used in the reverse direction for the sum condition of Nat.Partition."
+    },
+    {
+      "declaration_line": "lemma abs_sum_le_sum_abs [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {s : Multiset α} :",
+      "fallback_for_query": "Multiset.sum_filter_ne_zero_eq_sum",
+      "name": "Multiset.abs_sum_le_sum_abs",
+      "signature": "Multiset.abs_sum_le_sum_abs.{u_2} {α : Type u_2} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]\n  {s : Multiset α} : |s.sum| ≤ (Multiset.map abs s).sum",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sum_filter_ne_zero_eq_sum: To show that the sum of nonzero parts equals the total sum; used in the reverse direction for the sum condition of Nat.Partition."
+    },
+    {
+      "declaration_line": "lemma apply_prod_le_sum_map (h_one : f 1 ≤ 0) (h_mul : ∀ (a b : α), f (a * b) ≤ f a + f b) :",
+      "fallback_for_query": "Multiset.sum_filter_ne_zero_eq_sum",
+      "name": "Multiset.apply_prod_le_sum_map",
+      "signature": "Multiset.apply_prod_le_sum_map.{u_2, u_3} {α : Type u_2} {β : Type u_3} [CommMonoid α] [AddCommMonoid β] [Preorder β]\n  [AddLeftMono β] (m : Multiset α) (f : α → β) (h_one : f 1 ≤ 0) (h_mul : ∀ (a b : α), f (a * b) ≤ f a + f b) :\n  f m.prod ≤ (Multiset.map f m).sum",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sum_filter_ne_zero_eq_sum: To show that the sum of nonzero parts equals the total sum; used in the reverse direction for the sum condition of Nat.Partition."
+    },
+    {
+      "declaration_line": "lemma sum_map_le_apply_prod (h_one : 0 ≤ f 1) (h_mul : ∀ (a b : α), f a + f b ≤ f (a * b)) :",
+      "fallback_for_query": "Multiset.sum_filter_ne_zero_eq_sum",
+      "name": "Multiset.sum_map_le_apply_prod",
+      "signature": "Multiset.sum_map_le_apply_prod.{u_2, u_3} {α : Type u_2} {β : Type u_3} [CommMonoid α] [AddCommMonoid β] [Preorder β]\n  [AddLeftMono β] (m : Multiset α) (f : α → β) (h_one : 0 ≤ f 1) (h_mul : ∀ (a b : α), f a + f b ≤ f (a * b)) :\n  (Multiset.map f m).sum ≤ f m.prod",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request Multiset.sum_filter_ne_zero_eq_sum: To show that the sum of nonzero parts equals the total sum; used in the reverse direction for the sum condition of Nat.Partition."
+    },
+    {
+      "declaration_line": "theorem Sorted.of_cons (p : Sorted r (a :: l)) :",
+      "fallback_for_query": "List.sorted_descending_cons",
+      "name": "List.Sorted.of_cons",
+      "signature": "List.Sorted.of_cons.{u} {α : Type u} {r : α → α → Prop} {a : α} {l : List α} (p : List.Sorted r (a :: l)) :\n  List.Sorted r l",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_descending_cons: To prove the antitone condition for the forward construction when sorting parts descending."
+    },
+    {
+      "declaration_line": "theorem rel_of_sorted_cons (p : Sorted r (a :: l))",
+      "fallback_for_query": "List.sorted_descending_cons",
+      "name": "List.rel_of_sorted_cons",
+      "signature": "List.rel_of_sorted_cons.{u} {α : Type u} {r : α → α → Prop} {a : α} {l : List α} (p : List.Sorted r (a :: l)) {a' : α} :\n  a' ∈ l → r a a'",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_descending_cons: To prove the antitone condition for the forward construction when sorting parts descending."
+    },
+    {
+      "declaration_line": "theorem sorted_cons : Sorted r (a :: l) ↔ (∀ a' ∈ l, r a a') ∧ Sorted r l := pairwise_cons",
+      "fallback_for_query": "List.sorted_descending_cons",
+      "name": "List.sorted_cons",
+      "signature": "List.sorted_cons.{u} {α : Type u} {r : α → α → Prop} {a : α} {l : List α} :\n  List.Sorted r (a :: l) ↔ (∀ a' ∈ l, r a a') ∧ List.Sorted r l",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_descending_cons: To prove the antitone condition for the forward construction when sorting parts descending."
+    },
+    {
+      "declaration_line": "def cons (a : α i) (f : ∀ j ∈ l, α j) : ∀ j ∈ i :: l, α j :=",
+      "fallback_for_query": "List.sorted_descending_cons",
+      "name": "List.Pi.cons",
+      "signature": "List.Pi.cons.{u_1, u_2} {ι : Type u_1} [DecidableEq ι] {α : ι → Sort u_2} (i : ι) (l : List ι) (a : α i)\n  (f : (j : ι) → j ∈ l → α j) (j : ι) : j ∈ i :: l → α j",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_descending_cons: To prove the antitone condition for the forward construction when sorting parts descending."
+    },
+    {
+      "name": "Multiset.sort_sorted",
+      "signature": "Multiset.sort_sorted.{u_1} {α : Type u_1} (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To know that the sorted list of parts is descending."
+    }
+  ],
+  "do_not_use_identifiers": [
+    "Nat.Partition.length"
+  ],
+  "failed_or_unchecked_context_requests": [
+    {
+      "exact_identifier": "Multiset.card_filter_ne_zero",
+      "expected_signature_or_shape": "Multiset.card (s.filter (· ≠ 0)) ≤ Multiset.card s",
+      "lean_check": {
+        "error": "Unknown constant `Multiset.card_filter_ne_zero`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.card_filter_ne_zero`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Multiset.card_filter_ne_zero",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To bound the number of nonzero parts by the total number of parts; used in the forward direction to show that the length condition implies the number of nonzero parts is ≤ N."
+    },
+    {
+      "exact_identifier": "Finset.card_filter_le_card",
+      "expected_signature_or_shape": "Finset.card (s.filter p) ≤ Finset.card s",
+      "lean_check": {
+        "error": "Unknown constant `Finset.card_filter_le_card`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.card_filter_le_card`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Finset.card_filter_le_card",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To bound the number of nonzero parts of an NPartition by N."
+    },
+    {
+      "exact_identifier": "Multiset.sum_filter_ne_zero_eq_sum",
+      "expected_signature_or_shape": "(s.filter (· ≠ 0)).sum = s.sum",
+      "lean_check": {
+        "error": "Unknown constant `Multiset.sum_filter_ne_zero_eq_sum`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.sum_filter_ne_zero_eq_sum`",
+            "line": 10,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Multiset.sum_filter_ne_zero_eq_sum",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To show that the sum of nonzero parts equals the total sum; used in the reverse direction for the sum condition of Nat.Partition."
+    },
+    {
+      "exact_identifier": "List.sorted_descending_cons",
+      "expected_signature_or_shape": "List.Sorted (· ≥ ·) (a :: l) ↔ a ≥ ...",
+      "lean_check": {
+        "error": "Unknown constant `List.sorted_descending_cons`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sorted_descending_cons`",
+            "line": 11,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "List.sorted_descending_cons",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "To prove the antitone condition for the forward construction when sorting parts descending."
+    }
+  ],
+  "generated_at": "2026-05-06T02:14:16.497559+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "The exact definition of `Nat.Partition.length` is not available; we need to use `Multiset.card (p.parts.filter (· ≠ 0))` directly. The Mathlib `Nat.Partition` structure is available but its `length` field may not be exposed as a lemma. We need to confirm that `Nat.Partition` has a field `parts` of type `Multiset ℕ` and a field `parts_sum` ensuring sum equals n. The `length` is defined as `Multiset.card (parts.filter (· ≠ 0))` but may not be a lemma; we can use the raw expression. Also need an extensionality lemma for `NPartition` (function extensionality on `Fin N`).",
+      "unit_key": "unit-001"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The generated Lean code failed because: (1) `Nat.Partition.length` is not a known identifier in the available Mathlib; (2) no extensionality theorem is registered for `NPartition N`; (3) the proof plan relied on a stronger condition (`Multiset.card p.parts ≤ N`) than the source condition (`Nat.Partition.length p ≤ N`), and the mapping `ofPartition` requires the stronger condition, making the forward direction unprovable from the visible context.",
+      "proof_strategy_note": "Define a custom bijection that does not rely on `ofPartition` and `toPartition`. Instead, construct the equivalence directly: given a partition `p` of length ≤ N, produce an `NPartition` by taking its parts (sorted descending) and padding with zeros to length N. Conversely, given an `NPartition μ`, produce a partition by taking its nonzero parts (which are already sorted). The proof of length ≤ N for the forward direction uses the hypothesis directly. The proof of the reverse direction uses the fact that the number of nonzero parts of an NPartition is ≤ N. The extensionality for `NPartition` can be proved by function extensionality on `Fin N` (since `NPartition` is a structure with a single field `parts` and a proposition `antitone`). Register an `ext` lemma for `NPartition`. The main difficulty is that `Nat.Partition` is not available with a `length` field; we need to use `Nat.Partition` as defined in Mathlib (which has `parts` as a `Multiset ℕ` and `length` defined as `Multiset.card (parts.filter (· ≠ 0))`). Since `Nat.Partition.length` is not recognized, we must either use the raw `Multiset.card` expression or request the correct lemma. The simplest route: avoid `Nat.Partition.length` entirely and use the explicit condition `Multiset.card (p.parts.filter (· ≠ 0)) ≤ N`. This matches the source condition 'length ≤ N' because length is defined that way. Then the forward direction is provable: given `h : Multiset.card (p.parts.filter (· ≠ 0)) ≤ N`, we need to produce an `NPartition N`. We can define a function `parts` on `Fin N` that lists the sorted nonzero parts of `p` followed by zeros. The antitone condition holds because the nonzero parts are sorted descending and zeros are at the end. The reverse direction: given `μ : NPartition N`, we need to produce a `Nat.Partition` whose `parts` multiset is the nonzero parts of `μ`. The sum condition holds because the sum of all parts of `μ` equals the sum of its nonzero parts. The length condition `Multiset.card (parts.filter (· ≠ 0)) ≤ N` holds because the number of nonzero parts is at most N. The bijection proofs require function extensionality on `Fin N` for the forward direction and multiset equality for the reverse. We will need the following Mathlib facts: `Nat.Partition` structure (already available), `Multiset.card`, `Multiset.filter`, `Multiset.sort`, `List.Pairwise`, `Finset.univ`, `Finset.card`, `Finset.filter`. Also need `ext` lemma for `NPartition`.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [
+          "Nat.Partition.length"
+        ],
+        "failure_analysis": "The generated Lean code failed because: (1) `Nat.Partition.length` is not a known identifier in the available Mathlib; (2) no extensionality theorem is registered for `NPartition N`; (3) the proof plan relied on a stronger condition (`Multiset.card p.parts ≤ N`) than the source condition (`Nat.Partition.length p ≤ N`), and the mapping `ofPartition` requires the stronger condition, making the forward direction unprovable from the visible context.",
+        "missing_or_uncertain_context": [
+          "The exact definition of `Nat.Partition.length` is not available; we need to use `Multiset.card (p.parts.filter (· ≠ 0))` directly. The Mathlib `Nat.Partition` structure is available but its `length` field may not be exposed as a lemma. We need to confirm that `Nat.Partition` has a field `parts` of type `Multiset ℕ` and a field `parts_sum` ensuring sum equals n. The `length` is defined as `Multiset.card (parts.filter (· ≠ 0))` but may not be a lemma; we can use the raw expression. Also need an extensionality lemma for `NPartition` (function extensionality on `Fin N`)."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Nat.Partition.parts (p : Nat.Partition n) : Multiset ℕ",
+            "name_or_query": "Nat.Partition.parts",
+            "why_needed": "To access the multiset of parts of a partition."
+          },
+          {
+            "expected_signature_or_shape": "Nat.Partition.parts_sum (p : Nat.Partition n) : p.parts.sum = n",
+            "name_or_query": "Nat.Partition.parts_sum",
+            "why_needed": "To relate the sum of parts to the integer n."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.card (s.filter (· ≠ 0)) ≤ Multiset.card s",
+            "name_or_query": "Multiset.card_filter_ne_zero",
+            "why_needed": "To bound the number of nonzero parts by the total number of parts; used in the forward direction to show that the length condition implies the number of nonzero parts is ≤ N."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.card (Multiset.map f s) = Multiset.card s",
+            "name_or_query": "Multiset.card_map",
+            "why_needed": "To relate the cardinality of the multiset of parts of an NPartition (which is N) to the number of nonzero parts."
+          },
+          {
+            "expected_signature_or_shape": "Finset.card (Finset.univ : Finset (Fin N)) = N",
+            "name_or_query": "Finset.card_univ",
+            "why_needed": "To know that the total number of parts in an NPartition is N."
+          },
+          {
+            "expected_signature_or_shape": "Finset.card (s.filter p) ≤ Finset.card s",
+            "name_or_query": "Finset.card_filter_le_card",
+            "why_needed": "To bound the number of nonzero parts of an NPartition by N."
+          },
+          {
+            "expected_signature_or_shape": "(s.filter (· ≠ 0)).sum = s.sum",
+            "name_or_query": "Multiset.sum_filter_ne_zero_eq_sum",
+            "why_needed": "To show that the sum of nonzero parts equals the total sum; used in the reverse direction for the sum condition of Nat.Partition."
+          },
+          {
+            "expected_signature_or_shape": "List.Sorted (· ≥ ·) (a :: l) ↔ a ≥ ...",
+            "name_or_query": "List.sorted_descending_cons",
+            "why_needed": "To prove the antitone condition for the forward construction when sorting parts descending."
+          },
+          {
+            "expected_signature_or_shape": "Multiset.sort r s is sorted with respect to r",
+            "name_or_query": "Multiset.sort_sorted",
+            "why_needed": "To know that the sorted list of parts is descending."
+          }
+        ],
+        "repair_strategy_note": "Define a custom bijection that does not rely on `ofPartition` and `toPartition`. Instead, construct the equivalence directly: given a partition `p` of length ≤ N, produce an `NPartition` by taking its parts (sorted descending) and padding with zeros to length N. Conversely, given an `NPartition μ`, produce a partition by taking its nonzero parts (which are already sorted). The proof of length ≤ N for the forward direction uses the hypothesis directly. The proof of the reverse direction uses the fact that the number of nonzero parts of an NPartition is ≤ N. The extensionality for `NPartition` can be proved by function extensionality on `Fin N` (since `NPartition` is a structure with a single field `parts` and a proposition `antitone`). Register an `ext` lemma for `NPartition`. The main difficulty is that `Nat.Partition` is not available with a `length` field; we need to use `Nat.Partition` as defined in Mathlib (which has `parts` as a `Multiset ℕ` and `length` defined as `Multiset.card (parts.filter (· ≠ 0))`). Since `Nat.Partition.length` is not recognized, we must either use the raw `Multiset.card` expression or request the correct lemma. The simplest route: avoid `Nat.Partition.length` entirely and use the explicit condition `Multiset.card (p.parts.filter (· ≠ 0)) ≤ N`. This matches the source condition 'length ≤ N' because length is defined that way. Then the forward direction is provable: given `h : Multiset.card (p.parts.filter (· ≠ 0)) ≤ N`, we need to produce an `NPartition N`. We can define a function `parts` on `Fin N` that lists the sorted nonzero parts of `p` followed by zeros. The antitone condition holds because the nonzero parts are sorted descending and zeros are at the end. The reverse direction: given `μ : NPartition N`, we need to produce a `Nat.Partition` whose `parts` multiset is the nonzero parts of `μ`. The sum condition holds because the sum of all parts of `μ` equals the sum of its nonzero parts. The length condition `Multiset.card (parts.filter (· ≠ 0)) ≤ N` holds because the number of nonzero parts is at most N. The bijection proofs require function extensionality on `Fin N` for the forward direction and multiset equality for the reverse. We will need the following Mathlib facts: `Nat.Partition` structure (already available), `Multiset.card`, `Multiset.filter`, `Multiset.sort`, `List.Pairwise`, `Finset.univ`, `Finset.card`, `Finset.filter`. Also need `ext` lemma for `NPartition`.",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.Npar-as-par",
+            "why_needed": "Provides the mathematical statement: bijection between partitions of length ≤ N and N-partitions via zero-padding."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "NPartition",
+            "why_needed": "The target type of the bijection; its structure (parts : Fin N → ℕ, antitone) is needed to construct the forward map."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.length",
+            "why_needed": "Definition of length for NPartition (number of nonzero parts) is used in the reverse direction to bound the number of nonzero parts."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.size",
+            "why_needed": "Definition of size (sum of parts) is used to relate the sum of all parts to the sum of nonzero parts."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.part_eq_parts",
+            "why_needed": "Provides equality between `part` and `parts` for rewriting."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "filter_ne_zero_sum",
+            "why_needed": "Lemma that filtering out zeros does not change the sum of a multiset; used to prove the sum condition for the reverse direction."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "ofPartition",
+            "why_needed": "Although not directly usable due to stronger condition, its construction pattern (sorting parts, padding zeros) can be adapted."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "toPartition",
+            "why_needed": "Provides a template for mapping an NPartition to a Nat.Partition by taking nonzero parts."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context",
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.Npar-as-par",
+      "unit_key": "unit-001",
+      "why_needed": "Provides the mathematical statement: bijection between partitions of length ≤ N and N-partitions via zero-padding."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "NPartition",
+      "unit_key": "unit-001",
+      "why_needed": "The target type of the bijection; its structure (parts : Fin N → ℕ, antitone) is needed to construct the forward map."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.length",
+      "unit_key": "unit-001",
+      "why_needed": "Definition of length for NPartition (number of nonzero parts) is used in the reverse direction to bound the number of nonzero parts."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.size",
+      "unit_key": "unit-001",
+      "why_needed": "Definition of size (sum of parts) is used to relate the sum of all parts to the sum of nonzero parts."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.part_eq_parts",
+      "unit_key": "unit-001",
+      "why_needed": "Provides equality between `part` and `parts` for rewriting."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "filter_ne_zero_sum",
+      "unit_key": "unit-001",
+      "why_needed": "Lemma that filtering out zeros does not change the sum of a multiset; used to prove the sum condition for the reverse direction."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "ofPartition",
+      "unit_key": "unit-001",
+      "why_needed": "Although not directly usable due to stronger condition, its construction pattern (sorting parts, padding zeros) can be adapted."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "toPartition",
+      "unit_key": "unit-001",
+      "why_needed": "Provides a template for mapping an NPartition to a Nat.Partition by taking nonzero parts."
+    }
+  ]
+}

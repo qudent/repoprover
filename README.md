@@ -258,6 +258,18 @@ used nonexistent `Nat.Partition.length`, and failed on `NPartition`
 extensionality. This is a context-collection win and a generation/contract
 failure, not a solved theorem.
 
+A one-round repair-loop follow-up with visible-support verification cost
+`$0.00473298` and produced a contract-clean
+`cannot_prove_from_visible_context` rather than bad Lean. The repair selector
+hydrated 21 checked signatures, but the generator still concluded that the
+visible context did not justify the full bijection. This also exposed a
+benchmark-honesty issue: earlier same-source Lean declarations can look like
+local predecessors for another aligned declaration in the same LaTeX unit. The
+context selector now excludes current-unit aligned and referencing Lean
+declarations from `local_file_predecessor_declarations`; the no-cost refreshed
+`2026-05-06-npartition-localdeps-v3-honest-budget` payload removes
+`ofPartition` from predecessor context for this reason.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

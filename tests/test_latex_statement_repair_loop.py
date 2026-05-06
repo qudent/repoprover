@@ -34,6 +34,7 @@ def _base_args(tmp_path: Path) -> argparse.Namespace:
         hydration_opens=[],
         verification_imports=["Mathlib"],
         verification_opens=[],
+        materialize_visible_support=False,
         timeout_seconds=1.0,
         semantic_coverage=False,
         budget_only=False,
@@ -65,8 +66,10 @@ def test_repair_loop_budget_only_stops_after_context_selection(monkeypatch, tmp_
 def test_repair_loop_runs_round_and_stops_on_compile(monkeypatch, tmp_path: Path) -> None:
     args = _base_args(tmp_path)
     args.semantic_coverage = True
+    args.materialize_visible_support = True
     calls: list[str] = []
     repair_extra_contexts: list[list[Path]] = []
+    verification_materialize_flags: list[bool] = []
 
     def fake_context_selection(namespace):
         calls.append("context")
@@ -92,6 +95,7 @@ def test_repair_loop_runs_round_and_stops_on_compile(monkeypatch, tmp_path: Path
 
     def fake_verify(namespace):
         calls.append("verify")
+        verification_materialize_flags.append(namespace.materialize_visible_support)
         namespace.output.parent.mkdir(parents=True, exist_ok=True)
         namespace.output.write_text('{"unit_count":1,"compile_passed_units":1}\n', encoding="utf-8")
         return {"unit_count": 1, "compile_passed_units": 1}
@@ -115,9 +119,11 @@ def test_repair_loop_runs_round_and_stops_on_compile(monkeypatch, tmp_path: Path
     summary = run(args)
 
     assert summary["stop_reason"] == "all_units_semantically_covered"
+    assert summary["materialize_visible_support"] is True
     assert summary["final_generation_run"] == str(args.output_root / "round-01-repair")
     assert calls == ["context", "hydration", "pack", "repair", "verify", "gold", "semantic"]
     assert repair_extra_contexts == [[args.output_root / "round-01-context" / "checked-repair-context.json"]]
+    assert verification_materialize_flags == [True]
 
 
 def test_preserve_compile_clean_units_replaces_repaired_output(tmp_path: Path) -> None:

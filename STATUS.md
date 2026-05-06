@@ -105,7 +105,14 @@ on broader theorem units.
   emitted `sorry` despite `cannot_prove_from_visible_context`, guessed
   nonexistent `Nat.Partition.length`, and lacked an `NPartition` extensionality
   proof path.
-- Focused theorem-level suite passed: 65 pytest tests plus `py_compile` over
+- One-round partition repair with visible-support verification cost
+  `$0.00473298`, selected 21 checked signatures, and returned a contract-clean
+  `cannot_prove_from_visible_context`; compile/semantic coverage stayed `0/1`.
+  Follow-up code now excludes current-unit aligned/referencing Lean
+  declarations from local predecessor snippets; the no-cost
+  `2026-05-06-npartition-localdeps-v3-honest-budget` payload removes
+  same-source `ofPartition` from predecessor context.
+- Focused theorem-level suite passed: 66 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes
@@ -114,3 +121,9 @@ on broader theorem units.
 - Focused tests should cover theorem selector payload hiding/compaction,
   context hydration, generation prompts, verifier classification, semantic
   coverage, context graph generation, and elaborated dependency summary.
+- Current experiment: run a one-round partition repair loop with
+  `--materialize-visible-support`. Hypothesis: if same-file support can be
+  materialized during repair verification, the remaining signal is whether the
+  repair selector/generator can correct nonexistent API/contract failures from
+  Lean errors without seeing the hidden target.
+  Result: it corrected the contract behavior but did not find a proof.

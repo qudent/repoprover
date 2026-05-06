@@ -260,6 +260,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 imports=args.verification_imports,
                 opens=args.verification_opens,
                 infer_context=True,
+                materialize_visible_support=args.materialize_visible_support,
                 timeout_seconds=args.timeout_seconds,
                 output=verification_path,
             )
@@ -322,6 +323,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "max_rounds": args.max_rounds,
         "budget_only": args.budget_only,
         "semantic_coverage": args.semantic_coverage,
+        "materialize_visible_support": args.materialize_visible_support,
         "stop_reason": stop_reason,
         "final_generation_run": str(current_generation_run),
         "final_verification_results": str(current_verification_results),
@@ -357,6 +359,14 @@ def main() -> None:
     parser.add_argument("--hydration-opens", nargs="*", default=HYDRATION_DEFAULT_OPENS)
     parser.add_argument("--verification-imports", nargs="+", default=VERIFICATION_DEFAULT_IMPORTS)
     parser.add_argument("--verification-opens", nargs="*", default=VERIFICATION_DEFAULT_OPENS)
+    parser.add_argument(
+        "--materialize-visible-support",
+        action="store_true",
+        help=(
+            "When verifying repair outputs, incrementally materialize prompt-visible "
+            "project/local support snippets before the repaired generated body."
+        ),
+    )
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
     parser.add_argument("--semantic-coverage", action="store_true")
     parser.add_argument("--budget-only", action="store_true")

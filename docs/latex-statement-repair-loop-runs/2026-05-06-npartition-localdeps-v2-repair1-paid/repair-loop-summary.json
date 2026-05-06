@@ -1,0 +1,289 @@
+{
+  "budget_only": false,
+  "final_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair",
+  "final_verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair/eval/verification-results.json",
+  "generated_at": "2026-05-06T02:16:49.360560+00:00",
+  "initial_generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid",
+  "initial_semantic_coverage_results": null,
+  "initial_verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid/eval/verification-results-visible-support.json",
+  "materialize_visible_support": true,
+  "max_rounds": 1,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_root": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid",
+  "reasoning_effort": "none",
+  "rounds": [
+    {
+      "checked_repair_context": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context/checked-repair-context.json",
+      "checked_repair_context_summary": {
+        "checked_signature_count": 21,
+        "failed_or_unchecked_context_request_count": 4,
+        "output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context/checked-repair-context.json",
+        "schema_version": "repoprover.latex_statement_checked_repair_context_build.v1"
+      },
+      "context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context",
+      "context_selection": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.00198618,
+          "usage": {
+            "completion_tokens": 2099,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.00198618,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.00058772,
+              "upstream_inference_cost": 0.00198618,
+              "upstream_inference_prompt_cost": 0.00139846
+            },
+            "is_byok": false,
+            "prompt_tokens": 9989,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 12088
+          }
+        },
+        "elapsed_seconds": 77.249,
+        "generated_at": "2026-05-06T02:12:12.161816+00:00",
+        "generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-npartition-localdeps-v2-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid/eval/verification-results-visible-support.json"
+      },
+      "hydration": {
+        "batches": [
+          {
+            "exact_identifier_count": 9,
+            "fallback_exact_identifier_count": 29,
+            "fallback_lean_check_status": "ok",
+            "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+            "lean_check_status": "lean_errors",
+            "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context/batch-001/context-selection-output.json",
+            "request_count": 9
+          }
+        ],
+        "generated_at": "2026-05-06T02:14:16.492829+00:00",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-context",
+        "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+      },
+      "input_generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid",
+      "input_verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid/eval/verification-results-visible-support.json",
+      "preserve_compile_clean_units": {
+        "preserved_unit_keys": [],
+        "updated_paths": []
+      },
+      "repair": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.0027468,
+          "usage": {
+            "completion_tokens": 274,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.0027468,
+            "cost_details": {
+              "upstream_inference_completions_cost": 7.672e-05,
+              "upstream_inference_cost": 0.0027468,
+              "upstream_inference_prompt_cost": 0.00267008
+            },
+            "is_byok": false,
+            "prompt_tokens": 19072,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 19346
+          }
+        },
+        "elapsed_seconds": 22.954,
+        "generated_at": "2026-05-06T02:14:16.506617+00:00",
+        "generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_generation_repair.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-npartition-localdeps-v2-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-generation-runs/2026-05-06-npartition-localdeps-v2-paid/eval/verification-results-visible-support.json"
+      },
+      "repair_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair",
+      "round": 1,
+      "verification": {
+        "base_imports": [
+          "Mathlib"
+        ],
+        "base_opens": [
+          "open scoped Polynomial BigOperators",
+          "open PowerSeries Finset"
+        ],
+        "batches": [
+          {
+            "compile_passed_units": 0,
+            "filtered_target_module_imports": [
+              "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+            ],
+            "filtered_target_namespace_opens": [
+              "open AlgebraicCombinatorics",
+              "open SymmetricFunctions"
+            ],
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair/batch-001/generation-output.json",
+            "hidden_target_modules": [
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+            ],
+            "hidden_target_namespaces": [
+              "NPartition"
+            ],
+            "imports": [
+              "Mathlib"
+            ],
+            "inferred_imports": [],
+            "inferred_opens": [
+              "open scoped Polynomial",
+              "open MvPolynomial Finset Equiv",
+              "open Finset BigOperators"
+            ],
+            "materialize_visible_support": true,
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open scoped Polynomial",
+              "open MvPolynomial Finset Equiv",
+              "open Finset BigOperators"
+            ],
+            "unfiltered_inferred_imports": [
+              "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+            ],
+            "unfiltered_inferred_opens": [
+              "open scoped Polynomial",
+              "open MvPolynomial Finset Equiv",
+              "open AlgebraicCombinatorics",
+              "open SymmetricFunctions",
+              "open Finset BigOperators"
+            ],
+            "unit_count": 1,
+            "units": [
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-001",
+                "visible_support_context": {
+                  "accepted": [
+                    {
+                      "kind": "variable"
+                    },
+                    {
+                      "kind": "variable"
+                    },
+                    {
+                      "kind": "structure",
+                      "name": "NPartition"
+                    },
+                    {
+                      "kind": "def",
+                      "name": "size"
+                    },
+                    {
+                      "kind": "def",
+                      "name": "length"
+                    },
+                    {
+                      "kind": "def",
+                      "name": "part"
+                    },
+                    {
+                      "kind": "theorem",
+                      "name": "part_eq_parts"
+                    },
+                    {
+                      "kind": "lemma",
+                      "name": "filter_ne_zero_sum"
+                    },
+                    {
+                      "kind": "def",
+                      "name": "ofPartition"
+                    },
+                    {
+                      "kind": "def",
+                      "name": "toPartition"
+                    }
+                  ],
+                  "accepted_count": 10,
+                  "candidate_count": 11,
+                  "rejected": [
+                    {
+                      "kind": "abbrev",
+                      "lean_error_count": 1,
+                      "lean_returncode": 1,
+                      "messages": [
+                        {
+                          "column": 29,
+                          "data": "Unknown identifier `_root_.NPartition`",
+                          "kind": "lean.unknownIdentifier._namedError",
+                          "line": 9,
+                          "severity": "error"
+                        }
+                      ],
+                      "name": "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+                      "stderr": ""
+                    }
+                  ],
+                  "rejected_count": 1
+                }
+              }
+            ]
+          }
+        ],
+        "compile_passed_units": 0,
+        "filter_target_module_imports": true,
+        "generated_at": "2026-05-06T02:16:49.357854+00:00",
+        "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair",
+        "infer_context": true,
+        "materialize_visible_support": true,
+        "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+        "schema_version": "repoprover.latex_statement_generation_verification.v1",
+        "unit_count": 1
+      },
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/round-01-repair/eval/verification-results.json"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_repair_loop.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-npartition-localdeps-v2-paid",
+  "semantic_coverage": true,
+  "stop_reason": "max_rounds_reached"
+}

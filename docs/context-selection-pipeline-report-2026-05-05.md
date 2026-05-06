@@ -672,6 +672,19 @@ Diverse4 broader-batch probe:
   emitting `sorry` code, used nonexistent `Nat.Partition.length`, and lacked a
   visible `NPartition` extensionality route. This cleanly separates context
   materialization success from proof-generation failure.
+- repair-loop and honesty follow-up:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-localdeps-v2-repair1-paid/`
+  cost `$0.00473298` for one repair-context selection plus one repair call. It
+  hydrated 21 checked signatures and verified with
+  `--materialize-visible-support`, but the repair output was a contract-clean
+  `cannot_prove_from_visible_context`, so compile/semantic coverage stayed
+  `0/1`. The run also exposed a generic benchmark-honesty issue: if one LaTeX
+  unit has several Lean declarations, an earlier same-source declaration can
+  appear as a "local predecessor" for a later aligned declaration. The selector
+  now excludes current-unit aligned and referencing declarations from
+  `local_file_predecessor_declarations`; the no-cost
+  `2026-05-06-npartition-localdeps-v3-honest-budget` payload removes the
+  same-source `ofPartition` predecessor accordingly.
 
 ### Generation and Verification Counts
 

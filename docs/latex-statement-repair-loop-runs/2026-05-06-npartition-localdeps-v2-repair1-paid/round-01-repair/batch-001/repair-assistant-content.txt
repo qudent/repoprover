@@ -1,0 +1,18 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context does not provide a definition of `Nat.Partition.length` (it is not a lemma in the available Mathlib). The `ofPartition` helper requires `Multiset.card p.parts ≤ N`, which is a stronger condition than the source's `length ≤ N` (where length counts nonzero parts). The source bijection cannot be proved using the given `ofPartition` and `toPartition` helpers without additional lemmas that are not present. The `ext` lemma for `NPartition` is also missing. Therefore, the statement cannot be proved from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source: prop.sf.Npar-as-par",
+        "project: NPartition, NPartition.ofPartition, NPartition.toPartition, NPartition.size, NPartition.length, NPartition.part, NPartition.part_eq_parts, filter_ne_zero_sum",
+        "Mathlib: Nat.Partition (structure only, no length lemma)"
+      ]
+    }
+  ]
+}

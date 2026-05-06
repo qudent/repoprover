@@ -1,0 +1,61 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.Partition.parts (p : Nat.Partition n) : Multiset ℕ",
+              "name_or_query": "Nat.Partition.parts",
+              "why_needed": "To access the multiset of parts of a partition."
+            },
+            {
+              "expected_signature_or_shape": "Nat.Partition.parts_sum (p : Nat.Partition n) : p.parts.sum = n",
+              "name_or_query": "Nat.Partition.parts_sum",
+              "why_needed": "To relate the sum of parts to the integer n."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card (s.filter (· ≠ 0)) ≤ Multiset.card s",
+              "name_or_query": "Multiset.card_filter_ne_zero",
+              "why_needed": "To bound the number of nonzero parts by the total number of parts; used in the forward direction to show that the length condition implies the number of nonzero parts is ≤ N."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card (Multiset.map f s) = Multiset.card s",
+              "name_or_query": "Multiset.card_map",
+              "why_needed": "To relate the cardinality of the multiset of parts of an NPartition (which is N) to the number of nonzero parts."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card (Finset.univ : Finset (Fin N)) = N",
+              "name_or_query": "Finset.card_univ",
+              "why_needed": "To know that the total number of parts in an NPartition is N."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card (s.filter p) ≤ Finset.card s",
+              "name_or_query": "Finset.card_filter_le_card",
+              "why_needed": "To bound the number of nonzero parts of an NPartition by N."
+            },
+            {
+              "expected_signature_or_shape": "(s.filter (· ≠ 0)).sum = s.sum",
+              "name_or_query": "Multiset.sum_filter_ne_zero_eq_sum",
+              "why_needed": "To show that the sum of nonzero parts equals the total sum; used in the reverse direction for the sum condition of Nat.Partition."
+            },
+            {
+              "expected_signature_or_shape": "List.Sorted (· ≥ ·) (a :: l) ↔ a ≥ ...",
+              "name_or_query": "List.sorted_descending_cons",
+              "why_needed": "To prove the antitone condition for the forward construction when sorting parts descending."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sort r s is sorted with respect to r",
+              "name_or_query": "Multiset.sort_sorted",
+              "why_needed": "To know that the sorted list of parts is descending."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

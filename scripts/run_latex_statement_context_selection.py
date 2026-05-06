@@ -291,9 +291,24 @@ def local_predecessor_row(
         "context_source": context_source,
         "benchmark_honesty": (
             "Uses post-hoc target file/line placement only to select earlier declarations; "
-            "the hidden target declaration itself is omitted."
+            "current-unit aligned/referencing declarations are omitted."
         ),
     }
+
+
+def withheld_local_declaration_names(row: dict[str, Any]) -> dict[str, set[str]]:
+    """Return same-source Lean declarations that must not become support context."""
+
+    hidden_by_path: dict[str, set[str]] = {}
+    alignment = row.get("posthoc_lean_alignment", {}) or {}
+    for key in ("aligned_lean_declarations", "referencing_lean_declarations"):
+        for declaration in alignment.get(key) or []:
+            path = str(declaration.get("path") or "")
+            full_name = str(declaration.get("full_name") or declaration.get("name") or "")
+            local_name = local_declaration_name(full_name)
+            if path and local_name:
+                hidden_by_path.setdefault(path, set()).add(local_name)
+    return hidden_by_path
 
 
 def target_file_predecessor_declarations(
@@ -306,12 +321,14 @@ def target_file_predecessor_declarations(
     """Collect same-file declarations before the hidden target declaration.
 
     This uses post-hoc placement metadata only to define a cut line. It must not
-    expose the target declaration itself.
+    expose current-unit target or target-like declarations themselves.
     """
 
     if project_root is None or limit <= 0:
         return []
-    aligned = row.get("posthoc_lean_alignment", {}).get("aligned_lean_declarations", []) or []
+    alignment = row.get("posthoc_lean_alignment", {}) or {}
+    aligned = alignment.get("aligned_lean_declarations", []) or []
+    withheld_by_path = withheld_local_declaration_names(row)
     target_locations: dict[str, int] = {}
     for declaration in aligned:
         path = str(declaration.get("path") or "")
@@ -327,7 +344,12 @@ def target_file_predecessor_declarations(
         if not path.exists():
             continue
         lines = path.read_text(encoding="utf-8").splitlines()
-        spans = [span for span in local_declaration_spans(lines) if int(span["start"]) < target_start]
+        withheld_names = withheld_by_path.get(relative_path, set())
+        spans = [
+            span
+            for span in local_declaration_spans(lines)
+            if int(span["start"]) < target_start and local_declaration_name(str(span["name"])) not in withheld_names
+        ]
         selected_spans = spans[-limit:]
         selected_names = {str(span["name"]) for span in selected_spans}
         selected_snippets = [
@@ -581,7 +603,7 @@ def build_messages(
             "Do not write theorem/lemma Lean code in target_statement_sketch; exact API syntax belongs in needed_mathlib_context and will be hydrated by tools.",
             "Do not bundle all source parts into one conjunction unless the source unit itself requires that shape.",
             "Use previous project declarations only if they are shown under prior_project_context.",
-            "Use local_file_predecessor_declarations only as same-file helper/style context; the selected unit's target declarations are omitted.",
+            "Use local_file_predecessor_declarations only as same-file helper/style context; the selected unit's aligned/referencing target declarations are omitted.",
             "Do not treat Mathlib as the only context; enumerate source/project/local/Mathlib context separately.",
             "Prefer exact Mathlib names when known; otherwise give a narrow query plus expected signature shape.",
             "Keep added context tight: prefer a few thousand tokens or less per source unit.",
@@ -633,7 +655,7 @@ def build_messages(
                     "local_file_predecessor_declaration_source": (
                         "same Lean file declarations before selected unit placement line, plus shallow "
                         "same-file dependencies referenced by those predecessor snippets; benchmark-only "
-                        "placement metadata, target declaration omitted"
+                        "placement metadata, current-unit aligned/referencing declarations omitted"
                     ),
                 },
             }
