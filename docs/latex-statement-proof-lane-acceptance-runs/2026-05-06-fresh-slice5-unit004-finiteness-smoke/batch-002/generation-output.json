@@ -1,0 +1,24 @@
+{
+  "base_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair",
+  "overlay_generation_runs": [
+    "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-repair-v1-paid"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "theorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [fps_invertible_iff_constantCoeff, isUnit_iff_ne_zero]",
+      "notes": [
+        "Uses prior project lemma fps_invertible_iff_constantCoeff and the field fact that an element is a unit iff nonzero."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+        "isUnit_iff_ne_zero (field property)"
+      ]
+    }
+  ]
+}

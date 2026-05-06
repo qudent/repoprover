@@ -114,6 +114,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             args.base_generation_run,
         )
         payload_source = payload_path_for_unit(source_run, unit_key)
+        if payload_source is None and source_run != args.base_generation_run:
+            payload_source = payload_path_for_unit(args.base_generation_run, unit_key)
         if payload_source is not None:
             payload_target = batch_dir / "generation-payload.json"
             write_json(payload_target, read_json(payload_source))

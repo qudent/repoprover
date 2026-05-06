@@ -7,6 +7,7 @@ from scripts.verify_latex_statement_generation import (
     build_lean_source,
     payload_context,
     run,
+    run_lean_source,
     verify_generation_output,
     visible_support_candidates_for_unit,
 )
@@ -29,6 +30,26 @@ def test_build_lean_source_closes_support_namespaces_before_body() -> None:
 
     assert "namespace Box" in source
     assert source.index("end Box") < source.index("theorem demo")
+
+
+def test_run_lean_source_returns_structured_timeout(monkeypatch, tmp_path) -> None:
+    import subprocess
+
+    def fake_run(*args, **kwargs):
+        raise subprocess.TimeoutExpired(
+            cmd=["lake", "env", "lean", "--stdin", "--json"],
+            timeout=kwargs["timeout"],
+            output="",
+            stderr="partial stderr",
+        )
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.subprocess.run", fake_run)
+
+    result = run_lean_source("theorem demo : True := by trivial", project_root=tmp_path, timeout_seconds=0.01)
+
+    assert result["returncode"] == 124
+    assert result["messages"] == []
+    assert "Lean command timed out after 0.01 seconds" in result["stderr"]
 
 
 def test_visible_support_scopes_variables_to_matching_snippets() -> None:

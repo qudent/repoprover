@@ -494,15 +494,34 @@ def run_lean_source(
     project_root: Path,
     timeout_seconds: float,
 ) -> dict[str, Any]:
-    result = subprocess.run(
-        ["lake", "env", "lean", "--stdin", "--json"],
-        cwd=project_root,
-        input=source,
-        capture_output=True,
-        text=True,
-        timeout=timeout_seconds,
-        check=False,
-    )
+    command = ["lake", "env", "lean", "--stdin", "--json"]
+    try:
+        result = subprocess.run(
+            command,
+            cwd=project_root,
+            input=source,
+            capture_output=True,
+            text=True,
+            timeout=timeout_seconds,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as exc:
+        stdout = (
+            exc.stdout.decode("utf-8", errors="replace")
+            if isinstance(exc.stdout, bytes)
+            else (exc.stdout or "")
+        )
+        stderr = (
+            exc.stderr.decode("utf-8", errors="replace")
+            if isinstance(exc.stderr, bytes)
+            else (exc.stderr or "")
+        )
+        timeout_message = f"Lean command timed out after {timeout_seconds} seconds"
+        return {
+            "returncode": 124,
+            "messages": parse_lean_json(stdout),
+            "stderr": f"{stderr}\n{timeout_message}".strip(),
+        }
     return {
         "returncode": result.returncode,
         "messages": parse_lean_json(result.stdout),

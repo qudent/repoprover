@@ -39,6 +39,8 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - [x] Add a targeted proof-lane overlay utility for merging one-unit repairs
   back into a panel/slice artifact without losing hidden-target filtering.
 - [x] Add target-hidden proof-lane dossier generation for clean declines.
+- [x] Add a no-provider proof-lane acceptance runner that overlays solutions,
+  verifies, and runs post-hoc grading.
 - [ ] Route cases with checked context but repeated clean declines to a proof
   synthesis/coding-agent lane instead of more selector prompt tuning.
 
@@ -95,6 +97,15 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   `docs/latex-statement-proof-lane-tasks/2026-05-06-dev-panel5-v2-merged-panel/`.
   The task schema strips aligned targets and post-hoc semantic check/count
   metadata; leakage scans found no hidden target names.
+- Proof-lane acceptance is now a reproducible stage:
+  `scripts/run_latex_statement_proof_lane_acceptance.py` validates solution
+  unit keys against the target-hidden task set, scans tasks for forbidden
+  post-hoc metadata, overlays solutions onto the base run, verifies with
+  target-blind context/materialized support, and writes exact plus semantic
+  grader summaries. No-cost smoke artifact:
+  `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-unit004-finiteness-smoke/`
+  reproduced the signed-sum merge result: `1/5` compiled, `1/5` semantic
+  coverage, solution unit `unit-004` still a clean decline.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a

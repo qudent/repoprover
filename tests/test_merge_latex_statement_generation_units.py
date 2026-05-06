@@ -64,3 +64,43 @@ def test_overlay_targeted_generation_units_preserves_order_and_payloads(tmp_path
     assert payload_2["payload_for"] == "unit-002"
     assert results["selector_run"] == "selector/path"
     assert results["paid_call_made"] is False
+
+
+def test_overlay_file_without_payload_falls_back_to_base_unit_payload(tmp_path: Path) -> None:
+    base = tmp_path / "base"
+    _write_batch(base, 1, "unit-001", "base-one")
+    _write_batch(base, 2, "unit-002", "base-two")
+    (base / "eval").mkdir()
+    (base / "eval/generation-results.json").write_text(
+        json.dumps({"selector_run": "selector/path"}),
+        encoding="utf-8",
+    )
+    overlay_file = tmp_path / "proof-lane-solution.json"
+    overlay_file.write_text(
+        json.dumps(
+            {
+                "units": [
+                    {
+                        "unit_key": "unit-002",
+                        "status": "generated",
+                        "lean_file_body": "overlay-two",
+                        "declaration_names": ["overlay_two"],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    output = tmp_path / "merged"
+    run(
+        argparse.Namespace(
+            base_generation_run=base,
+            overlay_generation_run=[overlay_file],
+            output=output,
+        )
+    )
+
+    payload_2 = json.loads((output / "batch-002/generation-payload.json").read_text(encoding="utf-8"))
+
+    assert payload_2["payload_for"] == "unit-002"

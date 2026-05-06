@@ -694,6 +694,22 @@ the latest dev-panel merged run produced two at
 Leakage scans over both task directories found no hidden target names or gold
 metadata patterns.
 
+Proof-lane solution acceptance is now also scripted. Given one or more
+proof-lane `generation-output.json` solution files or runs,
+`scripts/run_latex_statement_proof_lane_acceptance.py` checks that all solution
+unit keys belong to the target-hidden task set, scans the task directory for
+forbidden post-hoc metadata patterns, overlays the solutions onto the base run,
+then runs target-blind Lean verification plus exact-name and semantic
+post-hoc grading. The no-provider smoke run at
+`docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-unit004-finiteness-smoke/`
+reproduced the signed-sum proof-lane merge result: generated-only verification
+`1/5`, semantic coverage `1/5`, and solution unit `unit-004` remained a clean
+`cannot_prove_from_visible_context` decline. The overlay utility now falls back
+to the base unit's generation payload when a proof-lane solution is a bare JSON
+file, so verifier-visible imports, opens, and support context are not lost.
+Lean subprocess timeouts are recorded as structured failed checks instead of
+crashing the acceptance run.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad
