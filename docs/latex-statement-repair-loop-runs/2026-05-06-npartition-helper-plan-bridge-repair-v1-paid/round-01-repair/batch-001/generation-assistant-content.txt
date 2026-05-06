@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition structure, Nat.Partition structure, and helper lemmas like filter_ne_zero_sum and toPartition. However, the bijection requires constructing a function from partitions of length ≤ N to NPartition N that pads with zeros, and an inverse that truncates zeros. The forward direction needs to extract the i-th part of a partition in decreasing order. The checked signatures show Multiset.sort_sorted and List.Pairwise.rel_get_of_lt, but there is no checked function to get the i-th element of a sorted list in a way that respects the partition's multiset order. The do_not_use_identifiers list forbids using Nat.Partition.length or Multiset.card p.parts as length, but the length condition must be expressed as Multiset.card p.parts ≤ N. The proof of antitone for the padded function requires reasoning about the sorted list of parts, which is nontrivial without a checked lemma that the sorted list is decreasing. The inverse direction using toPartition is available, but proving that its length (Multiset.card of parts) is ≤ N requires showing that the number of nonzero parts of an N-partition is at most N, which is true because there are only N indices, but a formal proof would need to use the antitone property to bound the count of positive entries. The overall bijection as an Equiv between the subtype of partitions with length ≤ N and NPartition N is not provable from the visible context alone because the forward direction's antitone proof and the length bound for the inverse are not fully supported by the checked signatures. Therefore, the status is cannot_prove_from_visible_context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "Multiset.sort_sorted",
+        "List.Pairwise.rel_get_of_lt",
+        "filter_ne_zero_sum",
+        "NPartition.toPartition"
+      ]
+    }
+  ]
+}

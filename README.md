@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 48
-verification-result files and 60 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 14 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 40
+verification-result files and 61 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 15 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -388,6 +388,18 @@ the remaining missing ingredients are now concrete list/sort/order bridge facts
 such as an available replacement for `List.Sorted.rel_of_lt`, plus a proof that
 the visible `toPartition` output has at most `N` nonzero parts. That is a
 smaller, sharper blocker than the original nonexistent `Nat.Partition.length`.
+
+The next no-cost bridge-hydration pass copied that repair-context selection to
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-bridge-budget/`
+and upgraded fallback search to use expected signature shapes, Lean diagnostic
+text, and simple Mathlib `alias` declarations. It now Lean-checks 18 signatures,
+including `List.Sorted.rel_get_of_lt`, `List.Sorted.rel_get_of_le`,
+`List.Pairwise.rel_get_of_lt`, and `List.Pairwise.rel_get_of_le`. A paid repair
+retry against this improved context cost `$0.00357280` and still made a clean
+`cannot_prove_from_visible_context` decision. So the list/sort bridge context is
+now selected correctly; the remaining NPartition blocker is the construction
+and proof plan itself, especially the `toPartition` length bound and inverse
+proofs from visible same-unit helpers.
 
 ### Imported Lean surface and likely context needs
 

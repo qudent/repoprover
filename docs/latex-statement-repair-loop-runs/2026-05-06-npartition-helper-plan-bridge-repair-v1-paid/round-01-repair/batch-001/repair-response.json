@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The visible context provides NPartition structure, Nat.Partition structure, and helper lemmas like filter_ne_zero_sum and toPartition. However, the bijection requires constructing a function from partitions of length ≤ N to NPartition N that pads with zeros, and an inverse that truncates zeros. The forward direction needs to extract the i-th part of a partition in decreasing order. The checked signatures show Multiset.sort_sorted and List.Pairwise.rel_get_of_lt, but there is no checked function to get the i-th element of a sorted list in a way that respects the partition's multiset order. The do_not_use_identifiers list forbids using Nat.Partition.length or Multiset.card p.parts as length, but the length condition must be expressed as Multiset.card p.parts ≤ N. The proof of antitone for the padded function requires reasoning about the sorted list of parts, which is nontrivial without a checked lemma that the sorted list is decreasing. The inverse direction using toPartition is available, but proving that its length (Multiset.card of parts) is ≤ N requires showing that the number of nonzero parts of an N-partition is at most N, which is true because there are only N indices, but a formal proof would need to use the antitone property to bound the count of positive entries. The overall bijection as an Equiv between the subtype of partitions with length ≤ N and NPartition N is not provable from the visible context alone because the forward direction's antitone proof and the length bound for the inverse are not fully supported by the checked signatures. Therefore, the status is cannot_prove_from_visible_context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure with parts and antitone\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum\",\n        \"Multiset.card for length\",\n        \"Multiset.sort_sorted\",\n        \"List.Pairwise.rel_get_of_lt\",\n        \"filter_ne_zero_sum\",\n        \"NPartition.toPartition\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778039503,
+  "id": "gen-1778039503-iuL9gO3Ddu8Sz53epgI3",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 485,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0035728,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0001358,
+      "upstream_inference_cost": 0.0035728,
+      "upstream_inference_prompt_cost": 0.003437
+    },
+    "is_byok": false,
+    "prompt_tokens": 24550,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 25035
+  }
+}

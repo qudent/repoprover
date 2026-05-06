@@ -613,6 +613,19 @@ Broader diverse4 negative probe:
   (`List.Sorted.rel_of_lt` was unavailable) plus a proof that visible
   `toPartition` has length at most `N`; this is a narrower proof-planning
   blocker than the earlier type-signature hallucination.
+- bridge-hydration retry:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-bridge-budget/`
+  reruns hydration without a new selector call. Fallback search now uses the
+  requested signature shape, Lean diagnostic text, and simple Mathlib `alias`
+  declarations, so the failed `List.Sorted.rel_of_lt` request hydrates checked
+  bridge facts: `List.Sorted.rel_get_of_lt`, `List.Sorted.rel_get_of_le`,
+  `List.Pairwise.rel_get_of_lt`, and `List.Pairwise.rel_get_of_le`. The checked
+  pack has 18 signatures. A paid repair retry at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-helper-plan-bridge-repair-v1-paid/`
+  cost `$0.00357280` and still declined cleanly. This shows the API-bridge
+  selection problem is mostly fixed for this case; the remaining blocker is
+  proof-planning/helper synthesis for the padded construction, the
+  `toPartition` length bound, and inverse proofs.
 
 ## Lean Dependency Accounting
 

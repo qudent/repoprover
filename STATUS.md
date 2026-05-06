@@ -45,8 +45,11 @@ handling on broader theorem units.
   lemmas.
 - [x] Run a paid helper-plan repair-context retry and generation repair on
   NPartition.
-- [ ] Resolve the remaining NPartition blocker by selecting concrete list/sort
-  bridge facts or by switching the helper plan away from sorted-list indexing.
+- [x] Improve NPartition fallback hydration enough to select checked list/sort
+  bridge facts for stale `List.Sorted` requests.
+- [ ] Resolve the remaining NPartition blocker by synthesizing the padded
+  construction/length-bound helper proof or switching away from sorted-list
+  indexing.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -69,8 +72,8 @@ handling on broader theorem units.
 - Diverse4 remains the negative frontier: after transport fixes, split
   generation, visible-support materialization, and two repair rounds, coverage
   stayed `0/4`; the blocker is missing useful project/Mathlib proof context.
-- Failure summary across 48 verification files / 60 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 14 clean cannot-prove
+- Failure summary across 40 verification files / 61 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 15 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -110,6 +113,13 @@ handling on broader theorem units.
   as fresh same-unit helpers and hydrated 17 checked signatures. Repair still
   declined because `List.Sorted.rel_of_lt` was unavailable and the proof that
   visible `toPartition` has length at most `N` is still missing.
+- Bridge-hydration retry now uses signature shapes, Lean diagnostics, and
+  simple Mathlib aliases in fallback search. It hydrates 18 checked signatures,
+  including `List.Sorted.rel_get_of_lt`, `List.Sorted.rel_get_of_le`,
+  `List.Pairwise.rel_get_of_lt`, and `List.Pairwise.rel_get_of_le`. Paid repair
+  retry cost `$0.00357280` and still cleanly declined, so the remaining blocker
+  is proof synthesis for the padded construction, `toPartition` length bound,
+  and inverse proofs rather than missing list/sort bridge API context.
 - Focused theorem-level suite last passed: 84 pytest tests plus `py_compile`
   over selector/generator/repair/verifier scripts.
 
@@ -117,6 +127,6 @@ handling on broader theorem units.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: improve helper-context search for list/sort/order bridge
-  lemmas, or make the helper planner choose a construction that avoids
-  sorted-list indexing when source-only context cannot support that proof.
+- Next useful work: make the helper planner produce/prove a concrete
+  `toPartition` cardinality bound and inverse lemmas from visible same-unit
+  context, or choose a construction that avoids sorted-list indexing.

@@ -23,6 +23,10 @@ DECL_RE = re.compile(
     r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)\s+"
     r"(?P<name>[^\s:\{\(\[]+)"
 )
+ALIAS_RE = re.compile(
+    r"^\s*(?:(?:protected)\s+)*alias\s+"
+    r"(?P<name>[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*)\s*:="
+)
 STRUCTURE_FIELD_RE = re.compile(r"^\s+(?P<name>[A-Za-z_][A-Za-z0-9_']*)\s*:")
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
@@ -142,6 +146,18 @@ def filter_fallback_candidates_for_query(query: str, candidates: list[dict[str, 
     return candidates
 
 
+def lean_check_diagnostic_text(check_result: dict[str, Any]) -> str:
+    parts: list[str] = []
+    for key in ("signature", "error"):
+        value = check_result.get(key)
+        if value:
+            parts.append(str(value))
+    for message in check_result.get("messages") or []:
+        if isinstance(message, dict) and message.get("data"):
+            parts.append(str(message["data"]))
+    return "\n".join(parts)
+
+
 def checked_parent_identifier(identifier: str | None, checked_exact_names: set[str]) -> str | None:
     if not identifier or "." not in identifier:
         return None
@@ -167,11 +183,36 @@ def namespace_end_matches(stack: list[str], end_name: str | None) -> bool:
     return end_name == top or end_name == top.split(".")[-1]
 
 
-def fallback_mathlib_candidates(query: str, *, project_root: Path, limit: int = 8) -> list[dict[str, Any]]:
-    tokens = identifier_tokens(query)
-    if not tokens:
+def source_declaration_match(line: str) -> tuple[str, str] | None:
+    decl_match = DECL_RE.match(line)
+    if decl_match:
+        return decl_match.group("kind"), decl_match.group("name")
+    alias_match = ALIAS_RE.match(line)
+    if alias_match:
+        return "alias", alias_match.group("name")
+    return None
+
+
+def fallback_mathlib_candidates(
+    query: str,
+    *,
+    project_root: Path,
+    limit: int = 8,
+    expected_signature_or_shape: str = "",
+    diagnostic_text: str = "",
+) -> list[dict[str, Any]]:
+    query_tokens = identifier_tokens(query)
+    search_tokens = list(
+        dict.fromkeys(
+            query_tokens
+            + identifier_tokens(expected_signature_or_shape)
+            + identifier_tokens(diagnostic_text)
+        )
+    )
+    if not search_tokens:
         return []
-    important_tokens = important_identifier_tokens(tokens)
+    important_query_tokens = important_identifier_tokens(query_tokens)
+    important_search_tokens = important_identifier_tokens(search_tokens)
     mathlib_root = project_root / ".lake" / "packages" / "mathlib" / "Mathlib"
     if not mathlib_root.exists():
         return []
@@ -188,24 +229,34 @@ def fallback_mathlib_candidates(query: str, *, project_root: Path, limit: int = 
             if end_match and namespace_end_matches(namespace_stack, end_match.group("name")):
                 namespace_stack.pop()
                 continue
-            decl_match = DECL_RE.match(line)
-            if not decl_match:
+            declaration = source_declaration_match(line)
+            if not declaration:
                 continue
-            name = decl_match.group("name")
+            kind, name = declaration
             haystack = f"{namespace_prefix(namespace_stack)}.{name} {line}".lower()
-            matched = [token for token in tokens if token in haystack]
+            query_matched = [token for token in query_tokens if token in haystack]
+            matched = [token for token in search_tokens if token in haystack]
             if not matched:
                 continue
-            important_matched = [token for token in important_tokens if token in haystack]
-            if important_tokens and not important_matched:
-                continue
-            score = len(matched) + (3 * len(important_matched))
+            important_query_matched = [token for token in important_query_tokens if token in haystack]
+            important_search_matched = [token for token in important_search_tokens if token in haystack]
+            if important_query_tokens and not important_query_matched:
+                if not query_matched or len(important_search_matched) < 2:
+                    continue
+            score = (
+                (2 * len(query_matched))
+                + len(matched)
+                + (4 * len(important_query_matched))
+                + (2 * len(important_search_matched))
+            )
             if name.lower() in query.lower():
                 score += 2
+            if kind == "alias":
+                score += 1
             candidates.append(
                 {
                     "name": ".".join(part for part in [namespace_prefix(namespace_stack), name] if part),
-                    "kind": decl_match.group("kind"),
+                    "kind": kind,
                     "path": rel,
                     "line_number": line_number,
                     "declaration_line": line.strip(),
@@ -489,7 +540,12 @@ def hydrate_output(
     for request in requests:
         check_result = checked.get(request.exact_identifier or "", {})
         if (not request.exact_identifier) or check_result.get("status") != "checked":
-            fallback_candidates = fallback_mathlib_candidates(request.query, project_root=project_root)
+            fallback_candidates = fallback_mathlib_candidates(
+                request.query,
+                project_root=project_root,
+                expected_signature_or_shape=request.expected_signature_or_shape,
+                diagnostic_text=lean_check_diagnostic_text(check_result),
+            )
             parent = checked_parent_identifier(request.exact_identifier, checked_exact_name_set)
             if parent:
                 scoped_candidates = [

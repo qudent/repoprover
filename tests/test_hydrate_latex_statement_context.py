@@ -111,7 +111,14 @@ def test_hydrate_output_lean_checks_fallback_candidates(monkeypatch, tmp_path) -
                 checked[name] = {"status": "error", "error": f"Unknown constant `{name}`"}
         return {"status": "ok", "checked": checked}
 
-    def fake_fallback(query, *, project_root, limit=8):
+    def fake_fallback(
+        query,
+        *,
+        project_root,
+        limit=8,
+        expected_signature_or_shape="",
+        diagnostic_text="",
+    ):
         return [
             {
                 "name": "Finset.powersetCard_eq_empty",
@@ -283,7 +290,14 @@ def test_hydrate_output_suppresses_unrelated_fallbacks_for_checked_parent(monkey
                 checked[name] = {"status": "checked", "signature": f"{name} : checked"}
         return {"status": "ok", "checked": checked}
 
-    def fake_fallback(query, *, project_root, limit=8):
+    def fake_fallback(
+        query,
+        *,
+        project_root,
+        limit=8,
+        expected_signature_or_shape="",
+        diagnostic_text="",
+    ):
         return [
             {
                 "name": "Nat.toDigits_length",
@@ -428,3 +442,31 @@ def test_fallback_mathlib_candidates_prefer_name_matches_over_type_sort_mentions
     candidates = fallback_mathlib_candidates("Multiset.sort_eq_sort", project_root=tmp_path)
 
     assert [candidate["name"] for candidate in candidates] == ["Multiset.sort_eq", "Multiset.sort"]
+
+
+def test_fallback_mathlib_candidates_uses_signature_shape_and_aliases(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/ListPairwise.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace List",
+                "theorem rel_of_sorted_cons (h : l.Pairwise R) : True := by trivial",
+                "theorem Pairwise.rel_get_of_le (h : l.Pairwise R) {a b : Fin l.length} (hab : a ≤ b) : True := by trivial",
+                "alias Sorted.rel_get_of_le := Pairwise.rel_get_of_le",
+                "end List",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates(
+        "List.Sorted.rel_of_lt",
+        project_root=tmp_path,
+        expected_signature_or_shape="List.Sorted r l -> i ≤ j -> r (l.get i) (l.get j)",
+        diagnostic_text="`List.Sorted` has been deprecated: Use `List.Pairwise` instead",
+    )
+
+    names = [candidate["name"] for candidate in candidates]
+    assert "List.Pairwise.rel_get_of_le" in names
+    assert "List.Sorted.rel_get_of_le" in names
