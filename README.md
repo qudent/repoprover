@@ -233,6 +233,17 @@ project/Mathlib proof context, not JSON transport.
 The stricter target-blind verifier also reran on this split generation artifact:
 it filtered target-bearing imports/opens, including a transitive
 `MonomialSymmetric -> NPartition` exposure, and the result remained `0/4`.
+The first follow-up on this batch found a generic Mathlib-hydration defect:
+fallback search ranked only the declaration headline, so the real multiline
+Vandermonde theorem `Nat.add_choose_eq` was below weaker binomial lemmas. The
+hydrator now ranks fallback candidates using compact declaration/doc/path
+excerpts and feeds selector `why_needed` text into fallback search. A no-cost
+rehydration artifact at
+`docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-round2-rehydrated/`
+resolves the failed guessed `Nat.choose_add_eq_choose_add_choose` request to a
+Lean-checked `Nat.add_choose_eq` signature for `prop.binom.vandermonde.NN`.
+This is a context-selection improvement, not yet a proof success: no new paid
+generation retry has been run from this rehydrated context.
 An optional verifier mode can now incrementally materialize Lean snippets that
 were visible in the generation prompt and compile under the target-blind import
 policy. On the diverse4 split run it still compiled `0/4`, but the diagnostic

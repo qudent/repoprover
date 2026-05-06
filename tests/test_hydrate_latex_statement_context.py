@@ -3,6 +3,7 @@
 from scripts.hydrate_latex_statement_context import (
     build_check_source,
     checked_parent_identifier,
+    declaration_search_excerpt,
     fallback_mathlib_candidates,
     find_mathlib_declarations,
     hydrate_output,
@@ -96,6 +97,63 @@ def test_hydrate_output_marks_non_exact_queries(monkeypatch, tmp_path) -> None:
     assert hydrated["exact_identifier_count"] == 1
     assert hydrated["hydrated_mathlib_context"][0]["lean_check"]["status"] == "checked"
     assert hydrated["hydrated_mathlib_context"][1]["lean_check"]["status"] == "not_exact_identifier"
+
+
+def test_declaration_search_excerpt_includes_docstring_and_continuation() -> None:
+    lines = [
+        "namespace Nat",
+        "",
+        "/-- Vandermonde's identity -/",
+        "theorem add_choose_eq (m n k : ℕ) :",
+        "    (m + n).choose k = ∑ ij ∈ antidiagonal k,",
+        "      m.choose ij.1 * n.choose ij.2 := by",
+        "  exact proof",
+    ]
+
+    excerpt = declaration_search_excerpt(lines, 3)
+
+    assert "Vandermonde's identity" in excerpt
+    assert "antidiagonal k" in excerpt
+    assert "exact proof" not in excerpt
+
+
+def test_fallback_mathlib_candidates_ranks_multiline_statement_matches(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Vandermonde.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace Nat",
+                "theorem add_choose (i j : ℕ) :",
+                "    (i + j).choose j = (i + j)! / (i ! * j !) := by",
+                "  exact proof",
+                "",
+                "/-- Vandermonde's identity -/",
+                "theorem add_choose_eq (m n k : ℕ) :",
+                "    (m + n).choose k = ∑ ij ∈ antidiagonal k,",
+                "      m.choose ij.1 * n.choose ij.2 := by",
+                "  exact proof",
+                "end Nat",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates(
+        "Nat.choose_add_eq_choose_add_choose",
+        project_root=tmp_path,
+        expected_signature_or_shape=(
+            "Nat.choose (a+b) n = ∑ k in Finset.Icc 0 n, "
+            "Nat.choose a k * Nat.choose b (n - k)"
+        ),
+        diagnostic_text="Need a lemma for Vandermonde's identity for natural numbers.",
+    )
+
+    assert [candidate["name"] for candidate in candidates[:2]] == [
+        "Nat.add_choose_eq",
+        "Nat.add_choose",
+    ]
+    assert "Vandermonde's identity" in candidates[0]["search_excerpt"]
 
 
 def test_hydrate_output_lean_checks_fallback_candidates(monkeypatch, tmp_path) -> None:

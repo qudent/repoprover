@@ -1,0 +1,597 @@
+{
+  "exact_identifier_count": 6,
+  "fallback_exact_identifier_count": 8,
+  "fallback_lean_check": {
+    "checked": {
+      "Nat.Prime.emultiplicity_le_emultiplicity_choose_add": {
+        "messages": [
+          {
+            "data": "Nat.Prime.emultiplicity_le_emultiplicity_choose_add {p : ℕ} (hp : Nat.Prime p) (n k : ℕ) :\n  emultiplicity p n ≤ emultiplicity p (n.choose k) + emultiplicity p k",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Prime.emultiplicity_le_emultiplicity_choose_add {p : ℕ} (hp : Nat.Prime p) (n k : ℕ) :\n  emultiplicity p n ≤ emultiplicity p (n.choose k) + emultiplicity p k",
+        "status": "checked"
+      },
+      "Nat.add_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+        "status": "checked"
+      },
+      "Nat.add_one_mul_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+        "status": "checked"
+      },
+      "Nat.choose_eq_choose_pred_add": {
+        "messages": [
+          {
+            "data": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+        "status": "checked"
+      },
+      "Nat.choose_pos": {
+        "messages": [
+          {
+            "data": "Nat.choose_pos {n k : ℕ} : k ≤ n → 0 < n.choose k",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_pos {n k : ℕ} : k ≤ n → 0 < n.choose k",
+        "status": "checked"
+      },
+      "Nat.choose_symm_of_eq_add": {
+        "messages": [
+          {
+            "data": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+        "status": "checked"
+      },
+      "Nat.multichoose_eq": {
+        "messages": [
+          {
+            "data": "Nat.multichoose_eq (n k : ℕ) : n.multichoose k = (n + k - 1).choose k",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.multichoose_eq (n k : ℕ) : n.multichoose k = (n + k - 1).choose k",
+        "status": "checked"
+      },
+      "Nat.succ_mul_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "7052a2292ae72deaf7cc4530c3819c4be53127ca6f13258cdb35ea5915c42a65",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T05:39:57.904719+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Nat.choose_mul_succ_eq",
+      "expected_signature_or_shape": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+        "status": "checked"
+      },
+      "query": "Nat.choose_mul_succ_eq",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k) := by",
+        "kind": "theorem",
+        "line_number": 221,
+        "name": "Nat.choose_mul_succ_eq",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+        "source_snippet": "theorem choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k) := by\n  cases k with\n  | zero => simp\n  | succ k =>\n    obtain hk | hk := le_or_gt (k + 1) (n + 1)\n    · rw [choose_succ_succ, Nat.add_mul, succ_sub_succ, ← choose_succ_right_eq, ← succ_sub_succ,\n        Nat.mul_sub_left_distrib, Nat.add_sub_cancel' (Nat.mul_le_mul_left _ hk)]\n    · rw [choose_eq_zero_of_lt hk, choose_eq_zero_of_lt (n.lt_succ_self.trans hk), Nat.zero_mul,\n        Nat.zero_mul]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Used to relate binomial coefficients with different n."
+    },
+    {
+      "exact_identifier": "Nat.succ_mul_choose_eq",
+      "expected_signature_or_shape": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+        "status": "checked"
+      },
+      "query": "Nat.succ_mul_choose_eq",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "theorem succ_mul_choose_eq : ∀ n k, succ n * choose n k = choose (succ n) (succ k) * succ k :=",
+        "kind": "theorem",
+        "line_number": 138,
+        "name": "Nat.succ_mul_choose_eq",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+        "source_snippet": "@[deprecated add_one_mul_choose_eq (since := \"2025-12-09\")]\ntheorem succ_mul_choose_eq : ∀ n k, succ n * choose n k = choose (succ n) (succ k) * succ k :=\n  add_one_mul_choose_eq",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Used to relate binomial coefficients with different k."
+    },
+    {
+      "exact_identifier": "Nat.choose_succ_succ",
+      "expected_signature_or_shape": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+        "status": "checked"
+      },
+      "query": "Nat.choose_succ_succ",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": {
+        "declaration_line": "theorem choose_succ_succ (n k : ℕ) : choose (succ n) (succ k) = choose n k + choose n (succ k) :=",
+        "kind": "theorem",
+        "line_number": 61,
+        "name": "Nat.choose_succ_succ",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+        "source_snippet": "theorem choose_succ_succ (n k : ℕ) : choose (succ n) (succ k) = choose n k + choose n (succ k) :=\n  rfl",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Pascal's rule, may be used in the proof."
+    },
+    {
+      "exact_identifier": "Nat.choose_add_eq_choose_add_choose",
+      "expected_signature_or_shape": "Nat.choose_add_eq_choose_add_choose (a b n : ℕ) : (a+b).choose n = ∑ k in Finset.Icc 0 n, a.choose k * b.choose (n - k)",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem add_choose_eq (m n k : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "status": "checked"
+          },
+          "line_number": 31,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq",
+            "vandermonde's",
+            "identity"
+          ],
+          "name": "Nat.add_choose_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Vandermonde.lean",
+          "score": 28,
+          "search_excerpt": "/-- Vandermonde's identity -/ theorem add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2 := by"
+        },
+        {
+          "declaration_line": "theorem succ_mul_choose_eq : ∀ n k, succ n * choose n k = choose (succ n) (succ k) * succ k :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "status": "checked"
+          },
+          "line_number": 138,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq",
+            "in"
+          ],
+          "name": "Nat.succ_mul_choose_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 23,
+          "search_excerpt": "@[deprecated add_one_mul_choose_eq (since := \"2025-12-09\")]"
+        },
+        {
+          "declaration_line": "theorem emultiplicity_le_emultiplicity_choose_add {p : ℕ} (hp : p.Prime) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.Prime.emultiplicity_le_emultiplicity_choose_add {p : ℕ} (hp : Nat.Prime p) (n k : ℕ) :\n  emultiplicity p n ≤ emultiplicity p (n.choose k) + emultiplicity p k",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.Prime.emultiplicity_le_emultiplicity_choose_add {p : ℕ} (hp : Nat.Prime p) (n k : ℕ) :\n  emultiplicity p n ≤ emultiplicity p (n.choose k) + emultiplicity p k",
+            "status": "checked"
+          },
+          "line_number": 217,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq",
+            "in"
+          ],
+          "name": "Nat.Prime.emultiplicity_le_emultiplicity_choose_add",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Multiplicity.lean",
+          "score": 23,
+          "search_excerpt": "/-- A lower bound on the multiplicity of `p` in `choose n k`. -/ theorem emultiplicity_le_emultiplicity_choose_add {p : ℕ} (hp : p.Prime) : ∀ n k : ℕ, emultiplicity p n ≤ emultiplicity p (choose n k) + emultiplicity p k | _, 0 => by simp | 0, _ + 1 => by simp | n + 1, k + 1 => by rw [← hp.emultiplicity_mul] refine emultiplicity_le_emultiplicity_of_dvd_right ?_ rw [← add_one_mul_choose_eq]"
+        },
+        {
+          "declaration_line": "theorem choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+            "status": "checked"
+          },
+          "line_number": 77,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.choose_eq_choose_pred_add",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 20,
+          "search_excerpt": "theorem choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) : choose n k = choose (n - 1) (k - 1) + choose (n - 1) k := by"
+        },
+        {
+          "declaration_line": "theorem choose_pos : ∀ {n k}, k ≤ n → 0 < choose n k",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_pos {n k : ℕ} : k ≤ n → 0 < n.choose k",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_pos {n k : ℕ} : k ≤ n → 0 < n.choose k",
+            "status": "checked"
+          },
+          "line_number": 114,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.choose_pos",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 20,
+          "search_excerpt": "theorem choose_pos : ∀ {n k}, k ≤ n → 0 < choose n k | 0, _, hk => by rw [Nat.eq_zero_of_le_zero hk]; decide | n + 1, 0, _ => by simp | _ + 1, _ + 1, hk => Nat.add_pos_left (choose_pos (le_of_succ_le_succ hk)) _ theorem choose_eq_zero_iff {n k : ℕ} : n.choose k = 0 ↔ n < k :="
+        },
+        {
+          "declaration_line": "theorem add_one_mul_choose_eq : ∀ n k, (n + 1) * choose n k = choose (n + 1) (k + 1) * (k + 1)",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+            "status": "checked"
+          },
+          "line_number": 128,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.add_one_mul_choose_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 20,
+          "search_excerpt": "theorem add_one_mul_choose_eq : ∀ n k, (n + 1) * choose n k = choose (n + 1) (k + 1) * (k + 1) | 0, 0 => by decide | 0, k + 1 => by simp [choose] | n + 1, 0 => by simp [choose, mul_succ, Nat.add_comm] | n + 1, k + 1 => by rw [choose_succ_succ' (n + 1) (k + 1), Nat.add_mul _ _ (k + 1 + 1), ← add_one_mul_choose_eq n, mul_add_one, ← add_one_mul_choose_eq n, Nat.add_right_comm _ _ (_ * _), ← Nat.mul_add, ← choose_succ_succ', ← add_one_mul]"
+        },
+        {
+          "declaration_line": "theorem choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : Nat.choose n a = Nat.choose n b := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+            "status": "checked"
+          },
+          "line_number": 199,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.choose_symm_of_eq_add",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 20,
+          "search_excerpt": "theorem choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : Nat.choose n a = Nat.choose n b := by"
+        },
+        {
+          "declaration_line": "theorem multichoose_eq : ∀ n k : ℕ, multichoose n k = (n + k - 1).choose k",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.multichoose_eq (n k : ℕ) : n.multichoose k = (n + k - 1).choose k",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.multichoose_eq (n k : ℕ) : n.multichoose k = (n + k - 1).choose k",
+            "status": "checked"
+          },
+          "line_number": 416,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.multichoose_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 20,
+          "search_excerpt": "theorem multichoose_eq : ∀ n k : ℕ, multichoose n k = (n + k - 1).choose k | _, 0 => by simp | 0, k + 1 => by simp | n + 1, k + 1 => by have : n + (k + 1) < (n + 1) + (k + 1) := Nat.add_lt_add_right (Nat.lt_succ_self _) _"
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.choose_add_eq_choose_add_choose",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Direct statement of Vandermonde's identity."
+    },
+    {
+      "exact_identifier": "Nat.Partition.ext",
+      "expected_signature_or_shape": "Nat.Partition.ext (p q : Nat.Partition n) (h : p.parts = q.parts) : p = q",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+        "status": "checked"
+      },
+      "query": "Nat.Partition.ext",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "To prove equality of partitions."
+    },
+    {
+      "exact_identifier": "NPartition.ext",
+      "expected_signature_or_shape": "NPartition.ext (μ ν : NPartition N) (h : μ.parts = ν.parts) : μ = ν",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown identifier `NPartition.ext`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.ext`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "NPartition.ext",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "To prove equality of N-partitions."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "NPartition.ext": {
+        "error": "Unknown identifier `NPartition.ext`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.ext`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.Partition.ext": {
+        "messages": [
+          {
+            "data": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+        "status": "checked"
+      },
+      "Nat.choose_add_eq_choose_add_choose": {
+        "error": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.choose_mul_succ_eq": {
+        "messages": [
+          {
+            "data": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+        "status": "checked"
+      },
+      "Nat.choose_succ_succ": {
+        "messages": [
+          {
+            "data": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+        "status": "checked"
+      },
+      "Nat.succ_mul_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "568e7e23476315089ea280b37b41df6421c98db016ee35a4e78729527c01ac87",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 6,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

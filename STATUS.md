@@ -42,6 +42,8 @@ same-unit helper planning, Mathlib hydration, and clean
 - [x] Enforce honest decline when the model can sketch helpers but cannot
   complete them without placeholders.
 - [x] Add a no-cost normalizer for existing placeholder/comment skeleton runs.
+- [x] Improve generic Mathlib fallback ranking so multiline theorem statements
+  and docstrings can beat weaker one-line name matches.
 - [ ] Decide whether to route the checked helper skeleton to a coding
   agent/manual diagnostic lane or continue open-model prompt retries.
 - [ ] Reclassify old strict-grader mismatches into actionable buckets.
@@ -56,6 +58,8 @@ same-unit helper planning, Mathlib hydration, and clean
 - Selectors/generators still miss Lean shapes: nonexistent Mathlib names,
   omitted binders/typeclasses, extensionality paths, proof APIs, and proof
   plans for fresh helpers.
+- Fallback search can now recover some missed Mathlib facts, but it still needs
+  better filtering so rehydrated packs do not include noisy checked neighbors.
 - Full elaborated dependency extraction is useful but heavy on this 8 GB
   machine; reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is
   necessary. "Rows" there means one compiled Lean declaration/dependency record,
@@ -101,6 +105,13 @@ same-unit helper planning, Mathlib hydration, and clean
   `$0.030156`. It produced a larger 5,767-character helper skeleton but still
   used placeholders for inverse lemmas; the normalizer converted the
   consumer-facing result to clean `declined_cannot_prove`.
+- Diverse4 rehydration found a generic fallback-search bug: the real
+  multiline/docstringed Vandermonde theorem `Nat.add_choose_eq` was ranked
+  below weaker one-line binomial lemmas. The hydrator now ranks with compact
+  declaration/doc/path excerpts and selector `why_needed` text; a no-cost
+  rehydration artifact resolves the failed `Nat.choose_add_eq_choose_add_choose`
+  request to a checked `Nat.add_choose_eq` signature. No paid retry has used
+  that improved context yet.
 - Current NPartition blocker: generation discipline/proof synthesis. The model
   can now sketch the right helper structure, but cannot complete the hard
   same-unit proofs honestly under the no-placeholder benchmark contract.
@@ -113,6 +124,6 @@ same-unit helper planning, Mathlib hydration, and clean
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: route the checked helper skeleton to a coding-agent/manual
-  diagnostic lane, or try another open-model repair under the stricter
-  normalizer to measure whether it cleanly declines.
+- Next useful work: run a small paid repair retry for the diverse4 Vandermonde
+  unit from the rehydrated checked context, and separately route the NPartition
+  helper skeleton to a coding-agent/manual diagnostic lane.

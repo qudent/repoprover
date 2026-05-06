@@ -120,7 +120,7 @@ def candidate_name_root(candidate: dict[str, Any]) -> str:
 def candidate_local_haystack(candidate: dict[str, Any]) -> str:
     name = str(candidate.get("name") or "")
     local_name = name.rsplit(".", 1)[-1]
-    return f"{local_name} {candidate.get('declaration_line') or ''}".lower()
+    return f"{local_name} {candidate.get('declaration_line') or ''} {candidate.get('search_excerpt') or ''}".lower()
 
 
 def filter_fallback_candidates_for_query(query: str, candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -258,6 +258,36 @@ def forced_bridge_fallback_candidates(
     return candidates
 
 
+def declaration_search_excerpt(lines: list[str], start_index: int, *, max_lines: int = 8) -> str:
+    """Return nearby declaration text for search ranking, including doc comments.
+
+    Mathlib theorem names are often terse while the useful natural-language key
+    is in a docstring and the statement shape starts on continuation lines. A
+    compact local excerpt gives fallback search enough signal without exposing
+    proof bodies.
+    """
+
+    prefix_start = start_index
+    index = start_index - 1
+    while index >= 0:
+        stripped = lines[index].strip()
+        if not stripped:
+            break
+        if stripped.startswith(("/--", "--", "@[")) or stripped.startswith(("*", "-/")):
+            prefix_start = index
+            index -= 1
+            continue
+        break
+
+    end = min(len(lines), start_index + max_lines)
+    snippet_lines: list[str] = []
+    for line in lines[prefix_start:end]:
+        snippet_lines.append(line.strip())
+        if ":=" in line or line.strip() == "where":
+            break
+    return " ".join(part for part in snippet_lines if part).strip()
+
+
 def fallback_mathlib_candidates(
     query: str,
     *,
@@ -289,7 +319,8 @@ def fallback_mathlib_candidates(
     for path in sorted(mathlib_root.rglob("*.lean")):
         namespace_stack: list[str] = []
         rel = path.relative_to(project_root).as_posix()
-        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        lines = path.read_text(encoding="utf-8").splitlines()
+        for line_number, line in enumerate(lines, start=1):
             namespace_match = NAMESPACE_RE.match(line)
             if namespace_match:
                 namespace_stack.append(namespace_match.group("name"))
@@ -302,7 +333,9 @@ def fallback_mathlib_candidates(
             if not declaration:
                 continue
             kind, name = declaration
-            haystack = f"{namespace_prefix(namespace_stack)}.{name} {line}".lower()
+            qualified_name = ".".join(part for part in [namespace_prefix(namespace_stack), name] if part)
+            search_excerpt = declaration_search_excerpt(lines, line_number - 1)
+            haystack = f"{qualified_name} {rel} {search_excerpt}".lower()
             query_matched = [token for token in query_tokens if token in haystack]
             matched = [token for token in search_tokens if token in haystack]
             if not matched:
@@ -320,15 +353,20 @@ def fallback_mathlib_candidates(
             )
             if name.lower() in query.lower():
                 score += 2
+            if query_tokens and all(token in haystack for token in query_tokens):
+                score += 2
+            if important_search_tokens and len(important_search_matched) >= min(3, len(important_search_tokens)):
+                score += 2
             if kind == "alias":
                 score += 1
             candidates.append(
                 {
-                    "name": ".".join(part for part in [namespace_prefix(namespace_stack), name] if part),
+                    "name": qualified_name,
                     "kind": kind,
                     "path": rel,
                     "line_number": line_number,
                     "declaration_line": line.strip(),
+                    "search_excerpt": search_excerpt[:500],
                     "matched_tokens": matched,
                     "score": score,
                 }
@@ -613,7 +651,11 @@ def hydrate_output(
                 request.query,
                 project_root=project_root,
                 expected_signature_or_shape=request.expected_signature_or_shape,
-                diagnostic_text=lean_check_diagnostic_text(check_result),
+                diagnostic_text="\n".join(
+                    part
+                    for part in [request.why_needed, lean_check_diagnostic_text(check_result)]
+                    if part
+                ),
             )
             parent = checked_parent_identifier(request.exact_identifier, checked_exact_name_set)
             if parent:
