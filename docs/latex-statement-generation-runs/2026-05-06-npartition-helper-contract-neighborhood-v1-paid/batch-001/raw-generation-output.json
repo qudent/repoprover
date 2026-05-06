@@ -1,0 +1,24 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "fromPartition",
+        "toNPartition",
+        "bijection_partition_NPartition"
+      ],
+      "lean_file_body": "open Finset\n\n/-- Given a partition `p` of `n` with length ≤ N, produce an N-partition by padding with zeros. -/\ndef fromPartition {n N : ℕ} (p : Nat.Partition n) (h : Multiset.card p.parts ≤ N) : NPartition N where\n  parts i := \n    if hi : (i : ℕ) < Multiset.card p.parts then \n      (Multiset.sort (· ≥ ·) p.parts).get ⟨i, hi⟩\n    else 0\n  antitone := by\n    intro i j hij\n    dsimp\n    split_ifs with hi hj\n    · have hcard : (i : ℕ) ≤ (j : ℕ) := hij\n      have hpos : (Multiset.sort (· ≥ ·) p.parts).Sorted (· ≥ ·) := by\n        apply Multiset.sort_sorted (· ≥ ·) (fun a b => by decide)\n      have := hpos.rel_of_lt (by exact_mod_cast hcard) (by exact_mod_cast hi) (by exact_mod_cast hj)\n      exact this\n    · exact Nat.zero_le _\n    · exact Nat.zero_le _\n    · rfl\n\n/-- Given an N-partition, produce a partition by dropping trailing zeros. -/\ndef toNPartition {N : ℕ} (μ : NPartition N) : Σ n : ℕ, Nat.Partition n := by\n  let partsList := (Finset.filter (λ i => μ.parts i ≠ 0) Finset.univ).val.map μ.parts\n  refine ⟨partsList.sum, ⟨partsList, ?_, ?_⟩⟩\n  · intro i hi\n    have : i ∈ partsList := hi\n    rcases Multiset.mem_map.mp this with ⟨j, hj, rfl⟩\n    have hpos : μ.parts j ≠ 0 := by\n      simpa using hj\n    exact Nat.pos_of_ne_zero hpos\n  · rfl\n\n/-- The bijection between partitions of length ≤ N and N-partitions. -/\ntheorem bijection_partition_NPartition {n N : ℕ} :\n    Function.Bijective (λ (p : Σ' (p : Nat.Partition n), Multiset.card p.parts ≤ N) => fromPartition p.1 p.2) := by\n  sorry",
+      "notes": [
+        "The `fromPartition` definition uses `Multiset.sort` to get an ordered list of parts; this may not match the intended ordering of the source text (weakly decreasing tuple). The `toNPartition` returns a sigma type because `Nat.Partition` is indexed by the sum; the bijection statement is incomplete and uses `sorry` because the proof is not provided. The `Function.Bijective` type may not be exactly what the source intends; the source says 'bijection' between sets, which could be formalized as an equivalence. The `Multiset.card` is used for length; there is no `Nat.Partition.length` in Mathlib. The `antitone` proof is sketched but may need more work. The `toNPartition` does not guarantee the length condition. Overall, this is a partial attempt and cannot be considered a complete formalization."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "Multiset.sort for ordering",
+        "Finset.univ for Fin N"
+      ]
+    }
+  ]
+}

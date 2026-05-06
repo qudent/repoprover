@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 34
-verification-result files and 55 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 9 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 45
+verification-result files and 57 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 11 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -343,6 +343,22 @@ verification classified it as `declined_cannot_prove`, and exact-name
 comparison classified it as `not_generated_cannot_prove`. This is evidence that
 same-unit helper planning helps task decomposition but does not yet supply the
 missing Mathlib/project proof API needed to construct the bijection honestly.
+
+The next generic hydration pass now augments checked Mathlib structures/classes
+with compact source snippets plus Lean-checked projection/extensionality
+neighbors. For `Nat.Partition`, this adds the actual structure fields
+`parts`, `parts_pos`, `parts_sum`, `ext`, and `ext_iff`; it also suppresses
+unrelated global fallback candidates for failed member guesses such as
+`Nat.Partition.length` once the parent type has checked. The no-cost
+neighborhood prompt at
+`docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-budget/`
+shrinks from 78,802 bytes to 60,942 bytes compared with the previous paid
+prompt while adding those checked fields. A paid retry cost `$0.00206416` and
+showed the intended API correction: the raw model used `Multiset.card p.parts`
+instead of nonexistent `Nat.Partition.length`. It still emitted an incomplete
+scratchpad under `cannot_prove_from_visible_context`, so normalized verification
+remains `declined_cannot_prove` and gold comparison remains
+`not_generated_cannot_prove`.
 
 ### Imported Lean surface and likely context needs
 

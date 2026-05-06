@@ -1,0 +1,36 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "fromPartition",
+          "toNPartition",
+          "bijection_partition_NPartition"
+        ],
+        "raw_lean_file_body_characters": 1504,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-001"
+      }
+    ],
+    "policy": "Runner normalized cannot_prove_from_visible_context units to the declared empty-output contract. See raw-generation-output.json or raw-repair-output.json for original model text."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The `fromPartition` definition uses `Multiset.sort` to get an ordered list of parts; this may not match the intended ordering of the source text (weakly decreasing tuple). The `toNPartition` returns a sigma type because `Nat.Partition` is indexed by the sum; the bijection statement is incomplete and uses `sorry` because the proof is not provided. The `Function.Bijective` type may not be exactly what the source intends; the source says 'bijection' between sets, which could be formalized as an equivalence. The `Multiset.card` is used for length; there is no `Nat.Partition.length` in Mathlib. The `antitone` proof is sketched but may need more work. The `toNPartition` does not guarantee the length condition. Overall, this is a partial attempt and cannot be considered a complete formalization."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "Multiset.card for length",
+        "Multiset.sort for ordering",
+        "Finset.univ for Fin N"
+      ]
+    }
+  ]
+}

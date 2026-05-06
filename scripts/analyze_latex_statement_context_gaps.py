@@ -152,6 +152,12 @@ def selected_context_for_unit(run_dir: Path, unit_key: str) -> dict[str, Any]:
                     name = item.get("exact_identifier") or item.get("name") or item.get("query")
                     if name:
                         mathlib_names.add(str(name))
+                    for related in item.get("related_mathlib_declarations") or []:
+                        if (related.get("lean_check") or {}).get("status") != "checked":
+                            continue
+                        related_name = related.get("name")
+                        if related_name:
+                            mathlib_names.add(str(related_name))
         for context in payload.get("additional_checked_repair_context") or []:
             for item in context.get("checked_signatures") or []:
                 if str(item.get("unit_key") or "") == unit_key and item.get("name"):

@@ -1,0 +1,26 @@
+{
+  "batch_count": 1,
+  "batches": [
+    {
+      "batch_dir": "docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-budget/batch-001",
+      "batch_index": 1,
+      "paid_call_made": false,
+      "parse_error": null,
+      "unit_keys": [
+        "unit-001"
+      ],
+      "valid_json": false
+    }
+  ],
+  "budget_only": true,
+  "generated_at": "2026-05-06T03:19:40.491038+00:00",
+  "max_units_per_call": 1,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-budget",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_generation.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-v1-paid",
+  "valid_json": true
+}

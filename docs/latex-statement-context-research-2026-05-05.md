@@ -574,6 +574,18 @@ Broader diverse4 negative probe:
   names. The no-cost
   `docs/latex-statement-context-runs/2026-05-06-npartition-helper-contract-budget/`
   payload records the updated prompt contract.
+- Mathlib type-neighborhood hydration:
+  checked Mathlib structures/classes now carry compact source snippets plus
+  Lean-checked projection/extensionality neighbors. In the NPartition retry this
+  exposed `Nat.Partition.parts`, `parts_pos`, `parts_sum`, `ext`, and `ext_iff`
+  and suppressed eight unrelated `Nat.*length*` fallback candidates for the
+  failed `Nat.Partition.length` guess. The budget prompt
+  `docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-budget/`
+  is 60,942 bytes versus 78,802 bytes for the previous paid prompt. The paid
+  neighborhood retry cost `$0.00206416`; the raw model switched to
+  `Multiset.card p.parts` but still cleanly declined after emitting an
+  incomplete scratchpad, so this is an API/context improvement rather than a
+  coverage win.
 
 ## Lean Dependency Accounting
 

@@ -160,6 +160,7 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "prior_helper" in prompt
     assert "variable {K : Type*} [CommRing K]" in prompt
     assert "Follow the Lean-checked signatures exactly" in prompt
+    assert "source_declaration or related_mathlib_declarations" in prompt
     assert "Never use a hydrated Mathlib exact_identifier whose lean_check.status is not `checked`" in prompt
     assert "exact_identifier_failed_lean_check_redacted_do_not_use" in prompt
     assert "Demo.bad_guess" not in prompt

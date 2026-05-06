@@ -2,10 +2,14 @@
 
 from scripts.hydrate_latex_statement_context import (
     build_check_source,
+    checked_parent_identifier,
     fallback_mathlib_candidates,
+    find_mathlib_declarations,
     hydrate_output,
     iter_mathlib_requests,
+    related_names_for_declaration,
     split_exact_identifier_list,
+    structure_field_names,
 )
 
 
@@ -150,6 +154,193 @@ def test_hydrate_output_lean_checks_fallback_candidates(monkeypatch, tmp_path) -
     assert fallback["name"] == "Finset.powersetCard_eq_empty"
     assert fallback["lean_check"]["status"] == "checked"
     assert hydrated["fallback_exact_identifier_count"] == 1
+
+
+def test_find_mathlib_declarations_extracts_structure_source(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/Partition.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace Nat",
+                "/-- A partition of n. -/",
+                "@[ext]",
+                "structure Partition (n : ℕ) where",
+                "  /-- positive parts -/",
+                "  parts : Multiset ℕ",
+                "  parts_sum : parts.sum = n",
+                "deriving DecidableEq",
+                "",
+                "namespace Partition",
+                "theorem ext {n : ℕ} {x y : Partition n} (h : x.parts = y.parts) : x = y := by",
+                "  cases x; cases y; simp_all",
+                "end Partition",
+                "end Nat",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    found = find_mathlib_declarations(["Nat.Partition"], project_root=tmp_path)
+
+    declaration = found["Nat.Partition"]
+    assert declaration["kind"] == "structure"
+    assert declaration["path"] == ".lake/packages/mathlib/Mathlib/Demo/Partition.lean"
+    assert "structure Partition" in declaration["source_snippet"]
+    assert structure_field_names(declaration["source_snippet"]) == ["parts", "parts_sum"]
+    assert related_names_for_declaration("Nat.Partition", declaration) == [
+        "Nat.Partition.parts",
+        "Nat.Partition.parts_sum",
+        "Nat.Partition.ext",
+        "Nat.Partition.ext_iff",
+    ]
+
+
+def test_hydrate_output_adds_checked_structure_neighborhood(monkeypatch, tmp_path) -> None:
+    def fake_check_names(names, *, project_root, imports, opens, timeout_seconds):
+        checked = {}
+        for name in names:
+            checked[name] = {
+                "status": "checked",
+                "signature": f"{name} : checked",
+            }
+        return {"status": "ok", "checked": checked}
+
+    def fake_find_declarations(names, *, project_root):
+        assert names == ["Nat.Partition"]
+        return {
+            "Nat.Partition": {
+                "name": "Nat.Partition",
+                "kind": "structure",
+                "path": "Mathlib/Combinatorics/Enumerative/Partition/Basic.lean",
+                "line_number": 57,
+                "declaration_line": "structure Partition (n : ℕ) where",
+                "source_snippet": "\n".join(
+                    [
+                        "structure Partition (n : ℕ) where",
+                        "  parts : Multiset ℕ",
+                        "  parts_pos : ∀ {i}, i ∈ parts → 0 < i",
+                        "  parts_sum : parts.sum = n",
+                    ]
+                ),
+                "source_snippet_truncated": False,
+            }
+        }
+
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.lean_check_names", fake_check_names)
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.find_mathlib_declarations", fake_find_declarations)
+
+    hydrated = hydrate_output(
+        {
+            "units": [
+                {
+                    "unit_key": "unit-001",
+                    "planned_declarations": [
+                        {
+                            "task_id": "unit-001-task-1",
+                            "source_part": "whole unit",
+                            "needed_mathlib_context": [{"name_or_query": "Nat.Partition"}],
+                        }
+                    ],
+                }
+            ]
+        },
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        opens=[],
+        timeout_seconds=1,
+    )
+
+    row = hydrated["hydrated_mathlib_context"][0]
+    assert row["source_declaration"]["kind"] == "structure"
+    related = row["related_mathlib_declarations"]
+    assert [item["name"] for item in related] == [
+        "Nat.Partition.parts",
+        "Nat.Partition.parts_pos",
+        "Nat.Partition.parts_sum",
+        "Nat.Partition.ext",
+        "Nat.Partition.ext_iff",
+    ]
+    assert all(item["lean_check"]["status"] == "checked" for item in related)
+    assert hydrated["related_exact_identifier_count"] == 5
+
+
+def test_checked_parent_identifier_uses_longest_checked_prefix() -> None:
+    assert (
+        checked_parent_identifier("Nat.Partition.length", {"Nat", "Nat.Partition"})
+        == "Nat.Partition"
+    )
+    assert checked_parent_identifier("Nat.Partition.length", {"Nat.Partition.parts"}) is None
+
+
+def test_hydrate_output_suppresses_unrelated_fallbacks_for_checked_parent(monkeypatch, tmp_path) -> None:
+    def fake_check_names(names, *, project_root, imports, opens, timeout_seconds):
+        checked = {}
+        for name in names:
+            if name == "Nat.Partition.length":
+                checked[name] = {"status": "error", "error": "Unknown constant"}
+            else:
+                checked[name] = {"status": "checked", "signature": f"{name} : checked"}
+        return {"status": "ok", "checked": checked}
+
+    def fake_fallback(query, *, project_root, limit=8):
+        return [
+            {
+                "name": "Nat.toDigits_length",
+                "kind": "lemma",
+                "path": "Mathlib/Data/Nat/Digits.lean",
+                "line_number": 1,
+                "declaration_line": "lemma toDigits_length : True := by trivial",
+                "matched_tokens": ["length"],
+                "score": 1,
+            }
+        ]
+
+    def fake_find_declarations(names, *, project_root):
+        return {
+            "Nat.Partition": {
+                "name": "Nat.Partition",
+                "kind": "structure",
+                "source_snippet": "structure Partition (n : ℕ) where\n  parts : Multiset ℕ",
+            }
+        }
+
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.lean_check_names", fake_check_names)
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.fallback_mathlib_candidates", fake_fallback)
+    monkeypatch.setattr("scripts.hydrate_latex_statement_context.find_mathlib_declarations", fake_find_declarations)
+
+    hydrated = hydrate_output(
+        {
+            "units": [
+                {
+                    "unit_key": "unit-001",
+                    "planned_declarations": [
+                        {
+                            "task_id": "unit-001-task-1",
+                            "source_part": "whole unit",
+                            "needed_mathlib_context": [
+                                {"name_or_query": "Nat.Partition"},
+                                {"name_or_query": "Nat.Partition.length"},
+                            ],
+                        }
+                    ],
+                }
+            ]
+        },
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        opens=[],
+        timeout_seconds=1,
+    )
+
+    failed = hydrated["hydrated_mathlib_context"][1]
+    assert failed["query"] == "Nat.Partition.length"
+    assert failed["fallback_mathlib_candidates"] == []
+    assert failed["fallback_suppression"] == {
+        "checked_parent": "Nat.Partition",
+        "policy": "failed_member_request_scoped_to_checked_parent",
+        "removed_candidate_count": 1,
+    }
 
 
 def test_fallback_mathlib_candidates_scores_local_mathlib_declarations(tmp_path) -> None:

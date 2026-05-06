@@ -272,6 +272,7 @@ def build_generation_messages(
             "Treat selector_unchecked_statement_sketch as non-authoritative mathematical intent only; do not copy its Lean syntax verbatim.",
             "Follow the Lean-checked signatures exactly when they differ from the selector's expected shape.",
             "Use the actual Lean-checked argument order from hydrated_mathlib_context. If the selector expected shape conflicts with the checked signature, the checked signature wins.",
+            "When hydrated_mathlib_context includes a source_declaration or related_mathlib_declarations for a selected type/class, use those checked fields, projections, constructors, and extensionality facts instead of inventing absent APIs.",
             "Never use a hydrated Mathlib exact_identifier whose lean_check.status is not `checked`; treat it as unavailable even if the selector expected it to exist.",
             "Treat fallback_mathlib_candidates as search hints only. Do not cite or use a fallback candidate as a theorem unless its statement in the prompt is sufficient for the proof.",
             "If a selected Mathlib API is field-specific, unit-specific, or otherwise not strong enough for the source statement, say so in notes and generate only declarations justified by the visible context.",

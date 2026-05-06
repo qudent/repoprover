@@ -23,6 +23,7 @@ DECL_RE = re.compile(
     r"(?P<kind>theorem|lemma|def|abbrev|instance|class|structure|inductive)\s+"
     r"(?P<name>[^\s:\{\(\[]+)"
 )
+STRUCTURE_FIELD_RE = re.compile(r"^\s+(?P<name>[A-Za-z_][A-Za-z0-9_']*)\s*:")
 NAMESPACE_RE = re.compile(r"^\s*namespace\s+(?P<name>[A-Za-z0-9_'. ]+)\s*$")
 END_RE = re.compile(r"^\s*end(?:\s+(?P<name>[A-Za-z0-9_'.]+))?\s*$")
 
@@ -134,6 +135,17 @@ def filter_fallback_candidates_for_query(query: str, candidates: list[dict[str, 
     return candidates
 
 
+def checked_parent_identifier(identifier: str | None, checked_exact_names: set[str]) -> str | None:
+    if not identifier or "." not in identifier:
+        return None
+    parts = identifier.split(".")
+    for size in range(len(parts) - 1, 0, -1):
+        parent = ".".join(parts[:size])
+        if parent in checked_exact_names:
+            return parent
+    return None
+
+
 def namespace_prefix(stack: list[str]) -> str:
     parts: list[str] = []
     for item in stack:
@@ -197,6 +209,110 @@ def fallback_mathlib_candidates(query: str, *, project_root: Path, limit: int = 
     candidates = filter_fallback_candidates_for_query(query, candidates)
     candidates.sort(key=lambda item: (-int(item["score"]), str(item["path"]), int(item["line_number"])))
     return candidates[:limit]
+
+
+def declaration_snippet_lines(lines: list[str], *, start_line: int, end_line: int, max_lines: int = 40) -> str:
+    """Return a compact source snippet for a declaration span."""
+
+    snippet_start = max(1, start_line)
+    index = snippet_start - 2
+    while index >= 0:
+        stripped = lines[index].strip()
+        if not stripped or not (stripped.startswith("@[") or stripped.startswith("/--")):
+            break
+        snippet_start = index + 1
+        if stripped.startswith("/--"):
+            break
+        index -= 1
+    snippet_end = min(end_line, start_line + max_lines - 1)
+    return "\n".join(lines[snippet_start - 1 : snippet_end]).rstrip()
+
+
+def find_mathlib_declarations(names: list[str], *, project_root: Path) -> dict[str, dict[str, Any]]:
+    """Find source declarations for fully-qualified Mathlib names.
+
+    ``#check`` is often too terse for checked types such as structures: it says
+    only that the type exists. A compact source declaration gives generators the
+    real field/projection names without exposing any target project theorem.
+    """
+
+    wanted = set(names)
+    if not wanted:
+        return {}
+    mathlib_root = project_root / ".lake" / "packages" / "mathlib" / "Mathlib"
+    if not mathlib_root.exists():
+        return {}
+
+    found: dict[str, dict[str, Any]] = {}
+    for path in sorted(mathlib_root.rglob("*.lean")):
+        if wanted.issubset(found):
+            break
+        rel = path.relative_to(project_root).as_posix()
+        lines = path.read_text(encoding="utf-8").splitlines()
+        namespace_stack: list[str] = []
+        declaration_starts: list[dict[str, Any]] = []
+        for line_number, line in enumerate(lines, start=1):
+            namespace_match = NAMESPACE_RE.match(line)
+            if namespace_match:
+                namespace_stack.append(namespace_match.group("name"))
+                continue
+            end_match = END_RE.match(line)
+            if end_match and namespace_end_matches(namespace_stack, end_match.group("name")):
+                namespace_stack.pop()
+                continue
+            decl_match = DECL_RE.match(line)
+            if not decl_match:
+                continue
+            name = ".".join(part for part in [namespace_prefix(namespace_stack), decl_match.group("name")] if part)
+            declaration_starts.append(
+                {
+                    "name": name,
+                    "kind": decl_match.group("kind"),
+                    "line_number": line_number,
+                    "declaration_line": line.strip(),
+                }
+            )
+        for index, declaration in enumerate(declaration_starts):
+            name = str(declaration["name"])
+            if name not in wanted or name in found:
+                continue
+            start = int(declaration["line_number"])
+            end = (
+                int(declaration_starts[index + 1]["line_number"]) - 1
+                if index + 1 < len(declaration_starts)
+                else len(lines)
+            )
+            snippet = declaration_snippet_lines(lines, start_line=start, end_line=end)
+            found[name] = {
+                **declaration,
+                "path": rel,
+                "source_snippet": snippet[:3000],
+                "source_snippet_truncated": (end - start + 1) > 40 or len(snippet) > 3000,
+            }
+    return found
+
+
+def structure_field_names(source_snippet: str) -> list[str]:
+    fields: list[str] = []
+    for line in source_snippet.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("/-") or stripped.startswith("--"):
+            continue
+        if stripped.startswith(("namespace ", "deriving ", "where")):
+            continue
+        match = STRUCTURE_FIELD_RE.match(line)
+        if match:
+            fields.append(match.group("name"))
+    return list(dict.fromkeys(fields))
+
+
+def related_names_for_declaration(name: str, declaration: dict[str, Any], *, limit: int = 8) -> list[str]:
+    kind = str(declaration.get("kind") or "")
+    if kind not in {"structure", "class"}:
+        return []
+    fields = [f"{name}.{field}" for field in structure_field_names(str(declaration.get("source_snippet") or ""))]
+    support = [f"{name}.ext", f"{name}.ext_iff"]
+    return list(dict.fromkeys(fields + support))[:limit]
 
 
 def request_from_item(
@@ -358,11 +474,29 @@ def hydrate_output(
     )
     checked = check.get("checked", {})
     request_fallbacks: dict[int, list[dict[str, Any]]] = {}
+    request_fallback_suppression: dict[int, dict[str, Any]] = {}
     fallback_names: list[str] = []
+    checked_exact_name_set = {
+        name for name in exact_names if name and (checked.get(name, {}) or {}).get("status") == "checked"
+    }
     for request in requests:
         check_result = checked.get(request.exact_identifier or "", {})
         if (not request.exact_identifier) or check_result.get("status") != "checked":
             fallback_candidates = fallback_mathlib_candidates(request.query, project_root=project_root)
+            parent = checked_parent_identifier(request.exact_identifier, checked_exact_name_set)
+            if parent:
+                scoped_candidates = [
+                    candidate
+                    for candidate in fallback_candidates
+                    if str(candidate.get("name") or "").startswith(f"{parent}.")
+                ]
+                if len(scoped_candidates) != len(fallback_candidates):
+                    request_fallback_suppression[id(request)] = {
+                        "policy": "failed_member_request_scoped_to_checked_parent",
+                        "checked_parent": parent,
+                        "removed_candidate_count": len(fallback_candidates) - len(scoped_candidates),
+                    }
+                fallback_candidates = scoped_candidates
             request_fallbacks[id(request)] = fallback_candidates
             fallback_names.extend(str(candidate["name"]) for candidate in fallback_candidates if candidate.get("name"))
 
@@ -374,6 +508,25 @@ def hydrate_output(
         timeout_seconds=timeout_seconds,
     )
     fallback_checked = fallback_check.get("checked", {})
+    exact_source_declarations = find_mathlib_declarations(
+        [name for name in exact_names if name and (checked.get(name, {}) or {}).get("status") == "checked"],
+        project_root=project_root,
+    )
+    related_names_by_exact: dict[str, list[str]] = {}
+    related_names: list[str] = []
+    for name, declaration in exact_source_declarations.items():
+        names = related_names_for_declaration(name, declaration)
+        related_names_by_exact[name] = names
+        related_names.extend(names)
+
+    related_check = lean_check_names(
+        related_names,
+        project_root=project_root,
+        imports=imports,
+        opens=opens,
+        timeout_seconds=timeout_seconds,
+    )
+    related_checked = related_check.get("checked", {})
 
     hydrated_requests: list[dict[str, Any]] = []
     for request in requests:
@@ -383,6 +536,16 @@ def hydrate_output(
             row = dict(candidate)
             row["lean_check"] = fallback_checked.get(str(row.get("name") or ""), {"status": "missing_message"})
             fallback_candidates.append(row)
+        exact_source_declaration = exact_source_declarations.get(request.exact_identifier or "")
+        related_declarations = []
+        for related_name in related_names_by_exact.get(request.exact_identifier or "", []):
+            related_declarations.append(
+                {
+                    "name": related_name,
+                    "relationship": "checked_projection_or_extensionality_for_selected_type",
+                    "lean_check": related_checked.get(related_name, {"status": "missing_message"}),
+                }
+            )
         hydrated_requests.append(
             {
                 "unit_key": request.unit_key,
@@ -394,6 +557,9 @@ def hydrate_output(
                 "why_needed": request.why_needed,
                 "exact_identifier": request.exact_identifier,
                 "lean_check": check_result if request.exact_identifier else {"status": "not_exact_identifier"},
+                "source_declaration": exact_source_declaration,
+                "related_mathlib_declarations": related_declarations,
+                "fallback_suppression": request_fallback_suppression.get(id(request)),
                 "fallback_mathlib_candidates": fallback_candidates,
             }
         )
@@ -410,6 +576,9 @@ def hydrate_output(
         "fallback_exact_identifier_count": len(set(fallback_names)),
         "fallback_lean_check_status": fallback_check.get("status"),
         "fallback_lean_check": fallback_check,
+        "related_exact_identifier_count": len(set(related_names)),
+        "related_lean_check_status": related_check.get("status"),
+        "related_lean_check": related_check,
         "hydrated_mathlib_context": hydrated_requests,
     }
 

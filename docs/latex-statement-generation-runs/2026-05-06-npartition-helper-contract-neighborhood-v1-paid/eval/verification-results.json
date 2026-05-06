@@ -1,0 +1,91 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-v1-paid/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "hidden_target_namespaces": [
+        "NPartition"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": false,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [],
+          "failure_class": "declined_cannot_prove",
+          "lean_error_count": 0,
+          "lean_returncode": null,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": "cannot_prove_from_visible_context",
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": null
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "failure_class_counts": {
+    "declined_cannot_prove": 1
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T03:20:34.807911+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-06-npartition-helper-contract-neighborhood-v1-paid",
+  "infer_context": true,
+  "materialize_visible_support": false,
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

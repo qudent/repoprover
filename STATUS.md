@@ -37,8 +37,10 @@ handling on broader theorem units.
 - [x] Add generic same-unit helper planning with `role` and `depends_on_task_ids`.
 - [ ] Reclassify old strict-grader mismatches into actionable buckets.
 - [ ] Scale beyond determinant/symmetric probes and reduce noisy fallback context.
-- [ ] Test whether helper planning plus better Mathlib/project context can solve
+- [x] Test helper planning plus better Mathlib/project context on
   `prop.sf.Npar-as-par` without exposing same-source gold declarations.
+- [ ] Turn the remaining NPartition failure into either a source-only repair
+  success or a precise missing-proof-context report.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -61,8 +63,8 @@ handling on broader theorem units.
 - Diverse4 remains the negative frontier: after transport fixes, split
   generation, visible-support materialization, and two repair rounds, coverage
   stayed `0/4`; the blocker is missing useful project/Mathlib proof context.
-- Failure summary across 34 verification files / 55 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 9 clean cannot-prove
+- Failure summary across 45 verification files / 57 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 11 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -76,6 +78,14 @@ handling on broader theorem units.
   normalized it to an empty output, verification classified
   `declined_cannot_prove`, and gold comparison classified
   `not_generated_cannot_prove`.
+- Generic Mathlib type-neighborhood hydration now adds compact checked
+  structure/class source plus checked projection/extensionality neighbors. For
+  `Nat.Partition` it adds `parts`, `parts_pos`, `parts_sum`, `ext`, and
+  `ext_iff`, suppresses eight unrelated `Nat.*length*` fallbacks, and shrinks
+  the NPartition prompt from 78,802 to 60,942 bytes. Paid retry cost
+  `$0.00206416`; raw output correctly used `Multiset.card p.parts` instead of
+  nonexistent `Nat.Partition.length`, but still normalized to a clean
+  `declined_cannot_prove`.
 - Focused theorem-level suite last passed: 76 pytest tests plus `py_compile`
   over selector/generator/repair/verifier scripts.
 
@@ -83,6 +93,7 @@ handling on broader theorem units.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: improve generic context collection for same-unit helper
-  construction, especially accurate Mathlib/project APIs for partition length,
-  extensionality, padding/truncation, and bijection proof shape.
+- Next useful work: either run a repair-context round using the improved
+  NPartition neighborhood prompt, or add a deterministic diagnostic that
+  extracts missing proof APIs from the raw `Multiset.card p.parts` attempt
+  without exposing same-source gold declarations to future model prompts.
