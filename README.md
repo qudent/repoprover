@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 43
-verification-result files and 64 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 18 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 44
+verification-result files and 65 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 19 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -431,6 +431,24 @@ selector drifted toward inventing an `OrderedPartition` representation and the
 generator concluded that the visible context lacked that new type, rather than
 using `Nat.Partition` plus sorted multiset parts. This is now a proof-planning
 and representation-control problem, not a Mathlib hydration failure.
+
+The next generic rule tells both selector and generator not to introduce a
+replacement carrier type when visible source/project/local context already fixes
+the representation. The no-cost prompt artifact is
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-representation-control-budget/`.
+The paid retry at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-representation-control-v1-paid/`
+cost `$0.00655354` total (`$0.00296646` context selection and `$0.00358708`
+repair). This fixed the representation drift: the helper plan stayed on
+`Nat.Partition` and proposed fresh same-unit helpers `length`,
+`fromPartition`, `toNPartition'`, `fromPartition_size`, and
+`bijection_equiv`. Hydration selected 16 checked signatures and left 3 guessed
+cardinality/sum names unchecked. Verification still produced a clean
+`declined_cannot_prove`, with gold comparison
+`not_generated_cannot_prove`. The remaining blocker is no longer "select the
+right carrier"; it is whether a source-only proof-planning loop can synthesize
+and prove the sorted/padded representative, the filtered-map length bound, and
+the inverse lemmas from visible context and checked Mathlib facts.
 
 ### Imported Lean surface and likely context needs
 

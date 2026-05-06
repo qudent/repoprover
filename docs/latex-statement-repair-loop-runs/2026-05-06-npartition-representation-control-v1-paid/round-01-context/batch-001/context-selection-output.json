@@ -1,0 +1,51 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.card (Multiset.map f s) = Multiset.card s",
+              "name_or_query": "Multiset.card_map",
+              "why_needed": "To bound the cardinality of the multiset of parts after mapping from Fin N."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card (s.filter p) ≤ Multiset.card s",
+              "name_or_query": "Multiset.card_filter_le",
+              "why_needed": "To bound the cardinality after filtering zeros."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card (Finset.univ : Finset (Fin N)) = N",
+              "name_or_query": "Finset.card_univ",
+              "why_needed": "To know the cardinality of the domain of an NPartition."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card (Multiset.map f s) = ∑ a in s.toFinset, Multiset.count a s",
+              "name_or_query": "Multiset.card_map_eq_sum_count",
+              "why_needed": "Alternative way to compute cardinality of mapped multiset."
+            },
+            {
+              "expected_signature_or_shape": "(s.filter (· ≠ 0)).sum = s.sum",
+              "name_or_query": "Multiset.sum_filter_ne_zero",
+              "why_needed": "General lemma that filtering zeros does not change sum; may be in Mathlib as `Multiset.sum_filter_ne_zero` or similar."
+            },
+            {
+              "expected_signature_or_shape": "∑ x in s, f x = (s.val.map f).sum",
+              "name_or_query": "Finset.sum_eq_multiset_sum",
+              "why_needed": "Used in `toPartition` to relate Finset sum to Multiset sum."
+            },
+            {
+              "expected_signature_or_shape": "Antitone (f ∘ g) if ...",
+              "name_or_query": "Antitone.comp",
+              "why_needed": "May be needed to prove antitone of the padded function if the original partition is decreasing."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}

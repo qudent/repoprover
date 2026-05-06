@@ -1,0 +1,24 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition (with parts : Fin N → ℕ and antitone), NPartition.size, NPartition.toPartition, Nat.Partition (with parts, parts_pos, parts_sum, ext), and a private lemma filter_ne_zero_sum. The source proposition describes a bijection between partitions of length ≤ N and N-partitions. The key missing ingredient is a notion of 'length' for Nat.Partition; Nat.Partition.length is unavailable and cannot be defined locally in a way that matches the source's intended bijection because the source uses weakly decreasing tuples, but Nat.Partition.parts is an unordered multiset. The checked signatures in the repair context (Multiset.card_map, Multiset.card_filter_le_iff, etc.) are not sufficient to reconstruct the ordered tuple representation needed for the forward map (padding with zeros) and the antitone condition. The attempted forward map using Multiset.sort is fragile and does not guarantee the antitone property in a provable way from the visible context. The backward map via NPartition.toPartition already exists but does not enforce the length bound. Without a checked lemma that the length (Multiset.card) of the filtered multiset is ≤ N, and without a way to prove the antitone condition for the padded function, the bijection cannot be fully formalized. Therefore, the status is cannot_prove_from_visible_context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "NPartition.size",
+        "NPartition.toPartition",
+        "Nat.Partition structure with parts, parts_pos, parts_sum, ext",
+        "private lemma filter_ne_zero_sum",
+        "Multiset.card_map (checked signature)",
+        "Multiset.card_filter_le_iff (checked fallback candidate)",
+        "Finset.card_univ (checked signature)",
+        "Finset.sum_eq_multiset_sum (checked signature)"
+      ]
+    }
+  ]
+}

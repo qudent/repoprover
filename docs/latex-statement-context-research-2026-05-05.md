@@ -545,9 +545,9 @@ Broader diverse4 negative probe:
   `not_generated_cannot_prove`, making the current result a clean model-decline
   rather than a bad Lean proof attempt.
 - historical summary:
-  `docs/latex-statement-failure-taxonomy-summary.json` currently covers 34
-  theorem-level verification result files / 55 unit checks: 16 compiled, 20
-  contract violations, 10 compile failures, and 9 clean cannot-prove declines.
+  `docs/latex-statement-failure-taxonomy-summary.json` currently covers 44
+  theorem-level verification result files / 65 unit checks: 16 compiled, 20
+  contract violations, 10 compile failures, and 19 clean cannot-prove declines.
   The old contract-violation bucket mostly predates deterministic
   normalization. The true compile failures group into 5 missing
   typeclass/binder errors, 3 unknown constants, 1 application type mismatch,
@@ -668,6 +668,22 @@ Broader diverse4 negative probe:
   proof-plan/representation control: keep the route on `Nat.Partition` plus
   sorted multiset parts, and synthesize same-unit helpers rather than requiring
   new ambient types.
+- representation-control retry:
+  the selector and repair prompts now explicitly forbid introducing a
+  replacement carrier type when visible context already fixes the representation.
+  The no-cost prompt artifact is
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-representation-control-budget/`.
+  The paid retry at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-representation-control-v1-paid/`
+  cost `$0.00655354` total (`$0.00296646` context selection and `$0.00358708`
+  repair). It selected 16 checked signatures, left 3 guessed cardinality/sum
+  names unchecked, and kept the helper plan on `Nat.Partition`: `length`,
+  `fromPartition`, `toNPartition'`, `fromPartition_size`, and
+  `bijection_equiv`. Verification was still a clean
+  `declined_cannot_prove` with gold comparison `not_generated_cannot_prove`.
+  The current blocker is therefore proof planning for the sorted/padded
+  representative, the filtered-map length bound, and inverse lemmas, not
+  Mathlib API lookup or invented-type drift.
 
 ## Lean Dependency Accounting
 
