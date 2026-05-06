@@ -141,6 +141,12 @@ dev/fresh panels plus one-off diagnostics.
   tactic/ill-typed generated terms, with no placeholder contract failures.
   Current overview is
   `reports/latex-statement-failure-overview-20260506T1740Z.md`.
+- Fixed a generic context gap exposed by unit 004: prior project declarations
+  now bring bounded same-file dependencies of their visible statement snippets.
+  Budget-only artifact
+  `docs/latex-statement-context-selection-runs/2026-05-06-unit004-prior-project-deps-budget/`
+  shows `allEvenTuples` added as dependency context for
+  `allEven_count_formula`, without exposing the selected unit's hidden target.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and native session JSONL under

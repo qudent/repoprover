@@ -1,0 +1,13 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-06T17:48:23.569581+00:00",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-context-selection-runs/2026-05-06-unit004-prior-project-deps-budget",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": null,
+  "records_input": 114,
+  "schema_version": "repoprover.latex_statement_context_selection.v1",
+  "units_selected": 1,
+  "valid_json": false
+}

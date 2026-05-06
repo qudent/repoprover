@@ -507,11 +507,103 @@ def target_file_predecessor_declarations(
     return predecessors[-(limit + max_dependency_rows + max(structure_support_limit, 0)) :]
 
 
+def project_declaration_dependency_rows(
+    declarations: list[dict[str, Any]],
+    *,
+    project_root: Path | None,
+    withheld_by_path: dict[str, set[str]] | None,
+    dependency_limit: int,
+    dependency_depth: int,
+) -> list[dict[str, Any]]:
+    if project_root is None or dependency_limit <= 0 or dependency_depth <= 0 or not declarations:
+        return []
+    withheld_by_path = withheld_by_path or {}
+    dependencies: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, tuple[int, ...]]] = set()
+    declarations_by_path: dict[str, list[dict[str, Any]]] = {}
+    for declaration in declarations:
+        relative_path = str(declaration.get("path") or "")
+        if relative_path:
+            declarations_by_path.setdefault(relative_path, []).append(declaration)
+
+    for relative_path, path_declarations in declarations_by_path.items():
+        path = project_root / relative_path
+        if not path.exists():
+            continue
+        lines = path.read_text(encoding="utf-8").splitlines()
+        withheld_names = withheld_by_path.get(relative_path, set())
+        spans = [
+            span
+            for span in local_declaration_spans(lines)
+            if local_declaration_name(str(span["name"])) not in withheld_names
+        ]
+        selected_spans: list[dict[str, Any]] = []
+        selected_snippets: list[str] = []
+        max_selected_start = 0
+        for declaration in path_declarations:
+            line_range = declaration.get("line_range") or []
+            if len(line_range) != 2:
+                continue
+            start = int(line_range[0])
+            end = int(line_range[1])
+            max_selected_start = max(max_selected_start, start)
+            selected = next(
+                (
+                    span
+                    for span in spans
+                    if start <= int(span["start"]) <= end
+                    or local_declaration_name(str(span["name"]))
+                    == local_declaration_name(str(declaration.get("name") or ""))
+                ),
+                None,
+            )
+            if selected is not None:
+                selected_spans.append(selected)
+            snippet = str(declaration.get("lean_snippet") or "")
+            if snippet:
+                selected_snippets.append(snippet)
+        if max_selected_start <= 0 or not selected_snippets:
+            continue
+        eligible_spans = [span for span in spans if int(span["start"]) < max_selected_start]
+        dependency_spans = same_file_dependency_spans(
+            lines=lines,
+            spans=eligible_spans,
+            selected_spans=selected_spans,
+            selected_snippets=selected_snippets,
+            dependency_limit=dependency_limit,
+            dependency_depth=dependency_depth,
+            end_limit=max_selected_start - 1,
+        )
+        for span in sorted(dependency_spans, key=lambda candidate: int(candidate["start"])):
+            row = local_predecessor_row(
+                lines=lines,
+                span=span,
+                relative_path=relative_path,
+                end_limit=max_selected_start - 1,
+                context_source="same_file_dependency_of_prior_project_declaration",
+            )
+            if row is None:
+                continue
+            key = (
+                str(row.get("path") or ""),
+                str(row.get("name") or ""),
+                tuple(int(value) for value in row.get("line_range") or []),
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            dependencies.append(row)
+    return dependencies
+
+
 def project_declarations_for_prior(
     prior: dict[str, Any],
     *,
     project_root: Path | None,
     limit: int = 12,
+    dependency_limit: int = 4,
+    dependency_depth: int = 2,
+    withheld_by_path: dict[str, set[str]] | None = None,
 ) -> list[dict[str, Any]]:
     declarations: list[dict[str, Any]] = []
     seen: set[tuple[str, str]] = set()
@@ -528,8 +620,22 @@ def project_declarations_for_prior(
             declarations.append(declaration_stub(decl, project_root=project_root, source=source))
             seen.add(key)
             if len(declarations) >= limit:
-                return declarations
-    return declarations
+                dependencies = project_declaration_dependency_rows(
+                    declarations,
+                    project_root=project_root,
+                    withheld_by_path=withheld_by_path,
+                    dependency_limit=dependency_limit,
+                    dependency_depth=dependency_depth,
+                )
+                return [*dependencies, *declarations]
+    dependencies = project_declaration_dependency_rows(
+        declarations,
+        project_root=project_root,
+        withheld_by_path=withheld_by_path,
+        dependency_limit=dependency_limit,
+        dependency_depth=dependency_depth,
+    )
+    return [*dependencies, *declarations]
 
 
 def candidate_context_refs(row: dict[str, Any], *, max_previous_same_file: int | None) -> list[dict[str, Any]]:
@@ -550,8 +656,11 @@ def prior_project_context(
     project_root: Path | None = None,
     max_previous_same_file: int | None = 2,
     declarations_per_prior_unit: int = 4,
+    dependency_limit: int = 4,
+    dependency_depth: int = 2,
 ) -> list[dict[str, Any]]:
     contexts: list[dict[str, Any]] = []
+    withheld_by_path = withheld_local_declaration_names(row)
 
     for ref in candidate_context_refs(row, max_previous_same_file=max_previous_same_file):
         unit_id = ref.get("unit_id")
@@ -562,7 +671,14 @@ def prior_project_context(
         prior = rows_by_id.get(str(unit_id))
         if prior is None:
             continue
-        declarations = project_declarations_for_prior(prior, project_root=project_root, limit=declarations_per_prior_unit)
+        declarations = project_declarations_for_prior(
+            prior,
+            project_root=project_root,
+            limit=declarations_per_prior_unit,
+            dependency_limit=dependency_limit,
+            dependency_depth=dependency_depth,
+            withheld_by_path=withheld_by_path,
+        )
         if declarations:
             contexts.append(
                 {
@@ -744,6 +860,8 @@ def build_messages(
             project_root=project_root,
             max_previous_same_file=max_previous_same_file,
             declarations_per_prior_unit=declarations_per_prior_unit,
+            dependency_limit=local_predecessor_dependency_declarations,
+            dependency_depth=local_predecessor_dependency_depth,
         )
         payload["units"].append(
             {

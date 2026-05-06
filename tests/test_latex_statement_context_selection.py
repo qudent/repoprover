@@ -189,6 +189,56 @@ def test_prior_project_context_uses_compact_statements_and_file_context(tmp_path
     assert payload["units"][0]["local_file_context_candidates"][0]["name"] == "variable {K : Type*} [CommRing K]"
 
 
+def test_prior_project_context_includes_same_file_dependencies(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
+    lean_path.parent.mkdir(parents=True)
+    lean_path.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "def priorSupport : Nat := 1",
+                "theorem prior_theorem : priorSupport = priorSupport := by",
+                "  rfl",
+                "theorem hidden_target : True := by",
+                "  trivial",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    prior = _unit(
+        unit_id="prior",
+        label="lem.prior",
+        source_text="\\begin{lemma}\\label{lem.prior}Prior.\\end{lemma}",
+        aligned_name="Demo.prior_theorem",
+    )
+    prior["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [4, 5]
+    target = _unit(
+        unit_id="target",
+        label="lem.target",
+        source_text="\\begin{lemma}\\label{lem.target}Target uses \\ref{lem.prior}.\\end{lemma}",
+        aligned_name="Demo.hidden_target",
+        refs=[{"unit_id": "prior", "label": "lem.prior", "resolved": True}],
+    )
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [6, 7]
+
+    messages = build_messages(
+        [SelectedUnit(public_key="unit-001", row=target)],
+        [prior, target],
+        source_units=[prior, target],
+        project_root=project_root,
+        local_predecessor_dependency_declarations=2,
+    )
+    payload = json.loads(messages[1]["content"])
+    declarations = payload["units"][0]["prior_project_context"][0]["project_declarations"]
+
+    assert [row["name"] for row in declarations] == ["priorSupport", "Demo.prior_theorem"]
+    assert declarations[0]["context_source"] == "same_file_dependency_of_prior_project_declaration"
+    assert "def priorSupport : Nat := 1" in declarations[0]["lean_snippet"]
+    assert "Demo.hidden_target" not in messages[1]["content"]
+
+
 def test_local_file_predecessors_omit_hidden_target(tmp_path: Path) -> None:
     project_root = tmp_path / "project"
     lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
