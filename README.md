@@ -620,6 +620,22 @@ semantic-grader fixes. Triangular determinant is a target-shape planning case,
 and FPS division plus NPartition remain honest
 insufficient-context/proof-synthesis cases.
 
+A follow-up repair-loop pass on the same five-unit development panel found two
+deterministic orchestration bugs and one generic repair-prompt gap. Multi-unit
+repair outputs must be split back into per-unit batches, and each split batch
+must carry forward the original unit-specific generation payload; otherwise
+the verifier loses the prompt-visible import/support context and can
+false-reject preserved successes. The repair prompts also now tell models to
+apply source theorems before checked bridge rewrites when that is what exposes
+the bridge lemma's left-hand side. The merged development artifact
+`docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/`
+compiles `3/5` units and post-hoc semantic coverage proves `2/5` aligned
+source units. The two true semantic wins are inverse uniqueness and
+Vandermonde; triangular still compiles with the wrong statement shape, and FPS
+division plus NPartition are clean cannot-prove declines. The effective
+provider cost for the artifact path was `$0.0244708072`; this remains
+development-panel evidence, not a held-out benchmark.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

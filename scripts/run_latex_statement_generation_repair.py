@@ -36,27 +36,55 @@ from scripts.run_latex_statement_generation import (
 )
 
 
+def generation_output_paths(generation_run: Path) -> list[Path]:
+    if generation_run.is_file():
+        return [generation_run]
+    return sorted(generation_run.glob("batch-*/generation-output.json"))
+
+
 def load_generation_output(generation_run: Path) -> dict[str, Any]:
-    path = generation_run / "batch-001" / "generation-output.json"
-    if not path.exists():
+    paths = generation_output_paths(generation_run)
+    if not paths:
+        path = generation_run / "batch-001" / "generation-output.json"
         raise FileNotFoundError(path)
-    return read_json(path)
+    if len(paths) == 1:
+        return read_json(paths[0])
+
+    units: list[dict[str, Any]] = []
+    batch_paths: list[str] = []
+    for path in paths:
+        output = read_json(path)
+        batch_paths.append(str(path))
+        units.extend(output.get("units") or [])
+    return {
+        "schema_version": "repoprover.latex_statement_generation_aggregated.v1",
+        "batch_paths": batch_paths,
+        "units": units,
+    }
 
 
 def load_raw_invalid_generation_output(generation_run: Path) -> dict[str, Any] | None:
-    for name in ("raw-generation-output.json", "raw-repair-output.json"):
-        path = generation_run / "batch-001" / name
-        if path.exists():
-            return {
-                "path": str(path),
-                "policy": (
-                    "Unverified prior model output preserved because the normalized "
-                    "consumer-facing artifact enforced the cannot-prove empty-output "
-                    "contract. Use only for failure analysis; do not treat any Lean "
-                    "code here as checked or acceptable."
-                ),
-                "output": read_json(path),
-            }
+    raw_paths: list[Path] = []
+    if generation_run.is_file():
+        raw_paths = []
+    else:
+        for name in ("raw-generation-output.json", "raw-repair-output.json"):
+            raw_paths.extend(sorted(generation_run.glob(f"batch-*/{name}")))
+    if not raw_paths:
+        for name in ("raw-generation-output.json", "raw-repair-output.json"):
+            path = generation_run / "batch-001" / name
+            if path.exists():
+                raw_paths.append(path)
+    if raw_paths:
+        return {
+            "policy": (
+                "Unverified prior model output preserved because the normalized "
+                "consumer-facing artifact enforced the cannot-prove empty-output "
+                "contract. Use only for failure analysis; do not treat any Lean "
+                "code here as checked or acceptable."
+            ),
+            "outputs": [{"path": str(path), "output": read_json(path)} for path in raw_paths],
+        }
     return None
 
 
@@ -118,6 +146,7 @@ def build_repair_messages(
     verification_results: Path,
     extra_context_paths: list[Path] | None = None,
     unit_keys: set[str] | None = None,
+    source_coverage_review_unit_keys: set[str] | None = None,
 ) -> list[dict[str, str]]:
     generation_messages = build_generation_messages(selector_run)
     generation_user = next(message for message in generation_messages if message["role"] == "user")
@@ -169,11 +198,15 @@ def build_repair_messages(
             "If additional_checked_repair_context contains discarded_do_not_use_items, treat them as schema sanitation notes only; they are not forbidden Lean identifiers.",
             "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context checked_signatures or selected_visible_context.",
             "For finite sums and products over a Finset, use Lean's membership-binder notation `∑ x ∈ s, f x` and `∏ x ∈ s, f x`; Lean v4.28 does not accept `∑ x in s, ...` or `∏ x in s, ...`.",
+            "When a checked bridge lemma rewrites between two indexed forms, use an explicit `rw [bridge_lemma]` or `change`/`rw` chain in the direction of the goal. Do not rely on `simpa [bridge_lemma] using source_theorem` unless the source theorem already has exactly the target indexed shape.",
+            "If a proof combines a source theorem with a checked bridge rewrite, first rewrite with the source theorem when that exposes the bridge lemma's left-hand side, then apply the bridge rewrite; do not rewrite a bridge pattern before it occurs in the goal.",
             "If raw_invalid_generation_output is present, treat it as unverified prior scratchpad only: use it to understand the attempted route, but do not copy identifiers or proof steps unless visible context and Lean-checked signatures justify them.",
             "If notes describe a simpler corrected proof, implement that proof in lean_file_body instead of saying it will be adjusted later.",
             "If status is cannot_prove_from_visible_context, lean_file_body must be exactly empty and declaration_names must be an empty list.",
             "When status is cannot_prove_from_visible_context, do not use lean_file_body as a scratchpad. Put analysis in notes only; lean_file_body must be exactly \"\" and declaration_names exactly [].",
             "The repair output must be directly acceptable as a generation-output.json file.",
+            "Return exactly one unit entry for every unit shown in original_generation_task.units. If a shown unit still cannot be repaired from visible context, include that unit with status cannot_prove_from_visible_context, lean_file_body exactly \"\", and declaration_names exactly [].",
+            "Units listed in source_coverage_review_unit_keys are not successful merely because they compile. Review the visible source text, planned declarations, and generated declaration shape for missing cases, displayed equations, alternatives, or subclaims; repair or split them when visible context supports that source coverage.",
         ],
         "original_generation_task": generation_payload,
         "failed_generation_output": failed_output,
@@ -182,6 +215,7 @@ def build_repair_messages(
             "unit_count": len(verification_units),
             "units": verification_units,
         },
+        "source_coverage_review_unit_keys": sorted(source_coverage_review_unit_keys or []),
         "additional_checked_repair_context": load_filtered_extra_context(extra_context_paths, unit_keys),
         "raw_invalid_generation_output": load_raw_invalid_generation_output(generation_run),
         "benchmark_policy": {
@@ -206,6 +240,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         verification_results=args.verification_results,
         extra_context_paths=args.extra_context,
         unit_keys=set(getattr(args, "unit_key", None) or []) or None,
+        source_coverage_review_unit_keys=set(getattr(args, "source_coverage_review_unit_key", None) or []) or None,
     )
     request_payload = {
         "model": args.model,
@@ -273,6 +308,14 @@ def main() -> None:
     parser.add_argument("--generation-run", type=Path, required=True)
     parser.add_argument("--verification-results", type=Path, required=True)
     parser.add_argument("--unit-key", action="append", help="Repair only the selected public unit key; may be repeated.")
+    parser.add_argument(
+        "--source-coverage-review-unit-key",
+        action="append",
+        help=(
+            "Unit key whose generated Lean compiles but should be reviewed for visible source coverage; "
+            "may be repeated. This does not include gold declarations."
+        ),
+    )
     parser.add_argument(
         "--extra-context",
         type=Path,

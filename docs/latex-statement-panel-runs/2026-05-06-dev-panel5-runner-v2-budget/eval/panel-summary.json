@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-05-06T07:07:17.343772+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation",
+  "gold_comparison_results": null,
+  "metrics": {
+    "context_selection": {
+      "budget_only": false,
+      "cached_prompt_tokens": 16768,
+      "completion_tokens": 9219,
+      "cost": 0.003094084,
+      "elapsed_seconds": 115.186,
+      "paid_call_made": true,
+      "path": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated",
+      "prompt_tokens": 17077,
+      "reasoning_tokens": 6914,
+      "units_selected": 5,
+      "valid_json": true
+    },
+    "generation": {
+      "batch_count": 5,
+      "budget_only": true,
+      "cached_prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": 0.0,
+      "elapsed_seconds": null,
+      "normalized_unit_count": 0,
+      "paid_call_made": false,
+      "path": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation",
+      "prompt_tokens": null,
+      "reasoning_tokens": null,
+      "valid_json": true
+    },
+    "gold_comparison": null,
+    "hydration": {
+      "batch_count": 1,
+      "exact_identifier_count": 6,
+      "fallback_exact_identifier_count": 27,
+      "fallback_lean_check_statuses": [
+        "ok"
+      ],
+      "lean_check_statuses": [
+        "lean_errors"
+      ],
+      "path": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated/eval/mathlib-hydration-summary.json",
+      "request_count": 7
+    },
+    "semantic_coverage": null,
+    "verification": null
+  },
+  "output_root": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget",
+  "panel": "/home/name/repos/repoprover/docs/latex-statement-dev-panel-2026-05-06.json",
+  "schema_version": "repoprover.latex_statement_panel_run.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated",
+  "semantic_coverage_results": null,
+  "stages": [
+    {
+      "command": "reuse existing selector run",
+      "elapsed_seconds": 0.0,
+      "exit_code": 0,
+      "stage": "context_selection",
+      "stderr_log": null,
+      "stderr_tail": "",
+      "stdout_log": null,
+      "stdout_tail": ""
+    },
+    {
+      "command": "/home/name/repos/repoprover/.venv/bin/python3 scripts/run_latex_statement_generation.py --selector-run docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated --output docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation --model deepseek/deepseek-v4-flash --base-url https://openrouter.ai/api/v1 --max-tokens 8192 --temperature 0.0 --max-units-per-call 1 --reasoning-effort none --budget-only",
+      "elapsed_seconds": 1.048,
+      "exit_code": 0,
+      "stage": "generation",
+      "stderr_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/logs/generation.stderr.log",
+      "stderr_tail": "",
+      "stdout_log": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/logs/generation.stdout.log",
+      "stdout_tail": "{\n  \"batch_count\": 5,\n  \"batches\": [\n    {\n      \"batch_dir\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation/batch-001\",\n      \"batch_index\": 1,\n      \"paid_call_made\": false,\n      \"parse_error\": null,\n      \"unit_keys\": [\n        \"unit-001\"\n      ],\n      \"valid_json\": false\n    },\n    {\n      \"batch_dir\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation/batch-002\",\n      \"batch_index\": 2,\n      \"paid_call_made\": false,\n      \"parse_error\": null,\n      \"unit_keys\": [\n        \"unit-002\"\n      ],\n      \"valid_json\": false\n    },\n    {\n      \"batch_dir\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation/batch-003\",\n      \"batch_index\": 3,\n      \"paid_call_made\": false,\n      \"parse_error\": null,\n      \"unit_keys\": [\n        \"unit-003\"\n      ],\n      \"valid_json\": false\n    },\n    {\n      \"batch_dir\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation/batch-004\",\n      \"batch_index\": 4,\n      \"paid_call_made\": false,\n      \"parse_error\": null,\n      \"unit_keys\": [\n        \"unit-004\"\n      ],\n      \"valid_json\": false\n    },\n    {\n      \"batch_dir\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation/batch-005\",\n      \"batch_index\": 5,\n      \"paid_call_made\": false,\n      \"parse_error\": null,\n      \"unit_keys\": [\n        \"unit-005\"\n      ],\n      \"valid_json\": false\n    }\n  ],\n  \"budget_only\": true,\n  \"generated_at\": \"2026-05-06T07:07:18.128012+00:00\",\n  \"max_units_per_call\": 1,\n  \"model\": \"deepseek/deepseek-v4-flash\",\n  \"output_path\": \"docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-budget/generation\",\n  \"paid_call_made\": false,\n  \"parse_error\": null,\n  \"reasoning_effort\": \"none\",\n  \"schema_version\": \"repoprover.latex_statement_generation.v1\",\n  \"selector_run\": \"docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated\",\n  \"valid_json\": true\n}\n"
+    }
+  ],
+  "stop_reason": "budget_only_after_generation",
+  "unit_ids": [
+    "AlgebraicCombinatorics/tex/FPS/DividingFPS.tex:thm.commring.inverse-uni",
+    "AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang",
+    "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+    "AlgebraicCombinatorics/tex/FPS/FPSDefinition.tex:prop.binom.vandermonde.NN",
+    "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par"
+  ],
+  "verification_results": null
+}

@@ -1,0 +1,64 @@
+{
+  "units": [
+    {
+      "unit_key": "unit-001",
+      "status": "cannot_prove_from_visible_context",
+      "lean_file_body": "",
+      "declaration_names": [],
+      "notes": [
+        "The lemma xnEquiv_mul_of_coeff_eq failed to compile due to missing Semiring K instance. The visible context does not provide a working lemma for coefficient-wise equality of products, and no lemma for coefficient-wise equality of inverses is available. The source requires a lemma that if c and d are units with equal coefficients up to n, then their inverses also have equal coefficients up to n, which is not available in the visible context. The checked signature PowerSeries.coeff_inv is over fields, not general commutative rings with IsUnit, and cannot be used here."
+      ],
+      "used_context": [
+        "source lemma text (lem.fps.prod.irlv.cong-div)",
+        "local_file_predecessor_declaration: xnEquiv_mul_of_coeff_eq (failed to compile)",
+        "checked_signature: PowerSeries.coeff_inv (field-specific, not applicable)"
+      ]
+    },
+    {
+      "unit_key": "unit-002",
+      "status": "generated",
+      "lean_file_body": "theorem det_of_triangular {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id ∨ A.BlockTriangular (OrderDual.toDual : Fin n → Fin n)) : A.det = ∏ i : Fin n, A i i := by\n  rcases h with (hU | hL)\n  · exact Matrix.det_of_upperTriangular hU\n  · exact Matrix.det_of_lowerTriangular A hL",
+      "declaration_names": ["det_of_triangular"],
+      "notes": [
+        "Uses the checked Mathlib signatures for Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular, which require BlockTriangular condition rather than explicit zero conditions.",
+        "The theorem combines both upper and lower triangular cases using an `or` hypothesis."
+      ],
+      "used_context": [
+        "source theorem text: triangular matrix determinant equals product of diagonal entries",
+        "Matrix.det_of_upperTriangular (checked signature)",
+        "Matrix.det_of_lowerTriangular (checked signature)",
+        "local_file_context_candidates: open Matrix Finset BigOperators, namespace AlgebraicCombinatorics, namespace Det, variable {K : Type*} [CommRing K], variable {n m : ℕ}"
+      ]
+    },
+    {
+      "unit_key": "unit-004",
+      "status": "generated",
+      "lean_file_body": "open Finset\nopen Nat\n\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k ∈ range (n + 1), (a.choose k) * (b.choose (n - k)) := by\n  simpa [Finset.Nat.sum_antidiagonal_eq_sum_range_succ] using Nat.add_choose_eq a b n",
+      "declaration_names": ["vandermonde_nat"],
+      "notes": [
+        "Uses Nat.add_choose_eq and Finset.Nat.sum_antidiagonal_eq_sum_range_succ from Mathlib.",
+        "The proof uses simpa to rewrite the antidiagonal sum to the range sum, avoiding the 'No goals to be solved' error from the previous attempt."
+      ],
+      "used_context": [
+        "Nat.add_choose_eq (checked signature)",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)"
+      ]
+    },
+    {
+      "unit_key": "unit-005",
+      "status": "cannot_prove_from_visible_context",
+      "lean_file_body": "",
+      "declaration_names": [],
+      "notes": [
+        "The visible context provides NPartition structure, toPartition, and filter_ne_zero_sum, but the bijection requires constructing an inverse map from Nat.Partition with parts.card ≤ N to NPartition N, proving antitone of the padded function, and proving left_inv and right_inv. The antitone proof requires case analysis on in-range vs out-of-range indices, using sortedness of the original partition parts. The checked fallback candidates (List.Pairwise.rel_get_of_le, List.sortedGE_iff_antitone_get, etc.) provide ingredients for the in-range case, but the full construction is complex and the visible context does not provide a direct lemma for the padded antitone function. The proof strategy note suggests a multi-step helper plan, but implementing it fully from the visible context is beyond the scope of a single repair step without additional project context or a preexisting bijection lemma."
+      ],
+      "used_context": [
+        "NPartition structure with parts, antitone, ext, ext'",
+        "NPartition.toPartition",
+        "filter_ne_zero_sum",
+        "Nat.Partition structure with parts, parts_pos, parts_sum, ext",
+        "checked fallback candidates: List.Pairwise.rel_get_of_le, List.sortedGE_iff_antitone_get, Finset.card_image_le, Fintype.card_fin"
+      ]
+    }
+  ]
+}

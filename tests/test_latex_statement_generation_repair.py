@@ -306,6 +306,8 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "generic checked-fallback rewrite/application routes" in prompt
     assert "schema sanitation notes only" in prompt
     assert "Lean's membership-binder notation `∑ x ∈ s, f x`" in prompt
+    assert "checked bridge lemma rewrites between two indexed forms" in prompt
+    assert "first rewrite with the source theorem" in prompt
     assert "theorem bad" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt
@@ -345,6 +347,41 @@ def test_repair_prompt_filters_by_unit_key(tmp_path: Path) -> None:
     assert "Unknown constant `Demo.other_bad_guess`" in prompt
     assert "Nat.add_zero" not in prompt
     assert "Unknown constant `Demo.bad_guess`" not in prompt
+
+
+def test_repair_prompt_aggregates_multibatch_generation_outputs(tmp_path: Path) -> None:
+    selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
+    _add_second_failed_unit(selector_run, generation_run, verification_path)
+    generation = json.loads((generation_run / "batch-001/generation-output.json").read_text())
+    first, second = generation["units"]
+    (generation_run / "batch-001/generation-output.json").write_text(
+        json.dumps({"units": [first]}),
+        encoding="utf-8",
+    )
+    (generation_run / "batch-002").mkdir(parents=True)
+    (generation_run / "batch-002/generation-output.json").write_text(
+        json.dumps({"units": [second]}),
+        encoding="utf-8",
+    )
+
+    messages = build_repair_messages(
+        selector_run=selector_run,
+        generation_run=generation_run,
+        verification_results=verification_path,
+        source_coverage_review_unit_keys={"unit-002"},
+    )
+    user_payload = json.loads(messages[1]["content"])
+    prompt = json.dumps(user_payload, ensure_ascii=False)
+
+    assert [unit["unit_key"] for unit in user_payload["failed_generation_output"]["units"]] == [
+        "unit-001",
+        "unit-002",
+    ]
+    assert user_payload["source_coverage_review_unit_keys"] == ["unit-002"]
+    assert "Return exactly one unit entry for every unit shown" in prompt
+    assert "not successful merely because they compile" in prompt
+    assert "Unknown constant `Demo.bad_guess`" in prompt
+    assert "Unknown constant `Demo.other_bad_guess`" in prompt
 
 
 def test_repair_prompt_includes_raw_invalid_generation_output_as_unchecked(tmp_path: Path) -> None:

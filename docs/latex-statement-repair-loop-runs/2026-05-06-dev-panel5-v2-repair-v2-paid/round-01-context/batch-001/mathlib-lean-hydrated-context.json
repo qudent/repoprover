@@ -1,0 +1,1064 @@
+{
+  "exact_identifier_count": 5,
+  "fallback_exact_identifier_count": 21,
+  "fallback_lean_check": {
+    "checked": {
+      "List.Pairwise.rel_get_of_le": {
+        "messages": [
+          {
+            "data": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+        "status": "checked"
+      },
+      "List.Pairwise.rel_get_of_lt": {
+        "messages": [
+          {
+            "data": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+        "status": "checked"
+      },
+      "List.SortedGE.sortedGT_of_nodup": {
+        "messages": [
+          {
+            "data": "List.SortedGE.sortedGT_of_nodup.{u_1} {α : Type u_1} [PartialOrder α] {l : List α} (h₁ : l.SortedGE) (h₂ : l.Nodup) :\n  l.SortedGT",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.SortedGE.sortedGT_of_nodup.{u_1} {α : Type u_1} [PartialOrder α] {l : List α} (h₁ : l.SortedGE) (h₂ : l.Nodup) :\n  l.SortedGT",
+        "status": "checked"
+      },
+      "List.SortedLT": {
+        "messages": [
+          {
+            "data": "List.SortedLT.{u_1} {α : Type u_1} [Preorder α] (l : List α) : Prop",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.SortedLT.{u_1} {α : Type u_1} [Preorder α] (l : List α) : Prop",
+        "status": "checked"
+      },
+      "List.exists_map_eq_of_sorted_nonempty_iff_sbtw": {
+        "messages": [
+          {
+            "data": "List.exists_map_eq_of_sorted_nonempty_iff_sbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l',\n      l'.SortedLT ∧\n        List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l ∧ (l.length = 1 ∨ l.head hl ≠ l.getLast hl)) ↔\n    List.Sbtw R l",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.exists_map_eq_of_sorted_nonempty_iff_sbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l',\n      l'.SortedLT ∧\n        List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l ∧ (l.length = 1 ∨ l.head hl ≠ l.getLast hl)) ↔\n    List.Sbtw R l",
+        "status": "checked"
+      },
+      "List.exists_map_eq_of_sorted_nonempty_iff_wbtw": {
+        "messages": [
+          {
+            "data": "List.exists_map_eq_of_sorted_nonempty_iff_wbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l', l'.SortedLE ∧ List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l) ↔ List.Wbtw R l",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.exists_map_eq_of_sorted_nonempty_iff_wbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l', l'.SortedLE ∧ List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l) ↔ List.Wbtw R l",
+        "status": "checked"
+      },
+      "List.sortedGE_iff_antitone_get": {
+        "messages": [
+          {
+            "data": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+        "status": "checked"
+      },
+      "List.sortedLE_iff_monotone_get": {
+        "messages": [
+          {
+            "data": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+        "status": "checked"
+      },
+      "Multiset.card": {
+        "messages": [
+          {
+            "data": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+            "line": 19,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+        "status": "checked"
+      },
+      "Multiset.card_le_card_toFinset_add_one_iff": {
+        "messages": [
+          {
+            "data": "Multiset.card_le_card_toFinset_add_one_iff.{u_2} {α : Type u_2} [DecidableEq α] {m : Multiset α} :\n  m.card ≤ #m.toFinset + 1 ↔\n    ∀ (x y : α), 1 < Multiset.count x m → 1 < Multiset.count y m → x = y ∧ Multiset.count x m = 2",
+            "line": 21,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_le_card_toFinset_add_one_iff.{u_2} {α : Type u_2} [DecidableEq α] {m : Multiset α} :\n  m.card ≤ #m.toFinset + 1 ↔\n    ∀ (x y : α), 1 < Multiset.count x m → 1 < Multiset.count y m → x = y ∧ Multiset.count x m = 2",
+        "status": "checked"
+      },
+      "Multiset.card_sum": {
+        "messages": [
+          {
+            "data": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+            "line": 20,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+        "status": "checked"
+      },
+      "Multiset.coe_card": {
+        "messages": [
+          {
+            "data": "Multiset.coe_card.{u_1} {α : Type u_1} (l : List α) : (↑l).card = l.length",
+            "line": 18,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.coe_card.{u_1} {α : Type u_1} (l : List α) : (↑l).card = l.length",
+        "status": "checked"
+      },
+      "Multiset.length_sort": {
+        "messages": [
+          {
+            "data": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+            "line": 17,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+        "status": "checked"
+      },
+      "Multiset.pow_card_le_prod": {
+        "messages": [
+          {
+            "data": "Multiset.pow_card_le_prod.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} {a : α} [MulLeftMono α]\n  (h : ∀ x ∈ s, a ≤ x) : a ^ s.card ≤ s.prod",
+            "line": 23,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.pow_card_le_prod.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} {a : α} [MulLeftMono α]\n  (h : ∀ x ∈ s, a ≤ x) : a ^ s.card ≤ s.prod",
+        "status": "checked"
+      },
+      "Multiset.prod_le_pow_card": {
+        "messages": [
+          {
+            "data": "Multiset.prod_le_pow_card.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] [MulLeftMono α] (s : Multiset α) (n : α)\n  (h : ∀ x ∈ s, x ≤ n) : s.prod ≤ n ^ s.card",
+            "line": 22,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.prod_le_pow_card.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] [MulLeftMono α] (s : Multiset α) (n : α)\n  (h : ∀ x ∈ s, x ≤ n) : s.prod ≤ n ^ s.card",
+        "status": "checked"
+      },
+      "Multiset.prod_map_le_pow_card": {
+        "messages": [
+          {
+            "data": "Multiset.prod_map_le_pow_card.{u_1, u_2, u_3} {R : Type u_1} [CommMonoidWithZero R] [PartialOrder R] [ZeroLEOneClass R]\n  [PosMulMono R] {F : Type u_2} {L : Type u_3} [FunLike F L R] {f : F} {r : R} {t : Multiset L} (hf0 : ∀ x ∈ t, 0 ≤ f x)\n  (hf : ∀ x ∈ t, f x ≤ r) : (Multiset.map (⇑f) t).prod ≤ r ^ t.card",
+            "line": 24,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.prod_map_le_pow_card.{u_1, u_2, u_3} {R : Type u_1} [CommMonoidWithZero R] [PartialOrder R] [ZeroLEOneClass R]\n  [PosMulMono R] {F : Type u_2} {L : Type u_3} [FunLike F L R] {f : F} {r : R} {t : Multiset L} (hf0 : ∀ x ∈ t, 0 ≤ f x)\n  (hf : ∀ x ∈ t, f x ≤ r) : (Multiset.map (⇑f) t).prod ≤ r ^ t.card",
+        "status": "checked"
+      },
+      "Nat.Partition.le_of_mem_parts": {
+        "messages": [
+          {
+            "data": "Nat.Partition.le_of_mem_parts {n : ℕ} {p : n.Partition} {m : ℕ} (h : m ∈ p.parts) : m ≤ n",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Partition.le_of_mem_parts {n : ℕ} {p : n.Partition} {m : ℕ} (h : m ∈ p.parts) : m ≤ n",
+        "status": "checked"
+      },
+      "Nat.nth_eq_getD_sort": {
+        "messages": [
+          {
+            "data": "Nat.nth_eq_getD_sort {p : ℕ → Prop} (h : (setOf p).Finite) (n : ℕ) :\n  Nat.nth p n = (h.toFinset.sort fun a b => a ≤ b).getD n 0",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.nth_eq_getD_sort {p : ℕ → Prop} (h : (setOf p).Finite) (n : ℕ) :\n  Nat.nth p n = (h.toFinset.sort fun a b => a ≤ b).getD n 0",
+        "status": "checked"
+      },
+      "Nat.primeFactorsList_sorted": {
+        "messages": [
+          {
+            "data": "Nat.primeFactorsList_sorted (n : ℕ) : n.primeFactorsList.SortedLE",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.primeFactorsList_sorted (n : ℕ) : n.primeFactorsList.SortedLE",
+        "status": "checked"
+      },
+      "Nat.sortedGT_map_snd_divisorsAntidiagonalList": {
+        "messages": [
+          {
+            "data": "Nat.sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.snd n.divisorsAntidiagonalList).SortedGT",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.snd n.divisorsAntidiagonalList).SortedGT",
+        "status": "checked"
+      },
+      "Nat.sortedLT_map_fst_divisorsAntidiagonalList": {
+        "messages": [
+          {
+            "data": "Nat.sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.fst n.divisorsAntidiagonalList).SortedLT",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.fst n.divisorsAntidiagonalList).SortedLT",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "aa2c56513668954243861e1c6455792c5a58a7de34a32feedfef2504f0478128",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T07:39:41.490098+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "PowerSeries.coeff_inv",
+      "expected_signature_or_shape": "theorem coeff_inv (k : ℕ) (φ : R⟦X⟧) [Invertible (constantCoeff φ)] : coeff k (φ⁻¹) = ...",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+        "status": "checked"
+      },
+      "query": "PowerSeries.coeff_inv",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem coeff_inv (n) (φ : k⟦X⟧) :",
+        "kind": "theorem",
+        "line_number": 139,
+        "name": "PowerSeries.coeff_inv",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+        "source_snippet": "theorem coeff_inv (n) (φ : k⟦X⟧) :\n    coeff n φ⁻¹ =\n      if n = 0 then (constantCoeff φ)⁻¹\n      else\n        -(constantCoeff φ)⁻¹ *\n          ∑ x ∈ antidiagonal n,\n            if x.2 < n then coeff x.1 φ * coeff x.2 φ⁻¹ else 0 := by\n  rw [inv_eq_inv_aux, coeff_inv_aux n (constantCoeff φ)⁻¹ φ]\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to compute coefficients of inverses of power series"
+    },
+    {
+      "exact_identifier": "PowerSeries.inv_eq_iff_mul_eq_one",
+      "expected_signature_or_shape": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : ψ⁻¹ = φ ↔ φ * ψ = 1",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+        "status": "checked"
+      },
+      "query": "PowerSeries.inv_eq_iff_mul_eq_one",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :",
+        "kind": "theorem",
+        "line_number": 184,
+        "name": "PowerSeries.inv_eq_iff_mul_eq_one",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+        "source_snippet": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n    ψ⁻¹ = φ ↔ φ * ψ = 1 :=\n  MvPowerSeries.inv_eq_iff_mul_eq_one h",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to relate inverse equality to product equality"
+    },
+    {
+      "exact_identifier": "Nat.Partition.parts_sort",
+      "expected_signature_or_shape": "theorem parts_sort (μ : Nat.Partition n) : (μ.parts.sort (· ≥ ·)).sum = n",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem le_of_mem_parts {n : ℕ} {p : Partition n} {m : ℕ} (h : m ∈ p.parts) : m ≤ n := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.Partition.le_of_mem_parts {n : ℕ} {p : n.Partition} {m : ℕ} (h : m ∈ p.parts) : m ≤ n",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.Partition.le_of_mem_parts {n : ℕ} {p : n.Partition} {m : ℕ} (h : m ∈ p.parts) : m ≤ n",
+            "status": "checked"
+          },
+          "line_number": 71,
+          "matched_tokens": [
+            "nat",
+            "partition",
+            "parts",
+            "to"
+          ],
+          "name": "Nat.Partition.le_of_mem_parts",
+          "path": ".lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Partition/Basic.lean",
+          "score": 26,
+          "search_excerpt": "@[grind →] theorem le_of_mem_parts {n : ℕ} {p : Partition n} {m : ℕ} (h : m ∈ p.parts) : m ≤ n := by"
+        },
+        {
+          "declaration_line": "theorem primeFactorsList_sorted (n : ℕ) : List.SortedLE (primeFactorsList n) :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.primeFactorsList_sorted (n : ℕ) : n.primeFactorsList.SortedLE",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.primeFactorsList_sorted (n : ℕ) : n.primeFactorsList.SortedLE",
+            "status": "checked"
+          },
+          "line_number": 119,
+          "matched_tokens": [
+            "nat",
+            "sort",
+            "to",
+            "sorted",
+            "list"
+          ],
+          "name": "Nat.primeFactorsList_sorted",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Factors.lean",
+          "score": 23,
+          "search_excerpt": "theorem primeFactorsList_sorted (n : ℕ) : List.SortedLE (primeFactorsList n) :="
+        },
+        {
+          "declaration_line": "lemma sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.fst n.divisorsAntidiagonalList).SortedLT",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.fst n.divisorsAntidiagonalList).SortedLT",
+            "status": "checked"
+          },
+          "line_number": 167,
+          "matched_tokens": [
+            "nat",
+            "sort",
+            "sorted",
+            "list"
+          ],
+          "name": "Nat.sortedLT_map_fst_divisorsAntidiagonalList",
+          "path": ".lake/packages/mathlib/Mathlib/NumberTheory/Divisors.lean",
+          "score": 20,
+          "search_excerpt": "lemma sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} : (n.divisorsAntidiagonalList.map Prod.fst).SortedLT :="
+        },
+        {
+          "declaration_line": "lemma sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.snd n.divisorsAntidiagonalList).SortedGT",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.snd n.divisorsAntidiagonalList).SortedGT",
+            "status": "checked"
+          },
+          "line_number": 171,
+          "matched_tokens": [
+            "nat",
+            "sort",
+            "sorted",
+            "list"
+          ],
+          "name": "Nat.sortedGT_map_snd_divisorsAntidiagonalList",
+          "path": ".lake/packages/mathlib/Mathlib/NumberTheory/Divisors.lean",
+          "score": 20,
+          "search_excerpt": "lemma sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} : (n.divisorsAntidiagonalList.map Prod.snd).SortedGT :="
+        },
+        {
+          "declaration_line": "theorem nth_eq_getD_sort (h : (setOf p).Finite) (n : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.nth_eq_getD_sort {p : ℕ → Prop} (h : (setOf p).Finite) (n : ℕ) :\n  Nat.nth p n = (h.toFinset.sort fun a b => a ≤ b).getD n 0",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.nth_eq_getD_sort {p : ℕ → Prop} (h : (setOf p).Finite) (n : ℕ) :\n  Nat.nth p n = (h.toFinset.sort fun a b => a ≤ b).getD n 0",
+            "status": "checked"
+          },
+          "line_number": 75,
+          "matched_tokens": [
+            "nat",
+            "sort",
+            "to"
+          ],
+          "name": "Nat.nth_eq_getD_sort",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Nth.lean",
+          "score": 15,
+          "search_excerpt": "theorem nth_eq_getD_sort (h : (setOf p).Finite) (n : ℕ) : nth p n = h.toFinset.sort.getD n 0 :="
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Nat.Partition.parts_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.Partition.parts_sort`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.Partition.parts_sort",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to obtain a sorted decreasing list from a Nat.Partition"
+    },
+    {
+      "exact_identifier": "List.sorted_ge_iff",
+      "expected_signature_or_shape": "theorem List.sorted_ge_iff (l : List ℕ) : l.Sorted (· ≥ ·) ↔ ∀ i j, i < j → l.get i ≥ l.get j",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+            "status": "checked"
+          },
+          "line_number": 1,
+          "matched_tokens": [
+            "antitone",
+            "condition",
+            "constant",
+            "for",
+            "ge",
+            "get",
+            "iff",
+            "inequalities",
+            "list",
+            "pointwise",
+            "relate",
+            "sorted",
+            "sortedness",
+            "to",
+            "unknown"
+          ],
+          "name": "List.Pairwise.rel_get_of_le",
+          "path": "<shape-driven-fallback>",
+          "score": 100
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+            "status": "checked"
+          },
+          "line_number": 2,
+          "matched_tokens": [
+            "antitone",
+            "condition",
+            "constant",
+            "for",
+            "ge",
+            "get",
+            "iff",
+            "inequalities",
+            "list",
+            "pointwise",
+            "relate",
+            "sorted",
+            "sortedness",
+            "to",
+            "unknown"
+          ],
+          "name": "List.Pairwise.rel_get_of_lt",
+          "path": "<shape-driven-fallback>",
+          "score": 99
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+            "status": "checked"
+          },
+          "line_number": 3,
+          "matched_tokens": [
+            "antitone",
+            "condition",
+            "constant",
+            "for",
+            "ge",
+            "get",
+            "iff",
+            "inequalities",
+            "list",
+            "pointwise",
+            "relate",
+            "sorted",
+            "sortedness",
+            "to",
+            "unknown"
+          ],
+          "name": "List.sortedGE_iff_antitone_get",
+          "path": "<shape-driven-fallback>",
+          "score": 98
+        },
+        {
+          "declaration_line": "theorem sortedLE_iff_monotone_get : l.SortedLE ↔ Monotone l.get := .rfl",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+            "status": "checked"
+          },
+          "line_number": 420,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "ge",
+            "iff",
+            "get",
+            "to"
+          ],
+          "name": "List.sortedLE_iff_monotone_get",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 34,
+          "search_excerpt": "theorem sortedLE_iff_monotone_get : l.SortedLE ↔ Monotone l.get := .rfl"
+        },
+        {
+          "declaration_line": "def SortedLT (l : List α) := StrictMono l.get",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.SortedLT.{u_1} {α : Type u_1} [Preorder α] (l : List α) : Prop",
+                "line": 13,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.SortedLT.{u_1} {α : Type u_1} [Preorder α] (l : List α) : Prop",
+            "status": "checked"
+          },
+          "line_number": 414,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "ge",
+            "get",
+            "to",
+            "antitone"
+          ],
+          "name": "List.SortedLT",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 32,
+          "search_excerpt": "/-- `l.SortedGE` means that the list is antitonic. -/ @[to_dual existing SortedLE] def SortedGE (l : List α) := Antitone l.get"
+        },
+        {
+          "declaration_line": "protected theorem SortedGE.sortedGT_of_nodup {l : List α} (h₁ : l.SortedGE) (h₂ : l.Nodup) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.SortedGE.sortedGT_of_nodup.{u_1} {α : Type u_1} [PartialOrder α] {l : List α} (h₁ : l.SortedGE) (h₂ : l.Nodup) :\n  l.SortedGT",
+                "line": 14,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.SortedGE.sortedGT_of_nodup.{u_1} {α : Type u_1} [PartialOrder α] {l : List α} (h₁ : l.SortedGE) (h₂ : l.Nodup) :\n  l.SortedGT",
+            "status": "checked"
+          },
+          "line_number": 668,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "ge",
+            "get",
+            "to",
+            "antitone"
+          ],
+          "name": "List.SortedGE.sortedGT_of_nodup",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 32,
+          "search_excerpt": "protected theorem SortedGE.sortedGT_of_nodup {l : List α} (h₁ : l.SortedGE) (h₂ : l.Nodup) : l.SortedGT := (h₁.antitone_get.strictAnti_of_injective h₂.injective_get).sortedGT"
+        },
+        {
+          "declaration_line": "lemma exists_map_eq_of_sorted_nonempty_iff_wbtw {l : List P} (hl : l ≠ []) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.exists_map_eq_of_sorted_nonempty_iff_wbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l', l'.SortedLE ∧ List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l) ↔ List.Wbtw R l",
+                "line": 15,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.exists_map_eq_of_sorted_nonempty_iff_wbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l', l'.SortedLE ∧ List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l) ↔ List.Wbtw R l",
+            "status": "checked"
+          },
+          "line_number": 207,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "ge",
+            "iff",
+            "get"
+          ],
+          "name": "List.exists_map_eq_of_sorted_nonempty_iff_wbtw",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Convex/BetweenList.lean",
+          "score": 31,
+          "search_excerpt": "lemma exists_map_eq_of_sorted_nonempty_iff_wbtw {l : List P} (hl : l ≠ []) : (∃ l' : List R, l'.SortedLE ∧ l'.map (lineMap (l.head hl) (l.getLast hl)) = l) ↔ l.Wbtw R := by"
+        },
+        {
+          "declaration_line": "lemma exists_map_eq_of_sorted_nonempty_iff_sbtw {l : List P} (hl : l ≠ []) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.exists_map_eq_of_sorted_nonempty_iff_sbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l',\n      l'.SortedLT ∧\n        List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l ∧ (l.length = 1 ∨ l.head hl ≠ l.getLast hl)) ↔\n    List.Sbtw R l",
+                "line": 16,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.exists_map_eq_of_sorted_nonempty_iff_sbtw.{u_1, u_2, u_4} {R : Type u_1} {V : Type u_2} {P : Type u_4} [Field R]\n  [LinearOrder R] [IsStrictOrderedRing R] [AddCommGroup V] [Module R V] [AddTorsor V P] {l : List P} (hl : l ≠ []) :\n  (∃ l',\n      l'.SortedLT ∧\n        List.map (⇑(AffineMap.lineMap (l.head hl) (l.getLast hl))) l' = l ∧ (l.length = 1 ∨ l.head hl ≠ l.getLast hl)) ↔\n    List.Sbtw R l",
+            "status": "checked"
+          },
+          "line_number": 267,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "ge",
+            "iff",
+            "get"
+          ],
+          "name": "List.exists_map_eq_of_sorted_nonempty_iff_sbtw",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Convex/BetweenList.lean",
+          "score": 31,
+          "search_excerpt": "lemma exists_map_eq_of_sorted_nonempty_iff_sbtw {l : List P} (hl : l ≠ []) : (∃ l' : List R, l'.SortedLT ∧ l'.map (lineMap (l.head hl) (l.getLast hl)) = l ∧ (l.length = 1 ∨ l.head hl ≠ l.getLast hl)) ↔ l.Sbtw R := by"
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `List.sorted_ge_iff`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sorted_ge_iff`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "List.sorted_ge_iff",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to relate sortedness to pointwise inequalities for the antitone condition"
+    },
+    {
+      "exact_identifier": "Multiset.card_sort",
+      "expected_signature_or_shape": "theorem Multiset.card_sort (s : Multiset α) : (s.sort r).length = s.card",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem length_sort : (sort s r).length = card s := Quot.inductionOn s <| length_mergeSort",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+                "line": 17,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+            "status": "checked"
+          },
+          "line_number": 88,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "sort",
+            "length"
+          ],
+          "name": "Multiset.length_sort",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Sort.lean",
+          "score": 34,
+          "search_excerpt": "@[simp] theorem length_sort : (sort s r).length = card s := Quot.inductionOn s <| length_mergeSort"
+        },
+        {
+          "declaration_line": "theorem coe_card (l : List α) : card (l : Multiset α) = length l :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.coe_card.{u_1} {α : Type u_1} (l : List α) : (↑l).card = l.length",
+                "line": 18,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.coe_card.{u_1} {α : Type u_1} (l : List α) : (↑l).card = l.length",
+            "status": "checked"
+          },
+          "line_number": 225,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "length",
+            "list"
+          ],
+          "name": "Multiset.coe_card",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Defs.lean",
+          "score": 26,
+          "search_excerpt": "@[simp] theorem coe_card (l : List α) : card (l : Multiset α) = length l :="
+        },
+        {
+          "declaration_line": "def card : Multiset α → ℕ := Quot.lift length fun _l₁ _l₂ => Perm.length_eq",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+                "line": 19,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+            "status": "checked"
+          },
+          "line_number": 222,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "length"
+          ],
+          "name": "Multiset.card",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Defs.lean",
+          "score": 25,
+          "search_excerpt": "def card : Multiset α → ℕ := Quot.lift length fun _l₁ _l₂ => Perm.length_eq"
+        },
+        {
+          "declaration_line": "lemma card_sum (s : Finset ι) (f : ι → Multiset α) : card (∑ i ∈ s, f i) = ∑ i ∈ s, card (f i) :=",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+                "line": 20,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+            "status": "checked"
+          },
+          "line_number": 752,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "to"
+          ],
+          "name": "Multiset.card_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean",
+          "score": 23,
+          "search_excerpt": "@[simp] lemma card_sum (s : Finset ι) (f : ι → Multiset α) : card (∑ i ∈ s, f i) = ∑ i ∈ s, card (f i) :="
+        },
+        {
+          "declaration_line": "theorem card_le_card_toFinset_add_one_iff [DecidableEq α] {m : Multiset α} :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.card_le_card_toFinset_add_one_iff.{u_2} {α : Type u_2} [DecidableEq α] {m : Multiset α} :\n  m.card ≤ #m.toFinset + 1 ↔\n    ∀ (x y : α), 1 < Multiset.count x m → 1 < Multiset.count y m → x = y ∧ Multiset.count x m = 2",
+                "line": 21,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.card_le_card_toFinset_add_one_iff.{u_2} {α : Type u_2} [DecidableEq α] {m : Multiset α} :\n  m.card ≤ #m.toFinset + 1 ↔\n    ∀ (x y : α), 1 < Multiset.count x m → 1 < Multiset.count y m → x = y ∧ Multiset.count x m = 2",
+            "status": "checked"
+          },
+          "line_number": 675,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "to"
+          ],
+          "name": "Multiset.card_le_card_toFinset_add_one_iff",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean",
+          "score": 23,
+          "search_excerpt": "theorem card_le_card_toFinset_add_one_iff [DecidableEq α] {m : Multiset α} : m.card ≤ m.toFinset.card + 1 ↔ ∀ x y, 1 < m.count x → 1 < m.count y → x = y ∧ m.count x = 2 := by"
+        },
+        {
+          "declaration_line": "lemma prod_le_pow_card [MulLeftMono α] (s : Multiset α) (n : α) (h : ∀ x ∈ s, x ≤ n) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.prod_le_pow_card.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] [MulLeftMono α] (s : Multiset α) (n : α)\n  (h : ∀ x ∈ s, x ≤ n) : s.prod ≤ n ^ s.card",
+                "line": 22,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.prod_le_pow_card.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] [MulLeftMono α] (s : Multiset α) (n : α)\n  (h : ∀ x ∈ s, x ≤ n) : s.prod ≤ n ^ s.card",
+            "status": "checked"
+          },
+          "line_number": 40,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "to"
+          ],
+          "name": "Multiset.prod_le_pow_card",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Multiset.lean",
+          "score": 23,
+          "search_excerpt": "@[to_additive sum_le_card_nsmul] lemma prod_le_pow_card [MulLeftMono α] (s : Multiset α) (n : α) (h : ∀ x ∈ s, x ≤ n) : s.prod ≤ n ^ card s := by"
+        },
+        {
+          "declaration_line": "lemma pow_card_le_prod [MulLeftMono α] (h : ∀ x ∈ s, a ≤ x) : a ^ card s ≤ s.prod := by",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.pow_card_le_prod.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} {a : α} [MulLeftMono α]\n  (h : ∀ x ∈ s, a ≤ x) : a ^ s.card ≤ s.prod",
+                "line": 23,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.pow_card_le_prod.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} {a : α} [MulLeftMono α]\n  (h : ∀ x ∈ s, a ≤ x) : a ^ s.card ≤ s.prod",
+            "status": "checked"
+          },
+          "line_number": 76,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "to"
+          ],
+          "name": "Multiset.pow_card_le_prod",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Multiset.lean",
+          "score": 23,
+          "search_excerpt": "@[to_additive card_nsmul_le_sum] lemma pow_card_le_prod [MulLeftMono α] (h : ∀ x ∈ s, a ≤ x) : a ^ card s ≤ s.prod := by"
+        },
+        {
+          "declaration_line": "theorem prod_map_le_pow_card {F L : Type*} [FunLike F L R] {f : F} {r : R} {t : Multiset L}",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.prod_map_le_pow_card.{u_1, u_2, u_3} {R : Type u_1} [CommMonoidWithZero R] [PartialOrder R] [ZeroLEOneClass R]\n  [PosMulMono R] {F : Type u_2} {L : Type u_3} [FunLike F L R] {f : F} {r : R} {t : Multiset L} (hf0 : ∀ x ∈ t, 0 ≤ f x)\n  (hf : ∀ x ∈ t, f x ≤ r) : (Multiset.map (⇑f) t).prod ≤ r ^ t.card",
+                "line": 24,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.prod_map_le_pow_card.{u_1, u_2, u_3} {R : Type u_1} [CommMonoidWithZero R] [PartialOrder R] [ZeroLEOneClass R]\n  [PosMulMono R] {F : Type u_2} {L : Type u_3} [FunLike F L R] {f : F} {r : R} {t : Multiset L} (hf0 : ∀ x ∈ t, 0 ≤ f x)\n  (hf : ∀ x ∈ t, f x ≤ r) : (Multiset.map (⇑f) t).prod ≤ r ^ t.card",
+            "status": "checked"
+          },
+          "line_number": 41,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "to"
+          ],
+          "name": "Multiset.prod_map_le_pow_card",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/GroupWithZero/Multiset.lean",
+          "score": 23,
+          "search_excerpt": "theorem prod_map_le_pow_card {F L : Type*} [FunLike F L R] {f : F} {r : R} {t : Multiset L} (hf0 : ∀ x ∈ t, 0 ≤ f x) (hf : ∀ x ∈ t, f x ≤ r) : (map f t).prod ≤ r ^ card t := by"
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Multiset.card_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.card_sort`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Multiset.card_sort",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to relate the length of the sorted list to the cardinality of the multiset"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "List.sorted_ge_iff": {
+        "error": "Unknown constant `List.sorted_ge_iff`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sorted_ge_iff`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Multiset.card_sort": {
+        "error": "Unknown constant `Multiset.card_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.card_sort`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.Partition.parts_sort": {
+        "error": "Unknown constant `Nat.Partition.parts_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.Partition.parts_sort`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "PowerSeries.coeff_inv": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+        "status": "checked"
+      },
+      "PowerSeries.inv_eq_iff_mul_eq_one": {
+        "messages": [
+          {
+            "data": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "888c240835a1f2c6550ce88e67baae5815039db894e1468162c43c193db180de",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 5,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

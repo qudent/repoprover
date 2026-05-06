@@ -1,0 +1,84 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The lemma xnEquiv_mul_of_coeff_eq fails to compile because K is missing a Semiring instance. Even after fixing that, the main claim requires a lemma about coefficient-wise equality of inverses given coefficient-wise equality of units up to n, which is not available in the visible context. The checked signatures PowerSeries.coeff_inv and PowerSeries.inv_eq_iff_mul_eq_one are over fields, not general commutative rings, and the invertibility condition is IsUnit. No lemma bridging coefficient equality of units to coefficient equality of inverses is present. The proof strategy note suggests a helper lemma coeff_inv_of_coeff_eq, but its proof would require a recurrence for inverse coefficients over a general commutative ring with invertible constant term, which is not available in the visible Mathlib context. Therefore the unit cannot be proved from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source lemma text: lem.fps.prod.irlv.cong-div",
+        "local_file_predecessor_declaration: xnEquiv_mul_of_coeff_eq (fails to compile)",
+        "checked signatures: PowerSeries.coeff_inv, PowerSeries.inv_eq_iff_mul_eq_one (both over fields, not general commutative rings)"
+      ]
+    },
+    {
+      "declaration_names": [
+        "det_of_triangular"
+      ],
+      "lean_file_body": "open Matrix Finset BigOperators\n\nnamespace AlgebraicCombinatorics\n\nnamespace Det\n\nvariable {K : Type*} [CommRing K]\nvariable {n m : ℕ}\n\ntheorem det_of_triangular {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id ∨ A.BlockTriangular (OrderDual.toDual : Fin n → Fin n)) : A.det = ∏ i : Fin n, A i i := by\n  rcases h with (hU | hL)\n  · exact Matrix.det_of_upperTriangular hU\n  · exact Matrix.det_of_lowerTriangular A hL\n\nend Det\n\nend AlgebraicCombinatorics",
+      "notes": [
+        "Uses the checked Mathlib signatures for Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular, which require BlockTriangular condition rather than explicit zero conditions.",
+        "The theorem combines both upper and lower triangular cases using an `or` hypothesis."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "source theorem text: thm.det.triang",
+        "Matrix.det_of_upperTriangular (checked signature)",
+        "Matrix.det_of_lowerTriangular (checked signature)",
+        "local_file_context_candidates: open Matrix Finset BigOperators, namespace AlgebraicCombinatorics, namespace Det, variable {K : Type*} [CommRing K], variable {n m : ℕ}"
+      ]
+    },
+    {
+      "declaration_names": [
+        "isInverse_unique"
+      ],
+      "lean_file_body": "theorem isInverse_unique {L : Type*} [CommRing L] {a b c : L} (hb : IsInverse a b) (hc : IsInverse a c) : b = c := by\n  have hb' : a * b = 1 := hb\n  have hc' : a * c = 1 := hc\n  calc\n    b = b * 1 := by simp\n    _ = b * (a * c) := by rw [hc']\n    _ = (b * a) * c := by ring\n    _ = (a * b) * c := by rw [mul_comm b a]\n    _ = 1 * c := by rw [hb']\n    _ = c := by simp",
+      "notes": [
+        "Uses IsInverse predicate from prior project context; proof uses commutativity and cancellation via ring."
+      ],
+      "status": "generated",
+      "unit_key": "unit-003",
+      "used_context": [
+        "IsInverse definition from prior project context",
+        "CommRing L",
+        "mul_comm, ring, simp"
+      ]
+    },
+    {
+      "declaration_names": [
+        "vandermonde_nat"
+      ],
+      "lean_file_body": "open Finset\nopen Nat\n\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k ∈ range (n + 1), (a.choose k) * (b.choose (n - k)) := by\n  rw [Nat.add_choose_eq, Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]",
+      "notes": [
+        "Uses Nat.add_choose_eq and Finset.Nat.sum_antidiagonal_eq_sum_range_succ from Mathlib.",
+        "Removed the trailing `simp` that caused 'No goals to be solved' error; the rewrite chain now leaves exactly the goal."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Nat.add_choose_eq (checked signature)",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The source states a bijection between partitions of length ≤ N and N-partitions (weakly decreasing N-tuples). The visible context provides NPartition (structure with parts : Fin N → ℕ and antitone) and Nat.Partition (structure with parts : Multiset ℕ, parts_pos, parts_sum). The existing NPartition.toPartition gives one direction. The missing direction requires converting a Nat.Partition with parts.card ≤ N to an NPartition by padding with zeros. This requires sorting the multiset decreasingly, which is not directly supported by Nat.Partition (parts are unordered). The checked fallback candidates (Nat.Partition.le_of_mem_parts, Nat.primeFactorsList_sorted, etc.) do not provide a sorted decreasing list from a Nat.Partition. The proof strategy note suggests implementing a padded sorted representative with local case splits, but the fundamental mismatch (unordered multiset vs ordered decreasing sequence) cannot be resolved from the visible context without additional lemmas about sorting multisets and relating sorted lists to the original partition sum. Therefore the unit cannot be proved from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "source proposition text: prop.sf.Npar-as-par",
+        "NPartition structure with parts, antitone, ext",
+        "NPartition.toPartition (defined in same file)",
+        "Nat.Partition structure with parts, parts_pos, parts_sum, ext",
+        "checked fallback candidates: Nat.Partition.le_of_mem_parts, List.sortedGE_iff_antitone_get, Multiset.length_sort, etc."
+      ]
+    }
+  ]
+}

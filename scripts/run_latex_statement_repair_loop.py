@@ -32,6 +32,8 @@ from scripts.hydrate_latex_statement_context import (  # noqa: E402
 )
 from scripts.hydrate_latex_statement_context import run as run_hydration  # noqa: E402
 from scripts.run_latex_statement_generation import DEFAULT_BASE_URL, DEFAULT_MODEL  # noqa: E402
+from scripts.run_latex_statement_generation_repair import generation_output_paths as generation_output_paths  # noqa: E402
+from scripts.run_latex_statement_generation_repair import load_generation_output as load_generation_output  # noqa: E402
 from scripts.run_latex_statement_generation_repair import run as run_repair  # noqa: E402
 from scripts.run_latex_statement_repair_context_selection import run as run_context_selection  # noqa: E402
 from scripts.verify_latex_statement_generation import (  # noqa: E402
@@ -60,12 +62,37 @@ def generation_output_path(run_dir: Path) -> Path:
     return path
 
 
+def generation_payload_path_for_unit(generation_run: Path, unit_key: str) -> Path | None:
+    for output_path in generation_output_paths(generation_run):
+        try:
+            output = read_json(output_path)
+        except (OSError, json.JSONDecodeError):
+            continue
+        output_unit_keys = {str(unit.get("unit_key") or "") for unit in output.get("units") or []}
+        if unit_key not in output_unit_keys:
+            continue
+        payload_path = output_path.with_name("generation-payload.json")
+        if payload_path.exists():
+            return payload_path
+    return None
+
+
 def compile_clean_unit_keys(verification: dict[str, Any]) -> set[str]:
     keys: set[str] = set()
     for batch in verification.get("batches") or []:
         for unit in batch.get("units") or []:
             if unit.get("compile_passed") and unit.get("unit_key"):
                 keys.add(str(unit["unit_key"]))
+    return keys
+
+
+def non_compile_clean_unit_keys(verification: dict[str, Any]) -> set[str]:
+    keys: set[str] = set()
+    for batch in verification.get("batches") or []:
+        for unit in batch.get("units") or []:
+            unit_key = str(unit.get("unit_key") or "")
+            if unit_key and not unit.get("compile_passed"):
+                keys.add(unit_key)
     return keys
 
 
@@ -83,9 +110,9 @@ def preserve_compile_clean_units(
     if not clean_keys:
         return {"preserved_unit_keys": [], "updated_paths": []}
 
-    previous_output = read_json(generation_output_path(previous_generation_run))
+    previous_output = load_generation_output(previous_generation_run)
     repair_output_path = generation_output_path(repair_run)
-    repair_output = read_json(repair_output_path)
+    repair_output = load_generation_output(repair_run)
 
     previous_units = {str(unit.get("unit_key") or ""): unit for unit in previous_output.get("units") or []}
     repair_units = {str(unit.get("unit_key") or ""): unit for unit in repair_output.get("units") or []}
@@ -101,17 +128,54 @@ def preserve_compile_clean_units(
     for unit_key, unit in repair_units.items():
         if unit_key not in seen:
             merged_units.append(unit)
+    updated_paths: list[str] = []
     merged_output = dict(repair_output)
     merged_output["units"] = merged_units
+    merged_path = repair_run / "eval" / "merged-generation-output.json"
+    write_json(merged_path, merged_output)
+    updated_paths.append(str(merged_path))
 
-    updated_paths: list[str] = []
-    for name in ("generation-output.json", "repair-output.json"):
-        path = repair_run / "batch-001" / name
-        if path.exists():
-            write_json(path, merged_output)
+    for path in repair_run.glob("batch-*/generation-output.json"):
+        path.unlink()
+    for path in repair_run.glob("batch-*/repair-output.json"):
+        path.unlink()
+    payload_sources: list[dict[str, str]] = []
+    fallback_payload = repair_run / "batch-001" / "generation-payload.json"
+    for index, unit in enumerate(merged_units, start=1):
+        unit_key = str(unit.get("unit_key") or "")
+        batch_dir = repair_run / f"batch-{index:03d}"
+        batch_output = dict(merged_output)
+        batch_output["units"] = [unit]
+        for name in ("generation-output.json", "repair-output.json"):
+            path = batch_dir / name
+            write_json(path, batch_output)
             updated_paths.append(str(path))
+        payload_source = generation_payload_path_for_unit(previous_generation_run, unit_key) or (
+            fallback_payload if fallback_payload.exists() else None
+        )
+        if payload_source is not None:
+            payload_target = batch_dir / "generation-payload.json"
+            write_json(payload_target, read_json(payload_source))
+            payload_sources.append(
+                {
+                    "unit_key": unit_key,
+                    "payload_source": str(payload_source),
+                    "payload_target": str(payload_target),
+                }
+            )
+            updated_paths.append(str(payload_target))
+    if payload_sources:
+        payload_sources_path = repair_run / "eval" / "split-generation-payload-sources.json"
+        write_json(payload_sources_path, payload_sources)
+        updated_paths.append(str(payload_sources_path))
     return {
         "preserved_unit_keys": sorted(clean_keys.intersection(previous_units)),
+        "carried_forward_unit_keys": sorted(
+            unit_key
+            for unit_key in previous_units
+            if unit_key not in repair_units and unit_key not in clean_keys
+        ),
+        "split_payload_sources": payload_sources,
         "updated_paths": updated_paths,
     }
 
@@ -230,6 +294,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             )
         )
         accumulated_contexts.append(checked_pack)
+        current_verification = read_json(current_verification_results)
+        repair_unit_keys = non_compile_clean_unit_keys(current_verification) | source_coverage_review_keys
+        if preserve_unit_keys is not None:
+            repair_unit_keys -= preserve_unit_keys
 
         repair_summary = run_repair(
             argparse.Namespace(
@@ -237,6 +305,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 generation_run=current_generation_run,
                 verification_results=current_verification_results,
                 extra_context=list(accumulated_contexts),
+                unit_key=sorted(repair_unit_keys),
+                source_coverage_review_unit_key=sorted(source_coverage_review_keys),
                 output=repair_run,
                 model=args.model,
                 base_url=args.base_url,
@@ -272,6 +342,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "checked_repair_context": str(checked_pack),
                 "checked_repair_context_summary": pack_summary,
                 "repair_run": str(repair_run),
+                "repair_unit_keys": sorted(repair_unit_keys),
                 "repair": repair_summary,
                 "preserve_compile_clean_units": preservation_summary,
                 "verification_results": str(verification_path),

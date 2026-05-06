@@ -1,0 +1,44 @@
+{
+  "budget_only": false,
+  "cost_summary": {
+    "model": "deepseek/deepseek-v4-flash",
+    "openrouter_reported_cost": 0.00636762,
+    "usage": {
+      "completion_tokens": 3173,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      },
+      "cost": 0.00636762,
+      "cost_details": {
+        "upstream_inference_completions_cost": 0.00088844,
+        "upstream_inference_cost": 0.00636762,
+        "upstream_inference_prompt_cost": 0.00547918
+      },
+      "is_byok": false,
+      "prompt_tokens": 39137,
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "video_tokens": 0
+      },
+      "total_tokens": 42310
+    }
+  },
+  "elapsed_seconds": 90.764,
+  "generated_at": "2026-05-06T07:37:01.835792+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-paid-bridge-support/generation",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v2-paid/round-01-context",
+  "paid_call_made": true,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-dev-panel5-v1-paid-bridge-hydrated",
+  "valid_json": true,
+  "verification_results": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-paid-bridge-support/eval/verification-results.json"
+}

@@ -56,42 +56,26 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Attempt-level taxonomy across recorded theorem runs: 16 compiled / 73 unit
   checks; deduplicated by source unit, 6/11 touched units have compiled at least
   once.
-- NPartition context work fixed many generic issues (field/projection context,
-  list/sort/cardinality bridges, representation control, placeholder
-  normalization) but still ends in clean declines or incomplete helper skeletons.
 - Five-unit panel artifacts:
   `docs/latex-statement-dev-panel-2026-05-06.json` and
   `docs/latex-statement-dev-panel-2026-05-06-summary.md`.
-- Five-unit selector comparison:
-  default DeepSeek V4 Flash returned valid JSON in 115.186s for `$0.003094084`
-  with 6,914 reasoning tokens; no-reasoning returned valid JSON in 33.785s for
-  `$0.00300286` but had worse exact API recall. Hydration confirms no-reasoning
-  is useful for cheap triage, while failed/high-risk units should be escalated.
-- `scripts/run_latex_statement_panel.py` now runs the fixed panel as a
-  repeatable stage chain and writes `eval/panel-summary.{json,md}`. No-cost
-  smoke artifacts:
-  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-budget/` and
-  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-generation-budget/`.
-- First paid panel-runner pass:
-  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1/`.
-  Generation cost `$0.0051861712` for 35,188 prompt tokens and 2,057 completion
-  tokens. Verification compiled 1/5 units; failures were 2 compile failures and
-  2 clean declines. Semantic coverage proved 0/5 aligned gold units.
-- Visible-support rerun of the same paid generation:
-  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-paid-v1-visible-support/`.
-  No provider calls; local verification took 508.903s. Compile improved to 2/5
-  and semantic coverage to 1/5: inverse uniqueness is a true win once visible
-  project definitions are materialized.
-- Vandermonde bridge retry:
-  `docs/latex-statement-generation-runs/2026-05-06-dev-panel-vandermonde-bridge-v2-paid/`.
-  Cost `$0.0013226`; generated-only verification compiled `1/1` after generic
-  Finset binder-syntax guidance and inferred-open validation. Bridge-aware
-  semantic grading now proves the aligned antidiagonal gold theorem `1/1` from
-  the generated source range-sum theorem using generated-side rewrite terms.
-- Re-running semantic coverage on the broader five-unit visible-support panel
-  with the bridge-aware grader made no provider calls and stayed at `1/5`; it
-  preserved the inverse-uniqueness success and did not convert triangular,
-  whose generated statement still has the wrong hypothesis shape.
+- Panel runner baseline: initial paid generation compiled `1/5`; visible
+  support rerun compiled `2/5` and semantically covered inverse uniqueness
+  `1/5`.
+- Vandermonde bridge retry proved the source range-sum theorem and the
+  bridge-aware semantic grader proved its aligned antidiagonal gold theorem.
+- Latest merged panel artifact:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/`.
+  Effective provider cost for the artifact path: `$0.0244708072`.
+  Generated-only verification is `3/5` compiled with `2` clean declines and no
+  compile failures; semantic coverage is `2/5` units.
+- Fixed repair-loop orchestration bugs: multi-unit repair outputs are split
+  back into per-unit batches, and each split batch carries the original
+  unit-specific generation payload so verifier import/support inference stays
+  target-blind but complete.
+- Added generic bridge-rewrite prompt guidance: when a source theorem exposes a
+  checked bridge lemma's left-hand side, rewrite with the source theorem first,
+  then apply the bridge rewrite.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
@@ -102,6 +86,7 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
 - Next useful work: route remaining panel failures by class. Triangular needs
-  stronger target-shape planning; FPS division and NPartition remain
-  proof/context synthesis cases. Validate the bridge-aware grader on a broader
-  panel or fresh-heldout slice before treating it as a benchmark-level fix.
+  source-shape planning that produces separate upper/lower entrywise-zero
+  statements; FPS division and NPartition need proof-synthesis/coding-agent
+  lanes rather than more selector prompt tuning. Use a fresh held-out slice for
+  benchmark claims.

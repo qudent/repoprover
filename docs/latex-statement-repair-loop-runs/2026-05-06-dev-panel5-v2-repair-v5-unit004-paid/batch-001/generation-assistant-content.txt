@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "vandermonde_nat"
+      ],
+      "lean_file_body": "open Finset\nopen Nat\n\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k ∈ range (n + 1), (a.choose k) * (b.choose (n - k)) := by\n  rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]\n  exact Nat.add_choose_eq a b n",
+      "notes": [
+        "Uses Nat.add_choose_eq and Finset.Nat.sum_antidiagonal_eq_sum_range_succ from Mathlib.",
+        "The rewrite direction is reversed: first rewrite the target sum to antidiagonal form, then apply Nat.add_choose_eq."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Nat.add_choose_eq (checked signature)",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)"
+      ]
+    }
+  ]
+}

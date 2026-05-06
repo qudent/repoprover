@@ -166,9 +166,79 @@ def test_preserve_compile_clean_units_replaces_repaired_output(tmp_path: Path) -
         repair_run=repair,
     )
 
-    merged = __import__("json").loads((repair / "batch-001/generation-output.json").read_text())
+    merged = __import__("json").loads((repair / "eval/merged-generation-output.json").read_text())
+    first_batch = __import__("json").loads((repair / "batch-001/generation-output.json").read_text())
+    second_batch = __import__("json").loads((repair / "batch-002/generation-output.json").read_text())
     assert summary["preserved_unit_keys"] == ["unit-001"]
     assert [unit["lean_file_body"] for unit in merged["units"]] == ["clean", "fixed"]
+    assert [unit["unit_key"] for unit in first_batch["units"]] == ["unit-001"]
+    assert [unit["unit_key"] for unit in second_batch["units"]] == ["unit-002"]
+
+
+def test_preserve_compile_clean_units_aggregates_multibatch_previous_output(tmp_path: Path) -> None:
+    previous = tmp_path / "previous"
+    repair = tmp_path / "repair"
+    (previous / "batch-001").mkdir(parents=True)
+    (previous / "batch-002").mkdir(parents=True)
+    (previous / "eval").mkdir()
+    (repair / "batch-001").mkdir(parents=True)
+    (previous / "batch-001/generation-output.json").write_text(
+        __import__("json").dumps(
+            {"units": [{"unit_key": "unit-001", "lean_file_body": "clean", "declaration_names": ["clean"]}]}
+        ),
+        encoding="utf-8",
+    )
+    (previous / "batch-002/generation-output.json").write_text(
+        __import__("json").dumps(
+            {"units": [{"unit_key": "unit-002", "lean_file_body": "bad", "declaration_names": ["bad"]}]}
+        ),
+        encoding="utf-8",
+    )
+    (previous / "batch-001/generation-payload.json").write_text(
+        __import__("json").dumps({"marker": "payload-unit-001"}),
+        encoding="utf-8",
+    )
+    (previous / "batch-002/generation-payload.json").write_text(
+        __import__("json").dumps({"marker": "payload-unit-002"}),
+        encoding="utf-8",
+    )
+    (previous / "eval/verification-results.json").write_text(
+        __import__("json").dumps(
+            {
+                "batches": [
+                    {"units": [{"unit_key": "unit-001", "compile_passed": True}]},
+                    {"units": [{"unit_key": "unit-002", "compile_passed": False}]},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    repaired_output = {
+        "units": [{"unit_key": "unit-002", "lean_file_body": "fixed", "declaration_names": ["fixed"]}]
+    }
+    for name in ("generation-output.json", "repair-output.json"):
+        (repair / "batch-001" / name).write_text(__import__("json").dumps(repaired_output), encoding="utf-8")
+
+    summary = preserve_compile_clean_units(
+        previous_generation_run=previous,
+        previous_verification_results=previous / "eval/verification-results.json",
+        repair_run=repair,
+    )
+
+    merged = __import__("json").loads((repair / "eval/merged-generation-output.json").read_text())
+    first_batch = __import__("json").loads((repair / "batch-001/generation-output.json").read_text())
+    second_batch = __import__("json").loads((repair / "batch-002/generation-output.json").read_text())
+    first_payload = __import__("json").loads((repair / "batch-001/generation-payload.json").read_text())
+    second_payload = __import__("json").loads((repair / "batch-002/generation-payload.json").read_text())
+    assert summary["preserved_unit_keys"] == ["unit-001"]
+    assert summary["carried_forward_unit_keys"] == []
+    assert [unit["unit_key"] for unit in merged["units"]] == ["unit-001", "unit-002"]
+    assert [unit["lean_file_body"] for unit in merged["units"]] == ["clean", "fixed"]
+    assert [unit["unit_key"] for unit in first_batch["units"]] == ["unit-001"]
+    assert [unit["unit_key"] for unit in second_batch["units"]] == ["unit-002"]
+    assert first_payload["marker"] == "payload-unit-001"
+    assert second_payload["marker"] == "payload-unit-002"
+    assert [row["unit_key"] for row in summary["split_payload_sources"]] == ["unit-001", "unit-002"]
 
 
 def test_preserve_compile_clean_units_can_use_semantic_success_keys(tmp_path: Path) -> None:
@@ -211,9 +281,13 @@ def test_preserve_compile_clean_units_can_use_semantic_success_keys(tmp_path: Pa
         preserve_unit_keys={"unit-001"},
     )
 
-    merged = __import__("json").loads((repair / "batch-001/generation-output.json").read_text())
+    merged = __import__("json").loads((repair / "eval/merged-generation-output.json").read_text())
+    first_batch = __import__("json").loads((repair / "batch-001/generation-output.json").read_text())
+    second_batch = __import__("json").loads((repair / "batch-002/generation-output.json").read_text())
     assert summary["preserved_unit_keys"] == ["unit-001"]
     assert [unit["lean_file_body"] for unit in merged["units"]] == ["semantic-clean", "semantic-fixed"]
+    assert [unit["unit_key"] for unit in first_batch["units"]] == ["unit-001"]
+    assert [unit["unit_key"] for unit in second_batch["units"]] == ["unit-002"]
 
 
 def test_semantic_key_helpers() -> None:
@@ -248,6 +322,8 @@ def test_repair_loop_initial_semantic_results_drive_review_keys(monkeypatch, tmp
     args.initial_semantic_coverage_results = semantic_path
     seen_review_keys: list[list[str]] = []
     seen_preserved: list[set[str] | None] = []
+    seen_repair_keys: list[list[str]] = []
+    seen_repair_review_keys: list[list[str]] = []
 
     def fake_context_selection(namespace):
         seen_review_keys.append(list(namespace.source_coverage_review_unit_key))
@@ -262,6 +338,8 @@ def test_repair_loop_initial_semantic_results_drive_review_keys(monkeypatch, tmp
         return {}
 
     def fake_repair(namespace):
+        seen_repair_keys.append(list(namespace.unit_key))
+        seen_repair_review_keys.append(list(namespace.source_coverage_review_unit_key))
         (namespace.output / "batch-001").mkdir(parents=True, exist_ok=True)
         (namespace.output / "batch-001/generation-output.json").write_text('{"units":[]}', encoding="utf-8")
         return {}
@@ -284,4 +362,6 @@ def test_repair_loop_initial_semantic_results_drive_review_keys(monkeypatch, tmp
 
     assert summary["initial_semantic_coverage_results"] == str(semantic_path)
     assert seen_review_keys == [["unit-002"]]
+    assert seen_repair_keys == [["unit-002"]]
+    assert seen_repair_review_keys == [["unit-002"]]
     assert seen_preserved == [{"unit-001"}]

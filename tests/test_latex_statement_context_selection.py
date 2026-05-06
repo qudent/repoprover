@@ -115,6 +115,7 @@ def test_theorem_level_selector_hides_target_alignment_but_keeps_prior_context()
     assert "same_unit_helper" in prompt
     assert "depends_on_task_ids" in prompt
     assert "Same-unit helper tasks are declarations for the later generator to create" in prompt
+    assert "prefer separate narrow planned_declarations for each case" in prompt
 
 
 def test_theorem_level_selector_uses_source_unit_only_referencing_declarations() -> None:

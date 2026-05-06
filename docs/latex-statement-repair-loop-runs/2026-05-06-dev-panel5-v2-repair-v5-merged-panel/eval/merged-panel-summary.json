@@ -1,0 +1,63 @@
+{
+  "artifact": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel",
+  "benchmark_caveat": "This is a development-panel merged artifact. Gold declarations are still used only by post-hoc semantic graders, but the panel has been iterated on and is not held out.",
+  "provenance": {
+    "base_panel_generation": "docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-v2-paid-bridge-support/generation",
+    "base_repair_loop": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split",
+    "unit004_successful_repair": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-unit004-paid"
+  },
+  "provider_cost_usd_for_effective_artifact": {
+    "initial_generation": 0.0053754232,
+    "initial_selector": 0.003094084,
+    "split_repair_context_selection": 0.00650062,
+    "split_repair_generation": 0.0064946,
+    "total": 0.0244708072,
+    "unit004_failed_focused_repair": 0.001512,
+    "unit004_successful_focused_repair": 0.00149408
+  },
+  "schema_version": "repoprover.latex_statement_merged_panel_summary.v1",
+  "semantic_coverage": {
+    "all_aligned_gold_proved_units": 2,
+    "coverage_status_counts": {
+      "all_aligned_gold_proved": 2,
+      "generated_not_compiled": 2,
+      "no_aligned_gold_proved": 1
+    },
+    "unit_count": 5
+  },
+  "unit_outcomes": [
+    {
+      "outcome": "clean cannot_prove_from_visible_context",
+      "source": "lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001"
+    },
+    {
+      "outcome": "compiles but semantic shape mismatch against two aligned gold declarations",
+      "source": "thm.det.triang",
+      "unit_key": "unit-002"
+    },
+    {
+      "outcome": "compiles and semantic coverage passes",
+      "source": "thm.commring.inverse-uni",
+      "unit_key": "unit-003"
+    },
+    {
+      "outcome": "compiles and semantic coverage passes after focused bridge-rewrite repair",
+      "source": "prop.binom.vandermonde.NN",
+      "unit_key": "unit-004"
+    },
+    {
+      "outcome": "clean cannot_prove_from_visible_context",
+      "source": "prop.sf.Npar-as-par",
+      "unit_key": "unit-005"
+    }
+  ],
+  "verification": {
+    "compile_passed_units": 3,
+    "failure_class_counts": {
+      "compiled": 3,
+      "declined_cannot_prove": 2
+    },
+    "unit_count": 5
+  }
+}

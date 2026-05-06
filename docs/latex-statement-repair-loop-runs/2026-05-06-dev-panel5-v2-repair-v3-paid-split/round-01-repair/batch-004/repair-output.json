@@ -1,0 +1,28 @@
+{
+  "batch_paths": [
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-001/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-002/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-003/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-004/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-005/generation-output.json"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_aggregated.v1",
+  "units": [
+    {
+      "declaration_names": [
+        "vandermonde_nat"
+      ],
+      "lean_file_body": "open Finset\nopen Nat\n\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k ∈ range (n + 1), (a.choose k) * (b.choose (n - k)) := by\n  simpa [Finset.Nat.sum_antidiagonal_eq_sum_range_succ] using Nat.add_choose_eq a b n",
+      "notes": [
+        "Uses Nat.add_choose_eq and Finset.Nat.sum_antidiagonal_eq_sum_range_succ from Mathlib.",
+        "The proof uses simpa to rewrite the antidiagonal sum to the range sum, avoiding the 'No goals to be solved' error from the previous attempt."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Nat.add_choose_eq (checked signature)",
+        "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)"
+      ]
+    }
+  ]
+}

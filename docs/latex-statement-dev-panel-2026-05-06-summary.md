@@ -200,6 +200,35 @@ inverse-uniqueness pass and did not change triangular determinant, where the
 generated theorem has a raw entrywise-zero hypothesis but the aligned gold
 statements use `BlockTriangular` hypotheses.
 
+### Repair Loop V5 Merged Panel
+
+Artifact:
+`docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/`
+
+This development artifact merges the five-unit v2 panel generation, the split
+repair-loop output, and a focused unit-004 repair. It made no hidden-target data
+available to selector, generator, or repair prompts; gold declarations are used
+only by post-hoc semantic graders. It is not held out, because the panel has
+been iterated on.
+
+- Effective provider cost for this artifact path: `$0.0244708072`.
+- Generated-only verification: `3/5` compiled, with `2` clean
+  `cannot_prove_from_visible_context` declines and no compile failures.
+- Semantic coverage: `2/5` source units prove all aligned gold declarations.
+- Semantic wins: inverse uniqueness (`unit-003`) and Vandermonde (`unit-004`).
+- Remaining blocker classes: triangular (`unit-002`) compiles but has the wrong
+  statement shape; FPS division (`unit-001`) and NPartition (`unit-005`) are
+  proof-synthesis/context-depth declines.
+
+The run exposed two deterministic repair-loop issues that are now fixed:
+multi-unit repair outputs must be split back into per-unit batches, and each
+split batch must carry forward the original unit-specific generation payload so
+the verifier can infer prompt-visible imports and support declarations. The
+Vandermonde repair also exposed a generic proof-planning issue: the model had
+the right checked bridge theorem, but needed compiler feedback and a prompt
+rule to apply the source theorem before the bridge rewrite when that is what
+introduces the bridge lemma's left-hand side.
+
 ## What This Shows
 
 The five-unit panel gives richer data immediately. The single NPartition loop

@@ -1,0 +1,663 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "PowerSeries.coeff_inv",
+      "signature": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to compute coefficients of inverses of power series"
+    },
+    {
+      "name": "PowerSeries.inv_eq_iff_mul_eq_one",
+      "signature": "PowerSeries.inv_eq_iff_mul_eq_one.{u_2} {k : Type u_2} [Field k] {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) :\n  ψ⁻¹ = φ ↔ φ * ψ = 1",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to relate inverse equality to product equality"
+    },
+    {
+      "declaration_line": "theorem le_of_mem_parts {n : ℕ} {p : Partition n} {m : ℕ} (h : m ∈ p.parts) : m ≤ n := by",
+      "fallback_for_query": "Nat.Partition.parts_sort",
+      "name": "Nat.Partition.le_of_mem_parts",
+      "signature": "Nat.Partition.le_of_mem_parts {n : ℕ} {p : n.Partition} {m : ℕ} (h : m ∈ p.parts) : m ≤ n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.parts_sort: to obtain a sorted decreasing list from a Nat.Partition"
+    },
+    {
+      "declaration_line": "theorem primeFactorsList_sorted (n : ℕ) : List.SortedLE (primeFactorsList n) :=",
+      "fallback_for_query": "Nat.Partition.parts_sort",
+      "name": "Nat.primeFactorsList_sorted",
+      "signature": "Nat.primeFactorsList_sorted (n : ℕ) : n.primeFactorsList.SortedLE",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.parts_sort: to obtain a sorted decreasing list from a Nat.Partition"
+    },
+    {
+      "declaration_line": "lemma sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} :",
+      "fallback_for_query": "Nat.Partition.parts_sort",
+      "name": "Nat.sortedLT_map_fst_divisorsAntidiagonalList",
+      "signature": "Nat.sortedLT_map_fst_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.fst n.divisorsAntidiagonalList).SortedLT",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.parts_sort: to obtain a sorted decreasing list from a Nat.Partition"
+    },
+    {
+      "declaration_line": "lemma sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} :",
+      "fallback_for_query": "Nat.Partition.parts_sort",
+      "name": "Nat.sortedGT_map_snd_divisorsAntidiagonalList",
+      "signature": "Nat.sortedGT_map_snd_divisorsAntidiagonalList {n : ℕ} : (List.map Prod.snd n.divisorsAntidiagonalList).SortedGT",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.parts_sort: to obtain a sorted decreasing list from a Nat.Partition"
+    },
+    {
+      "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+      "fallback_for_query": "List.sorted_ge_iff",
+      "name": "List.Pairwise.rel_get_of_le",
+      "signature": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_ge_iff: to relate sortedness to pointwise inequalities for the antitone condition"
+    },
+    {
+      "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+      "fallback_for_query": "List.sorted_ge_iff",
+      "name": "List.Pairwise.rel_get_of_lt",
+      "signature": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_ge_iff: to relate sortedness to pointwise inequalities for the antitone condition"
+    },
+    {
+      "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+      "fallback_for_query": "List.sorted_ge_iff",
+      "name": "List.sortedGE_iff_antitone_get",
+      "signature": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_ge_iff: to relate sortedness to pointwise inequalities for the antitone condition"
+    },
+    {
+      "declaration_line": "theorem sortedLE_iff_monotone_get : l.SortedLE ↔ Monotone l.get := .rfl",
+      "fallback_for_query": "List.sorted_ge_iff",
+      "name": "List.sortedLE_iff_monotone_get",
+      "signature": "List.sortedLE_iff_monotone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedLE ↔ Monotone l.get",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request List.sorted_ge_iff: to relate sortedness to pointwise inequalities for the antitone condition"
+    },
+    {
+      "declaration_line": "theorem length_sort : (sort s r).length = card s := Quot.inductionOn s <| length_mergeSort",
+      "fallback_for_query": "Multiset.card_sort",
+      "name": "Multiset.length_sort",
+      "signature": "Multiset.length_sort.{u_1} {α : Type u_1} {s : Multiset α} (r : α → α → Prop) [DecidableRel r] [IsTrans α r]\n  [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_sort: to relate the length of the sorted list to the cardinality of the multiset"
+    },
+    {
+      "declaration_line": "theorem coe_card (l : List α) : card (l : Multiset α) = length l :=",
+      "fallback_for_query": "Multiset.card_sort",
+      "name": "Multiset.coe_card",
+      "signature": "Multiset.coe_card.{u_1} {α : Type u_1} (l : List α) : (↑l).card = l.length",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_sort: to relate the length of the sorted list to the cardinality of the multiset"
+    },
+    {
+      "declaration_line": "def card : Multiset α → ℕ := Quot.lift length fun _l₁ _l₂ => Perm.length_eq",
+      "fallback_for_query": "Multiset.card_sort",
+      "name": "Multiset.card",
+      "signature": "Multiset.card.{u_1} {α : Type u_1} : Multiset α → ℕ",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_sort: to relate the length of the sorted list to the cardinality of the multiset"
+    },
+    {
+      "declaration_line": "lemma card_sum (s : Finset ι) (f : ι → Multiset α) : card (∑ i ∈ s, f i) = ∑ i ∈ s, card (f i) :=",
+      "fallback_for_query": "Multiset.card_sort",
+      "name": "Multiset.card_sum",
+      "signature": "Multiset.card_sum.{u_1, u_6} {ι : Type u_1} {α : Type u_6} (s : Finset ι) (f : ι → Multiset α) :\n  (∑ i ∈ s, f i).card = ∑ i ∈ s, (f i).card",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Multiset.card_sort: to relate the length of the sorted list to the cardinality of the multiset"
+    }
+  ],
+  "discarded_do_not_use_items": [],
+  "do_not_use_identifiers": [],
+  "failed_or_unchecked_context_requests": [],
+  "fallback_bridge_notes": [
+    {
+      "bridge_kind": "sorted_list_pointwise_order",
+      "checked_fallback_candidates": [
+        "List.Pairwise.rel_get_of_le",
+        "List.Pairwise.rel_get_of_lt",
+        "List.sortedGE_iff_antitone_get"
+      ],
+      "proof_guidance": "There may be no direct padded-antitone theorem. Use the checked sorted/Pairwise fact for the sorted list, then apply `List.Pairwise.rel_get_of_le` or `List.Pairwise.rel_get_of_lt` to in-range indices. Handle padded out-of-range indices by local case splits and zero-bound arithmetic rather than requiring a single library theorem for the whole padded function.",
+      "task_id": "unit-005-repair-context-1",
+      "unavailable_direct_request": "List.sorted_ge_iff",
+      "unit_key": "unit-005"
+    }
+  ],
+  "fallback_resolved_context_requests": [
+    {
+      "exact_identifier": "Nat.Partition.parts_sort",
+      "expected_signature_or_shape": "theorem parts_sort (μ : Nat.Partition n) : (μ.parts.sort (· ≥ ·)).sum = n",
+      "lean_check": {
+        "error": "Unknown constant `Nat.Partition.parts_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.Partition.parts_sort`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Nat.Partition.parts_sort",
+      "policy": "The requested direct identifier did not check, but the listed fallback candidates did. Treat the requested identifier as unavailable and use the checked fallback signatures instead.",
+      "resolved_by_checked_fallback_candidates": [
+        "Nat.Partition.le_of_mem_parts",
+        "Nat.primeFactorsList_sorted",
+        "Nat.sortedLT_map_fst_divisorsAntidiagonalList",
+        "Nat.sortedGT_map_snd_divisorsAntidiagonalList"
+      ],
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to obtain a sorted decreasing list from a Nat.Partition"
+    },
+    {
+      "exact_identifier": "List.sorted_ge_iff",
+      "expected_signature_or_shape": "theorem List.sorted_ge_iff (l : List ℕ) : l.Sorted (· ≥ ·) ↔ ∀ i j, i < j → l.get i ≥ l.get j",
+      "lean_check": {
+        "error": "Unknown constant `List.sorted_ge_iff`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sorted_ge_iff`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "List.sorted_ge_iff",
+      "policy": "The requested direct identifier did not check, but the listed fallback candidates did. Treat the requested identifier as unavailable and use the checked fallback signatures instead.",
+      "resolved_by_checked_fallback_candidates": [
+        "List.Pairwise.rel_get_of_le",
+        "List.Pairwise.rel_get_of_lt",
+        "List.sortedGE_iff_antitone_get",
+        "List.sortedLE_iff_monotone_get"
+      ],
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to relate sortedness to pointwise inequalities for the antitone condition"
+    },
+    {
+      "exact_identifier": "Multiset.card_sort",
+      "expected_signature_or_shape": "theorem Multiset.card_sort (s : Multiset α) : (s.sort r).length = s.card",
+      "lean_check": {
+        "error": "Unknown constant `Multiset.card_sort`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.card_sort`",
+            "line": 8,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Multiset.card_sort",
+      "policy": "The requested direct identifier did not check, but the listed fallback candidates did. Treat the requested identifier as unavailable and use the checked fallback signatures instead.",
+      "resolved_by_checked_fallback_candidates": [
+        "Multiset.length_sort",
+        "Multiset.coe_card",
+        "Multiset.card",
+        "Multiset.card_sum"
+      ],
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to relate the length of the sorted list to the cardinality of the multiset"
+    }
+  ],
+  "generated_at": "2026-05-06T07:39:41.494328+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "A lemma that if c and d are units in K⟦X⟧ and have equal coefficients up to n, then their inverses also have equal coefficients up to n. The Mathlib inverse API for power series is over fields, not general commutative rings. The invertibility condition is given as IsUnit. No such lemma exists in the visible context.",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "A lemma to convert a `Nat.Partition` with `parts.card ≤ N` to an `NPartition` by padding with zeros, preserving the antitone property. The antitone property requires that the padded sequence is weakly decreasing; this holds because the original parts are positive and sorted decreasing (by convention of Nat.Partition), and zeros are appended at the end.",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "A lemma that `Nat.Partition.parts` is sorted decreasing (or can be sorted). The Mathlib `Nat.Partition` does not guarantee order; the parts are a multiset. The source assumes partitions are written as weakly decreasing sequences, but the Mathlib representation is unordered. This is a fundamental mismatch.",
+      "unit_key": "unit-005"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The generated attempt used `xnEquiv_mul_of_coeff_eq` but that lemma itself failed to compile due to missing `Semiring K` instance (the binder `K` was not given a typeclass). The proof then stopped at the inversion step. The source requires a lemma about coefficient-wise equality of inverses given coefficient-wise equality of the units up to n, which is not available in the visible context.",
+      "proof_strategy_note": "First fix `xnEquiv_mul_of_coeff_eq` by adding `[CommRing K]` binder. Then prove a helper lemma `coeff_inv_of_coeff_eq` using the recurrence for inverse coefficients (or using the fact that if c and d are units and have equal coefficients up to n, then c⁻¹ and d⁻¹ also have equal coefficients up to n, by induction on m using the relation c * c⁻¹ = 1 and the product lemma). Finally combine product and inverse lemmas to get the division congruence.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    },
+    {
+      "failure_analysis": "The generated declaration `det_of_triangular` compiled successfully. No failure to repair.",
+      "proof_strategy_note": "No repair needed; unit compiled.",
+      "selector_confidence": 0.95,
+      "unit_key": "unit-002"
+    },
+    {
+      "failure_analysis": "The generated declaration `vandermonde_nat` failed with 'No goals to be solved' at line 33. The proof used `Nat.add_choose_eq` and `Finset.Nat.sum_antidiagonal_eq_sum_range_succ` but the rewrite chain left no goals, indicating the proof is already complete but the syntax is wrong (likely a stray `simp` that closed all goals prematurely). The source statement is the Vandermonde identity for natural numbers.",
+      "proof_strategy_note": "The proof is essentially correct but the `simp` at the end is too aggressive. Replace the last line with `rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]` and remove the `simp`. The rewrite will produce the desired sum over range (n+1).",
+      "selector_confidence": 0.95,
+      "unit_key": "unit-004"
+    },
+    {
+      "failure_analysis": "The generated attempt constructed a bijection but the antitone proof was incomplete, the invFun used a filter on Multiset which does not match the Nat.Partition structure (which requires parts_sum = n, not just any sum), and the left_inv/right_inv proofs were placeholders. The source states a bijection between partitions of length ≤ N and N-partitions (weakly decreasing N-tuples). The visible context provides `NPartition` (structure with `parts : Fin N → ℕ` and `antitone`) and `Nat.Partition` (structure with `parts : Multiset ℕ`, `parts_pos`, `parts_sum`). The existing `NPartition.toPartition` gives one direction. The missing direction is from a `Nat.Partition` with `parts.card ≤ N` to an `NPartition` by padding with zeros.",
+      "proof_strategy_note": "The main difficulty is that Mathlib's `Nat.Partition` is unordered (multiset), while the source assumes an ordered decreasing sequence. The repair must sort the multiset decreasingly, then pad with zeros. This requires several helper lemmas. The bijection can then be defined as `Equiv` using the two maps and the four helper lemmas. The `antitone` proof for the padded function will need to case-split on whether indices are within the length of the sorted list or beyond.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-005"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The generated attempt used `xnEquiv_mul_of_coeff_eq` but that lemma itself failed to compile due to missing `Semiring K` instance (the binder `K` was not given a typeclass). The proof then stopped at the inversion step. The source requires a lemma about coefficient-wise equality of inverses given coefficient-wise equality of the units up to n, which is not available in the visible context.",
+        "missing_or_uncertain_context": [
+          "A lemma that if c and d are units in K⟦X⟧ and have equal coefficients up to n, then their inverses also have equal coefficients up to n. The Mathlib inverse API for power series is over fields, not general commutative rings. The invertibility condition is given as IsUnit. No such lemma exists in the visible context."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "theorem coeff_inv (k : ℕ) (φ : R⟦X⟧) [Invertible (constantCoeff φ)] : coeff k (φ⁻¹) = ...",
+            "name_or_query": "PowerSeries.coeff_inv",
+            "why_needed": "to compute coefficients of inverses of power series"
+          },
+          {
+            "expected_signature_or_shape": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : ψ⁻¹ = φ ↔ φ * ψ = 1",
+            "name_or_query": "PowerSeries.inv_eq_iff_mul_eq_one",
+            "why_needed": "to relate inverse equality to product equality"
+          }
+        ],
+        "repair_strategy_note": "First fix `xnEquiv_mul_of_coeff_eq` by adding `[CommRing K]` binder. Then prove a helper lemma `coeff_inv_of_coeff_eq` using the recurrence for inverse coefficients (or using the fact that if c and d are units and have equal coefficients up to n, then c⁻¹ and d⁻¹ also have equal coefficients up to n, by induction on m using the relation c * c⁻¹ = 1 and the product lemma). Finally combine product and inverse lemmas to get the division congruence.",
+        "same_unit_helper_plan": [
+          {
+            "depends_on": [
+              "xnEquiv_mul_of_coeff_eq (fixed with proper typeclass)"
+            ],
+            "fresh_name_hint": "coeff_inv_of_coeff_eq",
+            "needed_checked_ingredients": [
+              "PowerSeries.coeff_inv (or a recurrence for inverse coefficients)",
+              "IsUnit.mul_left_cancel (or similar cancellation for units)"
+            ],
+            "role": "lemma",
+            "statement_sketch": "If c d : K⟦X⟧ are units (IsUnit c, IsUnit d) and ∀ m ≤ n, coeff m c = coeff m d, then ∀ m ≤ n, coeff m (c⁻¹) = coeff m (d⁻¹).",
+            "why_needed": "bridges from coefficient equality of units to coefficient equality of inverses"
+          }
+        ],
+        "selected_visible_context": [
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "xnEquiv_mul_of_coeff_eq",
+            "why_needed": "provides product coefficient equality; must be fixed to compile with proper typeclass"
+          },
+          {
+            "context_kind": "source",
+            "name_or_label": "lem.fps.prod.irlv.cong-div",
+            "why_needed": "source statement: division congruence lemma"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The generated declaration `det_of_triangular` compiled successfully. No failure to repair.",
+        "missing_or_uncertain_context": [],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "No repair needed; unit compiled.",
+        "same_unit_helper_plan": [],
+        "selected_visible_context": [],
+        "selector_confidence": 0.95,
+        "unit_key": "unit-002"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The generated declaration `vandermonde_nat` failed with 'No goals to be solved' at line 33. The proof used `Nat.add_choose_eq` and `Finset.Nat.sum_antidiagonal_eq_sum_range_succ` but the rewrite chain left no goals, indicating the proof is already complete but the syntax is wrong (likely a stray `simp` that closed all goals prematurely). The source statement is the Vandermonde identity for natural numbers.",
+        "missing_or_uncertain_context": [],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "The proof is essentially correct but the `simp` at the end is too aggressive. Replace the last line with `rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]` and remove the `simp`. The rewrite will produce the desired sum over range (n+1).",
+        "same_unit_helper_plan": [],
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.binom.vandermonde.NN",
+            "why_needed": "source statement: Vandermonde identity for ℕ"
+          },
+          {
+            "context_kind": "hydrated_mathlib",
+            "name_or_label": "Nat.add_choose_eq",
+            "why_needed": "checked signature: (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2"
+          },
+          {
+            "context_kind": "hydrated_mathlib",
+            "name_or_label": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+            "why_needed": "checked signature: converts antidiagonal sum to range sum"
+          }
+        ],
+        "selector_confidence": 0.95,
+        "unit_key": "unit-004"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The generated attempt constructed a bijection but the antitone proof was incomplete, the invFun used a filter on Multiset which does not match the Nat.Partition structure (which requires parts_sum = n, not just any sum), and the left_inv/right_inv proofs were placeholders. The source states a bijection between partitions of length ≤ N and N-partitions (weakly decreasing N-tuples). The visible context provides `NPartition` (structure with `parts : Fin N → ℕ` and `antitone`) and `Nat.Partition` (structure with `parts : Multiset ℕ`, `parts_pos`, `parts_sum`). The existing `NPartition.toPartition` gives one direction. The missing direction is from a `Nat.Partition` with `parts.card ≤ N` to an `NPartition` by padding with zeros.",
+        "missing_or_uncertain_context": [
+          "A lemma to convert a `Nat.Partition` with `parts.card ≤ N` to an `NPartition` by padding with zeros, preserving the antitone property. The antitone property requires that the padded sequence is weakly decreasing; this holds because the original parts are positive and sorted decreasing (by convention of Nat.Partition), and zeros are appended at the end.",
+          "A lemma that `Nat.Partition.parts` is sorted decreasing (or can be sorted). The Mathlib `Nat.Partition` does not guarantee order; the parts are a multiset. The source assumes partitions are written as weakly decreasing sequences, but the Mathlib representation is unordered. This is a fundamental mismatch."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "theorem parts_sort (μ : Nat.Partition n) : (μ.parts.sort (· ≥ ·)).sum = n",
+            "name_or_query": "Nat.Partition.parts_sort",
+            "why_needed": "to obtain a sorted decreasing list from a Nat.Partition"
+          },
+          {
+            "expected_signature_or_shape": "theorem List.sorted_ge_iff (l : List ℕ) : l.Sorted (· ≥ ·) ↔ ∀ i j, i < j → l.get i ≥ l.get j",
+            "name_or_query": "List.sorted_ge_iff",
+            "why_needed": "to relate sortedness to pointwise inequalities for the antitone condition"
+          },
+          {
+            "expected_signature_or_shape": "theorem Multiset.card_sort (s : Multiset α) : (s.sort r).length = s.card",
+            "name_or_query": "Multiset.card_sort",
+            "why_needed": "to relate the length of the sorted list to the cardinality of the multiset"
+          }
+        ],
+        "repair_strategy_note": "The main difficulty is that Mathlib's `Nat.Partition` is unordered (multiset), while the source assumes an ordered decreasing sequence. The repair must sort the multiset decreasingly, then pad with zeros. This requires several helper lemmas. The bijection can then be defined as `Equiv` using the two maps and the four helper lemmas. The `antitone` proof for the padded function will need to case-split on whether indices are within the length of the sorted list or beyond.",
+        "same_unit_helper_plan": [
+          {
+            "depends_on": [],
+            "fresh_name_hint": "fromPartitionToNPartition",
+            "needed_checked_ingredients": [
+              "Nat.Partition.parts_sort",
+              "List.sorted_ge_iff",
+              "Multiset.card_sort",
+              "Finset.card_univ",
+              "Fintype.card_fin"
+            ],
+            "role": "def",
+            "statement_sketch": "Given μ : Nat.Partition n with h : μ.parts.card ≤ N, produce an NPartition N by taking the sorted decreasing list of parts, padding with zeros to length N.",
+            "why_needed": "the missing direction of the bijection"
+          },
+          {
+            "depends_on": [
+              "fromPartitionToNPartition"
+            ],
+            "fresh_name_hint": "fromPartitionToNPartition_antitone",
+            "needed_checked_ingredients": [
+              "List.sorted_ge_iff",
+              "List.get_of_eq"
+            ],
+            "role": "lemma",
+            "statement_sketch": "The padded function from fromPartitionToNPartition is antitone.",
+            "why_needed": "to satisfy the NPartition.antitone field"
+          },
+          {
+            "depends_on": [
+              "fromPartitionToNPartition"
+            ],
+            "fresh_name_hint": "fromPartitionToNPartition_size",
+            "needed_checked_ingredients": [
+              "NPartition.size",
+              "Nat.Partition.parts_sum",
+              "List.sum_ofFn",
+              "List.sum_sort"
+            ],
+            "role": "lemma",
+            "statement_sketch": "The size of fromPartitionToNPartition μ h equals n (the sum of parts).",
+            "why_needed": "to relate the size to the original partition sum"
+          },
+          {
+            "depends_on": [
+              "fromPartitionToNPartition"
+            ],
+            "fresh_name_hint": "toPartition_fromPartition",
+            "needed_checked_ingredients": [
+              "NPartition.toPartition",
+              "Nat.Partition.ext",
+              "Multiset.filter_ne_zero_eq_self (for positive parts)"
+            ],
+            "role": "lemma",
+            "statement_sketch": "For any μ : Nat.Partition n with h : μ.parts.card ≤ N, we have NPartition.toPartition (fromPartitionToNPartition μ h) = μ.",
+            "why_needed": "left inverse of the bijection"
+          },
+          {
+            "depends_on": [
+              "fromPartitionToNPartition"
+            ],
+            "fresh_name_hint": "fromPartition_toPartition",
+            "needed_checked_ingredients": [
+              "NPartition.ext",
+              "NPartition.toPartition",
+              "NPartition.part_eq_parts"
+            ],
+            "role": "lemma",
+            "statement_sketch": "For any ν : NPartition N, we have fromPartitionToNPartition (NPartition.toPartition ν) (by ...) = ν.",
+            "why_needed": "right inverse of the bijection"
+          }
+        ],
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.Npar-as-par",
+            "why_needed": "source statement: bijection between partitions of length ≤ N and N-partitions"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition",
+            "why_needed": "target structure with parts and antitone"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.toPartition",
+            "why_needed": "one direction of the bijection (already defined)"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.ext",
+            "why_needed": "extensionality for NPartition"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.size",
+            "why_needed": "size of an NPartition"
+          },
+          {
+            "context_kind": "hydrated_mathlib",
+            "name_or_label": "Nat.Partition",
+            "why_needed": "source structure with parts, parts_pos, parts_sum, ext"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-005"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v2-paid/round-01-context",
+  "same_unit_helper_plan": [
+    {
+      "depends_on": [
+        "xnEquiv_mul_of_coeff_eq (fixed with proper typeclass)"
+      ],
+      "fresh_name_hint": "coeff_inv_of_coeff_eq",
+      "needed_checked_ingredients": [
+        "PowerSeries.coeff_inv (or a recurrence for inverse coefficients)",
+        "IsUnit.mul_left_cancel (or similar cancellation for units)"
+      ],
+      "role": "lemma",
+      "statement_sketch": "If c d : K⟦X⟧ are units (IsUnit c, IsUnit d) and ∀ m ≤ n, coeff m c = coeff m d, then ∀ m ≤ n, coeff m (c⁻¹) = coeff m (d⁻¹).",
+      "unit_key": "unit-001",
+      "why_needed": "bridges from coefficient equality of units to coefficient equality of inverses"
+    },
+    {
+      "depends_on": [],
+      "fresh_name_hint": "fromPartitionToNPartition",
+      "needed_checked_ingredients": [
+        "Nat.Partition.parts_sort",
+        "List.sorted_ge_iff",
+        "Multiset.card_sort",
+        "Finset.card_univ",
+        "Fintype.card_fin"
+      ],
+      "role": "def",
+      "statement_sketch": "Given μ : Nat.Partition n with h : μ.parts.card ≤ N, produce an NPartition N by taking the sorted decreasing list of parts, padding with zeros to length N.",
+      "unit_key": "unit-005",
+      "why_needed": "the missing direction of the bijection"
+    },
+    {
+      "depends_on": [
+        "fromPartitionToNPartition"
+      ],
+      "fresh_name_hint": "fromPartitionToNPartition_antitone",
+      "needed_checked_ingredients": [
+        "List.sorted_ge_iff",
+        "List.get_of_eq"
+      ],
+      "role": "lemma",
+      "statement_sketch": "The padded function from fromPartitionToNPartition is antitone.",
+      "unit_key": "unit-005",
+      "why_needed": "to satisfy the NPartition.antitone field"
+    },
+    {
+      "depends_on": [
+        "fromPartitionToNPartition"
+      ],
+      "fresh_name_hint": "fromPartitionToNPartition_size",
+      "needed_checked_ingredients": [
+        "NPartition.size",
+        "Nat.Partition.parts_sum",
+        "List.sum_ofFn",
+        "List.sum_sort"
+      ],
+      "role": "lemma",
+      "statement_sketch": "The size of fromPartitionToNPartition μ h equals n (the sum of parts).",
+      "unit_key": "unit-005",
+      "why_needed": "to relate the size to the original partition sum"
+    },
+    {
+      "depends_on": [
+        "fromPartitionToNPartition"
+      ],
+      "fresh_name_hint": "toPartition_fromPartition",
+      "needed_checked_ingredients": [
+        "NPartition.toPartition",
+        "Nat.Partition.ext",
+        "Multiset.filter_ne_zero_eq_self (for positive parts)"
+      ],
+      "role": "lemma",
+      "statement_sketch": "For any μ : Nat.Partition n with h : μ.parts.card ≤ N, we have NPartition.toPartition (fromPartitionToNPartition μ h) = μ.",
+      "unit_key": "unit-005",
+      "why_needed": "left inverse of the bijection"
+    },
+    {
+      "depends_on": [
+        "fromPartitionToNPartition"
+      ],
+      "fresh_name_hint": "fromPartition_toPartition",
+      "needed_checked_ingredients": [
+        "NPartition.ext",
+        "NPartition.toPartition",
+        "NPartition.part_eq_parts"
+      ],
+      "role": "lemma",
+      "statement_sketch": "For any ν : NPartition N, we have fromPartitionToNPartition (NPartition.toPartition ν) (by ...) = ν.",
+      "unit_key": "unit-005",
+      "why_needed": "right inverse of the bijection"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "xnEquiv_mul_of_coeff_eq",
+      "unit_key": "unit-001",
+      "why_needed": "provides product coefficient equality; must be fixed to compile with proper typeclass"
+    },
+    {
+      "context_kind": "source",
+      "name_or_label": "lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001",
+      "why_needed": "source statement: division congruence lemma"
+    },
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.binom.vandermonde.NN",
+      "unit_key": "unit-004",
+      "why_needed": "source statement: Vandermonde identity for ℕ"
+    },
+    {
+      "context_kind": "hydrated_mathlib",
+      "name_or_label": "Nat.add_choose_eq",
+      "unit_key": "unit-004",
+      "why_needed": "checked signature: (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2"
+    },
+    {
+      "context_kind": "hydrated_mathlib",
+      "name_or_label": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+      "unit_key": "unit-004",
+      "why_needed": "checked signature: converts antidiagonal sum to range sum"
+    },
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.Npar-as-par",
+      "unit_key": "unit-005",
+      "why_needed": "source statement: bijection between partitions of length ≤ N and N-partitions"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition",
+      "unit_key": "unit-005",
+      "why_needed": "target structure with parts and antitone"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.toPartition",
+      "unit_key": "unit-005",
+      "why_needed": "one direction of the bijection (already defined)"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.ext",
+      "unit_key": "unit-005",
+      "why_needed": "extensionality for NPartition"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.size",
+      "unit_key": "unit-005",
+      "why_needed": "size of an NPartition"
+    },
+    {
+      "context_kind": "hydrated_mathlib",
+      "name_or_label": "Nat.Partition",
+      "unit_key": "unit-005",
+      "why_needed": "source structure with parts, parts_pos, parts_sum, ext"
+    }
+  ]
+}

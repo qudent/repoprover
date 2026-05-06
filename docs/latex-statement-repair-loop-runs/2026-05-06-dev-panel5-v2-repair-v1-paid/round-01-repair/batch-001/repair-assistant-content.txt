@@ -1,0 +1,18 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof requires a lemma that if c and d are units with equal coefficients up to n, then their inverses also have equal coefficients up to n. This lemma is not available in the visible context; the available inverse API is field-specific. The helper lemma coeff_inv_of_coeff_eq cannot be proved from the checked signatures alone."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source lemma text",
+        "local_file_predecessor_declaration: xnEquiv_mul_of_coeff_eq",
+        "hydrated_mathlib_candidates for product and inverse coefficient lemmas"
+      ]
+    }
+  ]
+}

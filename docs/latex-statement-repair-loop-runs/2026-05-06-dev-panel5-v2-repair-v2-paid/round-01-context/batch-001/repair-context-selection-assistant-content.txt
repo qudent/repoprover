@@ -1,0 +1,223 @@
+{
+  "units": [
+    {
+      "unit_key": "unit-001",
+      "selector_confidence": 0.0,
+      "failure_analysis": "The generated attempt used `xnEquiv_mul_of_coeff_eq` but that lemma itself failed to compile due to missing `Semiring K` instance (the binder `K` was not given a typeclass). The proof then stopped at the inversion step. The source requires a lemma about coefficient-wise equality of inverses given coefficient-wise equality of the units up to n, which is not available in the visible context.",
+      "selected_visible_context": [
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "xnEquiv_mul_of_coeff_eq",
+          "why_needed": "provides product coefficient equality; must be fixed to compile with proper typeclass"
+        },
+        {
+          "context_kind": "source",
+          "name_or_label": "lem.fps.prod.irlv.cong-div",
+          "why_needed": "source statement: division congruence lemma"
+        }
+      ],
+      "missing_or_uncertain_context": [
+        "A lemma that if c and d are units in K⟦X⟧ and have equal coefficients up to n, then their inverses also have equal coefficients up to n. The Mathlib inverse API for power series is over fields, not general commutative rings. The invertibility condition is given as IsUnit. No such lemma exists in the visible context."
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "PowerSeries.coeff_inv",
+          "expected_signature_or_shape": "theorem coeff_inv (k : ℕ) (φ : R⟦X⟧) [Invertible (constantCoeff φ)] : coeff k (φ⁻¹) = ...",
+          "why_needed": "to compute coefficients of inverses of power series"
+        },
+        {
+          "name_or_query": "PowerSeries.inv_eq_iff_mul_eq_one",
+          "expected_signature_or_shape": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : ψ⁻¹ = φ ↔ φ * ψ = 1",
+          "why_needed": "to relate inverse equality to product equality"
+        }
+      ],
+      "same_unit_helper_plan": [
+        {
+          "role": "lemma",
+          "fresh_name_hint": "coeff_inv_of_coeff_eq",
+          "statement_sketch": "If c d : K⟦X⟧ are units (IsUnit c, IsUnit d) and ∀ m ≤ n, coeff m c = coeff m d, then ∀ m ≤ n, coeff m (c⁻¹) = coeff m (d⁻¹).",
+          "why_needed": "bridges from coefficient equality of units to coefficient equality of inverses",
+          "needed_checked_ingredients": [
+            "PowerSeries.coeff_inv (or a recurrence for inverse coefficients)",
+            "IsUnit.mul_left_cancel (or similar cancellation for units)"
+          ],
+          "depends_on": [
+            "xnEquiv_mul_of_coeff_eq (fixed with proper typeclass)"
+          ]
+        }
+      ],
+      "repair_strategy_note": "First fix `xnEquiv_mul_of_coeff_eq` by adding `[CommRing K]` binder. Then prove a helper lemma `coeff_inv_of_coeff_eq` using the recurrence for inverse coefficients (or using the fact that if c and d are units and have equal coefficients up to n, then c⁻¹ and d⁻¹ also have equal coefficients up to n, by induction on m using the relation c * c⁻¹ = 1 and the product lemma). Finally combine product and inverse lemmas to get the division congruence.",
+      "do_not_use_identifiers": []
+    },
+    {
+      "unit_key": "unit-002",
+      "selector_confidence": 0.95,
+      "failure_analysis": "The generated declaration `det_of_triangular` compiled successfully. No failure to repair.",
+      "selected_visible_context": [],
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [],
+      "same_unit_helper_plan": [],
+      "repair_strategy_note": "No repair needed; unit compiled.",
+      "do_not_use_identifiers": []
+    },
+    {
+      "unit_key": "unit-004",
+      "selector_confidence": 0.95,
+      "failure_analysis": "The generated declaration `vandermonde_nat` failed with 'No goals to be solved' at line 33. The proof used `Nat.add_choose_eq` and `Finset.Nat.sum_antidiagonal_eq_sum_range_succ` but the rewrite chain left no goals, indicating the proof is already complete but the syntax is wrong (likely a stray `simp` that closed all goals prematurely). The source statement is the Vandermonde identity for natural numbers.",
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "prop.binom.vandermonde.NN",
+          "why_needed": "source statement: Vandermonde identity for ℕ"
+        },
+        {
+          "context_kind": "hydrated_mathlib",
+          "name_or_label": "Nat.add_choose_eq",
+          "why_needed": "checked signature: (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2"
+        },
+        {
+          "context_kind": "hydrated_mathlib",
+          "name_or_label": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+          "why_needed": "checked signature: converts antidiagonal sum to range sum"
+        }
+      ],
+      "missing_or_uncertain_context": [],
+      "needed_mathlib_context": [],
+      "same_unit_helper_plan": [],
+      "repair_strategy_note": "The proof is essentially correct but the `simp` at the end is too aggressive. Replace the last line with `rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]` and remove the `simp`. The rewrite will produce the desired sum over range (n+1).",
+      "do_not_use_identifiers": []
+    },
+    {
+      "unit_key": "unit-005",
+      "selector_confidence": 0.0,
+      "failure_analysis": "The generated attempt constructed a bijection but the antitone proof was incomplete, the invFun used a filter on Multiset which does not match the Nat.Partition structure (which requires parts_sum = n, not just any sum), and the left_inv/right_inv proofs were placeholders. The source states a bijection between partitions of length ≤ N and N-partitions (weakly decreasing N-tuples). The visible context provides `NPartition` (structure with `parts : Fin N → ℕ` and `antitone`) and `Nat.Partition` (structure with `parts : Multiset ℕ`, `parts_pos`, `parts_sum`). The existing `NPartition.toPartition` gives one direction. The missing direction is from a `Nat.Partition` with `parts.card ≤ N` to an `NPartition` by padding with zeros.",
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "prop.sf.Npar-as-par",
+          "why_needed": "source statement: bijection between partitions of length ≤ N and N-partitions"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "NPartition",
+          "why_needed": "target structure with parts and antitone"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "NPartition.toPartition",
+          "why_needed": "one direction of the bijection (already defined)"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "NPartition.ext",
+          "why_needed": "extensionality for NPartition"
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "NPartition.size",
+          "why_needed": "size of an NPartition"
+        },
+        {
+          "context_kind": "hydrated_mathlib",
+          "name_or_label": "Nat.Partition",
+          "why_needed": "source structure with parts, parts_pos, parts_sum, ext"
+        }
+      ],
+      "missing_or_uncertain_context": [
+        "A lemma to convert a `Nat.Partition` with `parts.card ≤ N` to an `NPartition` by padding with zeros, preserving the antitone property. The antitone property requires that the padded sequence is weakly decreasing; this holds because the original parts are positive and sorted decreasing (by convention of Nat.Partition), and zeros are appended at the end.",
+        "A lemma that `Nat.Partition.parts` is sorted decreasing (or can be sorted). The Mathlib `Nat.Partition` does not guarantee order; the parts are a multiset. The source assumes partitions are written as weakly decreasing sequences, but the Mathlib representation is unordered. This is a fundamental mismatch."
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "Nat.Partition.parts_sort",
+          "expected_signature_or_shape": "theorem parts_sort (μ : Nat.Partition n) : (μ.parts.sort (· ≥ ·)).sum = n",
+          "why_needed": "to obtain a sorted decreasing list from a Nat.Partition"
+        },
+        {
+          "name_or_query": "List.sorted_ge_iff",
+          "expected_signature_or_shape": "theorem List.sorted_ge_iff (l : List ℕ) : l.Sorted (· ≥ ·) ↔ ∀ i j, i < j → l.get i ≥ l.get j",
+          "why_needed": "to relate sortedness to pointwise inequalities for the antitone condition"
+        },
+        {
+          "name_or_query": "Multiset.card_sort",
+          "expected_signature_or_shape": "theorem Multiset.card_sort (s : Multiset α) : (s.sort r).length = s.card",
+          "why_needed": "to relate the length of the sorted list to the cardinality of the multiset"
+        }
+      ],
+      "same_unit_helper_plan": [
+        {
+          "role": "def",
+          "fresh_name_hint": "fromPartitionToNPartition",
+          "statement_sketch": "Given μ : Nat.Partition n with h : μ.parts.card ≤ N, produce an NPartition N by taking the sorted decreasing list of parts, padding with zeros to length N.",
+          "why_needed": "the missing direction of the bijection",
+          "needed_checked_ingredients": [
+            "Nat.Partition.parts_sort",
+            "List.sorted_ge_iff",
+            "Multiset.card_sort",
+            "Finset.card_univ",
+            "Fintype.card_fin"
+          ],
+          "depends_on": []
+        },
+        {
+          "role": "lemma",
+          "fresh_name_hint": "fromPartitionToNPartition_antitone",
+          "statement_sketch": "The padded function from fromPartitionToNPartition is antitone.",
+          "why_needed": "to satisfy the NPartition.antitone field",
+          "needed_checked_ingredients": [
+            "List.sorted_ge_iff",
+            "List.get_of_eq"
+          ],
+          "depends_on": [
+            "fromPartitionToNPartition"
+          ]
+        },
+        {
+          "role": "lemma",
+          "fresh_name_hint": "fromPartitionToNPartition_size",
+          "statement_sketch": "The size of fromPartitionToNPartition μ h equals n (the sum of parts).",
+          "why_needed": "to relate the size to the original partition sum",
+          "needed_checked_ingredients": [
+            "NPartition.size",
+            "Nat.Partition.parts_sum",
+            "List.sum_ofFn",
+            "List.sum_sort"
+          ],
+          "depends_on": [
+            "fromPartitionToNPartition"
+          ]
+        },
+        {
+          "role": "lemma",
+          "fresh_name_hint": "toPartition_fromPartition",
+          "statement_sketch": "For any μ : Nat.Partition n with h : μ.parts.card ≤ N, we have NPartition.toPartition (fromPartitionToNPartition μ h) = μ.",
+          "why_needed": "left inverse of the bijection",
+          "needed_checked_ingredients": [
+            "NPartition.toPartition",
+            "Nat.Partition.ext",
+            "Multiset.filter_ne_zero_eq_self (for positive parts)"
+          ],
+          "depends_on": [
+            "fromPartitionToNPartition"
+          ]
+        },
+        {
+          "role": "lemma",
+          "fresh_name_hint": "fromPartition_toPartition",
+          "statement_sketch": "For any ν : NPartition N, we have fromPartitionToNPartition (NPartition.toPartition ν) (by ...) = ν.",
+          "why_needed": "right inverse of the bijection",
+          "needed_checked_ingredients": [
+            "NPartition.ext",
+            "NPartition.toPartition",
+            "NPartition.part_eq_parts"
+          ],
+          "depends_on": [
+            "fromPartitionToNPartition"
+          ]
+        }
+      ],
+      "repair_strategy_note": "The main difficulty is that Mathlib's `Nat.Partition` is unordered (multiset), while the source assumes an ordered decreasing sequence. The repair must sort the multiset decreasingly, then pad with zeros. This requires several helper lemmas. The bijection can then be defined as `Equiv` using the two maps and the four helper lemmas. The `antitone` proof for the padded function will need to case-split on whether indices are within the length of the sorted list or beyond.",
+      "do_not_use_identifiers": []
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"unit_key\": \"unit-001\",\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"lean_file_body\": \"\",\n      \"declaration_names\": [],\n      \"notes\": [\n        \"The lemma xnEquiv_mul_of_coeff_eq fails to compile because K is missing a Semiring instance. Even after fixing that, the main claim requires a lemma about coefficient-wise equality of inverses given coefficient-wise equality of units up to n, which is not available in the visible context. The checked signatures PowerSeries.coeff_inv and PowerSeries.inv_eq_iff_mul_eq_one are over fields, not general commutative rings, and the invertibility condition is IsUnit. No lemma bridging coefficient equality of units to coefficient equality of inverses is present. The proof strategy note suggests a helper lemma coeff_inv_of_coeff_eq, but its proof would require a recurrence for inverse coefficients over a general commutative ring with invertible constant term, which is not available in the visible Mathlib context. Therefore the unit cannot be proved from the visible context.\"\n      ],\n      \"used_context\": [\n        \"source lemma text: lem.fps.prod.irlv.cong-div\",\n        \"local_file_predecessor_declaration: xnEquiv_mul_of_coeff_eq (fails to compile)\",\n        \"checked signatures: PowerSeries.coeff_inv, PowerSeries.inv_eq_iff_mul_eq_one (both over fields, not general commutative rings)\"\n      ]\n    },\n    {\n      \"unit_key\": \"unit-002\",\n      \"status\": \"generated\",\n      \"lean_file_body\": \"open Matrix Finset BigOperators\\n\\nnamespace AlgebraicCombinatorics\\n\\nnamespace Det\\n\\nvariable {K : Type*} [CommRing K]\\nvariable {n m : ℕ}\\n\\ntheorem det_of_triangular {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id ∨ A.BlockTriangular (OrderDual.toDual : Fin n → Fin n)) : A.det = ∏ i : Fin n, A i i := by\\n  rcases h with (hU | hL)\\n  · exact Matrix.det_of_upperTriangular hU\\n  · exact Matrix.det_of_lowerTriangular A hL\\n\\nend Det\\n\\nend AlgebraicCombinatorics\",\n      \"declaration_names\": [\"det_of_triangular\"],\n      \"notes\": [\n        \"Uses the checked Mathlib signatures for Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular, which require BlockTriangular condition rather than explicit zero conditions.\",\n        \"The theorem combines both upper and lower triangular cases using an `or` hypothesis.\"\n      ],\n      \"used_context\": [\n        \"source theorem text: thm.det.triang\",\n        \"Matrix.det_of_upperTriangular (checked signature)\",\n        \"Matrix.det_of_lowerTriangular (checked signature)\",\n        \"local_file_context_candidates: open Matrix Finset BigOperators, namespace AlgebraicCombinatorics, namespace Det, variable {K : Type*} [CommRing K], variable {n m : ℕ}\"\n      ]\n    },\n    {\n      \"unit_key\": \"unit-004\",\n      \"status\": \"generated\",\n      \"lean_file_body\": \"open Finset\\nopen Nat\\n\\ntheorem vandermonde_nat (a b n : ℕ) : (a + b).choose n = ∑ k ∈ range (n + 1), (a.choose k) * (b.choose (n - k)) := by\\n  rw [Nat.add_choose_eq, Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]\",\n      \"declaration_names\": [\"vandermonde_nat\"],\n      \"notes\": [\n        \"Uses Nat.add_choose_eq and Finset.Nat.sum_antidiagonal_eq_sum_range_succ from Mathlib.\",\n        \"Removed the trailing `simp` that caused 'No goals to be solved' error; the rewrite chain now leaves exactly the goal.\"\n      ],\n      \"used_context\": [\n        \"Nat.add_choose_eq (checked signature)\",\n        \"Finset.Nat.sum_antidiagonal_eq_sum_range_succ (checked signature)\"\n      ]\n    },\n    {\n      \"unit_key\": \"unit-005\",\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"lean_file_body\": \"\",\n      \"declaration_names\": [],\n      \"notes\": [\n        \"The source states a bijection between partitions of length ≤ N and N-partitions (weakly decreasing N-tuples). The visible context provides NPartition (structure with parts : Fin N → ℕ and antitone) and Nat.Partition (structure with parts : Multiset ℕ, parts_pos, parts_sum). The existing NPartition.toPartition gives one direction. The missing direction requires converting a Nat.Partition with parts.card ≤ N to an NPartition by padding with zeros. This requires sorting the multiset decreasingly, which is not directly supported by Nat.Partition (parts are unordered). The checked fallback candidates (Nat.Partition.le_of_mem_parts, Nat.primeFactorsList_sorted, etc.) do not provide a sorted decreasing list from a Nat.Partition. The proof strategy note suggests implementing a padded sorted representative with local case splits, but the fundamental mismatch (unordered multiset vs ordered decreasing sequence) cannot be resolved from the visible context without additional lemmas about sorting multisets and relating sorted lists to the original partition sum. Therefore the unit cannot be proved from the visible context.\"\n      ],\n      \"used_context\": [\n        \"source proposition text: prop.sf.Npar-as-par\",\n        \"NPartition structure with parts, antitone, ext\",\n        \"NPartition.toPartition (defined in same file)\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum, ext\",\n        \"checked fallback candidates: Nat.Partition.le_of_mem_parts, List.sortedGE_iff_antitone_get, Multiset.length_sort, etc.\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778053182,
+  "id": "gen-1778053182-qy2PghzX6vkFi7VawC4O",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 1339,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00636328,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00037492,
+      "upstream_inference_cost": 0.00636328,
+      "upstream_inference_prompt_cost": 0.00598836
+    },
+    "is_byok": false,
+    "prompt_tokens": 42774,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 44113
+  }
+}

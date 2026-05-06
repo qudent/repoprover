@@ -1,0 +1,72 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem coeff_inv (k : ℕ) (φ : R⟦X⟧) [Invertible (constantCoeff φ)] : coeff k (φ⁻¹) = ...",
+              "name_or_query": "PowerSeries.coeff_inv",
+              "why_needed": "to compute coefficients of inverses of power series"
+            },
+            {
+              "expected_signature_or_shape": "theorem inv_eq_iff_mul_eq_one {φ ψ : k⟦X⟧} (h : constantCoeff ψ ≠ 0) : ψ⁻¹ = φ ↔ φ * ψ = 1",
+              "name_or_query": "PowerSeries.inv_eq_iff_mul_eq_one",
+              "why_needed": "to relate inverse equality to product equality"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-002-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-002"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-004-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-004"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem parts_sort (μ : Nat.Partition n) : (μ.parts.sort (· ≥ ·)).sum = n",
+              "name_or_query": "Nat.Partition.parts_sort",
+              "why_needed": "to obtain a sorted decreasing list from a Nat.Partition"
+            },
+            {
+              "expected_signature_or_shape": "theorem List.sorted_ge_iff (l : List ℕ) : l.Sorted (· ≥ ·) ↔ ∀ i j, i < j → l.get i ≥ l.get j",
+              "name_or_query": "List.sorted_ge_iff",
+              "why_needed": "to relate sortedness to pointwise inequalities for the antitone condition"
+            },
+            {
+              "expected_signature_or_shape": "theorem Multiset.card_sort (s : Multiset α) : (s.sort r).length = s.card",
+              "name_or_query": "Multiset.card_sort",
+              "why_needed": "to relate the length of the sorted list to the cardinality of the multiset"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-005-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-005"
+    }
+  ]
+}

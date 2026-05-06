@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"det_of_triangular\"\n      ],\n      \"lean_file_body\": \"theorem det_of_triangular {n : ℕ} (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id ∨ A.BlockTriangular (OrderDual.toDual : Fin n → Fin n)) : A.det = ∏ i : Fin n, A i i := by\\n  rcases h with (hU | hL)\\n  · exact Matrix.det_of_upperTriangular hU\\n  · exact Matrix.det_of_lowerTriangular A hL\",\n      \"notes\": [\n        \"Uses the checked Mathlib signatures for Matrix.det_of_upperTriangular and Matrix.det_of_lowerTriangular, which require BlockTriangular condition rather than explicit zero conditions.\",\n        \"The theorem combines both upper and lower triangular cases using an `or` hypothesis.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-002\",\n      \"used_context\": [\n        \"source theorem text: triangular matrix determinant equals product of diagonal entries\",\n        \"Matrix.det_of_upperTriangular (checked signature)\",\n        \"Matrix.det_of_lowerTriangular (checked signature)\",\n        \"local_file_context_candidates: open Matrix Finset BigOperators, namespace AlgebraicCombinatorics, namespace Det, variable {K : Type*} [CommRing K], variable {n m : ℕ}\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778051267,
+  "id": "gen-1778051267-yCG9ZRFnBreTPZvAiDij",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 333,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00118482,
+    "cost_details": {
+      "upstream_inference_completions_cost": 9.324e-05,
+      "upstream_inference_cost": 0.00118482,
+      "upstream_inference_prompt_cost": 0.00109158
+    },
+    "is_byok": false,
+    "prompt_tokens": 7797,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 8130
+  }
+}

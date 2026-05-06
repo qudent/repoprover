@@ -1,0 +1,16 @@
+{
+  "batches": [
+    {
+      "exact_identifier_count": 5,
+      "fallback_exact_identifier_count": 21,
+      "fallback_lean_check_status": "ok",
+      "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v2-paid/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+      "lean_check_status": "lean_errors",
+      "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v2-paid/round-01-context/batch-001/context-selection-output.json",
+      "request_count": 5
+    }
+  ],
+  "generated_at": "2026-05-06T07:39:41.491706+00:00",
+  "run": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v2-paid/round-01-context",
+  "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+}

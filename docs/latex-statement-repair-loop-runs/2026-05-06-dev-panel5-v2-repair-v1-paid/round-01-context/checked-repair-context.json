@@ -1,0 +1,418 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "PowerSeries.coeff_inv",
+      "signature": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to compute coefficients of inverses in terms of coefficients of the original series"
+    },
+    {
+      "declaration_line": "theorem ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq {b : ℕ} {l1 l2 : List ℕ}",
+      "fallback_for_query": "Nat.Partition.length",
+      "name": "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq",
+      "signature": "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq {b : ℕ} {l1 l2 : List ℕ} (h : l1.length = l2.length) :\n  Nat.ofDigits b l1 + Nat.ofDigits b l2 = Nat.ofDigits b (List.zipWith (fun x1 x2 => x1 + x2) l1 l2)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.length: to define the condition length ≤ N"
+    },
+    {
+      "declaration_line": "lemma toDigitsCore_length (b f n e : Nat) (h_e_pos : 0 < e) (hlt : n < b ^ e) :",
+      "fallback_for_query": "Nat.Partition.length",
+      "name": "Nat.toDigitsCore_length",
+      "signature": "Nat.toDigitsCore_length (b f n e : ℕ) (h_e_pos : 0 < e) (hlt : n < b ^ e) : (b.toDigitsCore f n []).length ≤ e",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.length: to define the condition length ≤ N"
+    },
+    {
+      "declaration_line": "lemma toDigits_length (b n e : Nat) : 0 < e → n < b ^ e → (Nat.toDigits b n).length ≤ e :=",
+      "fallback_for_query": "Nat.Partition.length",
+      "name": "Nat.toDigits_length",
+      "signature": "Nat.toDigits_length (b n e : ℕ) : 0 < e → n < b ^ e → (b.toDigits n).length ≤ e",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.length: to define the condition length ≤ N"
+    },
+    {
+      "declaration_line": "theorem ofDigits_lt_base_pow_length' {b : ℕ} {l : List ℕ} (hl : ∀ x ∈ l, x < b + 2) :",
+      "fallback_for_query": "Nat.Partition.length",
+      "name": "Nat.ofDigits_lt_base_pow_length'",
+      "signature": "Nat.ofDigits_lt_base_pow_length' {b : ℕ} {l : List ℕ} (hl : ∀ x ∈ l, x < b + 2) :\n  Nat.ofDigits (b + 2) l < (b + 2) ^ l.length",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "Checked fallback candidate for failed request Nat.Partition.length: to define the condition length ≤ N"
+    },
+    {
+      "name": "Nat.Partition.parts",
+      "signature": "Nat.Partition.parts {n : ℕ} (self : n.Partition) : Multiset ℕ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to access the parts multiset"
+    }
+  ],
+  "discarded_do_not_use_items": [],
+  "do_not_use_identifiers": [],
+  "failed_or_unchecked_context_requests": [],
+  "fallback_bridge_notes": [],
+  "fallback_resolved_context_requests": [
+    {
+      "exact_identifier": "Nat.Partition.length",
+      "expected_signature_or_shape": "def Nat.Partition.length (p : Nat.Partition n) : ℕ := p.parts.card",
+      "lean_check": {
+        "error": "Unknown constant `Nat.Partition.length`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.Partition.length`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Nat.Partition.length",
+      "policy": "The requested direct identifier did not check, but the listed fallback candidates did. Treat the requested identifier as unavailable and use the checked fallback signatures instead.",
+      "resolved_by_checked_fallback_candidates": [
+        "Nat.ofDigits_add_ofDigits_eq_ofDigits_zipWith_of_length_eq",
+        "Nat.toDigitsCore_length",
+        "Nat.toDigits_length",
+        "Nat.ofDigits_lt_base_pow_length'"
+      ],
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to define the condition length ≤ N"
+    }
+  ],
+  "generated_at": "2026-05-06T07:23:38.954323+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "A lemma that for units c,d in K⟦X⟧, if coeff m c = coeff m d for all m ≤ n, then coeff m (c⁻¹) = coeff m (d⁻¹) for all m ≤ n. This is not available in Mathlib for general commutative rings; the inverse API is field-specific.",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "Definition of length of a partition: Nat.Partition.length or similar.",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "A function from Nat.Partition (with length ≤ N) to NPartition N by padding with zeros.",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "Proof that toPartition and the padding function are inverses.",
+      "unit_key": "unit-005"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The attempted proof used xnEquiv_mul_of_coeff_eq for product equality but could not deduce equality of inverses from coefficient equality up to n. The available Mathlib inverse API is field-specific, not for general commutative rings with IsUnit. The proof route requires a lemma that if c and d are units with equal coefficients up to n, then their inverses also have equal coefficients up to n. This lemma is not available in the visible context.",
+      "proof_strategy_note": "Prove helper lemma coeff_inv_of_coeff_eq by induction on m using the recurrence relation for inverse coefficients (coeff n (c⁻¹) = - (1 / constantCoeff c) * sum over k<n of coeff k (c⁻¹) * coeff (n-k) c). This requires the formula for inverse coefficients available in PowerSeries.Inverse. Then combine with xnEquiv_mul_of_coeff_eq to get the division result.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    },
+    {
+      "failure_analysis": "Unit compiled successfully; no failure to analyze.",
+      "proof_strategy_note": "No repair needed.",
+      "selector_confidence": 0.95,
+      "unit_key": "unit-002"
+    },
+    {
+      "failure_analysis": "The generated theorem vandermonde_nat compiled with a 'No goals to be solved' error, indicating the proof block is empty or incorrectly structured. The visible context includes Nat.add_choose_eq which directly states Vandermonde's identity. The proof should simply invoke that theorem.",
+      "proof_strategy_note": "Rewrite the theorem body to simply use Nat.add_choose_eq. The statement should be: theorem vandermonde_nat (a b n : ℕ) : ((a + b).choose n) = ∑ k in Finset.range (n+1), (a.choose k) * (b.choose (n - k)) := by simpa [Finset.Nat.sum_antidiagonal_eq_sum_range_succ] using Nat.add_choose_eq a b n",
+      "selector_confidence": 0.95,
+      "unit_key": "unit-004"
+    },
+    {
+      "failure_analysis": "The unit was declined as cannot_prove_from_visible_context. The visible context includes NPartition structure and toPartition function, but the bijection in the source requires constructing an inverse map from Nat.Partition (with length ≤ N) to NPartition N. The missing part is the inverse construction: given a partition of n with length ≤ N, pad with zeros to get an NPartition. This requires defining a function from Nat.Partition to NPartition N, proving it is inverse to toPartition.",
+      "proof_strategy_note": "Define fromPartition that takes a Nat.Partition n and a proof that its length ≤ N, sorts its parts descending, pads with zeros to length N, and returns an NPartition N. Then prove the two inverse properties using extensionality lemmas.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-005"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The attempted proof used xnEquiv_mul_of_coeff_eq for product equality but could not deduce equality of inverses from coefficient equality up to n. The available Mathlib inverse API is field-specific, not for general commutative rings with IsUnit. The proof route requires a lemma that if c and d are units with equal coefficients up to n, then their inverses also have equal coefficients up to n. This lemma is not available in the visible context.",
+        "missing_or_uncertain_context": [
+          "A lemma that for units c,d in K⟦X⟧, if coeff m c = coeff m d for all m ≤ n, then coeff m (c⁻¹) = coeff m (d⁻¹) for all m ≤ n. This is not available in Mathlib for general commutative rings; the inverse API is field-specific."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "theorem coeff_inv (k : K) (φ : K⟦X⟧) (h : constantCoeff φ = k) (h' : IsUnit k) (n : ℕ) : coeff n (φ⁻¹) = ...",
+            "name_or_query": "PowerSeries.coeff_inv",
+            "why_needed": "to compute coefficients of inverses in terms of coefficients of the original series"
+          }
+        ],
+        "repair_strategy_note": "Prove helper lemma coeff_inv_of_coeff_eq by induction on m using the recurrence relation for inverse coefficients (coeff n (c⁻¹) = - (1 / constantCoeff c) * sum over k<n of coeff k (c⁻¹) * coeff (n-k) c). This requires the formula for inverse coefficients available in PowerSeries.Inverse. Then combine with xnEquiv_mul_of_coeff_eq to get the division result.",
+        "same_unit_helper_plan": [
+          {
+            "depends_on": [
+              "xnEquiv_mul_of_coeff_eq"
+            ],
+            "fresh_name_hint": "coeff_inv_of_coeff_eq",
+            "needed_checked_ingredients": [
+              "PowerSeries.coeff_inv or a recurrence for inverse coefficients"
+            ],
+            "role": "lemma",
+            "statement_sketch": "If c d : K⟦X⟧ are units (IsUnit c, IsUnit d) and ∀ m ≤ n, coeff m c = coeff m d, then ∀ m ≤ n, coeff m (c⁻¹) = coeff m (d⁻¹).",
+            "why_needed": "bridges coefficient equality of units to coefficient equality of inverses"
+          }
+        ],
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "lem.fps.prod.irlv.cong-div",
+            "why_needed": "source lemma to formalize"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "xnEquiv_mul_of_coeff_eq",
+            "why_needed": "provides product equality lemma for coefficients up to n"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "Unit compiled successfully; no failure to analyze.",
+        "missing_or_uncertain_context": [],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "No repair needed.",
+        "same_unit_helper_plan": [],
+        "selected_visible_context": [],
+        "selector_confidence": 0.95,
+        "unit_key": "unit-002"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The generated theorem vandermonde_nat compiled with a 'No goals to be solved' error, indicating the proof block is empty or incorrectly structured. The visible context includes Nat.add_choose_eq which directly states Vandermonde's identity. The proof should simply invoke that theorem.",
+        "missing_or_uncertain_context": [],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "Rewrite the theorem body to simply use Nat.add_choose_eq. The statement should be: theorem vandermonde_nat (a b n : ℕ) : ((a + b).choose n) = ∑ k in Finset.range (n+1), (a.choose k) * (b.choose (n - k)) := by simpa [Finset.Nat.sum_antidiagonal_eq_sum_range_succ] using Nat.add_choose_eq a b n",
+        "same_unit_helper_plan": [],
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.binom.vandermonde.NN",
+            "why_needed": "source proposition to formalize"
+          },
+          {
+            "context_kind": "hydrated_mathlib",
+            "name_or_label": "Nat.add_choose_eq",
+            "why_needed": "directly gives Vandermonde's identity"
+          }
+        ],
+        "selector_confidence": 0.95,
+        "unit_key": "unit-004"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The unit was declined as cannot_prove_from_visible_context. The visible context includes NPartition structure and toPartition function, but the bijection in the source requires constructing an inverse map from Nat.Partition (with length ≤ N) to NPartition N. The missing part is the inverse construction: given a partition of n with length ≤ N, pad with zeros to get an NPartition. This requires defining a function from Nat.Partition to NPartition N, proving it is inverse to toPartition.",
+        "missing_or_uncertain_context": [
+          "Definition of length of a partition: Nat.Partition.length or similar.",
+          "A function from Nat.Partition (with length ≤ N) to NPartition N by padding with zeros.",
+          "Proof that toPartition and the padding function are inverses."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "def Nat.Partition.length (p : Nat.Partition n) : ℕ := p.parts.card",
+            "name_or_query": "Nat.Partition.length",
+            "why_needed": "to define the condition length ≤ N"
+          },
+          {
+            "expected_signature_or_shape": "def Nat.Partition.parts (p : Nat.Partition n) : Multiset ℕ",
+            "name_or_query": "Nat.Partition.parts",
+            "why_needed": "to access the parts multiset"
+          }
+        ],
+        "repair_strategy_note": "Define fromPartition that takes a Nat.Partition n and a proof that its length ≤ N, sorts its parts descending, pads with zeros to length N, and returns an NPartition N. Then prove the two inverse properties using extensionality lemmas.",
+        "same_unit_helper_plan": [
+          {
+            "depends_on": [
+              "NPartition",
+              "Nat.Partition"
+            ],
+            "fresh_name_hint": "fromPartition",
+            "needed_checked_ingredients": [
+              "Nat.Partition.length",
+              "Multiset.sort",
+              "List.toFinFun"
+            ],
+            "role": "def",
+            "statement_sketch": "Given a Nat.Partition n with length ≤ N, produce an NPartition N by sorting parts descending and padding with zeros.",
+            "why_needed": "inverse map for bijection"
+          },
+          {
+            "depends_on": [
+              "fromPartition",
+              "toPartition"
+            ],
+            "fresh_name_hint": "fromPartition_toPartition",
+            "needed_checked_ingredients": [
+              "NPartition.ext"
+            ],
+            "role": "theorem",
+            "statement_sketch": "For any μ : NPartition N, fromPartition (toPartition μ) = μ",
+            "why_needed": "one direction of bijection"
+          },
+          {
+            "depends_on": [
+              "fromPartition",
+              "toPartition"
+            ],
+            "fresh_name_hint": "toPartition_fromPartition",
+            "needed_checked_ingredients": [
+              "Nat.Partition.ext"
+            ],
+            "role": "theorem",
+            "statement_sketch": "For any p : Nat.Partition n with length ≤ N, toPartition (fromPartition p) = p",
+            "why_needed": "other direction of bijection"
+          }
+        ],
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.sf.Npar-as-par",
+            "why_needed": "source proposition to formalize"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition",
+            "why_needed": "target type of bijection"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "NPartition.toPartition",
+            "why_needed": "one direction of bijection"
+          },
+          {
+            "context_kind": "hydrated_mathlib",
+            "name_or_label": "Nat.Partition",
+            "why_needed": "source type of bijection"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-005"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v1-paid/round-01-context",
+  "same_unit_helper_plan": [
+    {
+      "depends_on": [
+        "xnEquiv_mul_of_coeff_eq"
+      ],
+      "fresh_name_hint": "coeff_inv_of_coeff_eq",
+      "needed_checked_ingredients": [
+        "PowerSeries.coeff_inv or a recurrence for inverse coefficients"
+      ],
+      "role": "lemma",
+      "statement_sketch": "If c d : K⟦X⟧ are units (IsUnit c, IsUnit d) and ∀ m ≤ n, coeff m c = coeff m d, then ∀ m ≤ n, coeff m (c⁻¹) = coeff m (d⁻¹).",
+      "unit_key": "unit-001",
+      "why_needed": "bridges coefficient equality of units to coefficient equality of inverses"
+    },
+    {
+      "depends_on": [
+        "NPartition",
+        "Nat.Partition"
+      ],
+      "fresh_name_hint": "fromPartition",
+      "needed_checked_ingredients": [
+        "Nat.Partition.length",
+        "Multiset.sort",
+        "List.toFinFun"
+      ],
+      "role": "def",
+      "statement_sketch": "Given a Nat.Partition n with length ≤ N, produce an NPartition N by sorting parts descending and padding with zeros.",
+      "unit_key": "unit-005",
+      "why_needed": "inverse map for bijection"
+    },
+    {
+      "depends_on": [
+        "fromPartition",
+        "toPartition"
+      ],
+      "fresh_name_hint": "fromPartition_toPartition",
+      "needed_checked_ingredients": [
+        "NPartition.ext"
+      ],
+      "role": "theorem",
+      "statement_sketch": "For any μ : NPartition N, fromPartition (toPartition μ) = μ",
+      "unit_key": "unit-005",
+      "why_needed": "one direction of bijection"
+    },
+    {
+      "depends_on": [
+        "fromPartition",
+        "toPartition"
+      ],
+      "fresh_name_hint": "toPartition_fromPartition",
+      "needed_checked_ingredients": [
+        "Nat.Partition.ext"
+      ],
+      "role": "theorem",
+      "statement_sketch": "For any p : Nat.Partition n with length ≤ N, toPartition (fromPartition p) = p",
+      "unit_key": "unit-005",
+      "why_needed": "other direction of bijection"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001",
+      "why_needed": "source lemma to formalize"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "xnEquiv_mul_of_coeff_eq",
+      "unit_key": "unit-001",
+      "why_needed": "provides product equality lemma for coefficients up to n"
+    },
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.binom.vandermonde.NN",
+      "unit_key": "unit-004",
+      "why_needed": "source proposition to formalize"
+    },
+    {
+      "context_kind": "hydrated_mathlib",
+      "name_or_label": "Nat.add_choose_eq",
+      "unit_key": "unit-004",
+      "why_needed": "directly gives Vandermonde's identity"
+    },
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.sf.Npar-as-par",
+      "unit_key": "unit-005",
+      "why_needed": "source proposition to formalize"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition",
+      "unit_key": "unit-005",
+      "why_needed": "target type of bijection"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "NPartition.toPartition",
+      "unit_key": "unit-005",
+      "why_needed": "one direction of bijection"
+    },
+    {
+      "context_kind": "hydrated_mathlib",
+      "name_or_label": "Nat.Partition",
+      "unit_key": "unit-005",
+      "why_needed": "source type of bijection"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "NPartition_bijection_length_le_N"
+      ],
+      "lean_file_body": "open Finset\n\nnoncomputable def NPartition_bijection_length_le_N (N : ℕ) : {μ : Nat.Partition (∑ i : Fin N, 0) // μ.parts.card ≤ N} ≃ NPartition N where\n  toFun := λ ⟨μ, h⟩ =>\n    let parts' : Fin N → ℕ := λ i => if hi : (i : ℕ) < μ.parts.card then (μ.parts.toList.get ⟨i, hi⟩) else 0\n    { parts := parts'\n      antitone := by\n        intro i j hij\n        dsimp [parts']\n        split_ifs with hi hj\n        · have hcard : μ.parts.card ≤ N := h\n          have hpos : (i : ℕ) < μ.parts.card := hi\n          have hpos' : (j : ℕ) < μ.parts.card := hj\n          have hval : μ.parts.toList.get ⟨i, hi⟩ ≥ μ.parts.toList.get ⟨j, hj⟩ := by\n            sorry\n          exact hval\n        · exact Nat.zero_le _\n        · exact Nat.zero_le _\n        · rfl }\n  invFun := λ ν =>\n    let partsMultiset : Multiset ℕ := (Finset.image (λ i : Fin N => ν.parts i) Finset.univ).val\n    let partsSum := ∑ i : Fin N, ν.parts i\n    have hsum : partsMultiset.sum = partsSum := by\n      simp [partsMultiset, Finset.sum_image, Finset.sum_eq_multiset_sum]\n    { val := { parts := partsMultiset.filter (· ≠ 0)\n               parts_pos := by\n                 intro i hi\n                 have hi' : i ∈ partsMultiset.filter (· ≠ 0) := hi\n                 rcases Multiset.mem_filter.mp hi' with ⟨hi_mem, hi_ne_zero⟩\n                 exact Nat.pos_of_ne_zero hi_ne_zero\n               parts_sum := by\n                 calc\n                   (partsMultiset.filter (· ≠ 0)).sum = partsMultiset.sum := by\n                     apply Multiset.sum_filter_ne_zero\n                   _ = partsSum := hsum }\n      property := by\n        have hcard : (partsMultiset.filter (· ≠ 0)).card ≤ N := by\n          calc\n            (partsMultiset.filter (· ≠ 0)).card ≤ partsMultiset.card := Multiset.card_filter_le _ _\n            _ = (Finset.image (λ i : Fin N => ν.parts i) Finset.univ).card := rfl\n            _ ≤ Finset.card (Finset.univ : Finset (Fin N)) := Finset.card_image_le\n            _ = N := by simp\n        exact hcard }\n  left_inv := by\n    intro ⟨μ, h⟩\n    ext\n    simp\n  right_inv := by\n    intro ν\n    ext i\n    simp\n",
+      "notes": [
+        "The proof is incomplete; the antitone condition in toFun is not fully justified. The bijection construction is sketched but the antitone proof is missing. The invFun uses a filter to remove zeros, but the sum condition for Nat.Partition may not match the size of the NPartition. The left_inv and right_inv proofs are trivial placeholders. This is not a complete formalization."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "Nat.Partition structure with parts, parts_pos, parts_sum, ext",
+        "NPartition structure with parts, antitone, ext",
+        "NPartition.toPartition (not used directly but referenced in context)",
+        "Finset, Multiset operations"
+      ]
+    }
+  ]
+}

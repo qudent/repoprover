@@ -1,0 +1,62 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem coeff_inv (k : K) (φ : K⟦X⟧) (h : constantCoeff φ = k) (h' : IsUnit k) (n : ℕ) : coeff n (φ⁻¹) = ...",
+              "name_or_query": "PowerSeries.coeff_inv",
+              "why_needed": "to compute coefficients of inverses in terms of coefficients of the original series"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-002-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-002"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-004-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-004"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "def Nat.Partition.length (p : Nat.Partition n) : ℕ := p.parts.card",
+              "name_or_query": "Nat.Partition.length",
+              "why_needed": "to define the condition length ≤ N"
+            },
+            {
+              "expected_signature_or_shape": "def Nat.Partition.parts (p : Nat.Partition n) : Multiset ℕ",
+              "name_or_query": "Nat.Partition.parts",
+              "why_needed": "to access the parts multiset"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-005-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-005"
+    }
+  ]
+}

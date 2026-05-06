@@ -1,0 +1,93 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "theorem coeff_inv (k : ℕ) (φ : R⟦X⟧) (h : IsUnit (constantCoeff φ)) : coeff k (φ⁻¹) = ...",
+              "name_or_query": "PowerSeries.coeff_inv",
+              "why_needed": "to express coefficients of inverses in terms of coefficients of the original series, enabling a proof that coefficient equality up to n implies coefficient equality of inverses up to n"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-002-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-002"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+              "name_or_query": "Nat.add_choose_eq",
+              "why_needed": "Vandermonde identity; already checked and used in the failed attempt"
+            },
+            {
+              "expected_signature_or_shape": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (f : ℕ → ℕ → M) (n : ℕ) : ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+              "name_or_query": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+              "why_needed": "converts antidiagonal sum to range sum; already checked and used"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-004-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-004"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.card_filter_le (s : Multiset α) (p : α → Prop) [DecidablePred p] : (s.filter p).card ≤ s.card",
+              "name_or_query": "Multiset.card_filter_le",
+              "why_needed": "to bound the cardinality of filtered parts in the inverse direction"
+            },
+            {
+              "expected_signature_or_shape": "Finset.card_image_le (f : α → β) (s : Finset α) : (s.image f).card ≤ s.card",
+              "name_or_query": "Finset.card_image_le",
+              "why_needed": "to bound cardinality of image of Finset.univ under parts function"
+            },
+            {
+              "expected_signature_or_shape": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+              "name_or_query": "Fintype.card_fin",
+              "why_needed": "to compute that Finset.card (Finset.univ : Finset (Fin N)) = N"
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sum_filter_ne_zero (s : Multiset ℕ) : (s.filter (· ≠ 0)).sum = s.sum",
+              "name_or_query": "Multiset.sum_filter_ne_zero",
+              "why_needed": "to show that filtering zeros does not change the sum; used in toPartition and in the inverse direction"
+            },
+            {
+              "expected_signature_or_shape": "List.sorted_iff_pairwise (r : α → α → Prop) [DecidableRel r] (l : List α) : List.Sorted r l ↔ List.Pairwise r l",
+              "name_or_query": "List.sorted_iff_pairwise",
+              "why_needed": "to relate sortedness of the parts list to pairwise comparisons, which can be used to prove antitone of the padded function"
+            },
+            {
+              "expected_signature_or_shape": "List.pairwise_iff_get (r : α → α → Prop) (l : List α) : List.Pairwise r l ↔ ∀ i j, i < j → r (l.get i) (l.get j)",
+              "name_or_query": "List.pairwise_iff_get",
+              "why_needed": "to convert pairwise condition to pointwise inequalities on list elements, needed for antitone on Fin N"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-005-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-005"
+    }
+  ]
+}

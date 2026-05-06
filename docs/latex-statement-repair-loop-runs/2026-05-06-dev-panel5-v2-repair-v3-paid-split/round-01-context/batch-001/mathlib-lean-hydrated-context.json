@@ -1,0 +1,1530 @@
+{
+  "exact_identifier_count": 9,
+  "fallback_exact_identifier_count": 27,
+  "fallback_lean_check": {
+    "checked": {
+      "Finset.Nat.sum_antidiagonal_eq_sum_range_succ": {
+        "messages": [
+          {
+            "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+        "status": "checked"
+      },
+      "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk": {
+        "messages": [
+          {
+            "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+        "status": "checked"
+      },
+      "List.Pairwise.rel_get_of_le": {
+        "messages": [
+          {
+            "data": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+            "line": 23,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+        "status": "checked"
+      },
+      "List.Pairwise.rel_get_of_lt": {
+        "messages": [
+          {
+            "data": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+            "line": 24,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+        "status": "checked"
+      },
+      "List.sortedGE_iff_antitone_get": {
+        "messages": [
+          {
+            "data": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+            "line": 25,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+        "status": "checked"
+      },
+      "List.sortedLT_range": {
+        "messages": [
+          {
+            "data": "List.sortedLT_range (n : ℕ) : (List.range n).SortedLT",
+            "line": 29,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedLT_range (n : ℕ) : (List.range n).SortedLT",
+        "status": "checked"
+      },
+      "List.sortedLT_range'": {
+        "messages": [
+          {
+            "data": "List.sortedLT_range' (a b : ℕ) {s : ℕ} (hs : s ≠ 0) : (List.range' a b s).SortedLT",
+            "line": 30,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sortedLT_range' (a b : ℕ) {s : ℕ} (hs : s ≠ 0) : (List.range' a b s).SortedLT",
+        "status": "checked"
+      },
+      "List.sorted_cons_cons": {
+        "messages": [
+          {
+            "data": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+            "line": 28,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+        "status": "checked"
+      },
+      "List.sorted_replicate": {
+        "messages": [
+          {
+            "data": "List.sorted_replicate.{u_1} {α : Type u_1} {R : α → α → Prop} {a : α} {n : ℕ} [Std.Refl R] :\n  List.Pairwise R (List.replicate n a)",
+            "line": 27,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sorted_replicate.{u_1} {α : Type u_1} {R : α → α → Prop} {a : α} {n : ℕ} [Std.Refl R] :\n  List.Pairwise R (List.replicate n a)",
+        "status": "checked"
+      },
+      "List.sorted_singleton": {
+        "messages": [
+          {
+            "data": "List.sorted_singleton.{u} {α : Type u} (r : α → α → Prop) (a : α) : List.Sorted r [a]",
+            "line": 26,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.sorted_singleton.{u} {α : Type u} (r : α → α → Prop) (a : α) : List.Sorted r [a]",
+        "status": "checked"
+      },
+      "Multiset.abs_sum_le_sum_abs": {
+        "messages": [
+          {
+            "data": "Multiset.abs_sum_le_sum_abs.{u_2} {α : Type u_2} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]\n  {s : Multiset α} : |s.sum| ≤ (Multiset.map abs s).sum",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.abs_sum_le_sum_abs.{u_2} {α : Type u_2} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]\n  {s : Multiset α} : |s.sum| ≤ (Multiset.map abs s).sum",
+        "status": "checked"
+      },
+      "Multiset.all_one_of_le_one_le_of_prod_eq_one": {
+        "messages": [
+          {
+            "data": "Multiset.all_one_of_le_one_le_of_prod_eq_one.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α}\n  [IsOrderedMonoid α] : (∀ x ∈ s, 1 ≤ x) → s.prod = 1 → ∀ x ∈ s, x = 1",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.all_one_of_le_one_le_of_prod_eq_one.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α}\n  [IsOrderedMonoid α] : (∀ x ∈ s, 1 ≤ x) → s.prod = 1 → ∀ x ∈ s, x = 1",
+        "status": "checked"
+      },
+      "Multiset.card_filter_le_iff": {
+        "messages": [
+          {
+            "data": "Multiset.card_filter_le_iff.{u_1} {α : Type u_1} (s : Multiset α) (P : α → Prop) [DecidablePred P] (n : ℕ) :\n  (Multiset.filter P s).card ≤ n ↔ ∀ s' ≤ s, n < s'.card → ∃ a ∈ s', ¬P a",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_filter_le_iff.{u_1} {α : Type u_1} (s : Multiset α) (P : α → Prop) [DecidablePred P] (n : ℕ) :\n  (Multiset.filter P s).card ≤ n ↔ ∀ s' ≤ s, n < s'.card → ∃ a ∈ s', ¬P a",
+        "status": "checked"
+      },
+      "Multiset.card_le_card": {
+        "messages": [
+          {
+            "data": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+        "status": "checked"
+      },
+      "Multiset.countP_filter": {
+        "messages": [
+          {
+            "data": "Multiset.countP_filter.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (q : α → Prop) [DecidablePred q]\n  (s : Multiset α) : Multiset.countP p (Multiset.filter q s) = Multiset.countP (fun a => p a ∧ q a) s",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.countP_filter.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (q : α → Prop) [DecidablePred q]\n  (s : Multiset α) : Multiset.countP p (Multiset.filter q s) = Multiset.countP (fun a => p a ∧ q a) s",
+        "status": "checked"
+      },
+      "Multiset.disjSum_mono_left": {
+        "messages": [
+          {
+            "data": "Multiset.disjSum_mono_left.{u_1, u_2} {α : Type u_1} {β : Type u_2} (t : Multiset β) : Monotone fun s => s.disjSum t",
+            "line": 20,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.disjSum_mono_left.{u_1, u_2} {α : Type u_1} {β : Type u_2} (t : Multiset β) : Monotone fun s => s.disjSum t",
+        "status": "checked"
+      },
+      "Multiset.disjSum_mono_right": {
+        "messages": [
+          {
+            "data": "Multiset.disjSum_mono_right.{u_1, u_2} {α : Type u_1} {β : Type u_2} (s : Multiset α) : Monotone s.disjSum",
+            "line": 21,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.disjSum_mono_right.{u_1, u_2} {α : Type u_1} {β : Type u_2} (s : Multiset α) : Monotone s.disjSum",
+        "status": "checked"
+      },
+      "Multiset.filter_le": {
+        "messages": [
+          {
+            "data": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+        "status": "checked"
+      },
+      "Multiset.filter_singleton": {
+        "messages": [
+          {
+            "data": "Multiset.filter_singleton.{u_1} {α : Type u_1} {a : α} (p : α → Prop) [DecidablePred p] :\n  Multiset.filter p {a} = if p a then {a} else ∅",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.filter_singleton.{u_1} {α : Type u_1} {a : α} (p : α → Prop) [DecidablePred p] :\n  Multiset.filter p {a} = if p a then {a} else ∅",
+        "status": "checked"
+      },
+      "Multiset.map_count_True_eq_filter_card": {
+        "messages": [
+          {
+            "data": "Multiset.map_count_True_eq_filter_card.{u_1} {α : Type u_1} (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  Multiset.count True (Multiset.map p s) = (Multiset.filter p s).card",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.map_count_True_eq_filter_card.{u_1} {α : Type u_1} (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  Multiset.count True (Multiset.map p s) = (Multiset.filter p s).card",
+        "status": "checked"
+      },
+      "Multiset.monotone_filter_left": {
+        "messages": [
+          {
+            "data": "Multiset.monotone_filter_left.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] : Monotone (Multiset.filter p)",
+            "line": 18,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.monotone_filter_left.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] : Monotone (Multiset.filter p)",
+        "status": "checked"
+      },
+      "Multiset.monotone_filter_right": {
+        "messages": [
+          {
+            "data": "Multiset.monotone_filter_right.{u_1} {α : Type u_1} (s : Multiset α) ⦃p q : α → Prop⦄ [DecidablePred p]\n  [DecidablePred q] (h : ∀ (b : α), p b → q b) : Multiset.filter p s ≤ Multiset.filter q s",
+            "line": 19,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.monotone_filter_right.{u_1} {α : Type u_1} (s : Multiset α) ⦃p q : α → Prop⦄ [DecidablePred p]\n  [DecidablePred q] (h : ∀ (b : α), p b → q b) : Multiset.filter p s ≤ Multiset.filter q s",
+        "status": "checked"
+      },
+      "Multiset.multinomial_filter_ne": {
+        "messages": [
+          {
+            "data": "Multiset.multinomial_filter_ne.{u_1} {α : Type u_1} [DecidableEq α] (a : α) (m : Multiset α) :\n  m.multinomial = m.card.choose (Multiset.count a m) * (Multiset.filter (fun x => a ≠ x) m).multinomial",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.multinomial_filter_ne.{u_1} {α : Type u_1} [DecidableEq α] (a : α) (m : Multiset α) :\n  m.multinomial = m.card.choose (Multiset.count a m) * (Multiset.filter (fun x => a ≠ x) m).multinomial",
+        "status": "checked"
+      },
+      "Multiset.one_le_prod_of_one_le": {
+        "messages": [
+          {
+            "data": "Multiset.one_le_prod_of_one_le.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} [MulLeftMono α] :\n  (∀ x ∈ s, 1 ≤ x) → 1 ≤ s.prod",
+            "line": 22,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.one_le_prod_of_one_le.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} [MulLeftMono α] :\n  (∀ x ∈ s, 1 ≤ x) → 1 ≤ s.prod",
+        "status": "checked"
+      },
+      "Multiset.toFinset_filter": {
+        "messages": [
+          {
+            "data": "Multiset.toFinset_filter.{u_1} {α : Type u_1} [DecidableEq α] (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  (Multiset.filter p s).toFinset = filter p s.toFinset",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.toFinset_filter.{u_1} {α : Type u_1} [DecidableEq α] (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  (Multiset.filter p s).toFinset = filter p s.toFinset",
+        "status": "checked"
+      },
+      "Multiset.untrop_sum": {
+        "messages": [
+          {
+            "data": "Multiset.untrop_sum.{u_1} {R : Type u_1} [LinearOrder R] [OrderTop R] (s : Multiset (Tropical R)) :\n  Tropical.untrop s.sum = (Multiset.map Tropical.untrop s).inf",
+            "line": 17,
+            "severity": "information"
+          }
+        ],
+        "signature": "Multiset.untrop_sum.{u_1} {R : Type u_1} [LinearOrder R] [OrderTop R] (s : Multiset (Tropical R)) :\n  Tropical.untrop s.sum = (Multiset.map Tropical.untrop s).inf",
+        "status": "checked"
+      },
+      "Nat.add_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "e6b7722b05c0e97ae33b0a16e909b369cc6d5f1174b78b48e9b35ecbfd4a8cfe",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T07:50:48.268123+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "PowerSeries.coeff_inv",
+      "expected_signature_or_shape": "theorem coeff_inv (k : ℕ) (φ : R⟦X⟧) (h : IsUnit (constantCoeff φ)) : coeff k (φ⁻¹) = ...",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+        "status": "checked"
+      },
+      "query": "PowerSeries.coeff_inv",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem coeff_inv (n) (φ : k⟦X⟧) :",
+        "kind": "theorem",
+        "line_number": 139,
+        "name": "PowerSeries.coeff_inv",
+        "path": ".lake/packages/mathlib/Mathlib/RingTheory/PowerSeries/Inverse.lean",
+        "source_snippet": "theorem coeff_inv (n) (φ : k⟦X⟧) :\n    coeff n φ⁻¹ =\n      if n = 0 then (constantCoeff φ)⁻¹\n      else\n        -(constantCoeff φ)⁻¹ *\n          ∑ x ∈ antidiagonal n,\n            if x.2 < n then coeff x.1 φ * coeff x.2 φ⁻¹ else 0 := by\n  rw [inv_eq_inv_aux, coeff_inv_aux n (constantCoeff φ)⁻¹ φ]\n\n@[simp]",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "to express coefficients of inverses in terms of coefficients of the original series, enabling a proof that coefficient equality up to n implies coefficient equality of inverses up to n"
+    },
+    {
+      "exact_identifier": "Nat.add_choose_eq",
+      "expected_signature_or_shape": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "status": "checked"
+          },
+          "line_number": 1,
+          "matched_tokens": [
+            "add",
+            "already",
+            "and",
+            "antidiagonal",
+            "attempt",
+            "checked",
+            "choose",
+            "eq",
+            "failed",
+            "identity",
+            "ij",
+            "in",
+            "nat",
+            "used",
+            "vandermonde"
+          ],
+          "name": "Nat.add_choose_eq",
+          "path": "<shape-driven-fallback>",
+          "score": 100
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+            "status": "checked"
+          },
+          "line_number": 2,
+          "matched_tokens": [
+            "add",
+            "already",
+            "and",
+            "antidiagonal",
+            "attempt",
+            "checked",
+            "choose",
+            "eq",
+            "failed",
+            "identity",
+            "ij",
+            "in",
+            "nat",
+            "used",
+            "vandermonde"
+          ],
+          "name": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+          "path": "<shape-driven-fallback>",
+          "score": 99
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ × ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij = ∑ k ∈ range n.succ, f (k, n - k)",
+            "status": "checked"
+          },
+          "line_number": 3,
+          "matched_tokens": [
+            "add",
+            "already",
+            "and",
+            "antidiagonal",
+            "attempt",
+            "checked",
+            "choose",
+            "eq",
+            "failed",
+            "identity",
+            "ij",
+            "in",
+            "nat",
+            "used",
+            "vandermonde"
+          ],
+          "name": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk",
+          "path": "<shape-driven-fallback>",
+          "score": 98
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+        "status": "checked"
+      },
+      "query": "Nat.add_choose_eq",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": {
+        "declaration_line": "theorem add_choose_eq (m n k : ℕ) :",
+        "kind": "theorem",
+        "line_number": 31,
+        "name": "Nat.add_choose_eq",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Vandermonde.lean",
+        "source_snippet": "/-- Vandermonde's identity -/\ntheorem add_choose_eq (m n k : ℕ) :\n    (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2 := by\n  calc\n    (m + n).choose k = ((X + 1) ^ (m + n)).coeff k := by rw [coeff_X_add_one_pow, cast_id]\n    _ = ((X + 1) ^ m * (X + 1) ^ n).coeff k := by rw [pow_add]\n    _ = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2 := by\n      rw [coeff_mul, Finset.sum_congr rfl]\n      simp only [coeff_X_add_one_pow, cast_id, imp_true_iff]\n\n/-- The sum of entries squared in a row of Pascal's triangle -/",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "Vandermonde identity; already checked and used in the failed attempt"
+    },
+    {
+      "exact_identifier": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+      "expected_signature_or_shape": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ (f : ℕ → ℕ → M) (n : ℕ) : ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+        "status": "checked"
+      },
+      "query": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "converts antidiagonal sum to range sum; already checked and used"
+    },
+    {
+      "exact_identifier": "Multiset.card_filter_le",
+      "expected_signature_or_shape": "Multiset.card_filter_le (s : Multiset α) (p : α → Prop) [DecidablePred p] : (s.filter p).card ≤ s.card",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.filter_le.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (s : Multiset α) : Multiset.filter p s ≤ s",
+            "status": "checked"
+          },
+          "line_number": 1,
+          "matched_tokens": [
+            "bound",
+            "card",
+            "cardinality",
+            "constant",
+            "decidablepred",
+            "direction",
+            "filter",
+            "filtered",
+            "in",
+            "inverse",
+            "le",
+            "multiset",
+            "parts",
+            "prop",
+            "to",
+            "unknown"
+          ],
+          "name": "Multiset.filter_le",
+          "path": "<shape-driven-fallback>",
+          "score": 100
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.card_le_card.{u_1} {α : Type u_1} {s t : Multiset α} (h : s ≤ t) : s.card ≤ t.card",
+            "status": "checked"
+          },
+          "line_number": 2,
+          "matched_tokens": [
+            "bound",
+            "card",
+            "cardinality",
+            "constant",
+            "decidablepred",
+            "direction",
+            "filter",
+            "filtered",
+            "in",
+            "inverse",
+            "le",
+            "multiset",
+            "parts",
+            "prop",
+            "to",
+            "unknown"
+          ],
+          "name": "Multiset.card_le_card",
+          "path": "<shape-driven-fallback>",
+          "score": 99
+        },
+        {
+          "declaration_line": "lemma card_filter_le_iff (s : Multiset α) (P : α → Prop) [DecidablePred P] (n : ℕ) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.card_filter_le_iff.{u_1} {α : Type u_1} (s : Multiset α) (P : α → Prop) [DecidablePred P] (n : ℕ) :\n  (Multiset.filter P s).card ≤ n ↔ ∀ s' ≤ s, n < s'.card → ∃ a ∈ s', ¬P a",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.card_filter_le_iff.{u_1} {α : Type u_1} (s : Multiset α) (P : α → Prop) [DecidablePred P] (n : ℕ) :\n  (Multiset.filter P s).card ≤ n ↔ ∀ s' ≤ s, n < s'.card → ∃ a ∈ s', ¬P a",
+            "status": "checked"
+          },
+          "line_number": 163,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "filter",
+            "le",
+            "prop",
+            "decidablepred"
+          ],
+          "name": "Multiset.card_filter_le_iff",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Filter.lean",
+          "score": 40,
+          "search_excerpt": "lemma card_filter_le_iff (s : Multiset α) (P : α → Prop) [DecidablePred P] (n : ℕ) : card (s.filter P) ≤ n ↔ ∀ s' ≤ s, n < card s' → ∃ a ∈ s', ¬ P a := by"
+        },
+        {
+          "declaration_line": "theorem map_count_True_eq_filter_card (s : Multiset α) (p : α → Prop) [DecidablePred p] :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.map_count_True_eq_filter_card.{u_1} {α : Type u_1} (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  Multiset.count True (Multiset.map p s) = (Multiset.filter p s).card",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.map_count_True_eq_filter_card.{u_1} {α : Type u_1} (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  Multiset.count True (Multiset.map p s) = (Multiset.filter p s).card",
+            "status": "checked"
+          },
+          "line_number": 415,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "filter",
+            "le",
+            "prop",
+            "decidablepred"
+          ],
+          "name": "Multiset.map_count_True_eq_filter_card",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Filter.lean",
+          "score": 40,
+          "search_excerpt": "-/ @[simp] theorem map_count_True_eq_filter_card (s : Multiset α) (p : α → Prop) [DecidablePred p] : (s.map p).count True = card (s.filter p) := by"
+        },
+        {
+          "declaration_line": "theorem countP_filter (q) [DecidablePred q] (s : Multiset α) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.countP_filter.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (q : α → Prop) [DecidablePred q]\n  (s : Multiset α) : Multiset.countP p (Multiset.filter q s) = Multiset.countP (fun a => p a ∧ q a) s",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.countP_filter.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] (q : α → Prop) [DecidablePred q]\n  (s : Multiset α) : Multiset.countP p (Multiset.filter q s) = Multiset.countP (fun a => p a ∧ q a) s",
+            "status": "checked"
+          },
+          "line_number": 274,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "filter",
+            "le",
+            "decidablepred"
+          ],
+          "name": "Multiset.countP_filter",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Filter.lean",
+          "score": 37,
+          "search_excerpt": "@[simp] theorem countP_filter (q) [DecidablePred q] (s : Multiset α) : countP p (filter q s) = countP (fun a => p a ∧ q a) s := by simp [countP_eq_card_filter]"
+        },
+        {
+          "declaration_line": "theorem multinomial_filter_ne [DecidableEq α] (a : α) (m : Multiset α) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.multinomial_filter_ne.{u_1} {α : Type u_1} [DecidableEq α] (a : α) (m : Multiset α) :\n  m.multinomial = m.card.choose (Multiset.count a m) * (Multiset.filter (fun x => a ≠ x) m).multinomial",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.multinomial_filter_ne.{u_1} {α : Type u_1} [DecidableEq α] (a : α) (m : Multiset α) :\n  m.multinomial = m.card.choose (Multiset.count a m) * (Multiset.filter (fun x => a ≠ x) m).multinomial",
+            "status": "checked"
+          },
+          "line_number": 189,
+          "matched_tokens": [
+            "multiset",
+            "card",
+            "filter",
+            "le",
+            "in"
+          ],
+          "name": "Multiset.multinomial_filter_ne",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Multinomial.lean",
+          "score": 37,
+          "search_excerpt": "theorem multinomial_filter_ne [DecidableEq α] (a : α) (m : Multiset α) : m.multinomial = m.card.choose (m.count a) * (m.filter (a ≠ ·)).multinomial := by"
+        },
+        {
+          "declaration_line": "theorem toFinset_filter (s : Multiset α) (p : α → Prop) [DecidablePred p] :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.toFinset_filter.{u_1} {α : Type u_1} [DecidableEq α] (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  (Multiset.filter p s).toFinset = filter p s.toFinset",
+                "line": 13,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.toFinset_filter.{u_1} {α : Type u_1} [DecidableEq α] (s : Multiset α) (p : α → Prop) [DecidablePred p] :\n  (Multiset.filter p s).toFinset = filter p s.toFinset",
+            "status": "checked"
+          },
+          "line_number": 487,
+          "matched_tokens": [
+            "multiset",
+            "filter",
+            "le",
+            "prop",
+            "decidablepred",
+            "to",
+            "in"
+          ],
+          "name": "Multiset.toFinset_filter",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Basic.lean",
+          "score": 35,
+          "search_excerpt": "@[simp] theorem toFinset_filter (s : Multiset α) (p : α → Prop) [DecidablePred p] : (s.filter p).toFinset = s.toFinset.filter p := by"
+        },
+        {
+          "declaration_line": "theorem filter_singleton {a : α} (p : α → Prop) [DecidablePred p] :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.filter_singleton.{u_1} {α : Type u_1} {a : α} (p : α → Prop) [DecidablePred p] :\n  Multiset.filter p {a} = if p a then {a} else ∅",
+                "line": 14,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.filter_singleton.{u_1} {α : Type u_1} {a : α} (p : α → Prop) [DecidablePred p] :\n  Multiset.filter p {a} = if p a then {a} else ∅",
+            "status": "checked"
+          },
+          "line_number": 130,
+          "matched_tokens": [
+            "multiset",
+            "filter",
+            "le",
+            "prop",
+            "decidablepred",
+            "to",
+            "in"
+          ],
+          "name": "Multiset.filter_singleton",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Filter.lean",
+          "score": 35,
+          "search_excerpt": "theorem filter_singleton {a : α} (p : α → Prop) [DecidablePred p] : filter p {a} = if p a then {a} else ∅ := by"
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Multiset.card_filter_le`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.card_filter_le`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Multiset.card_filter_le",
+      "related_mathlib_declarations": [],
+      "request_index": 1,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to bound the cardinality of filtered parts in the inverse direction"
+    },
+    {
+      "exact_identifier": "Finset.card_image_le",
+      "expected_signature_or_shape": "Finset.card_image_le (f : α → β) (s : Finset α) : (s.image f).card ≤ s.card",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Finset.card_image_le.{u_1, u_2} {α : Type u_1} {β : Type u_2} {s : Finset α} {f : α → β} [DecidableEq β] :\n  #(image f s) ≤ #s",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_image_le.{u_1, u_2} {α : Type u_1} {β : Type u_2} {s : Finset α} {f : α → β} [DecidableEq β] :\n  #(image f s) ≤ #s",
+        "status": "checked"
+      },
+      "query": "Finset.card_image_le",
+      "related_mathlib_declarations": [],
+      "request_index": 2,
+      "source_declaration": {
+        "declaration_line": "theorem card_image_le [DecidableEq β] : #(s.image f) ≤ #s := by",
+        "kind": "theorem",
+        "line_number": 216,
+        "name": "Finset.card_image_le",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Card.lean",
+        "source_snippet": "theorem card_image_le [DecidableEq β] : #(s.image f) ≤ #s := by\n  simpa only [card_map] using (s.1.map f).toFinset_card_le\n\ngrind_pattern card_image_le => #(s.image f)\ngrind_pattern card_image_le => s.image f, #s",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to bound cardinality of image of Finset.univ under parts function"
+    },
+    {
+      "exact_identifier": "Fintype.card_fin",
+      "expected_signature_or_shape": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+        "status": "checked"
+      },
+      "query": "Fintype.card_fin",
+      "related_mathlib_declarations": [],
+      "request_index": 3,
+      "source_declaration": {
+        "declaration_line": "theorem Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n :=",
+        "kind": "theorem",
+        "line_number": 488,
+        "name": "Fintype.card_fin",
+        "path": ".lake/packages/mathlib/Mathlib/Data/Fintype/Card.lean",
+        "source_snippet": "@[simp]\ntheorem Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n :=\n  List.length_finRange",
+        "source_snippet_truncated": false
+      },
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to compute that Finset.card (Finset.univ : Finset (Fin N)) = N"
+    },
+    {
+      "exact_identifier": "Multiset.sum_filter_ne_zero",
+      "expected_signature_or_shape": "Multiset.sum_filter_ne_zero (s : Multiset ℕ) : (s.filter (· ≠ 0)).sum = s.sum",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "lemma all_one_of_le_one_le_of_prod_eq_one [IsOrderedMonoid α] :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.all_one_of_le_one_le_of_prod_eq_one.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α}\n  [IsOrderedMonoid α] : (∀ x ∈ s, 1 ≤ x) → s.prod = 1 → ∀ x ∈ s, x = 1",
+                "line": 15,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.all_one_of_le_one_le_of_prod_eq_one.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α}\n  [IsOrderedMonoid α] : (∀ x ∈ s, 1 ≤ x) → s.prod = 1 → ∀ x ∈ s, x = 1",
+            "status": "checked"
+          },
+          "line_number": 46,
+          "matched_tokens": [
+            "multiset",
+            "sum",
+            "ne",
+            "zero",
+            "to"
+          ],
+          "name": "Multiset.all_one_of_le_one_le_of_prod_eq_one",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Multiset.lean",
+          "score": 35,
+          "search_excerpt": "@[to_additive all_zero_of_le_zero_le_of_sum_eq_zero] lemma all_one_of_le_one_le_of_prod_eq_one [IsOrderedMonoid α] : (∀ x ∈ s, (1 : α) ≤ x) → s.prod = 1 → ∀ x ∈ s, x = (1 : α) :="
+        },
+        {
+          "declaration_line": "lemma abs_sum_le_sum_abs [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {s : Multiset α} :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.abs_sum_le_sum_abs.{u_2} {α : Type u_2} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]\n  {s : Multiset α} : |s.sum| ≤ (Multiset.map abs s).sum",
+                "line": 16,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.abs_sum_le_sum_abs.{u_2} {α : Type u_2} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]\n  {s : Multiset α} : |s.sum| ≤ (Multiset.map abs s).sum",
+            "status": "checked"
+          },
+          "line_number": 168,
+          "matched_tokens": [
+            "multiset",
+            "sum",
+            "ne",
+            "to",
+            "in"
+          ],
+          "name": "Multiset.abs_sum_le_sum_abs",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Multiset.lean",
+          "score": 35,
+          "search_excerpt": "lemma abs_sum_le_sum_abs [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {s : Multiset α} : |s.sum| ≤ (s.map abs).sum :="
+        },
+        {
+          "declaration_line": "theorem Multiset.untrop_sum [LinearOrder R] [OrderTop R] (s : Multiset (Tropical R)) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.untrop_sum.{u_1} {R : Type u_1} [LinearOrder R] [OrderTop R] (s : Multiset (Tropical R)) :\n  Tropical.untrop s.sum = (Multiset.map Tropical.untrop s).inf",
+                "line": 17,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.untrop_sum.{u_1} {R : Type u_1} [LinearOrder R] [OrderTop R] (s : Multiset (Tropical R)) :\n  Tropical.untrop s.sum = (Multiset.map Tropical.untrop s).inf",
+            "status": "checked"
+          },
+          "line_number": 101,
+          "matched_tokens": [
+            "multiset",
+            "sum",
+            "ne",
+            "to",
+            "in"
+          ],
+          "name": "Multiset.untrop_sum",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Tropical/BigOperators.lean",
+          "score": 35,
+          "search_excerpt": "theorem Multiset.untrop_sum [LinearOrder R] [OrderTop R] (s : Multiset (Tropical R)) : untrop s.sum = Multiset.inf (s.map untrop) := by"
+        },
+        {
+          "declaration_line": "theorem monotone_filter_left : Monotone (filter p) := fun _s _t => filter_le_filter p",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.monotone_filter_left.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] : Monotone (Multiset.filter p)",
+                "line": 18,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.monotone_filter_left.{u_1} {α : Type u_1} (p : α → Prop) [DecidablePred p] : Monotone (Multiset.filter p)",
+            "status": "checked"
+          },
+          "line_number": 73,
+          "matched_tokens": [
+            "multiset",
+            "filter",
+            "ne",
+            "to",
+            "not"
+          ],
+          "name": "Multiset.monotone_filter_left",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Filter.lean",
+          "score": 35,
+          "search_excerpt": "theorem monotone_filter_left : Monotone (filter p) := fun _s _t => filter_le_filter p"
+        },
+        {
+          "declaration_line": "theorem monotone_filter_right (s : Multiset α) ⦃p q : α → Prop⦄ [DecidablePred p] [DecidablePred q]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.monotone_filter_right.{u_1} {α : Type u_1} (s : Multiset α) ⦃p q : α → Prop⦄ [DecidablePred p]\n  [DecidablePred q] (h : ∀ (b : α), p b → q b) : Multiset.filter p s ≤ Multiset.filter q s",
+                "line": 19,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.monotone_filter_right.{u_1} {α : Type u_1} (s : Multiset α) ⦃p q : α → Prop⦄ [DecidablePred p]\n  [DecidablePred q] (h : ∀ (b : α), p b → q b) : Multiset.filter p s ≤ Multiset.filter q s",
+            "status": "checked"
+          },
+          "line_number": 75,
+          "matched_tokens": [
+            "multiset",
+            "filter",
+            "ne",
+            "to",
+            "not"
+          ],
+          "name": "Multiset.monotone_filter_right",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Filter.lean",
+          "score": 35,
+          "search_excerpt": "theorem monotone_filter_right (s : Multiset α) ⦃p q : α → Prop⦄ [DecidablePred p] [DecidablePred q] (h : ∀ b, p b → q b) : s.filter p ≤ s.filter q :="
+        },
+        {
+          "declaration_line": "theorem disjSum_mono_left (t : Multiset β) : Monotone fun s : Multiset α => s.disjSum t :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.disjSum_mono_left.{u_1, u_2} {α : Type u_1} {β : Type u_2} (t : Multiset β) : Monotone fun s => s.disjSum t",
+                "line": 20,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.disjSum_mono_left.{u_1, u_2} {α : Type u_1} {β : Type u_2} (t : Multiset β) : Monotone fun s => s.disjSum t",
+            "status": "checked"
+          },
+          "line_number": 68,
+          "matched_tokens": [
+            "multiset",
+            "sum",
+            "ne",
+            "to",
+            "not"
+          ],
+          "name": "Multiset.disjSum_mono_left",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Sum.lean",
+          "score": 35,
+          "search_excerpt": "theorem disjSum_mono_left (t : Multiset β) : Monotone fun s : Multiset α => s.disjSum t :="
+        },
+        {
+          "declaration_line": "theorem disjSum_mono_right (s : Multiset α) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.disjSum_mono_right.{u_1, u_2} {α : Type u_1} {β : Type u_2} (s : Multiset α) : Monotone s.disjSum",
+                "line": 21,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.disjSum_mono_right.{u_1, u_2} {α : Type u_1} {β : Type u_2} (s : Multiset α) : Monotone s.disjSum",
+            "status": "checked"
+          },
+          "line_number": 71,
+          "matched_tokens": [
+            "multiset",
+            "sum",
+            "ne",
+            "to",
+            "not"
+          ],
+          "name": "Multiset.disjSum_mono_right",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Multiset/Sum.lean",
+          "score": 35,
+          "search_excerpt": "theorem disjSum_mono_right (s : Multiset α) : Monotone (s.disjSum : Multiset β → Multiset (α ⊕ β)) := fun _ _ ht =>"
+        },
+        {
+          "declaration_line": "lemma one_le_prod_of_one_le [MulLeftMono α] : (∀ x ∈ s, (1 : α) ≤ x) → 1 ≤ s.prod :=",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Multiset.one_le_prod_of_one_le.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} [MulLeftMono α] :\n  (∀ x ∈ s, 1 ≤ x) → 1 ≤ s.prod",
+                "line": 22,
+                "severity": "information"
+              }
+            ],
+            "signature": "Multiset.one_le_prod_of_one_le.{u_2} {α : Type u_2} [CommMonoid α] [PartialOrder α] {s : Multiset α} [MulLeftMono α] :\n  (∀ x ∈ s, 1 ≤ x) → 1 ≤ s.prod",
+            "status": "checked"
+          },
+          "line_number": 32,
+          "matched_tokens": [
+            "multiset",
+            "sum",
+            "ne",
+            "to"
+          ],
+          "name": "Multiset.one_le_prod_of_one_le",
+          "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Multiset.lean",
+          "score": 32,
+          "search_excerpt": "@[to_additive sum_nonneg] lemma one_le_prod_of_one_le [MulLeftMono α] : (∀ x ∈ s, (1 : α) ≤ x) → 1 ≤ s.prod :="
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `Multiset.sum_filter_ne_zero`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.sum_filter_ne_zero`",
+            "line": 10,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Multiset.sum_filter_ne_zero",
+      "related_mathlib_declarations": [],
+      "request_index": 4,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to show that filtering zeros does not change the sum; used in toPartition and in the inverse direction"
+    },
+    {
+      "exact_identifier": "List.sorted_iff_pairwise",
+      "expected_signature_or_shape": "List.sorted_iff_pairwise (r : α → α → Prop) [DecidableRel r] (l : List α) : List.Sorted r l ↔ List.Pairwise r l",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+                "line": 23,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.Pairwise.rel_get_of_le.{u_1} {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+            "status": "checked"
+          },
+          "line_number": 1,
+          "matched_tokens": [
+            "antitone",
+            "be",
+            "can",
+            "comparisons",
+            "constant",
+            "decidablerel",
+            "function",
+            "iff",
+            "list",
+            "padded",
+            "pairwise",
+            "parts",
+            "prop",
+            "prove",
+            "relate",
+            "sorted",
+            "sortedness",
+            "to",
+            "unknown",
+            "used",
+            "which"
+          ],
+          "name": "List.Pairwise.rel_get_of_le",
+          "path": "<shape-driven-fallback>",
+          "score": 100
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+                "line": 24,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.Pairwise.rel_get_of_lt.{u_1} {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l)\n  {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+            "status": "checked"
+          },
+          "line_number": 2,
+          "matched_tokens": [
+            "antitone",
+            "be",
+            "can",
+            "comparisons",
+            "constant",
+            "decidablerel",
+            "function",
+            "iff",
+            "list",
+            "padded",
+            "pairwise",
+            "parts",
+            "prop",
+            "prove",
+            "relate",
+            "sorted",
+            "sortedness",
+            "to",
+            "unknown",
+            "used",
+            "which"
+          ],
+          "name": "List.Pairwise.rel_get_of_lt",
+          "path": "<shape-driven-fallback>",
+          "score": 99
+        },
+        {
+          "declaration_line": "shape-driven fallback for a composite request; Lean #check output is authoritative",
+          "kind": "bridge",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+                "line": 25,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedGE_iff_antitone_get.{u_1} {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+            "status": "checked"
+          },
+          "line_number": 3,
+          "matched_tokens": [
+            "antitone",
+            "be",
+            "can",
+            "comparisons",
+            "constant",
+            "decidablerel",
+            "function",
+            "iff",
+            "list",
+            "padded",
+            "pairwise",
+            "parts",
+            "prop",
+            "prove",
+            "relate",
+            "sorted",
+            "sortedness",
+            "to",
+            "unknown",
+            "used",
+            "which"
+          ],
+          "name": "List.sortedGE_iff_antitone_get",
+          "path": "<shape-driven-fallback>",
+          "score": 98
+        },
+        {
+          "declaration_line": "theorem sorted_singleton (r) (a : α) : Sorted r [a] := pairwise_singleton r a",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sorted_singleton.{u} {α : Type u} (r : α → α → Prop) (a : α) : List.Sorted r [a]",
+                "line": 26,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sorted_singleton.{u} {α : Type u} (r : α → α → Prop) (a : α) : List.Sorted r [a]",
+            "status": "checked"
+          },
+          "line_number": 59,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "pairwise",
+            "to"
+          ],
+          "name": "List.sorted_singleton",
+          "path": ".lake/packages/mathlib/Mathlib/Deprecated/Sort.lean",
+          "score": 32,
+          "search_excerpt": "@[deprecated pairwise_singleton (since := \"2025-10-11\")]"
+        },
+        {
+          "declaration_line": "alias sorted_replicate := pairwise_replicate_of_refl",
+          "kind": "alias",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sorted_replicate.{u_1} {α : Type u_1} {R : α → α → Prop} {a : α} {n : ℕ} [Std.Refl R] :\n  List.Pairwise R (List.replicate n a)",
+                "line": 27,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sorted_replicate.{u_1} {α : Type u_1} {R : α → α → Prop} {a : α} {n : ℕ} [Std.Refl R] :\n  List.Pairwise R (List.replicate n a)",
+            "status": "checked"
+          },
+          "line_number": 116,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "pairwise"
+          ],
+          "name": "List.sorted_replicate",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Pairwise.lean",
+          "score": 30,
+          "search_excerpt": "@[deprecated (since := \"2025-10-11\")]"
+        },
+        {
+          "declaration_line": "alias sorted_cons_cons := pairwise_cons_cons_iff_of_trans",
+          "kind": "alias",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+                "line": 28,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sorted_cons_cons.{u_1} {α : Type u_1} {R : α → α → Prop} [IsTrans α R] {l : List α} {a b : α} :\n  List.Pairwise R (a :: b :: l) ↔ R a b ∧ List.Pairwise R (b :: l)",
+            "status": "checked"
+          },
+          "line_number": 127,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "pairwise"
+          ],
+          "name": "List.sorted_cons_cons",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Pairwise.lean",
+          "score": 30,
+          "search_excerpt": "@[deprecated (since := \"2025-10-11\")]"
+        },
+        {
+          "declaration_line": "theorem sortedLT_range (n : ℕ) : (range n).SortedLT := pairwise_lt_range.sortedLT",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedLT_range (n : ℕ) : (List.range n).SortedLT",
+                "line": 29,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedLT_range (n : ℕ) : (List.range n).SortedLT",
+            "status": "checked"
+          },
+          "line_number": 532,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "pairwise"
+          ],
+          "name": "List.sortedLT_range",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 29,
+          "search_excerpt": "theorem sortedLT_range (n : ℕ) : (range n).SortedLT := pairwise_lt_range.sortedLT"
+        },
+        {
+          "declaration_line": "theorem sortedLT_range' (a b) {s} (hs : s ≠ 0) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "List.sortedLT_range' (a b : ℕ) {s : ℕ} (hs : s ≠ 0) : (List.range' a b s).SortedLT",
+                "line": 30,
+                "severity": "information"
+              }
+            ],
+            "signature": "List.sortedLT_range' (a b : ℕ) {s : ℕ} (hs : s ≠ 0) : (List.range' a b s).SortedLT",
+            "status": "checked"
+          },
+          "line_number": 540,
+          "matched_tokens": [
+            "list",
+            "sorted",
+            "pairwise"
+          ],
+          "name": "List.sortedLT_range'",
+          "path": ".lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+          "score": 29,
+          "search_excerpt": "theorem sortedLT_range' (a b) {s} (hs : s ≠ 0) : (range' a b s).SortedLT := (pairwise_lt_range' _ (Nat.pos_of_ne_zero hs)).sortedLT"
+        }
+      ],
+      "fallback_suppression": null,
+      "lean_check": {
+        "error": "Unknown constant `List.sorted_iff_pairwise`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sorted_iff_pairwise`",
+            "line": 11,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "List.sorted_iff_pairwise",
+      "related_mathlib_declarations": [],
+      "request_index": 5,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to relate sortedness of the parts list to pairwise comparisons, which can be used to prove antitone of the padded function"
+    },
+    {
+      "exact_identifier": "List.pairwise_iff_get",
+      "expected_signature_or_shape": "List.pairwise_iff_get (r : α → α → Prop) (l : List α) : List.Pairwise r l ↔ ∀ i j, i < j → r (l.get i) (l.get j)",
+      "fallback_mathlib_candidates": [],
+      "fallback_suppression": null,
+      "lean_check": {
+        "messages": [
+          {
+            "data": "List.pairwise_iff_get.{u_1} {α✝ : Type u_1} {R : α✝ → α✝ → Prop} {l : List α✝} :\n  List.Pairwise R l ↔ ∀ (i j : Fin l.length), i < j → R (l.get i) (l.get j)",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.pairwise_iff_get.{u_1} {α✝ : Type u_1} {R : α✝ → α✝ → Prop} {l : List α✝} :\n  List.Pairwise R l ↔ ∀ (i j : Fin l.length), i < j → R (l.get i) (l.get j)",
+        "status": "checked"
+      },
+      "query": "List.pairwise_iff_get",
+      "related_mathlib_declarations": [],
+      "request_index": 6,
+      "source_declaration": null,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-005-repair-context-1",
+      "unit_key": "unit-005",
+      "why_needed": "to convert pairwise condition to pointwise inequalities on list elements, needed for antitone on Fin N"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.Nat.sum_antidiagonal_eq_sum_range_succ": {
+        "messages": [
+          {
+            "data": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.Nat.sum_antidiagonal_eq_sum_range_succ.{u_3} {M : Type u_3} [AddCommMonoid M] (f : ℕ → ℕ → M) (n : ℕ) :\n  ∑ ij ∈ antidiagonal n, f ij.1 ij.2 = ∑ k ∈ range n.succ, f k (n - k)",
+        "status": "checked"
+      },
+      "Finset.card_image_le": {
+        "messages": [
+          {
+            "data": "Finset.card_image_le.{u_1, u_2} {α : Type u_1} {β : Type u_2} {s : Finset α} {f : α → β} [DecidableEq β] :\n  #(image f s) ≤ #s",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.card_image_le.{u_1, u_2} {α : Type u_1} {β : Type u_2} {s : Finset α} {f : α → β} [DecidableEq β] :\n  #(image f s) ≤ #s",
+        "status": "checked"
+      },
+      "Fintype.card_fin": {
+        "messages": [
+          {
+            "data": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+        "status": "checked"
+      },
+      "List.pairwise_iff_get": {
+        "messages": [
+          {
+            "data": "List.pairwise_iff_get.{u_1} {α✝ : Type u_1} {R : α✝ → α✝ → Prop} {l : List α✝} :\n  List.Pairwise R l ↔ ∀ (i j : Fin l.length), i < j → R (l.get i) (l.get j)",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "List.pairwise_iff_get.{u_1} {α✝ : Type u_1} {R : α✝ → α✝ → Prop} {l : List α✝} :\n  List.Pairwise R l ↔ ∀ (i j : Fin l.length), i < j → R (l.get i) (l.get j)",
+        "status": "checked"
+      },
+      "List.sorted_iff_pairwise": {
+        "error": "Unknown constant `List.sorted_iff_pairwise`",
+        "messages": [
+          {
+            "data": "Unknown constant `List.sorted_iff_pairwise`",
+            "line": 11,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Multiset.card_filter_le": {
+        "error": "Unknown constant `Multiset.card_filter_le`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.card_filter_le`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Multiset.sum_filter_ne_zero": {
+        "error": "Unknown constant `Multiset.sum_filter_ne_zero`",
+        "messages": [
+          {
+            "data": "Unknown constant `Multiset.sum_filter_ne_zero`",
+            "line": 10,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.add_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+        "status": "checked"
+      },
+      "PowerSeries.coeff_inv": {
+        "messages": [
+          {
+            "data": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "PowerSeries.coeff_inv.{u_2} {k : Type u_2} [Field k] (n : ℕ) (φ : k⟦X⟧) :\n  (coeff n) φ⁻¹ =\n    if n = 0 then (constantCoeff φ)⁻¹\n    else -(constantCoeff φ)⁻¹ * ∑ x ∈ antidiagonal n, if x.2 < n then (coeff x.1) φ * (coeff x.2) φ⁻¹ else 0",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "098c875ba91739255d2e33db9bd9e6af10189c602e2413447eec49c5cd8757e3",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "related_exact_identifier_count": 0,
+  "related_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "related_lean_check_status": "no_exact_identifiers",
+  "request_count": 9,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

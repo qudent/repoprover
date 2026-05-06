@@ -1,0 +1,28 @@
+{
+  "batch_paths": [
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-001/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-002/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-003/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-004/generation-output.json",
+    "docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v3-paid-split/round-01-repair/batch-005/generation-output.json"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_aggregated.v1",
+  "units": [
+    {
+      "declaration_names": [
+        "isInverse_unique"
+      ],
+      "lean_file_body": "theorem isInverse_unique {L : Type*} [CommRing L] {a b c : L} (hb : IsInverse a b) (hc : IsInverse a c) : b = c := by\n  have hb' : a * b = 1 := hb\n  have hc' : a * c = 1 := hc\n  calc\n    b = b * 1 := by simp\n    _ = b * (a * c) := by rw [hc']\n    _ = (b * a) * c := by ring\n    _ = (a * b) * c := by rw [mul_comm b a]\n    _ = 1 * c := by rw [hb']\n    _ = c := by simp",
+      "notes": [
+        "Uses IsInverse predicate from prior project context; proof uses commutativity and cancellation via ring."
+      ],
+      "status": "generated",
+      "unit_key": "unit-003",
+      "used_context": [
+        "IsInverse definition from prior project context",
+        "CommRing L",
+        "mul_comm, ring, simp"
+      ]
+    }
+  ]
+}
