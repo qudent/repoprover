@@ -6,7 +6,7 @@
     "missing_mathlib_context_against_gold_direct_deps": 3,
     "missing_project_context_against_gold_direct_deps": 1
   },
-  "generated_at": "2026-05-06T05:16:02.595324+00:00",
+  "generated_at": "2026-05-06T05:21:35.796062+00:00",
   "gold_candidates": "docs/latex-statement-gold-candidates.jsonl",
   "include_compiled": false,
   "scan_jsonl": "docs/lean-elaborated-direct-deps.jsonl",

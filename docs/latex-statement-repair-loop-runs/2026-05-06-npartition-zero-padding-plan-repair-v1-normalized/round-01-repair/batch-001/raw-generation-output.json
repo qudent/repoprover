@@ -1,0 +1,38 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "fromPartition",
+        "size_fromPartition",
+        "toPartition_length",
+        "fromPartition_toPartition",
+        "toPartition_fromPartition",
+        "bijection_partition_NPartition"
+      ],
+      "lean_file_body": "open Finset\nopen Multiset\n\nvariable {N : ℕ} {n : ℕ}\n\nnoncomputable def fromPartition (p : Nat.Partition n) (h : Multiset.card p.parts ≤ N) : NPartition N where\n  parts := λ i =>\n    if hi : (i : ℕ) < (p.parts.sort (· ≥ ·)).length then\n      (p.parts.sort (· ≥ ·)).get ⟨i, hi⟩\n    else 0\n  antitone := by\n    intro i j h_ij\n    dsimp\n    by_cases hi : (i : ℕ) < (p.parts.sort (· ≥ ·)).length\n    · by_cases hj : (j : ℕ) < (p.parts.sort (· ≥ ·)).length\n      · have h_sorted : List.Pairwise (· ≥ ·) (p.parts.sort (· ≥ ·)) := by\n          apply Multiset.sort_sorted (p.parts) (· ≥ ·)\n        have h_rel : (p.parts.sort (· ≥ ·)).get ⟨i, hi⟩ ≥ (p.parts.sort (· ≥ ·)).get ⟨j, hj⟩ := by\n          have h_ij' : (i : ℕ) ≤ (j : ℕ) := by exact_mod_cast h_ij\n          have := List.Pairwise.rel_get_of_le h_sorted (by exact h_ij')\n          exact this\n        simpa [hi, hj] using h_rel\n      · simp [hi, hj]\n    · simp [hi]\n\nlemma size_fromPartition (p : Nat.Partition n) (h : Multiset.card p.parts ≤ N) : (fromPartition p h).size = n := by\n  dsimp [fromPartition, NPartition.size]\n  have h_sorted : (p.parts.sort (· ≥ ·)).sum = p.parts.sum := by\n    simpa using congrArg Multiset.sum (Multiset.sort_eq (p.parts) (· ≥ ·))\n  have h_sum_list : (List.ofFn (λ i : Fin N =>\n    if hi : (i : ℕ) < (p.parts.sort (· ≥ ·)).length then\n      (p.parts.sort (· ≥ ·)).get ⟨i, hi⟩ else 0)).sum = (p.parts.sort (· ≥ ·)).sum := by\n    calc\n      (List.ofFn (λ i : Fin N => ...)).sum = ∑ i : Fin N, ... := by simp\n      _ = (∑ i in Finset.filter (λ i : Fin N => (i : ℕ) < (p.parts.sort (· ≥ ·)).length) Finset.univ,\n        (p.parts.sort (· ≥ ·)).get ⟨i, ...⟩) + (∑ i in Finset.filter (λ i : Fin N => ¬ (i : ℕ) < (p.parts.sort (· ≥ ·)).length) Finset.univ, 0) := by\n        rw [Finset.sum_union (Finset.disjoint_filter_filter _ _ ?_), Finset.sum_congr rfl ?_, Finset.sum_congr rfl ?_]\n        · simp\n        · intro i hi; simp [hi]\n        · intro i hi; simp [hi]\n      _ = (∑ i in Finset.filter (λ i : Fin N => (i : ℕ) < (p.parts.sort (· ≥ ·)).length) Finset.univ,\n        (p.parts.sort (· ≥ ·)).get ⟨i, ...⟩) := by simp\n      _ = (p.parts.sort (· ≥ ·)).sum := by\n        have h_len : (p.parts.sort (· ≥ ·)).length = Multiset.card p.parts := Multiset.length_sort (p.parts) (· ≥ ·)\n        have h_card : Multiset.card p.parts ≤ N := h\n        have h_lenN : (p.parts.sort (· ≥ ·)).length ≤ N := by linarith\n        have h_map : Finset.card (Finset.filter (λ i : Fin N => (i : ℕ) < (p.parts.sort (· ≥ ·)).length) Finset.univ) = (p.parts.sort (· ≥ ·)).length := by\n          simp [Finset.card_fin, h_lenN]\n        -- Use bijection between Fin (length) and the filter set\n        sorry\n      _ = n := by\n        rw [h_sorted, Nat.Partition.parts_sum p]\n  sorry\n\nlemma toPartition_length (μ : NPartition N) : Multiset.card (NPartition.toPartition μ).parts ≤ N := by\n  have h_card_map : Multiset.card ((Finset.univ.val.map μ.parts).filter (· ≠ 0)) ≤ Multiset.card (Finset.univ.val.map μ.parts) := by\n    apply Multiset.card_le_card (Multiset.filter_le (· ≠ 0) _)\n  have h_card_map' : Multiset.card (Finset.univ.val.map μ.parts) = Finset.card (Finset.univ : Finset (Fin N)) := by\n    simp\n  have h_card_univ : Finset.card (Finset.univ : Finset (Fin N)) = N := by simp\n  calc\n    Multiset.card (NPartition.toPartition μ).parts = Multiset.card ((Finset.univ.val.map μ.parts).filter (· ≠ 0)) := rfl\n    _ ≤ Multiset.card (Finset.univ.val.map μ.parts) := h_card_map\n    _ = Finset.card (Finset.univ : Finset (Fin N)) := h_card_map'\n    _ = N := h_card_univ\n\nlemma fromPartition_toPartition (μ : NPartition N) : fromPartition (NPartition.toPartition μ) (toPartition_length μ) = μ := by\n  ext i\n  dsimp [fromPartition, NPartition.toPartition]\n  sorry\n\nlemma toPartition_fromPartition (p : Nat.Partition n) (h : Multiset.card p.parts ≤ N) :\n    NPartition.toPartition (fromPartition p h) = p := by\n  apply Nat.Partition.ext\n  dsimp [NPartition.toPartition, fromPartition]\n  sorry\n\ndef bijection_partition_NPartition (n N : ℕ) : {p : Nat.Partition n // Multiset.card p.parts ≤ N} ≃ {μ : NPartition N // μ.size = n} where\n  toFun := λ ⟨p, h⟩ => ⟨fromPartition p h, size_fromPartition p h⟩\n  invFun := λ ⟨μ, h⟩ => ⟨NPartition.toPartition μ, toPartition_length μ⟩\n  left_inv := by\n    intro ⟨p, h⟩\n    ext\n    exact toPartition_fromPartition p h\n  right_inv := by\n    intro ⟨μ, h⟩\n    ext\n    exact fromPartition_toPartition μ",
+      "notes": [
+        "The proof of size_fromPartition is incomplete due to the missing bijection between Fin (length) and the filter set. The remaining lemmas fromPartition_toPartition and toPartition_fromPartition also need detailed proofs using the sorted list and zero-padding. The visible context provides the necessary lemmas (Multiset.sort_sorted, Multiset.length_sort, Multiset.sort_eq, Multiset.sum_coe, List.Pairwise.rel_get_of_le, etc.) but the combinatorial details require additional work. The current status is set to generated because the structure is in place, but the proofs are not complete."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "NPartition.toPartition",
+        "NPartition.ext",
+        "NPartition.ext'",
+        "filter_ne_zero_sum",
+        "Multiset.sort_sorted",
+        "Multiset.length_sort",
+        "Multiset.sort_eq",
+        "Multiset.sum_coe",
+        "List.Pairwise.rel_get_of_le",
+        "Multiset.card_map",
+        "Finset.card_univ",
+        "Fintype.card_fin",
+        "Multiset.filter_le",
+        "Multiset.card_le_card"
+      ]
+    }
+  ]
+}

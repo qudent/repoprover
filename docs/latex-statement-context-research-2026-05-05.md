@@ -741,6 +741,12 @@ Broader diverse4 negative probe:
   The runner now deterministically normalizes future `generated` outputs that
   contain proof placeholders, comments, or ellipsis scratchpads to the empty
   `cannot_prove_from_visible_context` contract while preserving raw model text.
+  `scripts/normalize_latex_statement_generation_run.py` applies the same policy
+  to existing recorded runs without a provider call. Its normalized copy at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/`
+  preserves the raw 4,380-character helper skeleton but verifies the
+  consumer-facing output as a clean `declined_cannot_prove` with gold
+  comparison `not_generated_cannot_prove`.
 
 ## Lean Dependency Accounting
 

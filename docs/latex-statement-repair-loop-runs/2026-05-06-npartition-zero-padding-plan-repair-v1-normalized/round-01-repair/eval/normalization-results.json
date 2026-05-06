@@ -1,0 +1,60 @@
+{
+  "batches": [
+    {
+      "batch": "batch-001",
+      "generation": {
+        "normalized_unit_count": 1,
+        "normalized_units": [
+          {
+            "contract_violations": [
+              "generated_lean_contains_placeholder",
+              "generated_lean_must_not_include_comments"
+            ],
+            "raw_declaration_names": [
+              "fromPartition",
+              "size_fromPartition",
+              "toPartition_length",
+              "fromPartition_toPartition",
+              "toPartition_fromPartition",
+              "bijection_partition_NPartition"
+            ],
+            "raw_lean_file_body_characters": 4380,
+            "reason": "generated_output_contains_incomplete_or_forbidden_lean",
+            "unit_key": "unit-001"
+          }
+        ],
+        "output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair/batch-001/generation-output.json",
+        "raw_output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair/batch-001/raw-generation-output.json"
+      },
+      "repair": {
+        "normalized_unit_count": 1,
+        "normalized_units": [
+          {
+            "contract_violations": [
+              "generated_lean_contains_placeholder",
+              "generated_lean_must_not_include_comments"
+            ],
+            "raw_declaration_names": [
+              "fromPartition",
+              "size_fromPartition",
+              "toPartition_length",
+              "fromPartition_toPartition",
+              "toPartition_fromPartition",
+              "bijection_partition_NPartition"
+            ],
+            "raw_lean_file_body_characters": 4380,
+            "reason": "generated_output_contains_incomplete_or_forbidden_lean",
+            "unit_key": "unit-001"
+          }
+        ],
+        "output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair/batch-001/repair-output.json",
+        "raw_output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair/batch-001/raw-repair-output.json"
+      }
+    }
+  ],
+  "generated_at": "2026-05-06T05:21:08.920036+00:00",
+  "output_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair",
+  "paid_call_made": false,
+  "schema_version": "repoprover.latex_statement_generation_normalization.v1",
+  "source_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/round-01-repair"
+}

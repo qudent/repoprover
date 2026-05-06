@@ -104,14 +104,14 @@
   "compile_passed_units": 16,
   "coverage_status_counts": {
     "contract_violation": 1,
-    "not_generated_cannot_prove": 13
+    "not_generated_cannot_prove": 14
   },
   "error_pattern_counts": {
     "ambiguous_namespace_or_notation": 1,
     "application_type_mismatch": 1,
     "compiled": 16,
     "contract_violation": 21,
-    "declined_cannot_prove": 24,
+    "declined_cannot_prove": 25,
     "missing_typeclass_or_binder": 5,
     "unknown_constant": 3
   },
@@ -363,9 +363,9 @@
     "compile_failure": 10,
     "compiled": 16,
     "contract_violation": 21,
-    "declined_cannot_prove": 24
+    "declined_cannot_prove": 25
   },
-  "generated_at": "2026-05-06T05:16:02.212813+00:00",
+  "generated_at": "2026-05-06T05:21:35.269916+00:00",
   "roots": [
     "docs/latex-statement-generation-runs",
     "docs/latex-statement-repair-loop-runs"
@@ -2678,6 +2678,46 @@
     {
       "compile_passed_units": 0,
       "coverage_status_counts": {
+        "not_generated_cannot_prove": 1
+      },
+      "error_pattern_counts": {
+        "declined_cannot_prove": 1
+      },
+      "examples_by_class": {
+        "declined_cannot_prove": [
+          {
+            "contract_violations": [],
+            "error_pattern": "declined_cannot_prove",
+            "first_error": null,
+            "lean_error_count": 0,
+            "lean_returncode": null,
+            "reported_status": "cannot_prove_from_visible_context",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "declined_cannot_prove": 1
+      },
+      "gold_comparison": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair/eval/gold-comparison.json",
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "declined_cannot_prove",
+          "failure_class": "declined_cannot_prove",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/round-01-repair/eval/verification-results.json"
+    },
+    {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {
         "contract_violation": 1
       },
       "error_pattern_counts": {
@@ -2759,6 +2799,6 @@
   ],
   "schema_version": "repoprover.latex_statement_failure_taxonomy_summary.v1",
   "source_unit_count": 11,
-  "unit_count": 71,
-  "verification_result_count": 50
+  "unit_count": 72,
+  "verification_result_count": 51
 }

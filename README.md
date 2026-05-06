@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 50
-verification-result files and 71 unit checks, it reports 16 compiled units, 21
-contract violations, 10 compile failures, and 24 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 51
+verification-result files and 72 unit checks, it reports 16 compiled units, 21
+contract violations, 10 compile failures, and 25 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -518,6 +518,14 @@ After that failure mode, generation contract enforcement was tightened: future
 scratchpads are normalized to the empty `cannot_prove_from_visible_context`
 contract while the raw model response is preserved. This avoids turning
 incomplete helper skeletons into noisy Lean/verification attempts.
+
+`scripts/normalize_latex_statement_generation_run.py` applies that same
+normalization to existing recorded runs without making a provider call. Applied
+to the zero-padding repair skeleton, it writes
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-normalized/`.
+The raw 4,380-character helper skeleton is preserved as raw output, while the
+consumer-facing generation verifies as a clean `declined_cannot_prove` and
+post-hoc gold comparison is `not_generated_cannot_prove`.
 
 ### Imported Lean surface and likely context needs
 
