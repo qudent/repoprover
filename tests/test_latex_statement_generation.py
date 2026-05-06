@@ -168,6 +168,8 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "Every identifier used in a theorem statement must be introduced" in prompt
     assert "you may include the needed commands in lean_file_body" in prompt
     assert "you may reuse those exact helper names" in prompt
+    assert "Do not enlarge a finite source choice space" in prompt
+    assert "there is no such generic instance for infinite codomains such as `ℤ`" in prompt
     assert "Lean's membership-binder notation `∑ x ∈ s, f x`" in prompt
     assert "checked bridge lemma rewrites between two indexed forms" in prompt
     assert "first rewrite with the source theorem" in prompt

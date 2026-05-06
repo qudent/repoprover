@@ -298,6 +298,8 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "helper_add_zero" in prompt
     assert "newly introduced declarations" in prompt
     assert "Do not introduce a replacement carrier type" in prompt
+    assert "Do not enlarge a finite source choice space" in prompt
+    assert "there is no such generic instance for infinite codomains such as `ℤ`" in prompt
     assert "Keep repaired theorem statements source-shaped" in prompt
     assert "construct the API hypothesis locally" in prompt
     assert "source-coverage review units" in prompt

@@ -1,0 +1,45 @@
+{
+  "base_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair",
+  "generated_at": "2026-05-06T10:11:28.454346+00:00",
+  "merged_generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/eval/merged-generation-output.json",
+  "model": "deepseek/deepseek-v4-flash",
+  "output": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged",
+  "overlay_generation_runs": [
+    "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-repair-v1-paid"
+  ],
+  "overlay_unit_keys": [
+    "unit-004"
+  ],
+  "paid_call_made": false,
+  "payload_sources": [
+    {
+      "payload_source": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-001/generation-payload.json",
+      "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/batch-001/generation-payload.json",
+      "unit_key": "unit-001"
+    },
+    {
+      "payload_source": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-002/generation-payload.json",
+      "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/batch-002/generation-payload.json",
+      "unit_key": "unit-002"
+    },
+    {
+      "payload_source": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-003/generation-payload.json",
+      "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/batch-003/generation-payload.json",
+      "unit_key": "unit-003"
+    },
+    {
+      "payload_source": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-repair-v1-paid/batch-001/generation-payload.json",
+      "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/batch-004/generation-payload.json",
+      "unit_key": "unit-004"
+    },
+    {
+      "payload_source": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-005/generation-payload.json",
+      "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/batch-005/generation-payload.json",
+      "unit_key": "unit-005"
+    }
+  ],
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_generation_overlay_run.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection",
+  "unit_count": 5
+}

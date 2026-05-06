@@ -1,0 +1,91 @@
+{
+  "base_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair",
+  "overlay_generation_runs": [
+    "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-repair-v1-paid"
+  ],
+  "schema_version": "repoprover.latex_statement_generation_overlay.v1",
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path. Cannot prove without project definitions."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix (same file predecessor, but fails to compile)",
+        "lgv_nonpermutable (prior project declaration, but depends on missing definitions)",
+        "xDecreasing, yIncreasing predicates (from prior context, but not defined in visible context)",
+        "nipatWeightSum (from prior context, but not defined in visible context)",
+        "dyckDigraph_pathFinite, dyckUnitArcWeight (from prior context, but not defined in visible context)"
+      ]
+    },
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "theorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [fps_invertible_iff_constantCoeff, isUnit_iff_ne_zero]",
+      "notes": [
+        "Uses prior project lemma fps_invertible_iff_constantCoeff and the field fact that an element is a unit iff nonzero."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+        "isUnit_iff_ne_zero (field property)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The statement is a combinatorial identity over a ℚ-algebra with binomial ring structure. The proof would require known identities for Ring.choose, possibly using polynomial identity trick or generating functions. The available context provides generalizedNewtonBinomial and related lemmas, but a complete proof is not yet constructed. The checked fallback candidates for Ring.choose_add (Ring.add_choose_eq, Ring.choose, Ring.multichoose_neg_add, Ring.choose_add_smul_choose) are insufficient to directly prove the identity. The prior project lemmas fpsPow_mul, generalizedNewtonBinomial, and key_product_identity' fail to compile due to missing HasConstantTermOne and fpsPow notation. Cannot prove from visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature from Mathlib",
+        "Finset.sum_range_succ",
+        "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial (prior project, fails to compile)",
+        "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow (prior project)",
+        "AlgebraicCombinatorics.FPS.polynomial_identity_trick (prior project)",
+        "local lemmas: fpsPow_mul, rescale_neg_one_one_sub_X, one_sub_X_pow_mul_invOneSubPow, one_add_X_pow_mul_rescale_invOneSubPow, one_sub_X_sq_pow, one_sub_X_sq_pow_mul_prod, key_product_identity' (all fail to compile)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The source lemma sums over sign vectors in {1,-1}^d, which is a finite set of size 2^d. The generated attempt incorrectly summed over all functions Fin d → ℤ, which is infinite and lacks a Fintype instance. The visible context provides toSign : ZMod 2 → ℤ and signSum : (Fin d → ZMod 2) → ℤ, which encode sign vectors as functions from Fin d to ZMod 2. The correct statement should sum over e : Fin d → ZMod 2, using toSign to convert to ℤ. The proof would use Finset.sum_pow' with s = Finset.univ : Finset (ZMod 2) and f = toSign, but the source lemma's right-hand side sums over e of e_{x_1}...e_{x_n}, which is signProduct e x. The visible context includes signProduct, but the lemma signProduct_eq_prod_pow failed to compile due to type errors. Without a working signProduct lemma, the proof cannot be completed from visible context. Therefore cannot_prove_from_visible_context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-004",
+      "used_context": [
+        "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+        "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+        "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+        "Finset.sum_pow' (checked signature)",
+        "Fintype.piFinset (checked signature)",
+        "Pi.instFintype (checked fallback candidate)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: NPartition.transpose, ssytFinset, Nipat, SkewSSYT, potentialVerticalStrips. Local file predecessors fail to compile due to missing identifiers. Cannot prove second Jacobi-Trudi without transpose API."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure (fails to compile due to duplicate declaration)",
+        "schur definition (fails to compile due to missing ssytFinset)",
+        "esymm signature (checked)",
+        "Matrix.det signature (checked)",
+        "jacobiTrudiMatrixH definition as pattern (checked)",
+        "hsymmExt definition (checked)"
+      ]
+    }
+  ]
+}

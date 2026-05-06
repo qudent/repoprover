@@ -38,6 +38,11 @@ after this point it is development evidence, not held out.
 - Compact repair-loop v2 cost `$0.01428308` total:
   `$0.00679938` repair-context selection plus `$0.0074837` repair generation.
   It hydrated 8 checked signatures and 2 fallback-resolved context requests.
+- Targeted signed-sum repair cost `$0.00240898`. It used the same checked
+  context but a generic finiteness/representation prompt rule, converting the
+  bad Lean compile failure into a clean `cannot_prove_from_visible_context`
+  decision. The merged artifact is
+  `docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/`.
 
 ## Results
 
@@ -73,6 +78,16 @@ Hankel and Jacobi-Trudi-e units, the model concluded that visible source and
 local predecessor context lack the needed project definitions/proof
 infrastructure. For the binomial identity, checked `PowerSeries.coeff_mul`
 context was not enough for the generator to construct the proof.
+
+A targeted proof-lane retry on `unit-004` fixed the failure classification. The
+prompt now includes a generic warning that a finite source choice space must not
+be enlarged to all functions into an infinite codomain, because there is no
+generic `Fintype (α → ℤ)`. The model then correctly identified the needed
+finite sign-vector carrier as `Fin d → ZMod 2` and declined because the visible
+context lacked a working `signProduct` bridge proof. After overlaying that
+one-unit result back onto the five-unit run, generated-only verification is
+`1/5` with failure classes `{compiled: 1, declined_cannot_prove: 4}` and
+semantic coverage remains `1/5`, proving the FPS aligned gold theorem.
 
 ## Interpretation
 

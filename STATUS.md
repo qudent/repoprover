@@ -36,6 +36,8 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   not look like failures.
 - [x] Filter repair prompts to only unresolved unit keys and stop recoverably on
   invalid repair-context JSON.
+- [x] Add a targeted proof-lane overlay utility for merging one-unit repairs
+  back into a panel/slice artifact without losing hidden-target filtering.
 - [ ] Route cases with checked context but repeated clean declines to a proof
   synthesis/coding-agent lane instead of more selector prompt tuning.
 
@@ -79,6 +81,12 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   signatures plus 2 fallback-resolved requests, and preserved `unit-002`; final
   verification stayed `1/5` with 3 clean declines and 1 signed-sum compile
   failure from the bad `Fin d -> ℤ` carrier choice.
+- Targeted signed-sum proof-lane retry cost `$0.00240898` and, after a generic
+  finite-choice-space prompt rule, converted the compile failure into a clean
+  decline with the correct diagnosis: the source carrier is finite sign vectors
+  `Fin d -> ZMod 2`, not all `Fin d -> ℤ`. The merged artifact
+  `docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/`
+  verifies `1/5` compiled, `4/5` clean declines, and semantic coverage `1/5`.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a

@@ -667,6 +667,20 @@ stayed `1/5`: Catalan Hankel, binomial identity, and Jacobi-Trudi-e are clean
 cannot-prove declines, while the signed-sum unit still compiles incorrectly
 because the model chose the impossible finite carrier `Fin d -> ℤ`. This is a
 selector/hydration robustness win, but not a fresh benchmark accuracy gain.
+A targeted proof-lane retry then added a generic finiteness/representation rule
+to generation, repair, and repair-context prompts: do not replace a finite
+source choice space by all functions into an infinite codomain, and do not rely
+on `Fintype (α -> β)` unless `Fintype β` is visible. The one-unit retry for
+`lem.cancel.all-even.l1` cost `$0.00240898` and produced an honest
+`cannot_prove_from_visible_context`, correctly diagnosing that the source
+carrier should be finite sign vectors `Fin d -> ZMod 2` and that the visible
+context lacks a working `signProduct` bridge proof. The new overlay utility
+`scripts/merge_latex_statement_generation_units.py` merges such targeted proof
+lane outputs back into a panel/slice run while preserving selector metadata for
+hidden-target filtering. The merged artifact
+`docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-unit004-finiteness-merged/`
+verifies as `1/5` compiled with four clean declines and no compile failures;
+semantic coverage is still `1/5`.
 
 ### Imported Lean surface and likely context needs
 

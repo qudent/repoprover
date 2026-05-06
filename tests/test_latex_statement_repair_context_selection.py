@@ -162,6 +162,8 @@ def test_repair_context_prompt_selects_context_without_hidden_target(tmp_path: P
     assert "request the checked pointwise/application lemmas" in prompt
     assert "Multiset.card_map" in prompt
     assert "not introduce a replacement carrier type" in prompt
+    assert "Do not plan a repair that enlarges a finite source choice space" in prompt
+    assert "there is no generic `Fintype (α → ℤ)`" in prompt
     assert "canonicalization route by sorting or enumerating" in prompt
     assert "case-splitting in-range/out-of-range indices" in prompt
     assert "decompose the same-unit proof into explicit obligations" in prompt
