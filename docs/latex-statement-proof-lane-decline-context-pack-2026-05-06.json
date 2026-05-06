@@ -1,0 +1,309 @@
+{
+  "decline_context_report": "docs/latex-statement-proof-lane-decline-context-2026-05-06.json",
+  "excluded_hidden_candidate_count": 0,
+  "generated_at": "2026-05-06T11:35:47.370842+00:00",
+  "gold_candidates_filter": "docs/latex-statement-gold-candidates.jsonl",
+  "gold_filter_policy": "Gold-candidate metadata is used only to exclude same-source aligned/referencing target declarations. Hidden target names and snippets are not emitted.",
+  "schema_version": "repoprover.proof_lane_decline_context_pack.v1",
+  "selected_project_context_count": 18,
+  "unit_count": 6,
+  "units": [
+    {
+      "excluded_hidden_candidate_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "catalanHankelMatrix",
+          "kind": "def",
+          "lean_snippet": "def catalanHankelMatrix (k : ℕ) : Matrix (Fin k) (Fin k) ℤ :=\n  Matrix.of fun i j => (catalan ((i : ℕ) + (j : ℕ)) : ℤ)\n\n/-- The Catalan Hankel matrix is symmetric (since c_{i+j} = c_{j+i}). -/",
+          "line": 5147,
+          "match_kind": "exact_local_name",
+          "name": "LGV.catalanHankelMatrix",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "pathWeightMatrix",
+          "kind": "def",
+          "lean_snippet": "noncomputable def pathWeightMatrix {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) (w : ArcWeight D K) {k : ℕ}\n    (A B : kVertex V k) : Matrix (Fin k) (Fin k) K :=\n  Matrix.of fun i j => pathWeightSum hpf w (A i) (B j)\n\n/-!\n## LGV Lemma: Weighted Lattice Version\n\nTheorem thm.lgv.kpaths.wt: For the integer lattice with arc weights w,\ndet(M) = ∑_{σ ∈ Sₖ} (-1)^σ ∑_{𝐩 nipat from 𝐀 to σ(𝐁)} w(𝐩)\n-/\n\n/-- The set of non-intersecting path tuples from 𝐀 to 𝐁 -/",
+          "line": 758,
+          "match_kind": "exact_local_name",
+          "name": "LGV.pathWeightMatrix",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "dyckDigraph_pathFinite",
+          "kind": "theorem",
+          "lean_snippet": "theorem dyckDigraph_pathFinite : dyckDigraph.IsPathFinite := by\n  intro u v\n  by_cases h : v.1 < u.1\n  · -- Case 1: No paths exist (would need to go backwards in x)\n    convert Set.finite_empty\n    ext p\n    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]\n    intro hstart hfinish\n    have hlen := dyckDigraph_path_length_eq p\n    rw [hstart, hfinish] at hlen\n    have hpos : 0 < p.vertices.length := List.length_pos_of_ne_nil p.nonempty\n    omega\n  · -- Case 2: Paths exist but are finite\n    push_neg at h\n    -- Define the path length\n    let n := (v.1 - u.1 + 1).toNat\n    -- Define the bounding box for the second coordinate\n    -- The second coordinate stays between 0 and u.2 + n\n    let maxY := u.2 + n\n    let box : Finset (ℤ × ℕ) := (Finset.Icc u.1 v.1) ×ˢ (Finset.range (maxY + 1))\n    -- Define the subtype of paths from u to v\n    let S := {p : SimpleDigraph.Path dyckDigraph | p.start = u ∧ p.finish = v}\n    -- Show S is finite by injecting into Fin n → box\n    suffices Finite S by exact Set.finite_coe_iff.mpr this\n    -- Define the injection: map each path to its vertex list as a function\n    let f : S → (Fin n → box) := fun ⟨p, hp⟩ i =>\n      let hi : i.val < p.vertices.length := by\n        have hlen := dyckDigraph_path_length_eq p\n        rw [hp.1, hp.2] at hlen\n        simp only [n] at hlen ⊢\n        have := i.isLt\n        omega",
+          "line": 5305,
+          "match_kind": "exact_local_name",
+          "name": "LGV.dyckDigraph_pathFinite",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "dyckUnitArcWeight",
+          "kind": "def",
+          "lean_snippet": "noncomputable def dyckUnitArcWeight : ArcWeight dyckDigraph ℤ :=\n  fun _ _ _ => 1\n\n/-- Helper: path weight with unit weight is 1 -/",
+          "line": 5426,
+          "match_kind": "exact_local_name",
+          "name": "LGV.dyckUnitArcWeight",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "xDecreasing",
+          "kind": "def",
+          "lean_snippet": "def xDecreasing {k : ℕ} (A : kVertex (ℤ × ℤ) k) : Prop :=\n  ∀ i j : Fin k, i ≤ j → xCoord (A j) ≤ xCoord (A i)\n\n/-- A k-vertex has weakly increasing y-coordinates -/",
+          "line": 3858,
+          "match_kind": "exact_local_name",
+          "name": "LGV.xDecreasing",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "yIncreasing",
+          "kind": "def",
+          "lean_snippet": "def yIncreasing {k : ℕ} (A : kVertex (ℤ × ℤ) k) : Prop :=\n  ∀ i j : Fin k, i ≤ j → yCoord (A i) ≤ yCoord (A j)\n\n/-- Discrete intermediate value theorem for integers (auxiliary version with explicit n) -/",
+          "line": 3862,
+          "match_kind": "exact_local_name",
+          "name": "LGV.yIncreasing",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "nipatWeightSum",
+          "kind": "def",
+          "lean_snippet": "noncomputable def nipatWeightSum {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) (w : ArcWeight D K) {k : ℕ}\n    (A B : kVertex V k) (_σ : Equiv.Perm (Fin k)) : K :=\n  ∑ pt ∈ nipatFinset hpf A B, pathTupleWeight w pt.paths\n\n/-!\n## Path Tuple Infrastructure for LGV\n\nThe key step in the LGV proof is to express the product of sums as a sum over path tuples:\n  ∏_j (∑_{p : A_j → B_j} w(p)) = ∑_{pt : PathTuple} pathTupleWeight w pt.paths\n\nThis uses `Finset.prod_univ_sum` and a bijection between PathTuple and the piFinset.\n-/\n\n/-- Bijection between PathTuple and the piFinset of pathsFromTo.\n    This is the key to converting the product of sums to a sum over path tuples. -/",
+          "line": 818,
+          "match_kind": "exact_local_name",
+          "name": "LGV.nipatWeightSum",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "SimpleDigraph.Path",
+          "kind": "structure",
+          "lean_snippet": "structure Path (D : SimpleDigraph V) where\n  /-- The vertices of the path, in order -/\n  vertices : List V\n  /-- The path is nonempty -/\n  nonempty : vertices ≠ []\n  /-- Consecutive vertices are connected by arcs -/\n  arcs_valid : ∀ i : ℕ, ∀ hi : i + 1 < vertices.length, D.arc (vertices.get ⟨i, Nat.lt_of_succ_lt hi⟩)\n      (vertices.get ⟨i + 1, hi⟩)\n\n/-- The starting vertex of a path -/",
+          "line": 97,
+          "match_kind": "suffix_full_name",
+          "name": "LGV.SimpleDigraph.Path",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        }
+      ],
+      "selected_project_context_count": 8,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "cor.lgv.catalan-hankel-det-0"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+      "unit_key": "unit-001"
+    },
+    {
+      "excluded_hidden_candidate_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "HasConstantTermOne",
+          "kind": "def",
+          "lean_snippet": "def HasConstantTermOne (f : K⟦X⟧) : Prop := constantCoeff f = 1\n\n/-- `HasConstantTermOne f` is equivalent to membership in `PowerSeries₁`.\n    This bridges the two representations of \"constant term equals 1\". -/",
+          "line": 115,
+          "match_kind": "exact_local_name",
+          "name": "AlgebraicCombinatorics.FPS.HasConstantTermOne",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "fpsPow",
+          "kind": "def",
+          "lean_snippet": "noncomputable def fpsPow (f : K⟦X⟧) (c : K) : K⟦X⟧ :=\n  fpsExp (c • fpsLog f)\n\n/-- Notation for non-integer powers (when needed) -/\nscoped notation:80 f \" ^ᶠ \" c:81 => fpsPow f c\n\n/-- f^0 = 1 for any f with constant term 1 -/\n@[simp]",
+          "line": 514,
+          "match_kind": "exact_local_name",
+          "name": "AlgebraicCombinatorics.FPS.fpsPow",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        }
+      ],
+      "selected_project_context_count": 2,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "prop.binom.nCk-2i-qedmo.CN"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/FPS/NonIntegerPowers.tex:prop.binom.nCk-2i-qedmo.CN",
+      "unit_key": "unit-003"
+    },
+    {
+      "excluded_hidden_candidate_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [],
+      "selected_project_context_count": 0,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "lem.cancel.all-even.l1"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex:lem.cancel.all-even.l1",
+      "unit_key": "unit-004"
+    },
+    {
+      "excluded_hidden_candidate_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 1,
+        "same_source_hidden_range_count": 1
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "selected_project_context": [
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "NPartition.transpose",
+          "kind": "def",
+          "lean_snippet": "noncomputable def transpose (μ : NPartition N) (hN : 0 < N) : NPartition (μ.parts ⟨0, hN⟩) where\n  parts := fun i => (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ μ.parts j).card\n  antitone := by\n    intro i j hij\n    apply Finset.card_le_card\n    intro r hr\n    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hr ⊢\n    exact le_trans (Nat.add_le_add_right hij 1) hr\n\n/-- Predicate asserting that `lamt` is the transpose of `lam`.\n    The transpose λᵗ of a partition λ satisfies:\n    (λᵗ)ᵢ = |{j : λⱼ ≥ i}| for each i.\n\n    Since we work with fixed-length tuples, this predicate captures\n    when two tuples represent transpose partitions (possibly with trailing zeros). -/",
+          "line": 1057,
+          "match_kind": "exact_full_name",
+          "name": "NPartition.transpose",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "NPartition.transpose",
+          "kind": "def",
+          "lean_snippet": "noncomputable def transpose (lam : NPartition N) (hN : 0 < N) : NPartition (lam.parts ⟨0, hN⟩) where\n  parts := fun i => (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ lam.parts j).card\n  weaklyDecreasing := by\n    intro i j hij\n    apply Finset.card_le_card\n    intro r hr\n    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hr ⊢\n    exact le_trans (Nat.add_le_add_right hij 1) hr\n\n/-- Predicate asserting that `lamt` is the transpose of `lam`.\n    The transpose λᵗ of a partition λ satisfies:\n    (λᵗ)ᵢ = |{j : λⱼ ≥ i}| for each i.\n\n    Since we work with fixed-length tuples, this predicate captures\n    when two tuples represent transpose partitions (possibly with trailing zeros). -/",
+          "line": 159,
+          "match_kind": "suffix_full_name",
+          "name": "SymmetricFunctions.NPartition.transpose",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "NPartition.transpose",
+          "kind": "def",
+          "lean_snippet": "noncomputable def transpose {n : ℕ} (p : Partition n) : Partition n := by\n  -- The transpose has parts: for each i from 1 to (largest part of p),\n  -- the i-th part of the transpose is the number of parts of p that are ≥ i\n  let largest := p.parts.fold max 0\n  let newParts : Multiset ℕ := (Finset.range largest).val.map\n    (fun i => (p.parts.filter (· > i)).card)\n  refine ⟨newParts.filter (· > 0), ?_, ?_⟩\n  · intro i hi\n    simp only [Multiset.mem_filter] at hi\n    exact hi.2\n  · -- Prove sum equals n using double counting\n    show (newParts.filter (· > 0)).sum = n\n    have h1 : newParts.sum = n := by\n      show ((Finset.range largest).val.map (fun i => (p.parts.filter (· > i)).card)).sum = n\n      have heq : ((Finset.range largest).val.map (fun i => (p.parts.filter (· > i)).card)).sum =\n                 (Finset.range largest).sum (fun i => (p.parts.filter (· > i)).card) := rfl\n      rw [heq]\n      have hp' : ∀ i ∈ p.parts, 0 < i := fun i hi => p.parts_pos hi\n      have := sum_filter_card_eq_sum p.parts hp'\n      rw [p.parts_sum] at this\n      exact this\n    rw [sum_filter_positive newParts]\n    exact h1\n\n/-- Helper lemma: for a sorted decreasing list, the count of elements > i is > j iff the j-th element > i.\n    This is the key bijection for the Young diagram transpose. -/",
+          "line": 1721,
+          "match_kind": "exact_local_name",
+          "name": "Nat.Partition.transpose",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "ssytFinset",
+          "kind": "def",
+          "lean_snippet": "noncomputable def ssytFinset (lam : NPartition N) : Finset (SSYT lam) :=\n  (ssytFillingFinsetNonSkew lam).attach.map ⟨\n    fun ⟨f, hf⟩ => fillingToSSYT lam f (Finset.mem_filter.mp hf).2,\n    fun ⟨f₁, hf₁⟩ ⟨f₂, hf₂⟩ h => by\n      simp only [Subtype.mk.injEq]\n      have : (fillingToSSYT lam f₁ (Finset.mem_filter.mp hf₁).2).entries =\n             (fillingToSSYT lam f₂ (Finset.mem_filter.mp hf₂).2).entries := by\n        simp only [fillingToSSYT] at h\n        cases h\n        rfl\n      exact this\n  ⟩\n\n/-- Every SSYT is in ssytFinset. -/",
+          "line": 1211,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.ssytFinset",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "Nipat",
+          "kind": "structure",
+          "lean_snippet": "structure Nipat (lam mu : Fin N → ℕ)\n    (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)\n    (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)\n    (hcontained : ∀ i, mu i ≤ lam i) where\n  /-- The tuple of paths, one for each i ∈ [N] -/\n  paths : (i : Fin N) → LatticePath (N := N)\n    ((mu i : ℤ) - (i.val : ℤ)) ((lam i : ℤ) - (i.val : ℤ))\n  /-- The paths satisfy column-strictness: for i < j, if east steps k (in path i)\n      and k' (in path j) correspond to the same tableau column (mu i + k = mu j + k'),\n      then the height of path i at step k is strictly less than the height of path j at step k'.\n      This is the key property that makes the nipat-SSYT bijection work. -/\n  colStrictPaths : ∀ i j : Fin N, i < j →\n    ∀ k : ℕ, ∀ hk : k < (paths i).eastStepHeights.length,\n    ∀ k' : ℕ, ∀ hk' : k' < (paths j).eastStepHeights.length,\n    mu i + k = mu j + k' →\n    (paths i).eastStepHeights[k] < (paths j).eastStepHeights[k']\n\n/-- The weight of a nipat is the product of the weights of its component paths. -/",
+          "line": 2872,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.Nipat",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "SkewSSYT",
+          "kind": "structure",
+          "lean_snippet": "structure SkewSSYT {N : ℕ} [NeZero N] (lam mu : NPartition N) extends SkewYoungTableau lam mu where\n  /-- Entries increase weakly along rows -/\n  row_weak : ∀ i : Fin N, ∀ j₁ j₂ : ℕ,\n    (i, j₁) ∈ skewYoungDiagram lam mu → (i, j₂) ∈ skewYoungDiagram lam mu → j₁ < j₂ →\n    entry (i, j₁) ≤ entry (i, j₂)\n  /-- Entries increase strictly down columns -/\n  col_strict : ∀ i₁ i₂ : Fin N, ∀ j : ℕ,\n    (i₁, j) ∈ skewYoungDiagram lam mu → (i₂, j) ∈ skewYoungDiagram lam mu → i₁ < i₂ →\n    entry (i₁, j) < entry (i₂, j)\n\n/-! ## Properties of Semistandard Skew Tableaux -/\n\n/-- In a semistandard skew tableau, entries increase weakly along rows (general version).\n    Lemma \\ref{lem.sf.skew-ssyt.increase}(a) in the source. -/",
+          "line": 1960,
+          "match_kind": "exact_full_name",
+          "name": "SkewSSYT",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "SkewSSYT",
+          "kind": "structure",
+          "lean_snippet": "structure SkewSSYT (s : SkewPartition N) where\n  /-- The entries of the tableau, only for boxes in Y(λ/μ).\n      Entry (i, k) corresponds to box (i, μᵢ + k + 1) in Y(λ/μ). -/\n  entries : (i : Fin N) → (k : Fin (s.outer.parts i - s.inner.parts i)) → Fin N\n  /-- Entries are weakly increasing along rows -/\n  rowWeak : ∀ i : Fin N, ∀ j k : Fin (s.outer.parts i - s.inner.parts i),\n    j ≤ k → entries i j ≤ entries i k\n  /-- Entries are strictly increasing down columns.\n      If boxes (i, c) and (i', c) are both in Y(λ/μ) with i < i', then\n      T(i, c) < T(i', c). Here c = μᵢ + k + 1 for some k.\n      The condition checks: for row i and column offset k, if row i+1 also\n      contains column μᵢ + k + 1 (i.e., μᵢ + k + 1 > μᵢ₊₁ and μᵢ + k + 1 ≤ λᵢ₊₁),\n      then the entry in row i is strictly less than the entry in row i+1. -/\n  colStrict : ∀ i : Fin N, ∀ hi : i.val + 1 < N,\n    ∀ k : Fin (s.outer.parts i - s.inner.parts i),\n    -- The absolute column is μᵢ + k + 1. For this to be in row i+1:\n    -- 1. μᵢ + k + 1 > μᵢ₊₁ (column is after the inner partition in row i+1)\n    -- 2. μᵢ + k + 1 ≤ λᵢ₊₁ (column is within the outer partition in row i+1)\n    ∀ _hcol : s.inner.parts i + k.val + 1 > s.inner.parts ⟨i.val + 1, hi⟩ ∧\n             s.inner.parts i + k.val + 1 ≤ s.outer.parts ⟨i.val + 1, hi⟩,\n    -- The offset in row i+1 for the same column\n    let k' : ℕ := s.inner.parts i + k.val - s.inner.parts ⟨i.val + 1, hi⟩\n    ∀ hk' : k' < s.outer.parts ⟨i.val + 1, hi⟩ - s.inner.parts ⟨i.val + 1, hi⟩,\n    entries i k < entries ⟨i.val + 1, hi⟩ ⟨k', hk'⟩\n\n/-- The monomial x^T associated to a tableau T.\n    x_T = ∏_{(i,j) ∈ Y(λ)} x_{T(i,j)} -/",
+          "line": 926,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.SkewSSYT",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        },
+        {
+          "context_source": "proof_lane_decline_context_miner_project_source_candidate",
+          "identifier_from_decline_note": "potentialVerticalStrips",
+          "kind": "def",
+          "lean_snippet": "def potentialVerticalStrips (mu : NPartition N) : Finset (Fin N → ℕ) :=\n  Fintype.piFinset (fun i => Finset.Icc (mu.parts i) (verticalStripUpperBound mu i))\n\n/-- The set of N-partitions λ such that λ/μ is a vertical n-strip.\n\n    This is the set of all N-partitions λ satisfying:\n    1. μ ⊆ λ (containment): μ_i ≤ λ_i for all i\n    2. Vertical strip: λ_i ≤ μ_i + 1 for all i\n    3. Size: |λ| - |μ| = n\n\n    The set is finite because each λ_i ∈ {μ_i, μ_i + 1}. -/",
+          "line": 1509,
+          "match_kind": "exact_local_name",
+          "name": "SymmetricFunctions.potentialVerticalStrips",
+          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+          "safety_policy": "Candidate came from a target-hidden proof-lane decline note and project-source scan. Same-source aligned/referencing target declarations were used only as an exclusion filter and are not included in this pack."
+        }
+      ],
+      "selected_project_context_count": 8,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "thm.sf.jt-e"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex:thm.sf.jt-e",
+      "unit_key": "unit-005"
+    },
+    {
+      "excluded_hidden_candidate_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 2,
+        "same_source_hidden_range_count": 2
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1",
+      "selected_project_context": [],
+      "selected_project_context_count": 0,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "lem.fps.prod.irlv.cong-div"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/Details/InfiniteProducts1.tex:lem.fps.prod.irlv.cong-div",
+      "unit_key": "unit-001"
+    },
+    {
+      "excluded_hidden_candidate_count": 0,
+      "hidden_filter_stats": {
+        "same_source_hidden_name_count": 5,
+        "same_source_hidden_range_count": 5
+      },
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1",
+      "selected_project_context": [],
+      "selected_project_context_count": 0,
+      "skipped_identifiers": [],
+      "source_labels": [
+        "prop.sf.Npar-as-par"
+      ],
+      "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+      "unit_key": "unit-005"
+    }
+  ]
+}

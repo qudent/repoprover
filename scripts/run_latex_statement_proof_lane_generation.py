@@ -68,6 +68,46 @@ def load_tasks(task_dir: Path, unit_keys: set[str] | None = None) -> list[dict[s
     return tasks
 
 
+def load_decline_context_pack(path: Path | None) -> dict[tuple[str, str], dict[str, Any]]:
+    if path is None:
+        return {}
+    data = read_json(path)
+    packs: dict[tuple[str, str], dict[str, Any]] = {}
+    for unit in data.get("units") or []:
+        source_unit_id = str(unit.get("source_unit_id") or "")
+        unit_key = str(unit.get("unit_key") or "")
+        if source_unit_id and unit_key:
+            packs[(source_unit_id, unit_key)] = unit
+    return packs
+
+
+def attach_decline_context_pack(tasks: list[dict[str, Any]], pack_path: Path | None) -> int:
+    packs = load_decline_context_pack(pack_path)
+    attached = 0
+    if not packs:
+        return attached
+    for task in tasks:
+        unit_key = str(task.get("unit_key") or "")
+        source_unit_id = str((task.get("source_unit") or {}).get("id") or "")
+        pack = packs.get((source_unit_id, unit_key))
+        if not pack:
+            continue
+        context = pack.get("selected_project_context") or []
+        if not context:
+            continue
+        task["decline_context_pack"] = {
+            "source": "scripts/build_proof_lane_decline_context_pack.py",
+            "policy": (
+                "Additional project context acquired from clean proof-lane decline notes after "
+                "same-source target-declaration exclusion filtering. Use these snippets as visible "
+                "project context; do not infer hidden aligned target declarations."
+            ),
+            "selected_project_context": context,
+        }
+        attached += 1
+    return attached
+
+
 def chunks(items: list[dict[str, Any]], size: int) -> list[list[dict[str, Any]]]:
     if size <= 0 or size >= len(items):
         return [items]
@@ -120,6 +160,7 @@ def build_messages(tasks: list[dict[str, Any]]) -> list[dict[str, str]]:
             "Do not enlarge a finite source choice space to all functions into an infinite codomain. Preserve finite representations supplied by visible context.",
             "Every identifier in a generated declaration must be introduced by an explicit binder, local declaration, visible helper, checked Mathlib/project/local declaration, or import/open context visible to the verifier.",
             "If verifier messages report missing typeclass instances for an unbound symbol, such as `Zero K`, `CommRing K`, or `Fintype α`, add the required type variable and typeclass binders to the generated theorem or emit the corresponding visible `variable` command in lean_file_body. Do not rely on local_file_context_candidates variables unless you reproduce the needed variable command or binders in the output.",
+            "If a task contains decline_context_pack.selected_project_context, treat those snippets as newly acquired visible project/local context after target-hidden filtering. Try those project declarations before concluding that a named project definition or bridge is unavailable.",
             "If the visible context is insufficient, set status to cannot_prove_from_visible_context, lean_file_body to exactly empty string, and declaration_names to exactly []. Put the missing facts in notes only.",
         ],
         "benchmark_policy": {
@@ -152,6 +193,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     eval_dir.mkdir(parents=True, exist_ok=True)
 
     selected_tasks = load_tasks(args.proof_lane_task_dir, set(args.unit_key or []) or None)
+    decline_context_pack = getattr(args, "decline_context_pack", None)
+    attached_decline_context_pack_count = attach_decline_context_pack(selected_tasks, decline_context_pack)
     task_chunks = chunks(selected_tasks, args.max_tasks_per_call)
     summary: dict[str, Any] = {
         "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
@@ -166,6 +209,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "budget_only": args.budget_only,
         "paid_call_made": False,
         "task_unit_keys": [str(task.get("unit_key") or "") for task in selected_tasks],
+        "decline_context_pack": str(decline_context_pack) if decline_context_pack else None,
+        "attached_decline_context_pack_count": attached_decline_context_pack_count,
         "batch_count": len(task_chunks),
         "batches": [],
     }
@@ -252,6 +297,7 @@ def main() -> None:
         help="OpenRouter reasoning effort override; use 'none' for schema-bound JSON proof-lane runs.",
     )
     parser.add_argument("--max-tasks-per-call", type=int, default=1)
+    parser.add_argument("--decline-context-pack", type=Path)
     parser.add_argument("--budget-only", action="store_true")
     args = parser.parse_args()
     print(json.dumps(run(args), indent=2, sort_keys=True))

@@ -763,6 +763,23 @@ already selected, and Mathlib-hydration gaps such as `Ring.choose_add` or
 diagnostic artifact only, and any candidate declarations must still be filtered
 against target-hidden/current-unit policy before entering model prompts.
 
+`scripts/build_proof_lane_decline_context_pack.py` turns that diagnostic into a
+model-facing context pack. It uses `docs/latex-statement-gold-candidates.jsonl`
+only as an exclusion filter for same-source aligned/referencing target
+declarations; hidden target names and snippets are not emitted into the pack.
+The current pack at
+`docs/latex-statement-proof-lane-decline-context-pack-2026-05-06.md` selects 18
+additional project-context snippets and excludes 0 hidden candidates. Budget-only
+proof-lane payloads with this pack are recorded at
+`docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-decline-context-budget/`
+and
+`docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-decline-context-budget/`.
+The fresh-slice payload attaches acquired context to 3 of 4 proof-lane tasks
+(`unit-001`, `unit-003`, and `unit-005`); the dev-panel payload attaches none,
+which is consistent with the miner: the remaining dev-panel blockers are either
+already-selected project context plus hard proof synthesis, or absent Mathlib
+lookup.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

@@ -31,7 +31,9 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - [x] Add target-hidden proof-lane task generation, paid proof-lane generation,
   no-provider acceptance, and overlay verification.
 - [x] Mine clean proof-lane declines against source-visible project declarations.
-- [ ] Turn decline-context mining into prompt-safe context acquisition packs.
+- [x] Turn decline-context mining into prompt-safe context acquisition packs.
+- [ ] Run the packed fresh-slice proof-lane payload as a paid/checked experiment
+  only if the payload review looks target-clean.
 - [ ] Validate the next generic context/proof-lane change on a fresh slice, not
   only on NPartition or one already-debugged theorem.
 
@@ -63,6 +65,11 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   5,677 project declarations in 53 project Lean files across 6 clean-decline
   units: 15 identifiers were project-source matches mentioned but not selected,
   11 were already selected, and 14 were absent from the project index.
+- Prompt-safe decline-context pack:
+  `docs/latex-statement-proof-lane-decline-context-pack-2026-05-06.md`. It uses
+  gold only as an exclusion filter, selected 18 extra project-context snippets,
+  and generated no-provider proof-lane payloads. Fresh-slice payloads attach
+  context to 3/4 tasks; dev-panel payloads attach 0/2.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -73,5 +80,5 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: build prompt-safe context packs from the decline-context
-  miner, filtering out current-unit/hidden target declarations before generation.
+- Next useful work: review the packed fresh-slice budget payload for target
+  cleanliness, then run a small paid proof-lane retry if clean.

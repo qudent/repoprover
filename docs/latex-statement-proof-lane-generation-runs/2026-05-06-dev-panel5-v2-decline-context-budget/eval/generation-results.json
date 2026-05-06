@@ -1,0 +1,45 @@
+{
+  "attached_decline_context_pack_count": 0,
+  "batch_count": 2,
+  "batches": [
+    {
+      "batch_index": 1,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-decline-context-budget/batch-001/generation-payload.json",
+      "task_unit_keys": [
+        "unit-001"
+      ],
+      "valid_json": false
+    },
+    {
+      "batch_index": 2,
+      "budget_only": true,
+      "paid_call_made": false,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-decline-context-budget/batch-002/generation-payload.json",
+      "task_unit_keys": [
+        "unit-005"
+      ],
+      "valid_json": false
+    }
+  ],
+  "budget_only": true,
+  "cost_summary": null,
+  "decline_context_pack": "docs/latex-statement-proof-lane-decline-context-pack-2026-05-06.json",
+  "generated_at": "2026-05-06T11:36:33.775945+00:00",
+  "max_tasks_per_call": 1,
+  "max_tokens": 8192,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-decline-context-budget",
+  "paid_call_made": false,
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-dev-panel5-v2-merged-panel",
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
+  "task_unit_keys": [
+    "unit-001",
+    "unit-005"
+  ],
+  "temperature": 0.0
+}
