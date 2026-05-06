@@ -128,6 +128,16 @@ artifacts are preserved at `checkpoint/before-per-latex-statement-dataset`.
   rounds. Budget-only smoke
   `docs/latex-statement-repair-loop-runs/2026-05-05-symmetric-loop-budget/`
   wrote the round-01 context-selection payload without a paid call.
+- Triangular determinant new-unit probe:
+  `docs/latex-statement-context-runs/2026-05-06-triangular-v1-paid/` selected
+  one broad task and guessed nonexistent `Matrix.det_triangular`; hydration
+  recovered checked fallbacks `Matrix.det_of_upperTriangular` and
+  `Matrix.det_of_lowerTriangular`. Initial generation decomposed the theorem
+  into two declarations but failed on `OrderDual` syntax and metadata omitted
+  one declaration name. The bounded loop
+  `docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/`
+  repaired it in one round: compile `1/1`, semantic coverage `1/1` source unit
+  with `2/2` aligned gold declarations proved. Added cost `$0.00550774`.
 
 ## Agent Notes
 - Current `main` is ahead of `origin/main`; do not assume remote is current.

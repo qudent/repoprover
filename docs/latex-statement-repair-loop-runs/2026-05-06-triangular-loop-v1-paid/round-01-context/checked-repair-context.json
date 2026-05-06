@@ -1,0 +1,75 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [],
+  "do_not_use_identifiers": [],
+  "failed_or_unchecked_context_requests": [],
+  "generated_at": "2026-05-06T00:06:54.264815+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "Correct syntax for applying OrderDual.toDual to Fin n: use (Fin n)ᵒᵈ with parentheses.",
+      "unit_key": "unit-001"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The error occurs at line 19: `OrderDual.toDual : Fin n → Fin nᵒᵈ` is invalid because `Fin n` is a type, not a term of `Type`. The correct usage is `OrderDual.toDual : Fin n → (Fin n)ᵒᵈ`. The generated code used `Fin nᵒᵈ` which is parsed as `(Fin n)ᵒᵈ` but the error indicates a type mismatch because `n` is a ℕ, not a Type. Actually `Fin n` is a type, so `(Fin n)ᵒᵈ` should be fine. The error says `n` is being used as a type, which suggests the binder `{n : ℕ}` is being interpreted as an explicit binder for a type? The error message: \"Application type mismatch: The argument n has type ℕ of sort `Type` but is expected to have type Type ?u.1130\". This is confusing. Possibly the issue is that `OrderDual.toDual` expects an explicit type argument? Actually `OrderDual.toDual` is a function `α → αᵒᵈ`. The error might be because `Fin n` is not recognized as a type? But `Fin n` is a type. The error says `n` is of type `ℕ` but expected a `Type`. This suggests that `Fin nᵒᵈ` is being parsed as `Fin (nᵒᵈ)`, i.e., applying `Fin` to `nᵒᵈ`, which is nonsense because `n` is a ℕ. The fix is to write `(Fin n)ᵒᵈ` with parentheses. The generated code wrote `Fin nᵒᵈ` which is ambiguous and parsed as `Fin (nᵒᵈ)`. So the repair is to add parentheses: `(Fin n)ᵒᵈ`. Additionally, the theorem `det_of_lowerTriangular` in Mathlib expects `M.BlockTriangular (OrderDual.toDual : m → mᵒᵈ)`. The generated code used `OrderDual.toDual : Fin n → Fin nᵒᵈ` but should be `(OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)`. Also, the `h` argument type should be `A.BlockTriangular (OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)`. The error is a syntax/type error, not a missing lemma. The proof route is correct: use `Matrix.det_of_upperTriangular` and `Matrix.det_of_lowerTriangular`. The only needed context is the correct syntax for `OrderDual.toDual` and the type `(Fin n)ᵒᵈ`. No additional Mathlib lemmas are needed beyond those already checked. The local file context shows `det_transpose'` is available but not needed. The prior project context includes `det_transpose'` but we don't need it. The repair is purely syntactic: add parentheses around `Fin n` before `ᵒᵈ`.",
+      "proof_strategy_note": "Fix the syntax error by adding parentheses around `Fin n` before `ᵒᵈ`. The two theorems `det_of_triangular` and `det_of_triangular'` are correct in intent. The first uses `Matrix.det_of_upperTriangular` with `h : A.BlockTriangular id`. The second uses `Matrix.det_of_lowerTriangular` with `h : A.BlockTriangular (OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)`. No additional lemmas are required.",
+      "selector_confidence": 1.0,
+      "unit_key": "unit-001"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "The error occurs at line 19: `OrderDual.toDual : Fin n → Fin nᵒᵈ` is invalid because `Fin n` is a type, not a term of `Type`. The correct usage is `OrderDual.toDual : Fin n → (Fin n)ᵒᵈ`. The generated code used `Fin nᵒᵈ` which is parsed as `(Fin n)ᵒᵈ` but the error indicates a type mismatch because `n` is a ℕ, not a Type. Actually `Fin n` is a type, so `(Fin n)ᵒᵈ` should be fine. The error says `n` is being used as a type, which suggests the binder `{n : ℕ}` is being interpreted as an explicit binder for a type? The error message: \"Application type mismatch: The argument n has type ℕ of sort `Type` but is expected to have type Type ?u.1130\". This is confusing. Possibly the issue is that `OrderDual.toDual` expects an explicit type argument? Actually `OrderDual.toDual` is a function `α → αᵒᵈ`. The error might be because `Fin n` is not recognized as a type? But `Fin n` is a type. The error says `n` is of type `ℕ` but expected a `Type`. This suggests that `Fin nᵒᵈ` is being parsed as `Fin (nᵒᵈ)`, i.e., applying `Fin` to `nᵒᵈ`, which is nonsense because `n` is a ℕ. The fix is to write `(Fin n)ᵒᵈ` with parentheses. The generated code wrote `Fin nᵒᵈ` which is ambiguous and parsed as `Fin (nᵒᵈ)`. So the repair is to add parentheses: `(Fin n)ᵒᵈ`. Additionally, the theorem `det_of_lowerTriangular` in Mathlib expects `M.BlockTriangular (OrderDual.toDual : m → mᵒᵈ)`. The generated code used `OrderDual.toDual : Fin n → Fin nᵒᵈ` but should be `(OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)`. Also, the `h` argument type should be `A.BlockTriangular (OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)`. The error is a syntax/type error, not a missing lemma. The proof route is correct: use `Matrix.det_of_upperTriangular` and `Matrix.det_of_lowerTriangular`. The only needed context is the correct syntax for `OrderDual.toDual` and the type `(Fin n)ᵒᵈ`. No additional Mathlib lemmas are needed beyond those already checked. The local file context shows `det_transpose'` is available but not needed. The prior project context includes `det_transpose'` but we don't need it. The repair is purely syntactic: add parentheses around `Fin n` before `ᵒᵈ`.",
+        "missing_or_uncertain_context": [
+          "Correct syntax for applying OrderDual.toDual to Fin n: use (Fin n)ᵒᵈ with parentheses."
+        ],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "Fix the syntax error by adding parentheses around `Fin n` before `ᵒᵈ`. The two theorems `det_of_triangular` and `det_of_triangular'` are correct in intent. The first uses `Matrix.det_of_upperTriangular` with `h : A.BlockTriangular id`. The second uses `Matrix.det_of_lowerTriangular` with `h : A.BlockTriangular (OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)`. No additional lemmas are required.",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "thm.det.triang",
+            "why_needed": "Source theorem statement."
+          },
+          {
+            "context_kind": "local_file_style",
+            "name_or_label": "open Matrix, variable declarations",
+            "why_needed": "Style guidance for the file."
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "AlgebraicCombinatorics.Det.det_transpose'",
+            "why_needed": "Not needed for this repair, but available."
+          }
+        ],
+        "selector_confidence": 1.0,
+        "unit_key": "unit-001"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-context",
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "thm.det.triang",
+      "unit_key": "unit-001",
+      "why_needed": "Source theorem statement."
+    },
+    {
+      "context_kind": "local_file_style",
+      "name_or_label": "open Matrix, variable declarations",
+      "unit_key": "unit-001",
+      "why_needed": "Style guidance for the file."
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "AlgebraicCombinatorics.Det.det_transpose'",
+      "unit_key": "unit-001",
+      "why_needed": "Not needed for this repair, but available."
+    }
+  ]
+}

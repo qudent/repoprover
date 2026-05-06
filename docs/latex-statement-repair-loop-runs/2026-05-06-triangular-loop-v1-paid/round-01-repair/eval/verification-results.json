@@ -1,0 +1,68 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 1,
+      "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-repair/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.DeterminantsBasic"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.Det",
+        "open Matrix",
+        "open Matrix.BlockTriangular",
+        "open Matrix.GeneralLinearGroup",
+        "open Subgroup.HasDetPlusMinusOne"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.Det",
+        "open Matrix",
+        "open Matrix.BlockTriangular",
+        "open Matrix.GeneralLinearGroup",
+        "open Subgroup.HasDetPlusMinusOne"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "det_of_triangular",
+            "det_of_triangular'"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "det_of_triangular",
+            "det_of_triangular'"
+          ],
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 1,
+  "generated_at": "2026-05-06T00:07:31.349669+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-repair",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

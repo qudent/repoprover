@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Need to handle both lower-triangular and upper-triangular cases, possibly via transpose.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib lemma for determinant of triangular matrix\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"det_triangular : det A = ∏ i, A i i for triangular A\",\n              \"name_or_query\": \"Matrix.det_triangular\",\n              \"why_needed\": \"Main theorem statement\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"AlgebraicCombinatorics.Det.det_transpose'\",\n              \"why_needed\": \"To reduce upper-triangular to lower-triangular via transpose\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"thm.det.triang source text\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For any n, any triangular matrix A over K, det A equals product of diagonal entries.\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Determinant of triangular matrix equals product of diagonal entries.\",\n      \"unit_key\": \"unit-001\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778025835,
+  "id": "gen-1778025835-HbYIacCCOVMRT7Yb9nfU",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 338,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00070966,
+    "cost_details": {
+      "upstream_inference_completions_cost": 9.464e-05,
+      "upstream_inference_cost": 0.00070966,
+      "upstream_inference_prompt_cost": 0.00061502
+    },
+    "is_byok": false,
+    "prompt_tokens": 4393,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 4731
+  }
+}

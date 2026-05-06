@@ -176,6 +176,18 @@ post-hoc gold/semantic grading. The budget-only smoke artifact
 `docs/latex-statement-repair-loop-runs/2026-05-05-symmetric-loop-budget/`
 records the round-01 payload without another paid call.
 
+A new theorem-level multi-declaration probe on `thm.det.triang` shows the loop
+generalizing beyond the symmetric unit. The selector guessed nonexistent
+`Matrix.det_triangular`, but fallback hydration recovered checked
+`Matrix.det_of_upperTriangular` and `Matrix.det_of_lowerTriangular`. The first
+generation decomposed the source theorem into two Lean declarations but failed
+on `OrderDual` syntax and omitted one declaration name from metadata. The
+bounded loop
+`docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/`
+fixed both in one repair round: generated-only compile `1/1`, exact metadata
+clean, and semantic coverage proved both aligned gold declarations `2/2`. Added
+cost for selector, generation, and repair-loop calls was `$0.00550774`.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

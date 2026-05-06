@@ -538,6 +538,31 @@ Reproducible runner:
   writes the first context-selection payload for the symmetric failure and
   stops before any paid call.
 
+New theorem-level multi-declaration probe:
+
+- source unit:
+  `AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang`
+  with two aligned gold declarations.
+- selector:
+  `docs/latex-statement-context-runs/2026-05-06-triangular-v1-paid/`,
+  cost `$0.00070966`; valid JSON, source-only, but it planned one broad task and
+  guessed nonexistent `Matrix.det_triangular`.
+- hydration: exact request failed, but checked fallback signatures included
+  `Matrix.det_of_upperTriangular` and `Matrix.det_of_lowerTriangular`.
+- generation:
+  `docs/latex-statement-generation-runs/2026-05-06-triangular-v1-paid/`,
+  cost `$0.00130004`; decomposed the source theorem into two Lean declarations
+  but failed on ambiguous `Fin nᵒᵈ`/`OrderDual` syntax and listed only one
+  declaration name. The verifier now catches declaration-name metadata
+  mismatches against declarations actually present in `lean_file_body`.
+- bounded repair loop:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/`,
+  one repair round, additional cost `$0.00349804`; repaired the `OrderDual`
+  syntax to `(Fin n)ᵒᵈ` and fixed `declaration_names`.
+- result: generated-only compile `1/1`; semantic coverage
+  `all_aligned_gold_proved` for the source unit with `2/2` aligned gold
+  declarations proved.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

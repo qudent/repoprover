@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "det_of_triangular",
+        "det_of_triangular'"
+      ],
+      "lean_file_body": "open Matrix\n\nopen scoped BigOperators\n\nvariable {K : Type*} [CommRing K] {n : ℕ}\n\ntheorem det_of_triangular (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id) : A.det = ∏ i : Fin n, A i i :=\n  Matrix.det_of_upperTriangular h\n\ntheorem det_of_triangular' (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular (OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)) : A.det = ∏ i : Fin n, A i i :=\n  Matrix.det_of_lowerTriangular A h",
+      "notes": [
+        "Fixed syntax error: added parentheses around `(Fin n)ᵒᵈ` to avoid ambiguous parsing as `Fin (nᵒᵈ)`. The two theorems use `Matrix.det_of_upperTriangular` and `Matrix.det_of_lowerTriangular` directly."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source text: thm.det.triang",
+        "Mathlib: Matrix.det_of_upperTriangular (checked)",
+        "Mathlib: Matrix.det_of_lowerTriangular (checked)",
+        "local file context: open Matrix, variable declarations"
+      ]
+    }
+  ]
+}

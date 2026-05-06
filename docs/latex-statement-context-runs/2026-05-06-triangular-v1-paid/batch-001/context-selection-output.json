@@ -1,0 +1,40 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Need to handle both lower-triangular and upper-triangular cases, possibly via transpose."
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for determinant of triangular matrix"
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "det_triangular : det A = ∏ i, A i i for triangular A",
+              "name_or_query": "Matrix.det_triangular",
+              "why_needed": "Main theorem statement"
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "AlgebraicCombinatorics.Det.det_transpose'",
+              "why_needed": "To reduce upper-triangular to lower-triangular via transpose"
+            }
+          ],
+          "needed_source_context": [
+            "thm.det.triang source text"
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For any n, any triangular matrix A over K, det A equals product of diagonal entries.",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Determinant of triangular matrix equals product of diagonal entries.",
+      "unit_key": "unit-001"
+    }
+  ]
+}

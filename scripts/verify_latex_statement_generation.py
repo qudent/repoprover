@@ -18,6 +18,10 @@ DEFAULT_OPENS = ["open scoped Polynomial BigOperators", "open PowerSeries Finset
 PLACEHOLDER_RE = re.compile(r"\b(sorry|admit|aesop\?)\b")
 LEAN_COMMENT_RE = re.compile(r"(^|\n)\s*(--|/-)")
 LEAN_DOTTED_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)+$")
+LEAN_DECL_RE = re.compile(
+    r"(?m)^\s*(?:(?:private|protected|noncomputable|unsafe|partial)\s+)*"
+    r"(?:theorem|lemma|def|abbrev|instance)\s+([^\s:\{\(\[]+)"
+)
 
 
 def read_json(path: Path) -> Any:
@@ -53,6 +57,10 @@ def maybe_namespace(name: str) -> str | None:
         return None
     namespace = ".".join(parts[:-1])
     return namespace if namespace not in {"Mathlib"} else None
+
+
+def local_declaration_name(name: str) -> str:
+    return name.split(".")[-1]
 
 
 def iter_dicts(value: Any) -> list[dict[str, Any]]:
@@ -112,6 +120,10 @@ def build_lean_source(body: str, *, imports: list[str], opens: list[str]) -> str
     return "\n".join(lines) + "\n"
 
 
+def declared_names_in_body(body: str) -> list[str]:
+    return unique_in_order([match.group(1) for match in LEAN_DECL_RE.finditer(body)])
+
+
 def parse_lean_json(stdout: str) -> list[dict[str, Any]]:
     messages: list[dict[str, Any]] = []
     for line in stdout.splitlines():
@@ -168,6 +180,7 @@ def verify_generation_output(
         body = str(unit.get("lean_file_body") or "")
         status = str(unit.get("status") or "generated")
         declaration_names = unit.get("declaration_names", [])
+        body_declaration_names = declared_names_in_body(body)
         placeholders = sorted(set(PLACEHOLDER_RE.findall(body)))
         contract_violations: list[str] = []
         if status == "cannot_prove_from_visible_context" and body.strip():
@@ -180,6 +193,9 @@ def verify_generation_output(
             contract_violations.append("generated_lean_contains_placeholder")
         if status == "generated" and LEAN_COMMENT_RE.search(body):
             contract_violations.append("generated_lean_must_not_include_comments")
+        reported_local_names = [local_declaration_name(str(name)) for name in declaration_names]
+        if status == "generated" and sorted(reported_local_names) != sorted(body_declaration_names):
+            contract_violations.append("declaration_names_must_match_lean_file_body_declarations")
 
         if status == "cannot_prove_from_visible_context" and not body.strip():
             lean_result = {"returncode": None, "messages": [], "stderr": "", "skipped_reason": status}
@@ -192,6 +208,7 @@ def verify_generation_output(
                 "unit_key": unit.get("unit_key"),
                 "reported_status": status,
                 "declaration_names": declaration_names,
+                "body_declaration_names": body_declaration_names,
                 "placeholder_tokens": placeholders,
                 "contract_violations": contract_violations,
                 "lean_returncode": lean_result["returncode"],

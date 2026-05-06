@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"det_of_triangular\",\n        \"det_of_triangular'\"\n      ],\n      \"lean_file_body\": \"open Matrix\\n\\nopen scoped BigOperators\\n\\nvariable {K : Type*} [CommRing K] {n : ℕ}\\n\\ntheorem det_of_triangular (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id) : A.det = ∏ i : Fin n, A i i :=\\n  Matrix.det_of_upperTriangular h\\n\\ntheorem det_of_triangular' (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular (OrderDual.toDual : Fin n → (Fin n)ᵒᵈ)) : A.det = ∏ i : Fin n, A i i :=\\n  Matrix.det_of_lowerTriangular A h\",\n      \"notes\": [\n        \"Fixed syntax error: added parentheses around `(Fin n)ᵒᵈ` to avoid ambiguous parsing as `Fin (nᵒᵈ)`. The two theorems use `Matrix.det_of_upperTriangular` and `Matrix.det_of_lowerTriangular` directly.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source text: thm.det.triang\",\n        \"Mathlib: Matrix.det_of_upperTriangular (checked)\",\n        \"Mathlib: Matrix.det_of_lowerTriangular (checked)\",\n        \"local file context: open Matrix, variable declarations\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778026014,
+  "id": "gen-1778026014-H2SbPoCZK0jyLCLeIfGm",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 378,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00181496,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00010584,
+      "upstream_inference_cost": 0.00181496,
+      "upstream_inference_prompt_cost": 0.00170912
+    },
+    "is_byok": false,
+    "prompt_tokens": 12208,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 12586
+  }
+}

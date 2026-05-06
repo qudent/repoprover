@@ -67,6 +67,36 @@ def test_verify_generation_output_flags_generated_comments(monkeypatch, tmp_path
     assert rows[0]["compile_passed"] is False
 
 
+def test_verify_generation_output_flags_declaration_name_mismatch(monkeypatch, tmp_path) -> None:
+    def fake_run_lean_source(source, *, project_root, timeout_seconds):
+        return {"returncode": 0, "messages": [], "stderr": ""}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
+    rows = verify_generation_output(
+        {
+            "units": [
+                {
+                    "unit_key": "unit-001",
+                    "status": "generated",
+                    "declaration_names": ["demo"],
+                    "lean_file_body": (
+                        "theorem demo : True := by\n  trivial\n\n"
+                        "theorem extra : True := by\n  trivial"
+                    ),
+                }
+            ]
+        },
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        opens=[],
+        timeout_seconds=1,
+    )
+
+    assert rows[0]["body_declaration_names"] == ["demo", "extra"]
+    assert rows[0]["contract_violations"] == ["declaration_names_must_match_lean_file_body_declarations"]
+    assert rows[0]["compile_passed"] is False
+
+
 def test_verify_generation_output_skips_empty_cannot_prove(monkeypatch, tmp_path) -> None:
     def fail_if_called(source, *, project_root, timeout_seconds):
         raise AssertionError("Lean should not run for empty cannot-prove outputs")

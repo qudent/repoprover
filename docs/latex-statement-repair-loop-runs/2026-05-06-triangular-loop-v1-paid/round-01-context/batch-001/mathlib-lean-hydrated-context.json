@@ -1,0 +1,28 @@
+{
+  "exact_identifier_count": 0,
+  "fallback_exact_identifier_count": 0,
+  "fallback_lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "fallback_lean_check_status": "no_exact_identifiers",
+  "generated_at": "2026-05-06T00:06:54.263970+00:00",
+  "hydrated_mathlib_context": [],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {},
+    "lean_source_sha256": "72feb8eb3bc28f65f0589e266fe04efe7430f0d7adfbd694895f77c90ece6b47",
+    "status": "no_exact_identifiers"
+  },
+  "lean_check_status": "no_exact_identifiers",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 0,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

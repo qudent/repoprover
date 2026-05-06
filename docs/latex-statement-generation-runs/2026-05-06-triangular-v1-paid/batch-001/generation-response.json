@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"det_of_triangular\"\n      ],\n      \"lean_file_body\": \"open Matrix\\n\\nopen scoped BigOperators\\n\\nvariable {K : Type*} [CommRing K] {n : ℕ}\\n\\ntheorem det_of_triangular (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular id) : A.det = ∏ i : Fin n, A i i :=\\n  Matrix.det_of_upperTriangular h\\n\\ntheorem det_of_triangular' (A : Matrix (Fin n) (Fin n) K) (h : A.BlockTriangular (OrderDual.toDual : Fin n → Fin nᵒᵈ)) : A.det = ∏ i : Fin n, A i i :=\\n  Matrix.det_of_lowerTriangular A h\",\n      \"notes\": [\n        \"The source theorem covers both lower- and upper-triangular cases. We provide two theorems: det_of_triangular for upper-triangular (using Matrix.det_of_upperTriangular) and det_of_triangular' for lower-triangular (using Matrix.det_of_lowerTriangular). The transpose reduction via det_transpose' is also possible but not needed since Mathlib provides both lemmas directly.\",\n        \"The variable declarations and open commands are included to match the local file context style.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source text: thm.det.triang\",\n        \"Mathlib: Matrix.det_of_upperTriangular (checked)\",\n        \"Mathlib: Matrix.det_of_lowerTriangular (checked)\",\n        \"local file context: open Matrix, variable declarations\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778025903,
+  "id": "gen-1778025903-5kGs2dxAJUXnHvYxLAhu",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "AtlasCloud",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 404,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00130004,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00011312,
+      "upstream_inference_cost": 0.00130004,
+      "upstream_inference_prompt_cost": 0.00118692
+    },
+    "is_byok": false,
+    "prompt_tokens": 8478,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 8882
+  }
+}

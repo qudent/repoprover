@@ -1,0 +1,362 @@
+{
+  "exact_identifier_count": 1,
+  "fallback_exact_identifier_count": 8,
+  "fallback_lean_check": {
+    "checked": {
+      "Matrix.BlockTriangular.det": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+        "status": "checked"
+      },
+      "Matrix.BlockTriangular.det_fintype": {
+        "messages": [
+          {
+            "data": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+        "status": "checked"
+      },
+      "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det": {
+        "messages": [
+          {
+            "data": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+        "status": "checked"
+      },
+      "Matrix.det_of_lowerTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "Matrix.det_of_upperTriangular": {
+        "messages": [
+          {
+            "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+        "status": "checked"
+      },
+      "Matrix.twoBlockTriangular_det": {
+        "messages": [
+          {
+            "data": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+        "status": "checked"
+      },
+      "Matrix.twoBlockTriangular_det'": {
+        "messages": [
+          {
+            "data": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+        "status": "checked"
+      },
+      "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular": {
+        "messages": [
+          {
+            "data": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "b3ee1ef7cf1a35f805932f006b86ba29d06a6a26a35a2f3842e286d154b8e4bc",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T00:04:46.543300+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Matrix.det_triangular",
+      "expected_signature_or_shape": "det_triangular : det A = ∏ i, A i i for triangular A",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem twoBlockTriangular_det (M : Matrix m m R) (p : m → Prop) [DecidablePred p]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.twoBlockTriangular_det.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), ¬p i → ∀ (j : m), p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "status": "checked"
+          },
+          "line_number": 224,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.twoBlockTriangular_det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem twoBlockTriangular_det' (M : Matrix m m R) (p : m → Prop) [DecidablePred p]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.twoBlockTriangular_det'.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  (M : Matrix m m R) (p : m → Prop) [DecidablePred p] (h : ∀ (i : m), p i → ∀ (j : m), ¬p j → M i j = 0) :\n  M.det = (M.toSquareBlockProp p).det * (M.toSquareBlockProp fun i => ¬p i).det",
+            "status": "checked"
+          },
+          "line_number": 233,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.twoBlockTriangular_det'",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "protected theorem BlockTriangular.det [DecidableEq α] [LinearOrder α] (hM : BlockTriangular M b) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.det.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R} {b : m → α}\n  [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [LinearOrder α] (hM : M.BlockTriangular b) :\n  M.det = ∏ a ∈ image b univ, (M.toSquareBlock b a).det",
+            "status": "checked"
+          },
+          "line_number": 241,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem BlockTriangular.det_fintype [DecidableEq α] [Fintype α] [LinearOrder α]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.BlockTriangular.det_fintype.{v, u_1, u_3} {α : Type u_1} {m : Type u_3} {R : Type v} {M : Matrix m m R}\n  {b : m → α} [CommRing R] [DecidableEq m] [Fintype m] [DecidableEq α] [Fintype α] [LinearOrder α]\n  (h : M.BlockTriangular b) : M.det = ∏ k, (M.toSquareBlock b k).det",
+            "status": "checked"
+          },
+          "line_number": 275,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.BlockTriangular.det_fintype",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem det_of_upperTriangular [LinearOrder m] (h : M.BlockTriangular id) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_of_upperTriangular.{v, u_3} {m : Type u_3} {R : Type v} {M : Matrix m m R} [CommRing R] [DecidableEq m]\n  [Fintype m] [LinearOrder m] (h : M.BlockTriangular id) : M.det = ∏ i, M i i",
+            "status": "checked"
+          },
+          "line_number": 281,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.det_of_upperTriangular",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem det_of_lowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular toDual) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.det_of_lowerTriangular.{v, u_3} {m : Type u_3} {R : Type v} [CommRing R] [DecidableEq m] [Fintype m]\n  [LinearOrder m] (M : Matrix m m R) (h : M.BlockTriangular ⇑OrderDual.toDual) : M.det = ∏ i, M i i",
+            "status": "checked"
+          },
+          "line_number": 286,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.det_of_lowerTriangular",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "lemma isParabolic_iff_of_upperTriangular_of_det [LinearOrder K] [IsStrictOrderedRing K]",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det.{u_2} {K : Type u_2} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {g : GL (Fin 2) K}\n  (h_det : Matrix.GeneralLinearGroup.det g = 1 ∨ Matrix.GeneralLinearGroup.det g = -1) (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "status": "checked"
+          },
+          "line_number": 241,
+          "matched_tokens": [
+            "matrix",
+            "det",
+            "triangular"
+          ],
+          "name": "Matrix.GeneralLinearGroup.isParabolic_iff_of_upperTriangular_of_det",
+          "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/FinTwo.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "lemma isParabolic_iff_of_upperTriangular {g} (hg : g ∈ 𝒢) (hg10 : g 1 0 = 0) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular.{u_1} {K : Type u_1} [Field K] [LinearOrder K]\n  [IsStrictOrderedRing K] {𝒢 : Subgroup (GL (Fin 2) K)} [𝒢.HasDetPlusMinusOne] {g : GL (Fin 2) K} (hg : g ∈ 𝒢)\n  (hg10 : ↑g 1 0 = 0) :\n  g.IsParabolic ↔\n    (∃ x, x ≠ 0 ∧ g = Matrix.GeneralLinearGroup.upperRightHom x) ∨\n      ∃ x, x ≠ 0 ∧ g = -Matrix.GeneralLinearGroup.upperRightHom x",
+            "status": "checked"
+          },
+          "line_number": 49,
+          "matched_tokens": [
+            "det",
+            "triangular"
+          ],
+          "name": "Subgroup.HasDetPlusMinusOne.isParabolic_iff_of_upperTriangular",
+          "path": ".lake/packages/mathlib/Mathlib/NumberTheory/ModularForms/Cusps.lean",
+          "score": 8
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Matrix.det_triangular`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_triangular`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Matrix.det_triangular",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "Main theorem statement"
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Matrix.det_triangular": {
+        "error": "Unknown constant `Matrix.det_triangular`",
+        "messages": [
+          {
+            "data": "Unknown constant `Matrix.det_triangular`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "2360347611b2b43a714f68ae7959bbae80efef46054045eb1da4ab64b1355233",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 1,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

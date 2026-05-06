@@ -416,6 +416,26 @@ Reproducibility update:
   records the round-01 context-selection request without spending another paid
   call.
 
+New multi-declaration probe:
+
+- source unit:
+  `AlgebraicCombinatorics/tex/Determinants/BasicProperties.tex:thm.det.triang`
+  with aligned gold declarations `det_upperTriangular` and
+  `det_lowerTriangular`.
+- selector/generation:
+  `docs/latex-statement-context-runs/2026-05-06-triangular-v1-paid/` and
+  `docs/latex-statement-generation-runs/2026-05-06-triangular-v1-paid/`.
+  The selector guessed nonexistent `Matrix.det_triangular`; hydration recovered
+  checked fallbacks `Matrix.det_of_upperTriangular` and
+  `Matrix.det_of_lowerTriangular`. Generation then decomposed the source unit
+  into two declarations but failed on `OrderDual` syntax and missed one
+  declaration name in metadata.
+- bounded repair loop:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/`
+  fixed the syntax and metadata in one round. Verification compiled `1/1`;
+  semantic coverage proved `2/2` aligned gold declarations. Total added cost
+  for this new-unit probe was `$0.00550774`.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

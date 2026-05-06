@@ -1,0 +1,16 @@
+{
+  "batches": [
+    {
+      "exact_identifier_count": 0,
+      "fallback_exact_identifier_count": 0,
+      "fallback_lean_check_status": "no_exact_identifiers",
+      "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+      "lean_check_status": "no_exact_identifiers",
+      "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-context/batch-001/context-selection-output.json",
+      "request_count": 0
+    }
+  ],
+  "generated_at": "2026-05-06T00:06:54.264299+00:00",
+  "run": "docs/latex-statement-repair-loop-runs/2026-05-06-triangular-loop-v1-paid/round-01-context",
+  "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+}
