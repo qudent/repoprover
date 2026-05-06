@@ -50,7 +50,7 @@
   "budget_only": true,
   "cost_summary": null,
   "decline_context_pack": "docs/latex-statement-proof-lane-decline-context-pack-2026-05-06.json",
-  "generated_at": "2026-05-06T11:36:33.889890+00:00",
+  "generated_at": "2026-05-06T11:46:53.539526+00:00",
   "max_tasks_per_call": 1,
   "max_tokens": 8192,
   "model": "deepseek/deepseek-v4-flash",

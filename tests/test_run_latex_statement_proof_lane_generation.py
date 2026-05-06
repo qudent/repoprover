@@ -146,3 +146,7 @@ def test_budget_only_attaches_decline_context_pack(tmp_path: Path) -> None:
     assert summary["attached_decline_context_pack_count"] == 1
     task_payload = user_payload["proof_lane_tasks"][0]
     assert task_payload["decline_context_pack"]["selected_project_context"][0]["name"] == "Project.safeDef"
+    assert any(
+        "Do not describe a declaration as missing" in instruction
+        for instruction in user_payload["instructions"]
+    )

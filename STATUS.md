@@ -76,6 +76,10 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   `docs/latex-statement-proof-lane-acceptance-runs/2026-05-06-fresh-slice5-decline-context-paid-v1/`
   stayed `1/5` compiled and `1/5` semantic with 3 clean declines and no task
   leakage matches.
+- The proof-lane prompt now forbids saying a declaration is missing when it is
+  present in `decline_context_pack.selected_project_context`; declines must
+  identify dependency/import/signature/proof-synthesis blockers. Packed budget
+  payloads were regenerated with this generic instruction.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -86,6 +90,6 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: stop spending on the same packed-context proof lane until
-  the generator prompt explicitly forces use of acquired project snippets or a
-  stronger proof-synthesis lane is tried.
+- Next useful work: review the stricter packed budget payload, then either run a
+  tiny paid retry on one context-bearing fresh unit or switch to a stronger
+  proof-synthesis lane.

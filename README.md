@@ -794,6 +794,14 @@ negative but sharper diagnosis: for these examples, just copying the missing
 project declarations into context did not overcome the proof-synthesis or
 Mathlib-bridge gap.
 
+The proof-lane prompt now has an additional generic guard for this failure mode:
+when a declaration appears in `decline_context_pack.selected_project_context`,
+the model may not report it as simply missing. If it still declines, it must
+state whether the blocker is an unresolved dependency, namespace/import mismatch,
+type/signature mismatch, or proof-synthesis gap. The budget-only packed payloads
+above were regenerated with that stricter instruction; no additional paid retry
+has been run with it yet.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad
