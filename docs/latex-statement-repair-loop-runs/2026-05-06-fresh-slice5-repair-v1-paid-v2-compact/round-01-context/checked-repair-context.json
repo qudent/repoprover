@@ -1,0 +1,486 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "PowerSeries.coeff_mul",
+      "signature": "PowerSeries.coeff_mul.{u_1} {R : Type u_1} [Semiring R] (n : ℕ) (φ ψ : R⟦X⟧) :\n  (coeff n) (φ * ψ) = ∑ p ∈ antidiagonal n, (coeff p.1) φ * (coeff p.2) ψ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "expand product of binomial series"
+    },
+    {
+      "declaration_line": "theorem add_choose_eq [Ring R] [BinomialRing R] {r s : R} (k : ℕ) (h : Commute r s) :",
+      "fallback_for_query": "Ring.choose_add",
+      "name": "Ring.add_choose_eq",
+      "signature": "Ring.add_choose_eq.{u_1} {R : Type u_1} [Ring R] [BinomialRing R] {r s : R} (k : ℕ) (h : Commute r s) :\n  Ring.choose (r + s) k = ∑ ij ∈ antidiagonal k, Ring.choose r ij.1 * Ring.choose s ij.2",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "Checked fallback candidate for failed request Ring.choose_add: Vandermonde identity for Ring.choose"
+    },
+    {
+      "declaration_line": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=",
+      "fallback_for_query": "Ring.choose_add",
+      "name": "Ring.choose",
+      "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "Checked fallback candidate for failed request Ring.choose_add: Vandermonde identity for Ring.choose"
+    },
+    {
+      "declaration_line": "theorem multichoose_neg_add (n k : ℕ) : multichoose (-n : ℤ) (n + k + 1) = 0 := by",
+      "fallback_for_query": "Ring.choose_add",
+      "name": "Ring.multichoose_neg_add",
+      "signature": "Ring.multichoose_neg_add (n k : ℕ) : Ring.multichoose (-↑n) (n + k + 1) = 0",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "Checked fallback candidate for failed request Ring.choose_add: Vandermonde identity for Ring.choose"
+    },
+    {
+      "declaration_line": "theorem choose_add_smul_choose [NatPowAssoc R] (r : R) (n k : ℕ) :",
+      "fallback_for_query": "Ring.choose_add",
+      "name": "Ring.choose_add_smul_choose",
+      "signature": "Ring.choose_add_smul_choose.{u_1} {R : Type u_1} [NonAssocRing R] [Pow R ℕ] [BinomialRing R] [NatPowAssoc R] (r : R)\n  (n k : ℕ) : (n + k).choose k • Ring.choose (r + ↑k) (n + k) = Ring.choose (r + ↑k) k * Ring.choose r n",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "Checked fallback candidate for failed request Ring.choose_add: Vandermonde identity for Ring.choose"
+    },
+    {
+      "declaration_line": "instance Pi.instFintype {α : Type*} {β : α → Type*} [DecidableEq α] [Fintype α]",
+      "fallback_for_query": "Pi.fintype",
+      "name": "Pi.instFintype",
+      "signature": "Pi.instFintype.{u_3, u_4} {α : Type u_3} {β : α → Type u_4} [DecidableEq α] [Fintype α] [(a : α) → Fintype (β a)] :\n  Fintype ((a : α) → β a)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "Checked fallback candidate for failed request Pi.fintype: Fintype instance for function space"
+    },
+    {
+      "name": "Finset.sum_pow'",
+      "signature": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) :\n  (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "expand power of sum"
+    },
+    {
+      "name": "Fintype.piFinset",
+      "signature": "Fintype.piFinset.{u_1, u_4} {α : Type u_1} [DecidableEq α] [Fintype α] {δ : α → Type u_4} (t : (a : α) → Finset (δ a)) :\n  Finset ((a : α) → δ a)",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "piFinset for finite functions"
+    }
+  ],
+  "discarded_do_not_use_items": [],
+  "do_not_use_identifiers": [
+    "Finset.piFinset"
+  ],
+  "failed_or_unchecked_context_requests": [],
+  "fallback_bridge_notes": [],
+  "fallback_resolved_context_requests": [
+    {
+      "exact_identifier": "Ring.choose_add",
+      "expected_signature_or_shape": "Ring.choose (a+b) k = sum_{i=0}^k Ring.choose a i * Ring.choose b (k-i)",
+      "lean_check": {
+        "error": "Unknown constant `Ring.choose_add`",
+        "messages": [
+          {
+            "data": "Unknown constant `Ring.choose_add`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Ring.choose_add",
+      "policy": "The requested direct identifier did not check, but the listed fallback candidates did. Treat the requested identifier as unavailable and use the checked fallback signatures instead.",
+      "resolved_by_checked_fallback_candidates": [
+        "Ring.add_choose_eq",
+        "Ring.choose",
+        "Ring.multichoose_neg_add",
+        "Ring.choose_add_smul_choose"
+      ],
+      "task_id": "unit-003-repair-context-1",
+      "unit_key": "unit-003",
+      "why_needed": "Vandermonde identity for Ring.choose"
+    },
+    {
+      "exact_identifier": "Pi.fintype",
+      "expected_signature_or_shape": "instance [Fintype α] [Fintype (β a)] : Fintype (∀ a, β a)",
+      "lean_check": {
+        "error": "Unknown identifier `Pi.fintype`",
+        "messages": [
+          {
+            "data": "Unknown identifier `Pi.fintype`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Pi.fintype",
+      "policy": "The requested direct identifier did not check, but the listed fallback candidates did. Treat the requested identifier as unavailable and use the checked fallback signatures instead.",
+      "resolved_by_checked_fallback_candidates": [
+        "Pi.instFintype"
+      ],
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "Fintype instance for function space"
+    }
+  ],
+  "generated_at": "2026-05-06T09:41:11.952940+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "catalanHankelMatrix definition",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "pathWeightMatrix definition",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "dyckDigraph_pathFinite definition",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "dyckUnitArcWeight definition",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "xDecreasing, yIncreasing predicates",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "nipatWeightSum definition",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "nipatWeightSum_dyckUnitArcWeight_one lemma",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "Lemma: binomialSeries K n * binomialSeries K m = binomialSeries K (n+m)",
+      "unit_key": "unit-003"
+    },
+    {
+      "item": "Lemma: coeff k (binomialSeries K n) = Ring.choose n k",
+      "unit_key": "unit-003"
+    },
+    {
+      "item": "Fintype instance for Fin d → ℤ",
+      "unit_key": "unit-004"
+    },
+    {
+      "item": "Finset.sum_pow' signature",
+      "unit_key": "unit-004"
+    },
+    {
+      "item": "Fintype.piFinset definition",
+      "unit_key": "unit-004"
+    },
+    {
+      "item": "NPartition.transpose definition",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "ssytFinset definition",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "Nipat type",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "SkewSSYT type",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "potentialVerticalStrips definition",
+      "unit_key": "unit-005"
+    },
+    {
+      "item": "Lemma: esymm = omegaInvolution hsymm",
+      "unit_key": "unit-005"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path.",
+      "proof_strategy_note": "Cannot prove without project definitions. Need catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum, and lemma nipatWeightSum_dyckUnitArcWeight_one.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    },
+    {
+      "failure_analysis": "Missing proof for binomial identity. Available lemmas (generalizedNewtonBinomial, coeff_one_add_X_fpsPow, polynomial_identity_trick) are insufficient; need generating function approach or combinatorial identity.",
+      "proof_strategy_note": "Prove using generating functions: express sum as coefficient of (1+X)^(n+k-1) via convolution of binomial series. Need lemma for product of binomial series.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-003"
+    },
+    {
+      "failure_analysis": "Compile failure: missing Fintype instance for Fin d → ℤ, unknown Finset.piFinset, and Finset.sum_pow' not recognized. The lemma sign_sum_pow_eq_sum_sign_product needs Fintype (Fin d → ℤ) and correct use of sum_pow'.",
+      "proof_strategy_note": "Add [Fintype (Fin d → ℤ)] instance via Pi.fintype. Use Finset.sum_pow' with Fintype.piFinset. Replace Finset.piFinset with Fintype.piFinset.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-004"
+    },
+    {
+      "failure_analysis": "Missing definitions: NPartition.transpose, ssytFinset, Nipat, SkewSSYT, potentialVerticalStrips. Local file predecessors fail to compile due to missing identifiers. Cannot prove second Jacobi-Trudi without transpose API.",
+      "proof_strategy_note": "Cannot prove without project definitions. Need NPartition.transpose, ssytFinset, Nipat, SkewSSYT, and lemma relating esymm to hsymm via omega involution.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-005"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path.",
+        "missing_or_uncertain_context": [
+          "catalanHankelMatrix definition",
+          "pathWeightMatrix definition",
+          "dyckDigraph_pathFinite definition",
+          "dyckUnitArcWeight definition",
+          "xDecreasing, yIncreasing predicates",
+          "nipatWeightSum definition",
+          "nipatWeightSum_dyckUnitArcWeight_one lemma"
+        ],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "Cannot prove without project definitions. Need catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum, and lemma nipatWeightSum_dyckUnitArcWeight_one.",
+        "same_unit_helper_plan": [],
+        "selected_visible_context": [
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "LGV.lgv_nonpermutable",
+            "why_needed": "core LGV lemma for determinant"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "catalanHankelMatrix_eq_pathWeightMatrix",
+            "why_needed": "equality of matrices needed for rewrite"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "Missing proof for binomial identity. Available lemmas (generalizedNewtonBinomial, coeff_one_add_X_fpsPow, polynomial_identity_trick) are insufficient; need generating function approach or combinatorial identity.",
+        "missing_or_uncertain_context": [
+          "Lemma: binomialSeries K n * binomialSeries K m = binomialSeries K (n+m)",
+          "Lemma: coeff k (binomialSeries K n) = Ring.choose n k"
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "coeff (a*b) = sum over i+j=k of coeff a i * coeff b j",
+            "name_or_query": "PowerSeries.coeff_mul",
+            "why_needed": "expand product of binomial series"
+          },
+          {
+            "expected_signature_or_shape": "Ring.choose (a+b) k = sum_{i=0}^k Ring.choose a i * Ring.choose b (k-i)",
+            "name_or_query": "Ring.choose_add",
+            "why_needed": "Vandermonde identity for Ring.choose"
+          }
+        ],
+        "repair_strategy_note": "Prove using generating functions: express sum as coefficient of (1+X)^(n+k-1) via convolution of binomial series. Need lemma for product of binomial series.",
+        "same_unit_helper_plan": [
+          {
+            "depends_on": [
+              "generalizedNewtonBinomial",
+              "fpsPow_mul"
+            ],
+            "fresh_name_hint": "binomialSeries_mul",
+            "needed_checked_ingredients": [
+              "generalizedNewtonBinomial",
+              "fpsPow_mul"
+            ],
+            "role": "lemma",
+            "statement_sketch": "binomialSeries K n * binomialSeries K m = binomialSeries K (n+m)",
+            "why_needed": "key identity for convolution"
+          }
+        ],
+        "selected_visible_context": [
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+            "why_needed": "binomial series expansion"
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow",
+            "why_needed": "coefficient formula"
+          },
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "AlgebraicCombinatorics.FPS.polynomial_identity_trick",
+            "why_needed": "polynomial identity trick"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-003"
+      },
+      {
+        "do_not_use_identifiers": [
+          "Finset.piFinset"
+        ],
+        "failure_analysis": "Compile failure: missing Fintype instance for Fin d → ℤ, unknown Finset.piFinset, and Finset.sum_pow' not recognized. The lemma sign_sum_pow_eq_sum_sign_product needs Fintype (Fin d → ℤ) and correct use of sum_pow'.",
+        "missing_or_uncertain_context": [
+          "Fintype instance for Fin d → ℤ",
+          "Finset.sum_pow' signature",
+          "Fintype.piFinset definition"
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "instance [Fintype α] [Fintype (β a)] : Fintype (∀ a, β a)",
+            "name_or_query": "Pi.fintype",
+            "why_needed": "Fintype instance for function space"
+          },
+          {
+            "expected_signature_or_shape": "(∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset (fun _ => s), ∏ i, f (p i)",
+            "name_or_query": "Finset.sum_pow'",
+            "why_needed": "expand power of sum"
+          },
+          {
+            "expected_signature_or_shape": "Fintype.piFinset t = Finset.pi (Finset.univ : Finset ι) t",
+            "name_or_query": "Fintype.piFinset",
+            "why_needed": "piFinset for finite functions"
+          }
+        ],
+        "repair_strategy_note": "Add [Fintype (Fin d → ℤ)] instance via Pi.fintype. Use Finset.sum_pow' with Fintype.piFinset. Replace Finset.piFinset with Fintype.piFinset.",
+        "same_unit_helper_plan": [],
+        "selected_visible_context": [
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+            "why_needed": "context for all-even tuples"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "signSum",
+            "why_needed": "definition of sign sum"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-004"
+      },
+      {
+        "do_not_use_identifiers": [],
+        "failure_analysis": "Missing definitions: NPartition.transpose, ssytFinset, Nipat, SkewSSYT, potentialVerticalStrips. Local file predecessors fail to compile due to missing identifiers. Cannot prove second Jacobi-Trudi without transpose API.",
+        "missing_or_uncertain_context": [
+          "NPartition.transpose definition",
+          "ssytFinset definition",
+          "Nipat type",
+          "SkewSSYT type",
+          "potentialVerticalStrips definition",
+          "Lemma: esymm = omegaInvolution hsymm"
+        ],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "Cannot prove without project definitions. Need NPartition.transpose, ssytFinset, Nipat, SkewSSYT, and lemma relating esymm to hsymm via omega involution.",
+        "same_unit_helper_plan": [],
+        "selected_visible_context": [
+          {
+            "context_kind": "prior_project",
+            "name_or_label": "SymmetricFunctions.jacobiTrudi_h",
+            "why_needed": "first Jacobi-Trudi formula as pattern"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "jacobiTrudiMatrixH",
+            "why_needed": "definition pattern for matrix"
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "hsymmExt",
+            "why_needed": "extended complete homogeneous symmetric functions"
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-005"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-context",
+  "same_unit_helper_plan": [
+    {
+      "depends_on": [
+        "generalizedNewtonBinomial",
+        "fpsPow_mul"
+      ],
+      "fresh_name_hint": "binomialSeries_mul",
+      "needed_checked_ingredients": [
+        "generalizedNewtonBinomial",
+        "fpsPow_mul"
+      ],
+      "role": "lemma",
+      "statement_sketch": "binomialSeries K n * binomialSeries K m = binomialSeries K (n+m)",
+      "unit_key": "unit-003",
+      "why_needed": "key identity for convolution"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "LGV.lgv_nonpermutable",
+      "unit_key": "unit-001",
+      "why_needed": "core LGV lemma for determinant"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "catalanHankelMatrix_eq_pathWeightMatrix",
+      "unit_key": "unit-001",
+      "why_needed": "equality of matrices needed for rewrite"
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+      "unit_key": "unit-003",
+      "why_needed": "binomial series expansion"
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow",
+      "unit_key": "unit-003",
+      "why_needed": "coefficient formula"
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "AlgebraicCombinatorics.FPS.polynomial_identity_trick",
+      "unit_key": "unit-003",
+      "why_needed": "polynomial identity trick"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+      "unit_key": "unit-004",
+      "why_needed": "context for all-even tuples"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "signSum",
+      "unit_key": "unit-004",
+      "why_needed": "definition of sign sum"
+    },
+    {
+      "context_kind": "prior_project",
+      "name_or_label": "SymmetricFunctions.jacobiTrudi_h",
+      "unit_key": "unit-005",
+      "why_needed": "first Jacobi-Trudi formula as pattern"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "jacobiTrudiMatrixH",
+      "unit_key": "unit-005",
+      "why_needed": "definition pattern for matrix"
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "hsymmExt",
+      "unit_key": "unit-005",
+      "why_needed": "extended complete homogeneous symmetric functions"
+    }
+  ]
+}

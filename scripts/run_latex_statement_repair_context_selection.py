@@ -87,18 +87,51 @@ def load_previous_checked_repair_context(generation_run: Path) -> list[Any]:
     return context if isinstance(context, list) else [context]
 
 
+def filter_units_payload(value: Any, unit_keys: set[str]) -> Any:
+    if not unit_keys:
+        return value
+    if isinstance(value, dict):
+        filtered: dict[str, Any] = {}
+        for key, child in value.items():
+            if key == "units" and isinstance(child, list):
+                filtered[key] = [
+                    filter_units_payload(item, unit_keys)
+                    for item in child
+                    if not isinstance(item, dict) or str(item.get("unit_key") or "") in unit_keys
+                ]
+            else:
+                filtered[key] = filter_units_payload(child, unit_keys)
+        return filtered
+    if isinstance(value, list):
+        return [filter_units_payload(item, unit_keys) for item in value]
+    return value
+
+
+def filter_verification_units(verification: dict[str, Any], unit_keys: set[str]) -> dict[str, Any]:
+    units = flatten_verification_units(verification)
+    if unit_keys:
+        units = [unit for unit in units if str(unit.get("unit_key") or "") in unit_keys]
+    return {
+        "compile_passed_units": sum(1 for unit in units if unit.get("compile_passed")),
+        "unit_count": len(units),
+        "units": units,
+    }
+
+
 def build_repair_context_messages(
     *,
     selector_run: Path,
     generation_run: Path,
     verification_results: Path,
     source_coverage_review_unit_keys: list[str] | None = None,
+    unit_keys: list[str] | None = None,
 ) -> list[dict[str, str]]:
     generation_messages = build_generation_messages(selector_run)
     generation_user = next(message for message in generation_messages if message["role"] == "user")
     generation_payload = json.loads(generation_user["content"])
     failed_output = load_generation_output(generation_run)
     verification = load_verification_results(verification_results)
+    unit_key_set = {str(unit_key) for unit_key in unit_keys or [] if str(unit_key)}
 
     system = (
         "You are a Lean 4/Mathlib repair-context planning agent. Select the "
@@ -162,6 +195,8 @@ def build_repair_context_messages(
         "rules": [
             "Do not infer or reveal hidden target Lean declaration names/statements/proofs.",
             "Do not output Lean theorem code; this stage selects context only.",
+            "Keep the JSON compact and bounded: failure_analysis and repair_strategy_note at most 50 words each; selected_visible_context at most 5 entries; same_unit_helper_plan at most 4 entries; needed_mathlib_context at most 8 entries; missing_or_uncertain_context at most 5 entries.",
+            "Return minified JSON if possible. Do not include markdown fences, long explanations, or repeated source excerpts.",
             "Do not request a direct theorem whose name Lean already reported as unknown.",
             "Do not stop at a missing direct theorem if a proof can be decomposed into smaller visible project/local and Mathlib facts.",
             "Request every Mathlib bridge lemma needed by your own repair_strategy_note, including cardinality, coercion, order, equality-rewrite, empty-sum, and simplification facts.",
@@ -184,16 +219,15 @@ def build_repair_context_messages(
             "If raw_invalid_generation_output is present, treat it as unverified prior scratchpad only: use it to understand the attempted route, but do not request or rely on identifiers unless visible context and Lean-checked signatures justify them.",
             "For units listed in source_coverage_review_unit_keys, do not rely on hidden gold data; use only the visible source text and generated output to identify missing source coverage.",
         ],
-        "original_generation_task": generation_payload,
-        "failed_generation_output": failed_output,
-        "raw_invalid_generation_output": load_raw_invalid_generation_output(generation_run),
+        "original_generation_task": filter_units_payload(generation_payload, unit_key_set),
+        "failed_generation_output": filter_units_payload(failed_output, unit_key_set),
+        "raw_invalid_generation_output": filter_units_payload(
+            load_raw_invalid_generation_output(generation_run),
+            unit_key_set,
+        ),
         "previous_checked_repair_context": load_previous_checked_repair_context(generation_run),
         "source_coverage_review_unit_keys": source_coverage_review_unit_keys or [],
-        "verification_results": {
-            "compile_passed_units": verification.get("compile_passed_units"),
-            "unit_count": verification.get("unit_count"),
-            "units": flatten_verification_units(verification),
-        },
+        "verification_results": filter_verification_units(verification, unit_key_set),
         "benchmark_policy": {
             "target_lean_available_to_context_selector": False,
             "posthoc_alignment_hidden": True,
@@ -215,6 +249,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         generation_run=args.generation_run,
         verification_results=args.verification_results,
         source_coverage_review_unit_keys=getattr(args, "source_coverage_review_unit_key", None),
+        unit_keys=getattr(args, "unit_key", None),
     )
     request_payload: dict[str, Any] = {
         "model": args.model,
@@ -271,6 +306,7 @@ def main() -> None:
     parser.add_argument("--selector-run", type=Path, required=True)
     parser.add_argument("--generation-run", type=Path, required=True)
     parser.add_argument("--verification-results", type=Path, required=True)
+    parser.add_argument("--unit-key", action="append")
     parser.add_argument(
         "--source-coverage-review-unit-key",
         action="append",
@@ -282,7 +318,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
-    parser.add_argument("--max-tokens", type=int, default=4096)
+    parser.add_argument("--max-tokens", type=int, default=8192)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument(
         "--reasoning-effort",

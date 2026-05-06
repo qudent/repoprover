@@ -34,6 +34,8 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   already-debugged theorem.
 - [x] Add bridge-aware semantic grading so equivalent source/gold surfaces do
   not look like failures.
+- [x] Filter repair prompts to only unresolved unit keys and stop recoverably on
+  invalid repair-context JSON.
 - [ ] Route cases with checked context but repeated clean declines to a proof
   synthesis/coding-agent lane instead of more selector prompt tuning.
 
@@ -70,6 +72,13 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   verifier fixes (scoped visible-support variables and semantic reuse of
   verified opens) reran no-cost to `1/5` generated-only compile and `1/5`
   semantic coverage.
+- Fresh-slice repair follow-up: first paid repair-context call cost
+  `$0.00738948` but truncated at the 4k output cap. The compact 8k v2 run at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/`
+  cost `$0.01428308`, selected valid target-hidden context, hydrated 8 checked
+  signatures plus 2 fallback-resolved requests, and preserved `unit-002`; final
+  verification stayed `1/5` with 3 clean declines and 1 signed-sum compile
+  failure from the bad `Fin d -> ℤ` carrier choice.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a

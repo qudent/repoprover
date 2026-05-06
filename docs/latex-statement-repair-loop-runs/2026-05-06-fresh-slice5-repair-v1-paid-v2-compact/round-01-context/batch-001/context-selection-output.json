@@ -1,0 +1,72 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "coeff (a*b) = sum over i+j=k of coeff a i * coeff b j",
+              "name_or_query": "PowerSeries.coeff_mul",
+              "why_needed": "expand product of binomial series"
+            },
+            {
+              "expected_signature_or_shape": "Ring.choose (a+b) k = sum_{i=0}^k Ring.choose a i * Ring.choose b (k-i)",
+              "name_or_query": "Ring.choose_add",
+              "why_needed": "Vandermonde identity for Ring.choose"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-003-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-003"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "instance [Fintype α] [Fintype (β a)] : Fintype (∀ a, β a)",
+              "name_or_query": "Pi.fintype",
+              "why_needed": "Fintype instance for function space"
+            },
+            {
+              "expected_signature_or_shape": "(∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset (fun _ => s), ∏ i, f (p i)",
+              "name_or_query": "Finset.sum_pow'",
+              "why_needed": "expand power of sum"
+            },
+            {
+              "expected_signature_or_shape": "Fintype.piFinset t = Finset.pi (Finset.univ : Finset ι) t",
+              "name_or_query": "Fintype.piFinset",
+              "why_needed": "piFinset for finite functions"
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-004-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-004"
+    },
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-005-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-005"
+    }
+  ]
+}

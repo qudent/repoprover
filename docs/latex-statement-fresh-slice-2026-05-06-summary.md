@@ -16,6 +16,10 @@ after this point it is development evidence, not held out.
   `docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/`
 - No-cost rerun after support/semantic verifier fixes:
   `docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1-support-scoped-rerun/`
+- Failed 4k repair-context attempt:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid/`
+- Compact 8k one-round repair loop:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/`
 
 ## Cost And Scale
 
@@ -28,6 +32,12 @@ after this point it is development evidence, not held out.
 - Total paid provider cost for this fresh-slice run: `$0.0127524416`.
 - Hydration: 10 requested Mathlib/project names, 9 exact checked identifiers,
   and 8 checked fallback identifiers.
+- First paid repair-context call cost `$0.00738948` but hit the 4,096-token
+  output cap and produced invalid JSON. The prompt now asks for compact bounded
+  JSON and the repair-loop default cap is 8,192 tokens.
+- Compact repair-loop v2 cost `$0.01428308` total:
+  `$0.00679938` repair-context selection plus `$0.0074837` repair generation.
+  It hydrated 8 checked signatures and 2 fallback-resolved context requests.
 
 ## Results
 
@@ -53,13 +63,25 @@ Per-unit outcome after the no-cost rerun:
 | `unit-004` | `lem.cancel.all-even.l1` | compile failure; model used `Fin d → ℤ` where project context uses `Fin d → ZMod 2`, and guessed unavailable `Finset.piFinset` |
 | `unit-005` | `thm.sf.jt-e` | normalized to clean cannot-prove; raw output contained `sorry` scratch |
 
+One compact repair round preserved the successful FPS unit but did not improve
+the fresh-slice compile count: verification stayed `1/5`, with three clean
+declines and one signed-sum compile failure. The selector did produce valid,
+hydrated context, but the remaining blockers are not JSON transport problems.
+For `lem.cancel.all-even.l1`, the model still used the impossible finite carrier
+`Fin d → ℤ` and claimed a `Fintype` route that Lean rejects. For the Catalan
+Hankel and Jacobi-Trudi-e units, the model concluded that visible source and
+local predecessor context lack the needed project definitions/proof
+infrastructure. For the binomial identity, checked `PowerSeries.coeff_mul`
+context was not enough for the generator to construct the proof.
+
 ## Interpretation
 
 This fresh slice is much harsher than the development panel. The current
 pipeline can select and hydrate context cheaply, but generation with
 `deepseek-v4-flash` at no reasoning often either declines after normalization or
 produces shallow proof sketches with forbidden placeholders. The useful
-engineering progress from the slice was in the verifier: support materialization
-and semantic coverage now avoid two false rejects. The remaining failures need
-repair/proof-synthesis lanes or stronger generation, not more theorem-specific
-prompt hints.
+engineering progress from the slice was in the verifier and loop robustness:
+support materialization and semantic coverage now avoid two false rejects, and
+repair-context JSON failures are recoverable. The remaining failures need
+repair/proof-synthesis lanes, better local/project context acquisition, or
+stronger generation, not theorem-specific prompt hints.

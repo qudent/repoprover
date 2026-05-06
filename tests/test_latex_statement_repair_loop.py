@@ -63,6 +63,28 @@ def test_repair_loop_budget_only_stops_after_context_selection(monkeypatch, tmp_
     assert (args.output_root / "repair-loop-summary.json").exists()
 
 
+def test_repair_loop_stops_recoverably_on_invalid_context_selection(monkeypatch, tmp_path: Path) -> None:
+    args = _base_args(tmp_path)
+    calls: list[str] = []
+
+    def fake_context_selection(namespace):
+        calls.append("context")
+        return {"valid_json": False, "parse_error": "truncated JSON", "output_path": str(namespace.output)}
+
+    monkeypatch.setattr("scripts.run_latex_statement_repair_loop.run_context_selection", fake_context_selection)
+    monkeypatch.setattr(
+        "scripts.run_latex_statement_repair_loop.run_hydration",
+        lambda namespace: calls.append("hydration"),
+    )
+
+    summary = run(args)
+
+    assert summary["stop_reason"] == "context_selection_invalid_json"
+    assert calls == ["context"]
+    assert summary["rounds"][0]["context_selection"]["parse_error"] == "truncated JSON"
+    assert (args.output_root / "repair-loop-summary.json").exists()
+
+
 def test_repair_loop_runs_round_and_stops_on_compile(monkeypatch, tmp_path: Path) -> None:
     args = _base_args(tmp_path)
     args.semantic_coverage = True
@@ -321,11 +343,13 @@ def test_repair_loop_initial_semantic_results_drive_review_keys(monkeypatch, tmp
     )
     args.initial_semantic_coverage_results = semantic_path
     seen_review_keys: list[list[str]] = []
+    seen_context_keys: list[list[str]] = []
     seen_preserved: list[set[str] | None] = []
     seen_repair_keys: list[list[str]] = []
     seen_repair_review_keys: list[list[str]] = []
 
     def fake_context_selection(namespace):
+        seen_context_keys.append(list(namespace.unit_key))
         seen_review_keys.append(list(namespace.source_coverage_review_unit_key))
         return {"valid_json": True}
 
@@ -361,6 +385,7 @@ def test_repair_loop_initial_semantic_results_drive_review_keys(monkeypatch, tmp
     summary = run(args)
 
     assert summary["initial_semantic_coverage_results"] == str(semantic_path)
+    assert seen_context_keys == [["unit-002"]]
     assert seen_review_keys == [["unit-002"]]
     assert seen_repair_keys == [["unit-002"]]
     assert seen_repair_review_keys == [["unit-002"]]

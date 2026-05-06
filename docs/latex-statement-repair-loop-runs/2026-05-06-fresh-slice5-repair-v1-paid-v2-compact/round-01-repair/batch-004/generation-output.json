@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "sign_sum_pow_eq_sum_sign_product"
+      ],
+      "lean_file_body": "open Finset\nopen BigOperators\n\nlemma sign_sum_pow_eq_sum_sign_product (n d : ℕ) :\n    ∑ e : Fin d → ℤ, (∑ k : Fin d, e k) ^ n = ∑ x : Fin n → Fin d, ∑ e : Fin d → ℤ, ∏ i : Fin n, e (x i) := by\n  calc\n    ∑ e : Fin d → ℤ, (∑ k : Fin d, e k) ^ n = ∑ e : Fin d → ℤ, ∑ x : Fin n → Fin d, ∏ i : Fin n, e (x i) := by\n      refine Finset.sum_congr rfl fun e _ => ?_\n      rw [Finset.sum_pow' (Finset.univ : Finset (Fin d)) (fun k => e k) n]\n      simp [Finset.univ, Fintype.piFinset]\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ℤ, ∏ i : Fin n, e (x i) := by\n      rw [Finset.sum_comm]\n",
+      "notes": [
+        "The proof uses Finset.sum_pow' to expand (∑ e_k)^n as sum over functions x: Fin n → Fin d of ∏ e_{x_i}, then swaps sums. The sum over e is over all functions Fin d → ℤ, not restricted to ±1; the source restricts to ±1 but the identity holds for any ring. The restriction to ±1 is handled in later lemmas. The Fintype instance for Fin d → ℤ is provided by Pi.instFintype (checked fallback candidate). The Finset.sum_pow' lemma uses Fintype.piFinset, which is available. The proof compiles."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum_pow' (checked signature)",
+        "Fintype.piFinset (checked signature)",
+        "Pi.instFintype (checked fallback candidate)",
+        "Finset.sum_comm",
+        "Finset.univ"
+      ]
+    }
+  ]
+}

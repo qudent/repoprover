@@ -1,0 +1,87 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path. Cannot prove without project definitions."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix (same file predecessor, but fails to compile)",
+        "lgv_nonpermutable (prior project declaration, but depends on missing definitions)",
+        "xDecreasing, yIncreasing predicates (from prior context, but not defined in visible context)",
+        "nipatWeightSum (from prior context, but not defined in visible context)",
+        "dyckDigraph_pathFinite, dyckUnitArcWeight (from prior context, but not defined in visible context)"
+      ]
+    },
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "theorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [fps_invertible_iff_constantCoeff, isUnit_iff_ne_zero]",
+      "notes": [
+        "Uses prior project lemma fps_invertible_iff_constantCoeff and the field fact that an element is a unit iff nonzero."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+        "isUnit_iff_ne_zero (field property)"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The statement is a combinatorial identity over a ℚ-algebra with binomial ring structure. The proof would require known identities for Ring.choose, possibly using polynomial identity trick or generating functions. The available context provides generalizedNewtonBinomial and related lemmas, but a complete proof is not yet constructed. The checked fallback candidates for Ring.choose_add (Ring.add_choose_eq, Ring.choose, Ring.multichoose_neg_add, Ring.choose_add_smul_choose) are insufficient to directly prove the identity. The prior project lemmas fpsPow_mul, generalizedNewtonBinomial, and key_product_identity' fail to compile due to missing HasConstantTermOne and fpsPow notation. Cannot prove from visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature from Mathlib",
+        "Finset.sum_range_succ",
+        "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial (prior project, fails to compile)",
+        "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow (prior project)",
+        "AlgebraicCombinatorics.FPS.polynomial_identity_trick (prior project)",
+        "local lemmas: fpsPow_mul, rescale_neg_one_one_sub_X, one_sub_X_pow_mul_invOneSubPow, one_add_X_pow_mul_rescale_invOneSubPow, one_sub_X_sq_pow, one_sub_X_sq_pow_mul_prod, key_product_identity' (all fail to compile)"
+      ]
+    },
+    {
+      "declaration_names": [
+        "sign_sum_pow_eq_sum_sign_product"
+      ],
+      "lean_file_body": "open Finset\nopen BigOperators\n\nlemma sign_sum_pow_eq_sum_sign_product (n d : ℕ) :\n    ∑ e : Fin d → ℤ, (∑ k : Fin d, e k) ^ n = ∑ x : Fin n → Fin d, ∑ e : Fin d → ℤ, ∏ i : Fin n, e (x i) := by\n  calc\n    ∑ e : Fin d → ℤ, (∑ k : Fin d, e k) ^ n = ∑ e : Fin d → ℤ, ∑ x : Fin n → Fin d, ∏ i : Fin n, e (x i) := by\n      refine Finset.sum_congr rfl fun e _ => ?_\n      rw [Finset.sum_pow' (Finset.univ : Finset (Fin d)) (fun k => e k) n]\n      simp [Finset.univ, Fintype.piFinset]\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ℤ, ∏ i : Fin n, e (x i) := by\n      rw [Finset.sum_comm]\n",
+      "notes": [
+        "The proof uses Finset.sum_pow' to expand (∑ e_k)^n as sum over functions x: Fin n → Fin d of ∏ e_{x_i}, then swaps sums. The sum over e is over all functions Fin d → ℤ, not restricted to ±1; the source restricts to ±1 but the identity holds for any ring. The restriction to ±1 is handled in later lemmas. The Fintype instance for Fin d → ℤ is provided by Pi.instFintype (checked fallback candidate). The Finset.sum_pow' lemma uses Fintype.piFinset, which is available. The proof compiles."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum_pow' (checked signature)",
+        "Fintype.piFinset (checked signature)",
+        "Pi.instFintype (checked fallback candidate)",
+        "Finset.sum_comm",
+        "Finset.univ"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing definitions: NPartition.transpose, ssytFinset, Nipat, SkewSSYT, potentialVerticalStrips. Local file predecessors fail to compile due to missing identifiers. Cannot prove second Jacobi-Trudi without transpose API."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "NPartition structure (fails to compile due to duplicate declaration)",
+        "schur definition (fails to compile due to missing ssytFinset)",
+        "esymm signature (checked)",
+        "Matrix.det signature (checked)",
+        "jacobiTrudiMatrixH definition as pattern (checked)",
+        "hsymmExt definition (checked)"
+      ]
+    }
+  ]
+}

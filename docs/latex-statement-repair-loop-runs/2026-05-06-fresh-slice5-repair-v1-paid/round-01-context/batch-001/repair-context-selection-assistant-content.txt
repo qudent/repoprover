@@ -1,0 +1,231 @@
+{
+  "units": [
+    {
+      "unit_key": "unit-001",
+      "selector_confidence": 0.0,
+      "failure_analysis": "The generated proof attempted to use `catalanHankelMatrix_eq_pathWeightMatrix` and `lgv_nonpermutable`, but the verification shows that `catalanHankelMatrix`, `pathWeightMatrix`, `dyckDigraph_pathFinite`, `dyckUnitArcWeight`, `xDecreasing`, `yIncreasing`, and `nipatWeightSum` are all unknown identifiers in the verification environment. The local file predecessor declarations also failed to compile due to missing `SimpleDigraph.Path` and other dependencies. The visible context is fundamentally insufficient: the project definitions for the LGV framework, Dyck digraph, Catalan Hankel matrix, and path weight matrix are not available.",
+      "missing_or_uncertain_context": [
+        "The entire LGV framework (lgv_nonpermutable, pathWeightMatrix, nipatWeightSum, xDecreasing, yIncreasing) is not available in the verification environment.",
+        "The Dyck digraph definitions (dyckDigraph, dyckDigraph_pathFinite, dyckUnitArcWeight) are not available.",
+        "The Catalan Hankel matrix definition (catalanHankelMatrix) is not available.",
+        "The lemma catalanHankelMatrix_eq_pathWeightMatrix is not available.",
+        "The lemma nipatWeightSum_dyckUnitArcWeight_one (needed to evaluate nipatWeightSum to 1) is not available and cannot be proved from visible context."
+      ],
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "cor.lgv.catalan-hankel-det-0",
+          "why_needed": "Source statement to prove: det of Catalan Hankel matrix equals 1."
+        },
+        {
+          "context_kind": "source",
+          "name_or_label": "cor.lgv.kpaths.wt-np",
+          "why_needed": "Source statement of LGV nonpermutable corollary, referenced in proof plan."
+        }
+      ],
+      "needed_mathlib_context": [],
+      "same_unit_helper_plan": [],
+      "repair_strategy_note": "The visible context is fundamentally insufficient. The entire LGV framework and Dyck digraph infrastructure are missing. A repair attempt would require hydrating the full project context for these definitions and theorems, which is beyond the scope of a small context selection. The unit should remain as cannot_prove_from_visible_context."
+    },
+    {
+      "unit_key": "unit-003",
+      "selector_confidence": 0.0,
+      "failure_analysis": "The generated proof attempted to use `generalizedNewtonBinomial`, `coeff_one_add_X_fpsPow`, `polynomial_identity_trick`, and local lemmas (`fpsPow_mul`, `rescale_neg_one_one_sub_X`, etc.). The verification shows that `fpsPow_mul`, `generalizedNewtonBinomial`, and `key_product_identity'` all failed to compile due to missing `HasConstantTermOne`, `fpsPow_nat'`, `f_series'`, and the `ᶠ` notation. The local lemmas that did compile (`rescale_neg_one_one_sub_X`, `one_sub_X_pow_mul_invOneSubPow`, etc.) are private and not sufficient for the main identity. The proof route using generating functions and the polynomial identity trick is plausible but requires the full `fpsPow` infrastructure and the `key_product_identity'` theorem, which are not available.",
+      "missing_or_uncertain_context": [
+        "The `fpsPow` notation and `HasConstantTermOne` typeclass are not available in the verification environment.",
+        "The lemma `fpsPow_nat'` is not available.",
+        "The definitions `f_series'` and `g_series'` used in `key_product_identity'` are not available.",
+        "The theorem `key_product_identity'` is not available.",
+        "The theorem `generalizedNewtonBinomial` is not available (failed to compile).",
+        "The theorem `coeff_one_add_X_fpsPow` is not available (not shown in verification results but likely also fails).",
+        "The theorem `polynomial_identity_trick` is not available (not shown in verification results but likely also fails)."
+      ],
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "prop.binom.nCk-2i-qedmo.CN",
+          "why_needed": "Source statement to prove: binomial coefficient identity."
+        },
+        {
+          "context_kind": "source",
+          "name_or_label": "thm.fps.gen-newton",
+          "why_needed": "Source statement of generalized Newton binomial formula, referenced in proof plan."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+          "why_needed": "Prior project theorem that was intended to be used but is not available."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.FPS.coeff_one_add_X_fpsPow",
+          "why_needed": "Prior project theorem that was intended to be used but is not available."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.FPS.polynomial_identity_trick",
+          "why_needed": "Prior project theorem that was intended to be used but is not available."
+        }
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "Ring.choose",
+          "expected_signature_or_shape": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+          "why_needed": "Generalized binomial coefficient used in the statement."
+        },
+        {
+          "name_or_query": "Finset.sum_range_succ",
+          "expected_signature_or_shape": "Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) : ∑ x ∈ range (n + 1), f x = ∑ x ∈ range n, f x + f n",
+          "why_needed": "Finite sum manipulation."
+        }
+      ],
+      "same_unit_helper_plan": [],
+      "repair_strategy_note": "The visible context is fundamentally insufficient. The entire `fpsPow` infrastructure and the key prior project theorems (`generalizedNewtonBinomial`, `coeff_one_add_X_fpsPow`, `polynomial_identity_trick`, `key_product_identity'`) are not available. A repair attempt would require hydrating the full FPS project context, which is beyond the scope of a small context selection. The unit should remain as cannot_prove_from_visible_context."
+    },
+    {
+      "unit_key": "unit-004",
+      "selector_confidence": 0.0,
+      "failure_analysis": "The generated proof compiled partially but failed with `Fintype (Fin d → ℤ)` instance missing and `Finset.piFinset` unknown. The proof used `Finset.sum_pow'` which expects `Fintype.piFinset`, but the verification environment does not have `Fintype.piFinset` available. The `Finset.sum_pow'` lemma itself is a fallback candidate, not a checked fact. The proof also used `Finset.sum_comm` which is available. The source lemma requires summing over all functions `Fin d → ℤ`, which is an infinite type, so `Fintype` instance cannot exist. The source actually sums over sign vectors `{1,-1}^d`, which is a finite set. The generated proof incorrectly used `Finset.univ` for `Fin d → ℤ` instead of a finite set of sign vectors.",
+      "missing_or_uncertain_context": [
+        "The `Fintype` instance for `Fin d → ℤ` does not exist and cannot exist because `ℤ` is infinite.",
+        "The lemma `Finset.sum_pow'` is not a checked fact; it is a fallback candidate.",
+        "The identifier `Fintype.piFinset` is unknown.",
+        "The source sums over sign vectors `{1,-1}^d`, which should be represented as a finite Finset, not `Finset.univ` of `Fin d → ℤ`.",
+        "The prior project definitions `toSign`, `signProduct`, `signSum`, `IsAllEven` are available but were not used in the generated proof."
+      ],
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "lem.cancel.all-even.l1",
+          "why_needed": "Source lemma to prove: identity relating sum over signs to sum over tuples."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.IsAllEven",
+          "why_needed": "Prior project definition that may be relevant for the all-even tuple context."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+          "why_needed": "Prior project definition for converting ZMod 2 to sign ±1."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+          "why_needed": "Prior project definition for product of signs along a tuple."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+          "why_needed": "Prior project definition for sum of signs."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "signProduct_eq_prod_pow",
+          "why_needed": "Local lemma that rewrites signProduct as product of powers, but it failed to compile due to type mismatch."
+        }
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "Finset.sum_pow'",
+          "expected_signature_or_shape": "Finset.sum_pow'.{u_2, u_4} {κ : Type u_2} {R : Type u_4} [CommSemiring R] (s : Finset κ) (f : κ → R) (n : ℕ) : (∑ a ∈ s, f a) ^ n = ∑ p ∈ Fintype.piFinset fun _i => s, ∏ i, f (p i)",
+          "why_needed": "Expand (∑ e_k)^n as sum over tuples. This is a fallback candidate; need to check if it is available."
+        },
+        {
+          "name_or_query": "Fintype.piFinset",
+          "expected_signature_or_shape": "Fintype.piFinset.{u_1, u_2} {ι : Type u_1} {κ : ι → Type u_2} [Fintype ι] (t : (i : ι) → Finset (κ i)) : Finset ((i : ι) → κ i)",
+          "why_needed": "Finset of functions from a finite type to finite sets, used by sum_pow'."
+        },
+        {
+          "name_or_query": "Finset.sum_comm",
+          "expected_signature_or_shape": "Finset.sum_comm.{u_1, u_2, u_3} {β : Type u_1} {α : Type u_2} {γ : Type u_3} [AddCommMonoid β] (s : Finset α) (t : Finset γ) (f : α → γ → β) : ∑ a ∈ s, ∑ b ∈ t, f a b = ∑ b ∈ t, ∑ a ∈ s, f a b",
+          "why_needed": "Swap the two sums."
+        }
+      ],
+      "same_unit_helper_plan": [
+        {
+          "fresh_name_hint": "signVectorsFinset",
+          "role": "definition",
+          "statement_sketch": "def signVectorsFinset (d : ℕ) : Finset (Fin d → ℤ) := Fintype.piFinset fun _ : Fin d => ({1, -1} : Finset ℤ)",
+          "why_needed": "Finite set of sign vectors {1,-1}^d, needed to represent the sum over sign vectors correctly.",
+          "needed_checked_ingredients": [
+            "Fintype.piFinset",
+            "Finset.mem_piFinset"
+          ],
+          "depends_on": []
+        },
+        {
+          "fresh_name_hint": "sign_sum_pow_eq_sum_sign_product_finite",
+          "role": "theorem",
+          "statement_sketch": "theorem sign_sum_pow_eq_sum_sign_product_finite (n d : ℕ) : ∑ e ∈ signVectorsFinset d, (∑ k : Fin d, e k) ^ n = ∑ x : Fin n → Fin d, ∑ e ∈ signVectorsFinset d, ∏ i : Fin n, e (x i) := ...",
+          "why_needed": "Correct finite version of the source lemma, using signVectorsFinset instead of Finset.univ of Fin d → ℤ.",
+          "needed_checked_ingredients": [
+            "Finset.sum_pow'",
+            "Fintype.piFinset",
+            "Finset.sum_comm",
+            "Finset.sum_congr",
+            "Finset.prod_congr"
+          ],
+          "depends_on": [
+            "signVectorsFinset"
+          ]
+        }
+      ],
+      "repair_strategy_note": "The main issue is that the sum over all functions `Fin d → ℤ` is infinite. The source sums over sign vectors `{1,-1}^d`, which is finite. Define `signVectorsFinset d` as the finite Finset of functions `Fin d → ℤ` with values in `{1, -1}` using `Fintype.piFinset`. Then use `Finset.sum_pow'` (if available) to expand `(∑ e_k)^n` as a sum over tuples `x : Fin n → Fin d` of `∏_i e_{x_i}`, then swap sums using `Finset.sum_comm`. The prior project definitions `toSign`, `signProduct`, `signSum` are not needed for this lemma; they are used in later lemmas. The key missing Mathlib facts are `Fintype.piFinset` and `Finset.sum_pow'`."
+    },
+    {
+      "unit_key": "unit-005",
+      "selector_confidence": 0.0,
+      "failure_analysis": "The generated proof attempted to define `jacobiTrudiMatrixE` and state `jacobiTrudi_e`, but the verification shows that `NPartition`, `schur`, `pathWeightSum_eq_hsymm`, `nipat_ssyt_bijection`, `verticalNStripPartitions` are all unknown or failed to compile. The visible context is fundamentally insufficient: the project definitions for NPartition, schur, and the entire Jacobi-Trudi infrastructure are not available. The source theorem requires the transpose of partitions, which is also unavailable.",
+      "missing_or_uncertain_context": [
+        "The `NPartition` structure is not available (failed to compile due to duplicate declaration).",
+        "The `schur` definition is not available (failed to compile due to missing `ssytFinset` and `toMonomial`).",
+        "The `jacobiTrudiMatrixH` definition is available but its dependencies (`hsymmExt`) are available.",
+        "The `pathWeightSum_eq_hsymm` theorem is not available.",
+        "The `nipat_ssyt_bijection` theorem is not available.",
+        "The `verticalNStripPartitions` definition is not available.",
+        "The transpose of partitions (`NPartition.transpose`) is not available.",
+        "The `esymm` function from Mathlib is available (checked).",
+        "The `Matrix.det` function from Mathlib is available (checked)."
+      ],
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "thm.sf.jt-e",
+          "why_needed": "Source theorem to prove: second Jacobi-Trudi formula using elementary symmetric functions."
+        },
+        {
+          "context_kind": "source",
+          "name_or_label": "thm.sf.jt-h",
+          "why_needed": "Source theorem for first Jacobi-Trudi formula, referenced in proof plan."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "SymmetricFunctions.jacobiTrudi_h",
+          "why_needed": "Prior project theorem for first Jacobi-Trudi formula, intended to be used but not available."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "SymmetricFunctions.pathWeightSum_eq_hsymm",
+          "why_needed": "Prior project theorem for path weight sum, intended to be used but not available."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "SymmetricFunctions.nipat_ssyt_bijection",
+          "why_needed": "Prior project theorem for nipat-SSYT bijection, intended to be used but not available."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "jacobiTrudiMatrixH",
+          "why_needed": "Local definition of first Jacobi-Trudi matrix, available as pattern for second."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "hsymmExt",
+          "why_needed": "Local definition of extended complete homogeneous symmetric function, available."
+        }
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "MvPolynomial.esymm",
+          "expected_signature_or

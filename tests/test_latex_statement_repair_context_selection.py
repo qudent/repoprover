@@ -153,6 +153,8 @@ def test_repair_context_prompt_selects_context_without_hidden_target(tmp_path: P
 
     assert "Unknown constant `Demo.bad_guess`" in prompt
     assert "Do not output Lean theorem code" in prompt
+    assert "Keep the JSON compact and bounded" in prompt
+    assert "Return minified JSON if possible" in prompt
     assert "Do not stop at a missing direct theorem" in prompt
     assert "same_unit_helper_plan" in prompt
     assert "fresh descriptive names" in prompt
@@ -221,6 +223,62 @@ def test_repair_context_prompt_includes_source_coverage_review_keys(tmp_path: Pa
     assert user_payload["source_coverage_review_unit_keys"] == ["unit-001"]
     assert "review the visible source text against the generated declarations" in prompt
     assert "does not include gold declarations" not in prompt
+
+
+def test_repair_context_prompt_filters_to_requested_units(tmp_path: Path) -> None:
+    selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
+
+    selector_payload_path = selector_run / "batch-001/context-selection-payload.json"
+    selector_payload = json.loads(selector_payload_path.read_text(encoding="utf-8"))
+    selector_user = json.loads(selector_payload["messages"][0]["content"])
+    selector_user["units"].append({"unit_key": "unit-002", "previous_source_context": ["covered"]})
+    selector_payload["messages"][0]["content"] = json.dumps(selector_user)
+    selector_payload_path.write_text(json.dumps(selector_payload), encoding="utf-8")
+
+    generation_path = generation_run / "batch-001/generation-output.json"
+    generation = json.loads(generation_path.read_text(encoding="utf-8"))
+    generation["units"].append(
+        {
+            "unit_key": "unit-002",
+            "status": "generated",
+            "declaration_names": ["covered"],
+            "lean_file_body": "theorem covered : True := by\n  trivial",
+        }
+    )
+    generation_path.write_text(json.dumps(generation), encoding="utf-8")
+
+    verification = json.loads(verification_path.read_text(encoding="utf-8"))
+    verification["unit_count"] = 2
+    verification["compile_passed_units"] = 1
+    verification["batches"][0]["units"].append({"unit_key": "unit-002", "compile_passed": True})
+    verification_path.write_text(json.dumps(verification), encoding="utf-8")
+    (generation_run / "batch-001/raw-generation-output.json").write_text(
+        json.dumps(
+            {
+                "units": [
+                    {"unit_key": "unit-001", "lean_file_body": "bad scratch"},
+                    {"unit_key": "unit-002", "lean_file_body": "covered scratch"},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    messages = build_repair_context_messages(
+        selector_run=selector_run,
+        generation_run=generation_run,
+        verification_results=verification_path,
+        unit_keys=["unit-001"],
+    )
+    user_payload = json.loads(messages[1]["content"])
+
+    assert [unit["unit_key"] for unit in user_payload["original_generation_task"]["units"]] == ["unit-001"]
+    assert [unit["unit_key"] for unit in user_payload["failed_generation_output"]["units"]] == ["unit-001"]
+    assert [unit["unit_key"] for unit in user_payload["verification_results"]["units"]] == ["unit-001"]
+    assert user_payload["raw_invalid_generation_output"]["outputs"][0]["output"]["units"] == [
+        {"unit_key": "unit-001", "lean_file_body": "bad scratch"}
+    ]
+    assert "covered" not in messages[1]["content"]
 
 
 def test_repair_context_prompt_includes_raw_invalid_generation_output_as_unchecked(tmp_path: Path) -> None:

@@ -249,12 +249,17 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         context_run = output_root / f"round-{round_index:02d}-context"
         repair_run = output_root / f"round-{round_index:02d}-repair"
         checked_pack = context_run / "checked-repair-context.json"
+        current_verification = read_json(current_verification_results)
+        repair_unit_keys = non_compile_clean_unit_keys(current_verification) | source_coverage_review_keys
+        if preserve_unit_keys is not None:
+            repair_unit_keys -= preserve_unit_keys
 
         context_summary = run_context_selection(
             argparse.Namespace(
                 selector_run=args.selector_run,
                 generation_run=current_generation_run,
                 verification_results=current_verification_results,
+                unit_key=sorted(repair_unit_keys),
                 source_coverage_review_unit_key=sorted(source_coverage_review_keys),
                 output=context_run,
                 model=args.model,
@@ -276,6 +281,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if args.budget_only:
             stop_reason = "budget_only_after_context_selection"
             break
+        if context_summary.get("valid_json") is False:
+            stop_reason = "context_selection_invalid_json"
+            break
 
         hydration_summary = run_hydration(
             argparse.Namespace(
@@ -294,10 +302,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             )
         )
         accumulated_contexts.append(checked_pack)
-        current_verification = read_json(current_verification_results)
-        repair_unit_keys = non_compile_clean_unit_keys(current_verification) | source_coverage_review_keys
-        if preserve_unit_keys is not None:
-            repair_unit_keys -= preserve_unit_keys
 
         repair_summary = run_repair(
             argparse.Namespace(
@@ -422,7 +426,7 @@ def main() -> None:
     parser.add_argument("--extra-context", type=Path, action="append")
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
-    parser.add_argument("--max-tokens", type=int, default=4096)
+    parser.add_argument("--max-tokens", type=int, default=8192)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--reasoning-effort", default="none")
     parser.add_argument("--project-root", type=Path, default=REPO_ROOT / "algebraic-combinatorics")

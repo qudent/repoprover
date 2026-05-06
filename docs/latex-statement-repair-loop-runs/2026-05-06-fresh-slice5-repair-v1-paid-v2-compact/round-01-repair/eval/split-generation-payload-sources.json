@@ -1,0 +1,27 @@
+[
+  {
+    "payload_source": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-001/generation-payload.json",
+    "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-001/generation-payload.json",
+    "unit_key": "unit-001"
+  },
+  {
+    "payload_source": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-002/generation-payload.json",
+    "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-002/generation-payload.json",
+    "unit_key": "unit-002"
+  },
+  {
+    "payload_source": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-003/generation-payload.json",
+    "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-003/generation-payload.json",
+    "unit_key": "unit-003"
+  },
+  {
+    "payload_source": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-004/generation-payload.json",
+    "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-004/generation-payload.json",
+    "unit_key": "unit-004"
+  },
+  {
+    "payload_source": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation/batch-005/generation-payload.json",
+    "payload_target": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/round-01-repair/batch-005/generation-payload.json",
+    "unit_key": "unit-005"
+  }
+]

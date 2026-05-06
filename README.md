@@ -654,6 +654,19 @@ no-cost verifier reruns with those fixes, generated-only compile is `1/5` and
 semantic coverage is `1/5`, proving `cor.fps.invertible.field`. The other four
 units are three normalized clean declines from raw `sorry` scratch and one real
 compile failure from an incorrect signed-tuple surface.
+The first paid repair-context call on that fresh slice cost `$0.00738948` but
+hit the 4,096-token output cap and returned invalid JSON. The repair loop now
+stops recoverably on invalid selector JSON, the repair-context prompt asks for
+compact bounded JSON, and the default repair-loop cap is 8,192 tokens. The
+compact v2 repair loop at
+`docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-paid-v2-compact/`
+cost `$0.01428308` (`$0.00679938` context selection plus `$0.0074837` repair),
+selected valid target-hidden context, hydrated 8 checked signatures and 2
+fallback-resolved requests, and preserved the FPS success. Verification still
+stayed `1/5`: Catalan Hankel, binomial identity, and Jacobi-Trudi-e are clean
+cannot-prove declines, while the signed-sum unit still compiles incorrectly
+because the model chose the impossible finite carrier `Fin d -> ℤ`. This is a
+selector/hydration robustness win, but not a fresh benchmark accuracy gain.
 
 ### Imported Lean surface and likely context needs
 

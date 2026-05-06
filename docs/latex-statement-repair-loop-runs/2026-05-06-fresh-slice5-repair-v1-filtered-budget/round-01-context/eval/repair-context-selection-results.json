@@ -1,0 +1,14 @@
+{
+  "budget_only": true,
+  "generated_at": "2026-05-06T09:34:39.642763+00:00",
+  "generation_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/generation",
+  "model": "deepseek/deepseek-v4-flash",
+  "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-fresh-slice5-repair-v1-filtered-budget/round-01-context",
+  "paid_call_made": false,
+  "parse_error": null,
+  "reasoning_effort": "none",
+  "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+  "selector_run": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1/context-selection",
+  "valid_json": false,
+  "verification_results": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-paid-v1-support-scoped-rerun/eval/verification-results.json"
+}
