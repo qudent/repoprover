@@ -855,6 +855,9 @@ def test_run_can_materialize_visible_support_snippets(monkeypatch, tmp_path) -> 
     assert support["candidate_count"] == 2
     assert support["accepted_count"] == 2
     assert support["rejected_count"] == 0
+    assert support["lean_call_count"] == 1
+    assert support["materialization_strategy"] == "batched"
+    assert len(calls) == 2
 
 
 def test_run_can_materialize_visible_support_as_assumptions(monkeypatch, tmp_path) -> None:
@@ -952,6 +955,10 @@ def test_run_can_materialize_visible_support_as_assumptions(monkeypatch, tmp_pat
     assert support["candidate_count"] == 2
     assert support["accepted_count"] == 1
     assert support["skipped_count"] == 1
+    assert support["availability_lean_call_count"] == 1
+    assert support["materialization_lean_call_count"] == 1
+    assert support["lean_call_count"] == 2
+    assert support["materialization_strategy"] == "batched"
 
 
 def test_run_checks_visible_support_assumptions_before_injecting(monkeypatch, tmp_path) -> None:
@@ -1050,6 +1057,10 @@ def test_run_checks_visible_support_assumptions_before_injecting(monkeypatch, tm
     assert support["accepted_count"] == 1
     assert support["rejected_count"] == 1
     assert [row["name"] for row in support["rejected"]] == ["helper_bad"]
+    assert support["availability_lean_call_count"] == 1
+    assert support["materialization_lean_call_count"] == 2
+    assert support["lean_call_count"] == 3
+    assert support["materialization_strategy"] == "batched"
     assert summary["compile_passed_units"] == 1
 
 

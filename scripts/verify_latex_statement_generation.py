@@ -828,7 +828,56 @@ def run_lean_source(
     }
 
 
-def materialize_visible_support_context(
+def support_trial_source_and_ranges(
+    *,
+    imports: list[str],
+    opens: list[str],
+    support_context: list[str],
+    candidates: list[dict[str, str]],
+) -> tuple[str, dict[str, tuple[int, int]]]:
+    lines = [f"import {name}" for name in imports]
+    lines.extend(opens)
+    for item in support_context:
+        lines.extend(item.rstrip().splitlines())
+    ranges: dict[str, tuple[int, int]] = {}
+    candidate_texts: list[str] = []
+    for candidate in candidates:
+        text = candidate["text"]
+        candidate_texts.append(text)
+        candidate_lines = text.rstrip().splitlines() or [""]
+        start_line = len(lines) + 1
+        lines.extend(candidate_lines)
+        ranges[text] = (start_line, len(lines))
+    lines.extend(support_namespace_closers([*support_context, *candidate_texts]))
+    lines.append("")
+    return "\n".join(lines) + "\n", ranges
+
+
+def message_line(message: dict[str, Any]) -> int:
+    try:
+        return int(message.get("line") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def messages_in_line_range(messages: list[dict[str, Any]], start_line: int, end_line: int) -> list[dict[str, Any]]:
+    return [message for message in messages if start_line <= message_line(message) <= end_line]
+
+
+def errors_outside_ranges(
+    messages: list[dict[str, Any]], ranges: dict[str, tuple[int, int]]
+) -> list[dict[str, Any]]:
+    outside: list[dict[str, Any]] = []
+    for message in messages:
+        if message.get("severity") != "error":
+            continue
+        line = message_line(message)
+        if not any(start_line <= line <= end_line for start_line, end_line in ranges.values()):
+            outside.append(message)
+    return outside
+
+
+def materialize_visible_support_context_sequential(
     candidates: list[dict[str, str]],
     *,
     project_root: Path,
@@ -888,17 +937,111 @@ def materialize_visible_support_context(
         "candidate_count": len(candidates),
         "lean_call_count": lean_call_count,
         "elapsed_seconds": round(elapsed_seconds, 3),
+        "materialization_strategy": "sequential",
     }
 
 
-def available_support_candidate_names(
+def materialize_visible_support_context(
     candidates: list[dict[str, str]],
     *,
     project_root: Path,
     imports: list[str],
     opens: list[str],
     timeout_seconds: float,
-) -> dict[str, bool]:
+) -> dict[str, Any]:
+    accepted: list[dict[str, str]] = []
+    support_context: list[str] = []
+    seen_text: set[str] = set()
+    pending: list[dict[str, str]] = []
+    for candidate in sorted(candidates, key=support_candidate_sort_key):
+        text = candidate["text"]
+        if text in seen_text:
+            continue
+        seen_text.add(text)
+        pending.append(candidate)
+    final_rejections: dict[str, dict[str, Any]] = {}
+    lean_call_count = 0
+    elapsed_seconds = 0.0
+    while pending:
+        source, ranges = support_trial_source_and_ranges(
+            imports=imports,
+            opens=opens,
+            support_context=support_context,
+            candidates=pending,
+        )
+        result = run_lean_source(source, project_root=project_root, timeout_seconds=timeout_seconds)
+        lean_call_count += 1
+        elapsed_seconds += float(result.get("elapsed_seconds") or 0.0)
+        errors = [message for message in result["messages"] if message.get("severity") == "error"]
+        if result["returncode"] != 0 and (not errors or errors_outside_ranges(result["messages"], ranges)):
+            fallback = materialize_visible_support_context_sequential(
+                candidates,
+                project_root=project_root,
+                imports=imports,
+                opens=opens,
+                timeout_seconds=timeout_seconds,
+            )
+            fallback["lean_call_count"] = int(fallback.get("lean_call_count") or 0) + lean_call_count
+            fallback["elapsed_seconds"] = round(
+                float(fallback.get("elapsed_seconds") or 0.0) + elapsed_seconds,
+                3,
+            )
+            fallback["materialization_strategy"] = "sequential_fallback"
+            return fallback
+        if result["returncode"] == 0 and not errors:
+            for candidate in pending:
+                support_context.append(candidate["text"])
+                accepted.append({key: value for key, value in candidate.items() if key != "text"})
+            pending = []
+            break
+
+        next_pending: list[dict[str, str]] = []
+        progress = False
+        for candidate in pending:
+            text = candidate["text"]
+            start_line, end_line = ranges[text]
+            candidate_errors = [
+                message
+                for message in messages_in_line_range(result["messages"], start_line, end_line)
+                if message.get("severity") == "error"
+            ]
+            if not candidate_errors:
+                support_context.append(text)
+                accepted.append({key: value for key, value in candidate.items() if key != "text"})
+                progress = True
+                continue
+            final_rejections[text] = {
+                **{key: value for key, value in candidate.items() if key != "text"},
+                "lean_returncode": result["returncode"],
+                "lean_error_count": len(candidate_errors),
+                "messages": candidate_errors[:5],
+                "stderr": result["stderr"],
+                "elapsed_seconds": result.get("elapsed_seconds"),
+            }
+            next_pending.append(candidate)
+        if not progress:
+            break
+        pending = next_pending
+    rejected = [final_rejections[candidate["text"]] for candidate in pending if candidate["text"] in final_rejections]
+    return {
+        "support_context": support_context,
+        "accepted": accepted,
+        "rejected": rejected,
+        "candidate_count": len(candidates),
+        "lean_call_count": lean_call_count,
+        "elapsed_seconds": round(elapsed_seconds, 3),
+        "materialization_strategy": "batched",
+    }
+
+
+def available_support_candidate_names_audit(
+    candidates: list[dict[str, str]],
+    *,
+    project_root: Path,
+    imports: list[str],
+    opens: list[str],
+    timeout_seconds: float,
+) -> dict[str, Any]:
     names = unique_in_order(
         [
             str(candidate.get("name") or "")
@@ -907,7 +1050,7 @@ def available_support_candidate_names(
         ]
     )
     if not names:
-        return {}
+        return {"availability": {}, "lean_call_count": 0, "elapsed_seconds": 0.0}
     body_lines: list[str] = []
     name_lines: dict[str, int] = {}
     line_offset = len(imports) + len(opens)
@@ -919,20 +1062,46 @@ def available_support_candidate_names(
         project_root=project_root,
         timeout_seconds=timeout_seconds,
     )
-    elapsed_seconds = result.get("elapsed_seconds")
     base_line_errors = [
         message
         for message in result["messages"]
         if message.get("severity") == "error" and int(message.get("line") or 0) <= line_offset
     ]
     if base_line_errors:
-        return {name: False for name in names}
+        availability = {name: False for name in names}
+        return {
+            "availability": availability,
+            "lean_call_count": 1,
+            "elapsed_seconds": result.get("elapsed_seconds") or 0.0,
+        }
     error_lines = {
         int(message.get("line") or 0)
         for message in result["messages"]
         if message.get("severity") == "error"
     }
-    return {name: name_lines[name] not in error_lines for name in names}
+    availability = {name: name_lines[name] not in error_lines for name in names}
+    return {
+        "availability": availability,
+        "lean_call_count": 1,
+        "elapsed_seconds": result.get("elapsed_seconds") or 0.0,
+    }
+
+
+def available_support_candidate_names(
+    candidates: list[dict[str, str]],
+    *,
+    project_root: Path,
+    imports: list[str],
+    opens: list[str],
+    timeout_seconds: float,
+) -> dict[str, bool]:
+    return available_support_candidate_names_audit(
+        candidates,
+        project_root=project_root,
+        imports=imports,
+        opens=opens,
+        timeout_seconds=timeout_seconds,
+    )["availability"]
 
 
 def unique_support_candidates(candidates: list[dict[str, str]]) -> list[dict[str, str]]:
@@ -1132,13 +1301,14 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             for unit_key, candidates in support_candidates.items():
                 if assumption_mode:
                     sorted_candidates = unique_support_candidates(candidates)
-                    available_names = available_support_candidate_names(
+                    availability_audit = available_support_candidate_names_audit(
                         sorted_candidates,
                         project_root=args.project_root,
                         imports=imports,
                         opens=opens,
                         timeout_seconds=getattr(args, "support_timeout_seconds", args.timeout_seconds),
                     )
+                    available_names = availability_audit["availability"]
                     skipped = [
                         {
                             **{key: value for key, value in candidate.items() if key != "text"},
@@ -1165,8 +1335,18 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                         "accepted_count": len(support["accepted"]),
                         "rejected_count": len(support["rejected"]),
                         "skipped_count": len(skipped),
-                        "lean_call_count": support["lean_call_count"],
-                        "elapsed_seconds": support["elapsed_seconds"],
+                        "lean_call_count": int(availability_audit["lean_call_count"])
+                        + int(support["lean_call_count"]),
+                        "elapsed_seconds": round(
+                            float(availability_audit["elapsed_seconds"])
+                            + float(support["elapsed_seconds"]),
+                            3,
+                        ),
+                        "availability_lean_call_count": availability_audit["lean_call_count"],
+                        "availability_elapsed_seconds": availability_audit["elapsed_seconds"],
+                        "materialization_lean_call_count": support["lean_call_count"],
+                        "materialization_elapsed_seconds": support["elapsed_seconds"],
+                        "materialization_strategy": support.get("materialization_strategy"),
                         "support_mode": support_mode,
                         "accepted": support["accepted"],
                         "skipped": skipped,
@@ -1188,6 +1368,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     "skipped_count": 0,
                     "lean_call_count": support["lean_call_count"],
                     "elapsed_seconds": support["elapsed_seconds"],
+                    "materialization_lean_call_count": support["lean_call_count"],
+                    "materialization_elapsed_seconds": support["elapsed_seconds"],
+                    "materialization_strategy": support.get("materialization_strategy"),
                     "support_mode": support_mode,
                     "accepted": support["accepted"],
                     "skipped": [],

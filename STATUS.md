@@ -66,9 +66,10 @@ dev/fresh panels plus one-off diagnostics.
   necessary.
 - One-unit model probes need verifier timeouts above the import-stack baseline:
   the same proof attempts that timed out at 120s compiled at 360s.
-- Lean verification is currently too slow because each open/support/final check
+- Lean verification is still slower than desired because each open/final batch
   starts a fresh `lake env lean --stdin --json`; measured cold `import Mathlib`
-  was about 25s and a warmed project-import check about 15s.
+  was about 25s and a warmed project-import check about 15s. Support
+  materialization is now batched, which removes the worst per-candidate loop.
 
 ## Recent Results
 - Scale snapshot: 462 LaTeX source units, 114 gold-candidate units, 414 aligned
@@ -129,10 +130,12 @@ dev/fresh panels plus one-off diagnostics.
   JSON, cost `$0.05606217`; unit 004 was interrupted after >35 min with no
   response. See the interruption audit in the run artifact.
 - Added verifier timing/counter instrumentation and a reusable failure overview
-  script. The timed DeepSeek-high two-unit verifier rerun used 28 Lean calls and
-  367.128s cumulative Lean elapsed; support checks alone used 22 calls and
-  258.225s. Current overview is
-  `reports/latex-statement-failure-overview-20260506T1715Z.md`.
+  script. Initial timed DeepSeek-high two-unit verifier rerun used 28 Lean calls
+  and 367.128s cumulative Lean elapsed, with support checks alone at 22 calls
+  and 258.225s. Batched support materialization rerun kept the result at `1/2`
+  compile/semantic but reduced verification to 12 Lean calls and 167.373s;
+  support work is now 6 calls and 68.851s. Current overview is
+  `reports/latex-statement-failure-overview-20260506T1735Z.md`.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and native session JSONL under
@@ -147,6 +150,7 @@ dev/fresh panels plus one-off diagnostics.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: batch/cache Lean support checks, then route failures by
-  class. Current failures are mostly clean declines or real proof/API errors,
-  not no-sorry contract violations.
+- Next useful work: batch inferred-open validation, reuse a warmed Lean process
+  if practical, then route the remaining failures by class. Current failures
+  are mostly clean declines or real proof/API errors, not no-sorry contract
+  violations.
