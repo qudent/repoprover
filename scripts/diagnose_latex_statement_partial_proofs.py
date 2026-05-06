@@ -52,6 +52,38 @@ def prompt_units_by_key(raw_path: Path) -> dict[str, dict[str, Any]]:
     }
 
 
+def load_decline_context_pack(path: Path | None) -> dict[tuple[str, str], dict[str, Any]]:
+    if path is None:
+        return {}
+    data = read_json(path)
+    packs: dict[tuple[str, str], dict[str, Any]] = {}
+    for unit in data.get("units") or []:
+        source_unit_id = str(unit.get("source_unit_id") or "")
+        unit_key = str(unit.get("unit_key") or "")
+        if source_unit_id and unit_key:
+            packs[(source_unit_id, unit_key)] = unit
+    return packs
+
+
+def extra_support_candidates_by_unit(raw_path: Path, pack_path: Path | None) -> dict[str, list[dict[str, str]]]:
+    packs = load_decline_context_pack(pack_path)
+    if not packs:
+        return {}
+    candidates: dict[str, list[dict[str, str]]] = {}
+    for unit_key, unit in prompt_units_by_key(raw_path).items():
+        source_unit_id = str((unit.get("source_unit") or {}).get("id") or "")
+        pack = packs.get((source_unit_id, unit_key))
+        if not pack:
+            continue
+        candidates[unit_key] = verify.visible_support_candidates_for_unit(
+            {
+                "unit_key": unit_key,
+                "diagnostic_decline_context_pack": pack,
+            }
+        )
+    return candidates
+
+
 def source_path_to_withheld_module(path_text: str) -> str | None:
     if not path_text:
         return None
@@ -113,12 +145,16 @@ def materialize_support(
     opens: list[str],
     enabled: bool,
     timeout_seconds: float,
+    decline_context_pack: Path | None = None,
 ) -> tuple[dict[str, list[str]], dict[str, dict[str, Any]]]:
     if not enabled:
         return {}, {}
     support_context_by_unit: dict[str, list[str]] = {}
     support_audit_by_unit: dict[str, dict[str, Any]] = {}
-    for unit_key, candidates in verify.visible_support_candidates_by_unit(raw_path).items():
+    candidates_by_unit = verify.visible_support_candidates_by_unit(raw_path)
+    for unit_key, extra_candidates in extra_support_candidates_by_unit(raw_path, decline_context_pack).items():
+        candidates_by_unit.setdefault(unit_key, []).extend(extra_candidates)
+    for unit_key, candidates in candidates_by_unit.items():
         support = verify.materialize_visible_support_context(
             candidates,
             project_root=project_root,
@@ -193,6 +229,7 @@ def diagnose_raw_path(args: argparse.Namespace, raw_path: Path) -> tuple[list[di
         opens=opens,
         enabled=args.materialize_visible_support,
         timeout_seconds=args.support_timeout_seconds,
+        decline_context_pack=args.decline_context_pack,
     )
     verification_rows = verify.verify_generation_output(
         raw_output,
@@ -336,6 +373,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "schema_version": "repoprover.latex_statement_partial_proof_diagnostics.v1",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "generation_runs": [str(path) for path in args.generation_run],
+        "decline_context_pack": str(args.decline_context_pack) if args.decline_context_pack else None,
         "raw_file_count": len(raw_paths),
         "diagnosed_unit_count": len(units),
         "diagnostic_class_counts": class_counts,
@@ -351,6 +389,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--generation-run", type=Path, action="append", required=True)
+    parser.add_argument("--decline-context-pack", type=Path)
     parser.add_argument("--unit-key", action="append")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--project-root", type=Path, default=REPO_ROOT / "algebraic-combinatorics")

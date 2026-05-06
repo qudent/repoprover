@@ -782,3 +782,36 @@ def test_visible_support_candidates_read_proof_lane_tasks(tmp_path) -> None:
     assert list(candidates) == ["unit-007"]
     assert candidates["unit-007"][0]["name"] == "Demo.helper"
     assert candidates["unit-007"][0]["text"] == "def helper : Nat := 0"
+
+
+def test_visible_support_snippet_trims_trailing_namespace_directives() -> None:
+    candidates = visible_support_candidates_for_unit(
+        {
+            "planned_declarations": [
+                {
+                    "available_prior_project_context": [
+                        {
+                            "project_declarations": [
+                                {
+                                    "kind": "structure",
+                                    "name": "Demo.Box",
+                                    "lean_snippet": "\n".join(
+                                        [
+                                            "structure Box where",
+                                            "  value : Nat",
+                                            "",
+                                            "namespace Box",
+                                            "variable {α : Type*}",
+                                            "def leaked : Nat := 1",
+                                        ]
+                                    ),
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    )
+
+    assert candidates[0]["text"] == "structure Box where\n  value : Nat"

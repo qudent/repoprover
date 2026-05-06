@@ -36,6 +36,8 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   after the target-clean gate passed.
 - [x] Add a no-provider partial-proof diagnostic for raw contract-violating
   proof-lane outputs.
+- [x] Add a bounded dependency-closure variant of decline context packs and
+  local diagnostics for the Catalan partial proof.
 - [ ] Validate the next generic context/proof-lane change on a fresh slice, not
   only on NPartition or one already-debugged theorem.
 
@@ -93,6 +95,14 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
   checks the raw Catalan body locally. Result: `lean_errors_before_or_at_placeholder`,
   `1/15` support snippets accepted, 12 Lean errors before the final `sorry`;
   blocker is context dependency closure plus proof synthesis.
+- Dependency-closure pack:
+  `docs/latex-statement-proof-lane-decline-context-pack-closure-2026-05-06.json`
+  adds 55 dependency rows across 6 decline units; Catalan grows to 42 context
+  rows with 26 dependencies. The local closure diagnostic at
+  `docs/latex-statement-partial-proof-diagnostics/2026-05-06-fresh-unit001-closure-pack/`
+  still fails (`lean_errors_before_or_at_placeholder`): 49 candidates, 0 accepted
+  under a 10s per-snippet timeout, and remaining unknown Catalan/path-matrix
+  identifiers. Body-snippet copying is too noisy/slow for same-file context.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and a native session JSONL under
@@ -103,6 +113,8 @@ development loop is a fixed five-unit panel plus fresh five-unit slices.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: make context packs dependency-closed and Lean-checkable, then
-  route remaining partial raw bodies to a stronger proof-synthesis/repair lane;
-  do not keep spending ordinary proof-lane calls on the same prompt shape.
+- Next useful work: replace arbitrary body-snippet materialization with a
+  target-hidden signature/assumption prelude or redacted-prefix module for
+  previous declarations, then route remaining partial raw bodies to a stronger
+  proof-synthesis/repair lane. Do not keep spending ordinary proof-lane calls on
+  the same prompt shape.

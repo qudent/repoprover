@@ -95,6 +95,7 @@ def test_partial_proof_diagnostic_classifies_sorry_body(monkeypatch, tmp_path: P
     summary = diagnose.run(
         argparse.Namespace(
             generation_run=[run_dir],
+            decline_context_pack=None,
             unit_key=None,
             output=tmp_path / "diagnostic",
             project_root=tmp_path,

@@ -829,6 +829,28 @@ the raw body still had 12 Lean errors including unknown `pathWeightMatrix`,
 So the immediate blocker is still context packaging/import dependency closure,
 not only proof synthesis.
 
+A first generic dependency-closure pack is recorded at
+`docs/latex-statement-proof-lane-decline-context-pack-closure-2026-05-06.json`.
+It recursively scans source-visible project declarations mentioned by selected
+context snippets, excludes same-source hidden target declarations, and adds
+nearby variable context. Across the six analyzed decline units it selected 95
+context rows, including 55 dependency-closure rows; for the Catalan unit this
+expanded the context from 8 direct rows to 42 rows with 26 dependencies. The
+support materializer was also made less order-sensitive by globally sorting and
+deduplicating candidates, retrying after newly accepted dependencies, and
+trimming trailing `namespace`/`variable` directives from copied snippets.
+
+This did not solve the Catalan diagnostic. The closure-pack diagnostic at
+`docs/latex-statement-partial-proof-diagnostics/2026-05-06-fresh-unit001-closure-pack/`
+still classified the raw body as `lean_errors_before_or_at_placeholder`. With a
+10-second per-snippet local Lean timeout, all 49 support candidates timed out or
+failed before being accepted, and the raw body still had unknown
+`catalanHankelMatrix`/`pathWeightMatrix` errors. The practical lesson is that
+arbitrary body-snippet copying is the wrong materialization primitive for large
+same-file context. The next design should expose previous declarations as a
+target-hidden signature/assumption prelude or a redacted-prefix module, while
+separately checking those previous declarations in the full project.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

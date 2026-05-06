@@ -315,6 +315,36 @@ def support_snippet_is_complete(snippet: str) -> bool:
     return ":=" in snippet or " where" in snippet or "\nwhere" in snippet
 
 
+def trim_support_snippet(snippet: str) -> str:
+    lines = snippet.splitlines()
+    trimmed: list[str] = []
+    seen_declaration = False
+    for line in lines:
+        stripped = line.strip()
+        if seen_declaration and (
+            stripped.startswith("namespace ")
+            or stripped.startswith("section")
+            or stripped.startswith("end ")
+            or stripped == "end"
+            or stripped.startswith("variable ")
+        ):
+            break
+        if LEAN_DECL_KIND_RE.match(line):
+            seen_declaration = True
+        trimmed.append(line)
+    return "\n".join(trimmed).strip()
+
+
+def support_candidate_sort_key(candidate: dict[str, str]) -> tuple[str, int, str]:
+    path = (candidate.get("path") or "").removeprefix("algebraic-combinatorics/").lower()
+    try:
+        line = int(candidate.get("line") or 0)
+    except ValueError:
+        line = 0
+    line_key = line if line > 0 else 1_000_000_000
+    return (path, line_key, candidate.get("name") or "")
+
+
 def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[dict[str, str]]:
     candidates: list[dict[str, str]] = []
     variables_by_path: dict[str, list[str]] = {}
@@ -327,7 +357,7 @@ def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[di
             continue
         snippet = item.get("lean_snippet")
         if isinstance(snippet, str):
-            cleaned = strip_lean_comments(snippet)
+            cleaned = trim_support_snippet(strip_lean_comments(snippet))
             if support_snippet_is_complete(cleaned):
                 path = str(item.get("path") or "")
                 candidates.append(
@@ -335,6 +365,7 @@ def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[di
                         "kind": str(item.get("kind") or "lean_snippet"),
                         "name": str(item.get("name") or ""),
                         "path": path,
+                        "line": str(item.get("line") or ""),
                         "text": support_snippet_block(cleaned, variables_by_path.get(path, [])),
                     }
                 )
@@ -345,7 +376,7 @@ def visible_support_candidates_for_unit(unit_payload: dict[str, Any]) -> list[di
         if text not in seen:
             unique.append(candidate)
             seen.add(text)
-    return unique
+    return sorted(unique, key=support_candidate_sort_key)
 
 
 def support_snippet_block(snippet: str, variables: list[str]) -> str:
@@ -541,29 +572,45 @@ def materialize_visible_support_context(
     timeout_seconds: float,
 ) -> dict[str, Any]:
     accepted: list[dict[str, str]] = []
-    rejected: list[dict[str, Any]] = []
     support_context: list[str] = []
-    for candidate in candidates:
-        trial_context = [*support_context, candidate["text"]]
-        result = run_lean_source(
-            build_lean_source("", imports=imports, opens=opens, support_context=trial_context),
-            project_root=project_root,
-            timeout_seconds=timeout_seconds,
-        )
-        errors = [message for message in result["messages"] if message.get("severity") == "error"]
-        if result["returncode"] == 0 and not errors:
-            support_context.append(candidate["text"])
-            accepted.append({key: value for key, value in candidate.items() if key != "text"})
-        else:
-            rejected.append(
-                {
+    seen_text: set[str] = set()
+    pending: list[dict[str, str]] = []
+    for candidate in sorted(candidates, key=support_candidate_sort_key):
+        text = candidate["text"]
+        if text in seen_text:
+            continue
+        seen_text.add(text)
+        pending.append(candidate)
+    final_rejections: dict[str, dict[str, Any]] = {}
+    while pending:
+        next_pending: list[dict[str, str]] = []
+        progress = False
+        for candidate in pending:
+            text = candidate["text"]
+            trial_context = [*support_context, text]
+            result = run_lean_source(
+                build_lean_source("", imports=imports, opens=opens, support_context=trial_context),
+                project_root=project_root,
+                timeout_seconds=timeout_seconds,
+            )
+            errors = [message for message in result["messages"] if message.get("severity") == "error"]
+            if result["returncode"] == 0 and not errors:
+                support_context.append(text)
+                accepted.append({key: value for key, value in candidate.items() if key != "text"})
+                progress = True
+            else:
+                final_rejections[text] = {
                     **{key: value for key, value in candidate.items() if key != "text"},
                     "lean_returncode": result["returncode"],
                     "lean_error_count": len(errors),
                     "messages": result["messages"][:5],
                     "stderr": result["stderr"],
                 }
-            )
+                next_pending.append(candidate)
+        if not progress:
+            break
+        pending = next_pending
+    rejected = [final_rejections[candidate["text"]] for candidate in pending if candidate["text"] in final_rejections]
     return {
         "support_context": support_context,
         "accepted": accepted,

@@ -104,3 +104,108 @@ def test_builds_pack_and_filters_same_source_hidden_declarations(tmp_path: Path)
     assert unit["selected_project_context"][0]["name"] == "Project.safeDef"
     assert unit["excluded_hidden_candidate_count"] == 1
     assert "Project.targetTheorem" not in json.dumps(pack)
+
+
+def test_dependency_closure_adds_visible_project_dependencies(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    source = project_root / "Project/Safe.lean"
+    source.parent.mkdir(parents=True)
+    source.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "",
+                "namespace Project",
+                "",
+                "variable {K : Type*} [CommRing K]",
+                "",
+                "def helper : K := 0",
+                "",
+                "def safeDef : K := helper",
+                "",
+                "theorem hiddenTarget : True := by trivial",
+                "",
+                "end Project",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    task_dir = tmp_path / "tasks"
+    run_dir = tmp_path / "run"
+    _write_json(run_dir / "eval/generation-results.json", {"proof_lane_task_dir": str(task_dir)})
+    _write_json(
+        task_dir / "tasks/unit-001.json",
+        {
+            "unit_key": "unit-001",
+            "source_unit": {"id": "tex/file.tex:thm.demo", "labels": ["thm.demo"]},
+        },
+    )
+    decline_report = tmp_path / "decline.json"
+    _write_json(
+        decline_report,
+        {
+            "project_root": str(project_root),
+            "units": [
+                {
+                    "run_dir": str(run_dir),
+                    "unit_key": "unit-001",
+                    "identifier_results": [
+                        {
+                            "identifier": "safeDef",
+                            "classification": "found_and_name_mentioned_but_declaration_not_selected",
+                            "candidates": [
+                                {
+                                    "name": "Project.safeDef",
+                                    "kind": "def",
+                                    "path": "project/Project/Safe.lean",
+                                    "line": 9,
+                                    "snippet": "def safeDef : K := helper",
+                                    "match_kind": "exact_local_name",
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ],
+        },
+    )
+    gold = tmp_path / "gold.jsonl"
+    _write_jsonl(
+        gold,
+        [
+            {
+                "id": "tex/file.tex:thm.demo",
+                "posthoc_lean_alignment": {
+                    "aligned_lean_declarations": [
+                        {
+                            "full_name": "Project.hiddenTarget",
+                            "path": "Project/Safe.lean",
+                            "line_range": [11, 11],
+                        }
+                    ],
+                    "referencing_lean_declarations": [],
+                },
+            }
+        ],
+    )
+
+    pack = build_pack(
+        argparse.Namespace(
+            decline_context_report=decline_report,
+            gold_candidates=gold,
+            project_root=project_root,
+            max_candidates_per_identifier=3,
+            dependency_depth=1,
+            max_dependencies_per_unit=8,
+        )
+    )
+
+    unit = pack["units"][0]
+    names = [row["name"] for row in unit["selected_project_context"]]
+    assert names == [
+        "Project.safeDef",
+        "Project.helper",
+        "variable {K : Type*} [CommRing K]",
+    ]
+    assert unit["dependency_project_context_count"] == 1
+    assert "Project.hiddenTarget" not in json.dumps(pack)
