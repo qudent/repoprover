@@ -1,0 +1,22 @@
+{
+  "schema_version": "repoprover.latex_statement_proof_lane_generation_aggregated.v1",
+  "unit_keys": [
+    "unit-002"
+  ],
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The previous generation used Units.ne_zero and IsUnit.mk incorrectly. The correct approach is to use PowerSeries.isUnit_iff_constantCoeff and then convert IsUnit (constantCoeff a) to constantCoeff a ≠ 0 using the field condition. In a field, an element is a unit iff it is nonzero. The lemma `isUnit_iff_ne_zero` exists for fields. We can use `by rw [isUnit_iff_ne_zero]` after `rw [PowerSeries.isUnit_iff_constantCoeff]`."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-002",
+      "used_context": [
+        "PowerSeries.isUnit_iff_constantCoeff",
+        "Field K",
+        "isUnit_iff_ne_zero"
+      ]
+    }
+  ]
+}

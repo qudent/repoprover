@@ -1,0 +1,116 @@
+{
+  "schema_version": "repoprover.latex_statement_model_ablation.v1",
+  "created_at": "2026-05-06T15:20:00Z",
+  "purpose": "Run the report-recommended same-panel model ablations before more one-off proof-lane retries.",
+  "model_ids_checked_against_openrouter_at": "2026-05-06T15:20:00Z",
+  "model_ids": {
+    "deepseek_v4_flash": "deepseek/deepseek-v4-flash",
+    "deepseek_v4_pro": "deepseek/deepseek-v4-pro",
+    "kimi_k2_6": "moonshotai/kimi-k2.6",
+    "gpt_5_5": "openai/gpt-5.5"
+  },
+  "panels": {
+    "dev": "docs/latex-statement-dev-panel-2026-05-06.json",
+    "fresh": "docs/latex-statement-fresh-slice-2026-05-06.json"
+  },
+  "fixed_selector_runs": {
+    "fresh_transitive_localdeps": "docs/latex-statement-panel-runs/2026-05-06-fresh-slice5-transitive-localdeps-v1/context-selection"
+  },
+  "proof_lane_task_dirs": {
+    "fresh_transitive_localdeps_assumption": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption"
+  },
+  "defaults": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "output_root": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix",
+    "max_tokens": 8192,
+    "temperature": 0.0,
+    "max_units_per_call": 1,
+    "support_mode": "assumption",
+    "materialize_visible_support": true,
+    "semantic_coverage": true
+  },
+  "runs": [
+    {
+      "id": "fresh-selector-flash-none",
+      "kind": "panel_selector_context",
+      "panel": "fresh",
+      "selector_model": "deepseek/deepseek-v4-flash",
+      "selector_reasoning_effort": "none",
+      "why": "Cheap selector baseline on the reserve fresh panel."
+    },
+    {
+      "id": "fresh-selector-flash-default",
+      "kind": "panel_selector_context",
+      "panel": "fresh",
+      "selector_model": "deepseek/deepseek-v4-flash",
+      "selector_reasoning_effort": "default",
+      "why": "Test whether selector reasoning improves context enough to justify cost."
+    },
+    {
+      "id": "fresh-generation-flash-fixed-selector",
+      "kind": "panel_generation_fixed_selector",
+      "panel": "fresh",
+      "selector_run": "fresh_transitive_localdeps",
+      "generation_model": "deepseek/deepseek-v4-flash",
+      "generation_reasoning_effort": "none",
+      "why": "Current cheap generation baseline with fixed selector context."
+    },
+    {
+      "id": "fresh-generation-pro-fixed-selector",
+      "kind": "panel_generation_fixed_selector",
+      "panel": "fresh",
+      "selector_run": "fresh_transitive_localdeps",
+      "generation_model": "deepseek/deepseek-v4-pro",
+      "generation_reasoning_effort": "none",
+      "why": "Measure whether V4 Pro improves proof synthesis without changing selected context."
+    },
+    {
+      "id": "fresh-proof-lane-flash",
+      "kind": "proof_lane_generation",
+      "proof_lane_task_dir": "fresh_transitive_localdeps_assumption",
+      "model": "deepseek/deepseek-v4-flash",
+      "reasoning_effort": "none",
+      "why": "Current proof-lane baseline."
+    },
+    {
+      "id": "fresh-proof-lane-pro",
+      "kind": "proof_lane_generation",
+      "proof_lane_task_dir": "fresh_transitive_localdeps_assumption",
+      "model": "deepseek/deepseek-v4-pro",
+      "reasoning_effort": "none",
+      "why": "Measure stronger DeepSeek proof-lane synthesis on identical tasks."
+    },
+    {
+      "id": "fresh-proof-lane-kimi-k2-6",
+      "kind": "proof_lane_generation",
+      "proof_lane_task_dir": "fresh_transitive_localdeps_assumption",
+      "model": "moonshotai/kimi-k2.6",
+      "reasoning_effort": "none",
+      "why": "Re-test Kimi on a panel, not only NPartition."
+    },
+    {
+      "id": "fresh-proof-lane-gpt-5-5",
+      "kind": "proof_lane_generation",
+      "proof_lane_task_dir": "fresh_transitive_localdeps_assumption",
+      "model": "openai/gpt-5.5",
+      "reasoning_effort": "default",
+      "why": "Small commercial-model sanity check on identical proof-lane tasks."
+    },
+    {
+      "id": "fresh-proof-lane-gpt-5-5-highreason",
+      "kind": "proof_lane_generation",
+      "proof_lane_task_dir": "fresh_transitive_localdeps_assumption",
+      "model": "openai/gpt-5.5",
+      "reasoning_effort": "high",
+      "max_tokens": 32768,
+      "why": "Top-line proof-lane probe: strongest available GPT-5.5 reasoning setting and large completion budget on identical tasks."
+    }
+  ],
+  "ledger": "docs/latex-statement-run-ledger.jsonl",
+  "policy": [
+    "Emit budget commands first and inspect payloads before paid mode.",
+    "Use identical selector runs when comparing generation models.",
+    "Use identical proof-lane task dirs when comparing proof-lane models.",
+    "Record every paid run in the run ledger."
+  ]
+}

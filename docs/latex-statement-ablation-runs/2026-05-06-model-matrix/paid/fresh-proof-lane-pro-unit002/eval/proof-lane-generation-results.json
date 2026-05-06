@@ -1,0 +1,116 @@
+{
+  "attached_decline_context_pack_count": 0,
+  "batch_count": 1,
+  "batches": [
+    {
+      "batch_index": 1,
+      "budget_only": false,
+      "contract_enforcement": {
+        "normalized_unit_count": 1,
+        "normalized_units": [
+          {
+            "contract_violations": [
+              "generated_lean_contains_placeholder",
+              "generated_lean_must_not_include_comments"
+            ],
+            "raw_declaration_names": [
+              "fps_invertible_iff_constantCoeff_field"
+            ],
+            "raw_lean_file_body_characters": 568,
+            "reason": "generated_output_contains_incomplete_or_forbidden_lean",
+            "unit_key": "unit-002"
+          }
+        ]
+      },
+      "cost_summary": {
+        "model": "deepseek/deepseek-v4-pro",
+        "openrouter_reported_cost": 0.004253865,
+        "usage": {
+          "completion_tokens": 424,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.004253865,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.00036888,
+            "upstream_inference_cost": 0.004253865,
+            "upstream_inference_prompt_cost": 0.003884985
+          },
+          "is_byok": false,
+          "prompt_tokens": 8931,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 9355
+        }
+      },
+      "elapsed_seconds": 15.272,
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-pro-unit002/batch-001/generation-payload.json",
+      "task_unit_keys": [
+        "unit-002"
+      ],
+      "valid_json": true
+    }
+  ],
+  "budget_only": false,
+  "cost_summary": {
+    "batches": [
+      {
+        "model": "deepseek/deepseek-v4-pro",
+        "openrouter_reported_cost": 0.004253865,
+        "usage": {
+          "completion_tokens": 424,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.004253865,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.00036888,
+            "upstream_inference_cost": 0.004253865,
+            "upstream_inference_prompt_cost": 0.003884985
+          },
+          "is_byok": false,
+          "prompt_tokens": 8931,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 9355
+        }
+      }
+    ],
+    "model": "deepseek/deepseek-v4-pro",
+    "openrouter_reported_cost": 0.004253865
+  },
+  "decline_context_pack": null,
+  "generated_at": "2026-05-06T15:17:25.078991+00:00",
+  "max_tasks_per_call": 1,
+  "max_tokens": 8192,
+  "model": "deepseek/deepseek-v4-pro",
+  "output_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-pro-unit002",
+  "paid_call_made": true,
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption",
+  "provider_error_count": 0,
+  "reasoning_effort": "none",
+  "resume_existing": true,
+  "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
+  "task_unit_keys": [
+    "unit-002"
+  ],
+  "temperature": 0.0
+}

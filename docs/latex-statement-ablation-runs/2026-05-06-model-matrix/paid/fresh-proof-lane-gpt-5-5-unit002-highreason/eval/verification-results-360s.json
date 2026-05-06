@@ -1,0 +1,164 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 1,
+      "failure_class_counts": {
+        "compiled": 1
+      },
+      "filtered_invalid_inferred_opens": [],
+      "filtered_target_module_imports": [],
+      "filtered_target_namespace_opens": [],
+      "generation_output": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-gpt-5-5-unit002-highreason/batch-001/generation-output.json",
+      "hidden_target_modules": [],
+      "hidden_target_namespaces": [],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.DividingFPS",
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.DividingFPS",
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "inferred_opens": [
+        "open scoped BigOperators",
+        "open AlgebraicCombinatorics",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "materialize_visible_support": true,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped BigOperators",
+        "open AlgebraicCombinatorics",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "support_mode": "assumption",
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.DividingFPS",
+        "AlgebraicCombinatorics.FPS.ExpLog",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped BigOperators",
+        "open AlgebraicCombinatorics",
+        "open PowerSeries",
+        "open Nat Finset"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "fps_invertible_iff_constantCoeff_field"
+          ],
+          "compile_passed": true,
+          "contract_violations": [],
+          "declaration_names": [
+            "fps_invertible_iff_constantCoeff_field"
+          ],
+          "failure_class": "compiled",
+          "lean_error_count": 0,
+          "lean_returncode": 0,
+          "messages": [],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-002",
+          "visible_support_context": {
+            "accepted": [],
+            "accepted_count": 0,
+            "candidate_count": 8,
+            "rejected": [],
+            "rejected_count": 0,
+            "skipped": [
+              {
+                "kind": "def",
+                "line": "140",
+                "name": "AlgebraicCombinatorics.divByUnit",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "146",
+                "name": "AlgebraicCombinatorics.fracs1_div_add_div",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "160",
+                "name": "AlgebraicCombinatorics.fracs1_div_mul_div",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "167",
+                "name": "AlgebraicCombinatorics.fracs1_div_eq_iff",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "193",
+                "name": "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "318",
+                "name": "AlgebraicCombinatorics.fps_onePlusX_isUnit",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "325",
+                "name": "AlgebraicCombinatorics.fps_onePlusX_inv",
+                "path": "AlgebraicCombinatorics/DividingFPS.lean",
+                "reason": "already_available_from_imports"
+              },
+              {
+                "kind": "theorem",
+                "line": "935",
+                "name": "PowerSeries.isUnit_of_constantCoeff_eq_one",
+                "path": "AlgebraicCombinatorics/FPS/ExpLog.lean",
+                "reason": "already_available_from_imports"
+              }
+            ],
+            "skipped_count": 8,
+            "support_mode": "assumption"
+          }
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 1,
+  "failure_class_counts": {
+    "compiled": 1
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T15:28:23.175340+00:00",
+  "generation_run": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-gpt-5-5-unit002-highreason",
+  "infer_context": true,
+  "materialize_visible_support": true,
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "support_mode": "assumption",
+  "unit_count": 1,
+  "validate_inferred_opens": true
+}

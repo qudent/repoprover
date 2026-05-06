@@ -1,0 +1,26 @@
+{
+  "schema_version": "repoprover.latex_statement_proof_lane_generation_aggregated.v1",
+  "unit_keys": [
+    "unit-004"
+  ],
+  "units": [
+    {
+      "declaration_names": [
+        "AlgebraicCombinatorics.SubtractiveMethods.cancel_all_even_l1"
+      ],
+      "lean_file_body": "open Finset BigOperators\n\nnamespace AlgebraicCombinatorics.SubtractiveMethods\n\ntheorem cancel_all_even_l1 (n d : ℕ) :\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n) =\n      ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\n  calc\n    (∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n)\n        = ∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, signProduct e x := by\n      apply Finset.sum_congr rfl\n      intro e _\n      simp [signProduct, Finset.sum_pow]\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\n      rw [Finset.sum_comm]\n\nend AlgebraicCombinatorics.SubtractiveMethods",
+      "notes": [
+        "Expands each power of a finite sum over signs into the sum over functions Fin n → Fin d, using the project definition signProduct, then interchanges the two finite sums."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+        "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+        "Finset.sum_congr",
+        "Finset.sum_pow",
+        "Finset.sum_comm"
+      ]
+    }
+  ]
+}

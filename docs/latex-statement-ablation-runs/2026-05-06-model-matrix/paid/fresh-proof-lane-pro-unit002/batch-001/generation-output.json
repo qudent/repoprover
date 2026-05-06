@@ -1,0 +1,36 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "contract_violations": [
+          "generated_lean_contains_placeholder",
+          "generated_lean_must_not_include_comments"
+        ],
+        "raw_declaration_names": [
+          "fps_invertible_iff_constantCoeff_field"
+        ],
+        "raw_lean_file_body_characters": 568,
+        "reason": "generated_output_contains_incomplete_or_forbidden_lean",
+        "unit_key": "unit-002"
+      }
+    ],
+    "policy": "Runner normalized invalid model units to the declared empty-output cannot-prove contract. This preserves benchmark honesty while keeping the raw model text in raw-generation-output.json or raw-repair-output.json."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The previous generation used Units.ne_zero and IsUnit.mk incorrectly. The correct approach is to use PowerSeries.isUnit_iff_constantCoeff and then convert IsUnit (constantCoeff a) to constantCoeff a ≠ 0 using the field condition. In a field, an element is a unit iff it is nonzero. The lemma `isUnit_iff_ne_zero` exists for fields. We can use `by rw [isUnit_iff_ne_zero]` after `rw [PowerSeries.isUnit_iff_constantCoeff]`."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-002",
+      "used_context": [
+        "PowerSeries.isUnit_iff_constantCoeff",
+        "Field K",
+        "isUnit_iff_ne_zero"
+      ]
+    }
+  ]
+}

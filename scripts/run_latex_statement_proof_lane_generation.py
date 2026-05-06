@@ -234,7 +234,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "max_tokens": args.max_tokens,
             "response_format": {"type": "json_object"},
         }
-        if args.reasoning_effort:
+        if args.reasoning_effort and args.reasoning_effort != "default":
             request_payload["extra_body"] = {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
         write_json(batch_dir / "generation-payload.json", request_payload)
         batch_summary: dict[str, Any] = {
@@ -320,7 +320,7 @@ def main() -> None:
     parser.add_argument(
         "--reasoning-effort",
         default="none",
-        help="OpenRouter reasoning effort override; use 'none' for schema-bound JSON proof-lane runs.",
+        help="OpenRouter reasoning effort override; use 'default' to omit the provider-specific override.",
     )
     parser.add_argument("--max-tasks-per-call", type=int, default=1)
     parser.add_argument("--decline-context-pack", type=Path)

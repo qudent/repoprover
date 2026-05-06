@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": " {\"units\": [{\"unit_key\":\"unit-002\",\"status\":\"generated\",\"declaration_names\":[\"fps_invertible_iff_constantCoeff_field\"],\"lean_file_body\":\"variable {K : Type*} [Field K]\\n\\nopen PowerSeries\\n\\ntheorem fps_invertible_iff_constantCoeff_field (a : PowerSeries K) :\\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\\n  rw [fps_invertible_iff_constantCoeff]\\n  constructor\\n  · intro h\\n    exact IsUnit.ne_zero h\\n  · intro h\\n    exact Ne.isUnit h\\n\",\"notes\":[\"Uses the prior project theorem fps_invertible_iff_constantCoeff (a : PowerSeries K) : IsUnit a ↔ IsUnit (a.constantCoeff).\",\"Over a field K, an element is a unit iff it is nonzero. The forward direction uses IsUnit.ne_zero. The reverse direction uses Ne.isUnit, which constructs a unit from a nonzero element in a field.\",\"The variable command and namespace open are reproduced from visible local file context.\"],\"used_context\":[\"AlgebraicCombinatorics.fps_invertible_iff_constantCoeff\",\"IsUnit.ne_zero\",\"Ne.isUnit\",\"Field K\",\"PowerSeries\"]}]}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778080646,
+  "id": "gen-1778080645-17pjqSB1uUt4ZhO1E7h7",
+  "model": "moonshotai/kimi-k2.6-20260420",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 251,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0075633,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.0008785,
+      "upstream_inference_cost": 0.0075633,
+      "upstream_inference_prompt_cost": 0.0066848
+    },
+    "is_byok": false,
+    "prompt_tokens": 8356,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 8607
+  }
+}

@@ -59,3 +59,45 @@ Read `STATUS.md` before non-trivial work and rewrite it after meaningful state
 changes. Keep project-specific commands and current plans there or in `docs/`,
 not in global learnings. Preserve hard benchmark examples; do not silently drop
 ugly or failing records.
+
+## Theorem-Level Pipeline Discipline
+
+For LaTeX-statement autoformalization work, implement the report recommendations
+rather than only summarizing them:
+
+- Before another paid one-off retry, inspect recent `STATUS.md` history and the
+  latest `reports/REPORT-*.md` files for repeated loops or stale assumptions.
+- Prefer frozen panels over single-theorem optimization. Use
+  `docs/latex-statement-dev-panel-2026-05-06.json` for contaminated development
+  feedback and `docs/latex-statement-fresh-slice-2026-05-06.json` as the current
+  reserve/fresh check. Do not call a prompt or context rule generic until it has
+  been scored outside the theorem that induced it.
+- Keep DeepSeek V4 Flash as the cheap selector/context baseline, but do not
+  assume it is the proof-lane winner. Use
+  `configs/latex-statement-model-ablation-2026-05-06.json` and
+  `scripts/build_latex_statement_ablation_commands.py` to compare Flash, V4 Pro,
+  Kimi K2.6, and GPT-5.5 on identical panels/task dirs before more one-off
+  proof-lane retries. "Top-line" proof-lane probes should use the strongest
+  supported reasoning setting and a large completion budget, not the cheap
+  no-reasoning defaults.
+- Emit budget/dry-run payloads first when changing prompts, context hydration,
+  or model mix. Inspect payloads for target leakage and fake context before paid
+  calls.
+- Record paid or acceptance-bearing runs with
+  `scripts/update_latex_statement_run_ledger.py` into
+  `docs/latex-statement-run-ledger.jsonl`. The ledger should include artifact
+  root, units, model/reasoning, cost/tokens, context counts, compile/semantic
+  counts, failure classes, and the verification artifact path. If Lean import
+  setup takes close to the verifier timeout, rerun with a larger timeout and do
+  not keep stale timeout artifacts as the headline result.
+- After two attempts on the same unit with the same failure class and adequate
+  checked context, stop prompt/context tuning and route the case to a different
+  lane: stronger-model ablation, manual Lean lemma development, Mathlib/project
+  API lookup, or a proof-synthesis worker.
+- Treat clean `cannot_prove_from_visible_context` declines as a quality metric,
+  not proof progress. Benchmark progress means Lean compilation and post-hoc
+  semantic coverage improve under the target-hidden contract.
+- Bottom-line viability claims must be evidence-based. Current artifacts do not
+  demonstrate a robust path to formalizing 90% of the book for about `$100`;
+  they demonstrate useful cheap components plus unresolved proof-lane and
+  context-routing blockers.

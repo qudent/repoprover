@@ -24,6 +24,8 @@ dev/fresh panels plus one-off diagnostics.
   target leakage.
 - [ ] Route remaining failures by class: context acquisition, Mathlib hydration,
   or proof synthesis.
+- [ ] Validate whether the pipeline can plausibly reach cheap 90%+ book
+  formalization; current evidence is not sufficient for a `$100`/90% claim.
 
 ## TODO Plan
 - [x] Generate theorem-level source units and gold-candidate rows.
@@ -38,8 +40,10 @@ dev/fresh panels plus one-off diagnostics.
   budget payload now includes private `translateVertex`/`dyckDigraph_arc_translate`.
 - [x] Validate transitive local predecessor context on a fresh multi-unit slice.
 - [ ] Run a fixed model/context ablation on the same theorem-level panel:
-  DeepSeek V4 Flash vs DeepSeek V4 Pro vs Kimi K2.6, with identical hidden-target
-  context packs and acceptance metrics.
+  DeepSeek V4 Flash vs DeepSeek V4 Pro vs Kimi K2.6 vs GPT-5.5, with identical
+  hidden-target context packs and acceptance metrics.
+- [ ] Keep a run ledger row for each paid or acceptance-bearing theorem-level
+  run.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -53,9 +57,15 @@ dev/fresh panels plus one-off diagnostics.
 - Flash-heavy generation is not yet justified as an optimizer strategy; it is
   only the cheap baseline. Need same-panel model ablations before concluding
   whether Flash, Pro, or Kimi should own selector/generator/proof-lane stages.
+- History review shows a recurring mistake: turning one hard theorem's failure
+  into prompt/context rules and retesting the same theorem. The fix is now
+  encoded in `AGENTS.md`: use panels, ledgers, and model ablations before more
+  one-off retries.
 - Full elaborated dependency extraction is useful but heavy on this 8 GB
   machine; reuse `docs/lean-elaborated-direct-deps.jsonl` unless a rerun is
   necessary.
+- One-unit model probes need verifier timeouts above the import-stack baseline:
+  the same proof attempts that timed out at 120s compiled at 360s.
 
 ## Recent Results
 - Scale snapshot: 462 LaTeX source units, 114 gold-candidate units, 414 aligned
@@ -89,6 +99,20 @@ dev/fresh panels plus one-off diagnostics.
 - Generic honesty fixes landed: placeholder-bodied local predecessor snippets
   are dropped from prompt/support context, proof-lane generation can resume
   completed batches, and provider exceptions are logged per batch.
+- Bottom-line viability: current artifacts show cheap recoverable pipeline
+  components, but not a robust `$100`/90% book-formalization path. Fresh-slice
+  proof-lane acceptance is still `0/5`, so proof synthesis/context routing must
+  improve substantially before scaling claims are credible.
+- Implemented report recommendations in local workflow: `AGENTS.md` now requires
+  history checks, frozen panels, model ablations, budget gates, run ledgers, and
+  stop/reroute rules; the ablation config/command builder and ledger writer are
+  under `configs/` and `scripts/`.
+- Same-task proof-lane model probe on unit 002: Kimi K2.6, GPT-5.5 default, and
+  GPT-5.5 high-reasoning/32k all compile when verified with a 360s timeout;
+  the earlier 120s failures were verifier-budget false negatives. A harder
+  unit 004 GPT-5.5 high-reasoning/32k probe produced a substantive proof
+  attempt but failed with one unsolved finite-sum/multinomial goal, so stronger
+  reasoning helps but does not yet solve broad theorem units automatically.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and native session JSONL under
@@ -103,6 +127,6 @@ dev/fresh panels plus one-off diagnostics.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: run the fixed model/context ablation panel, then route
-  failures by class. Avoid another Flash-only loop unless it is a cheap dry-run
-  gate before a stronger model comparison.
+- Next useful work: run the fixed model/context ablation panel with realistic
+  Lean timeouts, then route failures by class. Avoid another Flash-only loop
+  unless it is a cheap dry-run gate before a stronger model comparison.
