@@ -299,8 +299,8 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 49
-verification-result files and 70 unit checks, it reports 16 compiled units, 20
+theorem-level verification artifacts without rerunning Lean. Across 50
+verification-result files and 71 unit checks, it reports 16 compiled units, 21
 contract violations, 10 compile failures, and 24 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
@@ -497,6 +497,21 @@ cost `$0.00355558` and still cleanly declined with gold comparison
 frames the sort/sum route as missing; the remaining blocker is now the
 zero-padding monotonicity proof and inverse/`Equiv` proof structure for the
 same-unit helpers.
+
+The latest zero-padding plan retry adds generic same-unit helper obligations
+for padded definitions, in-range/out-of-range lemmas, antitone cases,
+sum-splitting, and inverse/extensionality. The paid planner at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-v1-paid/`
+cost `$0.00436282`; hydration checked 19 signatures with 0 failed requests,
+including `List.ofFn_get`, `List.sum_ofFn`, `Finset.sum_union`,
+`Finset.sum_eq_zero`, `Finset.sum_map`, and the corrected
+`Multiset.filter_le` + `Multiset.card_le_card` bridge for the guessed
+`Multiset.card_filter_le`. The paid repair retry at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/`
+cost `$0.00398090`. It generated the intended helper skeleton but violated the
+benchmark contract with `sorry`, comments, and ellipses, so verification is
+`contract_violation`. This is progress on task decomposition, not a formalized
+success.
 
 ### Imported Lean surface and likely context needs
 

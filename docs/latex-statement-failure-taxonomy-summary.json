@@ -103,13 +103,14 @@
   ],
   "compile_passed_units": 16,
   "coverage_status_counts": {
+    "contract_violation": 1,
     "not_generated_cannot_prove": 13
   },
   "error_pattern_counts": {
     "ambiguous_namespace_or_notation": 1,
     "application_type_mismatch": 1,
     "compiled": 16,
-    "contract_violation": 20,
+    "contract_violation": 21,
     "declined_cannot_prove": 24,
     "missing_typeclass_or_binder": 5,
     "unknown_constant": 3
@@ -361,10 +362,10 @@
   "failure_class_counts": {
     "compile_failure": 10,
     "compiled": 16,
-    "contract_violation": 20,
+    "contract_violation": 21,
     "declined_cannot_prove": 24
   },
-  "generated_at": "2026-05-06T05:05:16.434819+00:00",
+  "generated_at": "2026-05-06T05:16:02.212813+00:00",
   "roots": [
     "docs/latex-statement-generation-runs",
     "docs/latex-statement-repair-loop-runs"
@@ -2675,6 +2676,49 @@
       "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-representation-control-v1-paid/round-01-repair/eval/verification-results.json"
     },
     {
+      "compile_passed_units": 0,
+      "coverage_status_counts": {
+        "contract_violation": 1
+      },
+      "error_pattern_counts": {
+        "contract_violation": 1
+      },
+      "examples_by_class": {
+        "contract_violation": [
+          {
+            "contract_violations": [
+              "generated_lean_contains_placeholder",
+              "generated_lean_must_not_include_comments"
+            ],
+            "error_pattern": "contract_violation",
+            "first_error": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean e",
+            "lean_error_count": 18,
+            "lean_returncode": 1,
+            "reported_status": "generated",
+            "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/round-01-repair",
+            "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+            "unit_key": "unit-001"
+          }
+        ]
+      },
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "gold_comparison": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/round-01-repair/eval/gold-comparison.json",
+      "run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/round-01-repair",
+      "source_units": [
+        {
+          "compile_passed": false,
+          "error_pattern": "contract_violation",
+          "failure_class": "contract_violation",
+          "source_unit_id": "AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex:prop.sf.Npar-as-par",
+          "unit_key": "unit-001"
+        }
+      ],
+      "unit_count": 1,
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/round-01-repair/eval/verification-results.json"
+    },
+    {
       "compile_passed_units": 1,
       "coverage_status_counts": {},
       "error_pattern_counts": {
@@ -2715,6 +2759,6 @@
   ],
   "schema_version": "repoprover.latex_statement_failure_taxonomy_summary.v1",
   "source_unit_count": 11,
-  "unit_count": 70,
-  "verification_result_count": 49
+  "unit_count": 71,
+  "verification_result_count": 50
 }

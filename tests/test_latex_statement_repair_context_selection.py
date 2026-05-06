@@ -162,6 +162,8 @@ def test_repair_context_prompt_selects_context_without_hidden_target(tmp_path: P
     assert "not introduce a replacement carrier type" in prompt
     assert "canonicalization route by sorting or enumerating" in prompt
     assert "case-splitting in-range/out-of-range indices" in prompt
+    assert "decompose the same-unit proof into explicit obligations" in prompt
+    assert "List.sum_ofFn" in prompt
     assert "prior_helper" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt

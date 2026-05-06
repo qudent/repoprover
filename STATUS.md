@@ -37,8 +37,11 @@ same-unit helper planning, Mathlib hydration, and clean
 - [x] Add generic composite-proof bridge notes for checked fallback facts such
   as `Multiset.sort_eq` + `Multiset.sum_coe`, then retry NPartition without
   theorem-specific prompt hints.
-- [ ] Add or evaluate a generic same-unit proof-planning stage for
+- [x] Add and evaluate a generic same-unit proof-planning stage for
   zero-padding monotonicity and inverse/`Equiv` helper structure.
+- [ ] Decide how to enforce honest decline when the model can sketch helpers
+  but cannot complete them without placeholders, or hand the helper skeleton to
+  a coding agent/manual diagnostic lane.
 - [ ] Reclassify old strict-grader mismatches into actionable buckets.
 - [ ] Scale beyond determinant/symmetric probes and reduce noisy fallback
   context.
@@ -63,8 +66,8 @@ same-unit helper planning, Mathlib hydration, and clean
 - Proven positives: inverse uniqueness, determinant transpose, triangular
   determinant, mixed determinant batch, and symmetric `e_n = 0` can reach
   semantic coverage with target-blind context plus repair loops.
-- Failure summary across 49 verification files / 70 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 24 clean cannot-prove
+- Failure summary across 50 verification files / 71 unit checks: 16 compiled,
+  21 old/new contract violations, 10 compile failures, and 24 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -81,9 +84,14 @@ same-unit helper planning, Mathlib hydration, and clean
   checked signatures, with 0 failed/unchecked context requests. Latest paid
   NPartition retry cost `$0.00355558`; it still cleanly declined with gold
   comparison `not_generated_cannot_prove`.
-- Current NPartition blocker: proof synthesis for the same-unit helper
-  construction. The model now accepts the sort/sum bridge but still lacks a
-  source-only plan for zero-padding monotonicity and inverse/`Equiv` proofs.
+- Zero-padding planner retry cost `$0.00436282`, hydrated 19 checked signatures
+  with 0 failed requests, and fixed the guessed `Multiset.card_filter_le` shape
+  to `Multiset.filter_le` + `Multiset.card_le_card`. Repair cost `$0.00398090`
+  and generated the intended helper skeleton, but with `sorry`, comments, and
+  ellipses, so verification is `contract_violation`.
+- Current NPartition blocker: generation discipline/proof synthesis. The model
+  can now sketch the right helper structure, but cannot complete the hard
+  same-unit proofs honestly under the no-placeholder benchmark contract.
 - Test suite last passed: `uv run pytest tests` (`476 passed`) plus
   `py_compile` over selector/generator/repair/verifier scripts. Full
   `uv run pytest` still has one unrelated blueprint fixture failure because
@@ -93,6 +101,6 @@ same-unit helper planning, Mathlib hydration, and clean
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: prototype a target-blind same-unit proof-planning/reviewer
-  step that asks for exact helper obligations before generation, especially for
-  zero-padding and inverse proofs.
+- Next useful work: either add a stricter repair contract that converts
+  placeholder skeletons back to `cannot_prove_from_visible_context`, or route
+  the checked helper skeleton to a coding-agent/manual diagnostic lane.

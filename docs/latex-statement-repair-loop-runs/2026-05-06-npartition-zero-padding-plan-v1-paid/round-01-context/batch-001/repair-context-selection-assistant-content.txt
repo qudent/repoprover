@@ -1,0 +1,241 @@
+{
+  "units": [
+    {
+      "unit_key": "unit-001",
+      "selector_confidence": 0.0,
+      "failure_analysis": "The prior attempt could not prove the antitone condition for the padded NPartition because the proof required reasoning about indices beyond the sorted list length, and the necessary lemmas about zero-padding and monotonicity on out-of-range indices were not available. Additionally, the bijection statement was not correctly formulated as an Equiv between the appropriate subtypes. The visible context provides NPartition structure, Nat.Partition structure, and local helpers (toPartition, filter_ne_zero_sum), but lacks the specific lemmas needed to construct the inverse function and prove the antitone condition using only the checked signatures.",
+      "repair_strategy_note": "Define `fromPartition` using `Multiset.sort` to get a decreasing list, then pad with zeros. Prove antitone using `Multiset.sort_sorted` and `List.Pairwise.rel_get_of_le` for in-range indices, and case-split for out-of-range indices. Prove `size` equality using `Multiset.sort_eq` and `Multiset.sum_coe` to relate sorted list sum to multiset sum, and `Nat.Partition.parts_sum`. For the forward direction `toPartition`, use the existing `NPartition.toPartition` and prove the length bound using `Multiset.card_map` and `Finset.card_univ`. Then prove the two inverse lemmas using extensionality and the properties of sorting. Finally, combine into an `Equiv`.",
+      "selected_visible_context": [
+        {
+          "context_kind": "source",
+          "name_or_label": "prop.sf.Npar-as-par",
+          "why_needed": "Defines the bijection: padding a partition of length ℓ ≤ N with N-ℓ zeros, and truncating trailing zeros from an N-partition."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "NPartition",
+          "why_needed": "Target type of the bijection; provides `parts : Fin N → ℕ` and `antitone` condition."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "NPartition.size",
+          "why_needed": "Sum of parts of an N-partition; used to match the index of `Nat.Partition`."
+        },
+        {
+          "context_kind": "prior_project",
+          "name_or_label": "NPartition.toPartition",
+          "why_needed": "Existing conversion from `NPartition N` to `Nat.Partition μ.size`; this is the forward direction (truncating zeros)."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "NPartition.ext",
+          "why_needed": "Extensionality for NPartition; needed to prove equality of NPartitions."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "NPartition.ext'",
+          "why_needed": "Pointwise extensionality for NPartition."
+        },
+        {
+          "context_kind": "local_file_predecessor",
+          "name_or_label": "filter_ne_zero_sum",
+          "why_needed": "Used in `toPartition` to show sum is preserved; may be reused."
+        }
+      ],
+      "needed_mathlib_context": [
+        {
+          "name_or_query": "Multiset.sort_sorted",
+          "expected_signature_or_shape": "Multiset.sort_sorted (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r] [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+          "why_needed": "To prove that the sorted list of parts is weakly decreasing, which is needed for the antitone condition of the padded NPartition."
+        },
+        {
+          "name_or_query": "Multiset.length_sort",
+          "expected_signature_or_shape": "Multiset.length_sort (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r] [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+          "why_needed": "To relate the length of the sorted list to the cardinality of the multiset, used in the padding construction."
+        },
+        {
+          "name_or_query": "Multiset.sort_eq",
+          "expected_signature_or_shape": "Multiset.sort_eq (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r] [Std.Antisymm r] [Std.Total r] : ↑(s.sort r) = s",
+          "why_needed": "To show that the multiset coerced from the sorted list equals the original multiset, used to prove sum preservation."
+        },
+        {
+          "name_or_query": "Multiset.sum_coe",
+          "expected_signature_or_shape": "Multiset.sum_coe (l : List ℕ) : (↑l : Multiset ℕ).sum = l.sum",
+          "why_needed": "To move between list sum and multiset sum, used in sum preservation proofs."
+        },
+        {
+          "name_or_query": "List.Pairwise.rel_get_of_le",
+          "expected_signature_or_shape": "List.Pairwise.rel_get_of_le {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l) {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+          "why_needed": "To prove the antitone condition for in-range indices of the sorted list."
+        },
+        {
+          "name_or_query": "List.Pairwise.rel_get_of_lt",
+          "expected_signature_or_shape": "List.Pairwise.rel_get_of_lt {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l) {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+          "why_needed": "Alternative to rel_get_of_le for strict inequality, may be needed for antitone proof."
+        },
+        {
+          "name_or_query": "List.sortedGE_iff_antitone_get",
+          "expected_signature_or_shape": "List.sortedGE_iff_antitone_get {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+          "why_needed": "To convert between sorted list and antitone get function, used in antitone proof."
+        },
+        {
+          "name_or_query": "Multiset.card_map",
+          "expected_signature_or_shape": "Multiset.card_map (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+          "why_needed": "To relate the cardinality of the mapped multiset to the original, used in length bound proof."
+        },
+        {
+          "name_or_query": "Finset.card_univ",
+          "expected_signature_or_shape": "Finset.card_univ : Finset.card (Finset.univ : Finset (Fin N)) = Fintype.card (Fin N)",
+          "why_needed": "To reason about the cardinality of Fin N, used in length bound proof."
+        },
+        {
+          "name_or_query": "Fintype.card_fin",
+          "expected_signature_or_shape": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+          "why_needed": "To compute the cardinality of Fin N, used in length bound proof."
+        },
+        {
+          "name_or_query": "Multiset.card_filter_le",
+          "expected_signature_or_shape": "Multiset.card_filter_le (p : α → Prop) [DecidablePred p] (s : Multiset α) : (s.filter p).card ≤ s.card",
+          "why_needed": "To bound the cardinality of the filtered multiset, used in length bound proof."
+        },
+        {
+          "name_or_query": "List.ofFn_get",
+          "expected_signature_or_shape": "List.ofFn_get (f : Fin n → α) : (List.ofFn f).get = f",
+          "why_needed": "To relate List.ofFn to get, used in constructing the padded NPartition from a list."
+        },
+        {
+          "name_or_query": "List.sum_ofFn",
+          "expected_signature_or_shape": "List.sum_ofFn (f : Fin n → ℕ) : (List.ofFn f).sum = ∑ i : Fin n, f i",
+          "why_needed": "To compute the sum of the padded NPartition parts, used in size preservation proof."
+        },
+        {
+          "name_or_query": "Finset.sum_union",
+          "expected_signature_or_shape": "Finset.sum_union (h : Disjoint s t) : (s ∪ t).sum f = s.sum f + t.sum f",
+          "why_needed": "To split the sum over Fin N into in-range and out-of-range parts, used in size preservation proof."
+        },
+        {
+          "name_or_query": "Finset.sum_eq_zero",
+          "expected_signature_or_shape": "Finset.sum_eq_zero (h : ∀ x ∈ s, f x = 0) : s.sum f = 0",
+          "why_needed": "To show that the sum over out-of-range indices (where parts are zero) is zero, used in size preservation proof."
+        },
+        {
+          "name_or_query": "Finset.sum_map",
+          "expected_signature_or_shape": "Finset.sum_map (f : α → β) (s : Finset α) (g : β → ℕ) : (s.map f).sum g = s.sum (g ∘ f)",
+          "why_needed": "To relate sums over mapped Finsets, used in size preservation proof."
+        }
+      ],
+      "same_unit_helper_plan": [
+        {
+          "fresh_name_hint": "fromPartition",
+          "role": "definition",
+          "depends_on": [],
+          "needed_checked_ingredients": [
+            "Multiset.sort_sorted",
+            "Multiset.length_sort",
+            "List.get",
+            "List.Pairwise.rel_get_of_le"
+          ],
+          "statement_sketch": "Given `p : Nat.Partition n` and `h : Multiset.card p.parts ≤ N`, produce an `NPartition N` by padding the sorted parts with zeros.",
+          "why_needed": "Forward direction of the bijection."
+        },
+        {
+          "fresh_name_hint": "size_fromPartition",
+          "role": "lemma",
+          "depends_on": [
+            "fromPartition"
+          ],
+          "needed_checked_ingredients": [
+            "Multiset.sort_eq",
+            "Multiset.sum_coe",
+            "Nat.Partition.parts_sum",
+            "List.sum_ofFn",
+            "Finset.sum_union",
+            "Finset.sum_eq_zero",
+            "Finset.sum_map"
+          ],
+          "statement_sketch": "For `p : Nat.Partition n` and `h : Multiset.card p.parts ≤ N`, `(fromPartition p h).size = n`.",
+          "why_needed": "To match the index of the Nat.Partition in the bijection."
+        },
+        {
+          "fresh_name_hint": "toPartition_length",
+          "role": "lemma",
+          "depends_on": [
+            "NPartition.toPartition"
+          ],
+          "needed_checked_ingredients": [
+            "Multiset.card_map",
+            "Finset.card_univ",
+            "Fintype.card_fin",
+            "Multiset.card_filter_le"
+          ],
+          "statement_sketch": "For `μ : NPartition N`, `Multiset.card (NPartition.toPartition μ).parts ≤ N`.",
+          "why_needed": "To show that the forward direction lands in the set of partitions of length ≤ N."
+        },
+        {
+          "fresh_name_hint": "fromPartition_toPartition",
+          "role": "lemma",
+          "depends_on": [
+            "fromPartition",
+            "toPartition_length"
+          ],
+          "needed_checked_ingredients": [
+            "NPartition.ext'",
+            "Multiset.sort_sorted",
+            "Multiset.length_sort",
+            "List.Pairwise.rel_get_of_le",
+            "Multiset.card_map",
+            "Finset.card_univ",
+            "Fintype.card_fin"
+          ],
+          "statement_sketch": "For `μ : NPartition N`, `fromPartition (NPartition.toPartition μ) (toPartition_length μ) = μ`.",
+          "why_needed": "One direction of the bijection inverse."
+        },
+        {
+          "fresh_name_hint": "toPartition_fromPartition",
+          "role": "lemma",
+          "depends_on": [
+            "fromPartition",
+            "size_fromPartition"
+          ],
+          "needed_checked_ingredients": [
+            "Nat.Partition.ext",
+            "Multiset.sort_eq",
+            "Multiset.sum_coe",
+            "Multiset.card_map",
+            "Finset.card_univ",
+            "Fintype.card_fin"
+          ],
+          "statement_sketch": "For `p : Nat.Partition n` and `h : Multiset.card p.parts ≤ N`, `NPartition.toPartition (fromPartition p h) = p` (after transporting the index via `size_fromPartition`).",
+          "why_needed": "The other direction of the bijection inverse."
+        },
+        {
+          "fresh_name_hint": "bijection_partition_NPartition",
+          "role": "theorem",
+          "depends_on": [
+            "fromPartition",
+            "size_fromPartition",
+            "toPartition_length",
+            "fromPartition_toPartition",
+            "toPartition_fromPartition"
+          ],
+          "needed_checked_ingredients": [
+            "fromPartition",
+            "size_fromPartition",
+            "toPartition_length",
+            "fromPartition_toPartition",
+            "toPartition_fromPartition"
+          ],
+          "statement_sketch": "An `Equiv` between `{p : Nat.Partition n // Multiset.card p.parts ≤ N}` and `{μ : NPartition N // μ.size = n}`.",
+          "why_needed": "Main claim of the source proposition."
+        }
+      ],
+      "missing_or_uncertain_context": [
+        "The source requires a notion of 'length' for a `Nat.Partition`. Since `Nat.Partition.length` is not available in Mathlib, we will use `Multiset.card p.parts` as the length. This is already visible in the prior attempt. The main missing piece is a clean definition of the inverse function `fromPartition` that takes a `Nat.Partition n` with `Multiset.card p.parts ≤ N` and produces an `NPartition N` by padding with zeros, and a proof that this is inverse to `toPartition` (after adjusting the index via `size`). The prior attempt's `fromPartition` used `Multiset.sort` which is acceptable, but the antitone proof was incomplete. The requested Mathlib lemmas should enable a complete proof.",
+        "The bijection statement should be an `Equiv` between the set of `Nat.Partition n` with length ≤ N and `NPartition N` (with the same sum `n`). The prior attempt used `Function.Bijective` on a sigma type, which is not the intended set. The correct statement is an `Equiv` between `{p : Nat.Partition n // Multiset.card p.parts ≤ N}` and `NPartition N` (with the condition that `size` equals `n`). This requires a proof that `size` of the padded NPartition equals `n`."
+      ],
+      "do_not_use_identifiers": [
+        "Nat.Partition.length"
+      ]
+    }
+  ]
+}

@@ -199,6 +199,7 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "Do not introduce a replacement carrier type" in prompt
     assert "checked sort/enumeration route can be a valid local helper plan" in prompt
     assert "direct library theorem for the whole padded function is not required" in prompt
+    assert "padded definition, in-range get lemma" in prompt
     assert "fallback_resolved_context_requests" in prompt
     assert "fallback_bridge_notes" in prompt
     assert "generic checked-fallback rewrite/application routes" in prompt

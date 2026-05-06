@@ -526,3 +526,29 @@ def test_fallback_mathlib_candidates_bridges_sorted_antitone_shape(tmp_path) -> 
         "List.Pairwise.rel_get_of_lt",
         "List.sortedGE_iff_antitone_get",
     ]
+
+
+def test_fallback_mathlib_candidates_bridges_multiset_filter_card_le_shape(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/MultisetCard.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace Multiset",
+                "theorem card_filter_le_iff : True := by trivial",
+                "theorem filter_le : True := by trivial",
+                "theorem card_le_card : True := by trivial",
+                "end Multiset",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates(
+        "Multiset.card_filter_le",
+        project_root=tmp_path,
+        expected_signature_or_shape="(Multiset.filter p s).card ≤ s.card",
+    )
+
+    names = [candidate["name"] for candidate in candidates[:2]]
+    assert names == ["Multiset.filter_le", "Multiset.card_le_card"]

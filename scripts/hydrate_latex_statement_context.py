@@ -228,6 +228,8 @@ def forced_bridge_fallback_candidates(
     names: list[str] = []
     if root == "Multiset" and {"sort", "sum"}.issubset(tokens):
         names.extend(["Multiset.sort_eq", "Multiset.sum_coe"])
+    if root == "Multiset" and {"card", "filter", "le"}.issubset(tokens):
+        names.extend(["Multiset.filter_le", "Multiset.card_le_card"])
     if root == "List" and {"sorted", "antitone"}.issubset(tokens):
         names.extend(
             [

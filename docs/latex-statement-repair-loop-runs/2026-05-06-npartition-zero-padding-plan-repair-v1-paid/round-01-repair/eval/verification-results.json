@@ -1,0 +1,237 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "failure_class_counts": {
+        "contract_violation": 1
+      },
+      "filtered_target_module_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "filtered_target_namespace_opens": [
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions"
+      ],
+      "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/round-01-repair/batch-001/generation-output.json",
+      "hidden_target_modules": [
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "hidden_target_namespaces": [
+        "NPartition"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "materialize_visible_support": false,
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open Finset BigOperators"
+      ],
+      "unfiltered_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "unfiltered_inferred_opens": [
+        "open scoped Polynomial",
+        "open MvPolynomial Finset Equiv",
+        "open AlgebraicCombinatorics",
+        "open SymmetricFunctions",
+        "open Finset BigOperators"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "fromPartition",
+            "size_fromPartition",
+            "toPartition_length",
+            "fromPartition_toPartition",
+            "toPartition_fromPartition",
+            "bijection_partition_NPartition"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "generated_lean_contains_placeholder",
+            "generated_lean_must_not_include_comments"
+          ],
+          "declaration_names": [
+            "fromPartition",
+            "size_fromPartition",
+            "toPartition_length",
+            "fromPartition_toPartition",
+            "toPartition_fromPartition",
+            "bijection_partition_NPartition"
+          ],
+          "failure_class": "contract_violation",
+          "lean_error_count": 18,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 88,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 12,
+              "severity": "error"
+            },
+            {
+              "column": 32,
+              "data": "unexpected token '...'; expected term",
+              "kind": "[anonymous]",
+              "line": 40,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "Type mismatch: After simplification, term\n  congrArg sum (Multiset.sort_eq p.parts fun x1 x2 => x1 ≥ x2)\n has type\n  True\nbut is expected to have type\n  (p.parts.sort fun x1 x2 => x2 ≤ x1).sum = p.parts.sum",
+              "kind": "[anonymous]",
+              "line": 35,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "Unexpected syntax\n  failed to pretty print term (use 'set_option pp.rawOnError true' for raw representation)",
+              "kind": "[anonymous]",
+              "line": 39,
+              "severity": "error"
+            },
+            {
+              "column": 113,
+              "data": "unsolved goals\nN n : ℕ\np : n.Partition\nh : p.parts.card ≤ N\nh_sorted : (p.parts.sort fun x1 x2 => x1 ≥ x2).sum = p.parts.sum\nh_sum_list :\n  (List.ofFn fun i =>\n        if hi : ↑i < (p.parts.sort fun x1 x2 => x1 ≥ x2).length then (p.parts.sort fun x1 x2 => x1 ≥ x2).get ⟨↑i, hi⟩\n        else 0).sum =\n    (p.parts.sort fun x1 x2 => x1 ≥ x2).sum\n⊢ sorry () = n",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 32,
+              "severity": "error"
+            },
+            {
+              "column": 30,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 61,
+              "severity": "error"
+            },
+            {
+              "column": 61,
+              "data": "Invalid field notation: Type of\n  NPartition\nis not known; cannot resolve field `toPartition`\n\nHint: Consider replacing the field projection `.toPartition` with a call to the function `SimpleGraph.Coloring.toPartition`.",
+              "kind": "lean.invalidField._namedError",
+              "line": 61,
+              "severity": "error"
+            },
+            {
+              "column": 100,
+              "data": "unsolved goals\nN : ℕ\nx✝ : Sort u_1\nNPartition : x✝\nμ : sorry\n⊢ sorry.card ≤ N",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 61,
+              "severity": "error"
+            },
+            {
+              "column": 37,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 73,
+              "severity": "error"
+            },
+            {
+              "column": 68,
+              "data": "Invalid field notation: Type of\n  NPartition\nis not known; cannot resolve field `toPartition`\n\nHint: Consider replacing the field projection `.toPartition` with a call to the function `SimpleGraph.Coloring.toPartition`.",
+              "kind": "lean.invalidField._namedError",
+              "line": 73,
+              "severity": "error"
+            },
+            {
+              "column": 95,
+              "data": "Function expected at\n  toPartition_length\nbut this term has type\n  ?m.2\n\nNote: Expected a function because this term is being applied to the argument\n  μ\n\nHint: The identifier `toPartition_length` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 73,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "Unknown identifier `NPartition.toPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 79,
+              "severity": "error"
+            },
+            {
+              "column": 9,
+              "data": "Unknown identifier `NPartition.toPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 81,
+              "severity": "error"
+            },
+            {
+              "column": 105,
+              "data": "Function expected at\n  NPartition\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  N\n\nHint: The identifier `NPartition` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+              "kind": "[anonymous]",
+              "line": 84,
+              "severity": "error"
+            },
+            {
+              "column": 25,
+              "data": "Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression\n  NPartition\nhas type `x✝¹` which does not have the necessary form.",
+              "kind": "lean.invalidField._namedError",
+              "line": 86,
+              "severity": "error"
+            },
+            {
+              "column": 51,
+              "data": "Unknown identifier `toPartition_length`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 86,
+              "severity": "error"
+            },
+            {
+              "column": 10,
+              "data": "Unknown identifier `fromPartition_toPartition`",
+              "kind": "lean.unknownIdentifier._namedError",
+              "line": 94,
+              "severity": "error"
+            },
+            {
+              "column": 4,
+              "data": "failed to compile definition, consider marking it as 'noncomputable' because it depends on 'fromPartition', which is 'noncomputable'",
+              "kind": "lean.dependsOnNoncomputable._namedError",
+              "line": 84,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [
+            "sorry"
+          ],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001",
+          "visible_support_context": null
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "failure_class_counts": {
+    "contract_violation": 1
+  },
+  "filter_target_module_imports": true,
+  "generated_at": "2026-05-06T05:15:47.407161+00:00",
+  "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/round-01-repair",
+  "infer_context": true,
+  "materialize_visible_support": false,
+  "project_root": "algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

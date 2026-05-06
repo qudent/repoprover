@@ -723,6 +723,21 @@ Broader diverse4 negative probe:
   This sharpened the diagnosis: the model accepts the checked sort/sum bridge
   but still lacks a source-only construction/proof plan for zero-padding
   monotonicity and the inverse/`Equiv` helper structure.
+- zero-padding helper-plan retry:
+  the repair-context selector now decomposes zero-padding into same-unit
+  helper obligations: padded definition, in-range/out-of-range lemmas,
+  antitone/order cases, sum-splitting, and inverse/extensionality cases. The
+  paid planner at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-v1-paid/`
+  cost `$0.00436282`, selected those helper obligations, and after hydration
+  produced 19 checked signatures with 0 failed requests. Hydration corrected
+  the guessed `Multiset.card_filter_le` request to checked
+  `Multiset.filter_le` plus `Multiset.card_le_card`. The paid repair retry at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-zero-padding-plan-repair-v1-paid/`
+  cost `$0.00398090` and generated the intended helper skeleton, but it
+  violated the benchmark contract by emitting `sorry`, comments, and ellipses.
+  Verification is `contract_violation`, so this run is task-decomposition
+  evidence, not coverage.
 
 ## Lean Dependency Accounting
 

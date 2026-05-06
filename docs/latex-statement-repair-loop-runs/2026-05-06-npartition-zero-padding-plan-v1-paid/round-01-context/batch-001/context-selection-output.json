@@ -1,0 +1,96 @@
+{
+  "schema_version": "repoprover.latex_statement_repair_context_hydratable.v1",
+  "units": [
+    {
+      "planned_declarations": [
+        {
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Multiset.sort_sorted (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r] [Std.Antisymm r] [Std.Total r] : List.Pairwise r (s.sort r)",
+              "name_or_query": "Multiset.sort_sorted",
+              "why_needed": "To prove that the sorted list of parts is weakly decreasing, which is needed for the antitone condition of the padded NPartition."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.length_sort (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r] [Std.Antisymm r] [Std.Total r] : (s.sort r).length = s.card",
+              "name_or_query": "Multiset.length_sort",
+              "why_needed": "To relate the length of the sorted list to the cardinality of the multiset, used in the padding construction."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sort_eq (s : Multiset α) (r : α → α → Prop) [DecidableRel r] [IsTrans α r] [Std.Antisymm r] [Std.Total r] : ↑(s.sort r) = s",
+              "name_or_query": "Multiset.sort_eq",
+              "why_needed": "To show that the multiset coerced from the sorted list equals the original multiset, used to prove sum preservation."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.sum_coe (l : List ℕ) : (↑l : Multiset ℕ).sum = l.sum",
+              "name_or_query": "Multiset.sum_coe",
+              "why_needed": "To move between list sum and multiset sum, used in sum preservation proofs."
+            },
+            {
+              "expected_signature_or_shape": "List.Pairwise.rel_get_of_le {α : Type u_1} {R : α → α → Prop} [Std.Refl R] {l : List α} (h : List.Pairwise R l) {a b : Fin l.length} (hab : a ≤ b) : R (l.get a) (l.get b)",
+              "name_or_query": "List.Pairwise.rel_get_of_le",
+              "why_needed": "To prove the antitone condition for in-range indices of the sorted list."
+            },
+            {
+              "expected_signature_or_shape": "List.Pairwise.rel_get_of_lt {α : Type u_1} {R : α → α → Prop} {l : List α} (h : List.Pairwise R l) {a b : Fin l.length} (hab : a < b) : R (l.get a) (l.get b)",
+              "name_or_query": "List.Pairwise.rel_get_of_lt",
+              "why_needed": "Alternative to rel_get_of_le for strict inequality, may be needed for antitone proof."
+            },
+            {
+              "expected_signature_or_shape": "List.sortedGE_iff_antitone_get {α : Type u_1} {l : List α} [Preorder α] : l.SortedGE ↔ Antitone l.get",
+              "name_or_query": "List.sortedGE_iff_antitone_get",
+              "why_needed": "To convert between sorted list and antitone get function, used in antitone proof."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card_map (f : α → β) (s : Multiset α) : (Multiset.map f s).card = s.card",
+              "name_or_query": "Multiset.card_map",
+              "why_needed": "To relate the cardinality of the mapped multiset to the original, used in length bound proof."
+            },
+            {
+              "expected_signature_or_shape": "Finset.card_univ : Finset.card (Finset.univ : Finset (Fin N)) = Fintype.card (Fin N)",
+              "name_or_query": "Finset.card_univ",
+              "why_needed": "To reason about the cardinality of Fin N, used in length bound proof."
+            },
+            {
+              "expected_signature_or_shape": "Fintype.card_fin (n : ℕ) : Fintype.card (Fin n) = n",
+              "name_or_query": "Fintype.card_fin",
+              "why_needed": "To compute the cardinality of Fin N, used in length bound proof."
+            },
+            {
+              "expected_signature_or_shape": "Multiset.card_filter_le (p : α → Prop) [DecidablePred p] (s : Multiset α) : (s.filter p).card ≤ s.card",
+              "name_or_query": "Multiset.card_filter_le",
+              "why_needed": "To bound the cardinality of the filtered multiset, used in length bound proof."
+            },
+            {
+              "expected_signature_or_shape": "List.ofFn_get (f : Fin n → α) : (List.ofFn f).get = f",
+              "name_or_query": "List.ofFn_get",
+              "why_needed": "To relate List.ofFn to get, used in constructing the padded NPartition from a list."
+            },
+            {
+              "expected_signature_or_shape": "List.sum_ofFn (f : Fin n → ℕ) : (List.ofFn f).sum = ∑ i : Fin n, f i",
+              "name_or_query": "List.sum_ofFn",
+              "why_needed": "To compute the sum of the padded NPartition parts, used in size preservation proof."
+            },
+            {
+              "expected_signature_or_shape": "Finset.sum_union (h : Disjoint s t) : (s ∪ t).sum f = s.sum f + t.sum f",
+              "name_or_query": "Finset.sum_union",
+              "why_needed": "To split the sum over Fin N into in-range and out-of-range parts, used in size preservation proof."
+            },
+            {
+              "expected_signature_or_shape": "Finset.sum_eq_zero (h : ∀ x ∈ s, f x = 0) : s.sum f = 0",
+              "name_or_query": "Finset.sum_eq_zero",
+              "why_needed": "To show that the sum over out-of-range indices (where parts are zero) is zero, used in size preservation proof."
+            },
+            {
+              "expected_signature_or_shape": "Finset.sum_map (f : α → β) (s : Finset α) (g : β → ℕ) : (s.map f).sum g = s.sum (g ∘ f)",
+              "name_or_query": "Finset.sum_map",
+              "why_needed": "To relate sums over mapped Finsets, used in size preservation proof."
+            }
+          ],
+          "source_part": "repair_context_selection",
+          "task_id": "unit-001-repair-context-1"
+        }
+      ],
+      "unit_key": "unit-001"
+    }
+  ]
+}
