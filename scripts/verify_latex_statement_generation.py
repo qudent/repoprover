@@ -8,10 +8,13 @@ import json
 import re
 import subprocess
 import time
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
+
+from repoprover.lean_checker import LeanChecker, LeanCheckerConfig
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +49,7 @@ LEAN_DECL_KIND_LINE_RE = re.compile(
 LEAN_NAMESPACE_RE = re.compile(r"^\s*namespace\s+([A-Za-z0-9_'. ]+)\s*$")
 LEAN_SECTION_RE = re.compile(r"^\s*(?:noncomputable\s+)?section(?:\s+[A-Za-z0-9_'.]+)?\s*$")
 LEAN_END_RE = re.compile(r"^\s*end(?:\s+([A-Za-z0-9_'.]+))?\s*$")
+_ACTIVE_LEAN_RUNNER: "WarmedLeanRunner | None" = None
 
 
 def read_json(path: Path) -> Any:
@@ -882,12 +886,135 @@ def parse_lean_json(stdout: str) -> list[dict[str, Any]]:
     return messages
 
 
+def lean_repl_body_line_offset(source: str) -> int:
+    """Return the 1-index line offset between REPL body positions and source lines."""
+    lines = source.splitlines()
+    body_start = len(lines)
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if not stripped or stripped.startswith("--"):
+            continue
+        if stripped.startswith("import "):
+            continue
+        body_start = index
+        break
+    return body_start
+
+
+def repl_messages_to_cli_messages(raw_response: dict[str, Any], *, line_offset: int) -> list[dict[str, Any]]:
+    messages: list[dict[str, Any]] = []
+    for payload in raw_response.get("messages") or []:
+        pos = payload.get("pos") or {}
+        line = pos.get("line")
+        column = pos.get("column")
+        if isinstance(line, int):
+            line = line + line_offset
+        messages.append(
+            {
+                "severity": payload.get("severity"),
+                "kind": payload.get("kind"),
+                "data": payload.get("data"),
+                "line": line,
+                "column": column,
+            }
+        )
+    return messages
+
+
+class WarmedLeanRunner:
+    """Persistent `lake exe repl` checker with import-environment caching."""
+
+    def __init__(
+        self,
+        *,
+        project_root: Path,
+        timeout_seconds: float,
+        header_timeout_seconds: float,
+        mem_limit_gb: int,
+    ) -> None:
+        self.project_root = project_root
+        self.checker = LeanChecker(
+            LeanCheckerConfig(
+                workspace=str(project_root),
+                timeout=timeout_seconds,
+                header_timeout=header_timeout_seconds,
+                instance_mem_limit_gb=mem_limit_gb,
+                max_retries=0,
+            )
+        )
+        self.request_count = 0
+        self.request_elapsed_seconds = 0.0
+        self.warmup_call_count = 0
+        self.warmup_elapsed_seconds = 0.0
+
+    def __enter__(self) -> "WarmedLeanRunner":
+        self.checker.start()
+        return self
+
+    def __exit__(self, *args: Any) -> None:
+        self.checker.close()
+
+    def run(self, source: str, *, timeout_seconds: float) -> dict[str, Any]:
+        line_offset = lean_repl_body_line_offset(source)
+        started = time.monotonic()
+        result = self.checker.check_code(source, timeout=timeout_seconds)
+        elapsed_seconds = round(time.monotonic() - started, 3)
+        self.request_count += 1
+        self.request_elapsed_seconds += elapsed_seconds
+        raw_response = result.raw_response
+        messages = repl_messages_to_cli_messages(raw_response, line_offset=line_offset)
+        repl_error = raw_response.get("repl_error")
+        if repl_error is not None:
+            stderr = f"Lean REPL error: {repl_error}"
+            returncode = 124 if "timed out" in stderr.lower() else 1
+        else:
+            stderr = ""
+            returncode = 1 if any(message.get("severity") == "error" for message in messages) else 0
+        return {
+            "returncode": returncode,
+            "messages": messages,
+            "stderr": stderr,
+            "elapsed_seconds": elapsed_seconds,
+            "backend": "repl",
+        }
+
+    def warmup_imports(self, imports: list[str], *, timeout_seconds: float) -> dict[str, Any]:
+        source = "\n".join([*(f"import {name}" for name in imports), "#check True"]) + "\n"
+        result = self.run(source, timeout_seconds=timeout_seconds)
+        self.warmup_call_count += 1
+        self.warmup_elapsed_seconds += float(result.get("elapsed_seconds") or 0.0)
+        return result
+
+    def stats(self) -> dict[str, Any]:
+        return {
+            "backend": "repl",
+            "request_count": self.request_count,
+            "request_elapsed_seconds": round(self.request_elapsed_seconds, 3),
+            "warmup_call_count": self.warmup_call_count,
+            "warmup_elapsed_seconds": round(self.warmup_elapsed_seconds, 3),
+        }
+
+
+@contextmanager
+def active_lean_runner(runner: WarmedLeanRunner | None) -> Iterator[None]:
+    global _ACTIVE_LEAN_RUNNER
+    previous = _ACTIVE_LEAN_RUNNER
+    _ACTIVE_LEAN_RUNNER = runner
+    try:
+        yield
+    finally:
+        _ACTIVE_LEAN_RUNNER = previous
+
+
 def run_lean_source(
     source: str,
     *,
     project_root: Path,
     timeout_seconds: float,
 ) -> dict[str, Any]:
+    if _ACTIVE_LEAN_RUNNER is not None:
+        return _ACTIVE_LEAN_RUNNER.run(source, timeout_seconds=timeout_seconds)
+
     command = ["lake", "env", "lean", "--stdin", "--json"]
     started = time.monotonic()
     try:
@@ -1327,6 +1454,38 @@ def unit_lean_elapsed_seconds(units: list[dict[str, Any]]) -> float:
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
+    lean_backend = str(getattr(args, "lean_backend", "cold_process") or "cold_process")
+    if lean_backend == "repl" and _ACTIVE_LEAN_RUNNER is None:
+        runner = WarmedLeanRunner(
+            project_root=args.project_root,
+            timeout_seconds=args.timeout_seconds,
+            header_timeout_seconds=getattr(args, "repl_header_timeout_seconds", args.timeout_seconds),
+            mem_limit_gb=getattr(args, "repl_mem_limit_gb", 0),
+        )
+        with runner:
+            warmup_result = runner.warmup_imports(
+                args.imports,
+                timeout_seconds=getattr(args, "repl_header_timeout_seconds", args.timeout_seconds),
+            )
+            with active_lean_runner(runner):
+                summary = run(args)
+        summary["lean_backend"] = "repl"
+        summary["lean_runner_stats"] = runner.stats()
+        summary["lean_warmup"] = {
+            "imports": args.imports,
+            "returncode": warmup_result.get("returncode"),
+            "message_count": len(warmup_result.get("messages") or []),
+            "stderr": warmup_result.get("stderr"),
+            "elapsed_seconds": warmup_result.get("elapsed_seconds"),
+        }
+        summary["lean_elapsed_seconds_including_warmup"] = round(
+            float(summary.get("lean_elapsed_seconds") or 0.0)
+            + float(warmup_result.get("elapsed_seconds") or 0.0),
+            3,
+        )
+        write_json(args.output, summary)
+        return summary
+
     output_paths = generation_output_paths(args.generation_run)
     if not output_paths:
         raise FileNotFoundError(f"no generation-output.json files found under {args.generation_run}")
@@ -1531,6 +1690,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "validate_inferred_opens": bool(getattr(args, "validate_inferred_opens", True)),
         "materialize_visible_support": bool(getattr(args, "materialize_visible_support", False)),
         "support_mode": str(getattr(args, "support_mode", "body") or "body"),
+        "lean_backend": "repl" if _ACTIVE_LEAN_RUNNER is not None else "cold_process",
         "batches": batches,
         "compile_passed_units": sum(batch["compile_passed_units"] for batch in batches),
         "failure_class_counts": failure_class_counts(
@@ -1596,6 +1756,27 @@ def main() -> None:
             "How to materialize visible prompt support. `body` incrementally Lean-checks copied snippets; "
             "`assumption` inserts statement/signature axioms and skips names already available from imports."
         ),
+    )
+    parser.add_argument(
+        "--lean-backend",
+        choices=["cold_process", "repl"],
+        default="cold_process",
+        help=(
+            "Lean checking backend. `cold_process` starts `lake env lean --stdin --json` per check; "
+            "`repl` keeps one `lake exe repl` process warm and caches imported environments."
+        ),
+    )
+    parser.add_argument(
+        "--repl-header-timeout-seconds",
+        type=float,
+        default=300.0,
+        help="Timeout for warming/checking a Lean REPL import header.",
+    )
+    parser.add_argument(
+        "--repl-mem-limit-gb",
+        type=int,
+        default=0,
+        help="Optional RLIMIT_AS memory cap for the Lean REPL process; 0 disables the cap.",
     )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()

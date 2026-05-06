@@ -300,6 +300,7 @@ class _LeanRepl:
 
         with self._lock:
             for i in range(max_retries + 1):
+                last_error: Exception | None = None
                 try:
                     if not run_from_env:
                         env_id, output = self._get_env_for_header(header)
@@ -307,12 +308,14 @@ class _LeanRepl:
                             return output
                     return self._run(code, env_id, timeout, all_tactics)
                 except (TimeoutError, RuntimeError, json.JSONDecodeError) as e:
+                    last_error = e
                     logger.error(
                         "REPL error: %s (attempt %d/%d)", e, i + 1,
                         max_retries + 1,
                     )
                     self.restart()
-            return {"repl_error": "Exceeded maximum retries"}
+            detail = f": {last_error}" if last_error is not None else ""
+            return {"repl_error": f"Exceeded maximum retries{detail}"}
 
     def _get_env_for_header(
         self, header: str
@@ -548,6 +551,7 @@ class LeanCheckerConfig:
     header_timeout: float = 180.0
     pool_size: int = 0
     instance_mem_limit_gb: int = 24
+    max_retries: int = 1
 
     def __post_init__(self) -> None:
         if not self.workspace:
@@ -577,6 +581,7 @@ class LeanChecker:
                 capacity=self.config.pool_size,
                 request_timeout=self.config.timeout,
                 header_timeout=self.config.header_timeout,
+                max_retries=self.config.max_retries,
                 mem_limit_gb=self.config.instance_mem_limit_gb,
             )
             self._exit_stack.enter_context(self._pool)
@@ -585,6 +590,7 @@ class LeanChecker:
                 cwd=self.config.workspace,
                 request_timeout=self.config.timeout,
                 header_timeout=self.config.header_timeout,
+                max_retries=self.config.max_retries,
                 mem_limit_gb=self.config.instance_mem_limit_gb,
             )
             self._exit_stack.enter_context(self._repl)

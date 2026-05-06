@@ -4,9 +4,12 @@ import argparse
 import json
 
 from scripts.verify_latex_statement_generation import (
+    active_lean_runner,
     available_support_candidate_names,
     build_lean_source,
+    lean_repl_body_line_offset,
     payload_context,
+    repl_messages_to_cli_messages,
     run,
     run_lean_source,
     verify_generation_output,
@@ -52,6 +55,52 @@ def test_run_lean_source_returns_structured_timeout(monkeypatch, tmp_path) -> No
     assert result["returncode"] == 124
     assert result["messages"] == []
     assert "Lean command timed out after 0.01 seconds" in result["stderr"]
+
+
+def test_repl_message_lines_are_mapped_to_original_source_lines() -> None:
+    source = "import Mathlib\nimport Demo\n\nopen Nat\n#check missingThing\n"
+    raw_response = {
+        "messages": [
+            {
+                "severity": "error",
+                "pos": {"line": 2, "column": 7},
+                "data": "Unknown identifier `missingThing`",
+            }
+        ]
+    }
+
+    messages = repl_messages_to_cli_messages(
+        raw_response,
+        line_offset=lean_repl_body_line_offset(source),
+    )
+
+    assert messages == [
+        {
+            "severity": "error",
+            "kind": None,
+            "data": "Unknown identifier `missingThing`",
+            "line": 5,
+            "column": 7,
+        }
+    ]
+
+
+def test_run_lean_source_uses_active_warmed_runner(tmp_path) -> None:
+    class DummyRunner:
+        def run(self, source, *, timeout_seconds):
+            return {
+                "returncode": 0,
+                "messages": [{"severity": "info", "line": 1, "column": 0, "data": source}],
+                "stderr": "",
+                "elapsed_seconds": timeout_seconds,
+                "backend": "repl",
+            }
+
+    with active_lean_runner(DummyRunner()):  # type: ignore[arg-type]
+        result = run_lean_source("theorem demo : True := by trivial", project_root=tmp_path, timeout_seconds=3)
+
+    assert result["backend"] == "repl"
+    assert result["elapsed_seconds"] == 3
 
 
 def test_visible_support_scopes_variables_to_matching_snippets() -> None:
