@@ -28,8 +28,10 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - [x] Add target-blind selector, hydrator, generator, verifier, gold comparison,
   semantic grading, repair loops, failure taxonomy, and contract normalization.
 - [x] Add a fixed five-unit dev panel for richer loop feedback.
-- [ ] Add a one-command panel runner that performs selector -> hydration ->
+- [x] Add a one-command panel runner that performs selector -> hydration ->
   generation -> verification -> summary.
+- [ ] Use the panel runner for the next paid generation/verification pass, not
+  another hand-steered single-theorem retry.
 - [ ] Route cases with checked context but repeated clean declines to a proof
   synthesis/coding-agent lane instead of more selector prompt tuning.
 - [ ] Validate generic prompt/context changes on fresh held-out LaTeX units.
@@ -68,6 +70,11 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   with 6,914 reasoning tokens; no-reasoning returned valid JSON in 33.785s for
   `$0.00300286` but had worse exact API recall. Hydration confirms no-reasoning
   is useful for cheap triage, while failed/high-risk units should be escalated.
+- `scripts/run_latex_statement_panel.py` now runs the fixed panel as a
+  repeatable stage chain and writes `eval/panel-summary.{json,md}`. No-cost
+  smoke artifacts:
+  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-budget/` and
+  `docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-generation-budget/`.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`. Main recommendation:
   stop single-theorem loops once the failure class stops changing and run a
@@ -77,5 +84,5 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
-- Next useful work: implement the panel runner and use it as the default loop
-  gate before any new paid single-theorem retry.
+- Next useful work: use the panel runner for a paid per-unit generation pass
+  over the fixed dev panel, then route failures by class.

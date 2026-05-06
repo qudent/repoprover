@@ -574,6 +574,16 @@ tokens, but its exact API recall was worse (`Nat.vandermonde`,
 `IsInverse.unique`, and `NPartition.bijection` were bad guesses). This supports
 using no-reasoning selection for cheap triage, then escalating failed/high-risk
 units after Lean hydration rather than continuing one-theorem prompt tuning.
+`scripts/run_latex_statement_panel.py` now makes this a one-command loop. It
+reads the panel JSON, runs context selection, hydration, generation,
+generated-only verification, exact gold comparison, and optional semantic
+coverage, then writes `eval/panel-summary.json` and `eval/panel-summary.md`.
+Two no-cost smoke artifacts demonstrate the runner without provider calls:
+`docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-budget/` builds
+the selector payload, and
+`docs/latex-statement-panel-runs/2026-05-06-dev-panel5-runner-generation-budget/`
+reuses the existing no-reasoning selector to build five per-unit generation
+payloads.
 
 ### Imported Lean surface and likely context needs
 
