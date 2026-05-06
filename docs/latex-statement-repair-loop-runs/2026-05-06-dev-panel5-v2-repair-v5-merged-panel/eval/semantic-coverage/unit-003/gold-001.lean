@@ -645,6 +645,1086 @@ theorem __repoprover_latex_statement_check {a b c : L} (hab : IsInverse a b) (ha
   | convert isInverse_unique hab (by simpa [Fintype.card_fin] using hac) using 1
     rw [← hb']
     done
+  | simpa using isInverse_unique hab (by
+      intro x
+      exact hac x)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x
+      exact hac x)
+  | convert isInverse_unique hab (by
+      intro x
+      exact hac x) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      exact hac x) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      exact hac x) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      exact hac x) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      exact hac x) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      exact hac x) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)
+  | convert isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro x y
+      exact hac x y)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x y
+      exact hac x y)
+  | convert isInverse_unique hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)
+  | convert isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy)
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz)
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← hb']
+    done
   | simpa using isInverse_unique a b c hab hac
   | simpa [Fintype.card_fin] using isInverse_unique a b c hab hac
   | convert isInverse_unique a b c hab hac using 1
@@ -683,5 +1763,1085 @@ theorem __repoprover_latex_statement_check {a b c : L} (hab : IsInverse a b) (ha
     rw [hb']
     done
   | convert isInverse_unique a b c hab (by simpa [Fintype.card_fin] using hac) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x
+      exact hac x)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x
+      exact hac x)
+  | convert isInverse_unique a b c hab (by
+      intro x
+      exact hac x) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      exact hac x) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      exact hac x) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      exact hac x) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      exact hac x) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      exact hac x) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      exact hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      exact hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)
+  | convert isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x
+      simpa [Fintype.card_fin] using hac x) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hac x)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y)
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      exact hac x y) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      exact hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hac x y)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy)
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      exact hac x y hxy) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      exact hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hac x y hxy)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz)
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      exact hac x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      exact hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hac x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      exact hac w x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← hb']
+    done
+  | simpa using isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | simpa [Fintype.card_fin] using isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz))
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← hc']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [← mul_comm b a]
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
+    rw [hb']
+    done
+  | convert isInverse_unique a b c hab (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hac w x y z hxyz)) using 1
     rw [← hb']
     done

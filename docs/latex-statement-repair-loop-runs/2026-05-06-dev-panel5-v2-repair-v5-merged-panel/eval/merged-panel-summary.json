@@ -17,11 +17,10 @@
   },
   "schema_version": "repoprover.latex_statement_merged_panel_summary.v1",
   "semantic_coverage": {
-    "all_aligned_gold_proved_units": 2,
+    "all_aligned_gold_proved_units": 3,
     "coverage_status_counts": {
-      "all_aligned_gold_proved": 2,
-      "generated_not_compiled": 2,
-      "no_aligned_gold_proved": 1
+      "all_aligned_gold_proved": 3,
+      "generated_not_compiled": 2
     },
     "unit_count": 5
   },
@@ -32,7 +31,7 @@
       "unit_key": "unit-001"
     },
     {
-      "outcome": "compiles but semantic shape mismatch against two aligned gold declarations",
+      "outcome": "compiles and semantic coverage passes for both aligned upper/lower gold declarations after grader-side pointwise hypothesis bridge",
       "source": "thm.det.triang",
       "unit_key": "unit-002"
     },

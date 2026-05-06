@@ -21,11 +21,11 @@ from typing import Any
 
 try:
     from scripts.materialize_minimal_context_smoke import declaration_body_marker_index
-    from scripts.run_source_statement_live_eval import generated_application_candidates
+    from scripts.run_source_statement_live_eval import declaration_binder_names, generated_application_candidates
     from scripts.verify_latex_statement_generation import parse_lean_json
 except ModuleNotFoundError:
     from materialize_minimal_context_smoke import declaration_body_marker_index
-    from run_source_statement_live_eval import generated_application_candidates
+    from run_source_statement_live_eval import declaration_binder_names, generated_application_candidates
     from verify_latex_statement_generation import parse_lean_json
 
 
@@ -38,6 +38,13 @@ DECL_START_RE = re.compile(
     r"(?:theorem|lemma|def|abbrev|instance)\s+([^\s:\{\(\[]+)"
 )
 REWRITE_TACTIC_RE = re.compile(r"\b(?:rw|simp|simp only)\s*\[")
+POINTWISE_HYPOTHESIS_INTROS = (
+    ("x",),
+    ("x", "y"),
+    ("x", "y", "hxy"),
+    ("x", "y", "z", "hxyz"),
+    ("w", "x", "y", "z", "hxyz"),
+)
 
 
 def read_json(path: Path) -> Any:
@@ -274,6 +281,7 @@ def gold_check_declaration(
 ) -> str:
     candidates: list[str] = []
     rewrite_terms = generated_rewrite_terms(generated_body)
+    gold_args = set(declaration_binder_names(gold_head, include_implicit=True))
     for name in generated_names:
         generated_head = declaration_head_for_name(generated_body, name)
         for candidate_head in (generated_head, gold_head):
@@ -289,6 +297,12 @@ def gold_check_declaration(
                 simp_hyp = candidate_with_simplified_final_hypothesis(candidate)
                 if simp_hyp and simp_hyp not in candidates:
                     candidates.append(simp_hyp)
+                for bridged_candidate in candidates_with_pointwise_final_hypothesis(
+                    candidate,
+                    available_hypothesis_names=gold_args,
+                ):
+                    if bridged_candidate not in candidates:
+                        candidates.append(bridged_candidate)
     if not candidates:
         tactic = "  fail"
     else:
@@ -308,6 +322,35 @@ def candidate_with_simplified_final_hypothesis(candidate: str) -> str | None:
     if not separator or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_']*", final_arg):
         return None
     return f"{prefix} (by simpa [Fintype.card_fin] using {final_arg})"
+
+
+def candidates_with_pointwise_final_hypothesis(
+    candidate: str,
+    *,
+    available_hypothesis_names: set[str],
+) -> list[str]:
+    prefix, separator, final_arg = candidate.rpartition(" ")
+    if (
+        not separator
+        or final_arg not in available_hypothesis_names
+        or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_']*", final_arg)
+    ):
+        return []
+
+    candidates: list[str] = []
+    wrappers = ["", "Or.inl", "Or.inr"]
+    for intro_names in POINTWISE_HYPOTHESIS_INTROS:
+        intro_text = " ".join(intro_names)
+        arg_text = " ".join(intro_names)
+        proof_bodies = [
+            f"by\n      intro {intro_text}\n      exact {final_arg} {arg_text}",
+            f"by\n      intro {intro_text}\n      simpa [Fintype.card_fin] using {final_arg} {arg_text}",
+        ]
+        for proof_body in proof_bodies:
+            for wrapper in wrappers:
+                proof_term = f"({proof_body})" if not wrapper else f"({wrapper} ({proof_body}))"
+                candidates.append(f"{prefix} {proof_term}")
+    return candidates
 
 
 def build_semantic_check_source(

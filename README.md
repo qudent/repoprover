@@ -629,12 +629,17 @@ false-reject preserved successes. The repair prompts also now tell models to
 apply source theorems before checked bridge rewrites when that is what exposes
 the bridge lemma's left-hand side. The merged development artifact
 `docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/`
-compiles `3/5` units and post-hoc semantic coverage proves `2/5` aligned
-source units. The two true semantic wins are inverse uniqueness and
-Vandermonde; triangular still compiles with the wrong statement shape, and FPS
-division plus NPartition are clean cannot-prove declines. The effective
-provider cost for the artifact path was `$0.0244708072`; this remains
-development-panel evidence, not a held-out benchmark.
+compiles `3/5` units. A later triangular source-shape repair probe cost
+`$0.00171864` and returned the same broader `BlockTriangular` disjunction
+theorem, so the next fix was grader-side: the post-hoc semantic grader now
+tries to construct generated abstract/disjunctive final hypotheses from
+pointwise source hypotheses. Rerunning semantic coverage proves `3/5` source
+units and `4/6` aligned gold declarations: inverse uniqueness, Vandermonde, and
+both triangular upper/lower gold declarations. FPS division plus NPartition are
+clean cannot-prove declines. The effective provider cost for the artifact path
+was `$0.0244708072`; the extra triangular probe is logged separately and did
+not change the effective generated artifact. This remains development-panel
+evidence, not a held-out benchmark.
 
 ### Imported Lean surface and likely context needs
 

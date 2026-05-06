@@ -68,7 +68,12 @@ development loop is now a fixed five-unit panel rather than a single theorem.
   `docs/latex-statement-repair-loop-runs/2026-05-06-dev-panel5-v2-repair-v5-merged-panel/`.
   Effective provider cost for the artifact path: `$0.0244708072`.
   Generated-only verification is `3/5` compiled with `2` clean declines and no
-  compile failures; semantic coverage is `2/5` units.
+  compile failures; semantic coverage is `3/5` units after a generic
+  grader-side pointwise-hypothesis bridge proved both triangular aligned gold
+  declarations from the generated `BlockTriangular` disjunction theorem.
+- A focused triangular source-shape repair probe cost `$0.00171864` and
+  returned the same compiled theorem shape, confirming the prior failure was a
+  semantic-grader false reject under theorem-implication grading.
 - Fixed repair-loop orchestration bugs: multi-unit repair outputs are split
   back into per-unit batches, and each split batch carries the original
   unit-specific generation payload so verifier import/support inference stays
@@ -85,8 +90,6 @@ development loop is now a fixed five-unit panel rather than a single theorem.
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake/Codex checks. A separate CauchyBinet
   diagnostic Codex/Lean task is still expected to be left alone.
-- Next useful work: route remaining panel failures by class. Triangular needs
-  source-shape planning that produces separate upper/lower entrywise-zero
-  statements; FPS division and NPartition need proof-synthesis/coding-agent
-  lanes rather than more selector prompt tuning. Use a fresh held-out slice for
-  benchmark claims.
+- Next useful work: route remaining panel failures by class. FPS division and
+  NPartition need proof-synthesis/coding-agent lanes rather than more selector
+  prompt tuning. Use a fresh held-out slice for benchmark claims.

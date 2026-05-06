@@ -471,3 +471,183 @@ theorem __repoprover_latex_statement_check (A : Matrix (Fin n) (Fin n) K)
   | simpa [Fintype.card_fin] using det_of_triangular A hA
   | simpa using det_of_triangular A (by simpa [Fintype.card_fin] using hA)
   | simpa [Fintype.card_fin] using det_of_triangular A (by simpa [Fintype.card_fin] using hA)
+  | simpa using det_of_triangular A (by
+      intro x
+      exact hA x)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x
+      exact hA x)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x
+      exact hA x))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x
+      exact hA x))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x
+      exact hA x))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x
+      exact hA x))
+  | simpa using det_of_triangular A (by
+      intro x
+      simpa [Fintype.card_fin] using hA x)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x
+      simpa [Fintype.card_fin] using hA x)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hA x))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using hA x))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hA x))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using hA x))
+  | simpa using det_of_triangular A (by
+      intro x y
+      exact hA x y)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x y
+      exact hA x y)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x y
+      exact hA x y))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x y
+      exact hA x y))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x y
+      exact hA x y))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x y
+      exact hA x y))
+  | simpa using det_of_triangular A (by
+      intro x y
+      simpa [Fintype.card_fin] using hA x y)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x y
+      simpa [Fintype.card_fin] using hA x y)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hA x y))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using hA x y))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hA x y))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using hA x y))
+  | simpa using det_of_triangular A (by
+      intro x y hxy
+      exact hA x y hxy)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x y hxy
+      exact hA x y hxy)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x y hxy
+      exact hA x y hxy))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x y hxy
+      exact hA x y hxy))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x y hxy
+      exact hA x y hxy))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x y hxy
+      exact hA x y hxy))
+  | simpa using det_of_triangular A (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hA x y hxy)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hA x y hxy)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hA x y hxy))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hA x y hxy))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hA x y hxy))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using hA x y hxy))
+  | simpa using det_of_triangular A (by
+      intro x y z hxyz
+      exact hA x y z hxyz)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x y z hxyz
+      exact hA x y z hxyz)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x y z hxyz
+      exact hA x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x y z hxyz
+      exact hA x y z hxyz))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x y z hxyz
+      exact hA x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x y z hxyz
+      exact hA x y z hxyz))
+  | simpa using det_of_triangular A (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hA x y z hxyz)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hA x y z hxyz)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hA x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hA x y z hxyz))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hA x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using hA x y z hxyz))
+  | simpa using det_of_triangular A (by
+      intro w x y z hxyz
+      exact hA w x y z hxyz)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro w x y z hxyz
+      exact hA w x y z hxyz)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro w x y z hxyz
+      exact hA w x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro w x y z hxyz
+      exact hA w x y z hxyz))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro w x y z hxyz
+      exact hA w x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro w x y z hxyz
+      exact hA w x y z hxyz))
+  | simpa using det_of_triangular A (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hA w x y z hxyz)
+  | simpa [Fintype.card_fin] using det_of_triangular A (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hA w x y z hxyz)
+  | simpa using det_of_triangular A (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hA w x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hA w x y z hxyz))
+  | simpa using det_of_triangular A (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hA w x y z hxyz))
+  | simpa [Fintype.card_fin] using det_of_triangular A (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using hA w x y z hxyz))

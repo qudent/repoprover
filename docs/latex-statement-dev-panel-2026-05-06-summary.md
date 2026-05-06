@@ -214,11 +214,19 @@ been iterated on.
 - Effective provider cost for this artifact path: `$0.0244708072`.
 - Generated-only verification: `3/5` compiled, with `2` clean
   `cannot_prove_from_visible_context` declines and no compile failures.
-- Semantic coverage: `2/5` source units prove all aligned gold declarations.
-- Semantic wins: inverse uniqueness (`unit-003`) and Vandermonde (`unit-004`).
-- Remaining blocker classes: triangular (`unit-002`) compiles but has the wrong
-  statement shape; FPS division (`unit-001`) and NPartition (`unit-005`) are
-  proof-synthesis/context-depth declines.
+- Semantic coverage: `3/5` source units prove all aligned gold declarations,
+  covering `4/6` aligned gold declarations.
+- Semantic wins: triangular (`unit-002`, both upper/lower aligned gold
+  declarations), inverse uniqueness (`unit-003`), and Vandermonde (`unit-004`).
+- Remaining blocker classes: FPS division (`unit-001`) and NPartition
+  (`unit-005`) are proof-synthesis/context-depth declines.
+
+A focused triangular source-shape repair probe cost `$0.00171864` and returned
+the same broader `BlockTriangular` disjunction theorem. A generic grader-side
+pointwise-hypothesis bridge then proved both aligned upper/lower triangular
+gold declarations from that theorem. This means the earlier triangular
+semantic failure was a post-hoc grader false reject under theorem-implication
+grading, not a generation failure.
 
 The run exposed two deterministic repair-loop issues that are now fixed:
 multi-unit repair outputs must be split back into per-unit batches, and each

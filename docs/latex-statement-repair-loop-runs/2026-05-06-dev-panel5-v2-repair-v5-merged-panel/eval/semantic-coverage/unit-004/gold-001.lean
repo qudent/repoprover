@@ -831,6 +831,486 @@ theorem __repoprover_latex_statement_check (a b n : ℕ) :
   | convert vandermonde_nat a b (by simpa [Fintype.card_fin] using n) using 1
     rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
     done
+  | simpa using vandermonde_nat a b (by
+      intro x
+      exact n x)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x
+      exact n x)
+  | convert vandermonde_nat a b (by
+      intro x
+      exact n x) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x
+      exact n x) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x
+      exact n x))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x
+      exact n x))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x
+      exact n x)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x
+      exact n x)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x
+      exact n x))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x
+      exact n x))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x
+      exact n x)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x
+      exact n x)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro x
+      simpa [Fintype.card_fin] using n x)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x
+      simpa [Fintype.card_fin] using n x)
+  | convert vandermonde_nat a b (by
+      intro x
+      simpa [Fintype.card_fin] using n x) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x
+      simpa [Fintype.card_fin] using n x) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using n x))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using n x))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using n x)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x
+      simpa [Fintype.card_fin] using n x)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using n x))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using n x))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using n x)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x
+      simpa [Fintype.card_fin] using n x)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro x y
+      exact n x y)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x y
+      exact n x y)
+  | convert vandermonde_nat a b (by
+      intro x y
+      exact n x y) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x y
+      exact n x y) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x y
+      exact n x y))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x y
+      exact n x y))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y
+      exact n x y)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y
+      exact n x y)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x y
+      exact n x y))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x y
+      exact n x y))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y
+      exact n x y)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y
+      exact n x y)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y)
+  | convert vandermonde_nat a b (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y
+      simpa [Fintype.card_fin] using n x y)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro x y hxy
+      exact n x y hxy)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x y hxy
+      exact n x y hxy)
+  | convert vandermonde_nat a b (by
+      intro x y hxy
+      exact n x y hxy) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x y hxy
+      exact n x y hxy) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      exact n x y hxy))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      exact n x y hxy))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      exact n x y hxy)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      exact n x y hxy)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      exact n x y hxy))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      exact n x y hxy))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      exact n x y hxy)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      exact n x y hxy)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy)
+  | convert vandermonde_nat a b (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y hxy
+      simpa [Fintype.card_fin] using n x y hxy)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro x y z hxyz
+      exact n x y z hxyz)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x y z hxyz
+      exact n x y z hxyz)
+  | convert vandermonde_nat a b (by
+      intro x y z hxyz
+      exact n x y z hxyz) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x y z hxyz
+      exact n x y z hxyz) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      exact n x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      exact n x y z hxyz))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      exact n x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      exact n x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      exact n x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      exact n x y z hxyz))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      exact n x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      exact n x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz)
+  | convert vandermonde_nat a b (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro x y z hxyz
+      simpa [Fintype.card_fin] using n x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro w x y z hxyz
+      exact n w x y z hxyz)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro w x y z hxyz
+      exact n w x y z hxyz)
+  | convert vandermonde_nat a b (by
+      intro w x y z hxyz
+      exact n w x y z hxyz) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro w x y z hxyz
+      exact n w x y z hxyz) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      exact n w x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      exact n w x y z hxyz))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      exact n w x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      exact n w x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      exact n w x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      exact n w x y z hxyz))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      exact n w x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      exact n w x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz)
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz)
+  | convert vandermonde_nat a b (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz))
+  | convert vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inl (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | simpa using vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz))
+  | simpa [Fintype.card_fin] using vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz))
+  | convert vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz)) using 1
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
+  | convert vandermonde_nat a b (Or.inr (by
+      intro w x y z hxyz
+      simpa [Fintype.card_fin] using n w x y z hxyz)) using 1
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => a.choose i * b.choose j) n]
+    done
   | simpa using vandermonde_nat
   | simpa [Fintype.card_fin] using vandermonde_nat
   | convert vandermonde_nat using 1

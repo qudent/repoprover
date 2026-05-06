@@ -172,6 +172,8 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "checked bridge lemma rewrites between two indexed forms" in prompt
     assert "first rewrite with the source theorem" in prompt
     assert "prefer separate narrow generated declarations for each case" in prompt
+    assert "Keep theorem statements source-shaped" in prompt
+    assert "construct the API hypothesis locally" in prompt
     assert "selector_unchecked_statement_sketch" in prompt
     assert "do not copy its Lean syntax verbatim" in prompt
     assert "cannot_prove_from_visible_context" in prompt

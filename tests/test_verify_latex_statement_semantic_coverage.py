@@ -6,6 +6,7 @@ from pathlib import Path
 from scripts.verify_latex_statement_semantic_coverage import (
     build_semantic_check_source,
     compare,
+    candidates_with_pointwise_final_hypothesis,
     generated_rewrite_terms,
 )
 
@@ -43,6 +44,30 @@ def test_build_semantic_check_source_uses_gold_only_in_grader(tmp_path: Path) ->
     assert "simpa using generated h" in source
     assert "simpa [Fintype.card_fin] using generated h" in source
     assert "generated (by simpa [Fintype.card_fin] using h)" in source
+
+
+def test_candidates_with_pointwise_final_hypothesis_try_or_bridges() -> None:
+    candidates = candidates_with_pointwise_final_hypothesis(
+        "generated A hA",
+        available_hypothesis_names={"A", "hA"},
+    )
+
+    assert (
+        "generated A (by\n      intro x y hxy\n      exact hA x y hxy)"
+        in candidates
+    )
+    assert (
+        "generated A (Or.inl (by\n      intro x y hxy\n      exact hA x y hxy))"
+        in candidates
+    )
+    assert (
+        "generated A (Or.inr (by\n      intro x y hxy\n      simpa [Fintype.card_fin] using hA x y hxy))"
+        in candidates
+    )
+    assert candidates_with_pointwise_final_hypothesis(
+        "generated A h",
+        available_hypothesis_names={"A", "hA"},
+    ) == []
 
 
 def test_build_semantic_check_source_strips_duplicate_namespace_wrapper(tmp_path: Path) -> None:
