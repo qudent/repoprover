@@ -282,6 +282,16 @@ reported `cannot_prove_from_visible_context` while emitting `sorry` code and
 Lean syntax errors. The remaining issue is generation discipline and missing
 construction/proof planning, not support-snippet compilation.
 
+A follow-up v5b generation prompt made the empty-output contract explicit and
+cost `$0.0012572`; the raw model output still violated the contract with a
+1,487-character Lean scratchpad and four declaration names. Generation and
+repair runners now deterministically normalize such
+`cannot_prove_from_visible_context` outputs to `lean_file_body = ""` and
+`declaration_names = []`, while preserving the exact paid response as
+`raw-generation-output.json` / `raw-repair-output.json` plus a
+`contract_enforcement` summary. This is a transport/benchmark-honesty fix, not
+a proof success.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

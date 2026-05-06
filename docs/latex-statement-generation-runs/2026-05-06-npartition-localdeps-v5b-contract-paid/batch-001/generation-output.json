@@ -1,0 +1,36 @@
+{
+  "contract_enforcement": {
+    "normalized_unit_count": 1,
+    "normalized_units": [
+      {
+        "raw_declaration_names": [
+          "NPartition.toPartition",
+          "NPartition.ofPartition",
+          "NPartition.toPartition_ofPartition",
+          "NPartition.ofPartition_toPartition"
+        ],
+        "raw_lean_file_body_characters": 1487,
+        "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+        "unit_key": "unit-001"
+      }
+    ],
+    "policy": "Runner normalized cannot_prove_from_visible_context units to the declared empty-output contract. See raw-generation-output.json or raw-repair-output.json for original model text."
+  },
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proofs are incomplete; the antitone condition and length bounds need to be filled in. The Mathlib Nat.Partition.length is not available as a checked identifier, so we used a placeholder. The construction of ofPartition is sketched but not fully verified."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure from AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+        "NPartition.toPartition from same file",
+        "Nat.Partition from Mathlib (checked signature)",
+        "source proposition prop.sf.Npar-as-par"
+      ]
+    }
+  ]
+}

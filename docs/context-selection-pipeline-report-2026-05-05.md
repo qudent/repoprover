@@ -696,6 +696,15 @@ Diverse4 broader-batch probe:
   `cannot_prove_from_visible_context` with `sorry` placeholders and syntax
   errors. This is a stricter negative result: local support now materializes,
   but the open model still does not construct the proof from it.
+- cannot-prove contract follow-up:
+  a v5b generation prompt made the empty-output rule explicit and cost
+  `$0.0012572`, but the raw model output still used
+  `lean_file_body` as a 1,487-character scratchpad with four declaration names.
+  The generation and repair runners now enforce the schema deterministically:
+  `cannot_prove_from_visible_context` units are normalized to empty body/names
+  for downstream verification, and the exact paid text is retained in
+  `raw-generation-output.json` or `raw-repair-output.json` with a
+  `contract_enforcement` summary.
 
 ### Generation and Verification Counts
 
@@ -1187,14 +1196,19 @@ You are a Lean 4 autoformalization agent. Generate a small ordered sequence of L
     "Treat selector_unchecked_statement_sketch as non-authoritative mathematical intent only; do not copy its Lean syntax verbatim.",
     "Follow the Lean-checked signatures exactly when they differ from the selector's expected shape.",
     "Use the actual Lean-checked argument order from hydrated_mathlib_context. If the selector expected shape conflicts with the checked signature, the checked signature wins.",
+    "Never use a hydrated Mathlib exact_identifier whose lean_check.status is not `checked`; treat it as unavailable even if the selector expected it to exist.",
+    "Treat fallback_mathlib_candidates as search hints only. Do not cite or use a fallback candidate as a theorem unless its statement in the prompt is sufficient for the proof.",
+    "If a selected Mathlib API is field-specific, unit-specific, or otherwise not strong enough for the source statement, say so in notes and generate only declarations justified by the visible context.",
     "Do not invent project helper names that are not shown in available_prior_project_context, needed_project_context, or source context.",
     "When available_prior_project_context contains Lean snippets for project definitions or predicates, use those exact names and statement shapes instead of rephrasing the source with raw hypotheses.",
+    "When local_file_predecessor_declarations contains same-file helper declarations, you may reuse those exact helper names and statement shapes; do not infer any hidden target declaration from their file position.",
     "Prefer a narrow declaration sequence over a broad bundled conjunction when the source unit decomposes into multiple Lean declarations.",
     "Keep theorem-local assumptions explicit rather than relying on unavailable global variables.",
     "If local_file_context_candidates show useful namespace, open, notation, or variable commands, you may include the needed commands in lean_file_body before the declarations.",
     "If you use a variable command instead of explicit binders, the command itself must appear in lean_file_body. Do not depend on file-scope variables that are not emitted in your output.",
     "Every identifier used in a theorem statement must be introduced by an explicit binder, local declaration, or imported/opened declaration. In particular, source parameters such as coefficient types, matrix sizes, rings, variables, and typeclass assumptions must be bound in the generated theorem, e.g. `{K : Type*} [CommRing K] {n : ℕ}` when the source quantifies over a commutative ring and a natural number.",
-    "If you cannot produce a complete proof from visible context, set status to cannot_prove_from_visible_context and leave lean_file_body empty. Never output Lean containing sorry/admit/placeholders."
+    "If you cannot produce a complete proof from visible context, set status to cannot_prove_from_visible_context and leave lean_file_body empty. Never output Lean containing sorry/admit/placeholders.",
+    "When status is cannot_prove_from_visible_context, do not use lean_file_body as a scratchpad. Put analysis in notes only; lean_file_body must be exactly \"\" and declaration_names exactly []."
   ],
   "lean_environment": "<imports, opens, toolchain, hydrated context>",
   "benchmark_policy": {

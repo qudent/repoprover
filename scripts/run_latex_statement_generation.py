@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 import re
@@ -351,6 +352,46 @@ def summarize_costs(batch_summaries: list[dict[str, Any]], model: str) -> dict[s
     }
 
 
+def enforce_generation_contracts(output: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Normalize invalid cannot-prove units while preserving raw output elsewhere."""
+
+    normalized = copy.deepcopy(output)
+    normalized_units: list[dict[str, Any]] = []
+    for unit in normalized.get("units") or []:
+        status = str(unit.get("status") or "")
+        body = str(unit.get("lean_file_body") or "")
+        names = unit.get("declaration_names") or []
+        if status != "cannot_prove_from_visible_context":
+            continue
+        if not body.strip() and not names:
+            continue
+        normalized_units.append(
+            {
+                "unit_key": str(unit.get("unit_key") or ""),
+                "reason": "cannot_prove_from_visible_context_requires_empty_body_and_names",
+                "raw_lean_file_body_characters": len(body),
+                "raw_declaration_names": names,
+            }
+        )
+        unit["lean_file_body"] = ""
+        unit["declaration_names"] = []
+
+    report = {
+        "normalized_unit_count": len(normalized_units),
+        "normalized_units": normalized_units,
+    }
+    if normalized_units:
+        normalized["contract_enforcement"] = {
+            "policy": (
+                "Runner normalized cannot_prove_from_visible_context units to the "
+                "declared empty-output contract. See raw-generation-output.json "
+                "or raw-repair-output.json for original model text."
+            ),
+            **report,
+        }
+    return normalized, report
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     run_dir = args.output
     eval_dir = run_dir / "eval"
@@ -425,7 +466,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         batch_summary["valid_json"] = parsed is not None
         batch_summary["cost_summary"] = response_cost_summary(response, args.model)
         if parsed is not None:
-            write_json(batch_dir / "generation-output.json", parsed)
+            normalized, contract_report = enforce_generation_contracts(parsed)
+            if contract_report["normalized_unit_count"]:
+                write_json(batch_dir / "raw-generation-output.json", parsed)
+            batch_summary["contract_enforcement"] = contract_report
+            write_json(batch_dir / "generation-output.json", normalized)
     summary["elapsed_seconds"] = round(time.monotonic() - started, 3)
     summary["paid_call_made"] = True
     summary["valid_json"] = all(bool(row.get("valid_json")) for row in summary["batches"])

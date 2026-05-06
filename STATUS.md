@@ -12,8 +12,8 @@ The repo has pivoted from declaration-level rows to theorem-level LaTeX
 statement rows. Current datasets are `docs/latex-statement-units.jsonl` and
 `docs/latex-statement-gold-candidates.jsonl`; old declaration-level artifacts
 are preserved at `checkpoint/before-per-latex-statement-dataset`. Latest work
-is testing target-blind context selection plus visible-support materialization
-on broader theorem units.
+is testing target-blind context selection, visible-support materialization, and
+honest handling of cannot-prove outputs on broader theorem units.
 
 ## Active Goals
 - [ ] Use LaTeX statement units as the main planning and benchmark surface.
@@ -50,6 +50,8 @@ on broader theorem units.
   module imports and derived opens.
 - [x] Add optional verifier materialization for prompt-visible support snippets
   and expand same-file local predecessor context with shallow dependencies.
+- [x] Preserve raw model text and normalize invalid `cannot_prove` outputs before
+  downstream verification.
 
 ## Blockers
 - Previous-project context is the strongest signal, but it must stay
@@ -118,7 +120,12 @@ on broader theorem units.
   `toPartition` support while withholding same-source `ofPartition`. Generation
   still compiled `0/1` because the model emitted `sorry` code and syntax errors
   despite reporting `cannot_prove_from_visible_context`.
-- Focused theorem-level suite passed: 67 pytest tests plus `py_compile` over
+- A v5b prompt-only contract probe cost `$0.0012572` and still returned a raw
+  1,487-character scratchpad plus four names under
+  `cannot_prove_from_visible_context`. Runners now preserve that exact raw JSON
+  and normalize downstream output to empty body/names with
+  `contract_enforcement` metadata.
+- Focused theorem-level suite passed: 68 pytest tests plus `py_compile` over
   the selector/generator/repair/verifier scripts.
 
 ## Agent Notes
@@ -127,9 +134,5 @@ on broader theorem units.
 - Focused tests should cover theorem selector payload hiding/compaction,
   context hydration, generation prompts, verifier classification, semantic
   coverage, context graph generation, and elaborated dependency summary.
-- Current experiment: run a one-round partition repair loop with
-  `--materialize-visible-support`. Hypothesis: if same-file support can be
-  materialized during repair verification, the remaining signal is whether the
-  repair selector/generator can correct nonexistent API/contract failures from
-  Lean errors without seeing the hidden target.
-  Result: it corrected the contract behavior but did not find a proof.
+- Next experiment: use the stricter normalized outputs to compare failures by
+  cause instead of treating scratchpad Lean as generated proof attempts.

@@ -27,6 +27,7 @@ from scripts.run_latex_statement_generation import (
     DEFAULT_BASE_URL,
     DEFAULT_MODEL,
     build_generation_messages,
+    enforce_generation_contracts,
     extract_message_content,
     maybe_parse_json,
     read_json,
@@ -187,8 +188,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     summary["valid_json"] = parsed is not None
     summary["cost_summary"] = response_cost_summary(response, args.model)
     if parsed is not None:
-        write_json(batch_dir / "generation-output.json", parsed)
-        write_json(batch_dir / "repair-output.json", parsed)
+        normalized, contract_report = enforce_generation_contracts(parsed)
+        if contract_report["normalized_unit_count"]:
+            write_json(batch_dir / "raw-generation-output.json", parsed)
+            write_json(batch_dir / "raw-repair-output.json", parsed)
+        summary["contract_enforcement"] = contract_report
+        write_json(batch_dir / "generation-output.json", normalized)
+        write_json(batch_dir / "repair-output.json", normalized)
     write_json(eval_dir / "repair-results.json", summary)
     write_json(eval_dir / "generation-results.json", summary)
     return summary

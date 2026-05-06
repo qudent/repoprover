@@ -530,6 +530,13 @@ Broader diverse4 negative probe:
   `ofPartition` withheld, but generation still compiled `0/1` because the model
   emitted `sorry` code and syntax errors after reporting
   `cannot_prove_from_visible_context`.
+- cannot-prove contract v5b:
+  the explicit empty-output prompt cost `$0.0012572`, returned valid JSON, and
+  still violated the contract with a 1,487-character raw Lean scratchpad plus
+  four declaration names. The runner now normalizes these rows to empty
+  body/names and records the exact raw response separately, so future verifier
+  counts do not treat scratchpad Lean as a generated proof attempt while still
+  keeping paid model behavior auditable.
 
 ## Lean Dependency Accounting
 

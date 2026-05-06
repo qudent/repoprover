@@ -4,7 +4,7 @@ import json
 import argparse
 from pathlib import Path
 
-from scripts.run_latex_statement_generation import build_generation_messages, run
+from scripts.run_latex_statement_generation import build_generation_messages, enforce_generation_contracts, run
 
 
 def _write_selector_run(tmp_path: Path) -> Path:
@@ -197,6 +197,34 @@ def test_generation_budget_payload_disables_reasoning(tmp_path: Path) -> None:
     assert summary["paid_call_made"] is False
     payload = json.loads((output / "batch-001/generation-payload.json").read_text(encoding="utf-8"))
     assert payload["extra_body"] == {"reasoning": {"effort": "none", "exclude": True}}
+
+
+def test_enforce_generation_contracts_preserves_raw_needed_data() -> None:
+    raw = {
+        "units": [
+            {
+                "unit_key": "unit-001",
+                "status": "cannot_prove_from_visible_context",
+                "lean_file_body": "theorem scratch : True := by\n  sorry",
+                "declaration_names": ["scratch"],
+            },
+            {
+                "unit_key": "unit-002",
+                "status": "generated",
+                "lean_file_body": "theorem ok : True := by\n  trivial",
+                "declaration_names": ["ok"],
+            },
+        ]
+    }
+
+    normalized, report = enforce_generation_contracts(raw)
+
+    assert report["normalized_unit_count"] == 1
+    assert normalized["units"][0]["lean_file_body"] == ""
+    assert normalized["units"][0]["declaration_names"] == []
+    assert normalized["units"][1]["declaration_names"] == ["ok"]
+    assert raw["units"][0]["lean_file_body"].startswith("theorem scratch")
+    assert "contract_enforcement" in normalized
 
 
 def test_generation_budget_payload_can_split_units(tmp_path: Path) -> None:

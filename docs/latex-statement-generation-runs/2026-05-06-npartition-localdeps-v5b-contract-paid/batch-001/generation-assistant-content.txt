@@ -1,0 +1,24 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "NPartition.toPartition",
+        "NPartition.ofPartition",
+        "NPartition.toPartition_ofPartition",
+        "NPartition.ofPartition_toPartition"
+      ],
+      "lean_file_body": "open Finset\n\nnamespace NPartition\n\nvariable {N : ℕ}\n\n/-- Given a partition λ of length ℓ ≤ N, produce an N-partition by padding with zeros. -/\ndef ofPartition (λ : Nat.Partition (∑ i : Fin N, 0)) (h : λ.length ≤ N) : NPartition N :=\n  { parts := λ.parts.extend (fun _ : Fin N => 0) (by\n      have hlen : λ.parts.length ≤ N := h.trans (by simp)\n      exact hlen)\n    antitone := by\n      -- We need to show that the extended sequence is antitone.\n      -- Since λ.parts is already a partition (nonincreasing) and we pad with zeros,\n      -- the antitone property holds.\n      intro i j hij\n      simp [Function.funext_iff]\n      sorry\n  }\n\n/-- Given an N-partition, drop trailing zeros to get a partition of length ≤ N. -/\ndef toPartition' (μ : NPartition N) : Nat.Partition μ.size :=\n  μ.toPartition\n\n/-- The composition `toPartition' ∘ ofPartition` is identity. -/\ntheorem toPartition_ofPartition (λ : Nat.Partition (∑ i : Fin N, 0)) (h : λ.length ≤ N) :\n    (ofPartition λ h).toPartition' = λ := by\n  ext i\n  simp [toPartition', ofPartition, NPartition.toPartition]\n  sorry\n\n/-- The composition `ofPartition ∘ toPartition'` is identity. -/\ntheorem ofPartition_toPartition (μ : NPartition N) :\n    ofPartition μ.toPartition' (by\n      have hlen : μ.toPartition'.length ≤ N := by\n        -- The length of the partition is at most N because we drop zeros.\n        sorry\n      exact hlen) = μ := by\n  ext i\n  simp [toPartition', ofPartition, NPartition.toPartition]\n  sorry\n\nend NPartition",
+      "notes": [
+        "The proofs are incomplete; the antitone condition and length bounds need to be filled in. The Mathlib Nat.Partition.length is not available as a checked identifier, so we used a placeholder. The construction of ofPartition is sketched but not fully verified."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure from AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+        "NPartition.toPartition from same file",
+        "Nat.Partition from Mathlib (checked signature)",
+        "source proposition prop.sf.Npar-as-par"
+      ]
+    }
+  ]
+}
