@@ -1,0 +1,424 @@
+{
+  "decline_context_pack": "docs/latex-statement-proof-lane-decline-context-pack-closure-d3-2026-05-06.json",
+  "diagnosed_unit_count": 1,
+  "diagnostic_class_counts": {
+    "lean_errors_before_or_at_placeholder": 1
+  },
+  "generated_at": "2026-05-06T13:54:25.593737+00:00",
+  "generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1"
+  ],
+  "raw_file_count": 1,
+  "raw_files": [
+    {
+      "accepted_inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "accepted_inferred_opens": [
+        "open Finset BigOperators Matrix",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "diagnosed_unit_count": 1,
+      "filtered_source_module_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi"
+      ],
+      "filtered_source_module_opens": [],
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV2",
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi",
+        "AlgebraicCombinatorics.SymmetricFunctions.OmegaInvolution",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson"
+      ],
+      "inferred_opens": [
+        "open Finset BigOperators Matrix",
+        "open LGV",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset BigOperators Matrix",
+        "open Finset BigOperators Matrix MvPolynomial",
+        "open SymmetricFunctions"
+      ],
+      "raw_output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1/batch-001/raw-generation-output.json",
+      "raw_unit_count": 1,
+      "rejected_invalid_inferred_opens": [
+        {
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 5,
+              "data": "unknown namespace `LGV`",
+              "kind": "[anonymous]",
+              "line": 8,
+              "severity": "error"
+            }
+          ],
+          "open_statement": "open LGV",
+          "stderr": ""
+        }
+      ],
+      "withheld_source_modules": [
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ]
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_partial_proof_diagnostics.v1",
+  "units": [
+    {
+      "body_char_count": 1140,
+      "contract_violations": [
+        "cannot_prove_output_must_have_empty_lean_file_body",
+        "cannot_prove_output_must_have_empty_declaration_names",
+        "generated_lean_contains_placeholder"
+      ],
+      "declaration_names": [
+        "catalan_hankel_det_one"
+      ],
+      "diagnostic_class": "lean_errors_before_or_at_placeholder",
+      "first_messages": [
+        {
+          "column": 28,
+          "data": "Invalid field `finish`: The environment does not contain `LGV.SimpleDigraph.Path.finish`, so it is not possible to project the field `finish` from an expression\n  paths i\nof type `D.Path`",
+          "kind": "lean.invalidField._namedError",
+          "line": 74,
+          "severity": "error"
+        },
+        {
+          "column": 32,
+          "data": "Function expected at\n  translateVertex\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  d\n\nHint: The identifier `translateVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+          "kind": "[anonymous]",
+          "line": 160,
+          "severity": "error"
+        },
+        {
+          "column": 24,
+          "data": "Invalid field `finish`: The environment does not contain `LGV.SimpleDigraph.Path.finish`, so it is not possible to project the field `finish` from an expression\n  translatePath d p\nof type `dyckDigraph.Path`",
+          "kind": "lean.invalidField._namedError",
+          "line": 168,
+          "severity": "error"
+        },
+        {
+          "column": 33,
+          "data": "Function expected at\n  translateVertex\nbut this term has type\n  ?m.1\n\nNote: Expected a function because this term is being applied to the argument\n  d\n\nHint: The identifier `translateVertex` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.",
+          "kind": "[anonymous]",
+          "line": 168,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nk : ℕ\nh_eq :\n  catalanHankelMatrix k =\n    pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight (fun i => (-(2 * ↑↑i), 0)) fun j => (2 * ↑↑j, 0)\n⊢ xDecreasing fun i => (-(2 * ↑↑i), 0)",
+          "kind": "[anonymous]",
+          "line": 221,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nk : ℕ\nh_eq :\n  catalanHankelMatrix k =\n    pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight (fun i => (-(2 * ↑↑i), 0)) fun j => (2 * ↑↑j, 0)\nhxA : xDecreasing fun i => (-(2 * ↑↑i), 0)\n⊢ yIncreasing fun i => (-(2 * ↑↑i), 0)",
+          "kind": "[anonymous]",
+          "line": 226,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nk : ℕ\nh_eq :\n  catalanHankelMatrix k =\n    pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight (fun i => (-(2 * ↑↑i), 0)) fun j => (2 * ↑↑j, 0)\nhxA : xDecreasing fun i => (-(2 * ↑↑i), 0)\nhyA : yIncreasing fun i => (-(2 * ↑↑i), 0)\n⊢ xDecreasing fun j => (2 * ↑↑j, 0)",
+          "kind": "[anonymous]",
+          "line": 229,
+          "severity": "error"
+        },
+        {
+          "column": 10,
+          "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\nk : ℕ\nh_eq :\n  catalanHankelMatrix k =\n    pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight (fun i => (-(2 * ↑↑i), 0)) fun j => (2 * ↑↑j, 0)\nhxA : xDecreasing fun i => (-(2 * ↑↑i), 0)\nhyA : yIncreasing fun i => (-(2 * ↑↑i), 0)\nhxB : xDecreasing fun j => (2 * ↑↑j, 0)\n⊢ yIncreasing fun j => (2 * ↑↑j, 0)",
+          "kind": "[anonymous]",
+          "line": 234,
+          "severity": "error"
+        }
+      ],
+      "lean_error_count": 9,
+      "lean_returncode": 1,
+      "notes": [
+        "The proof uses the LGV nonpermutable lemma to reduce the determinant to a sum over non-intersecting path tuples. The equality of the Catalan Hankel matrix to the path weight matrix is given by catalanHankelMatrix_eq_pathWeightMatrix. The sorting conditions for the source and target vertices are verified. The final simplification of the nipat weight sum to 1 requires additional lemmas about the structure of non-intersecting path tuples in the Dyck digraph with unit arc weights, which are not yet available in the visible context. The proof is incomplete at the last step."
+      ],
+      "placeholder_tokens": [
+        "sorry"
+      ],
+      "raw_output_path": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-unit001-decline-context-forced-paid-v1/batch-001/raw-generation-output.json",
+      "source_path": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex",
+      "source_unit_id": "AlgebraicCombinatorics/tex/Determinants/LGV2.tex:cor.lgv.catalan-hankel-det-0",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix",
+        "pathWeightMatrix",
+        "dyckDigraph_pathFinite",
+        "dyckUnitArcWeight",
+        "xDecreasing",
+        "yIncreasing",
+        "lgv_nonpermutable",
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "nipatWeightSum",
+        "nipatFinset",
+        "pathTupleWeight"
+      ],
+      "visible_support_context": {
+        "accepted": [
+          {
+            "kind": "abbrev",
+            "line": "109",
+            "name": "LGV1.LatticePoint",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+          },
+          {
+            "kind": "inductive",
+            "line": "241",
+            "name": "LGV1.LatticeStep",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+          },
+          {
+            "kind": "abbrev",
+            "line": "266",
+            "name": "LGV1.LatticePath",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+          },
+          {
+            "kind": "def",
+            "line": "346",
+            "name": "LGV1.LatticePath.vertices",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV1.lean"
+          },
+          {
+            "kind": "structure",
+            "line": "85",
+            "name": "LGV.SimpleDigraph",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "structure",
+            "line": "97",
+            "name": "LGV.SimpleDigraph.Path",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "107",
+            "name": "LGV.SimpleDigraph.Path.start",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "130",
+            "name": "LGV.SimpleDigraph.IsPathFinite",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "540",
+            "name": "LGV.ArcWeight",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "546",
+            "name": "LGV.pathWeightAux",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "569",
+            "name": "LGV.pathWeight",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "683",
+            "name": "LGV.pathTupleWeight",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "abbrev",
+            "line": "696",
+            "name": "LGV.kVertex",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "structure",
+            "line": "705",
+            "name": "LGV.PathTuple",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "lemma",
+            "line": "715",
+            "name": "LGV.PathTuple.ext",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "747",
+            "name": "LGV.pathsFromTo",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "753",
+            "name": "LGV.pathWeightSum",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "758",
+            "name": "LGV.pathWeightMatrix",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "771",
+            "name": "LGV.nipatSet",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "776",
+            "name": "LGV.nipatSetFinite",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "802",
+            "name": "LGV.nipatFinset",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "818",
+            "name": "LGV.nipatWeightSum",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "3852",
+            "name": "LGV.xCoord",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "3855",
+            "name": "LGV.yCoord",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "3858",
+            "name": "LGV.xDecreasing",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "3862",
+            "name": "LGV.yIncreasing",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "theorem",
+            "line": "4264",
+            "name": "LGV.lgv_nonpermutable",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "5147",
+            "name": "LGV.catalanHankelMatrix",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "5222",
+            "name": "LGV.dyckDigraph",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "theorem",
+            "line": "5305",
+            "name": "LGV.dyckDigraph_pathFinite",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "5426",
+            "name": "LGV.dyckUnitArcWeight",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "5961",
+            "name": "LGV.translatePath",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "lemma",
+            "line": "5982",
+            "name": "LGV.translatePath_start",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "lemma",
+            "line": "5987",
+            "name": "LGV.translatePath_finish",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "lemma",
+            "line": "5992",
+            "name": "LGV.translatePath_neg",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "lemma",
+            "line": "6004",
+            "name": "LGV.translatePath_injective",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "theorem",
+            "line": "6013",
+            "name": "LGV.dyck_paths_shifted_eq_catalan",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "theorem",
+            "line": "6059",
+            "name": "LGV.catalanHankelMatrix_eq_pathWeightMatrix",
+            "path": "AlgebraicCombinatorics/Determinants/LGV2.lean"
+          },
+          {
+            "kind": "def",
+            "line": "520",
+            "name": "AlgebraicCombinatorics.FPS.catalan",
+            "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NotationsExamples.lean"
+          }
+        ],
+        "accepted_count": 39,
+        "assumption_mode": true,
+        "candidate_count": 39,
+        "rejected": [],
+        "rejected_count": 0,
+        "skipped": [],
+        "skipped_count": 0
+      }
+    }
+  ]
+}

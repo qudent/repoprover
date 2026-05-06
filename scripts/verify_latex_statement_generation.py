@@ -856,6 +856,65 @@ def materialize_visible_support_context(
     }
 
 
+def available_support_candidate_names(
+    candidates: list[dict[str, str]],
+    *,
+    project_root: Path,
+    imports: list[str],
+    opens: list[str],
+    timeout_seconds: float,
+) -> dict[str, bool]:
+    names = unique_in_order(
+        [
+            str(candidate.get("name") or "")
+            for candidate in candidates
+            if LEAN_NAME_RE.fullmatch(str(candidate.get("name") or ""))
+        ]
+    )
+    if not names:
+        return {}
+    body_lines: list[str] = []
+    name_lines: dict[str, int] = {}
+    line_offset = len(imports) + len(opens)
+    for name in names:
+        body_lines.append(f"#check {name}")
+        name_lines[name] = line_offset + len(body_lines)
+    result = run_lean_source(
+        build_lean_source("\n".join(body_lines), imports=imports, opens=opens),
+        project_root=project_root,
+        timeout_seconds=timeout_seconds,
+    )
+    base_line_errors = [
+        message
+        for message in result["messages"]
+        if message.get("severity") == "error" and int(message.get("line") or 0) <= line_offset
+    ]
+    if base_line_errors:
+        return {name: False for name in names}
+    error_lines = {
+        int(message.get("line") or 0)
+        for message in result["messages"]
+        if message.get("severity") == "error"
+    }
+    return {name: name_lines[name] not in error_lines for name in names}
+
+
+def unique_support_candidates(candidates: list[dict[str, str]]) -> list[dict[str, str]]:
+    seen_text: set[str] = set()
+    seen_names: set[str] = set()
+    unique: list[dict[str, str]] = []
+    for candidate in sorted(candidates, key=support_candidate_sort_key):
+        text = candidate["text"]
+        name = str(candidate.get("name") or "")
+        if text in seen_text or (name and name in seen_names):
+            continue
+        seen_text.add(text)
+        if name:
+            seen_names.add(name)
+        unique.append(candidate)
+    return unique
+
+
 def verify_generation_output(
     output_json: dict[str, Any],
     *,

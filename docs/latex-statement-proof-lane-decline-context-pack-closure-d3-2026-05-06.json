@@ -6,18 +6,18 @@
     "indexed_project_declaration_count": 5677,
     "max_dependencies_per_unit": 96
   },
-  "dependency_project_context_count": 65,
+  "dependency_project_context_count": 49,
   "excluded_hidden_candidate_count": 0,
   "excluded_hidden_dependency_count": 0,
-  "generated_at": "2026-05-06T13:44:42.682538+00:00",
+  "generated_at": "2026-05-06T13:56:04.264054+00:00",
   "gold_candidates_filter": "docs/latex-statement-gold-candidates.jsonl",
   "gold_filter_policy": "Gold-candidate metadata is used only to exclude same-source aligned/referencing target declarations. Hidden target names and snippets are not emitted.",
   "schema_version": "repoprover.proof_lane_decline_context_pack.v1",
-  "selected_project_context_count": 106,
+  "selected_project_context_count": 78,
   "unit_count": 6,
   "units": [
     {
-      "dependency_project_context_count": 32,
+      "dependency_project_context_count": 25,
       "excluded_hidden_candidate_count": 0,
       "excluded_hidden_dependency_count": 0,
       "hidden_filter_stats": {
@@ -260,30 +260,6 @@
         },
         {
           "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "LGV.SimpleDigraph.Path",
-          "identifier_from_decline_note": "vertices.length",
-          "kind": "def",
-          "lean_snippet": "def length (σ : Perm (Fin n)) : ℕ := (inversions σ).card\n\n/-- Notation for length. -/\nscoped notation \"ℓ\" => length\n\n/-! ### Equivalence with Inversions1 definitions -/\n\n/-- `Equiv.Perm.inversions` equals `AlgebraicCombinatorics.Perm.inv`. -/\n@[simp]",
-          "line": 180,
-          "match_kind": "dependency_local_name",
-          "name": "Equiv.Perm.length",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "LGV.SimpleDigraph.IsPathFinite",
-          "identifier_from_decline_note": "p",
-          "kind": "abbrev",
-          "lean_snippet": "noncomputable abbrev p (n : ℕ) : P K N := psum (Fin N) K n\n\n/-- Power sums are symmetric.\n    Label: def.sf.ehp -/",
-          "line": 819,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.SymmetricPolynomials.p",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
           "dependency_of": "LGV.SimpleDigraph.IsPathFinite",
           "identifier_from_decline_note": "p.start",
           "kind": "def",
@@ -328,30 +304,6 @@
           "match_kind": "dependency_local_name",
           "name": "LGV.pathWeight",
           "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "LGV.dyckDigraph",
-          "identifier_from_decline_note": "x",
-          "kind": "def",
-          "lean_snippet": "noncomputable def BivFPS.x : BivFPS R := MvPowerSeries.X 0\n\n/-- The second variable `y` in a bivariate power series ring. -/",
-          "line": 79,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.BivFPS.x",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "LGV.dyckDigraph",
-          "identifier_from_decline_note": "y",
-          "kind": "def",
-          "lean_snippet": "noncomputable def BivFPS.y : BivFPS R := MvPowerSeries.X 1\n\n/-!\n### Embedding univariate power series into bivariate power series\n\nTo formalize Proposition `prop.fps.mulvar.comp-y-coeff`, we need to embed sequences of\nunivariate power series into bivariate power series. Given a sequence `f : ℕ → PowerSeries R`,\nwe define the bivariate power series `∑_k f_k y^k` whose coefficient at `x^n y^k` is the\ncoefficient of `x^n` in `f_k`.\n-/\n\n/-- Embedding of a sequence of univariate power series `f : ℕ → PowerSeries R` into a\n    bivariate power series `∑_k f_k y^k` in `K[[x, y]]`.\n\n    The coefficient of `x^n y^k` in the result is the coefficient of `x^n` in `f_k`. -/",
-          "line": 82,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.BivFPS.y",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
           "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
         },
         {
@@ -416,30 +368,6 @@
         },
         {
           "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "Equiv.Perm.length",
-          "identifier_from_decline_note": "inversions",
-          "kind": "def",
-          "lean_snippet": "def inversions (σ : Perm (Fin n)) : Finset (Fin n × Fin n) :=\n  Finset.filter (fun p => p.1 < p.2 ∧ σ p.2 < σ p.1) (Finset.univ)\n\n/-- The length of a permutation is the number of its inversions. -/",
-          "line": 176,
-          "match_kind": "dependency_local_name",
-          "name": "Equiv.Perm.inversions",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "AlgebraicCombinatorics.SymmetricPolynomials.p",
-          "identifier_from_decline_note": "P",
-          "kind": "abbrev",
-          "lean_snippet": "abbrev P (K : Type*) [CommRing K] (N : ℕ) : Type _ := MvPolynomial (Fin N) K\n\n/-!\n## The Symmetric Group Action (Definition def.sf.PS (b))\n\nThe symmetric group S_N acts on P by permuting variables:\n  σ · f = f[x_{σ(1)}, x_{σ(2)}, ..., x_{σ(N)}]\n\nIn Mathlib, this is given by `MvPolynomial.rename σ f` where σ : Equiv.Perm (Fin N).\n-/\n\n/-- The action of a permutation on a polynomial by renaming variables.\n    This is σ · f = f[x_{σ(1)}, ..., x_{σ(N)}] in the source.\n    Label: def.sf.PS -/",
-          "line": 66,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.SymmetricPolynomials.P",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
           "dependency_of": "LGV.pathWeight",
           "identifier_from_decline_note": "pathWeightAux",
           "kind": "def",
@@ -448,18 +376,6 @@
           "match_kind": "dependency_local_name",
           "name": "LGV.pathWeightAux",
           "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "AlgebraicCombinatorics.BivFPS.x",
-          "identifier_from_decline_note": "BivFPS",
-          "kind": "abbrev",
-          "lean_snippet": "abbrev BivFPS (R : Type*) [CommSemiring R] := MvPowerSeries (Fin 2) R\n\n/-- The first variable `x` in a bivariate power series ring. -/",
-          "line": 76,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.BivFPS",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
           "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
         },
         {
@@ -521,49 +437,9 @@
           "name": "variable {V : Type*} [DecidableEq V] {K : Type*} [CommRing K]",
           "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
           "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 93,
-          "name": "variable {n : ℕ}",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 53,
-          "name": "variable {K : Type*} [CommRing K]",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 54,
-          "name": "variable {N : ℕ}",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 786,
-          "name": "variable [DecidableEq (Fin N)]",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 59,
-          "name": "variable {R : Type*} [CommSemiring R]",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/Multivariate.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
         }
       ],
-      "selected_project_context_count": 48,
+      "selected_project_context_count": 36,
       "skipped_identifiers": [],
       "source_labels": [
         "cor.lgv.catalan-hankel-det-0"
@@ -683,7 +559,7 @@
       "unit_key": "unit-004"
     },
     {
-      "dependency_project_context_count": 30,
+      "dependency_project_context_count": 21,
       "excluded_hidden_candidate_count": 0,
       "excluded_hidden_dependency_count": 0,
       "hidden_filter_stats": {
@@ -819,30 +695,6 @@
         {
           "context_source": "proof_lane_decline_context_dependency_closure",
           "dependency_of": "Nat.Partition.transpose",
-          "identifier_from_decline_note": "p",
-          "kind": "abbrev",
-          "lean_snippet": "noncomputable abbrev p (n : ℕ) : P K N := psum (Fin N) K n\n\n/-- Power sums are symmetric.\n    Label: def.sf.ehp -/",
-          "line": 819,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.SymmetricPolynomials.p",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "Nat.Partition.transpose",
-          "identifier_from_decline_note": "newParts.sum",
-          "kind": "theorem",
-          "lean_snippet": "theorem XnEquiv.sum [DecidableEq ι] {n : ℕ} {s : Finset ι} {a b : ι → R⟦X⟧}\n    (h : ∀ i ∈ s, XnEquiv n (a i) (b i)) : XnEquiv n (∑ i ∈ s, a i) (∑ i ∈ s, b i) := by\n  induction s using Finset.induction_on with\n  | empty =>\n    simp only [sum_empty]\n    exact XnEquiv.refl n 0\n  | @insert x s hxs ih =>\n    rw [sum_insert hxs, sum_insert hxs]\n    apply XnEquiv.add\n    · exact h x (mem_insert_self x s)\n    · exact ih (fun i hi' => h i (mem_insert_of_mem hi'))\n\n/-- x^n-equivalence is preserved by finite products (Theorem `thm.fps.xneq.props` (f), eq.thm.fps.xneq.props.e.*). -/",
-          "line": 249,
-          "match_kind": "dependency_local_name",
-          "name": "PowerSeries.XnEquiv.sum",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "Nat.Partition.transpose",
           "identifier_from_decline_note": "sum_filter_card_eq_sum",
           "kind": "lemma",
           "lean_snippet": "lemma sum_filter_card_eq_sum (p : Multiset ℕ) (hp : ∀ i ∈ p, 0 < i) :\n    (Finset.range (p.fold max 0)).sum (fun i => (p.filter (· > i)).card) = p.sum := by\n  induction p using Multiset.induction with\n  | empty => simp\n  | cons a s ih =>\n    have hs : ∀ i ∈ s, 0 < i := fun i hi => hp i (Multiset.mem_cons_of_mem hi)\n    have ha : 0 < a := hp a (Multiset.mem_cons_self a s)\n    specialize ih hs\n    simp only [Multiset.sum_cons, Multiset.fold_cons_left]\n    let M := s.fold max 0\n    conv_lhs =>\n      arg 2\n      ext i\n      rw [Multiset.filter_cons]\n    have hcard : ∀ i, ((if a > i then {a} else 0) + s.filter (· > i)).card =\n                      (if a > i then 1 else 0) + (s.filter (· > i)).card := by\n      intro i\n      split_ifs with h\n      · simp only [Multiset.singleton_add, Multiset.card_cons]; ring\n      · simp only [zero_add]\n    simp_rw [hcard]\n    rw [Finset.sum_add_distrib]\n    have h1 : ∑ i ∈ Finset.range (max a M), (if a > i then 1 else 0) = a := by\n      rw [Finset.sum_boole, Nat.cast_id]\n      convert card_range_filter_gt a (max a M) using 2\n      simp only [le_max_iff, le_refl, true_or, min_eq_left]\n    rw [h1]\n    have hbound : ∀ x ∈ s, x ≤ M := fun x hx => fold_max_ge_of_mem s x hx\n    have h2 : (Finset.range (max a M)).sum (fun i => (s.filter (· > i)).card) =\n              (Finset.range M).sum (fun i => (s.filter (· > i)).card) := by\n      apply sum_filter_card_range_extend s M (max a M) hbound (le_max_right a M)\n    rw [h2, ih]",
@@ -898,18 +750,6 @@
           "match_kind": "dependency_local_name",
           "name": "SymmetricFunctions.fillingToSSYT",
           "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "SymmetricFunctions.ssytFinset",
-          "identifier_from_decline_note": "h",
-          "kind": "abbrev",
-          "lean_snippet": "noncomputable abbrev h (n : ℕ) : P K N := hsymm (Fin N) K n\n\n/-- Complete homogeneous symmetric polynomials are symmetric.\n    Label: def.sf.ehp -/",
-          "line": 790,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.SymmetricPolynomials.h",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
           "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
         },
         {
@@ -998,30 +838,6 @@
         },
         {
           "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "AlgebraicCombinatorics.SymmetricPolynomials.p",
-          "identifier_from_decline_note": "P",
-          "kind": "abbrev",
-          "lean_snippet": "abbrev P (K : Type*) [CommRing K] (N : ℕ) : Type _ := MvPolynomial (Fin N) K\n\n/-!\n## The Symmetric Group Action (Definition def.sf.PS (b))\n\nThe symmetric group S_N acts on P by permuting variables:\n  σ · f = f[x_{σ(1)}, x_{σ(2)}, ..., x_{σ(N)}]\n\nIn Mathlib, this is given by `MvPolynomial.rename σ f` where σ : Equiv.Perm (Fin N).\n-/\n\n/-- The action of a permutation on a polynomial by renaming variables.\n    This is σ · f = f[x_{σ(1)}, ..., x_{σ(N)}] in the source.\n    Label: def.sf.PS -/",
-          "line": 66,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.SymmetricPolynomials.P",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "PowerSeries.XnEquiv.sum",
-          "identifier_from_decline_note": "XnEquiv",
-          "kind": "def",
-          "lean_snippet": "def XnEquiv (n : ℕ) (f g : R⟦X⟧) : Prop :=\n  ∀ m ≤ n, coeff m f = coeff m g\n\n/-- Notation for x^n-equivalence: `f ≡[x^n] g` means `XnEquiv n f g`.\nThis notation is used throughout the limits and infinite products theory. -/\nnotation:50 f \" ≡[x^\" n \"] \" g => XnEquiv n f g\n\n/-! ### Basic properties: Equivalence relation (Theorem thm.fps.xneq.props (a)) -/\n\n/-- x^n-equivalence is reflexive. -/",
-          "line": 65,
-          "match_kind": "dependency_local_name",
-          "name": "PowerSeries.XnEquiv",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
           "dependency_of": "SSYT",
           "identifier_from_decline_note": "YoungTableau",
           "kind": "structure",
@@ -1030,18 +846,6 @@
           "match_kind": "exact_full_name",
           "name": "YoungTableau",
           "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "SSYT",
-          "identifier_from_decline_note": "lam.youngDiagram",
-          "kind": "def",
-          "lean_snippet": "def youngDiagram (μ : NPartition N) : Finset (Fin N × ℕ) :=\n  Finset.univ.biUnion fun i => (Finset.range (μ.parts i)).map\n    ⟨fun j => (i, j), fun _ _ h => by simp at h; exact h⟩\n\n/-- Membership in a Young diagram: (i, j) ∈ Y(λ) iff j < λ_i.\n    This is the 0-indexed version of the textbook condition j ∈ [λ_i].\n    Definition def.sf.ydiag in the source. -/",
-          "line": 651,
-          "match_kind": "dependency_local_name",
-          "name": "NPartition.youngDiagram",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
           "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
         },
         {
@@ -1082,30 +886,6 @@
         },
         {
           "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "SymmetricFunctions.LatticePath",
-          "identifier_from_decline_note": "eastStepHeights.length",
-          "kind": "def",
-          "lean_snippet": "def length (σ : Perm (Fin n)) : ℕ := (inversions σ).card\n\n/-- Notation for length. -/\nscoped notation \"ℓ\" => length\n\n/-! ### Equivalence with Inversions1 definitions -/\n\n/-- `Equiv.Perm.inversions` equals `AlgebraicCombinatorics.Perm.inv`. -/\n@[simp]",
-          "line": 180,
-          "match_kind": "dependency_local_name",
-          "name": "Equiv.Perm.length",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "PowerSeries.XnEquiv",
-          "identifier_from_decline_note": "coeff",
-          "kind": "def",
-          "lean_snippet": "def coeff (f : DoublyInfinitePowerSeries K) (n : ℤ) : K := f n\n\n/-- Two doubly infinite power series are equal iff all their coefficients are equal -/\n@[ext]",
-          "line": 793,
-          "match_kind": "dependency_local_name",
-          "name": "AlgebraicCombinatorics.DoublyInfinitePowerSeries.coeff",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/LaurentSeries.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
-          "context_source": "proof_lane_decline_context_dependency_closure",
           "dependency_of": "SymmetricFunctions.isSSYTFillingNonSkew",
           "identifier_from_decline_note": "isRowWeakFilling",
           "kind": "def",
@@ -1129,63 +909,11 @@
           "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
         },
         {
-          "context_source": "proof_lane_decline_context_dependency_closure",
-          "dependency_of": "Equiv.Perm.length",
-          "identifier_from_decline_note": "inversions",
-          "kind": "def",
-          "lean_snippet": "def inversions (σ : Perm (Fin n)) : Finset (Fin n × Fin n) :=\n  Finset.filter (fun p => p.1 < p.2 ∧ σ p.2 < σ p.1) (Finset.univ)\n\n/-- The length of a permutation is the number of its inversions. -/",
-          "line": 176,
-          "match_kind": "dependency_local_name",
-          "name": "Equiv.Perm.inversions",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
-          "safety_policy": "Candidate came from source-visible project declarations after same-source target-declaration exclusion filtering. Hidden target names/snippets are not included."
-        },
-        {
           "context_source": "project_source_variable_context_for_dependency",
           "kind": "variable",
           "line": 86,
           "name": "variable {N : ℕ}",
           "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 53,
-          "name": "variable {K : Type*} [CommRing K]",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 54,
-          "name": "variable {N : ℕ}",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 786,
-          "name": "variable [DecidableEq (Fin N)]",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/Definitions.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 56,
-          "name": "variable {R : Type*} [CommSemiring R]",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 246,
-          "name": "variable {ι : Type*}",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/XnEquivalence.lean",
           "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
         },
         {
@@ -1227,25 +955,9 @@
           "name": "variable {N : ℕ}",
           "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
           "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 93,
-          "name": "variable {n : ℕ}",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/Permutations/Inversions2.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
-        },
-        {
-          "context_source": "project_source_variable_context_for_dependency",
-          "kind": "variable",
-          "line": 786,
-          "name": "variable {K : Type*} [Semiring K]",
-          "path": "algebraic-combinatorics/AlgebraicCombinatorics/LaurentSeries.lean",
-          "safety_policy": "Variable context was copied from the same project source file before the visible declaration line."
         }
       ],
-      "selected_project_context_count": 51,
+      "selected_project_context_count": 35,
       "skipped_identifiers": [],
       "source_labels": [
         "thm.sf.jt-e"

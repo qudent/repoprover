@@ -166,23 +166,39 @@ def materialize_support(
         candidates_by_unit.setdefault(unit_key, []).extend(extra_candidates)
     for unit_key, candidates in candidates_by_unit.items():
         if assumption_mode:
-            seen_text: set[str] = set()
-            sorted_candidates = []
-            for candidate in sorted(candidates, key=verify.support_candidate_sort_key):
-                if candidate["text"] in seen_text:
-                    continue
-                seen_text.add(candidate["text"])
-                sorted_candidates.append(candidate)
-            support_context_by_unit[unit_key] = [candidate["text"] for candidate in sorted_candidates]
+            sorted_candidates = verify.unique_support_candidates(candidates)
+            available_names = verify.available_support_candidate_names(
+                sorted_candidates,
+                project_root=project_root,
+                imports=imports,
+                opens=opens,
+                timeout_seconds=timeout_seconds,
+            )
+            skipped = [
+                {
+                    **{key: value for key, value in candidate.items() if key != "text"},
+                    "reason": "already_available_from_imports",
+                }
+                for candidate in sorted_candidates
+                if available_names.get(str(candidate.get("name") or ""), False)
+            ]
+            accepted_candidates = [
+                candidate
+                for candidate in sorted_candidates
+                if not available_names.get(str(candidate.get("name") or ""), False)
+            ]
+            support_context_by_unit[unit_key] = [candidate["text"] for candidate in accepted_candidates]
             support_audit_by_unit[unit_key] = {
                 "candidate_count": len(sorted_candidates),
-                "accepted_count": len(sorted_candidates),
+                "accepted_count": len(accepted_candidates),
                 "rejected_count": 0,
+                "skipped_count": len(skipped),
                 "assumption_mode": True,
                 "accepted": [
                     {key: value for key, value in candidate.items() if key != "text"}
-                    for candidate in sorted_candidates
+                    for candidate in accepted_candidates
                 ],
+                "skipped": skipped,
                 "rejected": [],
             }
             continue
@@ -307,8 +323,10 @@ def diagnose_raw_path(args: argparse.Namespace, raw_path: Path) -> tuple[list[di
                     "candidate_count": support_audit.get("candidate_count", 0),
                     "accepted_count": support_audit.get("accepted_count", 0),
                     "rejected_count": support_audit.get("rejected_count", 0),
+                    "skipped_count": support_audit.get("skipped_count", 0),
                     "assumption_mode": support_audit.get("assumption_mode", False),
                     "accepted": support_audit.get("accepted", []),
+                    "skipped": support_audit.get("skipped", [])[:8],
                     "rejected": support_audit.get("rejected", [])[:8],
                 },
             }
@@ -366,7 +384,10 @@ def markdown_summary(summary: dict[str, Any]) -> str:
                 f"- Declaration names: `{', '.join(unit.get('declaration_names') or [])}`",
                 f"- Used context: `{', '.join(unit.get('used_context') or [])}`",
                 f"- Contract violations: `{', '.join(unit.get('contract_violations') or [])}`",
-                f"- Visible support accepted/rejected: `{unit['visible_support_context']['accepted_count']}/{unit['visible_support_context']['rejected_count']}`",
+                "- Visible support accepted/skipped/rejected: "
+                f"`{unit['visible_support_context']['accepted_count']}/"
+                f"{unit['visible_support_context'].get('skipped_count', 0)}/"
+                f"{unit['visible_support_context']['rejected_count']}`",
             ]
         )
         if unit.get("notes"):

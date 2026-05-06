@@ -4,6 +4,7 @@ import argparse
 import json
 
 from scripts.verify_latex_statement_generation import (
+    available_support_candidate_names,
     build_lean_source,
     payload_context,
     run,
@@ -1042,3 +1043,34 @@ def test_visible_support_resolves_full_name_from_source_line(tmp_path) -> None:
 
     assert candidates[0]["name"] == "LGV.translatePath"
     assert candidates[0]["text"] == "namespace LGV\naxiom translatePath : Nat\nend LGV"
+
+
+def test_available_support_candidate_names_batches_checks(monkeypatch, tmp_path) -> None:
+    def fake_run_lean_source(source, *, project_root, timeout_seconds):
+        messages = []
+        for line_number, line in enumerate(source.splitlines(), start=1):
+            if line == "#check Demo.missing":
+                messages.append(
+                    {
+                        "severity": "error",
+                        "line": line_number,
+                        "column": 8,
+                        "data": "Unknown identifier `Demo.missing`",
+                    }
+                )
+        return {"returncode": 1, "messages": messages, "stderr": ""}
+
+    monkeypatch.setattr("scripts.verify_latex_statement_generation.run_lean_source", fake_run_lean_source)
+
+    availability = available_support_candidate_names(
+        [
+            {"name": "Demo.available", "text": "axiom available : Nat"},
+            {"name": "Demo.missing", "text": "axiom missing : Nat"},
+        ],
+        project_root=tmp_path,
+        imports=["Mathlib"],
+        opens=[],
+        timeout_seconds=1,
+    )
+
+    assert availability == {"Demo.available": True, "Demo.missing": False}

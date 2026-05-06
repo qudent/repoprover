@@ -305,6 +305,14 @@ def declaration_start_with_attributes(lines: list[str], start: int) -> int:
     return index + 2
 
 
+def local_predecessor_snippet(lines: list[str], span: dict[str, Any], *, end_limit: int) -> str:
+    start = int(span["start"])
+    snippet_start = declaration_start_with_attributes(lines, start)
+    end = min(int(span["end"]), end_limit)
+    declaration_text = "\n".join(lines[snippet_start - 1 : min(end, start + 39)]).rstrip()
+    return trim_trailing_attributes(strip_lean_comments(declaration_text))
+
+
 def local_predecessor_row(
     *,
     lines: list[str],
@@ -316,8 +324,7 @@ def local_predecessor_row(
     start = int(span["start"])
     snippet_start = declaration_start_with_attributes(lines, start)
     end = min(int(span["end"]), end_limit)
-    declaration_text = "\n".join(lines[snippet_start - 1 : min(end, start + 39)]).rstrip()
-    snippet = trim_trailing_attributes(strip_lean_comments(declaration_text))
+    snippet = local_predecessor_snippet(lines, span, end_limit=end_limit)
     return {
         "name": span["name"],
         "kind": span["kind"],
@@ -331,6 +338,42 @@ def local_predecessor_row(
             "current-unit aligned/referencing declarations are omitted."
         ),
     }
+
+
+def same_file_dependency_spans(
+    *,
+    lines: list[str],
+    spans: list[dict[str, Any]],
+    selected_spans: list[dict[str, Any]],
+    selected_snippets: list[str],
+    dependency_limit: int,
+    dependency_depth: int,
+    end_limit: int,
+) -> list[dict[str, Any]]:
+    if dependency_limit <= 0 or dependency_depth <= 0 or not selected_snippets:
+        return []
+    selected_names = {str(span["name"]) for span in selected_spans}
+    dependency_names: set[str] = set()
+    dependencies: list[dict[str, Any]] = []
+    frontier_snippets = selected_snippets
+    for _depth in range(dependency_depth):
+        round_spans: list[dict[str, Any]] = []
+        for span in spans:
+            name = str(span["name"])
+            if name in selected_names or name in dependency_names:
+                continue
+            if local_name_referenced_by_snippets(frontier_snippets, name):
+                round_spans.append(span)
+        round_spans = round_spans[-dependency_limit:]
+        if not round_spans:
+            break
+        dependencies.extend(round_spans)
+        dependency_names.update(str(span["name"]) for span in round_spans)
+        frontier_snippets = [
+            local_predecessor_snippet(lines, span, end_limit=end_limit)
+            for span in round_spans
+        ]
+    return dependencies
 
 
 def withheld_local_declaration_names(row: dict[str, Any]) -> dict[str, set[str]]:
@@ -354,6 +397,7 @@ def target_file_predecessor_declarations(
     project_root: Path | None,
     limit: int = 4,
     dependency_limit: int = 4,
+    dependency_depth: int = 2,
     structure_support_limit: int = 2,
 ) -> list[dict[str, Any]]:
     """Collect same-file declarations before the hidden target declaration.
@@ -389,7 +433,6 @@ def target_file_predecessor_declarations(
             if int(span["start"]) < target_start and local_declaration_name(str(span["name"])) not in withheld_names
         ]
         selected_spans = spans[-limit:]
-        selected_names = {str(span["name"]) for span in selected_spans}
         selected_snippets = [
             local_predecessor_row(
                 lines=lines,
@@ -404,20 +447,23 @@ def target_file_predecessor_declarations(
         dependency_tokens = local_dependency_tokens(selected_snippet_texts)
         dependency_spans: list[dict[str, Any]] = []
         if dependency_limit > 0 and dependency_tokens:
-            for span in spans:
-                name = str(span["name"])
-                if name in selected_names:
-                    continue
-                if local_name_referenced_by_snippets(selected_snippet_texts, name):
-                    dependency_spans.append(span)
-            dependency_spans = dependency_spans[-dependency_limit:]
+            dependency_spans = same_file_dependency_spans(
+                lines=lines,
+                spans=spans,
+                selected_spans=selected_spans,
+                selected_snippets=selected_snippet_texts,
+                dependency_limit=dependency_limit,
+                dependency_depth=dependency_depth,
+                end_limit=target_start - 1,
+            )
         support_spans = structure_support_spans(
             spans=spans,
             structure_spans=[span for span in [*dependency_spans, *selected_spans] if span.get("kind") == "structure"],
             withheld_names=withheld_names,
             limit=structure_support_limit,
         )
-        for span in [*dependency_spans, *support_spans, *selected_spans]:
+        ordered_dependency_spans = sorted(dependency_spans, key=lambda span: int(span["start"]))
+        for span in [*ordered_dependency_spans, *support_spans, *selected_spans]:
             predecessors.append(
                 local_predecessor_row(
                     lines=lines,
@@ -426,14 +472,15 @@ def target_file_predecessor_declarations(
                     end_limit=target_start - 1,
                     context_source=(
                         "same_file_dependency_of_local_predecessor"
-                        if span in dependency_spans
+                        if span in ordered_dependency_spans
                         else "same_file_structure_support"
                         if span in support_spans
                         else "same_file_before_selected_unit_line"
                     ),
                 )
             )
-    return predecessors[-(limit + max(dependency_limit, 0) + max(structure_support_limit, 0)) :]
+    max_dependency_rows = max(dependency_limit, 0) * max(dependency_depth, 0)
+    return predecessors[-(limit + max_dependency_rows + max(structure_support_limit, 0)) :]
 
 
 def project_declarations_for_prior(
@@ -591,6 +638,7 @@ def build_messages(
     declarations_per_prior_unit: int = 4,
     local_predecessor_declarations: int = 4,
     local_predecessor_dependency_declarations: int = 4,
+    local_predecessor_dependency_depth: int = 2,
 ) -> list[dict[str, str]]:
     source_rows_by_id = unit_index(source_units or all_rows)
     system = (
@@ -700,16 +748,17 @@ def build_messages(
                     project_root=project_root,
                     limit=local_predecessor_declarations,
                     dependency_limit=local_predecessor_dependency_declarations,
+                    dependency_depth=local_predecessor_dependency_depth,
                 ),
                 "benchmark_policy": {
                     "target_lean_available_to_selector": False,
                     "posthoc_alignment_hidden": True,
                     "local_file_context_source": "prior_project_declarations_only",
                     "local_file_predecessor_declaration_source": (
-                        "same Lean file declarations before selected unit placement line, plus shallow "
-                        "same-file dependencies and nearby structure extensionality support referenced by "
-                        "those predecessor snippets; benchmark-only placement metadata, current-unit "
-                        "aligned/referencing declarations omitted"
+                        "same Lean file declarations before selected unit placement line, plus bounded "
+                        "transitive same-file dependencies and nearby structure extensionality support "
+                        "referenced by those predecessor snippets; benchmark-only placement metadata, "
+                        "current-unit aligned/referencing declarations omitted"
                     ),
                 },
             }
@@ -767,6 +816,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         declarations_per_prior_unit=args.prior_project_declarations_per_unit,
         local_predecessor_declarations=args.local_predecessor_declarations,
         local_predecessor_dependency_declarations=args.local_predecessor_dependency_declarations,
+        local_predecessor_dependency_depth=args.local_predecessor_dependency_depth,
     )
     run_dir = args.output
     batch_dir = run_dir / "batch-001"
@@ -859,8 +909,18 @@ def main() -> None:
         type=int,
         default=4,
         help=(
-            "Maximum earlier same-file declarations to add when their names are referenced by selected "
-            "local predecessor snippets. Uses the same target-blind placement cut as local predecessors."
+            "Maximum earlier same-file declarations to add per dependency depth when their names are "
+            "referenced by selected local predecessor snippets. Uses the same target-blind placement "
+            "cut as local predecessors."
+        ),
+    )
+    parser.add_argument(
+        "--local-predecessor-dependency-depth",
+        type=int,
+        default=2,
+        help=(
+            "Depth for transitive same-file local predecessor dependencies. Depth 1 is the historical "
+            "shallow scrape; depth 2 also includes helpers needed by those helper snippets."
         ),
     )
     parser.add_argument("--model", default=DEFAULT_MODEL)

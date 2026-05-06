@@ -25,6 +25,7 @@ from scripts.run_latex_statement_generation import write_json  # noqa: E402
 from scripts.mine_proof_lane_decline_context import (  # noqa: E402
     IDENT_RE,
     Declaration,
+    allow_local_name_fallback,
     declaration_indexes,
     parse_project_declarations,
     strip_comments_and_strings,
@@ -253,15 +254,25 @@ def best_dependency_declaration(
         for declaration in sorted(by_full.values(), key=lambda item: item.full_name):
             if declaration.full_name.endswith(suffix):
                 return declaration, "suffix_full_name"
-    local = token.split(".")[-1]
-    candidates = by_local.get(local, [])
-    if not candidates:
-        return None
     parent_path = str(parent.get("path") or "")
     try:
         parent_line = int(parent.get("line") or 0)
     except (TypeError, ValueError):
         parent_line = 0
+    local = token.split(".")[-1]
+    candidates = by_local.get(local, [])
+    if not candidates:
+        return None
+    if not allow_local_name_fallback(token):
+        if not ("." in token and token.split(".")[0][:1].islower() and len(local) > 1):
+            return None
+        candidates = [
+            declaration
+            for declaration in candidates
+            if declaration.path == parent_path and bool(parent_line and declaration.line < parent_line)
+        ]
+        if not candidates:
+            return None
 
     def sort_key(declaration: Declaration) -> tuple[int, int, str]:
         same_file = declaration.path == parent_path

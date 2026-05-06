@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from scripts.mine_proof_lane_decline_context import analyze, parse_project_declarations
+from scripts.mine_proof_lane_decline_context import analyze, candidate_records, declaration_indexes, parse_project_declarations
 
 
 def _write_json(path: Path, data: object) -> None:
@@ -126,3 +126,41 @@ def test_parse_project_declarations_prefixes_dotted_names_inside_namespace(tmp_p
     assert "Project.Step" in by_name
     assert "Project.Step.apply" in by_name
     assert "Global.helper" in by_name
+
+
+def test_candidate_records_skip_ambiguous_one_letter_local_fallback(tmp_path: Path) -> None:
+    project = tmp_path / "project"
+    lean_file = project / "Project/Foo.lean"
+    lean_file.parent.mkdir(parents=True)
+    lean_file.write_text(
+        "\n".join(
+            [
+                "namespace Project",
+                "def x : Nat := 0",
+                "def helper : Nat := x",
+                "end Project",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    by_full, by_local = declaration_indexes(parse_project_declarations(project))
+
+    local_records = candidate_records(
+        "x",
+        by_full=by_full,
+        by_local=by_local,
+        visible_names=set(),
+        visible_text="x",
+        max_candidates=3,
+    )
+    full_records = candidate_records(
+        "Project.x",
+        by_full=by_full,
+        by_local=by_local,
+        visible_names=set(),
+        visible_text="Project.x",
+        max_candidates=3,
+    )
+
+    assert local_records == []
+    assert [record["name"] for record in full_records] == ["Project.x"]

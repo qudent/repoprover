@@ -447,6 +447,14 @@ def declaration_indexes(declarations: list[Declaration]) -> tuple[dict[str, Decl
     return by_full, by_local
 
 
+def allow_local_name_fallback(identifier: str) -> bool:
+    local = identifier.split(".")[-1]
+    if len(local) == 1 and local.islower():
+        return False
+    dotted_head = identifier.split(".")[0] if "." in identifier else ""
+    return "." not in identifier or dotted_head[:1].isupper()
+
+
 def candidate_records(
     identifier: str,
     *,
@@ -471,9 +479,7 @@ def candidate_records(
             if declaration.full_name.endswith(suffix):
                 add(declaration, "suffix_full_name")
     local = identifier.split(".")[-1]
-    dotted_head = identifier.split(".")[0] if "." in identifier else ""
-    allow_local_fallback = "." not in identifier or dotted_head[:1].isupper()
-    if allow_local_fallback:
+    if allow_local_name_fallback(identifier):
         for declaration in by_local.get(local, []):
             add(declaration, "exact_local_name")
     if not candidate_map and "." not in identifier and len(identifier) >= 5:

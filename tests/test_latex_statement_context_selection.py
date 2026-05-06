@@ -277,6 +277,53 @@ def test_local_file_predecessors_include_shallow_same_file_dependencies(tmp_path
     assert "hidden_target" not in messages[1]["content"]
 
 
+def test_local_file_predecessors_include_transitive_same_file_dependencies(tmp_path: Path) -> None:
+    project_root = tmp_path / "project"
+    lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
+    lean_path.parent.mkdir(parents=True)
+    lean_path.write_text(
+        "\n".join(
+            [
+                "import Mathlib",
+                "namespace Demo",
+                "private def base : Nat := 1",
+                "def bridge : Nat := base + 1",
+                "def nearby : Nat := bridge + 1",
+                "theorem hidden_target : nearby = nearby := by",
+                "  rfl",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    target = _unit(
+        unit_id="target",
+        label="lem.target",
+        source_text="\\begin{lemma}\\label{lem.target}Target.\\end{lemma}",
+        aligned_name="Demo.hidden_target",
+    )
+    target["posthoc_lean_alignment"]["aligned_lean_declarations"][0]["line_range"] = [6, 7]
+
+    messages = build_messages(
+        [SelectedUnit(public_key="unit-001", row=target)],
+        [target],
+        source_units=[target],
+        project_root=project_root,
+        local_predecessor_declarations=1,
+        local_predecessor_dependency_declarations=1,
+        local_predecessor_dependency_depth=2,
+    )
+    payload = json.loads(messages[1]["content"])
+    predecessors = payload["units"][0]["local_file_predecessor_declarations"]
+
+    assert [row["name"] for row in predecessors] == ["base", "bridge", "nearby"]
+    assert [row["context_source"] for row in predecessors] == [
+        "same_file_dependency_of_local_predecessor",
+        "same_file_dependency_of_local_predecessor",
+        "same_file_before_selected_unit_line",
+    ]
+    assert "hidden_target" not in messages[1]["content"]
+
+
 def test_local_file_predecessors_exclude_same_source_referencing_declarations(tmp_path: Path) -> None:
     project_root = tmp_path / "project"
     lean_path = project_root / "AlgebraicCombinatorics/Demo.lean"
