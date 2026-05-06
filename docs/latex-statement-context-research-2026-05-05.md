@@ -651,6 +651,12 @@ Broader diverse4 negative probe:
   `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality facts such
   as `Multiset.card_map`, `Multiset.filter_le`, `Multiset.card_le_card`,
   `Finset.card_univ`, and `Fintype.card_fin` for filtered-map bounds.
+- selector prompt follow-up:
+  the repair-context selector rules now explicitly require those pointwise
+  relation bridges and filtered/mapped cardinality facts. The budget-only
+  prompt artifact at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-budget/`
+  records the next retry prompt without a paid call.
 
 ## Lean Dependency Accounting
 

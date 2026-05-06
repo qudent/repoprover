@@ -52,6 +52,8 @@ handling on broader theorem units.
 - [ ] Resolve the remaining NPartition blocker by synthesizing the padded
   construction/length-bound helper proof or switching away from sorted-list
   indexing.
+- [x] Add repair-context selector rules for pointwise relation bridges and
+  filtered/mapped cardinality bounds.
 
 ## Blockers
 - Previous-project context is the strongest signal, but aligned target
@@ -132,6 +134,10 @@ handling on broader theorem units.
   `do_not_use_identifiers` but missed `List.Pairwise.rel_get_*` bridge facts
   and guessed unavailable cardinality names (`Multiset.length_map`,
   `Multiset.filter_ne_zero`).
+- Repair-context selector prompt now explicitly asks for pointwise/application
+  lemmas for `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality
+  facts for filtered/mapped finite data. No-cost prompt artifact:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-budget/`.
 - Test suite last passed: `uv run pytest tests` (`476 passed`) plus
   `py_compile` over selector/generator/repair/verifier scripts. Full
   `uv run pytest` still has one unrelated blueprint fixture failure because

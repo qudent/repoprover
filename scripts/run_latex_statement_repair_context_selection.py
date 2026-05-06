@@ -166,6 +166,8 @@ def build_repair_context_messages(
             "Do not stop at a missing direct theorem if a proof can be decomposed into smaller visible project/local and Mathlib facts.",
             "Request every Mathlib bridge lemma needed by your own repair_strategy_note, including cardinality, coercion, order, equality-rewrite, empty-sum, and simplification facts.",
             "If your proof route says two expressions are equal or equivalent, request the exact theorem or simp lemma that justifies that conversion unless it is already shown in visible context.",
+            "If your proof route uses `List.Pairwise`, `List.Sorted`, `Monotone`, or `Antitone`, request the checked pointwise/application lemmas that turn that relation into inequalities on `List.get`, function values, or indexed entries.",
+            "If your proof route needs a cardinality bound for filtered or mapped finite data, request both the map/filter cardinality facts and the domain-cardinality facts, for example `Multiset.card_map`, `Multiset.filter_le`, `Multiset.card_le_card`, `Finset.card_univ`, and `Fintype.card_fin` when those shapes apply.",
             "Use previous project declarations only if they are shown in original_generation_task.",
             "Use local_file_predecessor_declarations only if they are shown in original_generation_task.",
             "Keep Mathlib requests tight. Prefer exact names when known; otherwise use narrow search queries with expected shapes.",

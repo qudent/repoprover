@@ -157,6 +157,8 @@ def test_repair_context_prompt_selects_context_without_hidden_target(tmp_path: P
     assert "same_unit_helper_plan" in prompt
     assert "fresh descriptive names" in prompt
     assert "do_not_use_identifiers must contain exact Lean identifiers only" in prompt
+    assert "request the checked pointwise/application lemmas" in prompt
+    assert "Multiset.card_map" in prompt
     assert "prior_helper" in prompt
     assert "Demo.hidden_target" not in prompt
     assert "posthoc_lean_alignment" not in prompt

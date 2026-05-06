@@ -418,6 +418,12 @@ requested unavailable cardinality names (`Multiset.length_map`,
 `Multiset.card_map`, `Multiset.filter_le`, `Multiset.card_le_card`,
 `Finset.card_univ`, and `Fintype.card_fin`.
 
+The repair-context selector prompt now explicitly asks for pointwise bridge
+lemmas for `Pairwise`/`Sorted`/`Monotone`/`Antitone` routes and cardinality
+facts for filtered/mapped finite data. The no-cost next-retry prompt is
+recorded at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-cardinality-bridge-budget/`.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad
