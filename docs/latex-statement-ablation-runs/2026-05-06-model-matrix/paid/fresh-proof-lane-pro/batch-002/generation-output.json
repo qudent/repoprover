@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "open PowerSeries\n\ntheorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [PowerSeries.isUnit_iff_constantCoeff]\n  constructor\n  · intro h\n    have h' : IsUnit (constantCoeff a) := h\n    rcases h' with ⟨u, hu⟩\n    have : (u : K) ≠ 0 := Units.ne_zero u\n    rw [← hu]\n    exact this\n  · intro h\n    have : IsUnit (constantCoeff a) := by\n      apply isUnit_of_ne_zero h\n    exact this",
+      "notes": [
+        "Uses PowerSeries.isUnit_iff_constantCoeff from Mathlib. The field condition is used to convert IsUnit (constantCoeff a) to constantCoeff a ≠ 0 via Units.ne_zero and isUnit_of_ne_zero."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "PowerSeries.isUnit_iff_constantCoeff",
+        "Field K",
+        "Units.ne_zero",
+        "isUnit_of_ne_zero"
+      ]
+    }
+  ]
+}

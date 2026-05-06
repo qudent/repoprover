@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The theorem statement is incomplete; the proof is missing. The definition of jacobiTrudiMatrixE uses esymm with a nonnegative index via .toNat, assuming the index is nonnegative. The selector sketch mentions transpose partitions, but the current formalization uses lam, mu directly; the transpose aspect is not captured. The proof would likely use the first Jacobi-Trudi formula and the omega involution."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "Matrix.det",
+        "MvPolynomial.esymm",
+        "SymmetricFunctions.schur",
+        "NPartition.toNPartition",
+        "SymmetricFunctions.jacobiTrudiMatrixH (for analogy)"
+      ]
+    }
+  ]
+}

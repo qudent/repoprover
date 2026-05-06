@@ -90,6 +90,10 @@ rather than only summarizing them:
   counts, failure classes, and the verification artifact path. If Lean import
   setup takes close to the verifier timeout, rerun with a larger timeout and do
   not keep stale timeout artifacts as the headline result.
+- When resuming a paid generation after invalid JSON, provider failure, or
+  contract normalization, preserve the previous paid attempt and its cost. Do
+  not let a successful retry overwrite the only durable record of money already
+  spent.
 - After two attempts on the same unit with the same failure class and adequate
   checked context, stop prompt/context tuning and route the case to a different
   lane: stronger-model ablation, manual Lean lemma development, Mathlib/project

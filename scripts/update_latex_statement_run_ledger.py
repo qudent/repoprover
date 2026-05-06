@@ -54,6 +54,10 @@ def usage_totals_from_cost_summary(cost_summary: dict[str, Any] | None) -> dict[
         usage = (batch or {}).get("usage")
         if isinstance(usage, dict):
             add_usage(usage)
+    for archived in cost_summary.get("archived_attempts") or []:
+        usage = (archived or {}).get("usage")
+        if isinstance(usage, dict):
+            add_usage(usage)
     return totals
 
 
@@ -145,6 +149,7 @@ def row_from_panel(root: Path) -> dict[str, Any]:
 
 def row_from_generation(root: Path) -> dict[str, Any]:
     summary = read_json(root / "eval" / "generation-results.json")
+    cost_adjustment = retry_cost_adjustment(root)
     row = {
         "schema_version": "repoprover.latex_statement_run_ledger_row.v1",
         "artifact_root": str(root),
@@ -157,8 +162,11 @@ def row_from_generation(root: Path) -> dict[str, Any]:
             "model": summary.get("model"),
             "reasoning_effort": summary.get("reasoning_effort"),
         },
-        "cost": cost_value(summary),
-        "tokens": usage_totals_from_cost_summary(summary.get("cost_summary") or {}),
+        "cost": cost_value(summary) + cost_adjustment["cost"],
+        "tokens": add_token_totals(
+            usage_totals_from_cost_summary(summary.get("cost_summary") or {}),
+            cost_adjustment["tokens"],
+        ),
         "provider_error_count": summary.get("provider_error_count"),
         "paid_call_made": summary.get("paid_call_made"),
     }
@@ -171,6 +179,17 @@ def row_from_generation(root: Path) -> dict[str, Any]:
                 "failure_class_counts": verification_summary.get("failure_class_counts") or {},
             }
         )
+    if semantic := latest_semantic_summary(root):
+        semantic_path, semantic_summary = semantic
+        row.update(
+            {
+                "semantic_artifact": str(semantic_path),
+                "semantic_passed_units": semantic_summary.get("all_aligned_gold_proved_units"),
+                "semantic_status_counts": semantic_summary.get("coverage_status_counts") or {},
+            }
+        )
+    if cost_adjustment["entries"]:
+        row["manual_cost_adjustments"] = cost_adjustment["entries"]
     return row
 
 
@@ -182,6 +201,48 @@ def latest_verification_summary(root: Path) -> tuple[Path, dict[str, Any]] | Non
     return path, read_json(path)
 
 
+def latest_semantic_summary(root: Path) -> tuple[Path, dict[str, Any]] | None:
+    candidates = sorted((root / "eval").glob("semantic-coverage*.json"), key=lambda path: path.stat().st_mtime)
+    if not candidates:
+        return None
+    path = candidates[-1]
+    return path, read_json(path)
+
+
+def add_token_totals(left: dict[str, int], right: dict[str, int]) -> dict[str, int]:
+    merged = dict(left)
+    for key, value in right.items():
+        merged[key] = int(merged.get(key) or 0) + int(value or 0)
+    return merged
+
+
+def retry_cost_adjustment(root: Path) -> dict[str, Any]:
+    path = root / "eval" / "retry-cost-audit.json"
+    if not path.exists():
+        return {
+            "cost": 0.0,
+            "tokens": {
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "cached_prompt_tokens": 0,
+            },
+            "entries": [],
+        }
+    data = read_json(path)
+    entries = data.get("manual_cost_adjustments") or []
+    total_cost = 0.0
+    totals = {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "cached_prompt_tokens": 0}
+    for entry in entries:
+        try:
+            total_cost += float(entry.get("openrouter_reported_cost") or 0.0)
+        except (TypeError, ValueError):
+            pass
+        for key in totals:
+            totals[key] += int(entry.get(key) or 0)
+    return {"cost": total_cost, "tokens": totals, "entries": entries}
+
+
 def row_from_acceptance(root: Path) -> dict[str, Any]:
     summary = read_json(root / "eval" / "proof-lane-acceptance-summary.json")
     verification = summary.get("verification") or {}
@@ -189,13 +250,18 @@ def row_from_acceptance(root: Path) -> dict[str, Any]:
     solution_cost = 0.0
     solution_tokens = {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "cached_prompt_tokens": 0}
     for run_path in summary.get("solution_generation_runs") or []:
-        gen_path = Path(run_path) / "eval" / "generation-results.json"
+        generation_root = Path(run_path)
+        gen_path = generation_root / "eval" / "generation-results.json"
         if not gen_path.exists():
             continue
         generation = read_json(gen_path)
         solution_cost += cost_value(generation)
         usage = usage_totals_from_cost_summary(generation.get("cost_summary") or {})
         for key, value in usage.items():
+            solution_tokens[key] += value
+        adjustment = retry_cost_adjustment(generation_root)
+        solution_cost += adjustment["cost"]
+        for key, value in adjustment["tokens"].items():
             solution_tokens[key] += value
     return {
         "schema_version": "repoprover.latex_statement_run_ledger_row.v1",

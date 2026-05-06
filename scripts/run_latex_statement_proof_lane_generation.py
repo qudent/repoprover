@@ -27,6 +27,7 @@ from scripts.run_latex_statement_generation import (  # noqa: E402
     extract_message_content,
     maybe_parse_json,
     response_cost_summary,
+    response_file_cost_summary,
     scrub_lean_snippet_comments,
     summarize_costs,
     write_json,
@@ -191,6 +192,76 @@ def aggregate_outputs(paths: list[Path]) -> dict[str, Any] | None:
     }
 
 
+def archived_attempt_cost_rows(batch_summaries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for batch in batch_summaries:
+        for attempt in batch.get("archived_attempts") or []:
+            cost_summary = attempt.get("cost_summary")
+            if isinstance(cost_summary, dict):
+                rows.append(cost_summary)
+    return rows
+
+
+def merge_current_and_archived_costs(
+    batch_summaries: list[dict[str, Any]], model: str
+) -> dict[str, Any] | None:
+    current = summarize_costs(batch_summaries, model)
+    archived = archived_attempt_cost_rows(batch_summaries)
+    if not archived:
+        return current
+    current_cost = float((current or {}).get("openrouter_reported_cost") or 0.0)
+    archived_cost = sum(
+        float(row.get("openrouter_reported_cost") or 0.0)
+        for row in archived
+        if isinstance(row.get("openrouter_reported_cost"), (int, float))
+    )
+    return {
+        "model": model,
+        "openrouter_reported_cost": current_cost + archived_cost,
+        "current_openrouter_reported_cost": current_cost,
+        "archived_openrouter_reported_cost": archived_cost,
+        "batches": (current or {}).get("batches") or [],
+        "archived_attempts": archived,
+    }
+
+
+def archive_previous_attempt(batch_dir: Path, model: str) -> dict[str, Any] | None:
+    candidate_names = [
+        "generation-payload.json",
+        "generation-response.json",
+        "generation-assistant-content.txt",
+        "raw-generation-output.json",
+        "provider-error.txt",
+    ]
+    existing = [batch_dir / name for name in candidate_names if (batch_dir / name).exists()]
+    if not existing:
+        return None
+    attempts_dir = batch_dir / "attempts"
+    attempts_dir.mkdir(parents=True, exist_ok=True)
+    index = 1
+    while (attempts_dir / f"attempt-{index:03d}").exists():
+        index += 1
+    archive_dir = attempts_dir / f"attempt-{index:03d}"
+    archive_dir.mkdir()
+    moved: list[str] = []
+    cost_summary: dict[str, Any] | None = None
+    for path in existing:
+        target = archive_dir / path.name
+        path.rename(target)
+        moved.append(str(target))
+        if path.name == "generation-response.json":
+            cost_summary = response_file_cost_summary(target, model)
+    summary = {
+        "archive_dir": str(archive_dir),
+        "archived_files": moved,
+        "archived_at": datetime.now(timezone.utc).isoformat(),
+    }
+    if cost_summary:
+        summary["cost_summary"] = cost_summary
+    write_json(archive_dir / "attempt-summary.json", summary)
+    return summary
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     run_dir = args.output
     eval_dir = run_dir / "eval"
@@ -236,7 +307,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         }
         if args.reasoning_effort and args.reasoning_effort != "default":
             request_payload["extra_body"] = {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
-        write_json(batch_dir / "generation-payload.json", request_payload)
         batch_summary: dict[str, Any] = {
             "batch_index": batch_index,
             "task_unit_keys": [str(task.get("unit_key") or "") for task in batch_tasks],
@@ -246,9 +316,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "valid_json": False,
             "parse_error": None,
         }
-        if args.budget_only:
-            summary["batches"].append(batch_summary)
-            continue
         if getattr(args, "resume_existing", False):
             completed = completed_generation_batch_summary(batch_dir, args.model)
             if completed is not None:
@@ -256,6 +323,15 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 output_paths.append(batch_dir / "generation-output.json")
                 summary["batches"].append(batch_summary)
                 continue
+        archived_attempt = None
+        if not args.budget_only:
+            archived_attempt = archive_previous_attempt(batch_dir, args.model)
+            if archived_attempt:
+                batch_summary["archived_attempts"] = [archived_attempt]
+        write_json(batch_dir / "generation-payload.json", request_payload)
+        if args.budget_only:
+            summary["batches"].append(batch_summary)
+            continue
 
         if client is None:
             if not os.getenv("OPENROUTER_API_KEY"):
@@ -298,7 +374,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         aggregated = aggregate_outputs(output_paths)
         if aggregated is not None:
             write_json(eval_dir / "merged-generation-output.json", aggregated)
-    summary["cost_summary"] = summarize_costs(summary["batches"], args.model)
+    summary["cost_summary"] = merge_current_and_archived_costs(summary["batches"], args.model)
     provider_errors = [row.get("provider_error") for row in summary["batches"] if row.get("provider_error")]
     summary["provider_error_count"] = len(provider_errors)
     if provider_errors:

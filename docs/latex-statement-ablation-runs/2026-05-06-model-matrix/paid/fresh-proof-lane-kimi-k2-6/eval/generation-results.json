@@ -1,0 +1,401 @@
+{
+  "attached_decline_context_pack_count": 0,
+  "batch_count": 5,
+  "batches": [
+    {
+      "batch_index": 1,
+      "budget_only": false,
+      "cost_summary": {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.01413446,
+        "usage": {
+          "completion_tokens": 1060,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.01413446,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.004876,
+            "upstream_inference_cost": 0.01413446,
+            "upstream_inference_prompt_cost": 0.00925846
+          },
+          "is_byok": false,
+          "prompt_tokens": 8494,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 9554
+        }
+      },
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-001/generation-payload.json",
+      "raw_generation_output": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-001/raw-generation-output.json",
+      "resumed_existing": true,
+      "task_unit_keys": [
+        "unit-001"
+      ],
+      "valid_json": true
+    },
+    {
+      "batch_index": 2,
+      "budget_only": false,
+      "cost_summary": {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.0088382,
+        "usage": {
+          "completion_tokens": 225,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.0088382,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0009,
+            "upstream_inference_cost": 0.0088382,
+            "upstream_inference_prompt_cost": 0.0079382
+          },
+          "is_byok": false,
+          "prompt_tokens": 8356,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 8581
+        }
+      },
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-002/generation-payload.json",
+      "resumed_existing": true,
+      "task_unit_keys": [
+        "unit-002"
+      ],
+      "valid_json": true
+    },
+    {
+      "batch_index": 3,
+      "budget_only": false,
+      "contract_enforcement": {
+        "normalized_unit_count": 1,
+        "normalized_units": [
+          {
+            "contract_violations": [
+              "generated_lean_contains_placeholder",
+              "generated_lean_must_not_include_comments"
+            ],
+            "raw_declaration_names": [
+              "AlgebraicCombinatorics.FPS.prop_binom_nCk_2i_qedmo_CN"
+            ],
+            "raw_lean_file_body_characters": 3437,
+            "reason": "generated_output_contains_incomplete_or_forbidden_lean",
+            "unit_key": "unit-003"
+          }
+        ]
+      },
+      "cost_summary": {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.01784644,
+        "usage": {
+          "completion_tokens": 1639,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.01784644,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0075394,
+            "upstream_inference_cost": 0.01784644,
+            "upstream_inference_prompt_cost": 0.01030704
+          },
+          "is_byok": false,
+          "prompt_tokens": 9456,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 11095
+        }
+      },
+      "elapsed_seconds": 49.756,
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-003/generation-payload.json",
+      "task_unit_keys": [
+        "unit-003"
+      ],
+      "valid_json": true
+    },
+    {
+      "batch_index": 4,
+      "budget_only": false,
+      "cost_summary": {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.0060626,
+        "usage": {
+          "completion_tokens": 422,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.0060626,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.001477,
+            "upstream_inference_cost": 0.0060626,
+            "upstream_inference_prompt_cost": 0.0045856
+          },
+          "is_byok": false,
+          "prompt_tokens": 5732,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 6154
+        }
+      },
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-004/generation-payload.json",
+      "resumed_existing": true,
+      "task_unit_keys": [
+        "unit-004"
+      ],
+      "valid_json": true
+    },
+    {
+      "batch_index": 5,
+      "budget_only": false,
+      "cost_summary": {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.01254837,
+        "usage": {
+          "completion_tokens": 251,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.01254837,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0011546,
+            "upstream_inference_cost": 0.01254837,
+            "upstream_inference_prompt_cost": 0.01139377
+          },
+          "is_byok": false,
+          "prompt_tokens": 10453,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 704,
+            "video_tokens": 0
+          },
+          "total_tokens": 10704
+        }
+      },
+      "paid_call_made": true,
+      "parse_error": null,
+      "payload_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6/batch-005/generation-payload.json",
+      "resumed_existing": true,
+      "task_unit_keys": [
+        "unit-005"
+      ],
+      "valid_json": true
+    }
+  ],
+  "budget_only": false,
+  "cost_summary": {
+    "batches": [
+      {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.01413446,
+        "usage": {
+          "completion_tokens": 1060,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.01413446,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.004876,
+            "upstream_inference_cost": 0.01413446,
+            "upstream_inference_prompt_cost": 0.00925846
+          },
+          "is_byok": false,
+          "prompt_tokens": 8494,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 9554
+        }
+      },
+      {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.0088382,
+        "usage": {
+          "completion_tokens": 225,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.0088382,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0009,
+            "upstream_inference_cost": 0.0088382,
+            "upstream_inference_prompt_cost": 0.0079382
+          },
+          "is_byok": false,
+          "prompt_tokens": 8356,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 8581
+        }
+      },
+      {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.01784644,
+        "usage": {
+          "completion_tokens": 1639,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.01784644,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0075394,
+            "upstream_inference_cost": 0.01784644,
+            "upstream_inference_prompt_cost": 0.01030704
+          },
+          "is_byok": false,
+          "prompt_tokens": 9456,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 11095
+        }
+      },
+      {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.0060626,
+        "usage": {
+          "completion_tokens": 422,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.0060626,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.001477,
+            "upstream_inference_cost": 0.0060626,
+            "upstream_inference_prompt_cost": 0.0045856
+          },
+          "is_byok": false,
+          "prompt_tokens": 5732,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 0,
+            "video_tokens": 0
+          },
+          "total_tokens": 6154
+        }
+      },
+      {
+        "model": "moonshotai/kimi-k2.6",
+        "openrouter_reported_cost": 0.01254837,
+        "usage": {
+          "completion_tokens": 251,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": 0,
+            "image_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "cost": 0.01254837,
+          "cost_details": {
+            "upstream_inference_completions_cost": 0.0011546,
+            "upstream_inference_cost": 0.01254837,
+            "upstream_inference_prompt_cost": 0.01139377
+          },
+          "is_byok": false,
+          "prompt_tokens": 10453,
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cache_write_tokens": 0,
+            "cached_tokens": 704,
+            "video_tokens": 0
+          },
+          "total_tokens": 10704
+        }
+      }
+    ],
+    "model": "moonshotai/kimi-k2.6",
+    "openrouter_reported_cost": 0.05943007
+  },
+  "decline_context_pack": null,
+  "generated_at": "2026-05-06T15:50:42.388065+00:00",
+  "max_tasks_per_call": 1,
+  "max_tokens": 32768,
+  "model": "moonshotai/kimi-k2.6",
+  "output_path": "docs/latex-statement-ablation-runs/2026-05-06-model-matrix/paid/fresh-proof-lane-kimi-k2-6",
+  "paid_call_made": true,
+  "proof_lane_task_dir": "docs/latex-statement-proof-lane-tasks/2026-05-06-fresh-slice5-transitive-localdeps-v1-assumption",
+  "provider_error_count": 0,
+  "reasoning_effort": "none",
+  "resume_existing": true,
+  "schema_version": "repoprover.latex_statement_proof_lane_generation.v1",
+  "task_unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "temperature": 0.0
+}

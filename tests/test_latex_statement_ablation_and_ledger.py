@@ -144,6 +144,29 @@ def test_run_ledger_records_panel_generation_and_acceptance(tmp_path: Path) -> N
         ),
         encoding="utf-8",
     )
+    (proof_root / "eval/semantic-coverage-360s.json").write_text(
+        json.dumps(
+            {
+                "all_aligned_gold_proved_units": 1,
+                "coverage_status_counts": {"all_aligned_gold_proved": 1},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (proof_root / "eval/retry-cost-audit.json").write_text(
+        json.dumps(
+            {
+                "manual_cost_adjustments": [
+                    {
+                        "openrouter_reported_cost": 0.04,
+                        "prompt_tokens": 40,
+                        "completion_tokens": 8,
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
 
     acceptance_root = tmp_path / "acceptance"
     (acceptance_root / "eval").mkdir(parents=True)
@@ -173,10 +196,15 @@ def test_run_ledger_records_panel_generation_and_acceptance(tmp_path: Path) -> N
     assert rows[0]["checked_context_count"] == 2
     assert rows[0]["failed_context_count"] == 1
     assert rows[1]["models"]["model"] == "moonshotai/kimi-k2.6"
+    assert rows[1]["cost"] == 0.07
+    assert rows[1]["tokens"]["prompt_tokens"] == 70
     assert rows[1]["compile_passed_units"] == 1
     assert rows[1]["failure_class_counts"] == {"compiled": 1}
     assert rows[1]["verification_artifact"].endswith("verification-results-360s.json")
-    assert rows[2]["cost"] == 0.03
+    assert rows[1]["semantic_passed_units"] == 1
+    assert rows[1]["semantic_artifact"].endswith("semantic-coverage-360s.json")
+    assert len(rows[1]["manual_cost_adjustments"]) == 1
+    assert rows[2]["cost"] == 0.07
     assert rows[2]["leakage_match_count"] == 0
     assert len(ledger.read_text(encoding="utf-8").splitlines()) == 3
 

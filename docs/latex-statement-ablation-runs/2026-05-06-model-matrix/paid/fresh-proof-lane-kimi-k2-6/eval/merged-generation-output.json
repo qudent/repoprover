@@ -1,0 +1,94 @@
+{
+  "schema_version": "repoprover.latex_statement_proof_lane_generation_aggregated.v1",
+  "unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof strategy is: (1) use catalanHankelMatrix_eq_pathWeightMatrix to convert the Hankel determinant to a path weight matrix determinant, (2) apply lgv_nonpermutable with the appropriate x-decreasing/y-increasing conditions on the source and target vertices, (3) show that the only non-intersecting path tuple is the identity tuple with each path being a Dyck path from (-2i,0) to (2i,0), (4) since dyckUnitArcWeight assigns weight 1 to each arc, each path has weight 1 and the nipat weight sum equals 1.",
+        "Missing checked facts needed to complete: (a) a lemma that for the specific source vertices A_i = (-2i, 0) and target vertices B_j = (2j, 0), the only non-intersecting path tuple is the identity-matched tuple where path i goes from A_i to B_i; (b) a lemma that each such Dyck path has weight 1 under dyckUnitArcWeight (or that the product of path weights equals 1); (c) the cardinality of the set of non-intersecting path tuples equals 1. These are geometric facts about Dyck paths in the dyckDigraph that are not yet visible in the checked project context. The sorry placeholders indicate where these gaps remain; without formalized versions of these facts, the proof cannot be completed from visible context alone."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "LGV.catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable",
+        "LGV.dyckDigraph",
+        "LGV.dyckUnitArcWeight",
+        "LGV.PathTuple.ext"
+      ]
+    },
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "variable {K : Type*} [Field K]\n\nopen PowerSeries\n\ntheorem fps_invertible_iff_constantCoeff_field (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [fps_invertible_iff_constantCoeff]\n  constructor\n  · intro h\n    exact IsUnit.ne_zero h\n  · intro h\n    exact Ne.isUnit h\n",
+      "notes": [
+        "Uses the prior project theorem fps_invertible_iff_constantCoeff (IsUnit a ↔ IsUnit (constantCoeff a)). Over a field, an element is a unit iff it is nonzero, so we convert IsUnit (constantCoeff a) ↔ constantCoeff a ≠ 0 using IsUnit.ne_zero and Ne.isUnit."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "AlgebraicCombinatorics.fps_invertible_iff_constantCoeff",
+        "IsUnit.ne_zero",
+        "Ne.isUnit",
+        "Field K",
+        "PowerSeries"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof strategy is to use the generating function identity (1-X^2)^{-n} = (1-X)^{-n} * (1+X)^{-n} and compare coefficients. The generalizedNewtonBinomial theorem gives the power series expansion of (1+X)^c for any c in K. The coefficient of X^k in (1-X^2)^{-n} can be computed directly, while the product on the right gives a convolution. However, several key combinatorial identities about Ring.choose with negative upper arguments are needed: (1) Ring.choose (-n) k * (-1)^k = Ring.choose (n+k-1) k (negated upper index), and (2) the connection between Ring.choose (n+i-1) i and the coefficients of (1-X)^{-n}. These identities are standard binomial coefficient identities but are not available in the visible context. The proof also needs careful handling of the parity condition: the coefficient of X^{k-i} in (1+X)^{-n} when k-i is odd vs even, which relates to the k-2i in the original sum. Without checked lemmas for these specific binomial coefficient identities, the proof cannot be completed from visible context alone."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "generalizedNewtonBinomial",
+        "fpsPow_mul",
+        "fpsPow_one_add_smul_X'",
+        "coeff_mul",
+        "coeff_rescale",
+        "binomialSeries_coeff",
+        "Ring.choose signature"
+      ]
+    },
+    {
+      "declaration_names": [
+        "AlgebraicCombinatorics.SubtractiveMethods.lem_cancel_all_even_l1"
+      ],
+      "lean_file_body": "open Finset BigOperators\n\nnamespace AlgebraicCombinatorics.SubtractiveMethods\n\nlemma lem_cancel_all_even_l1 (n d : ℕ) :\n    ∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n\n    = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\n  calc\n    ∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n\n        = ∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i)) := by\n      congr; funext e\n      rw [Finset.sum_pow]\n      congr; funext x\n      rw [← Finset.prod_const]\n      rfl\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i)) := by\n      rw [Finset.sum_comm]\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\n      congr; funext x\n      congr; funext e\n      rw [signProduct]\n\nend AlgebraicCombinatorics.SubtractiveMethods",
+      "notes": [
+        "Proof uses Finset.sum_pow to expand (∑ toSign (e k))^n as a sum over functions x : Fin n → Fin d of products ∏ toSign (e (x i)). Then Finset.sum_comm swaps the order of summation. Finally unfold signProduct to match the goal."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum",
+        "Finset.sum_pow",
+        "Finset.sum_comm",
+        "toSign",
+        "signProduct",
+        "signProduct_eq_prod_pow"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "Missing checked project definitions and theorems required for the second Jacobi-Trudi formula: (1) A definition of transpose for NPartition (or Fin N → ℕ partitions), which is needed to form λ^t and μ^t. (2) A definition of elementary symmetric function e_n as an MvPolynomial, analogous to hsymmExt but for esymm; the visible context only provides hsymmExt for complete homogeneous symmetric functions h_n, not e_n. (3) A definition of skew Schur function s_{λ/μ} in the project, which appears referenced by thm.sf.jt-h but is not visible in the accepted context. (4) The first Jacobi-Trudi theorem (jacobiTrudi_h) is referenced as prior context but its statement is not visible in the accepted support context. (5) Any omega involution or duality theorem relating h_n and e_n via transpose partitions is not visible. Without these checked facts, the second Jacobi-Trudi formula cannot be proved from visible context alone."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": []
+    }
+  ]
+}

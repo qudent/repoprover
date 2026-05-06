@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The proof requires showing that the determinant of the Catalan Hankel matrix equals 1. The visible context provides catalanHankelMatrix_eq_pathWeightMatrix, which expresses the Catalan Hankel matrix as a path weight matrix for dyck paths. The LGV lemma (lgv_nonpermutable) gives that the determinant of this path weight matrix equals the nipat weight sum for the identity permutation. However, we lack a lemma that this nipat weight sum equals 1. The visible context does not contain a proof that the number of non-intersecting path tuples (nipats) from the given sources to targets is 1, or that the weight sum is 1. Without such a lemma, the proof cannot be completed from the visible context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"catalanHankelMatrix_eq_pathWeightMatrix\",\n        \"LGV.lgv_nonpermutable\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778082070,
+  "id": "gen-1778082070-gKUOlp5Pom1aFjqYhyEX",
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 244,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.004125105,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00021228,
+      "upstream_inference_cost": 0.004125105,
+      "upstream_inference_prompt_cost": 0.003912825
+    },
+    "is_byok": false,
+    "prompt_tokens": 8995,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 9239
+  }
+}

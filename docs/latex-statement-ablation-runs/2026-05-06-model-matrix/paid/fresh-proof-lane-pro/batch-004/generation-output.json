@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof is incomplete; the first equality step is not fully justified from visible context. The statement is generated as intended, but the proof sketch is insufficient."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum",
+        "toSign",
+        "signProduct",
+        "Finset.sum_comm",
+        "Finset.sum_pow",
+        "Finset.card_fin"
+      ]
+    }
+  ]
+}

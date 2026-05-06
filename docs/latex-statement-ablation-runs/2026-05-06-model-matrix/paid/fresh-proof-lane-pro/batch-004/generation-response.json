@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The proof is incomplete; the first equality step is not fully justified from visible context. The statement is generated as intended, but the proof sketch is insufficient.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-004\",\n      \"used_context\": [\n        \"Finset.sum\",\n        \"toSign\",\n        \"signProduct\",\n        \"Finset.sum_comm\",\n        \"Finset.sum_pow\",\n        \"Finset.card_fin\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778082097,
+  "id": "gen-1778082097-Hv5tBb8QSRIvLCBAXKnV",
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 142,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.002775735,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00012354,
+      "upstream_inference_cost": 0.002775735,
+      "upstream_inference_prompt_cost": 0.002652195
+    },
+    "is_byok": false,
+    "prompt_tokens": 6097,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 6239
+  }
+}

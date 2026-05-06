@@ -1,0 +1,90 @@
+{
+  "schema_version": "repoprover.latex_statement_proof_lane_generation_aggregated.v1",
+  "unit_keys": [
+    "unit-001",
+    "unit-002",
+    "unit-003",
+    "unit-004",
+    "unit-005"
+  ],
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof requires showing that the determinant of the Catalan Hankel matrix equals 1. The visible context provides catalanHankelMatrix_eq_pathWeightMatrix, which expresses the Catalan Hankel matrix as a path weight matrix for dyck paths. The LGV lemma (lgv_nonpermutable) gives that the determinant of this path weight matrix equals the nipat weight sum for the identity permutation. However, we lack a lemma that this nipat weight sum equals 1. The visible context does not contain a proof that the number of non-intersecting path tuples (nipats) from the given sources to targets is 1, or that the weight sum is 1. Without such a lemma, the proof cannot be completed from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable"
+      ]
+    },
+    {
+      "declaration_names": [
+        "fps_invertible_iff_constantCoeff_field"
+      ],
+      "lean_file_body": "open PowerSeries\n\ntheorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\n  rw [PowerSeries.isUnit_iff_constantCoeff]\n  constructor\n  · intro h\n    have h' : IsUnit (constantCoeff a) := h\n    rcases h' with ⟨u, hu⟩\n    have : (u : K) ≠ 0 := Units.ne_zero u\n    rw [← hu]\n    exact this\n  · intro h\n    have : IsUnit (constantCoeff a) := by\n      apply isUnit_of_ne_zero h\n    exact this",
+      "notes": [
+        "Uses PowerSeries.isUnit_iff_constantCoeff from Mathlib. The field condition is used to convert IsUnit (constantCoeff a) to constantCoeff a ≠ 0 via Units.ne_zero and isUnit_of_ne_zero."
+      ],
+      "status": "generated",
+      "unit_key": "unit-002",
+      "used_context": [
+        "PowerSeries.isUnit_iff_constantCoeff",
+        "Field K",
+        "Units.ne_zero",
+        "isUnit_of_ne_zero"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The statement is a placeholder; the proof requires combinatorial identities not available from the visible context. The theorem is stated with the correct type for n (K) and k (ℕ), using Ring.choose as per the hydrated Mathlib signature. The sum is over i from 0 to k, but the binomial coefficient Ring.choose n (k - 2*i) is defined for ℕ arguments; note that k - 2*i may be negative for large i, but the sum only goes to k, so the subtraction is natural. The proof is not provided due to missing context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": [
+        "Ring.choose signature from Mathlib",
+        "generalizedNewtonBinomial from prior project context",
+        "Finset.range",
+        "Algebra ℚ K, BinomialRing K, CharZero K assumptions"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof is incomplete; the first equality step is not fully justified from visible context. The statement is generated as intended, but the proof sketch is insufficient."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-004",
+      "used_context": [
+        "Finset.sum",
+        "toSign",
+        "signProduct",
+        "Finset.sum_comm",
+        "Finset.sum_pow",
+        "Finset.card_fin"
+      ]
+    },
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The theorem statement is incomplete; the proof is missing. The definition of jacobiTrudiMatrixE uses esymm with a nonnegative index via .toNat, assuming the index is nonnegative. The selector sketch mentions transpose partitions, but the current formalization uses lam, mu directly; the transpose aspect is not captured. The proof would likely use the first Jacobi-Trudi formula and the omega involution."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005",
+      "used_context": [
+        "Matrix.det",
+        "MvPolynomial.esymm",
+        "SymmetricFunctions.schur",
+        "NPartition.toNPartition",
+        "SymmetricFunctions.jacobiTrudiMatrixH (for analogy)"
+      ]
+    }
+  ]
+}

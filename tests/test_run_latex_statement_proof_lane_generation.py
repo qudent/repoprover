@@ -4,7 +4,11 @@ import argparse
 import json
 from pathlib import Path
 
-from scripts.run_latex_statement_proof_lane_generation import run
+from scripts.run_latex_statement_proof_lane_generation import (
+    archive_previous_attempt,
+    merge_current_and_archived_costs,
+    run,
+)
 
 
 def _write_task(task_dir: Path, unit_key: str = "unit-002") -> None:
@@ -165,6 +169,37 @@ def test_resume_existing_reuses_completed_batches_without_provider_key(tmp_path:
     assert summary["provider_error_count"] == 0
     assert summary["batches"][0]["resumed_existing"] is True
     assert summary["batches"][0]["cost_summary"]["openrouter_reported_cost"] == 0.125
+
+
+def test_archives_failed_paid_attempt_costs_before_retry(tmp_path: Path) -> None:
+    batch_dir = tmp_path / "run/batch-001"
+    batch_dir.mkdir(parents=True)
+    (batch_dir / "generation-payload.json").write_text(json.dumps({"old": "payload"}), encoding="utf-8")
+    (batch_dir / "generation-response.json").write_text(
+        json.dumps({"usage": {"cost": 0.5, "prompt_tokens": 10, "completion_tokens": 3}}),
+        encoding="utf-8",
+    )
+    (batch_dir / "generation-assistant-content.txt").write_text('{"truncated":', encoding="utf-8")
+
+    archived = archive_previous_attempt(batch_dir, "model/id")
+
+    assert archived is not None
+    assert not (batch_dir / "generation-response.json").exists()
+    assert Path(archived["archive_dir"], "generation-response.json").exists()
+    assert archived["cost_summary"]["openrouter_reported_cost"] == 0.5
+
+    merged = merge_current_and_archived_costs(
+        [
+            {
+                "cost_summary": {"model": "model/id", "openrouter_reported_cost": 0.25, "usage": {"cost": 0.25}},
+                "archived_attempts": [archived],
+            }
+        ],
+        "model/id",
+    )
+    assert merged is not None
+    assert merged["openrouter_reported_cost"] == 0.75
+    assert merged["archived_openrouter_reported_cost"] == 0.5
 
 
 def test_budget_only_attaches_decline_context_pack(tmp_path: Path) -> None:

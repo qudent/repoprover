@@ -1,0 +1,17 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The proof requires showing that the determinant of the Catalan Hankel matrix equals 1. The visible context provides catalanHankelMatrix_eq_pathWeightMatrix, which expresses the Catalan Hankel matrix as a path weight matrix for dyck paths. The LGV lemma (lgv_nonpermutable) gives that the determinant of this path weight matrix equals the nipat weight sum for the identity permutation. However, we lack a lemma that this nipat weight sum equals 1. The visible context does not contain a proof that the number of non-intersecting path tuples (nipats) from the given sources to targets is 1, or that the weight sum is 1. Without such a lemma, the proof cannot be completed from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable"
+      ]
+    }
+  ]
+}

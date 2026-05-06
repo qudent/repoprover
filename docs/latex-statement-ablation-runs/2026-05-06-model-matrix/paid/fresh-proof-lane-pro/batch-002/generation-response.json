@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"fps_invertible_iff_constantCoeff_field\"\n      ],\n      \"lean_file_body\": \"open PowerSeries\\n\\ntheorem fps_invertible_iff_constantCoeff_field {K : Type*} [Field K] (a : PowerSeries K) :\\n    IsUnit a ↔ constantCoeff a ≠ 0 := by\\n  rw [PowerSeries.isUnit_iff_constantCoeff]\\n  constructor\\n  · intro h\\n    have h' : IsUnit (constantCoeff a) := h\\n    rcases h' with ⟨u, hu⟩\\n    have : (u : K) ≠ 0 := Units.ne_zero u\\n    rw [← hu]\\n    exact this\\n  · intro h\\n    have : IsUnit (constantCoeff a) := by\\n      apply isUnit_of_ne_zero h\\n    exact this\",\n      \"notes\": [\n        \"Uses PowerSeries.isUnit_iff_constantCoeff from Mathlib. The field condition is used to convert IsUnit (constantCoeff a) to constantCoeff a ≠ 0 via Units.ne_zero and isUnit_of_ne_zero.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-002\",\n      \"used_context\": [\n        \"PowerSeries.isUnit_iff_constantCoeff\",\n        \"Field K\",\n        \"Units.ne_zero\",\n        \"isUnit_of_ne_zero\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778082078,
+  "id": "gen-1778082078-u6LGHksAz7a8WLM8NBEy",
+  "model": "deepseek/deepseek-v4-pro-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 328,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.000360441,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00028536,
+      "upstream_inference_cost": 0.000360441,
+      "upstream_inference_prompt_cost": 7.5081e-05
+    },
+    "is_byok": false,
+    "prompt_tokens": 8931,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 8832,
+      "video_tokens": 0
+    },
+    "total_tokens": 9259
+  }
+}

@@ -113,6 +113,12 @@ dev/fresh panels plus one-off diagnostics.
   unit 004 GPT-5.5 high-reasoning/32k probe produced a substantive proof
   attempt but failed with one unsolved finite-sum/multinomial goal, so stronger
   reasoning helps but does not yet solve broad theorem units automatically.
+- Full fresh-slice open-model proof-lane ablation is logged in
+  `docs/latex-statement-run-ledger.jsonl`: DeepSeek V4 Pro no-reasoning cost
+  `$0.016758781` and reached `0/5` compile/semantic; Kimi K2.6 no-reasoning
+  with a 32k retry cost `$0.10070847` total and reached `1/5` compile plus
+  `1/5` semantic. Kimi's first unit-003 attempt truncated at 8k tokens; the
+  retry-cost audit preserves that paid failed attempt.
 - Codex-log audit for the previous eight-hour report is committed at
   `reports/REPORT-20260506T053800Z-codex-log-audit.md`; it used
   `/home/name/.codex/log/codex-tui.log` and native session JSONL under
@@ -127,6 +133,6 @@ dev/fresh panels plus one-off diagnostics.
 - Do not kill existing Lean/lake/Codex checks.
 - Benchmark claims should use a fresh slice; current dev/fresh panels are
   development evidence.
-- Next useful work: run the fixed model/context ablation panel with realistic
-  Lean timeouts, then route failures by class. Avoid another Flash-only loop
-  unless it is a cheap dry-run gate before a stronger model comparison.
+- Next useful work: route the remaining fresh-slice failures by class. Kimi now
+  proves the easy FPS unit; the hard units need proof repair/context search
+  rather than another same-prompt no-reasoning open-model retry.

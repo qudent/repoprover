@@ -86,7 +86,8 @@
       "proof_lane_task_dir": "fresh_transitive_localdeps_assumption",
       "model": "moonshotai/kimi-k2.6",
       "reasoning_effort": "none",
-      "why": "Re-test Kimi on a panel, not only NPartition."
+      "max_tokens": 32768,
+      "why": "Re-test Kimi on a panel, not only NPartition; allow a large completion cap because one fresh proof-lane unit truncated at 8192 tokens."
     },
     {
       "id": "fresh-proof-lane-gpt-5-5",

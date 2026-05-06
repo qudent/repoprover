@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": " {\"units\": [{\"unit_key\":\"unit-004\",\"status\":\"generated\",\"declaration_names\":[\"AlgebraicCombinatorics.SubtractiveMethods.lem_cancel_all_even_l1\"],\"lean_file_body\":\"open Finset BigOperators\\n\\nnamespace AlgebraicCombinatorics.SubtractiveMethods\\n\\nlemma lem_cancel_all_even_l1 (n d : ℕ) :\\n    ∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n\\n    = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\\n  calc\\n    ∑ e : Fin d → ZMod 2, (∑ k : Fin d, toSign (e k)) ^ n\\n        = ∑ e : Fin d → ZMod 2, ∑ x : Fin n → Fin d, ∏ i : Fin n, toSign (e (x i)) := by\\n      congr; funext e\\n      rw [Finset.sum_pow]\\n      congr; funext x\\n      rw [← Finset.prod_const]\\n      rfl\\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, ∏ i : Fin n, toSign (e (x i)) := by\\n      rw [Finset.sum_comm]\\n    _ = ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by\\n      congr; funext x\\n      congr; funext e\\n      rw [signProduct]\\n\\nend AlgebraicCombinatorics.SubtractiveMethods\",\"notes\":[\"Proof uses Finset.sum_pow to expand (∑ toSign (e k))^n as a sum over functions x : Fin n → Fin d of products ∏ toSign (e (x i)). Then Finset.sum_comm swaps the order of summation. Finally unfold signProduct to match the goal.\"],\"used_context\":[\"Finset.sum\",\"Finset.sum_pow\",\"Finset.sum_comm\",\"toSign\",\"signProduct\",\"signProduct_eq_prod_pow\"]}]}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778082268,
+  "id": "gen-1778082268-dbsPz9Fo88SuujNfnyJ9",
+  "model": "moonshotai/kimi-k2.6-20260420",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 422,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0060626,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.001477,
+      "upstream_inference_cost": 0.0060626,
+      "upstream_inference_prompt_cost": 0.0045856
+    },
+    "is_byok": false,
+    "prompt_tokens": 5732,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 6154
+  }
+}

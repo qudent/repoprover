@@ -1,0 +1,23 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "LGV.catalanHankelMatrix_det_eq_one"
+      ],
+      "lean_file_body": "open Finset BigOperators Matrix\n\nnamespace LGV\n\nvariable {K : Type*} [CommRing K]\n\n-- The Catalan numbers are defined in the project context.\n-- We need the Hankel matrix definition and the path weight machinery.\n\ntheorem catalanHankelMatrix_det_eq_one (k : ℕ) :\n    (catalanHankelMatrix k).det = 1 := by\n  rw [catalanHankelMatrix_eq_pathWeightMatrix]\n  rw [lgv_nonpermutable dyckUnitArcWeight\n        (fun i : Fin k => (-(2 * (i : ℤ)), 0))\n        (fun j : Fin k => (2 * (j : ℤ), 0))\n        (by intro i j h; simp at h ⊢; omega)\n        (by intro i j h; simp at h ⊢; omega)\n        (by intro i j h; simp at h ⊢; omega)\n        (by intro i j h; simp at h ⊢; omega)]\n  simp only [nipatWeightSum, Equiv.coe_refl, Pi.one_apply, one_smul]\n  -- The only non-intersecting path tuple from A to B is the identity tuple,\n  -- and each path has weight 1 under dyckUnitArcWeight.\n  -- We need to show the sum equals 1.\n  have h : {pt : PathTuple dyckDigraph k\n              (fun i : Fin k => (-(2 * (i : ℤ)), 0))\n              (fun j : Fin k => (2 * (j : ℤ), 0)) |\n              pt.IsNonIntersecting} =\n           {PathTuple.mk (fun i =>\n             (dyckDigraph_pathFinite\n               (-(2 * (i : ℤ)), 0) (2 * (i : ℤ), 0)).choose)} := by\n    ext pt\n    simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]\n    constructor\n    · intro hni\n      apply PathTuple.ext\n      intro i\n      -- Each path from (-2i, 0) to (2i, 0) must stay non-intersecting with others.\n      -- By the x-decreasing/y-increasing conditions, the only possibility is\n      -- the direct Dyck path for each i, and paths for different i must be nested.\n      -- The non-intersecting condition forces path i to be the unique path\n      -- from (-2i, 0) to (2i, 0) that doesn't intersect with others.\n      -- Since the endpoints are ordered, the only non-intersecting tuple\n      -- uses the identity matching.\n      sorry\n    · intro heq\n      rw [heq]\n      -- Verify the singleton path tuple is non-intersecting\n      sorry\n  rw [h]\n  simp\n  -- The weight of each path under dyckUnitArcWeight is 1,\n  -- so the product is 1, and the sum over the singleton is 1.\n  sorry\n\nend LGV",
+      "notes": [
+        "The proof strategy is: (1) use catalanHankelMatrix_eq_pathWeightMatrix to convert the Hankel determinant to a path weight matrix determinant, (2) apply lgv_nonpermutable with the appropriate x-decreasing/y-increasing conditions on the source and target vertices, (3) show that the only non-intersecting path tuple is the identity tuple with each path being a Dyck path from (-2i,0) to (2i,0), (4) since dyckUnitArcWeight assigns weight 1 to each arc, each path has weight 1 and the nipat weight sum equals 1.",
+        "Missing checked facts needed to complete: (a) a lemma that for the specific source vertices A_i = (-2i, 0) and target vertices B_j = (2j, 0), the only non-intersecting path tuple is the identity-matched tuple where path i goes from A_i to B_i; (b) a lemma that each such Dyck path has weight 1 under dyckUnitArcWeight (or that the product of path weights equals 1); (c) the cardinality of the set of non-intersecting path tuples equals 1. These are geometric facts about Dyck paths in the dyckDigraph that are not yet visible in the checked project context. The sorry placeholders indicate where these gaps remain; without formalized versions of these facts, the proof cannot be completed from visible context alone."
+      ],
+      "status": "generated",
+      "unit_key": "unit-001",
+      "used_context": [
+        "LGV.catalanHankelMatrix_eq_pathWeightMatrix",
+        "LGV.lgv_nonpermutable",
+        "LGV.dyckDigraph",
+        "LGV.dyckUnitArcWeight",
+        "LGV.PathTuple.ext"
+      ]
+    }
+  ]
+}
