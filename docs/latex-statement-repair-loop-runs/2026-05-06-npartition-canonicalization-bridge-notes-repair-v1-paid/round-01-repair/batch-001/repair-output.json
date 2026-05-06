@@ -1,0 +1,31 @@
+{
+  "units": [
+    {
+      "declaration_names": [],
+      "lean_file_body": "",
+      "notes": [
+        "The visible context provides NPartition structure, Nat.Partition structure, and local helpers (toPartition, filter_ne_zero_sum). The source requires a bijection between partitions of length ≤ N and N-partitions. The checked signatures include Multiset.sort_sorted, Multiset.length_sort, Multiset.sort_eq, Multiset.sum_coe, List.Pairwise.rel_get_of_le, etc. However, the proof of antitone for the padded function requires reasoning about indices beyond the sorted list length, which is not directly covered by the checked signatures. The fallback bridge notes suggest local case splits, but the necessary lemmas about zero-padding and monotonicity on out-of-range indices are not available in the visible context. Additionally, the bijection statement should be an Equiv between subtypes, but the source does not provide a definition of 'length' for Nat.Partition (only Multiset.card is available). The prior attempt's toNPartition returns a sigma type, which does not match the intended set. Without a clear way to define the inverse function and prove the antitone condition using only the checked signatures, the formalization cannot be completed from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "NPartition structure with parts and antitone",
+        "Nat.Partition structure with parts, parts_pos, parts_sum",
+        "NPartition.toPartition",
+        "NPartition.ext",
+        "NPartition.ext'",
+        "filter_ne_zero_sum",
+        "Multiset.sort_sorted",
+        "Multiset.length_sort",
+        "Multiset.sort_eq",
+        "Multiset.sum_coe",
+        "List.Pairwise.rel_get_of_le",
+        "List.Pairwise.rel_get_of_lt",
+        "List.sortedGE_iff_antitone_get",
+        "Multiset.card_map",
+        "Finset.card_univ",
+        "Fintype.card_fin"
+      ]
+    }
+  ]
+}

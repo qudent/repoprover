@@ -34,9 +34,11 @@ same-unit helper planning, Mathlib hydration, and clean
 - [x] Fix NPartition API/context issues found so far: `Nat.Partition` fields,
   list/sort bridge hydration, `do_not_use_identifiers` sanitation, cardinality
   request rules, representation control, and unordered-data canonicalization.
-- [ ] Add a generic composite-proof bridge for checked fallback facts such as
-  `Multiset.sort_eq` + `Multiset.sum_coe`, then retry NPartition without
+- [x] Add generic composite-proof bridge notes for checked fallback facts such
+  as `Multiset.sort_eq` + `Multiset.sum_coe`, then retry NPartition without
   theorem-specific prompt hints.
+- [ ] Add or evaluate a generic same-unit proof-planning stage for
+  zero-padding monotonicity and inverse/`Equiv` helper structure.
 - [ ] Reclassify old strict-grader mismatches into actionable buckets.
 - [ ] Scale beyond determinant/symmetric probes and reduce noisy fallback
   context.
@@ -61,8 +63,8 @@ same-unit helper planning, Mathlib hydration, and clean
 - Proven positives: inverse uniqueness, determinant transpose, triangular
   determinant, mixed determinant batch, and symmetric `e_n = 0` can reach
   semantic coverage with target-blind context plus repair loops.
-- Failure summary across 48 verification files / 69 unit checks: 16 compiled,
-  20 old contract violations, 10 compile failures, and 23 clean cannot-prove
+- Failure summary across 49 verification files / 70 unit checks: 16 compiled,
+  20 old contract violations, 10 compile failures, and 24 clean cannot-prove
   declines. Deduplicated by source unit, 6/11 touched theorem units have
   compiled at least once.
 - Context-gap diagnostics for 5 unresolved units: 3 missing Mathlib context, 1
@@ -75,13 +77,13 @@ same-unit helper planning, Mathlib hydration, and clean
   resolved guessed `Multiset.sum_sort` and `List.sum_of_sorted_antitone`
   requests to 13 checked signatures, 2 fallback-resolved requests, and 0
   failed/unchecked requests.
-- Latest paid repair-only NPartition retry cost `$0.00348026`; three bridge
-  repair probes cost `$0.01062936` total. It still cleanly declined with gold
+- Bridge-note context now adds 2 generic fallback composition notes over the 13
+  checked signatures, with 0 failed/unchecked context requests. Latest paid
+  NPartition retry cost `$0.00355558`; it still cleanly declined with gold
   comparison `not_generated_cannot_prove`.
-- Current NPartition blocker: proof synthesis over checked finite-data facts.
-  The model recognizes the sorted/padded route but still fails to use
-  `Multiset.sort_eq` + `Multiset.sum_coe` and filtered-cardinality facts to
-  close the helper proofs.
+- Current NPartition blocker: proof synthesis for the same-unit helper
+  construction. The model now accepts the sort/sum bridge but still lacks a
+  source-only plan for zero-padding monotonicity and inverse/`Equiv` proofs.
 - Test suite last passed: `uv run pytest tests` (`476 passed`) plus
   `py_compile` over selector/generator/repair/verifier scripts. Full
   `uv run pytest` still has one unrelated blueprint fixture failure because
@@ -91,6 +93,6 @@ same-unit helper planning, Mathlib hydration, and clean
 - Current `main` is ahead of `origin/main`; do not assume remote is current.
 - Do not kill existing Lean/lake checks. Monitor passively and let them finish.
 - A separate CauchyBinet diagnostic Codex/Lean task is running; leave it alone.
-- Next useful work: add generic bridge notes for composite checked fallbacks
-  such as sort/sum preservation, then run a small NPartition retry without
-  exposing hidden target names.
+- Next useful work: prototype a target-blind same-unit proof-planning/reviewer
+  step that asks for exact helper obligations before generation, especially for
+  zero-padding and inverse proofs.

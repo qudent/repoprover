@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [],\n      \"lean_file_body\": \"\",\n      \"notes\": [\n        \"The visible context provides NPartition structure, Nat.Partition structure, and local helpers (toPartition, filter_ne_zero_sum). The source requires a bijection between partitions of length ≤ N and N-partitions. The checked signatures include Multiset.sort_sorted, Multiset.length_sort, Multiset.sort_eq, Multiset.sum_coe, List.Pairwise.rel_get_of_le, etc. However, the proof of antitone for the padded function requires reasoning about indices beyond the sorted list length, which is not directly covered by the checked signatures. The fallback bridge notes suggest local case splits, but the necessary lemmas about zero-padding and monotonicity on out-of-range indices are not available in the visible context. Additionally, the bijection statement should be an Equiv between subtypes, but the source does not provide a definition of 'length' for Nat.Partition (only Multiset.card is available). The prior attempt's toNPartition returns a sigma type, which does not match the intended set. Without a clear way to define the inverse function and prove the antitone condition using only the checked signatures, the formalization cannot be completed from the visible context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"NPartition structure with parts and antitone\",\n        \"Nat.Partition structure with parts, parts_pos, parts_sum\",\n        \"NPartition.toPartition\",\n        \"NPartition.ext\",\n        \"NPartition.ext'\",\n        \"filter_ne_zero_sum\",\n        \"Multiset.sort_sorted\",\n        \"Multiset.length_sort\",\n        \"Multiset.sort_eq\",\n        \"Multiset.sum_coe\",\n        \"List.Pairwise.rel_get_of_le\",\n        \"List.Pairwise.rel_get_of_lt\",\n        \"List.sortedGE_iff_antitone_get\",\n        \"Multiset.card_map\",\n        \"Finset.card_univ\",\n        \"Fintype.card_fin\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778043797,
+  "id": "gen-1778043797-MSOkft8ZbYMoYfgTRGUg",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepSeek",
+  "service_tier": null,
+  "system_fingerprint": "fp_058df29938_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 458,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00355558,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00012824,
+      "upstream_inference_cost": 0.00355558,
+      "upstream_inference_prompt_cost": 0.00342734
+    },
+    "is_byok": false,
+    "prompt_tokens": 24481,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 24939
+  }
+}

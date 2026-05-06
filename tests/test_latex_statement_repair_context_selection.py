@@ -404,6 +404,65 @@ def test_checked_context_pack_promotes_checked_fallback_candidates() -> None:
     ]
 
 
+def test_checked_context_pack_adds_generic_fallback_bridge_notes() -> None:
+    selection = {
+        "units": [
+            {
+                "unit_key": "unit-001",
+                "failure_analysis": "missing sorted sum theorem",
+                "repair_strategy_note": "sort parts and preserve the sum",
+                "needed_mathlib_context": [
+                    {
+                        "name_or_query": "Multiset.sum_sort",
+                        "expected_signature_or_shape": "(s.sort r).sum = s.sum",
+                        "why_needed": "prove the sorted representative has the same size",
+                    }
+                ],
+            }
+        ]
+    }
+    hydration = {
+        "hydrated_mathlib_context": [
+            {
+                "unit_key": "unit-001",
+                "task_id": "unit-001-repair-context-1",
+                "request_index": 1,
+                "query": "Multiset.sum_sort",
+                "exact_identifier": "Multiset.sum_sort",
+                "expected_signature_or_shape": "(s.sort r).sum = s.sum",
+                "why_needed": "prove the sorted representative has the same size",
+                "lean_check": {"status": "error", "error": "Unknown constant"},
+                "fallback_mathlib_candidates": [
+                    {
+                        "name": "Multiset.sort_eq",
+                        "lean_check": {
+                            "status": "checked",
+                            "signature": "Multiset.sort_eq : ↑(s.sort r) = s",
+                        },
+                    },
+                    {
+                        "name": "Multiset.sum_coe",
+                        "lean_check": {
+                            "status": "checked",
+                            "signature": "Multiset.sum_coe : (↑l).sum = l.sum",
+                        },
+                    },
+                ],
+            }
+        ]
+    }
+
+    pack = build_context_pack(selection=selection, hydration=hydration)
+
+    assert pack["failed_or_unchecked_context_requests"] == []
+    assert pack["fallback_bridge_notes"][0]["bridge_kind"] == "multiset_sort_sum_preservation"
+    assert pack["fallback_bridge_notes"][0]["checked_fallback_candidates"] == [
+        "Multiset.sort_eq",
+        "Multiset.sum_coe",
+    ]
+    assert "congrArg Multiset.sum" in pack["fallback_bridge_notes"][0]["proof_guidance"]
+
+
 def test_repair_context_budget_payload(tmp_path: Path) -> None:
     selector_run, generation_run, verification_path = _write_failed_run(tmp_path)
     output = tmp_path / "repair-context"

@@ -126,6 +126,7 @@ def build_repair_messages(
             "For zero-padded sorted/enumerated representatives, a direct library theorem for the whole padded function is not required. Use local case splits for in-range and out-of-range indices, pointwise sorted/get lemmas, arithmetic monotonicity, and zero-bound facts when those ingredients are checked or elementary.",
             "Treat checked_signatures in additional_checked_repair_context as authoritative only when their source says they were hydrated with Lean #check or are checked fallback candidates.",
             "If additional_checked_repair_context contains fallback_resolved_context_requests, the original requested identifier is unavailable but the listed checked fallback candidates are valid replacements; do not treat that original request as an unresolved blocker.",
+            "If additional_checked_repair_context contains fallback_bridge_notes, follow those generic checked-fallback rewrite/application routes before declaring a composite proof step unavailable.",
             "Respect do_not_use_identifiers and failed_or_unchecked_context_requests from additional_checked_repair_context.",
             "If additional_checked_repair_context contains discarded_do_not_use_items, treat them as schema sanitation notes only; they are not forbidden Lean identifiers.",
             "Do not claim a proof ingredient is missing when it is listed in additional_checked_repair_context checked_signatures or selected_visible_context.",

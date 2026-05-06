@@ -710,6 +710,19 @@ Broader diverse4 negative probe:
   blocker is now proof synthesis over checked finite-data facts, especially the
   sort/sum rewrite chain and filtered-cardinality route, not context
   selection/hydration for this proof skeleton.
+- bridge-note repair retry:
+  checked repair context packs now include generic `fallback_bridge_notes`
+  derived only from unavailable direct requests and Lean-checked fallback
+  signatures. The no-new-selector-call artifact at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-notes/`
+  has 13 checked signatures, 2 fallback-resolved requests, 2 bridge notes, and
+  0 failed/unchecked requests. The paid repair retry at
+  `docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-notes-repair-v1-paid/`
+  cost `$0.00355558`, returned valid JSON, and verified as a clean
+  `declined_cannot_prove` with gold comparison `not_generated_cannot_prove`.
+  This sharpened the diagnosis: the model accepts the checked sort/sum bridge
+  but still lacks a source-only construction/proof plan for zero-padding
+  monotonicity and the inverse/`Equiv` helper structure.
 
 ## Lean Dependency Accounting
 

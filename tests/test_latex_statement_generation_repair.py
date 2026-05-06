@@ -167,6 +167,12 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
                         "statement_sketch": "helper theorem about n + 0",
                     }
                 ],
+                "fallback_bridge_notes": [
+                    {
+                        "bridge_kind": "multiset_sort_sum_preservation",
+                        "proof_guidance": "Use checked fallback rewrite chain.",
+                    }
+                ],
             }
         ),
         encoding="utf-8",
@@ -194,6 +200,8 @@ def test_repair_prompt_includes_errors_and_hides_posthoc_alignment(tmp_path: Pat
     assert "checked sort/enumeration route can be a valid local helper plan" in prompt
     assert "direct library theorem for the whole padded function is not required" in prompt
     assert "fallback_resolved_context_requests" in prompt
+    assert "fallback_bridge_notes" in prompt
+    assert "generic checked-fallback rewrite/application routes" in prompt
     assert "schema sanitation notes only" in prompt
     assert "theorem bad" in prompt
     assert "Demo.hidden_target" not in prompt

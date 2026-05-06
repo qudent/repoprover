@@ -299,9 +299,9 @@ counts. Rechecking the normalized v5b artifact gives
 into generic `not_compiled`.
 
 `docs/latex-statement-failure-taxonomy-summary.json` summarizes the current
-theorem-level verification artifacts without rerunning Lean. Across 48
-verification-result files and 69 unit checks, it reports 16 compiled units, 20
-contract violations, 10 compile failures, and 23 clean cannot-prove declines.
+theorem-level verification artifacts without rerunning Lean. Across 49
+verification-result files and 70 unit checks, it reports 16 compiled units, 20
+contract violations, 10 compile failures, and 24 clean cannot-prove declines.
 The largest old bucket is therefore contract pollution from pre-normalization
 runs. The 10 real compile failures break down as 5 missing typeclass/binder
 errors, 3 unknown constants, 1 application type mismatch, and 1
@@ -483,6 +483,20 @@ It still produced a clean `declined_cannot_prove` with gold comparison
 selection/hydration to proof synthesis: the model recognizes the sorted/padded
 route but still fails to use the checked `sort_eq`/`sum_coe` and finite
 cardinality facts to close the local helper proofs.
+
+The next generic bridge-note pass adds `fallback_bridge_notes` to checked repair
+context packs. These notes are generated only from unavailable direct requests
+and Lean-checked fallback signatures; they do not use hidden target statements.
+The no-new-selector-call context artifact is
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-notes/`.
+It has 13 checked signatures, 2 fallback-resolved requests, 2 bridge notes, and
+0 failed/unchecked requests. The paid bridge-note repair retry at
+`docs/latex-statement-repair-loop-runs/2026-05-06-npartition-canonicalization-bridge-notes-repair-v1-paid/`
+cost `$0.00355558` and still cleanly declined with gold comparison
+`not_generated_cannot_prove`. The useful signal is that the model no longer
+frames the sort/sum route as missing; the remaining blocker is now the
+zero-padding monotonicity proof and inverse/`Equiv` proof structure for the
+same-unit helpers.
 
 ### Imported Lean surface and likely context needs
 

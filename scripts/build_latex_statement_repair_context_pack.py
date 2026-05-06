@@ -53,6 +53,63 @@ def clean_identifier(value: Any) -> str | None:
     return None
 
 
+def fallback_bridge_note(record: dict[str, Any], checked_fallback_names: list[str]) -> dict[str, Any] | None:
+    """Explain how to compose checked fallback facts for common missing direct lemmas."""
+
+    names = set(checked_fallback_names)
+    query_text = " ".join(
+        str(record.get(key) or "")
+        for key in ("name_or_query", "exact_identifier", "expected_signature_or_shape", "why_needed")
+    )
+    if {"Multiset.sort_eq", "Multiset.sum_coe"}.issubset(names):
+        return {
+            "unit_key": record.get("unit_key"),
+            "task_id": record.get("task_id"),
+            "bridge_kind": "multiset_sort_sum_preservation",
+            "unavailable_direct_request": record.get("exact_identifier") or record.get("name_or_query"),
+            "checked_fallback_candidates": [
+                name for name in checked_fallback_names if name in {"Multiset.sort_eq", "Multiset.sum_coe"}
+            ],
+            "proof_guidance": (
+                "There may be no direct theorem for the requested sorted-list sum equality. "
+                "Use `Multiset.sort_eq` to identify the multiset coerced from the sorted list "
+                "with the original multiset, and `Multiset.sum_coe` to move between list sum "
+                "and multiset sum. For a goal shaped like `(s.sort r).sum = s.sum`, first "
+                "rewrite by `Multiset.sum_coe (s.sort r)` in the reverse direction, then "
+                "close the multiset-sum equality with "
+                "`congrArg Multiset.sum (Multiset.sort_eq s r)`, adapted to local names."
+            ),
+        }
+    if (
+        {"List.Pairwise.rel_get_of_le", "List.Pairwise.rel_get_of_lt"} & names
+        and "antitone" in query_text.lower()
+    ):
+        return {
+            "unit_key": record.get("unit_key"),
+            "task_id": record.get("task_id"),
+            "bridge_kind": "sorted_list_pointwise_order",
+            "unavailable_direct_request": record.get("exact_identifier") or record.get("name_or_query"),
+            "checked_fallback_candidates": [
+                name
+                for name in checked_fallback_names
+                if name
+                in {
+                    "List.Pairwise.rel_get_of_le",
+                    "List.Pairwise.rel_get_of_lt",
+                    "List.sortedGE_iff_antitone_get",
+                }
+            ],
+            "proof_guidance": (
+                "There may be no direct padded-antitone theorem. Use the checked sorted/Pairwise "
+                "fact for the sorted list, then apply `List.Pairwise.rel_get_of_le` or "
+                "`List.Pairwise.rel_get_of_lt` to in-range indices. Handle padded out-of-range "
+                "indices by local case splits and zero-bound arithmetic rather than requiring a "
+                "single library theorem for the whole padded function."
+            ),
+        }
+    return None
+
+
 def build_context_pack(
     *,
     selection: dict[str, Any],
@@ -63,6 +120,7 @@ def build_context_pack(
     checked_signatures: list[dict[str, Any]] = []
     failed_or_unchecked: list[dict[str, Any]] = []
     fallback_resolved: list[dict[str, Any]] = []
+    fallback_bridge_notes: list[dict[str, Any]] = []
 
     for row in hydration.get("hydrated_mathlib_context") or []:
         unit_key = str(row.get("unit_key") or "")
@@ -140,6 +198,9 @@ def build_context_pack(
                         ),
                     }
                 )
+                note = fallback_bridge_note(record, checked_fallback_names)
+                if note is not None:
+                    fallback_bridge_notes.append(note)
             else:
                 failed_or_unchecked.append(record)
 
@@ -193,6 +254,7 @@ def build_context_pack(
         "selected_visible_context": selected_visible_context,
         "checked_signatures": checked_signatures,
         "fallback_resolved_context_requests": fallback_resolved,
+        "fallback_bridge_notes": fallback_bridge_notes,
         "failed_or_unchecked_context_requests": failed_or_unchecked,
         "do_not_use_identifiers": do_not_use_identifiers,
         "discarded_do_not_use_items": discarded_do_not_use_items,
@@ -213,6 +275,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "output": str(args.output),
         "checked_signature_count": len(pack["checked_signatures"]),
         "fallback_resolved_context_request_count": len(pack["fallback_resolved_context_requests"]),
+        "fallback_bridge_note_count": len(pack["fallback_bridge_notes"]),
         "failed_or_unchecked_context_request_count": len(pack["failed_or_unchecked_context_requests"]),
     }
 
