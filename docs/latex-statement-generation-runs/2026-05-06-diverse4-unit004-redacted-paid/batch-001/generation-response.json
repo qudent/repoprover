@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"NPartitionEquivNatPartitionBounded\"\n      ],\n      \"lean_file_body\": \"open Finset\\n\\nnoncomputable def NPartitionEquivNatPartitionBounded (n N : ℕ) :\\n    {p : Nat.Partition n // Multiset.card p.parts ≤ N} ≃ NPartition N where\\n  toFun := λ ⟨p, h⟩ => NPartition.ofPartition p h\\n  invFun := λ μ => ⟨NPartition.toPartition μ, by\\n    have hsize : NPartition.size μ = (NPartition.toPartition μ).sum := rfl\\n    have hcard : Multiset.card (NPartition.toPartition μ).parts = NPartition.size μ := by\\n      simp [NPartition.toPartition, NPartition.size]\\n    have hcard' : Multiset.card (NPartition.toPartition μ).parts ≤ N := by\\n      rw [hcard]\\n      exact NPartition.size_le_N μ\\n    exact hcard'⟩\\n  left_inv := by\\n    intro ⟨p, h⟩\\n    ext; simp [NPartition.ofPartition, NPartition.toPartition, h]\\n  right_inv := by\\n    intro μ\\n    ext i; simp [NPartition.ofPartition, NPartition.toPartition]\",\n      \"notes\": [\n        \"Uses NPartition.size_le_N which is not shown in context but is a natural property of NPartition; if missing, the proof would need an explicit lemma. The proof sketch assumes that lemma exists.\",\n        \"The definitions ofPartition and toPartition are taken from local_file_predecessor_declarations.\",\n        \"The Equiv is noncomputable due to the use of Nat.Partition which is a structure with a proof of parts_sum.\"\n      ],\n      \"status\": \"generated\",\n      \"unit_key\": \"unit-004\",\n      \"used_context\": [\n        \"source/proposition prop.sf.Npar-as-par\",\n        \"NPartition structure and definitions from local_file_predecessor_declarations\",\n        \"Nat.Partition from Mathlib\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778029412,
+  "id": "gen-1778029412-aPGoj10SPQSzqAI2vWvE",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepInfra",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 497,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00076104,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00013916,
+      "upstream_inference_cost": 0.00076104,
+      "upstream_inference_prompt_cost": 0.00062188
+    },
+    "is_byok": false,
+    "prompt_tokens": 4442,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 4939
+  }
+}

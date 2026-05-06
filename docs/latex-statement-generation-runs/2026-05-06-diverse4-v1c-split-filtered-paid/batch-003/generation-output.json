@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "boolean_mobius_inversion"
+      ],
+      "lean_file_body": "open Finset\n\nvariable {α : Type*} [DecidableEq α] {A : Type*} [AddCommGroup A]\n\ntheorem boolean_mobius_inversion {S : Finset α} (a b : Finset α → A)\n    (h : ∀ I, I ⊆ S → b I = ∑ J in Finset.powerset I, a J) :\n    ∀ I, I ⊆ S → a I = ∑ J in Finset.powerset I, ((-1 : ℤ) ^ (I \\ J).card : ℤ) • b J :=\nby\n  intro I hI\n  have hb : ∀ J, J ⊆ I → b J = ∑ K in Finset.powerset J, a K := by\n    intro J hJ\n    apply h J (Finset.Subset.trans hJ hI)\n  have hsum : ∑ J in Finset.powerset I, ((-1 : ℤ) ^ (I \\ J).card : ℤ) • b J =\n    ∑ J in Finset.powerset I, ((-1 : ℤ) ^ (I \\ J).card : ℤ) • (∑ K in Finset.powerset J, a K) := by\n    refine Finset.sum_congr rfl fun J hJ => ?_\n    rw [hb J (Finset.mem_powerset.1 hJ)]\n  rw [hsum]\n  -- Use the swap lemma and the alternating sum identities\n  have swap : ∑ J in Finset.powerset I, ∑ K in Finset.powerset J, ((-1 : ℤ) ^ (I \\ J).card : ℤ) • a K =\n    ∑ K in Finset.powerset I, ∑ J in (Finset.powerset I).filter (fun J => K ⊆ J), ((-1 : ℤ) ^ (I \\ J).card : ℤ) • a K := by\n    simpa using sum_powerset_powerset_swap (Q := I) (fun J K => ((-1 : ℤ) ^ (I \\ J).card : ℤ) • a K)\n  rw [swap]\n  refine Finset.sum_congr rfl fun K hK => ?_\n  have hK_sub : K ⊆ I := Finset.mem_powerset.1 hK\n  have hsum_inner : ∑ J in (Finset.powerset I).filter (fun J => K ⊆ J), ((-1 : ℤ) ^ (I \\ J).card : ℤ) = if K = I then 1 else 0 := by\n    -- This is exactly alternatingSum_superset_eq_iverson_b with P=K, Q=I\n    simpa using alternatingSum_superset_eq_iverson_b hK_sub\n  rw [hsum_inner]\n  by_cases hKI : K = I\n  · subst hKI; simp\n  · simp [hKI]\n",
+      "notes": [
+        "Uses local helper lemmas `alternatingSum_superset_eq_iverson_b` and `sum_powerset_powerset_swap` from the same file.",
+        "The scalar multiplication uses ℤ coefficients; the group A is an AddCommGroup, so ℤ-module structure is available.",
+        "The theorem statement matches the source: for all I ⊆ S, a I = sum over J ⊆ I of (-1)^{|I\\J|} * b J, with the scalar multiplication written as `((-1 : ℤ) ^ ...) • b J`."
+      ],
+      "status": "generated",
+      "unit_key": "unit-003",
+      "used_context": [
+        "source theorem thm.pie.moeb",
+        "local helper lemmas: alternatingSum_superset_eq_iverson_b, sum_powerset_powerset_swap",
+        "Mathlib: Finset, AddCommGroup, Finset.powerset"
+      ]
+    }
+  ]
+}

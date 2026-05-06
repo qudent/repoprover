@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"equivPartition\"\n      ],\n      \"lean_file_body\": \"open scoped Polynomial\\nopen MvPolynomial Finset Equiv\\n\\nnamespace AlgebraicCombinatorics\\nnamespace SymmetricFunctions\\n\\nvariable {N : ℕ}\\n\\n/-- The bijection between partitions of length ≤ N and N-partitions, given by padding with zeros. -/\\ndef equivPartition : {p : Nat.Partition n // Multiset.card p.parts ≤ N} ≃ NPartition N where\\n  toFun := λ ⟨p, hp⟩ => NPartition.ofPartition p hp\\n  invFun := λ μ => ⟨NPartition.toPartition μ, by\\n    have hsize : NPartition.size μ = Multiset.card (NPartition.toPartition μ).parts := rfl\\n    have hcard : Multiset.card (NPartition.toPartition μ).parts ≤ N := by\\n      have : (NPartition.toPartition μ).parts = (Finset.univ.val.map μ.parts).filter (· ≠ 0) := rfl\\n      calc\\n        Multiset.card ((Finset.univ.val.map μ.parts).filter (· ≠ 0)) ≤ Multiset.card (Finset.univ.val.map μ.parts) := Multiset.card_filter_le _ _\\n        _ = Finset.card (Finset.univ : Finset (Fin N)) := by simp\\n        _ = N := by simp\\n    exact hcard⟩\\n  left_inv := by\\n    intro ⟨p, hp⟩\\n    ext1\\n    dsimp [NPartition.toPartition, NPartition.ofPartition]\\n    sorry\\n  right_inv := by\\n    intro μ\\n    ext1 i\\n    dsimp [NPartition.ofPartition, NPartition.toPartition]\\n    sorry\\n\\nend SymmetricFunctions\\nend AlgebraicCombinatorics\",\n      \"notes\": [\n        \"The proof of left_inv and right_inv is not provided; the definitions ofPartition and toPartition are taken from local_file_predecessor_declarations but their full correctness proof requires additional lemmas about sorting and filtering that are not fully available in the visible context. The statement is structurally correct but the proofs are incomplete.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-004\",\n      \"used_context\": [\n        \"source/project/Mathlib facts actually used: NPartition structure, NPartition.ofPartition, NPartition.toPartition, Nat.Partition, Multiset.card\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778029317,
+  "id": "gen-1778029317-eW3cRvoCDY1AhlUch9ll",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepInfra",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 589,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00079114,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00016492,
+      "upstream_inference_cost": 0.00079114,
+      "upstream_inference_prompt_cost": 0.00062622
+    },
+    "is_byok": false,
+    "prompt_tokens": 4473,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 5062
+  }
+}

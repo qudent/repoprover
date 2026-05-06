@@ -173,3 +173,46 @@ def test_fallback_mathlib_candidates_scores_local_mathlib_declarations(tmp_path)
 
     assert candidates[0]["name"] == "MvPolynomial.esymm_eq_sum_subtype"
     assert "esymm" in candidates[0]["matched_tokens"]
+
+
+def test_fallback_mathlib_candidates_keep_qualified_namespace_root(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/Vandermonde.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace Matrix",
+                "theorem vandermonde : True := by trivial",
+                "end Matrix",
+                "namespace Nat",
+                "theorem choose_mul_succ_eq (n k : Nat) : True := by trivial",
+                "end Nat",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates("Nat.vandermonde", project_root=tmp_path)
+
+    assert all(candidate["name"].startswith("Nat.") for candidate in candidates)
+    assert "Matrix.vandermonde" not in {candidate["name"] for candidate in candidates}
+
+
+def test_fallback_mathlib_candidates_prefer_local_name_tokens(tmp_path) -> None:
+    mathlib_file = tmp_path / ".lake/packages/mathlib/Mathlib/Demo/Choose.lean"
+    mathlib_file.parent.mkdir(parents=True)
+    mathlib_file.write_text(
+        "\n".join(
+            [
+                "namespace Nat",
+                "theorem sqrt_mul_sqrt_lt_succ (n : Nat) : True := by trivial",
+                "theorem choose_mul_succ_eq (n k : Nat) : True := by trivial",
+                "end Nat",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    candidates = fallback_mathlib_candidates("Nat.choose_sq_ge_choose_mul_choose_succ", project_root=tmp_path)
+
+    assert [candidate["name"] for candidate in candidates] == ["Nat.choose_mul_succ_eq"]

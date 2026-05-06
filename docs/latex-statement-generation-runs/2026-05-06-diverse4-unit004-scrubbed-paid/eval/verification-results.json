@@ -1,0 +1,88 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-scrubbed-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.SymmetricFunctions"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.SymmetricFunctions"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "equivPartition"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "cannot_prove_output_must_have_empty_lean_file_body",
+            "cannot_prove_output_must_have_empty_declaration_names",
+            "generated_lean_contains_placeholder"
+          ],
+          "declaration_names": [
+            "equivPartition"
+          ],
+          "lean_error_count": 3,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 20,
+              "data": "Application type mismatch: The argument\n  μ.toPartition\nhas type\n  (NPartition.size μ).Partition\nbut is expected to have type\n  n.Partition\nin the application\n  Subtype.mk μ.toPartition",
+              "kind": "[anonymous]",
+              "line": 18,
+              "severity": "error"
+            },
+            {
+              "column": 87,
+              "data": "Type mismatch\n  rfl\nhas type\n  ?m.39 = ?m.39\nbut is expected to have type\n  NPartition.size μ = μ.toPartition.parts.card",
+              "kind": "[anonymous]",
+              "line": 19,
+              "severity": "error"
+            },
+            {
+              "column": 9,
+              "data": "Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce\n\ncase h\nN n : ℕ\nμ : NPartition N\n⊢ ((fun x =>\n          match x with\n          | ⟨p, hp⟩ => NPartition.ofPartition p hp)\n        ((fun μ => ⟨sorry, ⋯⟩) μ)).parts =\n    μ.parts",
+              "kind": "[anonymous]",
+              "line": 34,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [
+            "sorry"
+          ],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-004"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "generated_at": "2026-05-06T01:02:41.658173+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-scrubbed-paid",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

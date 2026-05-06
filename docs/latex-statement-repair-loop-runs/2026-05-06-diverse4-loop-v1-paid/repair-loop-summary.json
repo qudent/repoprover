@@ -1,0 +1,569 @@
+{
+  "budget_only": false,
+  "final_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+  "final_verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair/eval/verification-results.json",
+  "generated_at": "2026-05-06T00:45:48.356050+00:00",
+  "initial_generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+  "initial_semantic_coverage_results": null,
+  "initial_verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid/eval/verification-results.json",
+  "max_rounds": 2,
+  "model": "deepseek/deepseek-v4-flash",
+  "output_root": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid",
+  "reasoning_effort": "none",
+  "rounds": [
+    {
+      "checked_repair_context": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context/checked-repair-context.json",
+      "checked_repair_context_summary": {
+        "checked_signature_count": 12,
+        "failed_or_unchecked_context_request_count": 2,
+        "output": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context/checked-repair-context.json",
+        "schema_version": "repoprover.latex_statement_checked_repair_context_build.v1"
+      },
+      "context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context",
+      "context_selection": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.0044338,
+          "usage": {
+            "completion_tokens": 2161,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.0044338,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.00060508,
+              "upstream_inference_cost": 0.0044338,
+              "upstream_inference_prompt_cost": 0.00382872
+            },
+            "is_byok": false,
+            "prompt_tokens": 27348,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 29509
+          }
+        },
+        "elapsed_seconds": 26.558,
+        "generated_at": "2026-05-06T00:41:47.016695+00:00",
+        "generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid/eval/verification-results.json"
+      },
+      "hydration": {
+        "batches": [
+          {
+            "exact_identifier_count": 6,
+            "fallback_exact_identifier_count": 16,
+            "fallback_lean_check_status": "ok",
+            "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context/batch-001/mathlib-lean-hydrated-context.json",
+            "lean_check_status": "lean_errors",
+            "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context/batch-001/context-selection-output.json",
+            "request_count": 6
+          }
+        ],
+        "generated_at": "2026-05-06T00:42:48.956509+00:00",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context",
+        "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+      },
+      "input_generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+      "input_verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid/eval/verification-results.json",
+      "preserve_compile_clean_units": {
+        "preserved_unit_keys": [],
+        "updated_paths": []
+      },
+      "repair": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.00517958,
+          "usage": {
+            "completion_tokens": 1631,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.00517958,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.00045668,
+              "upstream_inference_cost": 0.00517958,
+              "upstream_inference_prompt_cost": 0.0047229
+            },
+            "is_byok": false,
+            "prompt_tokens": 33735,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 35366
+          }
+        },
+        "elapsed_seconds": 30.781,
+        "generated_at": "2026-05-06T00:42:48.973245+00:00",
+        "generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_generation_repair.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid/eval/verification-results.json"
+      },
+      "repair_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+      "round": 1,
+      "verification": {
+        "base_imports": [
+          "Mathlib"
+        ],
+        "base_opens": [
+          "open scoped Polynomial BigOperators",
+          "open PowerSeries Finset"
+        ],
+        "batches": [
+          {
+            "compile_passed_units": 0,
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair/batch-001/generation-output.json",
+            "imports": [
+              "Mathlib",
+              "AlgebraicCombinatorics.Determinants.LGV1",
+              "AlgebraicCombinatorics.Determinants.LGV2",
+              "AlgebraicCombinatorics.FPSDefinition",
+              "AlgebraicCombinatorics.FPS.InfiniteProducts2",
+              "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+            ],
+            "inferred_imports": [
+              "AlgebraicCombinatorics.Determinants.LGV1",
+              "AlgebraicCombinatorics.Determinants.LGV2",
+              "AlgebraicCombinatorics.FPSDefinition",
+              "AlgebraicCombinatorics.FPS.InfiniteProducts2",
+              "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+            ],
+            "inferred_opens": [
+              "open Nat",
+              "open Nat.Partition",
+              "open OrderedFinpartition",
+              "open LGV1",
+              "open LGV",
+              "open Int",
+              "open FermatLastTheoremForThreeGen.Solution",
+              "open AlgebraicCombinatorics.FPS",
+              "open Matrix",
+              "open EuclideanGeometry",
+              "open Booleanisation",
+              "open Finset",
+              "open BoolRing",
+              "open LieAlgebra.IsSemisimple",
+              "open AlgebraicCombinatorics.SymmetricFunctions",
+              "open Finpartition"
+            ],
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open Nat",
+              "open Nat.Partition",
+              "open OrderedFinpartition",
+              "open LGV1",
+              "open LGV",
+              "open Int",
+              "open FermatLastTheoremForThreeGen.Solution",
+              "open AlgebraicCombinatorics.FPS",
+              "open Matrix",
+              "open EuclideanGeometry",
+              "open Booleanisation",
+              "open Finset",
+              "open BoolRing",
+              "open LieAlgebra.IsSemisimple",
+              "open AlgebraicCombinatorics.SymmetricFunctions",
+              "open Finpartition"
+            ],
+            "unit_count": 4,
+            "units": [
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-001"
+              },
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-002"
+              },
+              {
+                "body_declaration_names": [
+                  "boolean_mobius_inversion"
+                ],
+                "compile_passed": false,
+                "contract_violations": [
+                  "generated_lean_contains_placeholder"
+                ],
+                "declaration_names": [
+                  "boolean_mobius_inversion"
+                ],
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 52,
+                    "data": "unexpected token 'in'; expected ','",
+                    "kind": "[anonymous]",
+                    "line": 27,
+                    "severity": "error"
+                  }
+                ],
+                "placeholder_tokens": [
+                  "sorry"
+                ],
+                "reported_status": "generated",
+                "skipped_reason": null,
+                "stderr": "",
+                "unit_key": "unit-003"
+              },
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-004"
+              }
+            ]
+          }
+        ],
+        "compile_passed_units": 0,
+        "generated_at": "2026-05-06T00:43:30.516482+00:00",
+        "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+        "infer_context": true,
+        "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+        "schema_version": "repoprover.latex_statement_generation_verification.v1",
+        "unit_count": 4
+      },
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair/eval/verification-results.json"
+    },
+    {
+      "checked_repair_context": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-context/checked-repair-context.json",
+      "checked_repair_context_summary": {
+        "checked_signature_count": 12,
+        "failed_or_unchecked_context_request_count": 2,
+        "output": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-context/checked-repair-context.json",
+        "schema_version": "repoprover.latex_statement_checked_repair_context_build.v1"
+      },
+      "context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-context",
+      "context_selection": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.00524468,
+          "usage": {
+            "completion_tokens": 2157,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.00524468,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.00060396,
+              "upstream_inference_cost": 0.00524468,
+              "upstream_inference_prompt_cost": 0.00464072
+            },
+            "is_byok": false,
+            "prompt_tokens": 33148,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 35305
+          }
+        },
+        "elapsed_seconds": 64.807,
+        "generated_at": "2026-05-06T00:43:30.536390+00:00",
+        "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-context",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_repair_context_selection.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair/eval/verification-results.json"
+      },
+      "hydration": {
+        "batches": [
+          {
+            "exact_identifier_count": 6,
+            "fallback_exact_identifier_count": 16,
+            "fallback_lean_check_status": "ok",
+            "hydrated_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-context/batch-001/mathlib-lean-hydrated-context.json",
+            "lean_check_status": "lean_errors",
+            "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-context/batch-001/context-selection-output.json",
+            "request_count": 6
+          }
+        ],
+        "generated_at": "2026-05-06T00:45:10.546818+00:00",
+        "run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-context",
+        "schema_version": "repoprover.latex_statement_context_hydration_run.v1"
+      },
+      "input_generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+      "input_verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair/eval/verification-results.json",
+      "preserve_compile_clean_units": {
+        "preserved_unit_keys": [],
+        "updated_paths": []
+      },
+      "repair": {
+        "budget_only": false,
+        "cost_summary": {
+          "model": "deepseek/deepseek-v4-flash",
+          "openrouter_reported_cost": 0.0059738,
+          "usage": {
+            "completion_tokens": 1561,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": 0,
+              "image_tokens": 0,
+              "reasoning_tokens": 0,
+              "rejected_prediction_tokens": null
+            },
+            "cost": 0.0059738,
+            "cost_details": {
+              "upstream_inference_completions_cost": 0.00043708,
+              "upstream_inference_cost": 0.0059738,
+              "upstream_inference_prompt_cost": 0.00553672
+            },
+            "is_byok": false,
+            "prompt_tokens": 39548,
+            "prompt_tokens_details": {
+              "audio_tokens": 0,
+              "cache_write_tokens": 0,
+              "cached_tokens": 0,
+              "video_tokens": 0
+            },
+            "total_tokens": 41109
+          }
+        },
+        "elapsed_seconds": 26.959,
+        "generated_at": "2026-05-06T00:45:10.568780+00:00",
+        "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair",
+        "model": "deepseek/deepseek-v4-flash",
+        "output_path": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+        "paid_call_made": true,
+        "parse_error": null,
+        "reasoning_effort": "none",
+        "schema_version": "repoprover.latex_statement_generation_repair.v1",
+        "selector_run": "docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid",
+        "valid_json": true,
+        "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-repair/eval/verification-results.json"
+      },
+      "repair_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+      "round": 2,
+      "verification": {
+        "base_imports": [
+          "Mathlib"
+        ],
+        "base_opens": [
+          "open scoped Polynomial BigOperators",
+          "open PowerSeries Finset"
+        ],
+        "batches": [
+          {
+            "compile_passed_units": 0,
+            "generation_output": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair/batch-001/generation-output.json",
+            "imports": [
+              "Mathlib",
+              "AlgebraicCombinatorics.Determinants.LGV1",
+              "AlgebraicCombinatorics.Determinants.LGV2",
+              "AlgebraicCombinatorics.FPSDefinition",
+              "AlgebraicCombinatorics.FPS.InfiniteProducts2",
+              "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+            ],
+            "inferred_imports": [
+              "AlgebraicCombinatorics.Determinants.LGV1",
+              "AlgebraicCombinatorics.Determinants.LGV2",
+              "AlgebraicCombinatorics.FPSDefinition",
+              "AlgebraicCombinatorics.FPS.InfiniteProducts2",
+              "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+              "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+            ],
+            "inferred_opens": [
+              "open Nat",
+              "open Nat.Partition",
+              "open OrderedFinpartition",
+              "open LGV1",
+              "open LGV",
+              "open Int",
+              "open FermatLastTheoremForThreeGen.Solution",
+              "open AlgebraicCombinatorics.FPS",
+              "open Matrix",
+              "open EuclideanGeometry",
+              "open Booleanisation",
+              "open Finset",
+              "open BoolRing",
+              "open LieAlgebra.IsSemisimple",
+              "open AlgebraicCombinatorics.SymmetricFunctions",
+              "open Finpartition"
+            ],
+            "opens": [
+              "open scoped Polynomial BigOperators",
+              "open PowerSeries Finset",
+              "open Nat",
+              "open Nat.Partition",
+              "open OrderedFinpartition",
+              "open LGV1",
+              "open LGV",
+              "open Int",
+              "open FermatLastTheoremForThreeGen.Solution",
+              "open AlgebraicCombinatorics.FPS",
+              "open Matrix",
+              "open EuclideanGeometry",
+              "open Booleanisation",
+              "open Finset",
+              "open BoolRing",
+              "open LieAlgebra.IsSemisimple",
+              "open AlgebraicCombinatorics.SymmetricFunctions",
+              "open Finpartition"
+            ],
+            "unit_count": 4,
+            "units": [
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-001"
+              },
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-002"
+              },
+              {
+                "body_declaration_names": [
+                  "boolean_mobius_inversion"
+                ],
+                "compile_passed": false,
+                "contract_violations": [
+                  "generated_lean_contains_placeholder"
+                ],
+                "declaration_names": [
+                  "boolean_mobius_inversion"
+                ],
+                "lean_error_count": 1,
+                "lean_returncode": 1,
+                "messages": [
+                  {
+                    "column": 52,
+                    "data": "unexpected token 'in'; expected ','",
+                    "kind": "[anonymous]",
+                    "line": 27,
+                    "severity": "error"
+                  }
+                ],
+                "placeholder_tokens": [
+                  "sorry"
+                ],
+                "reported_status": "generated",
+                "skipped_reason": null,
+                "stderr": "",
+                "unit_key": "unit-003"
+              },
+              {
+                "body_declaration_names": [],
+                "compile_passed": false,
+                "contract_violations": [],
+                "declaration_names": [],
+                "lean_error_count": 0,
+                "lean_returncode": null,
+                "messages": [],
+                "placeholder_tokens": [],
+                "reported_status": "cannot_prove_from_visible_context",
+                "skipped_reason": "cannot_prove_from_visible_context",
+                "stderr": "",
+                "unit_key": "unit-004"
+              }
+            ]
+          }
+        ],
+        "compile_passed_units": 0,
+        "generated_at": "2026-05-06T00:45:48.354982+00:00",
+        "generation_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair",
+        "infer_context": true,
+        "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+        "schema_version": "repoprover.latex_statement_generation_verification.v1",
+        "unit_count": 4
+      },
+      "verification_results": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-02-repair/eval/verification-results.json"
+    }
+  ],
+  "schema_version": "repoprover.latex_statement_repair_loop.v1",
+  "selector_run": "docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid",
+  "semantic_coverage": true,
+  "stop_reason": "max_rounds_reached"
+}

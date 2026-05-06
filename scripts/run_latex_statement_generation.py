@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,6 +18,8 @@ from openai import OpenAI
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
+LEAN_BLOCK_COMMENT_RE = re.compile(r"/-.*?-/", re.DOTALL)
+LEAN_LINE_COMMENT_RE = re.compile(r"(?m)^\s*--.*(?:\n|$)")
 
 
 def read_json(path: Path) -> Any:
@@ -46,6 +49,49 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8") as handle:
         for row in rows:
             handle.write(json.dumps(row, sort_keys=True, ensure_ascii=False) + "\n")
+
+
+def strip_lean_comments(source: str) -> str:
+    without_blocks = LEAN_BLOCK_COMMENT_RE.sub("", source)
+    without_lines = LEAN_LINE_COMMENT_RE.sub("", without_blocks)
+    lines = without_lines.splitlines()
+    compact: list[str] = []
+    previous_blank = False
+    for line in lines:
+        blank = not line.strip()
+        if blank and previous_blank:
+            continue
+        compact.append(line.rstrip())
+        previous_blank = blank
+    return "\n".join(compact).strip()
+
+
+def scrub_lean_snippet_comments(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {
+            key: strip_lean_comments(item) if key == "lean_snippet" and isinstance(item, str) else scrub_lean_snippet_comments(item)
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [scrub_lean_snippet_comments(item) for item in value]
+    return value
+
+
+def redact_failed_exact_identifier(row: dict[str, Any]) -> dict[str, Any]:
+    if not row.get("exact_identifier"):
+        return row
+    lean_check = row.get("lean_check") or {}
+    if lean_check.get("status") == "checked":
+        return row
+    redacted = dict(row)
+    redacted["unavailable_exact_identifier_redacted"] = True
+    redacted["exact_identifier"] = None
+    redacted["query"] = "<redacted failed exact identifier>"
+    redacted["lean_check"] = {
+        "status": lean_check.get("status") or "error",
+        "error": "Exact identifier failed Lean check and was redacted from the generation prompt.",
+    }
+    return redacted
 
 
 def public_source_unit(row: dict[str, Any]) -> dict[str, Any]:
@@ -114,16 +160,17 @@ def hydrated_for_task(hydration: dict[str, Any], *, unit_key: str, task_id: str)
                 row["usage_policy"] = "checked_signature_authoritative"
             elif row.get("exact_identifier"):
                 row["usage_policy"] = (
-                    "exact_identifier_failed_lean_check_do_not_use; "
+                    "exact_identifier_failed_lean_check_redacted_do_not_use; "
                     "fallback_mathlib_candidates are search hints, not checked facts"
                 )
             else:
                 row["usage_policy"] = "not_exact_identifier; use only as a search hint"
+            row = redact_failed_exact_identifier(row)
             rows.append(row)
     return rows
 
 
-def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
+def build_generation_units_payload(selector_run: Path) -> list[dict[str, Any]]:
     selector = load_selector_output(selector_run)
     hydration = load_hydration(selector_run)
     selected_units = load_selected_units(selector_run)
@@ -152,9 +199,11 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
                     ),
                     "needed_source_context": task.get("needed_source_context", []),
                     "needed_project_context": task.get("needed_project_context", []),
-                    "available_prior_project_context": prompt_unit.get("prior_project_context", []),
-                    "local_file_predecessor_declarations": prompt_unit.get(
-                        "local_file_predecessor_declarations", []
+                    "available_prior_project_context": scrub_lean_snippet_comments(
+                        prompt_unit.get("prior_project_context", [])
+                    ),
+                    "local_file_predecessor_declarations": scrub_lean_snippet_comments(
+                        prompt_unit.get("local_file_predecessor_declarations", [])
                     ),
                     "hydrated_mathlib_context": hydrated_for_task(hydration, unit_key=unit_key, task_id=task_id),
                     "missing_or_uncertain_context": task.get("missing_or_uncertain_context", []),
@@ -173,7 +222,15 @@ def build_generation_messages(selector_run: Path) -> list[dict[str, str]]:
                 "selector_confidence": unit.get("selector_confidence"),
             }
         )
+    return units_payload
 
+
+def build_generation_messages(
+    selector_run: Path, *, units_payload: list[dict[str, Any]] | None = None
+) -> list[dict[str, str]]:
+    hydration = load_hydration(selector_run)
+    if units_payload is None:
+        units_payload = build_generation_units_payload(selector_run)
     system = (
         "You are a Lean 4 autoformalization agent. Generate a small ordered "
         "sequence of Lean declarations for the provided LaTeX theorem-like unit. "
@@ -274,25 +331,38 @@ def response_cost_summary(response: Any, model: str) -> dict[str, Any]:
     }
 
 
+def unit_chunks(units: list[dict[str, Any]], max_units_per_call: int | None) -> list[list[dict[str, Any]]]:
+    if not max_units_per_call or max_units_per_call <= 0 or max_units_per_call >= len(units):
+        return [units]
+    return [units[index : index + max_units_per_call] for index in range(0, len(units), max_units_per_call)]
+
+
+def summarize_costs(batch_summaries: list[dict[str, Any]], model: str) -> dict[str, Any] | None:
+    cost_rows = [row.get("cost_summary") for row in batch_summaries if row.get("cost_summary")]
+    if not cost_rows:
+        return None
+    costs = [row.get("openrouter_reported_cost") for row in cost_rows]
+    numeric_costs = [float(cost) for cost in costs if isinstance(cost, (int, float))]
+    return {
+        "model": model,
+        "openrouter_reported_cost": sum(numeric_costs) if numeric_costs else None,
+        "batches": cost_rows,
+    }
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     run_dir = args.output
-    batch_dir = run_dir / "batch-001"
     eval_dir = run_dir / "eval"
-    batch_dir.mkdir(parents=True, exist_ok=True)
     eval_dir.mkdir(parents=True, exist_ok=True)
 
-    messages = build_generation_messages(args.selector_run)
-    request_payload = {
-        "model": args.model,
-        "messages": messages,
-        "temperature": args.temperature,
-        "max_tokens": args.max_tokens,
-        "response_format": {"type": "json_object"},
-    }
-    if args.reasoning_effort:
-        request_payload["extra_body"] = {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
-    write_json(batch_dir / "generation-payload.json", request_payload)
-
+    units_payload = build_generation_units_payload(args.selector_run)
+    unit_keys = set(getattr(args, "unit_key", None) or [])
+    if unit_keys:
+        units_payload = [unit for unit in units_payload if str(unit.get("unit_key") or "") in unit_keys]
+        if not units_payload:
+            raise ValueError(f"no selector units matched requested unit keys: {sorted(unit_keys)}")
+    max_units_per_call = int(getattr(args, "max_units_per_call", 0) or 0)
+    chunks = unit_chunks(units_payload, max_units_per_call)
     summary: dict[str, Any] = {
         "schema_version": "repoprover.latex_statement_generation.v1",
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -300,12 +370,40 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "output_path": str(run_dir),
         "model": args.model,
         "reasoning_effort": args.reasoning_effort,
+        "max_units_per_call": max_units_per_call,
+        "batch_count": len(chunks),
         "budget_only": args.budget_only,
         "paid_call_made": False,
         "valid_json": False,
         "parse_error": None,
+        "batches": [],
     }
+    for batch_index, units_chunk in enumerate(chunks, start=1):
+        batch_dir = run_dir / f"batch-{batch_index:03d}"
+        batch_dir.mkdir(parents=True, exist_ok=True)
+        messages = build_generation_messages(args.selector_run, units_payload=units_chunk)
+        request_payload = {
+            "model": args.model,
+            "messages": messages,
+            "temperature": args.temperature,
+            "max_tokens": args.max_tokens,
+            "response_format": {"type": "json_object"},
+        }
+        if args.reasoning_effort:
+            request_payload["extra_body"] = {"reasoning": {"effort": args.reasoning_effort, "exclude": True}}
+        write_json(batch_dir / "generation-payload.json", request_payload)
+        summary["batches"].append(
+            {
+                "batch_index": batch_index,
+                "batch_dir": str(batch_dir),
+                "unit_keys": [str(unit.get("unit_key") or "") for unit in units_chunk],
+                "valid_json": False,
+                "parse_error": None,
+                "paid_call_made": False,
+            }
+        )
     if args.budget_only:
+        summary["valid_json"] = True
         write_json(eval_dir / "generation-results.json", summary)
         return summary
 
@@ -313,18 +411,28 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         raise RuntimeError("OPENROUTER_API_KEY is not set")
     client = OpenAI(api_key=os.environ["OPENROUTER_API_KEY"], base_url=args.base_url)
     started = time.monotonic()
-    response = client.chat.completions.create(**request_payload)
+    for batch_summary in summary["batches"]:
+        batch_dir = Path(batch_summary["batch_dir"])
+        request_payload = read_json(batch_dir / "generation-payload.json")
+        response = client.chat.completions.create(**request_payload)
+        batch_summary["paid_call_made"] = True
+        write_json(batch_dir / "generation-response.json", response.model_dump())
+        content = extract_message_content(response)
+        (batch_dir / "generation-assistant-content.txt").write_text(content, encoding="utf-8")
+        parsed, parse_error = maybe_parse_json(content)
+        batch_summary["parse_error"] = parse_error
+        batch_summary["valid_json"] = parsed is not None
+        batch_summary["cost_summary"] = response_cost_summary(response, args.model)
+        if parsed is not None:
+            write_json(batch_dir / "generation-output.json", parsed)
     summary["elapsed_seconds"] = round(time.monotonic() - started, 3)
     summary["paid_call_made"] = True
-    write_json(batch_dir / "generation-response.json", response.model_dump())
-    content = extract_message_content(response)
-    (batch_dir / "generation-assistant-content.txt").write_text(content, encoding="utf-8")
-    parsed, parse_error = maybe_parse_json(content)
-    summary["parse_error"] = parse_error
-    summary["valid_json"] = parsed is not None
-    summary["cost_summary"] = response_cost_summary(response, args.model)
-    if parsed is not None:
-        write_json(batch_dir / "generation-output.json", parsed)
+    summary["valid_json"] = all(bool(row.get("valid_json")) for row in summary["batches"])
+    parse_errors = [row.get("parse_error") for row in summary["batches"] if row.get("parse_error")]
+    summary["parse_error"] = "; ".join(str(error) for error in parse_errors) if parse_errors else None
+    cost_summary = summarize_costs(summary["batches"], args.model)
+    if cost_summary:
+        summary["cost_summary"] = cost_summary
     write_json(eval_dir / "generation-results.json", summary)
     return summary
 
@@ -333,9 +441,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--selector-run", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--unit-key", action="append", help="Generate only the selected unit key; may be repeated.")
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--max-tokens", type=int, default=4096)
+    parser.add_argument(
+        "--max-units-per-call",
+        type=int,
+        default=0,
+        help="Split selector units across generation calls. 0 keeps all units in one call.",
+    )
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument(
         "--reasoning-effort",

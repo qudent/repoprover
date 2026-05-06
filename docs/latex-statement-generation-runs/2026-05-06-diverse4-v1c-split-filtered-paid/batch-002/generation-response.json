@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"vandermonde\"\n      ],\n      \"lean_file_body\": \"open Finset\\nopen Nat\\n\\ntheorem vandermonde (a b n : ℕ) : (a + b).choose n = ∑ k in range (n + 1), (a.choose k) * (b.choose (n - k)) :=\",\n      \"notes\": [\n        \"The statement is the standard Vandermonde identity for natural numbers. The sum is over k from 0 to n inclusive, using Finset.range (n+1). The proof is not provided because the required Mathlib lemma `Nat.vandermonde` is not available and no other context supplies a proof. The selector sketch matches the source, but the Lean-checked signature for `Nat.vandermonde` failed, so we cannot produce a complete proof from visible context.\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-002\",\n      \"used_context\": [\n        \"source proposition prop.binom.vandermonde.NN\",\n        \"selector sketch for Vandermonde identity\",\n        \"hydrated_mathlib_context: Nat.vandermonde not found\",\n        \"local_file_context: open scoped Polynomial, open PowerSeries Finset, namespace AlgebraicCombinatorics, namespace FPS, variable {R : Type*} [CommRing R]\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778028998,
+  "id": "gen-1778028998-xtpTrWF3DKjXyrTMsb8B",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 320,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00068334,
+    "cost_details": {
+      "upstream_inference_completions_cost": 8.96e-05,
+      "upstream_inference_cost": 0.00068334,
+      "upstream_inference_prompt_cost": 0.00059374
+    },
+    "is_byok": false,
+    "prompt_tokens": 4241,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 4561
+  }
+}

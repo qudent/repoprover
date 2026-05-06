@@ -467,6 +467,34 @@ Mixed determinant batch:
   units and `5/5` aligned gold declarations. Paid cost was `$0.03507336` for
   the whole mixed batch.
 
+Broader diverse4 negative probe:
+
+- source units:
+  `cor.lgv.binom-unimod`, `prop.binom.vandermonde.NN`, `thm.pie.moeb`, and
+  `prop.sf.Npar-as-par`.
+- selector:
+  `docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid/`; valid JSON,
+  cost `$0.00230804`. It understood the visible source at a high level but
+  guessed nonexistent exact Mathlib identifiers for all four units.
+- initial hydration/generation:
+  exact Mathlib checks failed `4/4`; noisy fallback search returned `32`
+  candidates. Generation cost `$0.00375886` and compiled `0/4`.
+- repair loop:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/`;
+  two rounds, additional cost `$0.02083186`, final compile `0/4`.
+- pipeline changes from the failure:
+  fallback candidates now require qualified namespace/local-token relevance;
+  generation supports `--max-units-per-call`; prior Lean snippets have comments
+  stripped before prompting; failed exact identifiers are redacted after Lean
+  rejects them.
+- effect:
+  filtered fallback count dropped from `32` to `10`, and split generation
+  `docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/`
+  returned valid JSON for all four one-unit calls at `$0.00394616`. Compile
+  coverage was still `0/4`. The next blocker is not batching transport; it is
+  selecting enough real proof context for nontrivial FPS/LGV/Möbius/partition
+  statements.
+
 ## Lean Dependency Accounting
 
 There are two dependency views:

@@ -206,6 +206,26 @@ gold declarations. Total paid cost for the mixed batch was `$0.03507336`
 (`$0.00630896` initial selector/generation, `$0.00967302` compile repair loop,
 and `$0.01909138` semantic-aware resume).
 
+A broader diverse4 probe then selected `cor.lgv.binom-unimod`,
+`prop.binom.vandermonde.NN`, `thm.pie.moeb`, and `prop.sf.Npar-as-par`. This
+batch is a useful negative outside the recent determinant/symmetric successes.
+The selector returned valid JSON for `$0.00230804`, but all four exact Mathlib
+name guesses failed Lean checking. The initial generation compiled `0/4`, and a
+two-round repair loop also ended at `0/4`; three units became clean
+`cannot_prove_from_visible_context`, while Boolean Möbius still emitted
+placeholder Lean. The run exposed generic pipeline issues rather than a
+single-theorem fix: fallback Mathlib search was too noisy, one four-unit
+generation call could hit the completion cap and return invalid JSON, prior
+Lean comments could leak future-label hints, and failed exact identifiers could
+bias generation. The pipeline now filters fallback candidates by qualified
+namespace/local tokens, can split generation into smaller calls with
+`--max-units-per-call`, strips Lean comments from project/local snippets before
+generation prompts, and redacts failed exact identifiers from generation
+context. With filtering plus per-unit generation, the same diverse4 selector
+returned valid generation JSON for all four units at `$0.00394616`, but Lean
+coverage remained `0/4`; the remaining blocker is selecting genuinely sufficient
+project/Mathlib proof context, not JSON transport.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

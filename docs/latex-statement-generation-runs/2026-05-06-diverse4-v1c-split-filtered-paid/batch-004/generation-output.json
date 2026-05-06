@@ -1,0 +1,20 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "NPartition.equivPartition"
+      ],
+      "lean_file_body": "open scoped Polynomial\nopen MvPolynomial Finset Equiv\n\nnamespace AlgebraicCombinatorics\nnamespace SymmetricFunctions\n\nvariable {R : Type*} [CommSemiring R]\nvariable {N : ℕ}\n\nopen Finset BigOperators\n\n/-- Bijection between partitions of length ≤ N and N-partitions.\n    Given a partition (Nat.Partition n) whose multiset of parts has cardinality ≤ N,\n    we pad it with zeros to obtain an N-partition. Conversely, given an N-partition,\n    we drop the trailing zeros to obtain a partition. -/\ndef NPartition.equivPartition (n : ℕ) :\n    {p : Nat.Partition n // Multiset.card p.parts ≤ N} ≃ NPartition N where\n  toFun := λ ⟨p, hp⟩ => NPartition.ofPartition p hp\n  invFun := λ μ =>\n    let p := NPartition.toPartition μ\n    ⟨p, by\n      -- The size of the partition equals the number of nonzero parts of μ, which is ≤ N.\n      have hsize : Multiset.card (NPartition.toPartition μ).parts = (Finset.filter (λ i : Fin N => μ.parts i ≠ 0) Finset.univ).card := by\n        simp [NPartition.toPartition, Multiset.card_map, Multiset.card_filter]\n      have hcard : (Finset.filter (λ i : Fin N => μ.parts i ≠ 0) Finset.univ).card ≤ N := by\n        exact Finset.card_filter_le _ _\n      omega⟩\n  left_inv := by\n    intro ⟨p, hp⟩\n    ext1\n    -- Need to show that toPartition (ofPartition p hp) = p as Nat.Partition\n    -- This follows from the definitions: ofPartition pads with zeros, toPartition removes zeros.\n    -- We rely on the lemma that the multiset of parts is unchanged after padding and removing zeros.\n    simp [NPartition.toPartition, NPartition.ofPartition, Multiset.map_filter, Multiset.filter_map,\n      Multiset.map_map, Function.comp]\n    -- Additional reasoning: the sorted list of parts of p is exactly p.parts (since p.parts is already sorted decreasing).\n    -- For a Nat.Partition, p.parts is a multiset; we need to show that after sorting descending and filtering zeros we get back p.parts.\n    -- This is true because p.parts has no zeros (by positivity) and is already sorted descending.\n    sorry\n  right_inv := by\n    intro μ\n    ext i\n    -- Need to show that ofPartition (toPartition μ) (some proof) has parts equal to μ.parts at index i.\n    -- This holds because toPartition removes zeros, and ofPartition pads them back.\n    simp [NPartition.toPartition, NPartition.ofPartition]\n    -- Need to handle the case where μ.parts i = 0: then the sorted list from toPartition may be shorter, and ofPartition fills 0.\n    -- This requires case analysis on whether μ.parts i = 0.\n    by_cases h : μ.parts i = 0\n    · simp [h]\n    · have hpos : μ.parts i > 0 := Nat.pos_of_ne_zero h\n      -- Then μ.parts i appears in the multiset of parts, so it appears in the sorted list.\n      -- We need to show that the sorted list's element at position i (if i < length) equals μ.parts i.\n      -- This is true because the sorted list is exactly the nonzero parts of μ in decreasing order, and μ is antitone.\n      sorry\n\nend SymmetricFunctions\nend AlgebraicCombinatorics",
+      "notes": [
+        "The proof of left_inv and right_inv are incomplete (sorry). The full proof would require lemmas about the sorted list of parts and the antitone property. The structure of the bijection is defined, but the proof of the bijection properties is not fully provided from the visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-004",
+      "used_context": [
+        "source/project: NPartition structure and ofPartition/toPartition definitions from NPartition.lean",
+        "source/project: Nat.Partition from Mathlib",
+        "source: proposition prop.sf.Npar-as-par"
+      ]
+    }
+  ]
+}

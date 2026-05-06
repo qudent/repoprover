@@ -1,0 +1,536 @@
+{
+  "exact_identifier_count": 4,
+  "fallback_exact_identifier_count": 10,
+  "fallback_lean_check": {
+    "checked": {
+      "Finset.booleanAlgebra": {
+        "messages": [
+          {
+            "data": "Finset.booleanAlgebra.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] : BooleanAlgebra (Finset α)",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.booleanAlgebra.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] : BooleanAlgebra (Finset α)",
+        "status": "checked"
+      },
+      "Finset.sup_sdiff_right": {
+        "messages": [
+          {
+            "data": "Finset.sup_sdiff_right.{u_7, u_8} {α : Type u_7} {β : Type u_8} [GeneralizedBooleanAlgebra α] (s : Finset β) (f : β → α)\n  (a : α) : (s.sup fun b => f b \\ a) = s.sup f \\ a",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finset.sup_sdiff_right.{u_7, u_8} {α : Type u_7} {β : Type u_8} [GeneralizedBooleanAlgebra α] (s : Finset β) (f : β → α)\n  (a : α) : (s.sup fun b => f b \\ a) = s.sup f \\ a",
+        "status": "checked"
+      },
+      "Nat.choose": {
+        "messages": [
+          {
+            "data": "Nat.choose : ℕ → ℕ → ℕ",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose : ℕ → ℕ → ℕ",
+        "status": "checked"
+      },
+      "Nat.choose_mul": {
+        "messages": [
+          {
+            "data": "Nat.choose_mul {n k s : ℕ} (hsk : s ≤ k) : n.choose k * k.choose s = n.choose s * (n - s).choose (k - s)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_mul {n k s : ℕ} (hsk : s ≤ k) : n.choose k * k.choose s = n.choose s * (n - s).choose (k - s)",
+        "status": "checked"
+      },
+      "Nat.choose_mul_succ_eq": {
+        "messages": [
+          {
+            "data": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+        "status": "checked"
+      },
+      "Nat.multichoose_succ_succ": {
+        "messages": [
+          {
+            "data": "Nat.multichoose_succ_succ (n k : ℕ) : (n + 1).multichoose (k + 1) = n.multichoose (k + 1) + (n + 1).multichoose k",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.multichoose_succ_succ (n k : ℕ) : (n + 1).multichoose (k + 1) = n.multichoose (k + 1) + (n + 1).multichoose k",
+        "status": "checked"
+      },
+      "Nat.multichoose_zero_succ": {
+        "messages": [
+          {
+            "data": "Nat.multichoose_zero_succ (k : ℕ) : Nat.multichoose 0 (k + 1) = 0",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.multichoose_zero_succ (k : ℕ) : Nat.multichoose 0 (k + 1) = 0",
+        "status": "checked"
+      },
+      "Nat.succ_mul_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+        "status": "checked"
+      },
+      "Nat.sum_range_mul_choose": {
+        "messages": [
+          {
+            "data": "Nat.sum_range_mul_choose (n : ℕ) : ∑ i ∈ range (n + 1), i * n.choose i = n * 2 ^ (n - 1)",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.sum_range_mul_choose (n : ℕ) : ∑ i ∈ range (n + 1), i * n.choose i = n * 2 ^ (n - 1)",
+        "status": "checked"
+      },
+      "Nat.sum_range_multichoose": {
+        "messages": [
+          {
+            "data": "Nat.sum_range_multichoose (n k : ℕ) : ∑ i ∈ range (n + 1), k.multichoose i = (n + k).choose k",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.sum_range_multichoose (n k : ℕ) : ∑ i ∈ range (n + 1), k.multichoose i = (n + k).choose k",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "93f6bb595a5c94adc3f678e0cc5916e65941e59ace2e76a61f18ae78a4da6e4c",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T00:48:25.514140+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Nat.choose_sq_ge_choose_mul_choose_succ",
+      "expected_signature_or_shape": "Nat.choose n k * Nat.choose n k ≥ Nat.choose n (k-1) * Nat.choose n (k+1) for n,k : ℕ",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem choose_mul {n k s : ℕ} (hsk : s ≤ k) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_mul {n k s : ℕ} (hsk : s ≤ k) : n.choose k * k.choose s = n.choose s * (n - s).choose (k - s)",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_mul {n k s : ℕ} (hsk : s ≤ k) : n.choose k * k.choose s = n.choose s * (n - s).choose (k - s)",
+            "status": "checked"
+          },
+          "line_number": 160,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "mul"
+          ],
+          "name": "Nat.choose_mul",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "def choose : ℕ → ℕ → ℕ",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose : ℕ → ℕ → ℕ",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose : ℕ → ℕ → ℕ",
+            "status": "checked"
+          },
+          "line_number": 49,
+          "matched_tokens": [
+            "nat",
+            "choose"
+          ],
+          "name": "Nat.choose",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem succ_mul_choose_eq : ∀ n k, succ n * choose n k = choose (succ n) (succ k) * succ k :=",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "status": "checked"
+          },
+          "line_number": 138,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "mul",
+            "succ"
+          ],
+          "name": "Nat.succ_mul_choose_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k) := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+            "status": "checked"
+          },
+          "line_number": 221,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "mul",
+            "succ"
+          ],
+          "name": "Nat.choose_mul_succ_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem multichoose_zero_succ (k : ℕ) : multichoose 0 (k + 1) = 0 := by simp [multichoose]",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.multichoose_zero_succ (k : ℕ) : Nat.multichoose 0 (k + 1) = 0",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.multichoose_zero_succ (k : ℕ) : Nat.multichoose 0 (k + 1) = 0",
+            "status": "checked"
+          },
+          "line_number": 392,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "mul",
+            "succ"
+          ],
+          "name": "Nat.multichoose_zero_succ",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem multichoose_succ_succ (n k : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.multichoose_succ_succ (n k : ℕ) : (n + 1).multichoose (k + 1) = n.multichoose (k + 1) + (n + 1).multichoose k",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.multichoose_succ_succ (n k : ℕ) : (n + 1).multichoose (k + 1) = n.multichoose (k + 1) + (n + 1).multichoose k",
+            "status": "checked"
+          },
+          "line_number": 394,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "mul",
+            "succ"
+          ],
+          "name": "Nat.multichoose_succ_succ",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "theorem sum_range_mul_choose (n : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.sum_range_mul_choose (n : ℕ) : ∑ i ∈ range (n + 1), i * n.choose i = n * 2 ^ (n - 1)",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.sum_range_mul_choose (n : ℕ) : ∑ i ∈ range (n + 1), i * n.choose i = n * 2 ^ (n - 1)",
+            "status": "checked"
+          },
+          "line_number": 154,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "ge",
+            "mul"
+          ],
+          "name": "Nat.sum_range_mul_choose",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Sum.lean",
+          "score": 7
+        },
+        {
+          "declaration_line": "lemma sum_range_multichoose (n k : ℕ) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.sum_range_multichoose (n k : ℕ) : ∑ i ∈ range (n + 1), k.multichoose i = (n + k).choose k",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.sum_range_multichoose (n k : ℕ) : ∑ i ∈ range (n + 1), k.multichoose i = (n + k).choose k",
+            "status": "checked"
+          },
+          "line_number": 177,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "ge",
+            "mul"
+          ],
+          "name": "Nat.sum_range_multichoose",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Sum.lean",
+          "score": 7
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Nat.choose_sq_ge_choose_mul_choose_succ`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.choose_sq_ge_choose_mul_choose_succ`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.choose_sq_ge_choose_mul_choose_succ",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-001-task-1",
+      "unit_key": "unit-001",
+      "why_needed": "Direct statement of the corollary."
+    },
+    {
+      "exact_identifier": "Nat.vandermonde",
+      "expected_signature_or_shape": "Nat.choose (a+b) n = ∑ k in Finset.Icc 0 n, Nat.choose a k * Nat.choose b (n - k)",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "error": "Unknown constant `Nat.vandermonde`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.vandermonde`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.vandermonde",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-002-task-1",
+      "unit_key": "unit-002",
+      "why_needed": "Direct statement of the proposition."
+    },
+    {
+      "exact_identifier": "Finset.mobius_inversion_boolean",
+      "expected_signature_or_shape": "Given S : Finset α, a b : Finset α → A, (∀ I ⊆ S, b I = ∑ J ⊆ I, a J) → (∀ I ⊆ S, a I = ∑ J ⊆ I, (-1)^(I \\. J).card * b J)",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "instance booleanAlgebra [DecidableEq α] : BooleanAlgebra (Finset α) :=",
+          "kind": "instance",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.booleanAlgebra.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] : BooleanAlgebra (Finset α)",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.booleanAlgebra.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α] : BooleanAlgebra (Finset α)",
+            "status": "checked"
+          },
+          "line_number": 100,
+          "matched_tokens": [
+            "finset",
+            "boolean"
+          ],
+          "name": "Finset.booleanAlgebra",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/BooleanAlgebra.lean",
+          "score": 5
+        },
+        {
+          "declaration_line": "theorem sup_sdiff_right {α β : Type*} [GeneralizedBooleanAlgebra α] (s : Finset β) (f : β → α)",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finset.sup_sdiff_right.{u_7, u_8} {α : Type u_7} {β : Type u_8} [GeneralizedBooleanAlgebra α] (s : Finset β) (f : β → α)\n  (a : α) : (s.sup fun b => f b \\ a) = s.sup f \\ a",
+                "line": 13,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finset.sup_sdiff_right.{u_7, u_8} {α : Type u_7} {β : Type u_8} [GeneralizedBooleanAlgebra α] (s : Finset β) (f : β → α)\n  (a : α) : (s.sup fun b => f b \\ a) = s.sup f \\ a",
+            "status": "checked"
+          },
+          "line_number": 156,
+          "matched_tokens": [
+            "finset",
+            "boolean"
+          ],
+          "name": "Finset.sup_sdiff_right",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Finset/Lattice/Fold.lean",
+          "score": 5
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Finset.mobius_inversion_boolean`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.mobius_inversion_boolean`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Finset.mobius_inversion_boolean",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-003-task-1",
+      "unit_key": "unit-003",
+      "why_needed": "Direct statement of the theorem."
+    },
+    {
+      "exact_identifier": "NPartition.equivPartition",
+      "expected_signature_or_shape": "Equiv between {p : Nat.Partition n // Multiset.card p.parts ≤ N} and NPartition N",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "error": "Unknown identifier `NPartition.equivPartition`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.equivPartition`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "NPartition.equivPartition",
+      "request_index": 1,
+      "source_part": "whole unit",
+      "task_id": "unit-004-task-1",
+      "unit_key": "unit-004",
+      "why_needed": "Formalization of the bijection."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "Finset.mobius_inversion_boolean": {
+        "error": "Unknown constant `Finset.mobius_inversion_boolean`",
+        "messages": [
+          {
+            "data": "Unknown constant `Finset.mobius_inversion_boolean`",
+            "line": 6,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "NPartition.equivPartition": {
+        "error": "Unknown identifier `NPartition.equivPartition`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.equivPartition`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.choose_sq_ge_choose_mul_choose_succ": {
+        "error": "Unknown constant `Nat.choose_sq_ge_choose_mul_choose_succ`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.choose_sq_ge_choose_mul_choose_succ`",
+            "line": 4,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.vandermonde": {
+        "error": "Unknown constant `Nat.vandermonde`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.vandermonde`",
+            "line": 5,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "5bd09bab49f2d0948dce59d98c4b9fed0991b124dabd98da45fc5991acba70b7",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 4,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

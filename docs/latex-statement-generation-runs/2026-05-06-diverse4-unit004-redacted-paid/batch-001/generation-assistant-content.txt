@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "NPartitionEquivNatPartitionBounded"
+      ],
+      "lean_file_body": "open Finset\n\nnoncomputable def NPartitionEquivNatPartitionBounded (n N : ℕ) :\n    {p : Nat.Partition n // Multiset.card p.parts ≤ N} ≃ NPartition N where\n  toFun := λ ⟨p, h⟩ => NPartition.ofPartition p h\n  invFun := λ μ => ⟨NPartition.toPartition μ, by\n    have hsize : NPartition.size μ = (NPartition.toPartition μ).sum := rfl\n    have hcard : Multiset.card (NPartition.toPartition μ).parts = NPartition.size μ := by\n      simp [NPartition.toPartition, NPartition.size]\n    have hcard' : Multiset.card (NPartition.toPartition μ).parts ≤ N := by\n      rw [hcard]\n      exact NPartition.size_le_N μ\n    exact hcard'⟩\n  left_inv := by\n    intro ⟨p, h⟩\n    ext; simp [NPartition.ofPartition, NPartition.toPartition, h]\n  right_inv := by\n    intro μ\n    ext i; simp [NPartition.ofPartition, NPartition.toPartition]",
+      "notes": [
+        "Uses NPartition.size_le_N which is not shown in context but is a natural property of NPartition; if missing, the proof would need an explicit lemma. The proof sketch assumes that lemma exists.",
+        "The definitions ofPartition and toPartition are taken from local_file_predecessor_declarations.",
+        "The Equiv is noncomputable due to the use of Nat.Partition which is a structure with a proof of parts_sum."
+      ],
+      "status": "generated",
+      "unit_key": "unit-004",
+      "used_context": [
+        "source/proposition prop.sf.Npar-as-par",
+        "NPartition structure and definitions from local_file_predecessor_declarations",
+        "Nat.Partition from Mathlib"
+      ]
+    }
+  ]
+}

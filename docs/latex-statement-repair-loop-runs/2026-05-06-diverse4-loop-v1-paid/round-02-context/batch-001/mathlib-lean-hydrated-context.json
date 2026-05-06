@@ -1,0 +1,804 @@
+{
+  "exact_identifier_count": 6,
+  "fallback_exact_identifier_count": 16,
+  "fallback_lean_check": {
+    "checked": {
+      "Finpartition.extend": {
+        "messages": [
+          {
+            "data": "Finpartition.extend.{u_1} {α : Type u_1} [Lattice α] [OrderBot α] [IsModularLattice α] [DecidableEq α] {a b c : α}\n  (P : Finpartition a) (hb : b ≠ ⊥) (hab : Disjoint a b) (hc : a ⊔ b = c) : Finpartition c",
+            "line": 19,
+            "severity": "information"
+          }
+        ],
+        "signature": "Finpartition.extend.{u_1} {α : Type u_1} [Lattice α] [OrderBot α] [IsModularLattice α] [DecidableEq α] {a b c : α}\n  (P : Finpartition a) (hb : b ≠ ⊥) (hab : Disjoint a b) (hc : a ⊔ b = c) : Finpartition c",
+        "status": "checked"
+      },
+      "Nat.add_choose": {
+        "messages": [
+          {
+            "data": "Nat.add_choose (i j : ℕ) : (i + j).choose j = (i + j).factorial / (i.factorial * j.factorial)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose (i j : ℕ) : (i + j).choose j = (i + j).factorial / (i.factorial * j.factorial)",
+        "status": "checked"
+      },
+      "Nat.add_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+        "status": "checked"
+      },
+      "Nat.add_choose_mul_factorial_mul_factorial": {
+        "messages": [
+          {
+            "data": "Nat.add_choose_mul_factorial_mul_factorial (i j : ℕ) : (i + j).choose j * i.factorial * j.factorial = (i + j).factorial",
+            "line": 11,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_choose_mul_factorial_mul_factorial (i j : ℕ) : (i + j).choose j * i.factorial * j.factorial = (i + j).factorial",
+        "status": "checked"
+      },
+      "Nat.add_one_mul_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+        "status": "checked"
+      },
+      "Nat.choose_eq_choose_pred_add": {
+        "messages": [
+          {
+            "data": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+        "status": "checked"
+      },
+      "Nat.choose_one_right": {
+        "messages": [
+          {
+            "data": "Nat.choose_one_right (n : ℕ) : n.choose 1 = n",
+            "line": 10,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_one_right (n : ℕ) : n.choose 1 = n",
+        "status": "checked"
+      },
+      "Nat.choose_symm_of_eq_add": {
+        "messages": [
+          {
+            "data": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+            "line": 7,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+        "status": "checked"
+      },
+      "OrderedFinpartition.extend": {
+        "messages": [
+          {
+            "data": "OrderedFinpartition.extend {n : ℕ} (c : OrderedFinpartition n) (i : Option (Fin c.length)) : OrderedFinpartition (n + 1)",
+            "line": 16,
+            "severity": "information"
+          }
+        ],
+        "signature": "OrderedFinpartition.extend {n : ℕ} (c : OrderedFinpartition n) (i : Option (Fin c.length)) : OrderedFinpartition (n + 1)",
+        "status": "checked"
+      },
+      "OrderedFinpartition.extendEquiv": {
+        "messages": [
+          {
+            "data": "OrderedFinpartition.extendEquiv (n : ℕ) :\n  (c : OrderedFinpartition n) × Option (Fin c.length) ≃ OrderedFinpartition (n + 1)",
+            "line": 18,
+            "severity": "information"
+          }
+        ],
+        "signature": "OrderedFinpartition.extendEquiv (n : ℕ) :\n  (c : OrderedFinpartition n) × Option (Fin c.length) ≃ OrderedFinpartition (n + 1)",
+        "status": "checked"
+      },
+      "OrderedFinpartition.extendLeft": {
+        "messages": [
+          {
+            "data": "OrderedFinpartition.extendLeft {n : ℕ} (c : OrderedFinpartition n) : OrderedFinpartition (n + 1)",
+            "line": 12,
+            "severity": "information"
+          }
+        ],
+        "signature": "OrderedFinpartition.extendLeft {n : ℕ} (c : OrderedFinpartition n) : OrderedFinpartition (n + 1)",
+        "status": "checked"
+      },
+      "OrderedFinpartition.extendMiddle": {
+        "messages": [
+          {
+            "data": "OrderedFinpartition.extendMiddle {n : ℕ} (c : OrderedFinpartition n) (k : Fin c.length) : OrderedFinpartition (n + 1)",
+            "line": 13,
+            "severity": "information"
+          }
+        ],
+        "signature": "OrderedFinpartition.extendMiddle {n : ℕ} (c : OrderedFinpartition n) (k : Fin c.length) : OrderedFinpartition (n + 1)",
+        "status": "checked"
+      },
+      "OrderedFinpartition.extend_some": {
+        "messages": [
+          {
+            "data": "OrderedFinpartition.extend_some {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  c.extend (some i) = c.extendMiddle i",
+            "line": 17,
+            "severity": "information"
+          }
+        ],
+        "signature": "OrderedFinpartition.extend_some {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  c.extend (some i) = c.extendMiddle i",
+        "status": "checked"
+      },
+      "OrderedFinpartition.index_extendMiddle_zero": {
+        "messages": [
+          {
+            "data": "OrderedFinpartition.index_extendMiddle_zero {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  (c.extendMiddle i).index 0 = i",
+            "line": 14,
+            "severity": "information"
+          }
+        ],
+        "signature": "OrderedFinpartition.index_extendMiddle_zero {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  (c.extendMiddle i).index 0 = i",
+        "status": "checked"
+      },
+      "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero": {
+        "messages": [
+          {
+            "data": "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero {n : ℕ} (c : OrderedFinpartition n) (i j : Fin c.length) :\n  Set.range ((c.extendMiddle i).emb j) ≠ {0}",
+            "line": 15,
+            "severity": "information"
+          }
+        ],
+        "signature": "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero {n : ℕ} (c : OrderedFinpartition n) (i j : Fin c.length) :\n  Set.range ((c.extendMiddle i).emb j) ≠ {0}",
+        "status": "checked"
+      },
+      "Ring.choose": {
+        "messages": [
+          {
+            "data": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+            "line": 9,
+            "severity": "information"
+          }
+        ],
+        "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "11cb71262d0c7d47c08790960bc8aec72fa213c865f564bbdbd1e9410dd0d240",
+    "returncode": 0,
+    "status": "ok",
+    "stderr": ""
+  },
+  "fallback_lean_check_status": "ok",
+  "generated_at": "2026-05-06T00:45:10.544825+00:00",
+  "hydrated_mathlib_context": [
+    {
+      "exact_identifier": "Nat.choose_mul_succ_eq",
+      "expected_signature_or_shape": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+        "status": "checked"
+      },
+      "query": "Nat.choose_mul_succ_eq",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Used to relate binomial coefficients with different n."
+    },
+    {
+      "exact_identifier": "Nat.succ_mul_choose_eq",
+      "expected_signature_or_shape": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+        "status": "checked"
+      },
+      "query": "Nat.succ_mul_choose_eq",
+      "request_index": 2,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Used to relate binomial coefficients with different k."
+    },
+    {
+      "exact_identifier": "Nat.choose_succ_succ",
+      "expected_signature_or_shape": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+        "status": "checked"
+      },
+      "query": "Nat.choose_succ_succ",
+      "request_index": 3,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Pascal's rule, may be used in the proof."
+    },
+    {
+      "exact_identifier": "Nat.choose_add_eq_choose_add_choose",
+      "expected_signature_or_shape": "Nat.choose_add_eq_choose_add_choose (a b n : ℕ) : (a+b).choose n = ∑ k in Finset.Icc 0 n, a.choose k * b.choose (n - k)",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "theorem add_choose (i j : ℕ) : (i + j).choose j = (i + j)! / (i ! * j !) := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_choose (i j : ℕ) : (i + j).choose j = (i + j).factorial / (i.factorial * j.factorial)",
+                "line": 4,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_choose (i j : ℕ) : (i + j).choose j = (i + j).factorial / (i.factorial * j.factorial)",
+            "status": "checked"
+          },
+          "line_number": 177,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add"
+          ],
+          "name": "Nat.add_choose",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 11
+        },
+        {
+          "declaration_line": "theorem choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+                "line": 5,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+            "status": "checked"
+          },
+          "line_number": 77,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.choose_eq_choose_pred_add",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "theorem add_one_mul_choose_eq : ∀ n k, (n + 1) * choose n k = choose (n + 1) (k + 1) * (k + 1)",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+                "line": 6,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+            "status": "checked"
+          },
+          "line_number": 128,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.add_one_mul_choose_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "theorem choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : Nat.choose n a = Nat.choose n b := by",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+                "line": 7,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+            "status": "checked"
+          },
+          "line_number": 199,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.choose_symm_of_eq_add",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "theorem add_choose_eq (m n k : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+                "line": 8,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_choose_eq (m n k : ℕ) : (m + n).choose k = ∑ ij ∈ antidiagonal k, m.choose ij.1 * n.choose ij.2",
+            "status": "checked"
+          },
+          "line_number": 31,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add",
+            "eq"
+          ],
+          "name": "Nat.add_choose_eq",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Vandermonde.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "def choose [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+                "line": 9,
+                "severity": "information"
+              }
+            ],
+            "signature": "Ring.choose.{u_1} {R : Type u_1} [AddCommGroupWithOne R] [Pow R ℕ] [BinomialRing R] (r : R) (n : ℕ) : R",
+            "status": "checked"
+          },
+          "line_number": 380,
+          "matched_tokens": [
+            "choose",
+            "add"
+          ],
+          "name": "Ring.choose",
+          "path": ".lake/packages/mathlib/Mathlib/RingTheory/Binomial.lean",
+          "score": 10
+        },
+        {
+          "declaration_line": "lemma choose_one_right (n : ℕ) : choose n 1 = n := by induction n <;> simp [*, choose, Nat.add_comm]",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.choose_one_right (n : ℕ) : n.choose 1 = n",
+                "line": 10,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.choose_one_right (n : ℕ) : n.choose 1 = n",
+            "status": "checked"
+          },
+          "line_number": 99,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add"
+          ],
+          "name": "Nat.choose_one_right",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 9
+        },
+        {
+          "declaration_line": "theorem add_choose_mul_factorial_mul_factorial (i j : ℕ) :",
+          "kind": "theorem",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Nat.add_choose_mul_factorial_mul_factorial (i j : ℕ) : (i + j).choose j * i.factorial * j.factorial = (i + j).factorial",
+                "line": 11,
+                "severity": "information"
+              }
+            ],
+            "signature": "Nat.add_choose_mul_factorial_mul_factorial (i j : ℕ) : (i + j).choose j * i.factorial * j.factorial = (i + j).factorial",
+            "status": "checked"
+          },
+          "line_number": 181,
+          "matched_tokens": [
+            "nat",
+            "choose",
+            "add"
+          ],
+          "name": "Nat.add_choose_mul_factorial_mul_factorial",
+          "path": ".lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean",
+          "score": 9
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "Nat.choose_add_eq_choose_add_choose",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Direct statement of Vandermonde's identity."
+    },
+    {
+      "exact_identifier": "Nat.Partition.ext",
+      "expected_signature_or_shape": "Nat.Partition.ext (p q : Nat.Partition n) (h : p.parts = q.parts) : p = q",
+      "fallback_mathlib_candidates": [],
+      "lean_check": {
+        "messages": [
+          {
+            "data": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+        "status": "checked"
+      },
+      "query": "Nat.Partition.ext",
+      "request_index": 1,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "To prove equality of partitions."
+    },
+    {
+      "exact_identifier": "NPartition.ext",
+      "expected_signature_or_shape": "NPartition.ext (μ ν : NPartition N) (h : μ.parts = ν.parts) : μ = ν",
+      "fallback_mathlib_candidates": [
+        {
+          "declaration_line": "def extendLeft (c : OrderedFinpartition n) : OrderedFinpartition (n + 1) where",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "OrderedFinpartition.extendLeft {n : ℕ} (c : OrderedFinpartition n) : OrderedFinpartition (n + 1)",
+                "line": 12,
+                "severity": "information"
+              }
+            ],
+            "signature": "OrderedFinpartition.extendLeft {n : ℕ} (c : OrderedFinpartition n) : OrderedFinpartition (n + 1)",
+            "status": "checked"
+          },
+          "line_number": 294,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "OrderedFinpartition.extendLeft",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "def extendMiddle (c : OrderedFinpartition n) (k : Fin c.length) : OrderedFinpartition (n + 1) where",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "OrderedFinpartition.extendMiddle {n : ℕ} (c : OrderedFinpartition n) (k : Fin c.length) : OrderedFinpartition (n + 1)",
+                "line": 13,
+                "severity": "information"
+              }
+            ],
+            "signature": "OrderedFinpartition.extendMiddle {n : ℕ} (c : OrderedFinpartition n) (k : Fin c.length) : OrderedFinpartition (n + 1)",
+            "status": "checked"
+          },
+          "line_number": 349,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "OrderedFinpartition.extendMiddle",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "lemma index_extendMiddle_zero (c : OrderedFinpartition n) (i : Fin c.length) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "OrderedFinpartition.index_extendMiddle_zero {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  (c.extendMiddle i).index 0 = i",
+                "line": 14,
+                "severity": "information"
+              }
+            ],
+            "signature": "OrderedFinpartition.index_extendMiddle_zero {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  (c.extendMiddle i).index 0 = i",
+            "status": "checked"
+          },
+          "line_number": 434,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "OrderedFinpartition.index_extendMiddle_zero",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "lemma range_emb_extendMiddle_ne_singleton_zero (c : OrderedFinpartition n) (i j : Fin c.length) :",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero {n : ℕ} (c : OrderedFinpartition n) (i j : Fin c.length) :\n  Set.range ((c.extendMiddle i).emb j) ≠ {0}",
+                "line": 15,
+                "severity": "information"
+              }
+            ],
+            "signature": "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero {n : ℕ} (c : OrderedFinpartition n) (i j : Fin c.length) :\n  Set.range ((c.extendMiddle i).emb j) ≠ {0}",
+            "status": "checked"
+          },
+          "line_number": 441,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "def extend (c : OrderedFinpartition n) (i : Option (Fin c.length)) : OrderedFinpartition (n + 1) :=",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "OrderedFinpartition.extend {n : ℕ} (c : OrderedFinpartition n) (i : Option (Fin c.length)) : OrderedFinpartition (n + 1)",
+                "line": 16,
+                "severity": "information"
+              }
+            ],
+            "signature": "OrderedFinpartition.extend {n : ℕ} (c : OrderedFinpartition n) (i : Option (Fin c.length)) : OrderedFinpartition (n + 1)",
+            "status": "checked"
+          },
+          "line_number": 461,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "OrderedFinpartition.extend",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "lemma extend_some (c : OrderedFinpartition n) (i : Fin c.length) : c.extend i = c.extendMiddle i :=",
+          "kind": "lemma",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "OrderedFinpartition.extend_some {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  c.extend (some i) = c.extendMiddle i",
+                "line": 17,
+                "severity": "information"
+              }
+            ],
+            "signature": "OrderedFinpartition.extend_some {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  c.extend (some i) = c.extendMiddle i",
+            "status": "checked"
+          },
+          "line_number": 469,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "OrderedFinpartition.extend_some",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "def extendEquiv (n : ℕ) :",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "OrderedFinpartition.extendEquiv (n : ℕ) :\n  (c : OrderedFinpartition n) × Option (Fin c.length) ≃ OrderedFinpartition (n + 1)",
+                "line": 18,
+                "severity": "information"
+              }
+            ],
+            "signature": "OrderedFinpartition.extendEquiv (n : ℕ) :\n  (c : OrderedFinpartition n) × Option (Fin c.length) ≃ OrderedFinpartition (n + 1)",
+            "status": "checked"
+          },
+          "line_number": 633,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "OrderedFinpartition.extendEquiv",
+          "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean",
+          "score": 8
+        },
+        {
+          "declaration_line": "def extend (P : Finpartition a) (hb : b ≠ ⊥) (hab : Disjoint a b) (hc : a ⊔ b = c) :",
+          "kind": "def",
+          "lean_check": {
+            "messages": [
+              {
+                "data": "Finpartition.extend.{u_1} {α : Type u_1} [Lattice α] [OrderBot α] [IsModularLattice α] [DecidableEq α] {a b c : α}\n  (P : Finpartition a) (hb : b ≠ ⊥) (hab : Disjoint a b) (hc : a ⊔ b = c) : Finpartition c",
+                "line": 19,
+                "severity": "information"
+              }
+            ],
+            "signature": "Finpartition.extend.{u_1} {α : Type u_1} [Lattice α] [OrderBot α] [IsModularLattice α] [DecidableEq α] {a b c : α}\n  (P : Finpartition a) (hb : b ≠ ⊥) (hab : Disjoint a b) (hc : a ⊔ b = c) : Finpartition c",
+            "status": "checked"
+          },
+          "line_number": 467,
+          "matched_tokens": [
+            "npartition",
+            "ext"
+          ],
+          "name": "Finpartition.extend",
+          "path": ".lake/packages/mathlib/Mathlib/Order/Partition/Finpartition.lean",
+          "score": 8
+        }
+      ],
+      "lean_check": {
+        "error": "Unknown identifier `NPartition.ext`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.ext`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "query": "NPartition.ext",
+      "request_index": 2,
+      "source_part": "repair_context_selection",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "To prove equality of N-partitions."
+    }
+  ],
+  "imports": [
+    "Mathlib"
+  ],
+  "lean_check": {
+    "checked": {
+      "NPartition.ext": {
+        "error": "Unknown identifier `NPartition.ext`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.ext`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.Partition.ext": {
+        "messages": [
+          {
+            "data": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+            "line": 8,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+        "status": "checked"
+      },
+      "Nat.choose_add_eq_choose_add_choose": {
+        "error": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "Nat.choose_mul_succ_eq": {
+        "messages": [
+          {
+            "data": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+            "line": 4,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+        "status": "checked"
+      },
+      "Nat.choose_succ_succ": {
+        "messages": [
+          {
+            "data": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+            "line": 6,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+        "status": "checked"
+      },
+      "Nat.succ_mul_choose_eq": {
+        "messages": [
+          {
+            "data": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "line": 5,
+            "severity": "information"
+          }
+        ],
+        "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+        "status": "checked"
+      }
+    },
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "--stdin",
+      "--json"
+    ],
+    "lean_source_sha256": "568e7e23476315089ea280b37b41df6421c98db016ee35a4e78729527c01ac87",
+    "returncode": 1,
+    "status": "lean_errors",
+    "stderr": ""
+  },
+  "lean_check_status": "lean_errors",
+  "opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "request_count": 6,
+  "schema_version": "repoprover.latex_statement_context_hydration.v1"
+}

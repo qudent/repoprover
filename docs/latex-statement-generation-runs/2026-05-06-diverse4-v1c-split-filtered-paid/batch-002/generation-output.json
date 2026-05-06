@@ -1,0 +1,21 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "vandermonde"
+      ],
+      "lean_file_body": "open Finset\nopen Nat\n\ntheorem vandermonde (a b n : ℕ) : (a + b).choose n = ∑ k in range (n + 1), (a.choose k) * (b.choose (n - k)) :=",
+      "notes": [
+        "The statement is the standard Vandermonde identity for natural numbers. The sum is over k from 0 to n inclusive, using Finset.range (n+1). The proof is not provided because the required Mathlib lemma `Nat.vandermonde` is not available and no other context supplies a proof. The selector sketch matches the source, but the Lean-checked signature for `Nat.vandermonde` failed, so we cannot produce a complete proof from visible context."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-002",
+      "used_context": [
+        "source proposition prop.binom.vandermonde.NN",
+        "selector sketch for Vandermonde identity",
+        "hydrated_mathlib_context: Nat.vandermonde not found",
+        "local_file_context: open scoped Polynomial, open PowerSeries Finset, namespace AlgebraicCombinatorics, namespace FPS, variable {R : Type*} [CommRing R]"
+      ]
+    }
+  ]
+}

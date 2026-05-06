@@ -80,7 +80,10 @@ def _write_selector_run(tmp_path: Path) -> Path:
                                             {
                                                 "name": "Demo.prior_helper",
                                                 "kind": "theorem",
-                                                "lean_snippet": "theorem prior_helper (n : Nat) : n + 0 = n",
+                                                "lean_snippet": (
+                                                    "/-- Do not leak Demo.hidden_target from comments. -/\n"
+                                                    "theorem prior_helper (n : Nat) : n + 0 = n"
+                                                ),
                                                 "context_source": "same_file_before_selected_unit_line",
                                             }
                                         ],
@@ -91,7 +94,10 @@ def _write_selector_run(tmp_path: Path) -> Path:
                                                     {
                                                         "name": "Demo.PriorPredicate",
                                                         "kind": "def",
-                                                        "lean_snippet": "def PriorPredicate (n : Nat) : Prop := n + 0 = n",
+                                                        "lean_snippet": (
+                                                            "-- target-shaped comment: Demo.hidden_target\n"
+                                                            "def PriorPredicate (n : Nat) : Prop := n + 0 = n"
+                                                        ),
                                                     }
                                                 ],
                                             }
@@ -146,6 +152,7 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "For all n" in prompt
     assert "Nat.add_zero (n : Nat)" in prompt
     assert "PriorPredicate" in prompt
+    assert "target-shaped comment" not in prompt
     assert "available_prior_project_context" in prompt
     assert "previous_source_context" in prompt
     assert "local_file_context_candidates" in prompt
@@ -154,7 +161,9 @@ def test_generation_prompt_uses_hydration_and_hides_posthoc_alignment(tmp_path: 
     assert "variable {K : Type*} [CommRing K]" in prompt
     assert "Follow the Lean-checked signatures exactly" in prompt
     assert "Never use a hydrated Mathlib exact_identifier whose lean_check.status is not `checked`" in prompt
-    assert "exact_identifier_failed_lean_check_do_not_use" in prompt
+    assert "exact_identifier_failed_lean_check_redacted_do_not_use" in prompt
+    assert "Demo.bad_guess" not in prompt
+    assert "<redacted failed exact identifier>" in prompt
     assert "Every identifier used in a theorem statement must be introduced" in prompt
     assert "you may include the needed commands in lean_file_body" in prompt
     assert "you may reuse those exact helper names" in prompt
@@ -187,3 +196,86 @@ def test_generation_budget_payload_disables_reasoning(tmp_path: Path) -> None:
     assert summary["paid_call_made"] is False
     payload = json.loads((output / "batch-001/generation-payload.json").read_text(encoding="utf-8"))
     assert payload["extra_body"] == {"reasoning": {"effort": "none", "exclude": True}}
+
+
+def test_generation_budget_payload_can_split_units(tmp_path: Path) -> None:
+    run_dir = _write_selector_run(tmp_path)
+    selected_path = run_dir / "eval/selected-units.jsonl"
+    first_selected = json.loads(selected_path.read_text(encoding="utf-8").strip())
+    second_selected = dict(first_selected)
+    second_selected["id"] = "source:demo.second"
+    second_selected["source_unit"] = dict(first_selected["source_unit"], labels=["demo.second"])
+    selected_path.write_text(
+        "\n".join(json.dumps(row) for row in [first_selected, second_selected]) + "\n",
+        encoding="utf-8",
+    )
+    selector_output_path = run_dir / "batch-001/context-selection-output.json"
+    selector_output = json.loads(selector_output_path.read_text(encoding="utf-8"))
+    second_unit = dict(selector_output["units"][0], unit_key="unit-002")
+    second_unit["planned_declarations"] = [
+        dict(task, task_id=str(task["task_id"]).replace("unit-001", "unit-002"))
+        for task in selector_output["units"][0]["planned_declarations"]
+    ]
+    selector_output["units"].append(second_unit)
+    selector_output_path.write_text(json.dumps(selector_output), encoding="utf-8")
+
+    output = tmp_path / "generation"
+    summary = run(
+        argparse.Namespace(
+            selector_run=run_dir,
+            output=output,
+            model="deepseek/deepseek-v4-flash",
+            base_url="https://openrouter.ai/api/v1",
+            max_tokens=256,
+            max_units_per_call=1,
+            temperature=0.0,
+            reasoning_effort="none",
+            budget_only=True,
+        )
+    )
+
+    assert summary["batch_count"] == 2
+    assert (output / "batch-001/generation-payload.json").exists()
+    assert (output / "batch-002/generation-payload.json").exists()
+    payload_1 = json.loads((output / "batch-001/generation-payload.json").read_text(encoding="utf-8"))
+    payload_2 = json.loads((output / "batch-002/generation-payload.json").read_text(encoding="utf-8"))
+    assert '"unit_key": "unit-001"' in payload_1["messages"][1]["content"]
+    assert '"unit_key": "unit-002"' not in payload_1["messages"][1]["content"]
+    assert '"unit_key": "unit-002"' in payload_2["messages"][1]["content"]
+
+
+def test_generation_budget_payload_can_filter_unit_keys(tmp_path: Path) -> None:
+    run_dir = _write_selector_run(tmp_path)
+    selected_path = run_dir / "eval/selected-units.jsonl"
+    first_selected = json.loads(selected_path.read_text(encoding="utf-8").strip())
+    second_selected = dict(first_selected)
+    second_selected["id"] = "source:demo.second"
+    selected_path.write_text(
+        "\n".join(json.dumps(row) for row in [first_selected, second_selected]) + "\n",
+        encoding="utf-8",
+    )
+    selector_output_path = run_dir / "batch-001/context-selection-output.json"
+    selector_output = json.loads(selector_output_path.read_text(encoding="utf-8"))
+    selector_output["units"].append(dict(selector_output["units"][0], unit_key="unit-002"))
+    selector_output_path.write_text(json.dumps(selector_output), encoding="utf-8")
+
+    output = tmp_path / "generation"
+    summary = run(
+        argparse.Namespace(
+            selector_run=run_dir,
+            output=output,
+            unit_key=["unit-002"],
+            model="deepseek/deepseek-v4-flash",
+            base_url="https://openrouter.ai/api/v1",
+            max_tokens=256,
+            max_units_per_call=1,
+            temperature=0.0,
+            reasoning_effort="none",
+            budget_only=True,
+        )
+    )
+
+    assert summary["batch_count"] == 1
+    payload = json.loads((output / "batch-001/generation-payload.json").read_text(encoding="utf-8"))
+    user_payload = json.loads(payload["messages"][1]["content"])
+    assert [unit["unit_key"] for unit in user_payload["units"]] == ["unit-002"]

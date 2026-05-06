@@ -1,0 +1,231 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.Determinants.LGV1",
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.Determinants.LGV1",
+        "AlgebraicCombinatorics.Determinants.LGV2"
+      ],
+      "inferred_opens": [
+        "open LGV1",
+        "open LGV",
+        "open Nat"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open LGV1",
+        "open LGV",
+        "open Nat"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "Nat.choose_sq_ge_choose_mul_choose_succ"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "cannot_prove_output_must_have_empty_lean_file_body",
+            "cannot_prove_output_must_have_empty_declaration_names"
+          ],
+          "declaration_names": [
+            "Nat.choose_sq_ge_choose_mul_choose_succ"
+          ],
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 0,
+              "data": "unexpected end of input",
+              "kind": "[anonymous]",
+              "line": 11,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-001"
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/batch-002/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.FPSDefinition",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts2"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.FPSDefinition",
+        "AlgebraicCombinatorics.FPS.InfiniteProducts2"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.FPS"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.FPS"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "vandermonde"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "cannot_prove_output_must_have_empty_lean_file_body",
+            "cannot_prove_output_must_have_empty_declaration_names"
+          ],
+          "declaration_names": [
+            "vandermonde"
+          ],
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 56,
+              "data": "unexpected token 'in'; expected ','",
+              "kind": "[anonymous]",
+              "line": 10,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-002"
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/batch-003/generation-output.json",
+      "imports": [
+        "Mathlib"
+      ],
+      "inferred_imports": [],
+      "inferred_opens": [
+        "open Finset"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open Finset"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "boolean_mobius_inversion"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "generated_lean_must_not_include_comments"
+          ],
+          "declaration_names": [
+            "boolean_mobius_inversion"
+          ],
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 31,
+              "data": "unexpected token 'in'; expected ','",
+              "kind": "[anonymous]",
+              "line": 10,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-003"
+        }
+      ]
+    },
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/batch-004/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.SymmetricFunctions"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.SymmetricFunctions"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "NPartition.equivPartition"
+          ],
+          "compile_passed": false,
+          "contract_violations": [
+            "cannot_prove_output_must_have_empty_lean_file_body",
+            "cannot_prove_output_must_have_empty_declaration_names",
+            "generated_lean_contains_placeholder"
+          ],
+          "declaration_names": [
+            "NPartition.equivPartition"
+          ],
+          "lean_error_count": 1,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 4,
+              "data": "`AlgebraicCombinatorics.SymmetricFunctions.NPartition.equivPartition` has already been declared",
+              "kind": "[anonymous]",
+              "line": 22,
+              "severity": "error"
+            }
+          ],
+          "placeholder_tokens": [
+            "sorry"
+          ],
+          "reported_status": "cannot_prove_from_visible_context",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-004"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "generated_at": "2026-05-06T00:59:40.554712+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 4
+}

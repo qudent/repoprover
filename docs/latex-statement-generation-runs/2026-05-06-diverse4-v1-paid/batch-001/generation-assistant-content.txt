@@ -1,0 +1,36 @@
+{
+  "units": [
+    {
+      "declaration_names": ["binom_sq_ge_choose_mul_choose_succ"],
+      "lean_file_body": "theorem binom_sq_ge_choose_mul_choose_succ (n k : ℕ) : (Nat.choose n k)^2 ≥ Nat.choose n (k-1) * Nat.choose n (k+1) := by\n  have h1 : (Nat.choose n k)^2 = Nat.choose n k * Nat.choose n k := by ring\n  have h2 : Nat.choose n (k-1) * Nat.choose n (k+1) ≤ Nat.choose n k * Nat.choose n k := by\n    -- This inequality is known as log-concavity of binomial coefficients.\n    -- We use the identity: (n choose k)^2 - (n choose k-1)(n choose k+1) = (n+1)!/(k!(n-k)!)^2 * (n+1) > 0 for 0<k<n.\n    -- For k=0 or k=n, the right side is zero.\n    by_cases hk0 : k = 0\n    · subst hk0; simp\n    · by_cases hkn : k = n\n      · subst hkn; simp\n      · have hpos : 0 < k := Nat.pos_of_ne_zero hk0\n        have hpos' : k < n := Nat.lt_of_le_of_ne (Nat.choose_pos (Nat.le_of_lt ?_) ?_) hkn\n        -- Use known combinatorial identity: (n choose k)^2 - (n choose k-1)(n choose k+1) = (n+1)!/(k!(n-k)!)^2 * (n+1) / (k*(n-k+1))\n        -- This is positive.\n        sorry\n  exact h2",
+      "notes": ["The proof of the inequality is incomplete; a known combinatorial identity or log-concavity lemma is needed."],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": ["source: cor.lgv.binom-unimod", "hydrated_mathlib_context: Nat.choose_sq_ge_choose_mul_choose_succ (unavailable)"]
+    },
+    {
+      "declaration_names": ["vandermonde_identity"],
+      "lean_file_body": "theorem vandermonde_identity (a b n : ℕ) : Nat.choose (a + b) n = ∑ k in Finset.Icc 0 n, Nat.choose a k * Nat.choose b (n - k) := by\n  -- Vandermonde's identity is a standard combinatorial identity.\n  -- It can be proved by considering the coefficient of x^n in (1+x)^(a+b) = (1+x)^a * (1+x)^b.\n  -- We use the polynomial ring ℕ[x] and the binomial theorem.\n  have h : (1 + x : ℕ[x])^(a+b) = (1 + x : ℕ[x])^a * (1 + x : ℕ[x])^b := by\n    simp [pow_add]\n  have hcoeff : coeff n ((1 + x : ℕ[x])^(a+b)) = coeff n ((1 + x : ℕ[x])^a * (1 + x : ℕ[x])^b) := by\n    rw [h]\n  -- Use the binomial theorem: (1+x)^m = ∑_{k=0}^m (m choose k) x^k\n  have hbinom (m : ℕ) : (1 + x : ℕ[x])^m = ∑ k in Finset.range (m+1), (Nat.choose m k : ℕ[x]) * x^k := by\n    -- This is the binomial theorem for ℕ[x].\n    sorry\n  sorry",
+      "notes": ["The proof uses polynomial ring ℕ[x] and binomial theorem; the binomial theorem for ℕ[x] is not provided."],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-002",
+      "used_context": ["source: prop.binom.vandermonde.NN", "hydrated_mathlib_context: Nat.vandermonde (unavailable)"]
+    },
+    {
+      "declaration_names": ["boolean_mobius_inversion"],
+      "lean_file_body": "theorem boolean_mobius_inversion {α : Type*} [DecidableEq α] {S : Finset α} {A : Type*} [AddCommGroup A]\n    (a b : Finset α → A) (h : ∀ I, I ⊆ S → b I = ∑ J in Finset.powerset I, a J) :\n    ∀ I, I ⊆ S → a I = ∑ J in Finset.powerset I, ((-1 : ℤ) ^ (I \\ J).card : ℤ) • b J := by\n  intro I hI\n  -- Use Möbius inversion on the Boolean lattice.\n  -- The Möbius function μ(J,I) = (-1)^(|I\\J|).\n  -- We have b = ζ * a (where ζ(J,I)=1 if J⊆I), so a = μ * b.\n  -- This can be proved by induction on |I| or using the alternating sum lemma.\n  sorry",
+      "notes": ["The proof requires Möbius inversion on the Boolean lattice; the alternating sum lemmas from the local file are not sufficient."],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003",
+      "used_context": ["source: thm.pie.moeb", "local_file_predecessor_declarations: alternatingSum_superset_eq_iverson_a, alternatingSum_superset_eq_iverson_b, sum_powerset_powerset_swap"]
+    },
+    {
+      "declaration_names": ["NPartition_equiv_partitions_length_le_N"],
+      "lean_file_body": "theorem NPartition_equiv_partitions_length_le_N (N : ℕ) :\n    { p : Nat.Partition (∑ i : Fin N, 0) // Multiset.card p.parts ≤ N } ≃ NPartition N := by\n  -- The bijection: given a partition λ of length ℓ ≤ N, pad with N-ℓ zeros to get an N-partition.\n  -- Conversely, given an N-partition, drop trailing zeros to get a partition.\n  -- This is a standard construction.\n  sorry",
+      "notes": ["The bijection is straightforward but requires definitions of Nat.Partition and NPartition; the proof is omitted."],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-004",
+      "used_context": ["source: prop.sf.Npar-as-par", "available_prior_project_context: NPartition structure and ofPartition/toPartition definitions"]
+    }
+  ]
+}

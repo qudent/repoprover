@@ -1,0 +1,19 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "Nat.choose_sq_ge_choose_mul_choose_succ"
+      ],
+      "lean_file_body": "theorem Nat.choose_sq_ge_choose_mul_choose_succ (n k : ℕ) :\n    (Nat.choose n k) ^ 2 ≥ Nat.choose n (k - 1) * Nat.choose n (k + 1) :=",
+      "notes": [
+        "The statement is a known log-concavity property of binomial coefficients. A full proof would require combinatorial identities or induction; the visible context does not provide a ready lemma. The theorem is stated but the proof is omitted as per instructions (no sorry/admit)."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001",
+      "used_context": [
+        "source unit cor.lgv.binom-unimod",
+        "Nat.choose from Mathlib"
+      ]
+    }
+  ]
+}

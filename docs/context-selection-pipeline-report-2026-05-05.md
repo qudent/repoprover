@@ -597,6 +597,45 @@ Mixed theorem-level determinant batch:
   aligned gold declarations. Total paid cost for the mixed batch was
   `$0.03507336`.
 
+Diverse4 broader-batch probe:
+
+- source units:
+  `cor.lgv.binom-unimod`, `prop.binom.vandermonde.NN`, `thm.pie.moeb`, and
+  `prop.sf.Npar-as-par`.
+- selector:
+  `docs/latex-statement-context-runs/2026-05-06-diverse4-v1-paid/`, valid JSON,
+  cost `$0.00230804`, no reasoning tokens.
+- hydration before filtering: all `4/4` exact Mathlib guesses failed; fallback
+  search attached `32` candidates including cross-namespace junk such as
+  `Matrix.vandermonde`, `EuclideanGeometry.inversion`, BoolRing facts, and an
+  FLT private definition.
+- initial generation:
+  `docs/latex-statement-generation-runs/2026-05-06-diverse4-v1-paid/`, valid
+  JSON, cost `$0.00375886`, generated-only compile `0/4`. The model often
+  declared `cannot_prove_from_visible_context` while still emitting invalid
+  placeholder Lean.
+- two-round repair loop:
+  `docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/`,
+  added `$0.02083186`, final compile `0/4`; three units became clean
+  `cannot_prove_from_visible_context`, while Boolean Möbius still emitted
+  placeholder Lean.
+- generic fixes from this run:
+  - fallback Mathlib candidates are now filtered by qualified namespace root and
+    local-name tokens before Lean checking;
+  - `scripts/run_latex_statement_generation.py` supports
+    `--max-units-per-call` to keep generation calls small while preserving
+    batched selector context;
+  - generation prompts strip Lean comments from prior project/local snippets so
+    future source-label explanations in comments do not leak target-shape hints;
+  - failed exact identifiers are redacted from generation prompts after Lean
+    rejects them, while checked fallback candidates remain available.
+- filtered hydration rerun: fallback candidates dropped from `32` to `10`, with
+  cross-namespace junk removed. A four-call split generation run
+  `docs/latex-statement-generation-runs/2026-05-06-diverse4-v1c-split-filtered-paid/`
+  returned valid JSON for `4/4` units at `$0.00394616`, avoiding the prior
+  one-call token-cap/invalid-JSON failure. Lean compile remained `0/4`, so this
+  is a transport/context-hygiene improvement, not a theorem coverage win.
+
 ### Generation and Verification Counts
 
 Honesty caveats:

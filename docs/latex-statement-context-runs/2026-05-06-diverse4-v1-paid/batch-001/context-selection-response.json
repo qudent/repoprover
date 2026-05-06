@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Inequality of binomial coefficients may require known combinatorial identities or log-concavity.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib lemma for binomial coefficient log-concavity or direct inequality proof.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Nat.choose n k * Nat.choose n k ≥ Nat.choose n (k-1) * Nat.choose n (k+1) for n,k : ℕ\",\n              \"name_or_query\": \"Nat.choose_sq_ge_choose_mul_choose_succ\",\n              \"why_needed\": \"Direct statement of the corollary.\"\n            }\n          ],\n          \"needed_project_context\": [],\n          \"needed_source_context\": [\n            \"cor.lgv.binom-unimod: Let n,k∈ℕ. Then, (n choose k)^2 ≥ (n choose k-1)·(n choose k+1).\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For natural numbers n and k, the square of the binomial coefficient n choose k is at least the product of n choose (k-1) and n choose (k+1).\",\n          \"task_id\": \"unit-001-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Corollary stating log-concavity of binomial coefficients.\",\n      \"unit_key\": \"unit-001\"\n    },\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Standard Vandermonde identity for natural numbers.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib lemma for Vandermonde's identity.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Nat.choose (a+b) n = ∑ k in Finset.Icc 0 n, Nat.choose a k * Nat.choose b (n - k)\",\n              \"name_or_query\": \"Nat.vandermonde\",\n              \"why_needed\": \"Direct statement of the proposition.\"\n            }\n          ],\n          \"needed_project_context\": [],\n          \"needed_source_context\": [\n            \"prop.binom.vandermonde.NN: For a,b,n∈ℕ, (a+b choose n) = ∑_{k=0}^n (a choose k)(b choose n-k).\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For natural numbers a, b, n, the binomial coefficient (a+b choose n) equals the sum over k from 0 to n of (a choose k) times (b choose n-k).\",\n          \"task_id\": \"unit-002-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.95,\n      \"source_focus_summary\": \"Vandermonde's identity for binomial coefficients over ℕ.\",\n      \"unit_key\": \"unit-002\"\n    },\n    {\n      \"context_pack_size_risk\": \"medium\",\n      \"formalization_risks\": [\n        \"Requires finite set S, additive abelian group A, and sums over subsets.\",\n        \"May need Finset sums and Iverson bracket or indicator functions.\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib lemma for Möbius inversion on the Boolean lattice.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Given S : Finset α, a b : Finset α → A, (∀ I ⊆ S, b I = ∑ J ⊆ I, a J) → (∀ I ⊆ S, a I = ∑ J ⊆ I, (-1)^(I \\\\. J).card * b J)\",\n              \"name_or_query\": \"Finset.mobius_inversion_boolean\",\n              \"why_needed\": \"Direct statement of the theorem.\"\n            }\n          ],\n          \"needed_project_context\": [],\n          \"needed_source_context\": [\n            \"thm.pie.moeb: Boolean Möbius inversion: b_I = ∑_{J⊆I} a_J implies a_I = ∑_{J⊆I} (-1)^{|I\\\\J|} b_J.\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"For a finite set S and an additive abelian group A, if for all subsets I of S we have b_I = sum over J⊆I of a_J, then for all I we have a_I = sum over J⊆I of (-1)^(|I\\\\J|) * b_J.\",\n          \"task_id\": \"unit-003-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.85,\n      \"source_focus_summary\": \"Boolean Möbius inversion theorem.\",\n      \"unit_key\": \"unit-003\"\n    },\n    {\n      \"context_pack_size_risk\": \"low\",\n      \"formalization_risks\": [\n        \"Bijection between partitions of length ≤ N and N-partitions (weakly decreasing N-tuples).\"\n      ],\n      \"planned_declarations\": [\n        {\n          \"kind\": \"theorem\",\n          \"missing_or_uncertain_context\": [\n            \"Exact Mathlib lemma for bijection between Nat.Partition and NPartition.\"\n          ],\n          \"needed_mathlib_context\": [\n            {\n              \"expected_signature_or_shape\": \"Equiv between {p : Nat.Partition n // Multiset.card p.parts ≤ N} and NPartition N\",\n              \"name_or_query\": \"NPartition.equivPartition\",\n              \"why_needed\": \"Formalization of the bijection.\"\n            }\n          ],\n          \"needed_project_context\": [\n            {\n              \"name\": \"NPartition\",\n              \"why_needed\": \"Definition of N-partition type.\"\n            }\n          ],\n          \"needed_source_context\": [\n            \"prop.sf.Npar-as-par: Bijection between partitions of length ≤ N and N-partitions via padding with zeros.\"\n          ],\n          \"source_part\": \"whole unit\",\n          \"target_statement_sketch\": \"There is a bijection between partitions of length at most N and N-partitions, given by appending N - ℓ zeros.\",\n          \"task_id\": \"unit-004-task-1\"\n        }\n      ],\n      \"selector_confidence\": 0.9,\n      \"source_focus_summary\": \"Bijection between partitions of bounded length and N-partitions.\",\n      \"unit_key\": \"unit-004\"\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778027857,
+  "id": "gen-1778027857-ppd210hNhDMRGrV2Pz3V",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "Parasail",
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.20.1rc1.dev1005+gcbf8428d0-dp2-ep-8d2ce3c3",
+  "usage": {
+    "completion_tokens": 1537,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.00230804,
+    "cost_details": {
+      "upstream_inference_completions_cost": 0.00043036,
+      "upstream_inference_cost": 0.00230804,
+      "upstream_inference_prompt_cost": 0.00187768
+    },
+    "is_byok": false,
+    "prompt_tokens": 13412,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 14949
+  }
+}

@@ -72,9 +72,66 @@ def identifier_tokens(value: str) -> list[str]:
 
 
 def important_identifier_tokens(tokens: list[str]) -> list[str]:
-    common_shape_tokens = {"eq", "zero", "one", "lt", "gt", "le", "ge", "iff", "mpr", "mp"}
+    common_shape_tokens = {
+        "eq",
+        "zero",
+        "one",
+        "lt",
+        "gt",
+        "le",
+        "ge",
+        "iff",
+        "mpr",
+        "mp",
+        "add",
+        "sub",
+        "mul",
+        "pow",
+        "sq",
+        "succ",
+        "pred",
+    }
     namespace_tokens = {"mathlib", "mvpolynomial", "matrix", "finset", "nat", "int"}
     return [token for token in tokens if token not in common_shape_tokens and token not in namespace_tokens]
+
+
+def query_namespace_root(query: str) -> str | None:
+    identifier = clean_identifier(query)
+    if not identifier or "." not in identifier:
+        return None
+    return identifier.split(".", 1)[0]
+
+
+def query_local_tokens(query: str) -> list[str]:
+    identifier = clean_identifier(query) or query
+    local_name = identifier.rsplit(".", 1)[-1]
+    return important_identifier_tokens(identifier_tokens(local_name))
+
+
+def candidate_name_root(candidate: dict[str, Any]) -> str:
+    return str(candidate.get("name") or "").split(".", 1)[0]
+
+
+def candidate_local_haystack(candidate: dict[str, Any]) -> str:
+    name = str(candidate.get("name") or "")
+    local_name = name.rsplit(".", 1)[-1]
+    return f"{local_name} {candidate.get('declaration_line') or ''}".lower()
+
+
+def filter_fallback_candidates_for_query(query: str, candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    root = query_namespace_root(query)
+    if root:
+        candidates = [candidate for candidate in candidates if candidate_name_root(candidate) == root]
+    local_tokens = query_local_tokens(query)
+    if local_tokens:
+        local_matches = [
+            candidate
+            for candidate in candidates
+            if any(token in candidate_local_haystack(candidate) for token in local_tokens)
+        ]
+        if local_matches:
+            candidates = local_matches
+    return candidates
 
 
 def namespace_prefix(stack: list[str]) -> str:
@@ -137,6 +194,7 @@ def fallback_mathlib_candidates(query: str, *, project_root: Path, limit: int = 
                     "score": score,
                 }
             )
+    candidates = filter_fallback_candidates_for_query(query, candidates)
     candidates.sort(key=lambda item: (-int(item["score"]), str(item["path"]), int(item["line_number"])))
     return candidates[:limit]
 

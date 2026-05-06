@@ -1,0 +1,397 @@
+{
+  "benchmark_honesty_caveat": "Autonomous second-round repair-context selector output. Hidden aligned target Lean declarations, statements, names, and proofs are not included. Mathlib signatures here are included only after Lean #check hydration.",
+  "checked_signatures": [
+    {
+      "name": "Nat.choose_mul_succ_eq",
+      "signature": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Used to relate binomial coefficients with different n."
+    },
+    {
+      "name": "Nat.succ_mul_choose_eq",
+      "signature": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Used to relate binomial coefficients with different k."
+    },
+    {
+      "name": "Nat.choose_succ_succ",
+      "signature": "Nat.choose_succ_succ (n k : ℕ) : n.succ.choose k.succ = n.choose k + n.choose k.succ",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-001-repair-context-1",
+      "unit_key": "unit-001",
+      "why_needed": "Pascal's rule, may be used in the proof."
+    },
+    {
+      "declaration_line": "theorem add_choose (i j : ℕ) : (i + j).choose j = (i + j)! / (i ! * j !) := by",
+      "fallback_for_query": "Nat.choose_add_eq_choose_add_choose",
+      "name": "Nat.add_choose",
+      "signature": "Nat.add_choose (i j : ℕ) : (i + j).choose j = (i + j).factorial / (i.factorial * j.factorial)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Checked fallback candidate for failed request Nat.choose_add_eq_choose_add_choose: Direct statement of Vandermonde's identity."
+    },
+    {
+      "declaration_line": "theorem choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :",
+      "fallback_for_query": "Nat.choose_add_eq_choose_add_choose",
+      "name": "Nat.choose_eq_choose_pred_add",
+      "signature": "Nat.choose_eq_choose_pred_add {n k : ℕ} (hn : 0 < n) (hk : 0 < k) :\n  n.choose k = (n - 1).choose (k - 1) + (n - 1).choose k",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Checked fallback candidate for failed request Nat.choose_add_eq_choose_add_choose: Direct statement of Vandermonde's identity."
+    },
+    {
+      "declaration_line": "theorem add_one_mul_choose_eq : ∀ n k, (n + 1) * choose n k = choose (n + 1) (k + 1) * (k + 1)",
+      "fallback_for_query": "Nat.choose_add_eq_choose_add_choose",
+      "name": "Nat.add_one_mul_choose_eq",
+      "signature": "Nat.add_one_mul_choose_eq (n k : ℕ) : (n + 1) * n.choose k = (n + 1).choose (k + 1) * (k + 1)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Checked fallback candidate for failed request Nat.choose_add_eq_choose_add_choose: Direct statement of Vandermonde's identity."
+    },
+    {
+      "declaration_line": "theorem choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : Nat.choose n a = Nat.choose n b := by",
+      "fallback_for_query": "Nat.choose_add_eq_choose_add_choose",
+      "name": "Nat.choose_symm_of_eq_add",
+      "signature": "Nat.choose_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choose b",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Checked fallback candidate for failed request Nat.choose_add_eq_choose_add_choose: Direct statement of Vandermonde's identity."
+    },
+    {
+      "name": "Nat.Partition.ext",
+      "signature": "Nat.Partition.ext {n : ℕ} {x y : n.Partition} (parts : x.parts = y.parts) : x = y",
+      "source": "autonomous_repair_context_selection_hydrated_with_lean_check",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "To prove equality of partitions."
+    },
+    {
+      "declaration_line": "def extendLeft (c : OrderedFinpartition n) : OrderedFinpartition (n + 1) where",
+      "fallback_for_query": "NPartition.ext",
+      "name": "OrderedFinpartition.extendLeft",
+      "signature": "OrderedFinpartition.extendLeft {n : ℕ} (c : OrderedFinpartition n) : OrderedFinpartition (n + 1)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "Checked fallback candidate for failed request NPartition.ext: To prove equality of N-partitions."
+    },
+    {
+      "declaration_line": "def extendMiddle (c : OrderedFinpartition n) (k : Fin c.length) : OrderedFinpartition (n + 1) where",
+      "fallback_for_query": "NPartition.ext",
+      "name": "OrderedFinpartition.extendMiddle",
+      "signature": "OrderedFinpartition.extendMiddle {n : ℕ} (c : OrderedFinpartition n) (k : Fin c.length) : OrderedFinpartition (n + 1)",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "Checked fallback candidate for failed request NPartition.ext: To prove equality of N-partitions."
+    },
+    {
+      "declaration_line": "lemma index_extendMiddle_zero (c : OrderedFinpartition n) (i : Fin c.length) :",
+      "fallback_for_query": "NPartition.ext",
+      "name": "OrderedFinpartition.index_extendMiddle_zero",
+      "signature": "OrderedFinpartition.index_extendMiddle_zero {n : ℕ} (c : OrderedFinpartition n) (i : Fin c.length) :\n  (c.extendMiddle i).index 0 = i",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "Checked fallback candidate for failed request NPartition.ext: To prove equality of N-partitions."
+    },
+    {
+      "declaration_line": "lemma range_emb_extendMiddle_ne_singleton_zero (c : OrderedFinpartition n) (i j : Fin c.length) :",
+      "fallback_for_query": "NPartition.ext",
+      "name": "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero",
+      "signature": "OrderedFinpartition.range_emb_extendMiddle_ne_singleton_zero {n : ℕ} (c : OrderedFinpartition n) (i j : Fin c.length) :\n  Set.range ((c.extendMiddle i).emb j) ≠ {0}",
+      "source": "autonomous_repair_context_selection_checked_fallback_candidate",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "Checked fallback candidate for failed request NPartition.ext: To prove equality of N-partitions."
+    }
+  ],
+  "do_not_use_identifiers": [
+    "Nat.choose_sq_ge_choose_mul_choose_succ",
+    "Nat.vandermonde",
+    "Finset.mobius_inversion_boolean",
+    "NPartition.equivPartition"
+  ],
+  "failed_or_unchecked_context_requests": [
+    {
+      "exact_identifier": "Nat.choose_add_eq_choose_add_choose",
+      "expected_signature_or_shape": "Nat.choose_add_eq_choose_add_choose (a b n : ℕ) : (a+b).choose n = ∑ k in Finset.Icc 0 n, a.choose k * b.choose (n - k)",
+      "lean_check": {
+        "error": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+        "messages": [
+          {
+            "data": "Unknown constant `Nat.choose_add_eq_choose_add_choose`",
+            "line": 7,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "Nat.choose_add_eq_choose_add_choose",
+      "task_id": "unit-002-repair-context-1",
+      "unit_key": "unit-002",
+      "why_needed": "Direct statement of Vandermonde's identity."
+    },
+    {
+      "exact_identifier": "NPartition.ext",
+      "expected_signature_or_shape": "NPartition.ext (μ ν : NPartition N) (h : μ.parts = ν.parts) : μ = ν",
+      "lean_check": {
+        "error": "Unknown identifier `NPartition.ext`",
+        "messages": [
+          {
+            "data": "Unknown identifier `NPartition.ext`",
+            "line": 9,
+            "severity": "error"
+          }
+        ],
+        "status": "error"
+      },
+      "name_or_query": "NPartition.ext",
+      "task_id": "unit-004-repair-context-1",
+      "unit_key": "unit-004",
+      "why_needed": "To prove equality of N-partitions."
+    }
+  ],
+  "generated_at": "2026-05-06T00:42:48.958291+00:00",
+  "missing_or_uncertain_context": [
+    {
+      "item": "Need a lemma for the identity: (n choose k)^2 - (n choose k-1)*(n choose k+1) = (n+1)!/(k!(n-k)!)^2 * (n+1)/(k*(n-k+1)) or a direct proof using recurrence relations.",
+      "unit_key": "unit-001"
+    },
+    {
+      "item": "Need a lemma for Vandermonde's identity for natural numbers.",
+      "unit_key": "unit-002"
+    },
+    {
+      "item": "The local lemmas are sufficient; no additional Mathlib context is needed.",
+      "unit_key": "unit-003"
+    },
+    {
+      "item": "Need lemmas to prove that ofPartition and toPartition are inverses: e.g., toPartition_ofPartition and ofPartition_toPartition.",
+      "unit_key": "unit-004"
+    }
+  ],
+  "proof_strategy_notes": [
+    {
+      "failure_analysis": "The generated Lean code contains a placeholder (sorry) and unsolved goals. The attempted proof uses an incomplete combinatorial identity and misapplies Nat.choose_pos. The verifier errors show that the proof cannot be completed from the visible context.",
+      "proof_strategy_note": "Prove the inequality using the known identity: (n choose k)^2 - (n choose k-1)*(n choose k+1) = (n+1)!/(k!(n-k)!)^2 * (n+1)/(k*(n-k+1)) > 0 for 0<k<n. This can be derived from the recurrence relation of binomial coefficients. Use the identity: (n choose k) = (n choose k-1) * (n-k+1)/k and (n choose k+1) = (n choose k) * (n-k)/(k+1). Then compute the product and simplify to show positivity. Alternatively, use the known log-concavity lemma from Mathlib: Nat.choose_mul_succ_eq and Nat.succ_mul_choose_eq.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-001"
+    },
+    {
+      "failure_analysis": "The generated Lean code contains a placeholder (sorry) and a syntax error (unexpected token 'in'). The attempted proof uses polynomial ring ℕ[x] and binomial theorem, but the binomial theorem for ℕ[x] is not provided. The verifier error indicates that the syntax is invalid.",
+      "proof_strategy_note": "Prove Vandermonde's identity using a combinatorial argument: the number of ways to choose n elements from a+b is the sum over k of choosing k from a and n-k from b. This can be proved by induction on a or using the identity (1+x)^(a+b) = (1+x)^a * (1+x)^b and comparing coefficients. Since the polynomial ring approach is complex, use the combinatorial identity directly via induction on a or using Nat.choose_add_eq_choose_add_choose.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-002"
+    },
+    {
+      "failure_analysis": "The generated Lean code contains a placeholder (sorry) and a syntax error (unexpected token 'in'). The attempted proof mentions Möbius inversion but does not provide a proof. The verifier error indicates that the syntax is invalid.",
+      "proof_strategy_note": "Prove Boolean Möbius inversion using the given local lemmas: alternatingSum_superset_eq_iverson_a, alternatingSum_superset_eq_iverson_b, and sum_powerset_powerset_swap. The proof proceeds by substituting the hypothesis into the expression for a_I and using the alternating sum lemmas to simplify. Specifically, compute ∑_{J⊆I} (-1)^{|I\\J|} b_J = ∑_{J⊆I} (-1)^{|I\\J|} ∑_{K⊆J} a_K = ∑_{K⊆I} a_K ∑_{J: K⊆J⊆I} (-1)^{|I\\J|}. The inner sum equals 1 if K=I and 0 otherwise by the alternating sum lemmas.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-003"
+    },
+    {
+      "failure_analysis": "The generated Lean code contains a placeholder (sorry) and an ambiguity error: 'NPartition' is ambiguous between _root_.NPartition and AlgebraicCombinatorics.SymmetricFunctions.NPartition. The attempted proof does not provide a bijection. The verifier error indicates that the namespace is ambiguous.",
+      "proof_strategy_note": "Prove the bijection using the existing definitions ofPartition and toPartition from the local file NPartition.lean. The equivalence can be constructed as an Equiv with forward map ofPartition and reverse map toPartition, and then prove that they are inverses. The ambiguity can be resolved by using the full name _root_.NPartition or by opening the correct namespace.",
+      "selector_confidence": 0.0,
+      "unit_key": "unit-004"
+    }
+  ],
+  "raw_selection_output": {
+    "units": [
+      {
+        "do_not_use_identifiers": [
+          "Nat.choose_sq_ge_choose_mul_choose_succ"
+        ],
+        "failure_analysis": "The generated Lean code contains a placeholder (sorry) and unsolved goals. The attempted proof uses an incomplete combinatorial identity and misapplies Nat.choose_pos. The verifier errors show that the proof cannot be completed from the visible context.",
+        "missing_or_uncertain_context": [
+          "Need a lemma for the identity: (n choose k)^2 - (n choose k-1)*(n choose k+1) = (n+1)!/(k!(n-k)!)^2 * (n+1)/(k*(n-k+1)) or a direct proof using recurrence relations."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Nat.choose_mul_succ_eq (n k : ℕ) : n.choose k * (n + 1) = (n + 1).choose k * (n + 1 - k)",
+            "name_or_query": "Nat.choose_mul_succ_eq",
+            "why_needed": "Used to relate binomial coefficients with different n."
+          },
+          {
+            "expected_signature_or_shape": "Nat.succ_mul_choose_eq (n k : ℕ) : n.succ * n.choose k = n.succ.choose k.succ * k.succ",
+            "name_or_query": "Nat.succ_mul_choose_eq",
+            "why_needed": "Used to relate binomial coefficients with different k."
+          },
+          {
+            "expected_signature_or_shape": "Nat.choose_succ_succ (n k : ℕ) : (n+1).choose (k+1) = n.choose (k+1) + n.choose k",
+            "name_or_query": "Nat.choose_succ_succ",
+            "why_needed": "Pascal's rule, may be used in the proof."
+          }
+        ],
+        "repair_strategy_note": "Prove the inequality using the known identity: (n choose k)^2 - (n choose k-1)*(n choose k+1) = (n+1)!/(k!(n-k)!)^2 * (n+1)/(k*(n-k+1)) > 0 for 0<k<n. This can be derived from the recurrence relation of binomial coefficients. Use the identity: (n choose k) = (n choose k-1) * (n-k+1)/k and (n choose k+1) = (n choose k) * (n-k)/(k+1). Then compute the product and simplify to show positivity. Alternatively, use the known log-concavity lemma from Mathlib: Nat.choose_mul_succ_eq and Nat.succ_mul_choose_eq.",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "cor.lgv.binom-unimod",
+            "why_needed": "Provides the statement to prove."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-001"
+      },
+      {
+        "do_not_use_identifiers": [
+          "Nat.vandermonde"
+        ],
+        "failure_analysis": "The generated Lean code contains a placeholder (sorry) and a syntax error (unexpected token 'in'). The attempted proof uses polynomial ring ℕ[x] and binomial theorem, but the binomial theorem for ℕ[x] is not provided. The verifier error indicates that the syntax is invalid.",
+        "missing_or_uncertain_context": [
+          "Need a lemma for Vandermonde's identity for natural numbers."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Nat.choose_add_eq_choose_add_choose (a b n : ℕ) : (a+b).choose n = ∑ k in Finset.Icc 0 n, a.choose k * b.choose (n - k)",
+            "name_or_query": "Nat.choose_add_eq_choose_add_choose",
+            "why_needed": "Direct statement of Vandermonde's identity."
+          }
+        ],
+        "repair_strategy_note": "Prove Vandermonde's identity using a combinatorial argument: the number of ways to choose n elements from a+b is the sum over k of choosing k from a and n-k from b. This can be proved by induction on a or using the identity (1+x)^(a+b) = (1+x)^a * (1+x)^b and comparing coefficients. Since the polynomial ring approach is complex, use the combinatorial identity directly via induction on a or using Nat.choose_add_eq_choose_add_choose.",
+        "selected_visible_context": [
+          {
+            "context_kind": "source",
+            "name_or_label": "prop.binom.vandermonde.NN",
+            "why_needed": "Provides the statement to prove."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-002"
+      },
+      {
+        "do_not_use_identifiers": [
+          "Finset.mobius_inversion_boolean"
+        ],
+        "failure_analysis": "The generated Lean code contains a placeholder (sorry) and a syntax error (unexpected token 'in'). The attempted proof mentions Möbius inversion but does not provide a proof. The verifier error indicates that the syntax is invalid.",
+        "missing_or_uncertain_context": [
+          "The local lemmas are sufficient; no additional Mathlib context is needed."
+        ],
+        "needed_mathlib_context": [],
+        "repair_strategy_note": "Prove Boolean Möbius inversion using the given local lemmas: alternatingSum_superset_eq_iverson_a, alternatingSum_superset_eq_iverson_b, and sum_powerset_powerset_swap. The proof proceeds by substituting the hypothesis into the expression for a_I and using the alternating sum lemmas to simplify. Specifically, compute ∑_{J⊆I} (-1)^{|I\\J|} b_J = ∑_{J⊆I} (-1)^{|I\\J|} ∑_{K⊆J} a_K = ∑_{K⊆I} a_K ∑_{J: K⊆J⊆I} (-1)^{|I\\J|}. The inner sum equals 1 if K=I and 0 otherwise by the alternating sum lemmas.",
+        "selected_visible_context": [
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "alternatingSum_superset_eq_iverson_a",
+            "why_needed": "Used to evaluate the alternating sum over supersets."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "alternatingSum_superset_eq_iverson_b",
+            "why_needed": "Used to evaluate the alternating sum over supersets with complement cardinality."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "sum_powerset_powerset_swap",
+            "why_needed": "Used to swap the order of summation."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-003"
+      },
+      {
+        "do_not_use_identifiers": [
+          "NPartition.equivPartition"
+        ],
+        "failure_analysis": "The generated Lean code contains a placeholder (sorry) and an ambiguity error: 'NPartition' is ambiguous between _root_.NPartition and AlgebraicCombinatorics.SymmetricFunctions.NPartition. The attempted proof does not provide a bijection. The verifier error indicates that the namespace is ambiguous.",
+        "missing_or_uncertain_context": [
+          "Need lemmas to prove that ofPartition and toPartition are inverses: e.g., toPartition_ofPartition and ofPartition_toPartition."
+        ],
+        "needed_mathlib_context": [
+          {
+            "expected_signature_or_shape": "Nat.Partition.ext (p q : Nat.Partition n) (h : p.parts = q.parts) : p = q",
+            "name_or_query": "Nat.Partition.ext",
+            "why_needed": "To prove equality of partitions."
+          },
+          {
+            "expected_signature_or_shape": "NPartition.ext (μ ν : NPartition N) (h : μ.parts = ν.parts) : μ = ν",
+            "name_or_query": "NPartition.ext",
+            "why_needed": "To prove equality of N-partitions."
+          }
+        ],
+        "repair_strategy_note": "Prove the bijection using the existing definitions ofPartition and toPartition from the local file NPartition.lean. The equivalence can be constructed as an Equiv with forward map ofPartition and reverse map toPartition, and then prove that they are inverses. The ambiguity can be resolved by using the full name _root_.NPartition or by opening the correct namespace.",
+        "selected_visible_context": [
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "ofPartition",
+            "why_needed": "Converts a partition to an N-partition."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "toPartition",
+            "why_needed": "Converts an N-partition to a partition."
+          },
+          {
+            "context_kind": "local_file_predecessor",
+            "name_or_label": "filter_ne_zero_sum",
+            "why_needed": "Used in the definition of toPartition."
+          }
+        ],
+        "selector_confidence": 0.0,
+        "unit_key": "unit-004"
+      }
+    ]
+  },
+  "repair_context_run": "docs/latex-statement-repair-loop-runs/2026-05-06-diverse4-loop-v1-paid/round-01-context",
+  "schema_version": "repoprover.latex_statement_checked_repair_context.v1",
+  "selected_visible_context": [
+    {
+      "context_kind": "source",
+      "name_or_label": "cor.lgv.binom-unimod",
+      "unit_key": "unit-001",
+      "why_needed": "Provides the statement to prove."
+    },
+    {
+      "context_kind": "source",
+      "name_or_label": "prop.binom.vandermonde.NN",
+      "unit_key": "unit-002",
+      "why_needed": "Provides the statement to prove."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "alternatingSum_superset_eq_iverson_a",
+      "unit_key": "unit-003",
+      "why_needed": "Used to evaluate the alternating sum over supersets."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "alternatingSum_superset_eq_iverson_b",
+      "unit_key": "unit-003",
+      "why_needed": "Used to evaluate the alternating sum over supersets with complement cardinality."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "sum_powerset_powerset_swap",
+      "unit_key": "unit-003",
+      "why_needed": "Used to swap the order of summation."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "ofPartition",
+      "unit_key": "unit-004",
+      "why_needed": "Converts a partition to an N-partition."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "toPartition",
+      "unit_key": "unit-004",
+      "why_needed": "Converts an N-partition to a partition."
+    },
+    {
+      "context_kind": "local_file_predecessor",
+      "name_or_label": "filter_ne_zero_sum",
+      "unit_key": "unit-004",
+      "why_needed": "Used in the definition of toPartition."
+    }
+  ]
+}

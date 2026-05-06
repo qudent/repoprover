@@ -1,0 +1,134 @@
+{
+  "units": [
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Inequality of binomial coefficients may require known combinatorial identities or log-concavity."
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for binomial coefficient log-concavity or direct inequality proof."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.choose n k * Nat.choose n k ≥ Nat.choose n (k-1) * Nat.choose n (k+1) for n,k : ℕ",
+              "name_or_query": "Nat.choose_sq_ge_choose_mul_choose_succ",
+              "why_needed": "Direct statement of the corollary."
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "cor.lgv.binom-unimod: Let n,k∈ℕ. Then, (n choose k)^2 ≥ (n choose k-1)·(n choose k+1)."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For natural numbers n and k, the square of the binomial coefficient n choose k is at least the product of n choose (k-1) and n choose (k+1).",
+          "task_id": "unit-001-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Corollary stating log-concavity of binomial coefficients.",
+      "unit_key": "unit-001"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Standard Vandermonde identity for natural numbers."
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for Vandermonde's identity."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Nat.choose (a+b) n = ∑ k in Finset.Icc 0 n, Nat.choose a k * Nat.choose b (n - k)",
+              "name_or_query": "Nat.vandermonde",
+              "why_needed": "Direct statement of the proposition."
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "prop.binom.vandermonde.NN: For a,b,n∈ℕ, (a+b choose n) = ∑_{k=0}^n (a choose k)(b choose n-k)."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For natural numbers a, b, n, the binomial coefficient (a+b choose n) equals the sum over k from 0 to n of (a choose k) times (b choose n-k).",
+          "task_id": "unit-002-task-1"
+        }
+      ],
+      "selector_confidence": 0.95,
+      "source_focus_summary": "Vandermonde's identity for binomial coefficients over ℕ.",
+      "unit_key": "unit-002"
+    },
+    {
+      "context_pack_size_risk": "medium",
+      "formalization_risks": [
+        "Requires finite set S, additive abelian group A, and sums over subsets.",
+        "May need Finset sums and Iverson bracket or indicator functions."
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for Möbius inversion on the Boolean lattice."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Given S : Finset α, a b : Finset α → A, (∀ I ⊆ S, b I = ∑ J ⊆ I, a J) → (∀ I ⊆ S, a I = ∑ J ⊆ I, (-1)^(I \\. J).card * b J)",
+              "name_or_query": "Finset.mobius_inversion_boolean",
+              "why_needed": "Direct statement of the theorem."
+            }
+          ],
+          "needed_project_context": [],
+          "needed_source_context": [
+            "thm.pie.moeb: Boolean Möbius inversion: b_I = ∑_{J⊆I} a_J implies a_I = ∑_{J⊆I} (-1)^{|I\\J|} b_J."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "For a finite set S and an additive abelian group A, if for all subsets I of S we have b_I = sum over J⊆I of a_J, then for all I we have a_I = sum over J⊆I of (-1)^(|I\\J|) * b_J.",
+          "task_id": "unit-003-task-1"
+        }
+      ],
+      "selector_confidence": 0.85,
+      "source_focus_summary": "Boolean Möbius inversion theorem.",
+      "unit_key": "unit-003"
+    },
+    {
+      "context_pack_size_risk": "low",
+      "formalization_risks": [
+        "Bijection between partitions of length ≤ N and N-partitions (weakly decreasing N-tuples)."
+      ],
+      "planned_declarations": [
+        {
+          "kind": "theorem",
+          "missing_or_uncertain_context": [
+            "Exact Mathlib lemma for bijection between Nat.Partition and NPartition."
+          ],
+          "needed_mathlib_context": [
+            {
+              "expected_signature_or_shape": "Equiv between {p : Nat.Partition n // Multiset.card p.parts ≤ N} and NPartition N",
+              "name_or_query": "NPartition.equivPartition",
+              "why_needed": "Formalization of the bijection."
+            }
+          ],
+          "needed_project_context": [
+            {
+              "name": "NPartition",
+              "why_needed": "Definition of N-partition type."
+            }
+          ],
+          "needed_source_context": [
+            "prop.sf.Npar-as-par: Bijection between partitions of length ≤ N and N-partitions via padding with zeros."
+          ],
+          "source_part": "whole unit",
+          "target_statement_sketch": "There is a bijection between partitions of length at most N and N-partitions, given by appending N - ℓ zeros.",
+          "task_id": "unit-004-task-1"
+        }
+      ],
+      "selector_confidence": 0.9,
+      "source_focus_summary": "Bijection between partitions of bounded length and N-partitions.",
+      "unit_key": "unit-004"
+    }
+  ]
+}

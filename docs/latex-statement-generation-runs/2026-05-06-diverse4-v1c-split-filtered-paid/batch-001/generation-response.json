@@ -1,0 +1,51 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "annotations": null,
+        "audio": null,
+        "content": "{\n  \"units\": [\n    {\n      \"declaration_names\": [\n        \"Nat.choose_sq_ge_choose_mul_choose_succ\"\n      ],\n      \"lean_file_body\": \"theorem Nat.choose_sq_ge_choose_mul_choose_succ (n k : ℕ) :\\n    (Nat.choose n k) ^ 2 ≥ Nat.choose n (k - 1) * Nat.choose n (k + 1) :=\",\n      \"notes\": [\n        \"The statement is a known log-concavity property of binomial coefficients. A full proof would require combinatorial identities or induction; the visible context does not provide a ready lemma. The theorem is stated but the proof is omitted as per instructions (no sorry/admit).\"\n      ],\n      \"status\": \"cannot_prove_from_visible_context\",\n      \"unit_key\": \"unit-001\",\n      \"used_context\": [\n        \"source unit cor.lgv.binom-unimod\",\n        \"Nat.choose from Mathlib\"\n      ]\n    }\n  ]\n}",
+        "function_call": null,
+        "refusal": null,
+        "role": "assistant",
+        "tool_calls": null
+      },
+      "native_finish_reason": "stop"
+    }
+  ],
+  "created": 1778028994,
+  "id": "gen-1778028994-KYfduI0FBzgMcHNXQIKC",
+  "model": "deepseek/deepseek-v4-flash-20260423",
+  "object": "chat.completion",
+  "provider": "DeepInfra",
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 228,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": 0,
+      "image_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "cost": 0.0012075,
+    "cost_details": {
+      "upstream_inference_completions_cost": 6.384e-05,
+      "upstream_inference_cost": 0.0012075,
+      "upstream_inference_prompt_cost": 0.00114366
+    },
+    "is_byok": false,
+    "prompt_tokens": 8169,
+    "prompt_tokens_details": {
+      "audio_tokens": 0,
+      "cache_write_tokens": 0,
+      "cached_tokens": 0,
+      "video_tokens": 0
+    },
+    "total_tokens": 8397
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "base_imports": [
+    "Mathlib"
+  ],
+  "base_opens": [
+    "open scoped Polynomial BigOperators",
+    "open PowerSeries Finset"
+  ],
+  "batches": [
+    {
+      "compile_passed_units": 0,
+      "generation_output": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-redacted-paid/batch-001/generation-output.json",
+      "imports": [
+        "Mathlib",
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "inferred_imports": [
+        "AlgebraicCombinatorics.SymmetricFunctions.MonomialSymmetric",
+        "AlgebraicCombinatorics.SymmetricFunctions.NPartition"
+      ],
+      "inferred_opens": [
+        "open AlgebraicCombinatorics.SymmetricFunctions"
+      ],
+      "opens": [
+        "open scoped Polynomial BigOperators",
+        "open PowerSeries Finset",
+        "open AlgebraicCombinatorics.SymmetricFunctions"
+      ],
+      "unit_count": 1,
+      "units": [
+        {
+          "body_declaration_names": [
+            "NPartitionEquivNatPartitionBounded"
+          ],
+          "compile_passed": false,
+          "contract_violations": [],
+          "declaration_names": [
+            "NPartitionEquivNatPartitionBounded"
+          ],
+          "lean_error_count": 4,
+          "lean_returncode": 1,
+          "messages": [
+            {
+              "column": 57,
+              "data": "Ambiguous term\n  NPartition\nPossible interpretations:\n  _root_.NPartition N : Type\n  \n  AlgebraicCombinatorics.SymmetricFunctions.NPartition N : Type",
+              "kind": "[anonymous]",
+              "line": 10,
+              "severity": "error"
+            },
+            {
+              "column": 20,
+              "data": "Application type mismatch: The argument\n  NPartition.toPartition ?m.28\nhas type\n  (NPartition.size ?m.28).Partition\nbut is expected to have type\n  n.Partition\nin the application\n  Subtype.mk (NPartition.toPartition ?m.28)",
+              "kind": "[anonymous]",
+              "line": 12,
+              "severity": "error"
+            },
+            {
+              "column": 64,
+              "data": "Invalid field `sum`: The environment does not contain `Nat.Partition.sum`, so it is not possible to project the field `sum` from an expression\n  NPartition.toPartition ?m.36\nof type\n  (NPartition.size ?m.36).Partition",
+              "kind": "lean.invalidField._namedError",
+              "line": 13,
+              "severity": "error"
+            },
+            {
+              "column": 14,
+              "data": "unsolved goals\ncase a.parts.a\nn N : ℕ\np : n.Partition\nh : p.parts.card ≤ N\na✝ : ℕ\n⊢ Multiset.count a✝ (sorry ()).parts = Multiset.count a✝ p.parts",
+              "kind": "Tactic.unsolvedGoals",
+              "line": 20,
+              "severity": "error"
+            },
+            {
+              "column": 15,
+              "data": "This simp argument is unused:\n  NPartition.ofPartition\n\nHint: Omit it from the simp argument list.\n  simp [̵N̵P̵a̵r̵t̵i̵t̵i̵o̵n̵.̵o̵f̵P̵a̵r̵t̵i̵t̵i̵o̵n̵,̵ ̵N̵P̵a̵r̵t̵i̵t̵i̵o̵n̵.̵t̵o̵P̵a̵r̵t̵i̵t̵i̵o̵n̵,̵[̲N̲P̲a̲r̲t̲i̲t̲i̲o̲n̲.̲t̲o̲P̲a̲r̲t̲i̲t̲i̲o̲n̲,̲ h]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
+              "kind": "linter.unusedSimpArgs",
+              "line": 22,
+              "severity": "warning"
+            },
+            {
+              "column": 39,
+              "data": "This simp argument is unused:\n  NPartition.toPartition\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.ofPartition, N̵P̵a̵r̵t̵i̵t̵i̵o̵n̵.̵t̵o̵P̵a̵r̵t̵i̵t̵i̵o̵n̵,̵ ̵h]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
+              "kind": "linter.unusedSimpArgs",
+              "line": 22,
+              "severity": "warning"
+            },
+            {
+              "column": 63,
+              "data": "This simp argument is unused:\n  h\n\nHint: Omit it from the simp argument list.\n  simp [NPartition.ofPartition, NPartition.toPartition,̵ ̵h̵]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`",
+              "kind": "linter.unusedSimpArgs",
+              "line": 22,
+              "severity": "warning"
+            }
+          ],
+          "placeholder_tokens": [],
+          "reported_status": "generated",
+          "skipped_reason": null,
+          "stderr": "",
+          "unit_key": "unit-004"
+        }
+      ]
+    }
+  ],
+  "compile_passed_units": 0,
+  "generated_at": "2026-05-06T01:04:06.768323+00:00",
+  "generation_run": "docs/latex-statement-generation-runs/2026-05-06-diverse4-unit004-redacted-paid",
+  "infer_context": true,
+  "project_root": "/home/name/repos/repoprover/algebraic-combinatorics",
+  "schema_version": "repoprover.latex_statement_generation_verification.v1",
+  "unit_count": 1
+}

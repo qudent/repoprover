@@ -1,0 +1,18 @@
+{
+  "units": [
+    {
+      "declaration_names": [
+        "equivPartition"
+      ],
+      "lean_file_body": "open scoped Polynomial\nopen MvPolynomial Finset Equiv\n\nnamespace AlgebraicCombinatorics\nnamespace SymmetricFunctions\n\nvariable {N : ℕ}\n\n/-- The bijection between partitions of length ≤ N and N-partitions, given by padding with zeros. -/\ndef equivPartition : {p : Nat.Partition n // Multiset.card p.parts ≤ N} ≃ NPartition N where\n  toFun := λ ⟨p, hp⟩ => NPartition.ofPartition p hp\n  invFun := λ μ => ⟨NPartition.toPartition μ, by\n    have hsize : NPartition.size μ = Multiset.card (NPartition.toPartition μ).parts := rfl\n    have hcard : Multiset.card (NPartition.toPartition μ).parts ≤ N := by\n      have : (NPartition.toPartition μ).parts = (Finset.univ.val.map μ.parts).filter (· ≠ 0) := rfl\n      calc\n        Multiset.card ((Finset.univ.val.map μ.parts).filter (· ≠ 0)) ≤ Multiset.card (Finset.univ.val.map μ.parts) := Multiset.card_filter_le _ _\n        _ = Finset.card (Finset.univ : Finset (Fin N)) := by simp\n        _ = N := by simp\n    exact hcard⟩\n  left_inv := by\n    intro ⟨p, hp⟩\n    ext1\n    dsimp [NPartition.toPartition, NPartition.ofPartition]\n    sorry\n  right_inv := by\n    intro μ\n    ext1 i\n    dsimp [NPartition.ofPartition, NPartition.toPartition]\n    sorry\n\nend SymmetricFunctions\nend AlgebraicCombinatorics",
+      "notes": [
+        "The proof of left_inv and right_inv is not provided; the definitions ofPartition and toPartition are taken from local_file_predecessor_declarations but their full correctness proof requires additional lemmas about sorting and filtering that are not fully available in the visible context. The statement is structurally correct but the proofs are incomplete."
+      ],
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-004",
+      "used_context": [
+        "source/project/Mathlib facts actually used: NPartition structure, NPartition.ofPartition, NPartition.toPartition, Nat.Partition, Multiset.card"
+      ]
+    }
+  ]
+}
