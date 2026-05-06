@@ -746,6 +746,23 @@ semantic coverage `1/5`. The useful signal is negative but clean: this cheap
 proof lane can recognize missing project definitions/bridges without emitting
 bad Lean, but it did not solve those four hard fresh-slice units.
 
+`scripts/mine_proof_lane_decline_context.py` now mines those clean decline
+notes against target-hidden proof-lane task dossiers and the visible project
+Lean source tree, without using gold alignments or elaborated target
+dependencies. On the two paid clean-decline proof-lane runs above, it scanned
+5,677 project declarations across 53 project Lean files and analyzed 6 declined
+units. The headline result is that 15 identifiers were found in project source
+but only mentioned, not selected as usable project/local declarations; 11 were
+already selected as visible context; and 14 were not in the project-source
+index. This separates likely context-acquisition failures, like Catalan Hankel
+and Jacobi-Trudi-e project definitions that exist but were not selected, from
+likely proof-synthesis failures, like NPartition where core declarations were
+already selected, and Mathlib-hydration gaps such as `Ring.choose_add` or
+`PowerSeries.coeff_inv`. The report is
+`docs/latex-statement-proof-lane-decline-context-2026-05-06.md`; it is a
+diagnostic artifact only, and any candidate declarations must still be filtered
+against target-hidden/current-unit policy before entering model prompts.
+
 ### Imported Lean surface and likely context needs
 
 The generated Algebraic Combinatorics Lean files are built in a very broad

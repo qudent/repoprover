@@ -1,0 +1,733 @@
+{
+  "benchmark_honesty_caveat": "This report does not use gold alignment or elaborated target dependencies. It scans the project source tree and target-hidden proof-lane dossiers only. Because the current repo contains the finished formalization, candidate declarations must still be filtered against target-hidden/current-unit policy before being placed into model prompts.",
+  "generated_at": "2026-05-06T11:29:06.610229+00:00",
+  "project_declaration_count": 5677,
+  "project_file_count": 53,
+  "project_root": "algebraic-combinatorics",
+  "proof_lane_generation_runs": [
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+    "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1"
+  ],
+  "schema_version": "repoprover.proof_lane_decline_context_mining.v1",
+  "summary": {
+    "declined_unit_count": 6,
+    "identifier_class_counts": {
+      "found_and_name_mentioned_but_declaration_not_selected": 15,
+      "found_and_selected_as_visible_context": 11,
+      "not_found_in_project_index": 14
+    },
+    "unit_count_by_run": {
+      "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1": 2,
+      "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1": 4
+    }
+  },
+  "units": [
+    {
+      "extracted_identifier_count": 8,
+      "identifier_class_counts": {
+        "found_and_name_mentioned_but_declaration_not_selected": 8
+      },
+      "identifier_results": [
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 5147,
+              "local_name": "catalanHankelMatrix",
+              "match_kind": "exact_local_name",
+              "name": "LGV.catalanHankelMatrix",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "def catalanHankelMatrix (k : ℕ) : Matrix (Fin k) (Fin k) ℤ :=\n  Matrix.of fun i j => (catalan ((i : ℕ) + (j : ℕ)) : ℤ)\n\n/-- The Catalan Hankel matrix is symmetric (since c_{i+j} = c_{j+i}). -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "catalanHankelMatrix"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 758,
+              "local_name": "pathWeightMatrix",
+              "match_kind": "exact_local_name",
+              "name": "LGV.pathWeightMatrix",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def pathWeightMatrix {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) (w : ArcWeight D K) {k : ℕ}\n    (A B : kVertex V k) : Matrix (Fin k) (Fin k) K :=\n  Matrix.of fun i j => pathWeightSum hpf w (A i) (B j)\n\n/-!\n## LGV Lemma: Weighted Lattice Version\n\nTheorem thm.lgv.kpaths.wt: For the integer lattice with arc weights w,\ndet(M) = ∑_{σ ∈ Sₖ} (-1)^σ ∑_{𝐩 nipat from 𝐀 to σ(𝐁)} w(𝐩)\n-/\n\n/-- The set of non-intersecting path tuples from 𝐀 to 𝐁 -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "pathWeightMatrix"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "theorem",
+              "line": 5305,
+              "local_name": "dyckDigraph_pathFinite",
+              "match_kind": "exact_local_name",
+              "name": "LGV.dyckDigraph_pathFinite",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "theorem dyckDigraph_pathFinite : dyckDigraph.IsPathFinite := by\n  intro u v\n  by_cases h : v.1 < u.1\n  · -- Case 1: No paths exist (would need to go backwards in x)\n    convert Set.finite_empty\n    ext p\n    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]\n    intro hstart hfinish\n    have hlen := dyckDigraph_path_length_eq p\n    rw [hstart, hfinish] at hlen\n    have hpos : 0 < p.vertices.length := List.length_pos_of_ne_nil p.nonempty\n    omega\n  · -- Case 2: Paths exist but are finite\n    push_neg at h\n    -- Define the path length\n    let n := (v.1 - u.1 + 1).toNat\n    -- Define the bounding box for the second coordinate\n    -- The second coordinate stays between 0 and u.2 + n\n    let maxY := u.2 + n\n    let box : Finset (ℤ × ℕ) := (Finset.Icc u.1 v.1) ×ˢ (Finset.range (maxY + 1))\n    -- Define the subtype of paths from u to v\n    let S := {p : SimpleDigraph.Path dyckDigraph | p.start = u ∧ p.finish = v}\n    -- Show S is finite by injecting into Fin n → box\n    suffices Finite S by exact Set.finite_coe_iff.mpr this\n    -- Define the injection: map each path to its vertex list as a function\n    let f : S → (Fin n → box) := fun ⟨p, hp⟩ i =>\n      let hi : i.val < p.vertices.length := by\n        have hlen := dyckDigraph_path_length_eq p\n        rw [hp.1, hp.2] at hlen\n        simp only [n] at hlen ⊢\n        have := i.isLt\n        omega"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "dyckDigraph_pathFinite"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 5426,
+              "local_name": "dyckUnitArcWeight",
+              "match_kind": "exact_local_name",
+              "name": "LGV.dyckUnitArcWeight",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def dyckUnitArcWeight : ArcWeight dyckDigraph ℤ :=\n  fun _ _ _ => 1\n\n/-- Helper: path weight with unit weight is 1 -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "dyckUnitArcWeight"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 3858,
+              "local_name": "xDecreasing",
+              "match_kind": "exact_local_name",
+              "name": "LGV.xDecreasing",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "def xDecreasing {k : ℕ} (A : kVertex (ℤ × ℤ) k) : Prop :=\n  ∀ i j : Fin k, i ≤ j → xCoord (A j) ≤ xCoord (A i)\n\n/-- A k-vertex has weakly increasing y-coordinates -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "xDecreasing"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 3862,
+              "local_name": "yIncreasing",
+              "match_kind": "exact_local_name",
+              "name": "LGV.yIncreasing",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "def yIncreasing {k : ℕ} (A : kVertex (ℤ × ℤ) k) : Prop :=\n  ∀ i j : Fin k, i ≤ j → yCoord (A i) ≤ yCoord (A j)\n\n/-- Discrete intermediate value theorem for integers (auxiliary version with explicit n) -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "yIncreasing"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 818,
+              "local_name": "nipatWeightSum",
+              "match_kind": "exact_local_name",
+              "name": "LGV.nipatWeightSum",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def nipatWeightSum {V : Type*} [DecidableEq V] {D : SimpleDigraph V}\n    (hpf : D.IsPathFinite) (w : ArcWeight D K) {k : ℕ}\n    (A B : kVertex V k) (_σ : Equiv.Perm (Fin k)) : K :=\n  ∑ pt ∈ nipatFinset hpf A B, pathTupleWeight w pt.paths\n\n/-!\n## Path Tuple Infrastructure for LGV\n\nThe key step in the LGV proof is to express the product of sums as a sum over path tuples:\n  ∏_j (∑_{p : A_j → B_j} w(p)) = ∑_{pt : PathTuple} pathTupleWeight w pt.paths\n\nThis uses `Finset.prod_univ_sum` and a bijection between PathTuple and the piFinset.\n-/\n\n/-- Bijection between PathTuple and the piFinset of pathsFromTo.\n    This is the key to converting the product of sums to a sum over path tuples. -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "nipatWeightSum"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "structure",
+              "line": 97,
+              "local_name": "Path",
+              "match_kind": "suffix_full_name",
+              "name": "LGV.SimpleDigraph.Path",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Determinants/LGV2.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "structure Path (D : SimpleDigraph V) where\n  /-- The vertices of the path, in order -/\n  vertices : List V\n  /-- The path is nonempty -/\n  nonempty : vertices ≠ []\n  /-- Consecutive vertices are connected by arcs -/\n  arcs_valid : ∀ i : ℕ, ∀ hi : i + 1 < vertices.length, D.arc (vertices.get ⟨i, Nat.lt_of_succ_lt hi⟩)\n      (vertices.get ⟨i + 1, hi⟩)\n\n/-- The starting vertex of a path -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "SimpleDigraph.Path"
+        }
+      ],
+      "notes": [
+        "Missing definitions: catalanHankelMatrix, pathWeightMatrix, dyckDigraph_pathFinite, dyckUnitArcWeight, xDecreasing, yIncreasing, nipatWeightSum. Local file predecessors fail to compile due to missing SimpleDigraph.Path. Cannot prove without project definitions."
+      ],
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001"
+    },
+    {
+      "extracted_identifier_count": 10,
+      "identifier_class_counts": {
+        "found_and_name_mentioned_but_declaration_not_selected": 2,
+        "found_and_selected_as_visible_context": 3,
+        "not_found_in_project_index": 5
+      },
+      "identifier_results": [
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "Ring.choose"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "theorem",
+              "line": 1127,
+              "local_name": "generalizedNewtonBinomial",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.FPS.generalizedNewtonBinomial",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "theorem generalizedNewtonBinomial (c : K) :\n    (1 + X : K⟦X⟧) ^ᶠ c = binomialSeries K c := by\n  -- We prove by showing both sides have the same coefficients.\n  ext k\n  -- The RHS coefficient is Ring.choose c k.\n  rw [binomialSeries_coeff, smul_eq_mul, mul_one]\n  -- For natural n, both sides give Nat.choose n k = Ring.choose n k.\n  -- LHS: fpsPow (1+X) n = (1+X)^n (by fpsPow_nat)\n  --      coeff k ((1+X)^n) = Nat.choose n k\n  -- RHS: Ring.choose n k = Nat.choose n k (by Ring.choose_natCast)\n  have h_nat : ∀ n : ℕ, coeff k ((1 + X : K⟦X⟧) ^ᶠ (n : K)) = Ring.choose (n : K) k := by\n    intro n\n    rw [fpsPow_nat' hasConstantTermOne_one_add_X n]\n    -- coeff k ((1+X)^n) = Nat.choose n k\n    have hpoly : (1 + X : K⟦X⟧) ^ n =\n        (((1 : Polynomial K) + Polynomial.X) ^ n).toPowerSeries := by simp\n    rw [hpoly, Polynomial.coeff_coe, Polynomial.coeff_one_add_X_pow, Ring.choose_natCast]\n  -- Both coeff k (fpsPow (1+X) c) and Ring.choose c k are polynomial in c\n  -- (of degree ≤ k) and agree on all natural numbers.\n  -- By the polynomial identity principle, they are equal.\n  --\n  -- For Ring.choose c k: by Ring.descPochhammer_eq_factorial_smul_choose,\n  -- k! • Ring.choose c k = (descPochhammer ℤ k).smeval c, so Ring.choose c k\n  -- is the evaluation of (1/k!) * descPochhammer at c.\n  --\n  -- For coeff k (fpsPow (1+X) c) = coeff k (exp.subst (c • logSeries)):\n  -- Since logSeries has ℚ-coefficients and exp has ℚ-coefficients,\n  -- the k-th coefficient is ∑_{m=0}^k c^m * b_m for some b_m ∈ ℚ,\n  -- which is a polynomial in c of degree ≤ k.\n  --\n  -- Both polynomials agree on infinitely many points (all of ℕ).\n  -- By Polynomial.eq_zero_of_infinite_isRoot, the difference is 0."
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "generalizedNewtonBinomial"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "Ring.choose_add"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "Ring.add_choose_eq"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "Ring.multichoose_neg_add"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "Ring.choose_add_smul_choose"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "theorem",
+              "line": 565,
+              "local_name": "fpsPow_mul",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.FPS.fpsPow_mul",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "theorem fpsPow_mul {f g : K⟦X⟧} (hf : HasConstantTermOne f) (hg : HasConstantTermOne g) (a : K) :\n    (f * g) ^ᶠ a = (f ^ᶠ a) * (g ^ᶠ a) := by\n  unfold fpsPow\n  -- Goal: fpsExp (a • fpsLog (f * g)) = fpsExp (a • fpsLog f) * fpsExp (a • fpsLog g)\n  -- Use the log product rule: fpsLog (f * g) = fpsLog f + fpsLog g\n  rw [fpsLog_mul hf hg]\n  -- Goal: fpsExp (a • (fpsLog f + fpsLog g)) = fpsExp (a • fpsLog f) * fpsExp (a • fpsLog g)\n  -- Use smul_add to distribute the scalar\n  rw [smul_add]\n  -- Goal: fpsExp (a • fpsLog f + a • fpsLog g) = fpsExp (a • fpsLog f) * fpsExp (a • fpsLog g)\n  -- Use the exp functional equation: fpsExp (x + y) = fpsExp x * fpsExp y\n  apply fpsExp_add\n  · -- Need: constantCoeff (a • fpsLog f) = 0\n    rw [constantCoeff_smul, constantCoeff_fpsLog hf, smul_zero]\n  · -- Need: constantCoeff (a • fpsLog g) = 0\n    rw [constantCoeff_smul, constantCoeff_fpsLog hg, smul_zero]\n\n/-- Rule of exponents: (f^a)^b = f^{ab}\n    Label: eq.sec.gf.nips.rules-of-exps (third rule)\n\n    **Proof strategy**:\n    (f^a)^b = Exp(b • Log(f^a))\n           = Exp(b • Log(Exp(a • Log f)))\n           = Exp(b • (a • Log f))         [by fpsLog_fpsExp: Log(Exp g) = g]\n           = Exp((b * a) • Log f)         [by smul_smul]\n           = Exp((a * b) • Log f)         [by mul_comm]\n           = f^{ab}\n\n    **Dependency**: Requires the inverse property `fpsLog (fpsExp g) = g`\n    for g with constant term 0. This is proved in ExpLog.lean as `Log_Exp`. -/"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "fpsPow_mul"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "theorem",
+              "line": 1838,
+              "local_name": "key_product_identity'",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.FPS.key_product_identity'",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "theorem key_product_identity' (n : K) :\n    f_series' n * g_series' n = rescale (-1 : K) (binomialSeries K (-n)) := by\n  -- The proof uses the algebraic identity:\n  -- f_series' n = (1-x²)^{-n}  [substitution x → -x² in (1+x)^{-n}]\n  -- g_series' n = (1+x)^n\n  -- (1-x²)^{-n} * (1+x)^n = (1-x)^{-n} * (1+x)^{-n} * (1+x)^n = (1-x)^{-n}\n  --                       = rescale (-1) (binomialSeries K (-n))\n  --\n  -- Step 1: Show f_series' n = (1 - X²)^ᶠ (-n) = rescale (-1) (binomialSeries K (-n)) * binomialSeries K (-n)\n  -- Step 2: Then f_series' n * g_series' n = ... * binomialSeries K n = rescale (-1) (binomialSeries K (-n))\n  --\n  -- Key algebraic facts:\n  -- (1 - X²) = (1 - X) * (1 + X)\n  -- (1 - X)^ᶠ c = rescale (-1) (binomialSeries K c)  [by fpsPow_one_add_smul_X']\n  -- (1 + X)^ᶠ c = binomialSeries K c  [by generalizedNewtonBinomial]\n  -- (f * g)^ᶠ a = f^ᶠ a * g^ᶠ a  [by fpsPow_mul]\n  --\n  -- First, establish helper lemmas\n  have h_one_sub_X : (1 - X : K⟦X⟧) = 1 + (-1 : K) • X := by\n    simp only [neg_smul, one_smul, sub_eq_add_neg]\n  have h_one_sub_X_sq : (1 - X^2 : K⟦X⟧) = (1 - X) * (1 + X) := by ring\n  have h_const_one_sub_X : HasConstantTermOne (1 - X : K⟦X⟧) := by simp [HasConstantTermOne]\n  -- (1 - X)^ᶠ (-n) = rescale (-1) (binomialSeries K (-n))\n  have h_fpsPow_one_sub_X : (1 - X : K⟦X⟧) ^ᶠ (-n) = rescale (-1 : K) (binomialSeries K (-n)) := by\n    rw [h_one_sub_X, fpsPow_one_add_smul_X', generalizedNewtonBinomial]\n  -- (1 - X²)^ᶠ (-n) = (1 - X)^ᶠ (-n) * (1 + X)^ᶠ (-n)\n  have h_fpsPow_one_sub_X_sq : (1 - X^2 : K⟦X⟧) ^ᶠ (-n) =\n      rescale (-1 : K) (binomialSeries K (-n)) * binomialSeries K (-n) := by\n    rw [h_one_sub_X_sq, fpsPow_mul h_const_one_sub_X hasConstantTermOne_one_add_X,\n        h_fpsPow_one_sub_X, generalizedNewtonBinomial]\n  -- f_series' n = (1 - X²)^ᶠ (-n)\n  -- This requires showing the coefficients match."
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "key_product_identity'"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 115,
+              "local_name": "HasConstantTermOne",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.FPS.HasConstantTermOne",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "def HasConstantTermOne (f : K⟦X⟧) : Prop := constantCoeff f = 1\n\n/-- `HasConstantTermOne f` is equivalent to membership in `PowerSeries₁`.\n    This bridges the two representations of \"constant term equals 1\". -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "HasConstantTermOne"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 514,
+              "local_name": "fpsPow",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.FPS.fpsPow",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/NonIntegerPowers.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def fpsPow (f : K⟦X⟧) (c : K) : K⟦X⟧ :=\n  fpsExp (c • fpsLog f)\n\n/-- Notation for non-integer powers (when needed) -/\nscoped notation:80 f \" ^ᶠ \" c:81 => fpsPow f c\n\n/-- f^0 = 1 for any f with constant term 1 -/\n@[simp]"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "fpsPow"
+        }
+      ],
+      "notes": [
+        "The statement is a combinatorial identity over a ℚ-algebra with binomial ring structure. The proof would require known identities for Ring.choose, possibly using polynomial identity trick or generating functions. The available context provides generalizedNewtonBinomial and related lemmas, but a complete proof is not yet constructed. The checked fallback candidates for Ring.choose_add (Ring.add_choose_eq, Ring.choose, Ring.multichoose_neg_add, Ring.choose_add_smul_choose) are insufficient to directly prove the identity. The prior project lemmas fpsPow_mul, generalizedNewtonBinomial, and key_product_identity' fail to compile due to missing HasConstantTermOne and fpsPow notation. Cannot prove from visible context."
+      ],
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-003"
+    },
+    {
+      "extracted_identifier_count": 10,
+      "identifier_class_counts": {
+        "found_and_selected_as_visible_context": 4,
+        "not_found_in_project_index": 6
+      },
+      "identifier_results": [
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 83,
+              "local_name": "toSign",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.SubtractiveMethods.toSign",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "def toSign (b : ZMod 2) : ℤ := if b = 0 then 1 else -1\n\n@[simp]"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "toSign"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 155,
+              "local_name": "signSum",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.SubtractiveMethods.signSum",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "def signSum {d : ℕ} (e : Fin d → ZMod 2) : ℤ :=\n  ∑ k : Fin d, toSign (e k)\n\n/-- Sum interchange identity (Lemma `lem.cancel.all-even.l1`):\nThe sum over sign tuples of `(∑_k e_k)^n` equals the double sum\nover index tuples and sign tuples of the sign product.\n\nThis follows from expanding `(∑_k e_k)^n` using the distributive law.\n\nLabel: Lemma `lem.cancel.all-even.l1` -/"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "signSum"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "Finset.sum_pow'"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "Finset.univ"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "lemma's"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "e_"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "x_1"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "x_n"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 93,
+              "local_name": "signProduct",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "def signProduct {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) : ℤ :=\n  ∏ i : Fin n, toSign (e (x i))\n\n/-! ### Helper lemmas about toSign and powers -/\n\n/-- The square of any sign is 1 -/"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "signProduct"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "theorem",
+              "line": 126,
+              "local_name": "signProduct_eq_prod_pow",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.SubtractiveMethods.signProduct_eq_prod_pow",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SignedCounting/SubtractiveMethods.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "theorem signProduct_eq_prod_pow {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) :\n    signProduct e x = ∏ k : Fin d, (toSign (e k)) ^ (multiplicity x k) := by\n  unfold signProduct multiplicity\n  rw [← Finset.prod_fiberwise Finset.univ x (fun i => toSign (e (x i)))]\n  congr 1\n  ext k\n  simp only [prod_filter]\n  have h1 : ∏ a : Fin n, (if x a = k then toSign (e (x a)) else 1) =\n            ∏ a : Fin n, (if x a = k then toSign (e k) else 1) := by\n    apply Finset.prod_congr rfl\n    intro a _\n    split_ifs with h\n    · rw [h]\n    · rfl\n  rw [h1]\n  rw [Finset.prod_ite]\n  simp only [prod_const_one, mul_one]\n  rw [Finset.prod_const]\n\n/-! ### Lemma `lem.cancel.all-even.l1`: Sum interchange\n\nThis lemma establishes that:\n```\n∑_{e ∈ {1,-1}^d} (e_1 + e_2 + ... + e_d)^n =\n  ∑_{x ∈ [d]^n} ∑_{e ∈ {1,-1}^d} e_{x_1} * e_{x_2} * ... * e_{x_n}\n```\n-/\n\n/-- The sum of entries of a sign tuple, as an integer -/"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "signProduct_eq_prod_pow"
+        }
+      ],
+      "notes": [
+        "The source lemma sums over sign vectors in {1,-1}^d, which is a finite set of size 2^d. The visible context provides toSign : ZMod 2 → ℤ and signSum : (Fin d → ZMod 2) → ℤ, which encode sign vectors as functions from Fin d to ZMod 2. The correct statement should sum over e : Fin d → ZMod 2, using toSign to convert to ℤ. The proof would use Finset.sum_pow' with s = Finset.univ : Finset (ZMod 2) and f = toSign, but the source lemma's right-hand side sums over e of e_{x_1}...e_{x_n}, which is signProduct e x. The visible context includes signProduct, but the lemma signProduct_eq_prod_pow failed to compile due to type errors. Without a working signProduct lemma, the proof cannot be completed from visible context. Therefore cannot_prove_from_visible_context."
+      ],
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-004"
+    },
+    {
+      "extracted_identifier_count": 5,
+      "identifier_class_counts": {
+        "found_and_name_mentioned_but_declaration_not_selected": 5
+      },
+      "identifier_results": [
+        {
+          "candidate_count": 3,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 1057,
+              "local_name": "transpose",
+              "match_kind": "exact_full_name",
+              "name": "NPartition.transpose",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def transpose (μ : NPartition N) (hN : 0 < N) : NPartition (μ.parts ⟨0, hN⟩) where\n  parts := fun i => (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ μ.parts j).card\n  antitone := by\n    intro i j hij\n    apply Finset.card_le_card\n    intro r hr\n    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hr ⊢\n    exact le_trans (Nat.add_le_add_right hij 1) hr\n\n/-- Predicate asserting that `lamt` is the transpose of `lam`.\n    The transpose λᵗ of a partition λ satisfies:\n    (λᵗ)ᵢ = |{j : λⱼ ≥ i}| for each i.\n\n    Since we work with fixed-length tuples, this predicate captures\n    when two tuples represent transpose partitions (possibly with trailing zeros). -/"
+            },
+            {
+              "kind": "def",
+              "line": 159,
+              "local_name": "transpose",
+              "match_kind": "suffix_full_name",
+              "name": "SymmetricFunctions.NPartition.transpose",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def transpose (lam : NPartition N) (hN : 0 < N) : NPartition (lam.parts ⟨0, hN⟩) where\n  parts := fun i => (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ lam.parts j).card\n  weaklyDecreasing := by\n    intro i j hij\n    apply Finset.card_le_card\n    intro r hr\n    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hr ⊢\n    exact le_trans (Nat.add_le_add_right hij 1) hr\n\n/-- Predicate asserting that `lamt` is the transpose of `lam`.\n    The transpose λᵗ of a partition λ satisfies:\n    (λᵗ)ᵢ = |{j : λⱼ ≥ i}| for each i.\n\n    Since we work with fixed-length tuples, this predicate captures\n    when two tuples represent transpose partitions (possibly with trailing zeros). -/"
+            },
+            {
+              "kind": "def",
+              "line": 1721,
+              "local_name": "transpose",
+              "match_kind": "exact_local_name",
+              "name": "Nat.Partition.transpose",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/Partitions/Basics.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def transpose {n : ℕ} (p : Partition n) : Partition n := by\n  -- The transpose has parts: for each i from 1 to (largest part of p),\n  -- the i-th part of the transpose is the number of parts of p that are ≥ i\n  let largest := p.parts.fold max 0\n  let newParts : Multiset ℕ := (Finset.range largest).val.map\n    (fun i => (p.parts.filter (· > i)).card)\n  refine ⟨newParts.filter (· > 0), ?_, ?_⟩\n  · intro i hi\n    simp only [Multiset.mem_filter] at hi\n    exact hi.2\n  · -- Prove sum equals n using double counting\n    show (newParts.filter (· > 0)).sum = n\n    have h1 : newParts.sum = n := by\n      show ((Finset.range largest).val.map (fun i => (p.parts.filter (· > i)).card)).sum = n\n      have heq : ((Finset.range largest).val.map (fun i => (p.parts.filter (· > i)).card)).sum =\n                 (Finset.range largest).sum (fun i => (p.parts.filter (· > i)).card) := rfl\n      rw [heq]\n      have hp' : ∀ i ∈ p.parts, 0 < i := fun i hi => p.parts_pos hi\n      have := sum_filter_card_eq_sum p.parts hp'\n      rw [p.parts_sum] at this\n      exact this\n    rw [sum_filter_positive newParts]\n    exact h1\n\n/-- Helper lemma: for a sorted decreasing list, the count of elements > i is > j iff the j-th element > i.\n    This is the key bijection for the Young diagram transpose. -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "NPartition.transpose"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 1211,
+              "local_name": "ssytFinset",
+              "match_kind": "exact_local_name",
+              "name": "SymmetricFunctions.ssytFinset",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "noncomputable def ssytFinset (lam : NPartition N) : Finset (SSYT lam) :=\n  (ssytFillingFinsetNonSkew lam).attach.map ⟨\n    fun ⟨f, hf⟩ => fillingToSSYT lam f (Finset.mem_filter.mp hf).2,\n    fun ⟨f₁, hf₁⟩ ⟨f₂, hf₂⟩ h => by\n      simp only [Subtype.mk.injEq]\n      have : (fillingToSSYT lam f₁ (Finset.mem_filter.mp hf₁).2).entries =\n             (fillingToSSYT lam f₂ (Finset.mem_filter.mp hf₂).2).entries := by\n        simp only [fillingToSSYT] at h\n        cases h\n        rfl\n      exact this\n  ⟩\n\n/-- Every SSYT is in ssytFinset. -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "ssytFinset"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "structure",
+              "line": 2872,
+              "local_name": "Nipat",
+              "match_kind": "exact_local_name",
+              "name": "SymmetricFunctions.Nipat",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "structure Nipat (lam mu : Fin N → ℕ)\n    (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)\n    (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)\n    (hcontained : ∀ i, mu i ≤ lam i) where\n  /-- The tuple of paths, one for each i ∈ [N] -/\n  paths : (i : Fin N) → LatticePath (N := N)\n    ((mu i : ℤ) - (i.val : ℤ)) ((lam i : ℤ) - (i.val : ℤ))\n  /-- The paths satisfy column-strictness: for i < j, if east steps k (in path i)\n      and k' (in path j) correspond to the same tableau column (mu i + k = mu j + k'),\n      then the height of path i at step k is strictly less than the height of path j at step k'.\n      This is the key property that makes the nipat-SSYT bijection work. -/\n  colStrictPaths : ∀ i j : Fin N, i < j →\n    ∀ k : ℕ, ∀ hk : k < (paths i).eastStepHeights.length,\n    ∀ k' : ℕ, ∀ hk' : k' < (paths j).eastStepHeights.length,\n    mu i + k = mu j + k' →\n    (paths i).eastStepHeights[k] < (paths j).eastStepHeights[k']\n\n/-- The weight of a nipat is the product of the weights of its component paths. -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "Nipat"
+        },
+        {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "kind": "structure",
+              "line": 1960,
+              "local_name": "SkewSSYT",
+              "match_kind": "exact_full_name",
+              "name": "SkewSSYT",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/SchurBasics.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "structure SkewSSYT {N : ℕ} [NeZero N] (lam mu : NPartition N) extends SkewYoungTableau lam mu where\n  /-- Entries increase weakly along rows -/\n  row_weak : ∀ i : Fin N, ∀ j₁ j₂ : ℕ,\n    (i, j₁) ∈ skewYoungDiagram lam mu → (i, j₂) ∈ skewYoungDiagram lam mu → j₁ < j₂ →\n    entry (i, j₁) ≤ entry (i, j₂)\n  /-- Entries increase strictly down columns -/\n  col_strict : ∀ i₁ i₂ : Fin N, ∀ j : ℕ,\n    (i₁, j) ∈ skewYoungDiagram lam mu → (i₂, j) ∈ skewYoungDiagram lam mu → i₁ < i₂ →\n    entry (i₁, j) < entry (i₂, j)\n\n/-! ## Properties of Semistandard Skew Tableaux -/\n\n/-- In a semistandard skew tableau, entries increase weakly along rows (general version).\n    Lemma \\ref{lem.sf.skew-ssyt.increase}(a) in the source. -/"
+            },
+            {
+              "kind": "structure",
+              "line": 926,
+              "local_name": "SkewSSYT",
+              "match_kind": "exact_local_name",
+              "name": "SymmetricFunctions.SkewSSYT",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "structure SkewSSYT (s : SkewPartition N) where\n  /-- The entries of the tableau, only for boxes in Y(λ/μ).\n      Entry (i, k) corresponds to box (i, μᵢ + k + 1) in Y(λ/μ). -/\n  entries : (i : Fin N) → (k : Fin (s.outer.parts i - s.inner.parts i)) → Fin N\n  /-- Entries are weakly increasing along rows -/\n  rowWeak : ∀ i : Fin N, ∀ j k : Fin (s.outer.parts i - s.inner.parts i),\n    j ≤ k → entries i j ≤ entries i k\n  /-- Entries are strictly increasing down columns.\n      If boxes (i, c) and (i', c) are both in Y(λ/μ) with i < i', then\n      T(i, c) < T(i', c). Here c = μᵢ + k + 1 for some k.\n      The condition checks: for row i and column offset k, if row i+1 also\n      contains column μᵢ + k + 1 (i.e., μᵢ + k + 1 > μᵢ₊₁ and μᵢ + k + 1 ≤ λᵢ₊₁),\n      then the entry in row i is strictly less than the entry in row i+1. -/\n  colStrict : ∀ i : Fin N, ∀ hi : i.val + 1 < N,\n    ∀ k : Fin (s.outer.parts i - s.inner.parts i),\n    -- The absolute column is μᵢ + k + 1. For this to be in row i+1:\n    -- 1. μᵢ + k + 1 > μᵢ₊₁ (column is after the inner partition in row i+1)\n    -- 2. μᵢ + k + 1 ≤ λᵢ₊₁ (column is within the outer partition in row i+1)\n    ∀ _hcol : s.inner.parts i + k.val + 1 > s.inner.parts ⟨i.val + 1, hi⟩ ∧\n             s.inner.parts i + k.val + 1 ≤ s.outer.parts ⟨i.val + 1, hi⟩,\n    -- The offset in row i+1 for the same column\n    let k' : ℕ := s.inner.parts i + k.val - s.inner.parts ⟨i.val + 1, hi⟩\n    ∀ hk' : k' < s.outer.parts ⟨i.val + 1, hi⟩ - s.inner.parts ⟨i.val + 1, hi⟩,\n    entries i k < entries ⟨i.val + 1, hi⟩ ⟨k', hk'⟩\n\n/-- The monomial x^T associated to a tableau T.\n    x_T = ∏_{(i,j) ∈ Y(λ)} x_{T(i,j)} -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "SkewSSYT"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "def",
+              "line": 1509,
+              "local_name": "potentialVerticalStrips",
+              "match_kind": "exact_local_name",
+              "name": "SymmetricFunctions.potentialVerticalStrips",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+              "selected_as_project_or_local_context": false,
+              "snippet": "def potentialVerticalStrips (mu : NPartition N) : Finset (Fin N → ℕ) :=\n  Fintype.piFinset (fun i => Finset.Icc (mu.parts i) (verticalStripUpperBound mu i))\n\n/-- The set of N-partitions λ such that λ/μ is a vertical n-strip.\n\n    This is the set of all N-partitions λ satisfying:\n    1. μ ⊆ λ (containment): μ_i ≤ λ_i for all i\n    2. Vertical strip: λ_i ≤ μ_i + 1 for all i\n    3. Size: |λ| - |μ| = n\n\n    The set is finite because each λ_i ∈ {μ_i, μ_i + 1}. -/"
+            }
+          ],
+          "classification": "found_and_name_mentioned_but_declaration_not_selected",
+          "identifier": "potentialVerticalStrips"
+        }
+      ],
+      "notes": [
+        "Missing definitions: NPartition.transpose, ssytFinset, Nipat, SkewSSYT, potentialVerticalStrips. Local file predecessors fail to compile due to missing identifiers. Cannot prove second Jacobi-Trudi without transpose API."
+      ],
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-fresh-slice5-finiteness-paid-v1",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005"
+    },
+    {
+      "extracted_identifier_count": 2,
+      "identifier_class_counts": {
+        "found_and_selected_as_visible_context": 1,
+        "not_found_in_project_index": 1
+      },
+      "identifier_results": [
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "theorem",
+              "line": 134,
+              "local_name": "xnEquiv_mul_of_coeff_eq",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.FPS.xnEquiv_mul_of_coeff_eq",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/FPS/InfiniteProducts1.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "theorem xnEquiv_mul_of_coeff_eq {n : ℕ} {a b c d : K⟦X⟧}\n    (hab : ∀ m ≤ n, coeff m a = coeff m b)\n    (hcd : ∀ m ≤ n, coeff m c = coeff m d) :\n    ∀ m ≤ n, coeff m (a * c) = coeff m (b * d) :=\n  PowerSeries.XnEquiv.mul hab hcd\n\n/-!\n## Lemma lem.fps.prod.irlv.cong-div\n\nIf `a ≡ b` and `c ≡ d` (mod x^{n+1}) with `c, d` invertible,\nthen `a/c ≡ b/d` (mod x^{n+1}).\n\nThis is the division analogue of lem.fps.prod.irlv.cong-mul.\n-/\n\n/-- If coefficients agree up to n for numerators and invertible denominators,\n    quotients agree up to n.\n    (Lemma lem.fps.prod.irlv.cong-div)\n    Label: lem.fps.prod.irlv.cong-div -/"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "xnEquiv_mul_of_coeff_eq"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "PowerSeries.coeff_inv"
+        }
+      ],
+      "notes": [
+        "The lemma xnEquiv_mul_of_coeff_eq failed to compile due to missing Semiring K instance. The visible context does not provide a working lemma for coefficient-wise equality of products, and no lemma for coefficient-wise equality of inverses is available. The source requires a lemma that if c and d are units with equal coefficients up to n, then their inverses also have equal coefficients up to n, which is not available in the visible context. The checked signature PowerSeries.coeff_inv is over fields, not general commutative rings with IsUnit, and cannot be used here."
+      ],
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-001"
+    },
+    {
+      "extracted_identifier_count": 5,
+      "identifier_class_counts": {
+        "found_and_selected_as_visible_context": 3,
+        "not_found_in_project_index": 2
+      },
+      "identifier_results": [
+        {
+          "candidate_count": 3,
+          "candidates": [
+            {
+              "kind": "structure",
+              "line": 132,
+              "local_name": "NPartition",
+              "match_kind": "exact_full_name",
+              "name": "NPartition",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "structure NPartition (N : ℕ) where\n  /-- The entries of the N-partition as a function from `Fin N` to `ℕ` -/\n  parts : Fin N → ℕ\n  /-- The entries are weakly decreasing (antitone) -/\n  antitone : Antitone parts\n\nnamespace NPartition\n\nvariable {N : ℕ}\n\n/-! ## Compatibility aliases for field names -/\n\n/-- Alias for `antitone` to match SchurBasics.lean naming convention.\n    The weakly decreasing condition: if `i ≤ j` then `parts j ≤ parts i`. -/"
+            },
+            {
+              "kind": "abbrev",
+              "line": 100,
+              "local_name": "NPartition",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.SymmetricFunctions.NPartition",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/MonomialSymmetric.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "abbrev NPartition (N : ℕ) := _root_.NPartition N\n\nnamespace NPartition\n\n-- All basic definitions and lemmas (ext, DecidableEq, size, zero, length, etc.)\n-- are inherited from _root_.NPartition in NPartition.lean.\n\n/-!\n## Bijection with partitions of length ≤ N (Proposition prop.sf.Npar-as-par)\n\nThere is a bijection between partitions of length ≤ N and N-partitions.\n\nThe core definitions (`ofPartition`, `toPartition`, `ofPartition_size`, `toPartition_card_le`)\nare defined in `NPartition.lean` and re-exported here for convenience within this namespace.\n-/\n\n-- Re-export canonical definitions from _root_.NPartition to this namespace.\n-- This allows code in this file to use `ofPartition`, `toPartition`, etc.\n-- without qualification, while avoiding code duplication.\n\n/-- Convert a partition (as a `Nat.Partition`) to an N-partition by padding with zeros.\n    Re-export of `_root_.NPartition.ofPartition`. -/"
+            },
+            {
+              "kind": "structure",
+              "line": 115,
+              "local_name": "NPartition",
+              "match_kind": "exact_local_name",
+              "name": "SymmetricFunctions.NPartition",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/PieriJacobiTrudi.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "structure NPartition (N : ℕ) where\n  /-- The parts of the partition -/\n  parts : Fin N → ℕ\n  /-- The parts are weakly decreasing -/\n  weaklyDecreasing : ∀ i j : Fin N, i ≤ j → parts j ≤ parts i\n\nnamespace NPartition\n\nvariable {N : ℕ}\n\n/-- Two N-partitions are equal if their parts are equal. -/\n@[ext]"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "NPartition"
+        },
+        {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "kind": "abbrev",
+              "line": 127,
+              "local_name": "toPartition",
+              "match_kind": "exact_local_name",
+              "name": "AlgebraicCombinatorics.SymmetricFunctions.NPartition.toPartition",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/MonomialSymmetric.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "abbrev toPartition (mu : NPartition N) : Nat.Partition mu.size :=\n  _root_.NPartition.toPartition mu\n\n/-- The size of ofPartition p equals n (the sum of the original partition).\n    Re-export of `_root_.NPartition.ofPartition_size`. -/"
+            },
+            {
+              "kind": "def",
+              "line": 563,
+              "local_name": "toPartition",
+              "match_kind": "exact_local_name",
+              "name": "NPartition.toPartition",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "def toPartition (μ : NPartition N) : Nat.Partition μ.size where\n  parts := (Finset.univ.val.map μ.parts).filter (· ≠ 0)\n  parts_pos := by\n    intro i hi\n    simp only [Multiset.mem_filter, Multiset.mem_map, Finset.mem_val, Finset.mem_univ,\n      true_and] at hi\n    omega\n  parts_sum := by\n    simp only [size]\n    have h : (Finset.univ.val.map μ.parts).sum = ∑ i, μ.parts i := by\n      simp [Finset.sum_eq_multiset_sum]\n    rw [← h]\n    exact filter_ne_zero_sum _\n\n/-- The size of ofPartition p equals n (the sum of the original partition).\n    (Proposition prop.sf.Npar-as-par, well-definedness)\n\n    Label: prop.sf.Npar-as-par.size -/"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "toPartition"
+        },
+        {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "kind": "lemma",
+              "line": 529,
+              "local_name": "filter_ne_zero_sum",
+              "match_kind": "exact_local_name",
+              "name": "NPartition.filter_ne_zero_sum",
+              "name_string_visible_in_task": true,
+              "path": "algebraic-combinatorics/AlgebraicCombinatorics/SymmetricFunctions/NPartition.lean",
+              "selected_as_project_or_local_context": true,
+              "snippet": "private lemma filter_ne_zero_sum (m : Multiset ℕ) : (m.filter (· ≠ 0)).sum = m.sum := by\n  induction m using Multiset.induction_on with\n  | empty => simp\n  | cons a s ih =>\n    simp only [Multiset.filter_cons, Multiset.sum_cons]\n    split_ifs with ha\n    · simp [ih]\n    · push_neg at ha; simp [ha, ih]\n\n/-- Convert a partition (as a `Nat.Partition`) to an N-partition by padding with zeros.\n    Requires that the partition has at most N parts.\n\n    This corresponds to the map in Proposition prop.sf.Npar-as-par:\n    (μ₁, μ₂, ..., μ_ℓ) ↦ (μ₁, μ₂, ..., μ_ℓ, 0, 0, ..., 0) -/"
+            }
+          ],
+          "classification": "found_and_selected_as_visible_context",
+          "identifier": "filter_ne_zero_sum"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "List.Pairwise.rel_get_of_le"
+        },
+        {
+          "candidate_count": 0,
+          "candidates": [],
+          "classification": "not_found_in_project_index",
+          "identifier": "List.sortedGE_iff_antitone_get"
+        }
+      ],
+      "notes": [
+        "The visible context provides NPartition structure, toPartition, and filter_ne_zero_sum, but the bijection requires constructing an inverse map from Nat.Partition with parts.card ≤ N to NPartition N, proving antitone of the padded function, and proving left_inv and right_inv. The antitone proof requires case analysis on in-range vs out-of-range indices, using sortedness of the original partition parts. The checked fallback candidates (List.Pairwise.rel_get_of_le, List.sortedGE_iff_antitone_get, etc.) provide ingredients for the in-range case, but the full construction is complex and the visible context does not provide a direct lemma for the padded antitone function. The proof strategy note suggests a multi-step helper plan, but implementing it fully from the visible context is beyond the scope of a single repair step without additional project context or a preexisting bijection lemma."
+      ],
+      "run_dir": "docs/latex-statement-proof-lane-generation-runs/2026-05-06-dev-panel5-v2-merged-panel-paid-v1",
+      "status": "cannot_prove_from_visible_context",
+      "unit_key": "unit-005"
+    }
+  ]
+}
